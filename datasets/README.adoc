@@ -1,0 +1,28 @@
+:derived: link:data/derived_datasets.md/[Derived Dataset]
+
+= Datasets and Data Collection
+
+After completing link:concepts/choosing_a_dataset.md[Choosing A Dataset], 
+you should have a high level understanding of what questions each dataset is able to answer.
+This section contains a series of tutorials which will help you understand our dataset more deeply.
+
+Reading this section front to back is not recommended.
+Instead, identify a dataset you'd like to understand better and read through 
+the relavent documentation.
+
+
+// Uses to consider in this section:
+// * Analyst looking for information on a given dataset (how is l10l sampled?)
+// * Engineer, we have a question, does this data exist? What does it look like?
+// * New hire, do we collect data?
+
+
+//.Dataset Directory
+//|===
+//|Dataset Name    |Sampled? |Type
+//
+//|link:data/cross_sectional/README.md[Cross Sectional]
+//|1% of clients
+//|{derived}
+//|===
+//
