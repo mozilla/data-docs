@@ -1,0 +1,21 @@
+= Cross Sectional Dataset
+
+Test
+
+:toc:
+
+== What is this dataset
+
+User focused summary stats
+
+== How do I use it?
+
+* Open up a new query
+* Type this query in
+* Horray! More complicated
+* Horray! More complicated
+* Conclusion
+
+== Technical Notes
+
+== How to augment

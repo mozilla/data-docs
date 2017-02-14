@@ -1,0 +1,5 @@
+= Creating Your Own Dataset to Query in re:dash
+
+1. Create a spark notebook that does the transformations you need, either on raw data (using Dataset API) or on parquet data
+2. Output the results of that to an s3 location, usually `telemetry-parquet/user/$YOUR_DATASET/v$VERSION_NUMBER/submission_date=$YESTERDAY/`. This would partition by submission_date, meaning each day this runs and is outputted to a new location in s3. Do NOT put the submission_date in the parquet file as well! A column name cannot also be the name of a partition.
+3. Open a bug, put :robotblake as the assignee, and make the title "Add dataset to Presto". Be sure to include the location of the dataset, and what you want the name of the dataset to be.
