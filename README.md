@@ -2,7 +2,7 @@
 
 This document will teach you how to use Firefox data
 to answer questions about our users.
-It's hosted [here](https://harterrt.github.io/firefox-data-docs/)
+It's hosted [here](https://mozilla.github.io/firefox-data-docs/)
 
 ## Using this document
 
