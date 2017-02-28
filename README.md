@@ -1,28 +1,39 @@
 # Firefox Data Documentation
 
-This document will teach you how to use Firefox data
-to answer questions about our users.
-It's hosted [here](https://mozilla.github.io/firefox-data-docs/)
+This document will teach you how to answer questions about Firefox Users with data.
+You can find the [rendered documentation here](https://mozilla.github.io/firefox-data-docs/).
 
-## Using this document
-
-This documentation is divided into four main sections:
-
-### [Intro to Analysis](concepts/learning_paths.adoc)
-  This section provides a **quick introduction** to analyzing telemetry data.
-  After reading these articles, you will be able to confidently perform analysis
-  over telemetry data.
-### [Data Collection and Datasets](data/README.md)
-  Describes all available data we have on our users. 
-  For each dataset, we include a description of the dataset's purpose,
-  what data is included, how the data is collected,
-  and how you can change or augment the dataset.
-  You do not need to read this section end-to-end.
-### [Tools](tools/README.md)
-  Describes the tools we maintain to access and analyze user data.
-  For each tool we include a description of the purpose, relative strengths
-  and weaknesses, and what data you can access from the tool.
-### [Cookbooks & Tutorials](tutorials/README.md)
-  This section contains tutorials presented in a simple problem/solution format.
+This documentation is rendered with [GitBook](https://www.gitbook.com), and hosted on Github pages.
 
 
+## Building the documentation
+
+To build the documentation locally, you'll need to install the gitbook-cli app with npm:
+```bash
+npm install gitbook-cli -g
+```
+
+You can then clone the repository and serve the documentation locally with:
+```
+gitbook serve
+```
+
+The complete documentation for the gitbook toolchain is at: https://toolchain.gitbook.com/.
+
+## Adding a new article
+
+This documentation is under active development,
+so we may already be working on the documentation you need.
+Take a look at 
+[this bug tree](https://bugzilla.mozilla.org/showdependencytree.cgi?id=1341617&hide_resolved=1)
+to check.
+Please open a new bug if you spot any missing documentation.
+
+Articles can be written in either 
+[Markdown](https://daringfireball.net/projects/markdown/syntax) or 
+[AsciiDoc](http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/).
+We recommend using Markdown by default.
+
+Be sure to link to your new article from `SUMMARY.md`, or GitBook will not render the file.
+
+Once your happy with your contribution, please open a PR and flag @harterrt for review. 
