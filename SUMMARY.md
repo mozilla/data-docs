@@ -1,4 +1,4 @@
-* [Firefox Data Documentation](README.md)
+* [Firefox Data Documentation](introduction.md)
   * [Terminology](concepts/terminology.md)
 * [Getting Started](concepts/getting_started.md)
   * [Analysis Quick Start](concepts/analysis_intro.adoc)
