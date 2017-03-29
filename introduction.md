@@ -8,21 +8,21 @@ It's hosted [here](https://mozilla.github.io/firefox-data-docs/)
 
 This documentation is divided into four main sections:
 
-### [Intro to Analysis](concepts/learning_paths.adoc)
+### [Getting Started](concepts/getting_started.md)
   This section provides a **quick introduction** to analyzing telemetry data.
   After reading these articles, you will be able to confidently perform analysis
   over telemetry data.
-### [Data Collection and Datasets](data/README.md)
+### [Data Collection and Datasets](datasets/README.adoc)
   Describes all available data we have on our users. 
   For each dataset, we include a description of the dataset's purpose,
   what data is included, how the data is collected,
   and how you can change or augment the dataset.
   You do not need to read this section end-to-end.
-### [Tools](tools/README.md)
+### [Tools](tools/README.adoc)
   Describes the tools we maintain to access and analyze user data.
   For each tool we include a description of the purpose, relative strengths
   and weaknesses, and what data you can access from the tool.
-### [Cookbooks & Tutorials](tutorials/README.md)
+### [Cookbooks & Tutorials](tutorials/README.adoc)
   This section contains tutorials presented in a simple problem/solution format.
 
 

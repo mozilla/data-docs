@@ -32,8 +32,24 @@ Please open a new bug if you spot any missing documentation.
 Articles can be written in either 
 [Markdown](https://daringfireball.net/projects/markdown/syntax) or 
 [AsciiDoc](http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/).
-We recommend using Markdown by default.
+I recommend using Markdown by default.
+If you run into any technical limitations, let me (@harter) know.
+I'm happy to change the tooling to make it as much fun as possible to write.
 
 Be sure to link to your new article from `SUMMARY.md`, or GitBook will not render the file.
 
+### Review
+
 Once your happy with your contribution, please open a PR and flag @harterrt for review. 
+Please squash your changes  into meaningful commits  and follow these
+[commit message guidelines](https://chris.beams.io/posts/git-commit/).
+
+
+I'll give it review for clarity.
+This documentation is meant to address higher level concepts,
+so I'm aiming to keep a conversational tone throughout the document.
+Beyond that, I don't have a strong opinion.
+If you'd find it helpful,
+we have some consumers of this documentation who have agreed to review PRs for clairty.
+This will give you a fresh set of eyes to identify any jargon or difficult to understand sections.
+
