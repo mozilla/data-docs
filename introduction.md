@@ -22,7 +22,7 @@ This documentation is divided into four main sections:
   Describes the tools we maintain to access and analyze user data.
   For each tool we include a description of the purpose, relative strengths
   and weaknesses, and what data you can access from the tool.
-### [Cookbooks & Tutorials](tutorials/README.adoc)
+### [Cookbooks & Tutorials](cookbooks/README.adoc)
   This section contains tutorials presented in a simple problem/solution format.
 
 
