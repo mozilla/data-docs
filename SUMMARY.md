@@ -2,16 +2,18 @@
   * [Terminology](concepts/terminology.md)
 * [Getting Started](concepts/getting_started.md)
   * [Analysis Quick Start](concepts/analysis_intro.adoc)
-  * [Data Privacy](/concepts/data_privacy.md)
+  * [Data Privacy](concepts/data_privacy.md)
   * [Choosing a Dataset](concepts/choosing_a_dataset.md)
+  * [Common Analysis Gotchas](concepts/analysis_gotchas.md)
 * [Data Collection and Datasets](datasets/README.adoc)
   * Understanding our Data
-    * How we collect data (pings, studies, experiments)
-    * Choosing a dataset
     * Experimental vs Descriptive Data
-    * Sessions and Subsessions
-    * Dates, Timespans, & their caveats
-    * Profiles vs. Users
+    * [Choosing a dataset](concepts/choosing_a_dataset.md)
+    * [Tools for Experimentation](concepts/experiment_intro.adoc)
+    * [Common Analysis Gotchas](concepts/analysis_gotchas.md)
+      * Sessions and Subsessions
+      * Dates, Timespans, & their caveats
+      * Profiles vs. Users
   * [Dataset Reference](datasets/reference.md)
     * Pings
       * Opt-in vs Opt-out
@@ -42,8 +44,10 @@
       * Airflow
       * Presto
 * [Cookbooks](cookbooks/README.adoc)
+  * [Working with Parquet Data on ATMO Clusters](cookbooks/parquet.md)
   * [Creating a custom re:dash dataset](cookbooks/create_a_dataset.adoc)
   * [Creating a Real-time Analysis Plugin](cookbooks/realtime_analysis_plugin.md)
+  * [Longitudinal Examples](cookbooks/longitudinal.md)
 
 
 * [About this Documentation](meta/README.md)
