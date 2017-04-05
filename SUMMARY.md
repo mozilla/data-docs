@@ -19,10 +19,14 @@
       * Opt-in vs Opt-out
       * [Main Ping](concepts/main_ping_intro.md)
     * Derived Datasets
-      * Longitudinal
+      * [Longitudinal](datasets/longitudinal/Longitudinal.md)
       * Cross Sectional
-      * Main Summary
-      * Crash Summary
+      * [Main Summary](datasets/main_summary/MainSummary.md)
+      * [Crash Summary](datasets/crash_summary/CrashSummary.md)
+      * [Crash Aggregate](datasets/crash_aggregate/CrashAggregateView.md)
+      * [Events](datasets/events/Events.md)
+      * [Sync Summary](datasets/sync_summary/SyncSummary.md)
+      * [Addons](datasets/addons/Addons.md)
       * ETC
     * [Experimental Datasets](concepts/experiment_intro.adoc)
       * Accessing Shield Study data
