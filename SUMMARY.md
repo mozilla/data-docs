@@ -43,6 +43,7 @@
       * Presto
 * [Cookbooks](cookbooks/README.adoc)
   * [Creating a custom re:dash dataset](cookbooks/create_a_dataset.adoc)
+  * [Creating a Real-time Analysis Plugin](cookbooks/realtime_analysis_plugin.md)
 
 
 * [About this Documentation](meta/README.md)
