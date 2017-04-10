@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Collecting New Data · GitBook</title>
+        <title>Creating a Real-time Analysis Plugin · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -57,8 +57,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="../tools/" />
+    <link rel="next" href="../meta/README.md" />
     
+    
+    <link rel="prev" href="create_a_dataset.html" />
     
 
     </head>
@@ -177,9 +179,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3" data-path="./">
+        <li class="chapter " data-level="1.3" data-path="../datasets/">
             
-                <a href="./">
+                <a href="../datasets/">
             
                     
                     Data Collection and Datasets
@@ -288,9 +290,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.2" data-path="reference.html">
+        <li class="chapter " data-level="1.3.2" data-path="../datasets/reference.html">
             
-                <a href="reference.html">
+                <a href="../datasets/reference.html">
             
                     
                     Dataset Reference
@@ -468,9 +470,9 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.3.3" data-path="new_data.html">
+        <li class="chapter " data-level="1.3.3" data-path="../datasets/new_data.html">
             
-                <a href="new_data.html">
+                <a href="../datasets/new_data.html">
             
                     
                     Collecting New Data
@@ -718,9 +720,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.5" data-path="../cookbooks/">
+        <li class="chapter " data-level="1.5" data-path="./">
             
-                <a href="../cookbooks/">
+                <a href="./">
             
                     
                     Cookbooks
@@ -732,9 +734,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.5.1" data-path="../cookbooks/create_a_dataset.html">
+        <li class="chapter " data-level="1.5.1" data-path="create_a_dataset.html">
             
-                <a href="../cookbooks/create_a_dataset.html">
+                <a href="create_a_dataset.html">
             
                     
                     Creating a custom re:dash dataset
@@ -745,9 +747,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.5.2" data-path="../cookbooks/realtime_analysis_plugin.html">
+        <li class="chapter active" data-level="1.5.2" data-path="realtime_analysis_plugin.html">
             
-                <a href="../cookbooks/realtime_analysis_plugin.html">
+                <a href="realtime_analysis_plugin.html">
             
                     
                     Creating a Real-time Analysis Plugin
@@ -845,7 +847,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Collecting New Data</a>
+        <a href=".." >Creating a Real-time Analysis Plugin</a>
     </h1>
 </div>
 
@@ -860,14 +862,183 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="collecting-new-data">Collecting New Data</h1>
-<p>This document will give a high level overview of how to add new data to our datasets.</p>
-<h2 id="pings">Pings</h2>
-<p><a href="https://docs.google.com/document/d/11wM2RJkHAqYF-4xgL5tHwA621IUQEaf4vecuC-hqnzk/edit#" target="_blank">Adding new ping types</a>
-When do we need to add new pings?</p>
-<p><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Adding_a_new_Telemetry_probe" target="_blank">Adding a new probe</a>
-When should one add a new probe? </p>
-<h2 id="derived-datasets">Derived Datasets</h2>
+                                <h1 id="creating-a-real-time-analysis-plugin">Creating a Real-time Analysis Plugin</h1>
+<h2 id="getting-started">Getting Started</h2>
+<p>Creating an analysis plugin consists of three steps:</p>
+<ol>
+<li><p>Writing a message matcher</p>
+<p>The message matcher allows one to select specific data from the data stream.</p>
+</li>
+<li><p>Writing the analysis code/business logic</p>
+<p>The analysis code allows one to aggregrate, detect anomalies, apply machine
+learning algorithms etc.</p>
+</li>
+<li><p>Writing the output code</p>
+<p>The output code allows one to structure the analysis results in an easy to
+consume format.</p>
+</li>
+</ol>
+<h3 id="step-by-step-setup">Step by Step Setup</h3>
+<ol>
+<li><p>Go to the CEP site: <a href="https://pipeline-cep.prod.mozaws.net/" target="_blank">https://pipeline-cep.prod.mozaws.net/</a></p>
+</li>
+<li><p>Login/Register using your Google @mozilla.com account</p>
+</li>
+<li><p>Click on the <code>Plugin Deployment</code> tab</p>
+</li>
+<li><p>Create a message matcher</p>
+<ol>
+<li><p>Edit the <code>message_matcher</code> variable in the <code>Heka Analysis Plugin Configuration</code>
+text area. For this example we are selecting all telemetry messages. The
+full syntax of the message matcher can be found here: 
+<a href="http://mozilla-services.github.io/lua_sandbox/util/message_matcher.html" target="_blank">http://mozilla-services.github.io/lua_sandbox/util/message_matcher.html</a></p>
+<pre><code class="lang-lua">message_matcher = <span class="hljs-string">&quot;Type == &apos;telemetry&apos;&quot;</span>
+</code></pre>
+</li>
+</ol>
+</li>
+<li><p>Test the message matcher</p>
+<ol>
+<li><p>Click the <code>Run Matcher</code> button.</p>
+<p>Your results or error message will appear to the right.  You can browse
+the returned messages to examine their structure and the data they
+contain; this is very helpful when developing the analysis code but is
+also useful for data exploration even when not developing a plugin.</p>
+</li>
+</ol>
+</li>
+<li><p>Delete the code in the <code>Heka Analysis Plugin</code> text area</p>
+</li>
+<li><p>Create the Analysis Code (process_message)</p>
+<p>The <code>process_message</code> function is invoked every time a message is matched and
+should return 0 for success and -1 for failure. Full interface documentation:
+<a href="http://mozilla-services.github.io/lua_sandbox/heka/analysis.html" target="_blank">http://mozilla-services.github.io/lua_sandbox/heka/analysis.html</a></p>
+<ol>
+<li><p>Here is the minimum  implementation; type it into the 
+<code>Heka Analysis Plugin</code> text area:</p>
+<pre><code class="lang-lua"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">process_message</span><span class="hljs-params">()</span></span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span> <span class="hljs-comment">-- success</span>
+<span class="hljs-keyword">end</span>
+</code></pre>
+</li>
+</ol>
+</li>
+<li><p>Create the Output Code (timer_event)</p>
+<p>The <code>timer_event</code> function is invoked every <code>ticker_interval</code> seconds.</p>
+<ol>
+<li><p>Here is the minimum inplementation; type it into the <code>Heka Analysis Plugin</code>
+text area:</p>
+<pre><code class="lang-lua"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">timer_event</span><span class="hljs-params">()</span></span>
+<span class="hljs-keyword">end</span>
+</code></pre>
+</li>
+</ol>
+</li>
+<li><p>Test the Plugin</p>
+<ol>
+<li><p>Click the <code>Test Plugin</code> button.</p>
+<p>Your results or error message will appear to the right. If an error is
+output, correct it and test again.</p>
+</li>
+</ol>
+</li>
+</ol>
+<ol>
+<li><p>Extend the Code to Perform a Simple Message Count Analysis/Output</p>
+<ol>
+<li><p>Replace the code in the <code>Heka Analysis Plugin</code> text area with the
+following:</p>
+<pre><code class="lang-lua"><span class="hljs-keyword">local</span> cnt = <span class="hljs-number">0</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">process_message</span><span class="hljs-params">()</span></span>
+    cnt = cnt + <span class="hljs-number">1</span>                       <span class="hljs-comment">-- count the number of messages that matched</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+<span class="hljs-keyword">end</span>
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">timer_event</span><span class="hljs-params">()</span></span>
+    inject_payload(<span class="hljs-string">&quot;txt&quot;</span>, <span class="hljs-string">&quot;types&quot;</span>, cnt) <span class="hljs-comment">-- output the count</span>
+<span class="hljs-keyword">end</span>
+</code></pre>
+</li>
+</ol>
+</li>
+<li><p>Test the Plugin</p>
+<ol>
+<li><p>Click the <code>Test Plugin</code> button.</p>
+<p>Your results or error message will appear to the right. If an error is
+output, correct it and test again.</p>
+</li>
+</ol>
+</li>
+<li><p>Extend the Code to Perform a More Complex Count by Type Analysis/Output</p>
+<ol>
+<li><p>Replace the code in the <code>Heka Analysis Plugin</code> text area with the
+following:</p>
+<pre><code class="lang-lua">types = {}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">process_message</span><span class="hljs-params">()</span></span>
+    <span class="hljs-comment">-- read the docType from the message, if it doesn&apos;t exist set it to &quot;unknown&quot;</span>
+    <span class="hljs-keyword">local</span> dt = read_message(<span class="hljs-string">&quot;Fields[docType]&quot;</span>) <span class="hljs-keyword">or</span> <span class="hljs-string">&quot;unknown&quot;</span>
+
+    <span class="hljs-comment">-- look up the docType in the types hash</span>
+    <span class="hljs-keyword">local</span> cnt = types[dt]
+    <span class="hljs-keyword">if</span> cnt <span class="hljs-keyword">then</span>
+        types[dt] = cnt + <span class="hljs-number">1</span>   <span class="hljs-comment">-- if the type cnt exists, increment it by one</span>
+    <span class="hljs-keyword">else</span>
+        types[dt] = <span class="hljs-number">1</span>         <span class="hljs-comment">-- if the type cnt didn&apos;t exist, initialize it to one</span>
+    <span class="hljs-keyword">end</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+<span class="hljs-keyword">end</span>
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">timer_event</span><span class="hljs-params">()</span></span>
+    add_to_payload(<span class="hljs-string">&quot;docType = Count\n&quot;</span>)   <span class="hljs-comment">-- add a header to the output</span>
+    <span class="hljs-keyword">for</span> k, v <span class="hljs-keyword">in</span> <span class="hljs-built_in">pairs</span>(types) <span class="hljs-keyword">do</span>           <span class="hljs-comment">-- iterate over all the key/values (docTypes/cnt in the hash)</span>
+        add_to_payload(k, <span class="hljs-string">&quot; = &quot;</span>, v, <span class="hljs-string">&quot;\n&quot;</span>) <span class="hljs-comment">-- add a line to the output</span>
+    <span class="hljs-keyword">end</span>
+    inject_payload(<span class="hljs-string">&quot;txt&quot;</span>, <span class="hljs-string">&quot;types&quot;</span>)        <span class="hljs-comment">-- finalize all the data written to the payload</span>
+<span class="hljs-keyword">end</span>
+</code></pre>
+</li>
+</ol>
+</li>
+<li><p>Test the Plugin</p>
+<ol>
+<li><p>Click the <code>Test Plugin</code> button.</p>
+<p>Your results or error message will appear to the right. If an error is
+output, correct it and test again.</p>
+</li>
+</ol>
+</li>
+<li><p>Deploy the plugin</p>
+<ol>
+<li>Click the <code>Deploy Plugin</code> button and dismiss the successfully deployed 
+dialog.</li>
+</ol>
+</li>
+<li><p>View the running plugin</p>
+<ol>
+<li>Click the <code>Plugins</code> tab and look for the plugin that was just deployed
+<code>{user}.example</code></li>
+<li>Right click on the plugin to active the context menu allowing you to view
+the source or stop the plugin.</li>
+</ol>
+</li>
+<li><p>View the plugin output</p>
+<ol>
+<li>Click on the <code>Dashboards</code> tab</li>
+<li>Click on the <code>Raw Dashboard Output</code> link</li>
+<li>Click on analysis.{user}.example.types.txt link</li>
+</ol>
+</li>
+</ol>
+<h3 id="where-to-go-from-here">Where to go from here</h3>
+<ul>
+<li>Lua Reference: <a href="http://www.lua.org/manual/5.1/manual.html" target="_blank">http://www.lua.org/manual/5.1/manual.html</a></li>
+<li>Available Lua Modules: <a href="https://mozilla-services.github.io/lua_sandbox_extensions/" target="_blank">https://mozilla-services.github.io/lua_sandbox_extensions/</a></li>
+<li>Support<ul>
+<li>IRC: <a href="irc://irc.mozilla.org/hindsight" target="_blank">#hindsight on irc.mozilla.org</a></li>
+<li>Mailing list: <a href="https://mail.mozilla.org/listinfo/hindsight" target="_blank">https://mail.mozilla.org/listinfo/hindsight</a></li>
+</ul>
+</li>
+</ul>
 
                                 
                                 </section>
@@ -895,8 +1066,12 @@ When should one add a new probe? </p>
 
             
                 
+                <a href="create_a_dataset.html" class="navigation navigation-prev " aria-label="Previous page: Creating a custom re:dash dataset">
+                    <i class="fa fa-angle-left"></i>
+                </a>
                 
-                <a href="../tools/" class="navigation navigation-next navigation-unique" aria-label="Next page: Tools">
+                
+                <a href="../meta/README.md" class="navigation navigation-next " aria-label="Next page: About this Documentation">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -907,7 +1082,7 @@ When should one add a new probe? </p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Collecting New Data","level":"1.3.3","depth":2,"next":{"title":"Tools","level":"1.4","depth":1,"path":"tools/README.adoc","ref":"tools/README.adoc","articles":[{"title":"Interfaces","level":"1.4.1","depth":2,"ref":"","articles":[{"title":"TMO & STMO","level":"1.4.1.1","depth":3,"ref":"","articles":[]},{"title":"Distribution Viewer","level":"1.4.1.2","depth":3,"ref":"","articles":[]},{"title":"Advanced analysis with ATMO","level":"1.4.1.3","depth":3,"path":"concepts/advanced_analysis_with_atmo.adoc","ref":"concepts/advanced_analysis_with_atmo.adoc","articles":[]},{"title":"An Introduction to Spark","level":"1.4.1.4","depth":3,"ref":"","articles":[]},{"title":"Realtime Analysis with CEP","level":"1.4.1.5","depth":3,"ref":"","articles":[]},{"title":"HBase","level":"1.4.1.6","depth":3,"path":"tools/hbase.md","ref":"tools/hbase.md","articles":[]},{"title":"RTMO","level":"1.4.1.7","depth":3,"ref":"","articles":[]}]},{"title":"Infrastructure","level":"1.4.2","depth":2,"ref":"","articles":[{"title":"The Path to Re:dash","level":"1.4.2.1","depth":3,"ref":"","articles":[{"title":"Heka Messages","level":"1.4.2.1.1","depth":4,"ref":"","articles":[]},{"title":"telemetry-batch-view","level":"1.4.2.1.2","depth":4,"ref":"","articles":[]},{"title":"parquet2hive","level":"1.4.2.1.3","depth":4,"ref":"","articles":[]},{"title":"Airflow","level":"1.4.2.1.4","depth":4,"ref":"","articles":[]},{"title":"Presto","level":"1.4.2.1.5","depth":4,"ref":"","articles":[]}]}]}]},"previous":{"title":"Accessing Shield Study data","level":"1.3.2.3.1","depth":4,"ref":"","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/new_data.md","mtime":"2017-02-27T23:07:17.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-10T12:03:00.188Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Creating a Real-time Analysis Plugin","level":"1.5.2","depth":2,"next":{"title":"About this Documentation","level":"2.1","depth":1,"path":"meta/README.md","ref":"meta/README.md","articles":[{"title":"Structure","level":"2.1.1","depth":2,"path":"meta/structure.md","ref":"meta/structure.md","articles":[]},{"title":"Contributing","level":"2.1.2","depth":2,"path":"meta/contributing.md","ref":"meta/contributing.md","articles":[]}]},"previous":{"title":"Creating a custom re:dash dataset","level":"1.5.1","depth":2,"path":"cookbooks/create_a_dataset.adoc","ref":"cookbooks/create_a_dataset.adoc","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"cookbooks/realtime_analysis_plugin.md","mtime":"2017-04-10T12:02:54.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-10T12:03:00.188Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
