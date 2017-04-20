@@ -57,7 +57,7 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="../datasets/" />
+    <link rel="next" href="analysis_gotchas.html" />
     
     
     <link rel="prev" href="data_privacy.html" />
@@ -174,6 +174,19 @@
             
         </li>
     
+        <li class="chapter " data-level="1.2.4" data-path="analysis_gotchas.html">
+            
+                <a href="analysis_gotchas.html">
+            
+                    
+                    Common Analysis Gotchas
+            
+                </a>
+            
+
+            
+        </li>
+    
 
             </ul>
             
@@ -212,32 +225,6 @@
                 <span>
             
                     
-                    How we collect data (pings, studies, experiments)
-            
-                </span>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.1.2" >
-            
-                <span>
-            
-                    
-                    Choosing a dataset
-            
-                </span>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.1.3" >
-            
-                <span>
-            
-                    
                     Experimental vs Descriptive Data
             
                 </span>
@@ -246,7 +233,47 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.1.4" >
+        <li class="chapter active" data-level="1.3.1.2" data-path="choosing_a_dataset.html">
+            
+                <a href="choosing_a_dataset.html">
+            
+                    
+                    Choosing a dataset
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.3" data-path="experiment_intro.html">
+            
+                <a href="experiment_intro.html">
+            
+                    
+                    Tools for Experimentation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.4" data-path="analysis_gotchas.html">
+            
+                <a href="analysis_gotchas.html">
+            
+                    
+                    Common Analysis Gotchas
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1.4.1" >
             
                 <span>
             
@@ -259,7 +286,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.1.5" >
+        <li class="chapter " data-level="1.3.1.4.2" >
             
                 <span>
             
@@ -272,7 +299,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.1.6" >
+        <li class="chapter " data-level="1.3.1.4.3" >
             
                 <span>
             
@@ -282,6 +309,11 @@
                 </span>
             
 
+            
+        </li>
+    
+
+            </ul>
             
         </li>
     
@@ -734,7 +766,20 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.5.1" data-path="../cookbooks/create_a_dataset.html">
+        <li class="chapter " data-level="1.5.1" data-path="../cookbooks/parquet.html">
+            
+                <a href="../cookbooks/parquet.html">
+            
+                    
+                    Working with Parquet Data on ATMO Clusters
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../cookbooks/create_a_dataset.html">
             
                 <a href="../cookbooks/create_a_dataset.html">
             
@@ -747,12 +792,25 @@
             
         </li>
     
-        <li class="chapter " data-level="1.5.2" data-path="../cookbooks/realtime_analysis_plugin.html">
+        <li class="chapter " data-level="1.5.3" data-path="../cookbooks/realtime_analysis_plugin.html">
             
                 <a href="../cookbooks/realtime_analysis_plugin.html">
             
                     
                     Creating a Real-time Analysis Plugin
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../cookbooks/longitudinal.html">
+            
+                <a href="../cookbooks/longitudinal.html">
+            
+                    
+                    Longitudinal Examples
             
                 </a>
             
@@ -862,88 +920,156 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="choosing-a-dataset">Choosing a dataset</h1>
-<p>This document is a quick overview of the datasets provided by the data pipeline
-team.  After reading this document, you should have a good idea of what dataset
-is the most useful for your analysis.</p>
-<p>Before making final decisions from your findings, consider getting your query
-or analysis reviewed by a member of the data pipeline team.</p>
-<h2 id="accessing-a-dataset">Accessing a dataset</h2>
-<p>Playing with the data is the best way to get comfortable.  All of these
-datasets can be queried from <a href="http://sql.telemetry.mozilla.org" target="_blank">STMO</a> (AKA:
-re:dash).  STMO will give you an interactive SQL interface, which should be
-sufficient for getting comfortable with the data.  If you need to complete more
-complicated analyses or want to productionize your code, see <a href="analyzing_telemetry_data.md">Analyzing
-Telemetry Data</a>.</p>
-<h2 id="overview">Overview</h2>
-<p>Unless noted otherwise, these datasets summarize the <a href="https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/main-ping.html" target="_blank">&quot;main&quot; Telemetry ping
-type</a>.
-The main ping payload contains most of the measurements used to track
-performance and health of Firefox in the wild.  It can be useful to refer back
-to the source ping documentation to understand how the source data was
-generated.</p>
-<h1 id="datasets">Datasets</h1>
+                                <h1 id="choosing-a-dataset">Choosing a Dataset</h1>
+<p>This document will help you find the best data source for a given analysis.</p>
+<p>This guide focuses on descriptive datasets and does not cover experimentation.
+For example, this guide will help if you need to answer questions like:
+how many users do we have in Germany, how many crashes we see per day,
+or how many users have a given addon installed.
+If you&apos;re interested in figuring out whether there&apos;s a causal link between two events
+take a look at our <a href="experiment_intro.html">tools for experimentation</a>.</p>
 <h2 id="table-of-contents">Table of Contents</h2>
+<!-- toc -->
 <ul>
-<li><a href="#main-summary">main_summary</a></li>
+<li><a href="#raw-pings">Raw Pings</a></li>
+<li><a href="#main-ping-derived-datasets">Main Ping Derived Datasets</a><ul>
 <li><a href="#longitudinal">longitudinal</a></li>
-<li><a href="#cross-sectional">cross_sectional</a></li>
-<li><a href="#client-count">client_count</a></li>
-<li><a href="#crash-aggregates">crash_aggregates</a></li>
+<li><a href="#mainsummary">main_summary</a></li>
+<li><a href="#crosssectional">cross_sectional</a></li>
+<li><a href="#clientcount">client_count</a></li>
 </ul>
-<h2 id="main-summary">Main Summary</h2>
-<p>The <code>main_summary</code> table is the most direct representation of a main ping but
-can be difficult to work with due to its size. </p>
-<h3 id="rows-and-columns">Rows and Columns</h3>
-<p>The <code>main_summary</code> table contains one row for each ping.  Each column
-represents one field from the main ping payload, though only a subset of all
-main ping fields are included.</p>
-<h3 id="background-and-caveats">Background and Caveats</h3>
-<p>This table is massive, and due to it&apos;s size, it can be difficult to work with.
-You should <strong>avoid querying <code>main_summary</code></strong> from
-<a href="sql.telemetry.mozilla.com">re:dash</a>.  Your queries will be <strong>slow to
-complete</strong> and can <strong>impact performance for other users</strong>, since re:dash on a
-shared cluster.</p>
-<p>Instead, we recommend using the <code>longitudinal</code> or <code>cross_sectional</code> dataset
-where possible.  If these datasets do not suffice, consider using Spark on an
-<a href="analysis.telemetry.mozilla.com">ATMO</a> cluster.  In the odd case where these
-queries are necessary, make use of the <code>sample_id</code> field and limit to a short
-submission date range.</p>
-<h2 id="longitudinal">Longitudinal</h2>
-<p>The <code>longitudinal</code> dataset is a 1% sample of main ping data organized to
-roughly represent a user. If you&apos;re not sure which dataset to use for your
-analysis, this is probably what you want.</p>
-<h3 id="rows-and-columns">Rows and Columns</h3>
-<p>Each row in the <code>longitudinal</code> dataset represents one <code>client_id</code>, which is a
-rough approximation of a user.  Each column represents a field from the main
-ping.  Most fields contain arrays of values, with one value for each ping
-associated with a client_id. Using arrays give you access to the raw data from
-each ping, but can be difficult to work with from SQL.  Take a look at the
-<a href="longitudinal_examples.md">longitudinal examples</a> if you get stuck.</p>
-<h3 id="background-and-caveats">Background and Caveats</h3>
-<p>Think of the longitudinal table as wide and short.  The dataset contains more
-columns than <code>main_summary</code> and down-samples to 1% of all clients to reduce
-query computation time and save resources.</p>
-<p>In summary, the longitudinal table differs from <code>main_summary</code> in two important
-ways:</p>
+</li>
+<li><a href="#crash-ping-derived-datasets">Crash Ping Derived Datasets</a><ul>
+<li><a href="#crashaggregates">crash_aggregates</a></li>
+</ul>
+</li>
+<li><a href="#appendix">Appendix</a><ul>
+<li><a href="#mobile-metrics">Mobile Metrics</a></li>
+</ul>
+</li>
+</ul>
+<!-- toc stop -->
+<h1 id="raw-pings">Raw Pings</h1>
+<p>We receive data from our users via <strong>pings</strong>.
+There are several types of pings,
+each containing different measurements and sent for different purposes.
+To review a complete list of ping types and their schemata, see 
+<a href="http://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/index.html" target="_blank">this section of the Mozilla Source Tree Docs</a>.</p>
+<h4 id="background-and-caveats">Background and Caveats</h4>
+<p>The large majority of analyses can be completed using only the
+<a href="http://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/main-ping.html" target="_blank">main ping</a>.
+This ping includes histograms, scalars, and other performance and diagnostic data.</p>
+<p>Few analyses actually rely directly on the raw ping data.
+Instead, we provide <strong>derived datasets</strong> which are processed versions of these data,
+made to be:</p>
+<ul>
+<li>Easier and faster to query</li>
+<li>Organized to make the data easier to analyze</li>
+<li>Cleaned of erroneous or misleading data</li>
+</ul>
+<p>Before analyzing raw ping data,
+<strong>check to make sure there isn&apos;t already a derived dataset</strong> made for your purpose.
+If you do need to work with raw ping data, be aware that loading the data can take a while.
+Try to limit the size of your data by controlling the date range, etc.</p>
+<h4 id="accessing-the-data">Accessing the Data</h4>
+<p>You can access raw ping data from an 
+<a href="https://analysis.telemetry.mozilla.org/" target="_blank">ATMO cluster</a> using the 
+<a href="http://python-moztelemetry.readthedocs.io/en/stable/userguide.html#module-moztelemetry.dataset" target="_blank">Dataset API</a>.
+Raw ping data are not available in <a href="https://sql.telemetry.mozilla.org/" target="_blank">re:dash</a>.</p>
+<h4 id="further-reading">Further Reading</h4>
+<p>You can find <a href="http://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/index.html" target="_blank">the complete ping documentation</a>.
+To augment our data collection, see
+<a href="https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Adding_a_new_Telemetry_probe" target="_blank">Collecting New Data</a></p>
+<h1 id="main-ping-derived-datasets">Main Ping Derived Datasets</h1>
+<p>The <a href="http://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/main-ping.html" target="_blank">main ping</a>
+contains most of the measurements used to track performance and health of Firefox in the wild.
+This ping includes histograms and scalars.</p>
+<p>This section describes the derived datasets we provide to make analyzing this data easier.</p>
+<h2 id="longitudinal">longitudinal</h2>
+<p>The <code>longitudinal</code> dataset is a 1% sample of main ping data
+organized so that each row corresponds to a client_id.
+If you&apos;re not sure which dataset to use for your analysis,
+this is probably what you want.</p>
+<h4 id="contents">Contents</h4>
+<p>Each row in the <code>longitudinal</code> dataset represents one <code>client_id</code>,
+which is approximately a user.
+Each column represents a field from the main ping.
+Most fields contain <strong>arrays of values</strong>, with one value for each ping associated with a client_id.
+Using arrays give you access to the raw data from each ping,
+but can be difficult to work with from SQL.
+Here&apos;s a <a href="https://sql.telemetry.mozilla.org/queries/4188#table" target="_blank">query showing some sample data</a>
+to help illustrate.
+Take a look at the <a href="../cookbooks/longitudinal.html">longitudinal examples</a> if you get stuck.</p>
+<h4 id="background-and-caveats">Background and Caveats</h4>
+<p>Think of the longitudinal table as wide and short.
+The dataset contains more columns than <code>main_summary</code>
+and down-samples to 1% of all clients to reduce query computation time and save resources.</p>
+<p>In summary, the longitudinal table differs from <code>main_summary</code> in two important ways:</p>
 <ul>
 <li>The longitudinal dataset groups all data so that one row represents a client_id</li>
 <li>The longitudinal dataset samples to 1% of all client_ids</li>
 </ul>
-<h2 id="cross-sectional">Cross Sectional</h2>
-<p>The <code>cross_sectional</code> dataset provides descriptive statistics for each
-client_id in a 1% sample of main ping data. This dataset simplifies the
-longitudinal table by replacing the longitudinal arrays with summary
-statistics. This is the most useful dataset for describing our user base.</p>
-<h3 id="rows-and-columns">Rows and Columns</h3>
-<p>Each row in the <code>cross_sectional</code> dataset represents one <code>client_id</code>, which is
-a rough approximation to a user.  Each column is a summary statistic describing
-the client_id.</p>
-<p>For example, the longitudinal table has a row called <code>geo_country</code> which
-contains an array of country codes. For the same client_id the
-<code>cross_sectional</code> table has columns called <code>geo_country_mode</code> and
-<code>geo_country_configs</code> containing single summary statistics for the modal country and the
-number of distinct countries in the array.</p>
+<h4 id="accessing-the-data">Accessing the Data</h4>
+<p>The <code>longitudinal</code> is available in re:dash,
+though it can be difficult to work with the array values in SQL.
+Take a look at this <a href="https://sql.telemetry.mozilla.org/queries/4189/source" target="_blank">example query</a>.</p>
+<p>The data is stored as a parquet table in S3 at the following address.
+See <a href="../cookbooks/parquet.html">this cookbook</a> to get started working with the data
+in <a href="http://spark.apache.org/docs/latest/quick-start.html" target="_blank">Spark</a>.</p>
+<pre><code>s3://telemetry-parquet/longitudinal/
+</code></pre><h4 id="further-reading">Further Reading</h4>
+<p>The technical documentation for the <code>longitudinal</code> dataset is located in the
+<a href="https://github.com/mozilla/telemetry-batch-view/blob/master/docs/Longitudinal.md" target="_blank">telemetry-batch-view documentation</a>.</p>
+<p>We also have a set of examples in the <a href="../cookbooks/longitudinal.html">longitudinal cookbook</a></p>
+<p>The code that generates this dataset is <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/Longitudinal.scala" target="_blank">here</a></p>
+<h2 id="mainsummary">main_summary</h2>
+<p>The <code>main_summary</code> table is the most direct representation of a main ping
+but can be difficult to work with due to its size. 
+Prefer the <code>longitudinal</code> dataset unless using the sampled data is prohibitive.</p>
+<h4 id="contents">Contents</h4>
+<p>The <code>main_summary</code> table contains one row for each ping.
+Each column represents one field from the main ping payload,
+though only a subset of all main ping fields are included.
+This dataset <strong>does not include histograms</strong>.</p>
+<h4 id="background-and-caveats">Background and Caveats</h4>
+<p>This table is massive, and due to it&apos;s size, it can be difficult to work with.
+You should <strong>avoid querying <code>main_summary</code></strong> from <a href="https://sql.telemetry.mozilla.org" target="_blank">re:dash</a>.
+Your queries will be <strong>slow to complete</strong> and can <strong>impact performance for other users</strong>,
+since re:dash on a shared cluster.</p>
+<p>Instead, we recommend using the <code>longitudinal</code> or <code>cross_sectional</code> dataset where possible.
+If these datasets do not suffice, consider using Spark on an
+<a href="https://analysis.telemetry.mozilla.org" target="_blank">ATMO</a> cluster.
+In the odd case where these queries are necessary,
+make use of the <code>sample_id</code> field and limit to a short submission date range.</p>
+<h4 id="accessing-the-data">Accessing the Data</h4>
+<p>The data is stored as a parquet table in S3 at the following address.
+See <a href="../cookbooks/parquet.html">this cookbook</a> to get started working with the data in Spark.</p>
+<pre><code>s3://telemetry-parquet/main_summary/v3/
+</code></pre><p>Though <strong>not recommended</strong> <code>main_summary</code> is accessible through re:dash. 
+Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/4201/source" target="_blank">example query</a>.
+Your queries will be slow to complete and can <strong>impact performance for other users</strong>,
+since re:dash is on a shared cluster.</p>
+<h4 id="further-reading">Further Reading</h4>
+<p>The technical documentation for <code>main_summary</code> is located in the
+<a href="https://github.com/mozilla/telemetry-batch-view/blob/master/docs/MainSummary.md" target="_blank">telemetry-batch-view documentation</a>.</p>
+<p>The code responsible for generating this dataset is 
+<a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/MainSummaryView.scala" target="_blank">here</a></p>
+<h2 id="crosssectional">cross_sectional</h2>
+<p>The <code>cross_sectional</code> dataset provides descriptive statistics
+for each client_id in a 1% sample of main ping data.
+This dataset simplifies the longitudinal table by replacing 
+the longitudinal arrays with summary statistics. 
+This is the most useful dataset for describing our user base.</p>
+<h4 id="content">Content</h4>
+<p>Each row in the <code>cross_sectional</code> dataset represents one <code>client_id</code>,
+which is approximately a user.
+Each column is a summary statistic describing the client_id.</p>
+<p>For example, the longitudinal table has a row called <code>geo_country</code> 
+which contains an array of country codes.
+For the same <code>client_id</code> the <code>cross_sectional</code> table 
+has columns called <code>geo_country_mode</code> and <code>geo_country_configs</code> 
+containing single summary statistics for 
+the modal country and the number of distinct countries in the array.</p>
 <table>
 <thead>
 <tr>
@@ -968,40 +1094,77 @@ number of distinct countries in the array.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="background-and-caveats">Background and Caveats</h3>
+<h4 id="background-and-caveats">Background and Caveats</h4>
 <p>This table is much easier to work with than the longitudinal dataset because
-you don&apos;t need to work with arrays.  Note that this dataset is a summary of the
-longitudinal dataset, so it is also a 1% sample of all client_ids. </p>
-<h2 id="client-count">Client Count</h2>
-<p>The <code>client_count</code> dataset is simply a count of clients in a time period,
-stratified over a set of dimensions.</p>
-<h3 id="rows-and-columns">Rows and Columns</h3>
-<p>This dataset includes columns for a dozen factors and an HLL variable.  The
-<code>hll</code> column contains a
-<a href="https://en.wikipedia.org/wiki/HyperLogLog" target="_blank">HyperLogLog</a> variable, which is an
-approximation to the exact count.  The factor columns include activity date and
-the dimensions listed
+you don&apos;t need to work with arrays.
+This table has a limited number of pre-computed summary statistics
+so you&apos;re metric may not be included.</p>
+<p>Note that this dataset is a summary of the longitudinal dataset,
+so it is also a 1% sample of all client_ids.</p>
+<p>All summary statistics are computed over the last 180 days,
+so this dataset can be insensitive to changes over time.</p>
+<h4 id="accessing-the-data">Accessing the Data</h4>
+<p>The cross_sectional dataset is available in re:dash.
+Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/4202/source" target="_blank">example query</a>.</p>
+<p>The data is stored as a parquet table in S3 at the following address.
+See <a href="../cookbooks/parquet.html">this cookbook</a> to get started working with the data in Spark.</p>
+<pre><code>s3://telemetry-parquet/cross_sectional/v1/
+</code></pre><h4 id="further-reading">Further Reading</h4>
+<p>The <code>cross_sectional</code> dataset is generated by 
+<a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/CrossSectionalView.scala" target="_blank">this code</a>.
+Take a look at <a href="https://sql.telemetry.mozilla.org/queries/4203/source" target="_blank">this query</a> for a schema.</p>
+<h2 id="clientcount">client_count</h2>
+<p>The <code>client_count</code> dataset is useful for estimating user counts over a few 
+<a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/ClientCountView.scala#L22" target="_blank">pre-defined dimensions</a>.</p>
+<h4 id="content">Content</h4>
+<p>This dataset includes columns for a dozen factors and an HLL variable.
+The <code>hll</code> column contains a
+<a href="https://en.wikipedia.org/wiki/HyperLogLog" target="_blank">HyperLogLog</a>
+variable, which is an approximation to the exact count.
+The factor columns include activity date and the dimensions listed
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/ClientCountView.scala#L22" target="_blank">here</a>.
 Each row represents one combinations of the factor columns.</p>
-<h3 id="background-and-caveats">Background and Caveats</h3>
+<h4 id="background-and-caveats">Background and Caveats</h4>
 <p>It&apos;s important to understand that the <code>hll</code> column is <strong>not a standard count</strong>.
-The <code>hll</code> variable avoids double-counting users when aggregating over
-multiple days.  The HyperLogLog variable is a far more efficient way to count
-distinct elements of a set, but comes with some complexity.  To find the
-cardinality of an HLL use <code>cardinality(cast(hll AS HLL))</code>.  To find the union
-of two HLL&apos;s over different dates, use <code>merge(cast(hll AS HLL))</code>.  The <a href="https://sql.telemetry.mozilla.org/queries/81/source#129" target="_blank">Firefox
-ER Reporting Query</a> is
-a good example to review.  Finally, Roberto has a relevant writeup
+The <code>hll</code> variable avoids double-counting users when aggregating over multiple days.
+The HyperLogLog variable is a far more efficient way to count distinct elements of a set,
+but comes with some complexity.
+To find the cardinality of an HLL use <code>cardinality(cast(hll AS HLL))</code>.
+To find the union of two HLL&apos;s over different dates, use <code>merge(cast(hll AS HLL))</code>.
+The <a href="https://sql.telemetry.mozilla.org/queries/81/source#129" target="_blank">Firefox ER Reporting Query</a>
+is a good example to review.
+Finally, Roberto has a relevant writeup
 <a href="https://robertovitillo.com/2016/04/12/measuring-product-engagment-at-scale/" target="_blank">here</a>.</p>
-<h2 id="crash-aggregates">Crash Aggregates</h2>
-<p>The Crash Aggregates dataset compiles crash statistics over various dimensions for each day.</p>
-<h3 id="rows-and-columns">Rows and Columns</h3>
-<p>There&apos;s one column for each of the stratifying dimensions and the crash
-statistics.  Each row is a distinct set of dimensions, along with their
-associated crash stats.  Example stratifying dimensions include channel and
-country, example statistics include usage hours and plugin crashes. See the
-<a href="CrashAggregateView.md">complete documentation</a> for all available dimensions
+<h4 id="accessing-the-data">Accessing the Data</h4>
+<p>The data is available in re:dash.
+Take a look at this 
+<a href="https://sql.telemetry.mozilla.org/queries/81/source#129" target="_blank">example query</a>.</p>
+<p>I don&apos;t recommend accessing this data from ATMO.</p>
+<h4 id="further-reading">Further Reading</h4>
+<h1 id="crash-ping-derived-datasets">Crash Ping Derived Datasets</h1>
+<p>The <a href="http://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/crash-ping.html" target="_blank">crash ping</a>
+is captured after the main Firefox process crashes or after a content process crashes,
+whether or not the crash report is submitted to crash-stats.mozilla.org.
+It includes non-identifying metadata about the crash.</p>
+<p>This section describes the derived datasets we provide to make analyzing this data easier.</p>
+<h2 id="crashaggregates">crash_aggregates</h2>
+<p>The <code>crash_aggregates</code> dataset compiles crash statistics over various dimensions for each day.</p>
+<h4 id="rows-and-columns">Rows and Columns</h4>
+<p>There&apos;s one column for each of the stratifying dimensions and the crash statistics.
+Each row is a distinct set of dimensions, along with their associated crash stats.
+Example stratifying dimensions include channel and country,
+example statistics include usage hours and plugin crashes.
+See the <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/docs/CrashAggregateView.md" target="_blank">complete documentation</a>
+for all available dimensions
 and statistics.</p>
+<h4 id="accessing-the-data">Accessing the Data</h4>
+<p>This dataset is accessible via re:dash.</p>
+<p>The data is stored as a parquet table in S3 at the following address.
+See <a href="../cookbooks/parquet.html">this cookbook</a> to get started working with the data in Spark.</p>
+<pre><code>s3://telemetry-parquet/crash_aggregates/v1/
+</code></pre><h4 id="further-reading">Further Reading</h4>
+<p>The technical documentation for this dataset can be found in the
+<a href="https://github.com/mozilla/telemetry-batch-view/blob/master/docs/CrashAggregateView.md" target="_blank">telemetry-batch-view documentation</a></p>
 <h1 id="appendix">Appendix</h1>
 <h2 id="mobile-metrics">Mobile Metrics</h2>
 <p>There are several tables owned by the mobile team documented
@@ -1012,13 +1175,6 @@ and statistics.</p>
 <li>android_addons</li>
 <li>mobile_clients</li>
 </ul>
-<h2 id="wiki-for-reference-a-previous-version-of-this-document-was-stored">Wiki For reference, a previous version of this document was stored</h2>
-<p><a href="https://wiki.mozilla.org/Telemetry/Available_Telemetry_Datasets_and_their_Applications" target="_blank">here</a>.</p>
-<h2 id="who-to-contact">Who to Contact</h2>
-<p>Feel free to open an issue or contact Ryan Harter
-(<a href="https://github.com/harterrt" target="_blank">@harterrt</a>) to identify errors or confusing
-parts of this documentation.  I will be reviewing this documentation quarterly
-for accuracy.</p>
 
                                 
                                 </section>
@@ -1051,7 +1207,7 @@ for accuracy.</p>
                 </a>
                 
                 
-                <a href="../datasets/" class="navigation navigation-next " aria-label="Next page: Data Collection and Datasets">
+                <a href="analysis_gotchas.html" class="navigation navigation-next " aria-label="Next page: Common Analysis Gotchas">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1062,7 +1218,7 @@ for accuracy.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.3","depth":2,"next":{"title":"Data Collection and Datasets","level":"1.3","depth":1,"path":"datasets/README.adoc","ref":"datasets/README.adoc","articles":[{"title":"Understanding our Data","level":"1.3.1","depth":2,"ref":"","articles":[{"title":"How we collect data (pings, studies, experiments)","level":"1.3.1.1","depth":3,"ref":"","articles":[]},{"title":"Choosing a dataset","level":"1.3.1.2","depth":3,"ref":"","articles":[]},{"title":"Experimental vs Descriptive Data","level":"1.3.1.3","depth":3,"ref":"","articles":[]},{"title":"Sessions and Subsessions","level":"1.3.1.4","depth":3,"ref":"","articles":[]},{"title":"Dates, Timespans, & their caveats","level":"1.3.1.5","depth":3,"ref":"","articles":[]},{"title":"Profiles vs. Users","level":"1.3.1.6","depth":3,"ref":"","articles":[]}]},{"title":"Dataset Reference","level":"1.3.2","depth":2,"path":"datasets/reference.md","ref":"datasets/reference.md","articles":[{"title":"Pings","level":"1.3.2.1","depth":3,"ref":"","articles":[{"title":"Opt-in vs Opt-out","level":"1.3.2.1.1","depth":4,"ref":"","articles":[]},{"title":"Main Ping","level":"1.3.2.1.2","depth":4,"path":"concepts/main_ping_intro.md","ref":"concepts/main_ping_intro.md","articles":[]}]},{"title":"Derived Datasets","level":"1.3.2.2","depth":3,"ref":"","articles":[{"title":"Longitudinal","level":"1.3.2.2.1","depth":4,"ref":"","articles":[]},{"title":"Cross Sectional","level":"1.3.2.2.2","depth":4,"ref":"","articles":[]},{"title":"Main Summary","level":"1.3.2.2.3","depth":4,"ref":"","articles":[]},{"title":"Crash Summary","level":"1.3.2.2.4","depth":4,"ref":"","articles":[]},{"title":"ETC","level":"1.3.2.2.5","depth":4,"ref":"","articles":[]}]},{"title":"Experimental Datasets","level":"1.3.2.3","depth":3,"path":"concepts/experiment_intro.adoc","ref":"concepts/experiment_intro.adoc","articles":[{"title":"Accessing Shield Study data","level":"1.3.2.3.1","depth":4,"ref":"","articles":[]}]}]},{"title":"Collecting New Data","level":"1.3.3","depth":2,"path":"datasets/new_data.md","ref":"datasets/new_data.md","articles":[]}]},"previous":{"title":"Data Privacy","level":"1.2.2","depth":2,"path":"concepts/data_privacy.md","ref":"concepts/data_privacy.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2017-02-27T23:07:17.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-10T12:03:00.188Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.3","depth":2,"next":{"title":"Common Analysis Gotchas","level":"1.2.4","depth":2,"path":"concepts/analysis_gotchas.md","ref":"concepts/analysis_gotchas.md","articles":[]},"previous":{"title":"Data Privacy","level":"1.2.2","depth":2,"path":"concepts/data_privacy.md","ref":"concepts/data_privacy.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc"],"pluginsConfig":{"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2017-04-20T17:07:43.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-20T17:09:49.302Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
