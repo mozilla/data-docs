@@ -1,5 +1,9 @@
 # Collecting New Data
 
+This is a work in progress.
+The work is being tracked in
+[this bug](https://bugzilla.mozilla.org/show_bug.cgi?id=1341818)
+
 This document will give a high level overview of how to add new data to our datasets.
 
 ## Pings

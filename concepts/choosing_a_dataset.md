@@ -7,7 +7,7 @@ For example, this guide will help if you need to answer questions like:
 how many users do we have in Germany, how many crashes we see per day,
 or how many users have a given addon installed.
 If you're interested in figuring out whether there's a causal link between two events
-take a look at our [tools for experimentation](/concepts/experiment_intro.adoc).
+take a look at our [tools for experimentation](/tools/experiments.md).
 
 ## Table of Contents
 <!-- toc -->
