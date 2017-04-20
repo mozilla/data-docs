@@ -4,54 +4,42 @@
   * [Analysis Quick Start](concepts/analysis_intro.adoc)
   * [Data Privacy](concepts/data_privacy.md)
   * [Choosing a Dataset](concepts/choosing_a_dataset.md)
+  * [Intro to STMO / Re:dash](/tools/stmo.md)
   * [Common Analysis Gotchas](concepts/analysis_gotchas.md)
-* [Data Collection and Datasets](datasets/README.adoc)
+  * [Getting Review](concepts/review.md)
+* [Data Collection and Datasets](/datasets/README.adoc)
   * Understanding our Data
-    * Experimental vs Descriptive Data
     * [Choosing a dataset](concepts/choosing_a_dataset.md)
-    * [Tools for Experimentation](concepts/experiment_intro.adoc)
+    * [Tools for Experimentation](tools/experiments.md)
     * [Common Analysis Gotchas](concepts/analysis_gotchas.md)
-      * Sessions and Subsessions
-      * Dates, Timespans, & their caveats
-      * Profiles vs. Users
   * [Dataset Reference](datasets/reference.md)
-    * Pings
-      * Opt-in vs Opt-out
-      * [Main Ping](concepts/main_ping_intro.md)
-    * Derived Datasets
-      * [Longitudinal](datasets/longitudinal/Longitudinal.md)
-      * Cross Sectional
-      * [Main Summary](datasets/main_summary/MainSummary.md)
-      * [Crash Summary](datasets/crash_summary/CrashSummary.md)
-      * [Crash Aggregate](datasets/crash_aggregate/CrashAggregateView.md)
-      * [Events](datasets/events/Events.md)
-      * [Sync Summary](datasets/sync_summary/SyncSummary.md)
-      * [Addons](datasets/addons/Addons.md)
-      * ETC
-    * [Experimental Datasets](concepts/experiment_intro.adoc)
-      * Accessing Shield Study data
+    * [Pings](datasets/pings.md)
+    * [Derived Datasets](datasets/derived.md)
+      * [Longitudinal](datasets/batch_view/Longitudinal.md)
+      * [Cross Sectional](datasets/batch_view/cross_sectional.md)
+      * [Main Summary](datasets/batch_view/MainSummary.md)
+      * [Crash Summary](datasets/batch_view/CrashSummary.md)
+      * [Crash Aggregate](datasets/batch_view/CrashAggregateView.md)
+      * [Events](datasets/batch_view/Events.md)
+      * [Sync Summary](datasets/batch_view/SyncSummary.md)
+      * [Addons](datasets/batch_view/Addons.md)
+    * [Experimental Datasets](tools/experiments.md)
+      * [Accessing Shield Study data](datasets/shield.md)
   * [Collecting New Data](datasets/new_data.md)
 * [Tools](tools/README.adoc)
-  * Interfaces
-    * TMO & STMO
-    * Distribution Viewer
-    * [Advanced analysis with ATMO](concepts/advanced_analysis_with_atmo.adoc)
-    * An Introduction to Spark
-    * Realtime Analysis with CEP
+  * [Interfaces](tools/interfaces.md)
+    * [TMO & STMO](concepts/analysis_intro.adoc)
+    * [Advanced analysis with ATMO](tools/advanced_analysis_with_atmo.md)
+    * [Creating a Real-time Analysis Plugin](cookbooks/realtime_analysis_plugin.md)
+    * [Distribution Viewer](tools/distribution_viewer.md)
     * [HBase](tools/hbase.md)
-    * RTMO
-  * Infrastructure
-    * The Path to Re:dash
-      * Heka Messages
-      * telemetry-batch-view
-      * parquet2hive
-      * Airflow
-      * Presto
+    * [RTMO](tools/rtmo.md)
+  * [Infrastructure](tools/infrastructure.md)
 * [Cookbooks](cookbooks/README.adoc)
   * [Working with Parquet Data on ATMO Clusters](cookbooks/parquet.md)
   * [Creating a custom re:dash dataset](cookbooks/create_a_dataset.adoc)
   * [Creating a Real-time Analysis Plugin](cookbooks/realtime_analysis_plugin.md)
-  * [Longitudinal Examples](cookbooks/longitudinal.md)
+  * [Longitudinal Examples](cookbooks/longitudinal_examples.md)
 
 
 * [About this Documentation](meta/README.md)
