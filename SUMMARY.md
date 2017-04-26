@@ -42,6 +42,6 @@
   * [Longitudinal Examples](cookbooks/longitudinal_examples.md)
 
 
-* [About this Documentation](meta/README.md)
+* About this Documentation
   * [Structure](meta/structure.md)
   * [Contributing](meta/contributing.md)
