@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Creating a custom re:dash dataset · GitBook</title>
+        <title>Longitudinal Examples · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -57,10 +57,8 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="realtime_analysis_plugin.html" />
     
-    
-    <link rel="prev" href="parquet.html" />
+    <link rel="prev" href="realtime_analysis_plugin.html" />
     
 
     </head>
@@ -651,7 +649,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.5.2" data-path="create_a_dataset.html">
+        <li class="chapter " data-level="1.5.2" data-path="create_a_dataset.html">
             
                 <a href="create_a_dataset.html">
             
@@ -677,7 +675,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.5.4" data-path="longitudinal_examples.html">
+        <li class="chapter active" data-level="1.5.4" data-path="longitudinal_examples.html">
             
                 <a href="longitudinal_examples.html">
             
@@ -777,7 +775,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Creating a custom re:dash dataset</a>
+        <a href=".." >Longitudinal Examples</a>
     </h1>
 </div>
 
@@ -792,20 +790,170 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="creating-your-own-dataset-to-query-in-redash">Creating Your Own Dataset to Query in re:dash</h1>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Create a spark notebook that does the transformations you need, either on raw data (using Dataset API) or on parquet data</p>
-</li>
-<li>
-<p>Output the results of that to an s3 location, usually <code>telemetry-parquet/user/$YOUR_DATASET/v$VERSION_NUMBER/submission_date=$YESTERDAY/</code>. This would partition by submission_date, meaning each day this runs and is outputted to a new location in s3. Do NOT put the submission_date in the parquet file as well! A column name cannot also be the name of a partition.</p>
-</li>
-<li>
-<p>Open a bug, put :robotblake as the assignee, and make the title &quot;Add dataset to Presto&quot;. Be sure to include the location of the dataset, and what you want the name of the dataset to be.</p>
-</li>
-</ol>
-</div>
+                                <h3 id="introduction">Introduction</h3>
+<p>The longitudinal dataset is a summary of main pings. If you&apos;re not sure which
+dataset to use for your query, this is probably what you want. It differs from
+the main_summary table in two important ways:</p>
+<ul>
+<li>The longitudinal dataset groups all data for a client-id in the same row.
+This makes it easy to report profile level metrics. Without this deduping,
+metrics would be weighted by the number of submissions instead of by clients.</li>
+<li>The dataset uses a 1% of all recent profiles, which will reduce query
+computation time and save resources. The sample of clients will be stable over
+time.</li>
+</ul>
+<p>Accordingly, one should prefer using the Longitudinal dataset except in the
+rare case where a 100% sample is strictly necessary.</p>
+<p>As discussed in the <a href="https://github.com/mozilla/emr-bootstrap-spark/blob/master/examples/Longitudinal%20Dataset%20Tutorial.ipynb" target="_blank">Longitudinal Data Set Example Notebook</a>:</p>
+<pre><code>The longitudinal dataset is logically organized as a table where rows
+represent profiles and columns the various metrics (e.g. startup time). Each
+field of the table contains a list of values, one per Telemetry submission
+received for that profile. [...]
+
+The current version of the longitudinal dataset has been build with all
+main pings received from 1% of profiles across all channels with [...] up to
+180 days of data.
+</code></pre><h3 id="table-structure">Table structure</h3>
+<p>To get an overview of the longitudinal data table:</p>
+<pre><code class="lang-sql"><span class="hljs-keyword">DESCRIBE</span> longitudinal
+</code></pre>
+<p>That table has a row for each client, with columns for the different
+parts of the ping. There are a lot of fields here, so I recommend
+downloading the results as a CSV if you want to search through these
+fields. Unfortunately, there&apos;s no way to filter the output of DESCRIBE
+in Presto.</p>
+<p>Because this table combines all rows for a given client id, most columns
+contain either Arrays or Maps (described below). A few properties are
+directly available to query on:</p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">count</span>(*) <span class="hljs-keyword">AS</span> <span class="hljs-keyword">count</span>
+<span class="hljs-keyword">FROM</span> longitudinal
+<span class="hljs-keyword">WHERE</span> os = <span class="hljs-string">&apos;Linux&apos;</span>
+</code></pre>
+<h4 id="arrays">Arrays</h4>
+<p>Most properties are arrays, which contain one entry for each submission
+from a given client (newest first). Note that indexing starts at 1:</p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> reason[<span class="hljs-number">1</span>] <span class="hljs-keyword">AS</span> newest_reason
+<span class="hljs-keyword">FROM</span> longitudinal
+<span class="hljs-keyword">WHERE</span> os = <span class="hljs-string">&apos;Linux&apos;</span>
+</code></pre>
+<p>To expand arrays and maps and work on the data row-wise we can use
+<code>UNNEST(array)</code>.</p>
+<pre><code class="lang-sql">WITH lengths AS
+  (<span class="hljs-keyword">SELECT</span> os, <span class="hljs-keyword">greatest</span>(<span class="hljs-number">-1</span>, <span class="hljs-keyword">least</span>(<span class="hljs-number">31</span>, sl / (<span class="hljs-number">24</span>*<span class="hljs-number">60</span>*<span class="hljs-number">60</span>))) <span class="hljs-keyword">AS</span> <span class="hljs-keyword">days</span>
+   <span class="hljs-keyword">FROM</span> longitudinal
+   <span class="hljs-keyword">CROSS</span> <span class="hljs-keyword">JOIN</span> UNNEST(session_length, reason) <span class="hljs-keyword">AS</span> t(sl, r)
+   <span class="hljs-keyword">WHERE</span> r = <span class="hljs-string">&apos;shutdown&apos;</span> <span class="hljs-keyword">OR</span> r = <span class="hljs-string">&apos;aborted-session&apos;</span>)
+<span class="hljs-keyword">SELECT</span> os, <span class="hljs-keyword">days</span>, <span class="hljs-keyword">count</span>(*) <span class="hljs-keyword">AS</span> <span class="hljs-keyword">count</span>
+<span class="hljs-keyword">FROM</span> lengths
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">days</span>, os <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">days</span> <span class="hljs-keyword">ASC</span>
+</code></pre>
+<p>However, it may be better to use a sample from the main_summary table
+instead.</p>
+<p>Links:</p>
+<ul>
+<li><a href="https://prestodb.io/docs/current/functions/array.html" target="_blank">Documentation on array
+functions</a></li>
+<li><a href="https://prestodb.io/docs/current/sql/select.html#unnest" target="_blank"><code>UNNEST</code>
+documentation</a></li>
+</ul>
+<h4 id="maps">Maps</h4>
+<p>Some fields like <code>active_addons</code> or <code>user_prefs</code> are handled as maps, on
+which you can use the <code>[]</code> operator and special functions:</p>
+<pre><code class="lang-sql">WITH adp AS
+  (<span class="hljs-keyword">SELECT</span> active_addons[<span class="hljs-number">1</span>][<span class="hljs-string">&apos;{d10d0bf8-f5b5-c8b4-a8b2-2b9879e08c5d}&apos;</span>]
+            <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">null</span> <span class="hljs-keyword">AS</span> has_adblockplus
+   <span class="hljs-keyword">FROM</span> longitudinal)
+<span class="hljs-keyword">SELECT</span> has_adblockplus, <span class="hljs-keyword">count</span>(*) <span class="hljs-keyword">AS</span> <span class="hljs-keyword">count</span>
+<span class="hljs-keyword">FROM</span> adp <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> <span class="hljs-number">1</span> <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> <span class="hljs-number">2</span> <span class="hljs-keyword">DESC</span>
+</code></pre>
+<p>Links:</p>
+<ul>
+<li><a href="https://prestodb.io/docs/current/functions/map.html" target="_blank">Documentation on map
+functions</a></li>
+</ul>
+<h3 id="sampling">Sampling</h3>
+<p>While composing queries, it can be helpful to work on small samples to
+reduce query runtimes:</p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> longitudinal <span class="hljs-keyword">LIMIT</span> <span class="hljs-number">1000</span> ...
+</code></pre>
+<p>There&apos;s no need to use other sampling methods, such as TABLESAMPLE, on
+the longitudinal set. Rows are randomly ordered, so a LIMIT sample is
+expected to be random.</p>
+<h3 id="example-queries">Example Queries</h3>
+<h4 id="blocklist-urls-extensionsblocklisturl">Blocklist URLs (extensions.blocklist.url)</h4>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> bl, <span class="hljs-keyword">COUNT</span>(bl)
+<span class="hljs-keyword">FROM</span>
+  (<span class="hljs-keyword">SELECT</span> element_at(<span class="hljs-keyword">settings</span>, <span class="hljs-number">1</span>).user_prefs[<span class="hljs-string">&apos;extensions.blocklist.url&apos;</span>] <span class="hljs-keyword">AS</span> bl
+   <span class="hljs-keyword">FROM</span> longitudinal)
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> bl
+</code></pre>
+<h4 id="blocklist-enableddisabled-extensionsblocklistenabled-count">Blocklist enabled/disabled (extensions.blocklist.enabled) count:</h4>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> bl, <span class="hljs-keyword">COUNT</span>(bl)
+<span class="hljs-keyword">FROM</span>
+  (<span class="hljs-keyword">SELECT</span> element_at(<span class="hljs-keyword">settings</span>, <span class="hljs-number">1</span>).blocklist_enabled <span class="hljs-keyword">AS</span> bl
+   <span class="hljs-keyword">FROM</span> longitudinal)
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> bl
+</code></pre>
+<h4 id="parsing-most-recent-submissiondate">Parsing most recent submission_date</h4>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> DATE_PARSE(submission_date[<span class="hljs-number">1</span>], <span class="hljs-string">&apos;%Y-%m-%dT00:00:00.000Z&apos;</span>) <span class="hljs-keyword">as</span> parsed_submission_date
+<span class="hljs-keyword">FROM</span> longitudinal
+</code></pre>
+<h4 id="limiting-to-most-recent-ping-in-the-last-7-days">Limiting to most recent ping in the last 7 days</h4>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> longitudinal
+<span class="hljs-keyword">WHERE</span> DATE_DIFF(<span class="hljs-string">&apos;day&apos;</span>, DATE_PARSE(submission_date[<span class="hljs-number">1</span>], <span class="hljs-string">&apos;%Y-%m-%dT00:00:00.000Z&apos;</span>), <span class="hljs-keyword">current_date</span>) &lt; <span class="hljs-number">7</span>
+</code></pre>
+<h4 id="scalar-measurement-how-many-users-with-more-than-100-tabs">Scalar measurement (how many users with more than 100 tabs)</h4>
+<pre><code class="lang-sql">WITH samples AS
+ (<span class="hljs-keyword">SELECT</span>
+   client_id,
+   normalized_channel <span class="hljs-keyword">as</span> channel,
+   mctc.<span class="hljs-keyword">value</span> <span class="hljs-keyword">AS</span> max_concurrent_tabs
+  <span class="hljs-keyword">FROM</span> longitudinal
+  <span class="hljs-keyword">CROSS</span> <span class="hljs-keyword">JOIN</span> UNNEST(scalar_parent_browser_engagement_max_concurrent_tab_count) <span class="hljs-keyword">as</span> t (mctc)
+  <span class="hljs-keyword">WHERE</span>
+   scalar_parent_browser_engagement_max_concurrent_tab_count <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">null</span> <span class="hljs-keyword">and</span>
+   mctc.<span class="hljs-keyword">value</span> <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">null</span> <span class="hljs-keyword">and</span>
+   normalized_channel = <span class="hljs-string">&apos;nightly&apos;</span>)
+<span class="hljs-keyword">SELECT</span> approx_distinct(client_id) <span class="hljs-keyword">FROM</span> samples <span class="hljs-keyword">WHERE</span> max_concurrent_tabs &gt; <span class="hljs-number">100</span>
+</code></pre>
+<h3 id="using-views">Using Views</h3>
+<p>If you find yourself copy/pasting SQL between different queries,
+consider using a Presto VIEW to allow for code reuse. Views create
+logical tables which you can reuse in other queries. For example, <a href="https://sql.telemetry.mozilla.org/queries/776/source" target="_blank">this
+view</a> defines some
+important filters and derived variables which are then used in <a href="https://sql.telemetry.mozilla.org/queries/777/source#1311" target="_blank">this
+downstream
+query</a>.</p>
+<p>You can define a view by prefixing your query with</p>
+<pre><code class="lang-sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span> <span class="hljs-keyword">VIEW</span> view_name <span class="hljs-keyword">AS</span> ...
+</code></pre>
+<p>Be careful not to overwrite an existing view! Using a unique name is
+important.</p>
+<p>Find more information
+<a href="https://prestodb.io/docs/current/sql/create-view.html" target="_blank">here</a>.</p>
+<h3 id="working-offline">Working offline</h3>
+<p>It&apos;s often useful to keep a local sample of the l10l data when
+prototyping an analysis. The data is stored in
+s3://telemetry-parquet/longitudinal/. Once you have AWS credentials you
+can copy a shard of the parquet dataset to a local directory using <code>aws
+cp [filename] .</code></p>
+<p>To request AWS credentials, see <a href="https://mana.mozilla.org/wiki/display/SVCOPS/Requesting+A+Dev+IAM+account+from+Cloud+Operations" target="_blank">this
+page</a>.
+To initiate your AWS config, try <code>aws configure</code></p>
+<h3 id="faq">FAQ</h3>
+<h4 id="im-getting-an-error--cannot-be-resolved">I&apos;m getting an error, &quot;... cannot be resolved&quot;</h4>
+<p>For some reason, re:dash has trouble parsing SQL strings with double
+quotes. Try using single quotes instead.</p>
+<h3 id="other-resources">Other Resources</h3>
+<ul>
+<li><a href="https://prestodb.io/docs/current/sql.html" target="_blank">Presto Docs</a></li>
+<li><a href="https://docs.treasuredata.com/articles/presto-query-faq" target="_blank">Helpful FAQ covering
+perf/distribution</a></li>
+<li><a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/Longitudinal.scala#L194" target="_blank">Longitudinal schema
+definition</a></li>
+<li><a href="https://wiki.mozilla.org/Custom_dashboards_with_re:dash" target="_blank">Custom_dashboards_with_re:dash</a></li>
+</ul>
+
                                 
                                 </section>
                             
@@ -832,14 +980,10 @@
 
             
                 
-                <a href="parquet.html" class="navigation navigation-prev " aria-label="Previous page: Working with Parquet Data on ATMO Clusters">
+                <a href="realtime_analysis_plugin.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Creating a Real-time Analysis Plugin">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
-                
-                <a href="realtime_analysis_plugin.html" class="navigation navigation-next " aria-label="Next page: Creating a Real-time Analysis Plugin">
-                    <i class="fa fa-angle-right"></i>
-                </a>
                 
             
         
@@ -848,7 +992,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Creating a custom re:dash dataset","level":"1.5.2","depth":2,"next":{"title":"Creating a Real-time Analysis Plugin","level":"1.5.3","depth":2,"path":"cookbooks/realtime_analysis_plugin.md","ref":"cookbooks/realtime_analysis_plugin.md","articles":[]},"previous":{"title":"Working with Parquet Data on ATMO Clusters","level":"1.5.1","depth":2,"path":"cookbooks/parquet.md","ref":"cookbooks/parquet.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc"],"pluginsConfig":{"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"cookbooks/create_a_dataset.adoc","mtime":"2017-02-27T23:07:17.000Z","type":"asciidoc"},"gitbook":{"version":"3.2.2","time":"2017-04-26T15:25:15.047Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Longitudinal Examples","level":"1.5.4","depth":2,"next":{"title":"About this Documentation","level":"2.1","depth":1,"ref":"","articles":[{"title":"Structure","level":"2.1.1","depth":2,"path":"meta/structure.md","ref":"meta/structure.md","articles":[]},{"title":"Contributing","level":"2.1.2","depth":2,"path":"meta/contributing.md","ref":"meta/contributing.md","articles":[]}]},"previous":{"title":"Creating a Real-time Analysis Plugin","level":"1.5.3","depth":2,"path":"cookbooks/realtime_analysis_plugin.md","ref":"cookbooks/realtime_analysis_plugin.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc"],"pluginsConfig":{"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"cookbooks/longitudinal_examples.md","mtime":"2017-04-26T15:25:07.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-26T15:25:15.047Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
