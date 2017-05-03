@@ -50,7 +50,7 @@ The DAG is [here](https://github.com/mozilla/telemetry-airflow/blob/master/dags/
 
 ## Schema
 
-TODO(harter): Coming soon.
+TODO(harter): https://bugzilla.mozilla.org/show_bug.cgi?id=1361862
 
 # Code Reference
 
