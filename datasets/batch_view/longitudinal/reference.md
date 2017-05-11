@@ -8,7 +8,7 @@
 
 # Data Reference
 
-## Making Queries
+## Example Queries
 
 Take a look at the 
 [Longitudinal Examples Cookbook](/cookbooks/longitudinal_examples.md).
