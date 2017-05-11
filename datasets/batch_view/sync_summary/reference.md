@@ -10,11 +10,15 @@
 
 ## Example Queries
 
-TODO
+Work in progres.
+Work is being tracked
+[here](https://bugzilla.mozilla.org/show_bug.cgi?id=1364171)
 
 ## Sampling
 
-TODO
+Work in progres.
+Work is being tracked
+[here](https://bugzilla.mozilla.org/show_bug.cgi?id=1364171)
 
 ## Scheduling
 
