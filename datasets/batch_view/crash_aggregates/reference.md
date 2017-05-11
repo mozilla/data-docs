@@ -1,3 +1,7 @@
+# Crash Aggregates Reference
+
+<!-- toc -->
+
 # Introduction
 
 {% include "./intro.md" %}
