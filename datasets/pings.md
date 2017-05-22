@@ -1,15 +1,12 @@
-# Work in Progress
+# Raw Ping Data
 
-This article is a work in progress.
-The work is being tracked in
-[this bug](https://bugzilla.mozilla.org/show_bug.cgi?id=1341805).
+<!-- toc -->
 
-# Coverage
+# Introduction
 
-## Why look at pings?
+{% include "./ping_intro.md" %}
 
-## What types of data do we have?
+# Data Reference
 
-## Opt In vs Opt Out
-
-## How to look at pings
+You can find the reference documentation for all ping types
+[here](http://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/concepts/pings.html).
