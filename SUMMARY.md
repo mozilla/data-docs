@@ -3,6 +3,7 @@
 * [Getting Started](concepts/getting_started.md)
   * [Analysis Quick Start](concepts/analysis_intro.adoc)
   * [Data Privacy](concepts/data_privacy.md)
+  * [Overview of Mozilla's Data Pipeline](/concepts/data_pipeline.md)
   * [Choosing a Dataset](concepts/choosing_a_dataset.md)
   * [Intro to STMO / Re:dash](/tools/stmo.md)
   * [Common Analysis Gotchas](concepts/analysis_gotchas.md)
