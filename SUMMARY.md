@@ -28,6 +28,7 @@
     * [Experimental Datasets](tools/experiments.md)
       * [Accessing Shield Study data](datasets/shield.md)
 * [Tools](tools/README.adoc)
+  * [Overview of Mozilla's Data Pipeline](/concepts/data_pipeline.md)
   * [Interfaces](tools/interfaces.md)
     * [TMO & STMO](concepts/analysis_intro.adoc)
     * [Advanced analysis with ATMO](tools/advanced_analysis_with_atmo.md)
