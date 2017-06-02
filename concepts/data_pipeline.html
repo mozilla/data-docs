@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Common Analysis Gotchas · GitBook</title>
+        <title>Overview of Mozilla's Data Pipeline · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="review.html" />
+    <link rel="next" href="../tools/interfaces.html" />
     
     
-    <link rel="prev" href="../tools/stmo.html" />
+    <link rel="prev" href="../tools/" />
     
 
     </head>
@@ -187,7 +187,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.2.5" data-path="analysis_gotchas.html">
+        <li class="chapter " data-level="1.2.5" data-path="analysis_gotchas.html">
             
                 <a href="analysis_gotchas.html">
             
@@ -272,7 +272,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.3.1.3" data-path="analysis_gotchas.html">
+        <li class="chapter " data-level="1.3.1.3" data-path="analysis_gotchas.html">
             
                 <a href="analysis_gotchas.html">
             
@@ -522,7 +522,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.4.1" data-path="data_pipeline.html">
+        <li class="chapter active" data-level="1.4.1" data-path="data_pipeline.html">
             
                 <a href="data_pipeline.html">
             
@@ -803,7 +803,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Common Analysis Gotchas</a>
+        <a href=".." >Overview of Mozilla's Data Pipeline</a>
     </h1>
 </div>
 
@@ -818,46 +818,57 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="analysis-gotchas">Analysis Gotchas</h1>
-<p>When performing analysis on any data there are some mistakes that are easy to make and details that are easy to overlook. Do you know exactly what question you hope to answer? Is your sample representative of your population? Is your result &quot;real&quot;? How precisely can you state your conclusion?</p>
-<p>This document is not about those traps. Instead, it is about quirks and pitfalls specific to <a href="http://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/index.html" target="_blank">Telemetry</a>.</p>
-<h3 id="pseudo-replication">Pseudo-replication</h3>
-<p>Telemetry data is a collection of pings. A single main-ping represents a single subsession. Some clients have more subsessions than others.</p>
-<p>So when you say <a href="https://mzl.la/2q75dbF" target="_blank">&quot;63% of beta 53 has Firefox set as its default browser&quot;</a>, make sure you specify it is 63% of <em>pings</em>, since it is only around 46% of clients. (Apparently users with Firefox Beta 53 set as their default browser submit more main-pings than users who don&apos;t).</p>
-<h3 id="profiles-vs-users">Profiles vs Users</h3>
-<p>In the section above you&apos;ll notice I said &quot;clients&quot; not &quot;users.&quot; That is because of all the things we&apos;re able to count, users isn&apos;t one of them.</p>
-<p>Users can have multiple Firefox profiles running on the same computer at the same time (like developers).</p>
-<p>Users can have the same Firefox profile running on several computers on different days of the week (also developers).</p>
-<p>The only things we can count are pings and clients. Clients we can count because we send a <code>client_id</code> with each ping that uniquely identifies the profile from which it came. This is generally close enough to our idea of &quot;user&quot; that we can get away with counting profiles and calling them users, but you may run into some instances where the distinction matters.</p>
-<p>When in doubt, be precise. You&apos;re counting <em>clients</em>.</p>
-<h3 id="opt-in-vs-opt-out">Opt-in vs Opt-out</h3>
-<p>We don&apos;t collect the same information from everyone.</p>
-<p>Every profile that doesn&apos;t have Telemetry disabled sends us &quot;opt-out&quot; Telemetry. This includes:</p>
+                                <h1 id="an-overview-of-mozillas-data-pipeline">An overview of Mozilla&#x2019;s Data Pipeline</h1>
+<p>This post describes the architecture of Mozilla&#x2019;s data pipeline, which is used to collect Telemetry data from our users and logs from various services. One of the cool perks of working at Mozilla is that most of what we do is out in the open and because of that I can do more than just show you some diagram with arrows of our architecture; I can point you to the code, script &amp; configuration that underlies it!</p>
+<p>To make the examples concrete, the following description is centered around the collection of Telemetry data. The same tool-chain is used to collect, store and analyze data coming from disparate sources though, such as service logs.</p>
+<p><img src="../assets/pipeline_flowchart.jpeg" alt="Pipeline Flowchart"></p>
+<h1 id="firefox">Firefox</h1>
+<p>There are different APIs and formats to <a href="https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/collection/index.html" target="_blank">collect data</a> in Firefox, all suiting different use cases:</p>
 <ul>
-<li>Nearly everything in the <a href="http://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/environment.html" target="_blank">Environment</a></li>
-<li>Some very specific <a href="http://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/collection/histograms.html" target="_blank">Histograms</a>, <a href="http://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/collection/scalars.html" target="_blank">Scalars</a>, and <a href="http://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/collection/events.html" target="_blank">Events</a> that are marked <code>&quot;releaseChannelCollection&quot;: &quot;opt-out&quot;</code></li>
+<li><a href="https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/collection/histograms.html" target="_blank">histograms</a> &#x2013; for recording multiple data points;</li>
+<li><a href="https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/collection/scalars.html" target="_blank">scalars</a> &#x2013; for recording single values;</li>
+<li><a href="https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/collection/measuring-time.html" target="_blank">timings</a> &#x2013; for measuring how long operations take;</li>
+<li><a href="https://docs.google.com/document/d/1hNuS9lUJMvMqgntZXbFA6xZBU9zBpQgo7x73-sXKRpI/edit#heading=h.r5uzjaihw03a" target="_blank">events</a> &#x2013; for recording time-stamped events.</li>
 </ul>
-<p>Most probes are &quot;opt-in&quot;: we do not get information from them unless the user opts into sending us this information. Users can opt-in in two ways:</p>
-<ol>
-<li>Using Firefox&apos;s Options UI to tick the box that gives us permission</li>
-<li>Installing any pre-release version of Firefox</li>
-</ol>
-<p>The nature of selection bias is such that the population in #1 is useless for analysis. If you want to encourage users to collect good information for us, ask them to install Beta: it&apos;s only slightly harder than finding and checking the opt-in checkbox in Firefox.</p>
-<h3 id="trusting-dates">Trusting Dates</h3>
-<p>Don&apos;t trust client times.</p>
-<p>Any timestamp recorded by the user is subject to &quot;clock skew.&quot; The user&apos;s clock can be set (purposefully or accidentally) to any time at all. The nature of SSL certificates tends to keep this within a certain relatively-accurate window, because a user who&apos;s clock is too far in the past or too far in the future might confuse certain expiration-date-checking code.</p>
-<p>Examples of client times: <code>crashDate</code>, <code>crashTime</code>, <code>meta/Date</code>, <code>sessionStartDate</code>, <code>subsessionStartDate</code>, <code>profile/creationDate</code></p>
-<p>Examples of server times you can trust: <code>Timestamp</code></p>
-<h3 id="date-formats">Date Formats</h3>
-<p>Not all dates and times are created equal. Most of the dates and times in Telemetry pings are <a href="https://en.wikipedia.org/wiki/ISO_8601" target="_blank">ISO 8601</a>. Most are full timestamps, though their resolution may differ from being per-second to being per-day.</p>
-<p>Then there&apos;s <code>profile/creationDate</code> which is just a number of days since epoch. Like <code>17177</code> for the date 2017-01-11.</p>
-<p><strong>Tip:</strong> To convert <code>profile/creationDate</code> to a usable date in SQL: <code>DATE_ADD(&apos;day&apos;, profile_created, DATE &apos;1970-01-01&apos;)</code></p>
-<p>In derived datasets ISO dates are sometimes converted to strings in one of two formats: <code>%Y-%m-%d</code> or <code>%Y%m%d</code>.</p>
-<p>Build ids look like dates but aren&apos;t. If you take the first eight characters you can use that as a proxy for the day the build was released.</p>
-<h3 id="delays">Delays</h3>
-<p>Telemetry data takes a while to get into our hands. The largest data mule in Telemetry is the main-ping. It is (pending <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1336360" target="_blank">bug 1336360</a>) sent at the beginning of a client&apos;s <em>next</em> Firefox session. If the user shuts down their Firefox for the weekend, we won&apos;t get their Friday data until Monday morning.</p>
-<p>A rule of thumb (pending <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1336360" target="_blank">bug 1336360</a>) is data from two days ago is usually fairly representative.</p>
-<p>If you&apos;d like to read more about this subject and look at pretty graphs, there are a series of blogposts <a href="https://chuttenblog.wordpress.com/2017/02/09/data-science-is-hard-client-delays-for-crash-pings/" target="_blank">here</a>.</p>
+<p>These are commonly referred to as <a href="../datasets/new_data.html">probes</a>. Each probe must declare the <a href="https://wiki.mozilla.org/Firefox/Data_Collection" target="_blank">collection policy</a> it conforms to: either opt-out (aka base telemetry) or opt-in (aka extended telemetry). When adding a new measurement data-reviewers carefully inspect the probe and eventually approve the requested collection policy:</p>
+<ul>
+<li>opt-out (base telemetry) data is collected by default from all Firefox users; users may choose to turn this data collection off in preferences;</li>
+<li>opt-in (extended telemetry) data is collected from users who explicitly express a choice to help with Firefox development; this includes all users who install pre-release &amp; testing builds, plus release users who have explicitly checked the box in preferences.</li>
+</ul>
+<p>A session begins when Firefox starts up and ends when it shuts down. As a session could be long-running and last weeks, it gets sliced into smaller logical units called <a href="https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/concepts/sessions.html#subsessions" target="_blank">subsessions</a>. Each subsession generates a batch of data containing the current state of all probes collected so far, i.e. a <a href="https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/main-ping.html" target="_blank">main ping</a>, which is sent to our servers. The main ping is just one of the many <a href="https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/concepts/pings.html#ping-types" target="_blank">ping types</a> we support. Developers can <a href="https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/collection/custom-pings.html" target="_blank">create their own ping types</a> if needed.</p>
+<p>Pings are submitted via an <a href="https://dxr.mozilla.org/mozilla-central/rev/6a23526fe5168087d7e4132c0705aefcaed5f571/toolkit/components/telemetry/TelemetryController.jsm#202" target="_blank">API</a> that performs a HTTP POST request to our edge servers. If a ping fails to successfully <a href="https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/concepts/submission.html#submission" target="_blank">submit</a> (e.g. because of missing internet connection), Firefox will store the ping on disk and retry to send it until the maximum ping age is exceeded.</p>
+<h1 id="kafka">Kafka</h1>
+<p>HTTP submissions coming in from the wild hit a <a href="https://aws.amazon.com/elasticloadbalancing/" target="_blank">load balancer</a> and then an NGINX <a href="https://github.com/mozilla-services/nginx_moz_ingest" target="_blank">module</a>. The <a href="https://github.com/mozilla-services/nginx_moz_ingest" target="_blank">module</a> accepts data via a <a href="https://wiki.mozilla.org/CloudServices/DataPipeline/HTTPEdgeServerSpecification" target="_blank">HTTP request</a> which it wraps in a Hindsight protobuf message and forwards to two places: a Kafka cluster and a short-lived S3 bucket (landfill) which acts as a fail-safe in case there is a processing error and/or data loss within the rest of the pipeline. The deployment scripts and configuration files of NGINX and Kafka live in a <a href="https://github.com/mozilla-services/puppet-config/tree/02f716a3e0df1117fc2494b41e85a1416f8e2a64/pipeline" target="_blank">private repository</a>.</p>
+<p>The data from Kafka is read from the Complex Event Processors (CEP) and the Data Warehouse Loader (DWL), both of which use Hindsight.</p>
+<h1 id="hindsight">Hindsight</h1>
+<p><a href="https://github.com/mozilla-services/hindsight" target="_blank">Hindsight</a>, an open source stream processing software system developed by Mozilla as <a href="https://github.com/mozilla-services/heka" target="_blank">Heka</a>&#x2019;s successor, is useful for a wide variety of different tasks, such as:</p>
+<ul>
+<li>converting data from one format to another;</li>
+<li>shipping data from one location to another;</li>
+<li>performing real time analysis, graphing, and anomaly detection.</li>
+</ul>
+<p>Hindsight&#x2019;s core is a lightweight data processing kernel written in C that controls a set of Lua <a href="https://github.com/mozilla-services/hindsight/blob/9593668e84a642aff9dd95ccc648b6585948abfe/docs/index.md" target="_blank">plugins</a> executed inside a sandbox.</p>
+<p>The CEP are custom plugins that are created, configured and deployed from an <a href="https://github.com/mozilla-services/hindsight_admin" target="_blank">UI</a> which produce real-time plots like the number of pings matching a certain criteria.  Mozilla employees can <a href="https://pipeline-cep.prod.mozaws.net/" target="_blank">access the UI</a> and create/deploy their own custom plugin in real-time without interfering with other plugins running.</p>
+<p><img src="../assets/CEP_custom_plugin.jpeg" alt="CEP Custom Plugin" title="CEP &#x2013; a custom plugin in action"></p>
+<p>The DWL is composed of a set of plugins that transform, convert &amp; finally shovel pings into S3 for long term storage. In the specific case of Telemetry data, an input plugin <a href="https://github.com/mozilla-services/lua_sandbox_extensions/blob/0895238e32d25241ef46f561e43039beb201c7cd/kafka/sandboxes/heka/input/kafka.lua" target="_blank">reads pings from Kafka</a>, <a href="https://github.com/mozilla-services/lua_sandbox_extensions/blob/5d8907ee9f1a20e3a02bfe5b57d4312b173487a3/moz_telemetry/io_modules/decoders/moz_telemetry/ping.lua" target="_blank">pre-processes</a> them and <a href="https://github.com/mozilla-services/lua_sandbox_extensions/blob/5d8907ee9f1a20e3a02bfe5b57d4312b173487a3/moz_telemetry/sandboxes/heka/output/moz_telemetry_s3.lua" target="_blank">sends batches to S3</a>, our data lake, for long term storage. The data is compressed and partitioned by a set of dimensions, like date and application.</p>
+<p>The data has traditionally been serialized to <a href="https://hekad.readthedocs.io/en/latest/message/index.html#stream-framing" target="_blank">Protobuf</a> sequence files which contain some nasty &#x201C;free-form&#x201D; JSON fields. Hindsight gained recently the ability to <a href="https://github.com/mozilla-services/lua_sandbox_extensions/pull/48" target="_blank">dump data directly in Parquet form</a> though.</p>
+<p>The deployment scripts and configuration files of the CEP &amp; DWL live in a <a href="https://github.com/mozilla-services/puppet-config/tree/02f716a3e0df1117fc2494b41e85a1416f8e2a64/pipeline" target="_blank">private repository</a>.</p>
+<h1 id="spark">Spark</h1>
+<p>Once the data reaches our data lake on S3 it can be processed with Spark. We provide a portal (<a href="https://analysis.telemetry.mozilla.org/" target="_blank">ATMO</a>) that allows Mozilla employees to create their own Spark cluster pre-loaded with a set of libraries &amp; tools, like jupyter, numpy, scipy, pandas etc., and <a href="https://python-moztelemetry.readthedocs.io/en/stable/userguide.html#module-moztelemetry.dataset" target="_blank">an API</a> to conveniently read data stored in Protobuf form on S3 in a Spark RDD using a ORM-like interface. Behind the scenes we use <a href="https://github.com/mozilla/emr-bootstrap-spark/" target="_blank">EMR</a> to create Spark clusters, which are then monitored by ATMO.</p>
+<p><img src="../assets/ATMO_example.jpeg" alt="ATMO" title="ATMO &#x2013; monitoring clusters"></p>
+<p>ATMO is mainly used to write custom ad-hoc analyses; since our users aren&#x2019;t necessary data engineers/scientists we chose Python as the main supported language to interface with Spark. From ATMO it&#x2019;s also possible to schedule periodic notebook runs and inspect the results from a web UI.</p>
+<p>As mentioned earlier, most of our data lake contains data serialized to Protobuf with free-form JSON fields. Needless to say, parsing JSON is terribly slow when ingesting TBs of data per day. A set of <a href="https://github.com/mozilla/telemetry-batch-view" target="_blank">ETL jobs</a>, written in Scala by Data Engineers and scheduled with <a href="https://github.com/mozilla/telemetry-airflow/" target="_blank">Airflow</a>, create <a href="choosing_a_dataset.html">Parquet views</a> of our raw data. We have a Github repository <a href="https://github.com/mozilla/telemetry-batch-view/" target="_blank">telemetry-batch-view</a> that showcases this.</p>
+<p>A dedicated Spark job feeds daily aggregates to a Postgres database which powers a <a href="https://github.com/mozilla/python_mozaggregator/#api" target="_blank">HTTP service</a> to easily retrieve faceted roll-ups. The service is mainly used by <a href="https://telemetry.mozilla.org/" target="_blank">TMO</a>, a dashboard that visualizes distributions and time-series, and cerberus, an anomaly detection tool that detects and alerts developers of changes in the distributions. Originally the sole purpose of the Telemetry pipeline was to feed data into this dashboard but in time its scope and flexibility grew to support more general use-cases.</p>
+<p><img src="../assets/TMO_example.jpeg" alt="TMO" title="TMO &#x2013; timeseries"></p>
+<h1 id="presto--redash">Presto &amp; re:dash</h1>
+<p>We maintain a couple of <a href="https://github.com/mozilla/emr-bootstrap-presto" target="_blank">Presto clusters</a> and a centralized Hive metastore to query Parquet data with SQL. The Hive metastore provides an universal view of our Parquet dataset to both Spark and Presto clusters.</p>
+<p>Presto, and other databases, are behind a <a href="https://sql.telemetry.mozilla.org/" target="_blank">re:dash</a> service (<a href="https://sql.telemetry.mozilla.org/" target="_blank">STMO</a>) which provides a convenient &amp; powerful interface to query SQL engines and build dashboards that can be shared within the company. Mozilla maintains its own <a href="https://github.com/mozilla/redash" target="_blank">fork of re:dash</a> to iterate quickly on new features, but as good open source citizen we push our changes upstream.</p>
+<p><img src="../assets/STMO_example.jpeg" alt="STMO" title="STMO &#x2013; who doesn&#x2019;t love SQL?"></p>
+<h1 id="hbase">HBase</h1>
+<p>We use HBase to store the history of pings by client. It&#x2019;s a relatively new addition and it provides support for fast <a href="https://python-moztelemetry.readthedocs.io/en/stable/userguide.html#module-moztelemetry.hbase" target="_blank">needle-in-haystack queries</a>.</p>
+<h1 id="is-that-it">Is that it?</h1>
+<p>No, not really. For example, the DWL pushes some of the Telemetry data to Redshift and Elasticsearch but those tools satisfy more niche needs. The pipeline ingests logs from services as well and there are many specialized dashboards out there I haven&#x2019;t mentioned. We also use <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1369519" target="_blank">Zeppelin</a> as a means to create interactive data analysis notebooks that supports Spark, SQL, Scala and more.</p>
+<p>There is a vast ecosystem of tools for processing data at scale, each with their pros &amp; cons. The pipeline grew organically and we added new tools as new use-cases came up that we couldn&#x2019;t solve with our existing stack. There are still scars left from that growth though which require some effort to get rid of, like ingesting data from schema-less format.</p>
 
                                 
                                 </section>
@@ -885,12 +896,12 @@
 
             
                 
-                <a href="../tools/stmo.html" class="navigation navigation-prev " aria-label="Previous page: Intro to STMO / Re:dash">
+                <a href="../tools/" class="navigation navigation-prev " aria-label="Previous page: Tools">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="review.html" class="navigation navigation-next " aria-label="Next page: Getting Review">
+                <a href="../tools/interfaces.html" class="navigation navigation-next " aria-label="Next page: Interfaces">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -901,7 +912,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Common Analysis Gotchas","level":"1.2.5","depth":2,"next":{"title":"Getting Review","level":"1.2.6","depth":2,"path":"concepts/review.md","ref":"concepts/review.md","articles":[]},"previous":{"title":"Intro to STMO / Re:dash","level":"1.2.4","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc"],"pluginsConfig":{"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/analysis_gotchas.md","mtime":"2017-05-02T14:56:08.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-02T17:12:50.341Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Overview of Mozilla's Data Pipeline","level":"1.4.1","depth":2,"next":{"title":"Interfaces","level":"1.4.2","depth":2,"path":"tools/interfaces.md","ref":"tools/interfaces.md","articles":[{"title":"TMO & STMO","level":"1.4.2.1","depth":3,"path":"concepts/analysis_intro.adoc","ref":"concepts/analysis_intro.adoc","articles":[]},{"title":"Advanced analysis with ATMO","level":"1.4.2.2","depth":3,"path":"tools/advanced_analysis_with_atmo.md","ref":"tools/advanced_analysis_with_atmo.md","articles":[]},{"title":"Creating a Real-time Analysis Plugin","level":"1.4.2.3","depth":3,"path":"cookbooks/realtime_analysis_plugin.md","ref":"cookbooks/realtime_analysis_plugin.md","articles":[]},{"title":"Distribution Viewer","level":"1.4.2.4","depth":3,"path":"tools/distribution_viewer.md","ref":"tools/distribution_viewer.md","articles":[]},{"title":"HBase","level":"1.4.2.5","depth":3,"path":"tools/hbase.md","ref":"tools/hbase.md","articles":[]},{"title":"RTMO","level":"1.4.2.6","depth":3,"path":"tools/rtmo.md","ref":"tools/rtmo.md","articles":[]}]},"previous":{"title":"Tools","level":"1.4","depth":1,"path":"tools/README.adoc","ref":"tools/README.adoc","articles":[{"title":"Overview of Mozilla's Data Pipeline","level":"1.4.1","depth":2,"path":"concepts/data_pipeline.md","ref":"concepts/data_pipeline.md","articles":[]},{"title":"Interfaces","level":"1.4.2","depth":2,"path":"tools/interfaces.md","ref":"tools/interfaces.md","articles":[{"title":"TMO & STMO","level":"1.4.2.1","depth":3,"path":"concepts/analysis_intro.adoc","ref":"concepts/analysis_intro.adoc","articles":[]},{"title":"Advanced analysis with ATMO","level":"1.4.2.2","depth":3,"path":"tools/advanced_analysis_with_atmo.md","ref":"tools/advanced_analysis_with_atmo.md","articles":[]},{"title":"Creating a Real-time Analysis Plugin","level":"1.4.2.3","depth":3,"path":"cookbooks/realtime_analysis_plugin.md","ref":"cookbooks/realtime_analysis_plugin.md","articles":[]},{"title":"Distribution Viewer","level":"1.4.2.4","depth":3,"path":"tools/distribution_viewer.md","ref":"tools/distribution_viewer.md","articles":[]},{"title":"HBase","level":"1.4.2.5","depth":3,"path":"tools/hbase.md","ref":"tools/hbase.md","articles":[]},{"title":"RTMO","level":"1.4.2.6","depth":3,"path":"tools/rtmo.md","ref":"tools/rtmo.md","articles":[]}]},{"title":"Infrastructure","level":"1.4.3","depth":2,"path":"tools/infrastructure.md","ref":"tools/infrastructure.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc"],"pluginsConfig":{"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/data_pipeline.md","mtime":"2017-06-02T17:12:46.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-02T17:12:50.341Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
