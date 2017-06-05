@@ -10,7 +10,6 @@
 * [Data Collection and Datasets](/datasets/README.adoc)
   * Understanding our Data
     * [Choosing a dataset](concepts/choosing_a_dataset.md)
-    * [Tools for Experimentation](tools/experiments.md)
     * [Common Analysis Gotchas](concepts/analysis_gotchas.md)
   * [Collecting New Data](datasets/new_data.md)
   * [Dataset Reference](datasets/reference.md)
@@ -36,7 +35,6 @@
     * [Distribution Viewer](tools/distribution_viewer.md)
     * [HBase](tools/hbase.md)
     * [RTMO](tools/rtmo.md)
-  * [Infrastructure](tools/infrastructure.md)
 * [Cookbooks](cookbooks/README.adoc)
   * [Working with Parquet Data on ATMO Clusters](cookbooks/parquet.md)
   * [Creating a custom re:dash dataset](cookbooks/create_a_dataset.adoc)
