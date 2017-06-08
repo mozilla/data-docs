@@ -54,6 +54,10 @@ This section describes the derived datasets we provide to make analyzing this da
 
 {% include "/datasets/batch_view/crash_aggregates/intro.md" %}
 
+## crash_summary
+
+{% include "/datasets/batch_view/crash_summary/intro.md" %}
+
 # Appendix
 
 ## Mobile Metrics
