@@ -813,6 +813,7 @@ take a look at our <a href="../tools/experiments.html">tools for experimentation
 </li>
 <li><a href="#crash-ping-derived-datasets">Crash Ping Derived Datasets</a><ul>
 <li><a href="#crashaggregates">crash_aggregates</a></li>
+<li><a href="#crashsummary">crash_summary</a></li>
 </ul>
 </li>
 <li><a href="#appendix">Appendix</a><ul>
@@ -1032,6 +1033,23 @@ See <a href="../cookbooks/parquet.html">this cookbook</a> to get started working
 </code></pre><h4 id="further-reading">Further Reading</h4>
 <p>The technical documentation for this dataset can be found in the
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/docs/CrashAggregateView.md" target="_blank">telemetry-batch-view documentation</a></p>
+<h2 id="crashsummary">crash_summary</h2>
+<p>The <code>crash_summary</code> table is the most direct representation of a crash ping.</p>
+<h4 id="contents">Contents</h4>
+<p>The <code>crash_summary</code> table contains one row for each crash ping.
+Each column represents one field from the crash ping payload,
+though only a subset of all crash ping fields are included.</p>
+<h4 id="accessing-the-data">Accessing the Data</h4>
+<p>The data is stored as a parquet table in S3 at the following address.
+See <a href="../cookbooks/parquet.html">this cookbook</a> to get started working with the data in Spark.</p>
+<pre><code>s3://telemetry-parquet/crash_summary/v1/
+</code></pre><p><code>crash_summary</code> is accessible through re:dash.
+Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/4793/source" target="_blank">example query</a>.</p>
+<h4 id="further-reading">Further Reading</h4>
+<p>The technical documentation for <code>crash_summary</code> is located in the
+<a href="https://github.com/mozilla/telemetry-batch-view/blob/master/docs/CrashSummary.md" target="_blank">telemetry-batch-view documentation</a>.</p>
+<p>The code responsible for generating this dataset is
+<a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/CrashSummaryView.scala" target="_blank">here</a></p>
 <h1 id="appendix">Appendix</h1>
 <h2 id="mobile-metrics">Mobile Metrics</h2>
 <p>There are several tables owned by the mobile team documented
@@ -1085,7 +1103,7 @@ See <a href="../cookbooks/parquet.html">this cookbook</a> to get started working
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.3","depth":2,"next":{"title":"Intro to STMO / Re:dash","level":"1.2.4","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"previous":{"title":"Data Privacy","level":"1.2.2","depth":2,"path":"concepts/data_privacy.md","ref":"concepts/data_privacy.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc"],"pluginsConfig":{"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2017-05-23T14:46:32.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-05T16:54:44.455Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.3","depth":2,"next":{"title":"Intro to STMO / Re:dash","level":"1.2.4","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"previous":{"title":"Data Privacy","level":"1.2.2","depth":2,"path":"concepts/data_privacy.md","ref":"concepts/data_privacy.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc"],"pluginsConfig":{"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2017-06-08T13:00:16.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-08T13:00:23.032Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
