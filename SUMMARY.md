@@ -1,7 +1,7 @@
 * [Firefox Data Documentation](introduction.md)
   * [Terminology](concepts/terminology.md)
 * [Getting Started](concepts/getting_started.md)
-  * [Analysis Quick Start](concepts/analysis_intro.adoc)
+  * [Analysis Quick Start](concepts/analysis_intro.md)
   * [Data Privacy](concepts/data_privacy.md)
   * [Choosing a Dataset](concepts/choosing_a_dataset.md)
   * [Intro to STMO / Re:dash](/tools/stmo.md)
@@ -29,7 +29,7 @@
 * [Tools](tools/README.adoc)
   * [Overview of Mozilla's Data Pipeline](/concepts/data_pipeline.md)
   * [Interfaces](tools/interfaces.md)
-    * [TMO & STMO](concepts/analysis_intro.adoc)
+    * [TMO & STMO](concepts/analysis_intro.md)
     * [Custom analysis with Spark](tools/spark.md)
     * [Creating a Real-time Analysis Plugin](cookbooks/realtime_analysis_plugin.md)
     * [Distribution Viewer](tools/distribution_viewer.md)
@@ -43,5 +43,6 @@
 
 
 * About this Documentation
+  * [Bug Template](https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&component=Documentation%20and%20Knowledge%20Repo%20%28RTMO%29&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=P3&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&target_milestone=---&version=unspecified)
   * [Structure](meta/structure.md)
   * [Contributing](meta/contributing.md)
