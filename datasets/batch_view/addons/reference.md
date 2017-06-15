@@ -12,8 +12,9 @@
 
 ## Sampling
 
-It contains one or more records for every [Main Summary](MainSummary.md) record 
-that contains a non-null value for `client_id`.
+It contains one or more records for every 
+[Main Summary](/datasets/batch_view/main_summary/reference.md)
+record that contains a non-null value for `client_id`.
 Each Addons record contains info for a single addon,
 or if the main ping did not contain any active addons,
 there will be a row with nulls for all the addon fields
