@@ -30,7 +30,7 @@
   * [Overview of Mozilla's Data Pipeline](/concepts/data_pipeline.md)
   * [Interfaces](tools/interfaces.md)
     * [TMO & STMO](concepts/analysis_intro.adoc)
-    * [Advanced analysis with ATMO](tools/advanced_analysis_with_atmo.md)
+    * [Custom analysis with Spark](tools/spark.md)
     * [Creating a Real-time Analysis Plugin](cookbooks/realtime_analysis_plugin.md)
     * [Distribution Viewer](tools/distribution_viewer.md)
     * [HBase](tools/hbase.md)
