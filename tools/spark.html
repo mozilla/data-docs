@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Advanced analysis with ATMO · GitBook</title>
+        <title>Custom analysis with Spark · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -549,12 +549,12 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.4.2.2" data-path="advanced_analysis_with_atmo.html">
+        <li class="chapter active" data-level="1.4.2.2" data-path="spark.html">
             
-                <a href="advanced_analysis_with_atmo.html">
+                <a href="spark.html">
             
                     
-                    Advanced analysis with ATMO
+                    Custom analysis with Spark
             
                 </a>
             
@@ -777,7 +777,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Advanced analysis with ATMO</a>
+        <a href=".." >Custom analysis with Spark</a>
     </h1>
 </div>
 
@@ -792,19 +792,266 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="work-in-progress">Work in Progress</h1>
-<p>This document is a work in progress.
-The work is being tracked in
-<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1341899" target="_blank">this bug</a>.</p>
-<p>This document will be derived from
-<a href="https://wiki.mozilla.org/Telemetry/Custom_analysis_with_spark" target="_blank">Custom Analysis with Spark</a></p>
-<h1 id="advanced-analysis-with-atmo">Advanced Analysis with ATMO</h1>
-<h2 id="loading-derived-datasets">Loading Derived Datasets</h2>
-<p>// Introduces accessing Derived Datasets via S3</p>
-<h2 id="simple-analysis">Simple Analysis</h2>
-<p>// Introduces Spark</p>
-<h2 id="get-some-pings">Get Some pings</h2>
-<p>// Introduces Raw Pings</p>
+                                <h2 id="introduction">Introduction</h2>
+<p><a href="http://spark.apache.org/" target="_blank">Spark</a>
+is a data processing engine designed to be fast and easy to use.
+We have setup
+<a href="http://jupyter.org/" target="_blank">Jupyter notebooks</a>
+that use Spark to analyze our Telemetry data.
+Jupyter workbooks can be easily shared and updated among colleagues,
+and, when combined with Spark, enable richer analysis than SQL alone.</p>
+<p>The Spark clusters can be spun up on <a href="https://analysis.telemetry.mozilla.org" target="_blank">ATMO</a>.
+The Spark Python API is called pyspark.</p>
+<h2 id="setting-up-a-spark-cluster-on-atmo">Setting Up a Spark Cluster On ATMO</h2>
+<ol>
+<li>Go to <a href="http://analysis.telemetry.mozilla.org" target="_blank">http://analysis.telemetry.mozilla.org</a></li>
+<li>Click &#x201C;Launch an ad-hoc Spark cluster&#x201D;.</li>
+<li>Enter some details:<ol>
+<li>The &#x201C;Cluster Name&#x201D; field should be a short descriptive name,
+like &#x201C;chromehangs analysis&#x201D;.</li>
+<li>Set the number of workers for the cluster. Please keep in mind
+to use resources sparingly; use a single worker to write and
+debug your job.</li>
+<li>Upload your SSH public key.</li>
+</ol>
+</li>
+<li>Click &#x201C;Submit&#x201D;.</li>
+<li>A cluster will be launched on AWS preconfigured with Spark, IPython
+and some handy data analysis libraries like pandas and matplotlib.</li>
+</ol>
+<p>Once the cluster is ready, you can tunnel IPython through SSH by
+following the instructions on the dashboard.
+For example:</p>
+<pre><code class="lang-bash">ssh -i ~/.ssh/id_rsa -L 8888:localhost:8888 hadoop@ec2-54-70-129-221.us-west-2.compute.amazonaws.com
+</code></pre>
+<p>Finally, you can launch IPython in Firefox by visiting <a href="http://localhost:8888" target="_blank">http://localhost:8888</a>.</p>
+<h2 id="the-python-jupyter-notebook">The Python Jupyter Notebook</h2>
+<p>When you access <a href="http://localhost:8888" target="_blank">http://localhost:8888</a>, two example Jupyter notebooks
+are available to peruse.</p>
+<p>Starting out, we recommend looking through the
+<a href="https://github.com/mozilla/mozilla-reports/blob/master/tutorials/telemetry_hello_world.kp/orig_src/Telemetry%20Hello%20World.ipynb" target="_blank">Telemetry Hello World</a>
+notebook.
+It gives a nice overview of Jupyter and analyzing telemetry data using pyspark and the RDD API.</p>
+<h3 id="using-jupyter">Using Jupyter</h3>
+<p>Jupyter Notebooks contain a series of cells.
+Each cell contains code or markdown.
+To switch between the two, use the dropdown at the top.
+To run a cell, use shift-enter;
+this either compiles the markdown or runs the code.
+To create new cell, select Insert -&gt; Insert Cell Below.</p>
+<p>A cell can output text or plots.
+To output plots inlined with the cell,
+run <code>%pylab inline</code>, usually below your import statements:</p>
+<p>The notebook is setup to work with Spark. See the &quot;Using Spark&quot; section
+for more information.</p>
+<h3 id="schedule-a-periodic-job">Schedule a periodic job</h3>
+<p>Scheduled Spark jobs allow a Jupyter notebook to be updated consistently,
+making a nice and easy-to-use dashboard.</p>
+<p>To schedule a Spark job:</p>
+<ol>
+<li>Visit the analysis provisioning dashboard at
+telemetry-dash.mozilla.org and sign in</li>
+<li>Click &#x201C;Schedule a Spark Job&#x201D;</li>
+<li>Enter some details:<ol>
+<li>The &#x201C;Job Name&#x201D; field should be a short descriptive name, like
+&#x201C;chromehangs analysis&#x201D;.</li>
+<li>Upload your IPython notebook containing the analysis.</li>
+<li>Set the number of workers of the cluster in the &#x201C;Cluster Size&#x201D;
+field.</li>
+<li>Set a schedule frequency using the remaining fields.</li>
+</ol>
+</li>
+</ol>
+<p>Now, the notebook will be updated automatically and the results can be
+easily shared. Furthermore, all files stored in the notebook&apos;s local
+working directory at the end of the job will be automatically uploaded
+to S3, which comes in handy for simple ETL workloads for example.</p>
+<p>For reference, see 
+<a href="https://robertovitillo.com/2015/03/13/simple-dashboards-with-scheduled-spark-jobs-and-plotly" target="_blank">Simple Dashboard with Scheduled Spark Jobs and Plotly</a>.</p>
+<h3 id="sharing-a-notebook">Sharing a Notebook</h3>
+<p>Jupyter notebooks can be shared in a few different ways.</p>
+<h4 id="sharing-a-static-notebook">Sharing a Static Notebook</h4>
+<p>An easy way to share is using a gist on github.</p>
+<ol>
+<li>Download file as .ipynb</li>
+<li>Upload to a gist on <a href="http://gist.github.com" target="_blank">gist.github.com</a></li>
+<li>Enter the gist URL at <a href="http://nbviewer.jupyter.org/" target="_blank">Jupyter
+nbviewer</a></li>
+<li>Share with your colleagues!</li>
+</ol>
+<h4 id="sharing-a-scheduled-notebook">Sharing a Scheduled Notebook</h4>
+<p>Setup your scheduled notebook. After it&apos;s run, do the following:</p>
+<ol>
+<li>Go to the &apos;Schedule a Spark job&apos; tab in atmo</li>
+<li>Get the URL for the notebook (under &apos;Currently Scheduled Jobs&apos;)</li>
+<li>Paste that URL into <a href="http://nbviewer.jupyter.org/" target="_blank">Jupyter nbviewer</a></li>
+</ol>
+<h2 id="zeppelin-notebooks">Zeppelin Notebooks</h2>
+<p>We also have *experimental* support for <a href="http://zeppelin.apache.org/" target="_blank">Apache
+Zeppelin</a> notebooks. The notebook server
+for that is running on port 8890, so you can connect to it just by
+tunneling the port (instead of port 8888 for Jupyter). For example:</p>
+<p>ssh -i ~/.ssh/id_rsa -L 8890:localhost:8890
+hadoop@ec2-54-70-129-221.us-west-2.compute.amazonaws.com</p>
+<h2 id="using-spark">Using Spark</h2>
+<p>Spark is a general-purpose cluster computing system - it allows users to
+run general execution graphs. APIs are available in Python, Scala, and
+Java. The Jupyter notebook utilizes the Python API. In a nutshell, it
+provides a way to run functional code (e.g. map, reduce, etc.) on large,
+distributed data.</p>
+<p>Check out 
+<a href="https://robertovitillo.com/2015/06/30/spark-best-practices/" target="_blank">Spark Best Practices</a>
+for tips on using Spark to it&apos;s full capabilities.</p>
+<h3 id="sparkcontext-sc">SparkContext (sc)</h3>
+<p>Access to the Spark API is provided through SparkContext. In the Jupyter
+notebook, this is the `sc` object. For example, to create a
+distributed RDD of monotonically increasing numbers 1-1000:</p>
+<pre><code class="lang-python">numbers = range(<span class="hljs-number">1000</span>)
+<span class="hljs-comment">#no need to initialize sc in the Jupyter notebook</span>
+numsRdd = sc.parallelize(numbers)
+nums.take(<span class="hljs-number">10</span>) <span class="hljs-comment">#no guaranteed order</span>
+</code></pre>
+<h3 id="spark-rdd">Spark RDD</h3>
+<p>The Resilient Distributed Dataset (RDD) is Spark&apos;s basic data structure.
+The operations that are performed on these structures are distributed to
+the cluster. Only certain actions (such as collect() or take(N)) pull an
+RDD in locally.</p>
+<p>RDD&apos;s are nice because there is no imposed schema - whatever they
+contain, they distribute around the cluster. Additionally, RDD&apos;s can be
+cached in memory, which can greatly improve performance of some
+algorithms that need access to data over and over again.</p>
+<p>Additionally, RDD operations are all part of a directed, acyclic graph.
+This gives increased redundancy, since Spark is always able to recreate
+an RDD from the base data (by rerunning the graph), but also provides
+lazy evaluation. No computation is performed while an RDD is just being
+transformed (a la map), but when an action is taken (e.g. reduce, take)
+the entire computation graph is evaluated. Continuing from our previous
+example, the following gives some of the peaks of a sin wave:</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-comment">#no computation is performed on the following line!</span>
+sin_values = numsRdd.map(<span class="hljs-keyword">lambda</span> x : np.float(x) / <span class="hljs-number">10</span>).map(<span class="hljs-keyword">lambda</span> x : (x, np.sin(x)))
+<span class="hljs-comment">#now the entire computation graph is evaluated</span>
+sin_values.takeOrdered(<span class="hljs-number">5</span>, <span class="hljs-keyword">lambda</span> x : -x[<span class="hljs-number">1</span>])
+</code></pre>
+<p>For jumping into working with Spark RDD&apos;s, we recommend reading the
+<a href="https://spark.apache.org/docs/latest/programming-guide.html" target="_blank">Spark Programming Guide</a>.</p>
+<h3 id="spark-sql-and-spark-dataframesdatasets">Spark SQL and Spark Dataframes/Datasets</h3>
+<p>Spark also supports traditional SQL, along with special data structures
+that require schemas. The Spark SQL API can be accessed with the
+`spark` object. For example:</p>
+<p><code>longitudinal = spark.sql(&apos;SELECT * FROM longitudinal&apos;)</code></p>
+<p>creates a DataFrame that contains all the longitudinal data. A Spark
+DataFrame is essentially a distributed table, a la Pandas or R
+Dataframes. Under the covers they are an RDD of Row objects, and thus
+the entirety of the RDD API is available for DataFrames, as well as a
+DataFrame specific API. For example, a sql-like way to get the count of
+a specific OS:</p>
+<p><code>longitudinal.select(&quot;os&quot;).where(&quot;os = &apos;Darwin&apos;&quot;).count()</code></p>
+<p>To Transform the DataFrame object to an RDD, simply do:</p>
+<p><code>longitudinal_rdd = longitudinal.rdd</code></p>
+<p>In general, however, the DataFrames are performance optimized, so it&apos;s
+worth the effort to learn the DataFrame API.</p>
+<p>For more overview, see the 
+<a href="https://spark.apache.org/docs/latest/sql-programming-guide.html" target="_blank">SQL Programming Guide</a>.
+See also the 
+<a href="http://reports.telemetry.mozilla.org/post/tutorials/longitudinal_dataset.kp" target="_blank">Longitudinal Tutorial</a>,
+one of the available example notebooks when you start a cluster.</p>
+<h3 id="available-data-sources-for-sparksql">Available Data Sources for SparkSQL</h3>
+<p>For information about available queryable data sources (e.g.  Longitudinal dataset), 
+see 
+<a href="../concepts/choosing_a_dataset.html">Choosing a Dataset</a>.</p>
+<p>These datasets are optimized for fast access, and will far out-perform
+analysis on the raw telemetry ping data.</p>
+<h3 id="accessing-the-spark-ui">Accessing the Spark UI</h3>
+<p>Go to <a href="https://localhost:8888/spark" target="_blank">https://localhost:8888/spark</a> after ssh-ing into the spark cluster
+to see the Spark UI.
+It has information about job statuses and task completion,
+and may help you debug your job.</p>
+<h2 id="the-moztelemetry-library">The MozTelemetry Library</h2>
+<p>We have provided a library that gives easy access to the raw telemetry ping data.
+For example usage, see the 
+<a href="http://reports.telemetry.mozilla.org/post/tutorials/telemetry_hello_world.kp" target="_blank">Telemetry Hello World</a>
+example notebook.
+Detailed documentation for the library can be found at the 
+<a href="http://python-moztelemetry.readthedocs.io" target="_blank">Python MozTelemetry Documentation</a>.</p>
+<h3 id="using-the-raw-ping-data">Using the Raw Ping Data</h3>
+<p>First off, import the moztelemetry library using the following:</p>
+<p><code>from moztelemetry import get_pings</code></p>
+<p>If you need any other functions, just comma separate them with
+<code>get_pings</code>.</p>
+<p>The ping data is an RDD of JSON elements. For example, using the
+following:</p>
+<pre><code class="lang-python">pings = get_pings(sc, app=<span class="hljs-string">&quot;Firefox&quot;</span>, channel=<span class="hljs-string">&quot;nightly&quot;</span>, build_id=(<span class="hljs-string">&quot;20160901000000&quot;</span>, <span class="hljs-string">&quot;20160901999999&quot;</span>), fraction=<span class="hljs-number">0.01</span>)
+</code></pre>
+<p>returns an RDD of 1/100th of Firefox Nightly JSON pings for all builds
+from September 1 2016. Now, because it&apos;s JSON, pings are easy to access.
+For example, to get the count of each OS type:</p>
+<pre><code class="lang-python">os_names = pings.map(<span class="hljs-keyword">lambda</span> x : (x[<span class="hljs-string">&apos;environment&apos;</span>][<span class="hljs-string">&apos;system&apos;</span>][<span class="hljs-string">&apos;os&apos;</span>][<span class="hljs-string">&apos;name&apos;</span>], <span class="hljs-number">1</span>))`\
+os_counts = os_names.reduceByKey(<span class="hljs-keyword">lambda</span> x, y : x+y)`\
+os_counts.collect()`
+</code></pre>
+<p>Alternatively, moztelemetry provides the `get_pings_properties`
+function, which will gather the data for you:</p>
+<pre><code class="lang-python">subset = get_pings_properties(pings, [<span class="hljs-string">&quot;environment/system/os/name&quot;</span>])`\
+subset.map(<span class="hljs-keyword">lambda</span> x : (x[<span class="hljs-string">&quot;environment/system/os/name&quot;</span>], <span class="hljs-number">1</span>)).reduceByKey(<span class="hljs-keyword">lambda</span> x, y : x+y).collect()`
+</code></pre>
+<h2 id="faq">FAQ</h2>
+<p>Please add more FAQ as questions are answered by you or for you.</p>
+<h3 id="how-can-i-load-parquet-datasets-in-a-jupyter-notebook">How can I load parquet datasets in a Jupyter notebook?</h3>
+<p>Use spark.read.parquet, e.g.:</p>
+<pre><code class="lang-python">dataset = spark.read.parquet(<span class="hljs-string">&quot;s3://the_bucket/the_prefix/the_version&quot;</span>)`
+</code></pre>
+<p>For more information see
+<a href="../cookbooks/parquet.html">Working with Parquet</a>.</p>
+<h3 id="i-got-a-remote-host-identification-has-changed-error">I got a REMOTE HOST IDENTIFICATION HAS CHANGED! error</h3>
+<p>AWS recycles hostnames, so this warning is expected.
+Removing the offending key from $HOME/.ssh/known_hosts will remove the warning.
+You can find the line to remove by finding the line in the output that says</p>
+<p><code>Offending key in /path/to/hosts/known_hosts:2</code></p>
+<p>Where 2 is the line number of the key that can be deleted.
+Just remove that line, save the file, and try again.</p>
+<h3 id="why-is-my-notebook-hanging">Why is my notebook hanging?</h3>
+<p>There are a few common causes for this:</p>
+<ol>
+<li>Currently, our Spark notebooks can only run a single Python kernel at
+a time. If you open multiple notebooks on the same cluster and try to
+run both, the second notebook will hang. Be sure to close notebooks
+using &quot;Close and Halt&quot; under the &quot;File&quot; dropdown.</li>
+<li>The connection from PySpark to the Spark driver might be lost.
+Unfortunately the best way to recover from this for the moment seems to
+be spinning up a new cluster.</li>
+<li>Canceling execution of a notebook cell doesn&apos;t cancel any spark jobs
+that might be running in the background. If your spark commands seem to
+be hanging, try running `sc.cancelAllJobs()`.</li>
+</ol>
+<h3 id="how-can-i-keep-running-after-closing-the-notebook">How can I keep running after closing the notebook?</h3>
+<p>For long-running computation, it might be nice to close the notebook
+(and the ssh session) and look at the results later.
+Unfortunately, <strong>all cell output will be lost when a notebook is closed</strong>
+(for the running cell).
+To alleviate this, there are a few options:</p>
+<ol>
+<li>Have everything output to a variable. These values should still be
+available when you reconnect.</li>
+<li>Put %%capture at the beginning of the cell to store all output. 
+<a href="https://ipython.org/ipython-doc/3/interactive/magics.html#cellmagic-capture" target="_blank">See the documentation</a>.</li>
+</ol>
+<h3 id="how-do-i-load-an-external-library-into-the-cluster">How do I load an external library into the cluster?</h3>
+<p>Assuming you&apos;ve got a url for the repo, you can create an egg for it
+this way:</p>
+<pre><code class="lang-python">!git clone `&lt;repo url&gt;` &amp;&amp; cd `&lt;repo-name&gt;` &amp;&amp; python setup.py bdist_egg`\
+sc.addPyFile(<span class="hljs-string">&apos;`&lt;repo-name&gt;`/dist/my-egg-file.egg&apos;</span>)`
+</code></pre>
+<p>Alternately, you could just create that egg locally, upload it to a web
+server, then download and install it:</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> requests`\
+r = requests.get(<span class="hljs-string">&apos;`&lt;url-to-my-egg-file&gt;`&apos;</span>)`\
+<span class="hljs-keyword">with</span> open(<span class="hljs-string">&apos;mylibrary.egg&apos;</span>, <span class="hljs-string">&apos;wb&apos;</span>) <span class="hljs-keyword">as</span> f:`\
+  f.write(r.content)`\
+sc.addPyFile(<span class="hljs-string">&apos;mylibrary.egg&apos;</span>)`
+</code></pre>
+<p>You will want to do this <strong>before</strong> you load the library. If the library
+is already loaded, restart the kernel in the ipython notebook.</p>
 
                                 
                                 </section>
@@ -848,7 +1095,7 @@ The work is being tracked in
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Advanced analysis with ATMO","level":"1.4.2.2","depth":3,"next":{"title":"Creating a Real-time Analysis Plugin","level":"1.4.2.3","depth":3,"path":"cookbooks/realtime_analysis_plugin.md","ref":"cookbooks/realtime_analysis_plugin.md","articles":[]},"previous":{"title":"TMO & STMO","level":"1.4.2.1","depth":3,"path":"concepts/analysis_intro.adoc","ref":"concepts/analysis_intro.adoc","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc"],"pluginsConfig":{"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"tools/advanced_analysis_with_atmo.md","mtime":"2017-04-26T15:25:07.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-08T13:00:23.032Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Custom analysis with Spark","level":"1.4.2.2","depth":3,"next":{"title":"Creating a Real-time Analysis Plugin","level":"1.4.2.3","depth":3,"path":"cookbooks/realtime_analysis_plugin.md","ref":"cookbooks/realtime_analysis_plugin.md","articles":[]},"previous":{"title":"TMO & STMO","level":"1.4.2.1","depth":3,"path":"concepts/analysis_intro.adoc","ref":"concepts/analysis_intro.adoc","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc"],"pluginsConfig":{"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"tools/spark.md","mtime":"2017-06-15T16:15:05.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-15T16:15:11.523Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
