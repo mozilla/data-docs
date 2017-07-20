@@ -14,7 +14,7 @@ They could be technical or non-technical: engineer, PM, or data scientist.
 
 _Getting Started_ covers:
 
-* [Analysis Quick Start](analysis_intro.adoc)- an introduction to TMO and histograms
+* [Analysis Quick Start](analysis_intro.md)- an introduction to TMO and histograms
 * [Data Privacy @ Mozilla](/concepts/data_privacy.md) - what can['t] you share?
 * [Choosing a Dataset](/concepts/choosing_a_dataset.md)
 * [Intro to STMO](/tools/stmo.md)
