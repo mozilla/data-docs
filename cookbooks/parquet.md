@@ -59,4 +59,4 @@ test_dataframe.write.mode('error') \
 
 # Accessing Parquet Tables from Re:dash
 
-See [Creating a custom re:dash dataset](/cookbooks/create_a_dataset.adoc).
+See [Creating a custom re:dash dataset](/cookbooks/create_a_dataset.md).
