@@ -110,7 +110,7 @@ There is a vast ecosystem of tools for processing data at scale, each with their
 [dump data directly in Parquet form]: https://github.com/mozilla-services/lua_sandbox_extensions/pull/48
 [private repository]: https://github.com/mozilla-services/puppet-config/tree/02f716a3e0df1117fc2494b41e85a1416f8e2a64/pipeline
 [ATMO]: https://analysis.telemetry.mozilla.org/
-[an API]: https://python-moztelemetry.readthedocs.io/en/stable/userguide.html#module-moztelemetry.dataset
+[an API]: https://python-moztelemetry.readthedocs.io/en/stable/api.html#module-moztelemetry.dataset
 [EMR]: https://github.com/mozilla/emr-bootstrap-spark/
 [ETL jobs]: https://github.com/mozilla/telemetry-batch-view
 [Airflow]: https://github.com/mozilla/telemetry-airflow/
@@ -122,5 +122,5 @@ There is a vast ecosystem of tools for processing data at scale, each with their
 [re:dash]: https://sql.telemetry.mozilla.org/
 [STMO]: https://sql.telemetry.mozilla.org/
 [fork of re:dash]: https://github.com/mozilla/redash
-[needle-in-haystack queries]: https://python-moztelemetry.readthedocs.io/en/stable/userguide.html#module-moztelemetry.hbase
+[needle-in-haystack queries]: https://python-moztelemetry.readthedocs.io/en/stable/api.html#module-moztelemetry.hbase
 [Zeppelin]: https://bugzilla.mozilla.org/show_bug.cgi?id=1369519

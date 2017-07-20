@@ -218,4 +218,4 @@ quotes. Try using single quotes instead.
   definition](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/Longitudinal.scala#L194)
 - [Custom_dashboards_with_re:dash](https://wiki.mozilla.org/Custom_dashboards_with_re:dash)
 
-[1]: https://github.com/mozilla/emr-bootstrap-spark/blob/master/examples/Longitudinal%20Dataset%20Tutorial.ipynb
+[1]: http://reports.telemetry.mozilla.org/post/tutorials/longitudinal_dataset.kp
