@@ -26,7 +26,7 @@ Try to limit the size of your data by controlling the date range, etc.
 
 You can access raw ping data from an 
 [ATMO cluster](https://analysis.telemetry.mozilla.org/) using the 
-[Dataset API](http://python-moztelemetry.readthedocs.io/en/stable/userguide.html#module-moztelemetry.dataset).
+[Dataset API](https://python-moztelemetry.readthedocs.io/en/stable/api.html#module-moztelemetry.dataset).
 Raw ping data are not available in [re:dash](https://sql.telemetry.mozilla.org/).
 
 #### Further Reading
