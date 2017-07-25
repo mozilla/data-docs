@@ -21,7 +21,7 @@ queries, visualizations, and dashboards.
 STMO's basic unit of analysis is the query. A query is a block of SQL code that
 extracts and (optionally) transforms data from a single data source. Queries
 can vary widely in complexity. Some queries are trivial one liners
-(e.g. 'SELECT * FROM tablename LIMIT 10'), while others are many pages long,
+(e.g. `SELECT * FROM tablename LIMIT 10`), while others are many pages long,
 small programs in their own right.
 
 The raw output from a query is tabular data, where each row is one set of
@@ -296,3 +296,6 @@ Some final notes to help you create your dashboards:
   sophisticated visualizations supported by STMO. You can see a great many much
   more sophisticated queries and dashboards by browsing around and exploring
   the work that has been published by others.
+
+* The [redash help center](https://redash.io/help/) is useful for further deep
+  diving into redash and all of its capabilities.
