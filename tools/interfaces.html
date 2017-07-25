@@ -805,10 +805,66 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="work-in-progress">Work in Progress</h1>
-<p>This document is a work in progress.
-The work is being tracked in
-<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1341896" target="_blank">this bug</a>.</p>
+                                <h2 id="mozilla-firefox-data-analysis-tools">Mozilla Firefox Data Analysis Tools</h2>
+<p>This is a starting point for making sense of (and gaining access to) all of the
+Firefox-related data analysis tools. There are a number of different tools
+available, all with their own strengths, tailored to a variety of use cases and
+skill sets.</p>
+<h4 id="sqltelemetrymozillaorg-stmo"><a href="stmo.html">sql.telemetry.mozilla.org</a> (STMO)</h4>
+<p>The <a href="https://sql.telemetry.mozilla.org" target="_blank">sql.telemetry.mozilla.org</a> (STMO) site
+is an instance of the very fine <a href="https://redash.io/" target="_blank">redash</a> software, allowing
+for SQL-based exploratory analysis and visualization / dashboard
+construction. Requires (surprise!)  familiarity with SQL, and for your data to
+be explicitly exposed as an STMO data source. Bugs or feature requests can be
+reported in our <a href="https://github.com/mozilla/redash/issues" target="_blank">issue tracker</a>.</p>
+<h4 id="analysistelemetrymozillaorg-atmo"><a href="spark.html">analysis.telemetry.mozilla.org</a> (ATMO)</h4>
+<p>The
+<a href="https://https://analysis.telemetry.mozilla.org" target="_blank">analysis.telemetry.mozilla.org</a>
+(ATMO) site can be used to launch and gain access to virtual machines running
+Apache Spark clusters which have been preconfigured with access to the raw data
+stored in our long term storage (LTS) S3 buckets. Spark allows you to use
+Python or Scala to perform arbitrary analysis and generate arbitrary
+output. Once developed, a.t.m.o can also be used to run recurring Spark jobs
+for data transformation, processing, or reporting. Requires Python or Scala
+programming skills and knowledge of various data APIs. Learn more by visiting
+the <a href="https://wiki.mozilla.org/Telemetry" target="_blank">documentation</a> or
+<a href="spark.html">tutorials</a>.</p>
+<h4 id="telemetrymozillaorg-tmo"><a href="analysis_intro.md">telemetry.mozilla.org</a> (TMO)</h4>
+<p>Our <a href="https://telemetry.mozilla.org" target="_blank">telemetry.mozilla.org</a> (TMO) site is the
+&apos;venerable standby&apos; of Firefox telemetry analysis tools. It uses aggregate
+telemetry data (as opposed to the collated data sets that are exposed to most
+of the other tools) so it provides less latency than most but is unsuitable for
+examining at the individual client level. It provides a powerful UI that allows
+for sophisticated ad-hoc analysis without the need for any specialized
+programming skills, but with so many options the UI can be a bit intimidating
+for novice users.</p>
+<h4 id="distribution-viewer"><a href="distribution_viewer.html">Distribution Viewer</a></h4>
+<p><a href="https://gauss.telemetry.mozilla.org" target="_blank">Distribution Viewer</a> is a simple tool
+that provides a set of <a href="http://math.stackexchange.com/questions/52400/what-is-cdf-cumulative-distribution-function" target="_blank">cumulative distribution
+graphs</a>
+for a pre-specified selection of Firefox user metrics. These metrics are
+extracted from a 1% sample of the clientIds from Unified Telemetry. These plots
+will allow you to understand how values of different metrics are spread out
+among our population of users rather than just using a one number summary (such
+as a mean or median). By viewing the entire distribution, you can get a sense
+of the importance of behavior at the extremes as well as anomalies within the
+population that might indicate interesting behavior. Very simple to use (no
+programming required) and able to provide interesting insights, but not usually
+suitable for ad-hoc analysis.</p>
+<h4 id="real-time--cep"><a href="../cookbooks/realtime_analysis_plugin.html">Real Time / CEP</a></h4>
+<p>The &apos;real time&apos; or &apos;complex event processing&apos; (CEP)
+<a href="https://pipeline-cep.prod.mozaws.net/" target="_blank">system</a> is part of the ingestion
+infrastructure that processes all of our Firefox telemetry data. It provides
+extremely low latency access to the data as it&apos;s flowing through our ingestion
+system on its way to long term storage. As a CEP system, it is unlike the rest
+of our analysis tools in that it is up to the analyst to specify and maintain
+state from the data that is flowing; it is non-trivial to revisit older data
+that has already passed through the system. The CEP is very powerful, allowing
+for sophisticated monitoring, alerting, reporting, and dashboarding. Developing
+new analysis plugins requires knowledge of the Lua programming language,
+relevant APIs, and a custom filter configuration syntax. Learn more about how
+to do this in our <a href="../cookbooks/realtime_analysis_plugin.html">Creating a Real-time Analysis
+Plugin</a> article.</p>
 
                                 
                                 </section>
@@ -852,7 +908,7 @@ The work is being tracked in
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Interfaces","level":"1.4.2","depth":2,"next":{"title":"TMO & STMO","level":"1.4.2.1","depth":3,"path":"concepts/analysis_intro.md","ref":"concepts/analysis_intro.md","articles":[]},"previous":{"title":"Overview of Mozilla's Data Pipeline","level":"1.4.1","depth":2,"path":"concepts/data_pipeline.md","ref":"concepts/data_pipeline.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc"],"pluginsConfig":{"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"tools/interfaces.md","mtime":"2017-04-26T15:25:07.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-13T19:14:00.554Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Interfaces","level":"1.4.2","depth":2,"next":{"title":"TMO & STMO","level":"1.4.2.1","depth":3,"path":"concepts/analysis_intro.md","ref":"concepts/analysis_intro.md","articles":[]},"previous":{"title":"Overview of Mozilla's Data Pipeline","level":"1.4.1","depth":2,"path":"concepts/data_pipeline.md","ref":"concepts/data_pipeline.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc"],"pluginsConfig":{"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"tools/interfaces.md","mtime":"2017-07-25T13:31:50.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-25T13:32:06.868Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
