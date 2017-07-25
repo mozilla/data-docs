@@ -66,9 +66,10 @@ more slowly.
 
 Other available data sources include *Crash-DB*, *Tiles*, *Sync Stats*, *Push*,
 *Test Pilot*, *ATMO*, and even a *re:dash metadata* which connects to STMO's
-own redash database. It is beyond the scope of this document to list and
-describe all of the data sources, but if you have questions about particular
-data sets, or would like to know if specific data is or can be made available
+own redash database. You can learn more about the available data sets and how
+to find the one that's right for you on the [Choosing a
+dataset](../concepts/choosing_a_dataset.md) page. If you have data set
+questions, or would like to know if specific data is or can be made available
 in STMO, please inquire in the #datapipeline or #datatools channels on
 irc.mozilla.org.
 
@@ -80,26 +81,41 @@ simple dashboard using STMO.
 
 #### Creating A Query
 
-First we must create a query, which can be initiated by clicking on the 'New
-Query' button near the top left of the page. This will bring you to the query
-editing page:
+We start by creating a query. Our first query will count the number of client
+ids that we have coming from each country, for the top N countries. Clicking on
+the 'New Query' button near the top left of the site will bring you to the
+query editing page:
 
 ![New Query Page](/../assets/STMO_screenshots/new_query.png "New Query page")
 
-The first query will be counting the number of client ids that we have coming
-from each country, for the top N countries. There is a "client_count" data set
-that is generated from Firefox telemetry pings, so first we check to see if
-that data is available in the *Athena* data source by typing "client_count"
-into the "Search schema..." search box above the schema browser interface to
-the left of the main query edit box. As of this writing, this data set is not
-available in *Athena*, but if you click on the 'Data Source' dropdown and
-change the selection from 'Athena' to 'Presto', you can see that there is a
-main client_count data set (showing up as 'default.client_count') and a number
-of historical client_count data sets (showing up as
-'default.client_count_v<TIMESTAMP>'). Clicking on "default.client_count" in the
-schema browser exposes the columns that are available in the data set. Two of
-the columns are of interest to us for this query: *country* (for obvious
-reasons) and *hll*.
+For this (and most queries where we're counting distinct client IDs) we'll want
+to use the ["client_count" data
+set](../datasets/batch_view/client_count/reference.md) that is generated from
+Firefox telemetry pings.
+
+* Check if the data set is in Athena
+
+  As mentioned above, Athena is faster than Presto, but not all data sets are
+  yet available in Athena. We can check to see if the one we want is available
+  in the by typing "client_count" into the "Search schema..."  search box above
+  the schema browser interface to the left of the main query edit box. As of
+  this writing, alas, there are no matches for "client_count", which means this
+  data set is not available in *Athena*.
+
+* Verify the data set exists in Presto
+
+  It's not in Athena, so now we should check to see if it's in Presto. If you
+  click on the 'Data Source' dropdown and change the selection from 'Athena' to
+  'Presto' (with "client_count" still populating the filter input), you should
+  see that there is, in fact, a client_count data set (showing up as
+  'default.client_count'), as well as a number of historical client_count data
+  sets (showing up as 'default.client_count_v<TIMESTAMP>').
+
+* Introspect the available columns
+
+  Clicking on the "default.client_count" in the schema browser exposes the
+  columns that are available in the data set. Two of the columns are of
+  interest to us for this query: *country* (for obvious reasons) and *hll*.
 
 The *hll* column bears some explanation. "hll" stands for
 [HyperLogLog](https://en.wikipedia.org/wiki/HyperLogLog), a sophisticated
@@ -112,10 +128,16 @@ incantation:
 
   ```cardinality(merge(cast(hll as HLL)))```
 
-So a query that extracts all of the unique country values and the count for each
-one, sorted from highest count to lowest count looks like this:
+So a query that extracts all of the unique country values and the count for
+each one, sorted from highest count to lowest count looks like this:
 
-  ```SELECT country, cardinality(merge(cast(hll AS HLL))) AS client_count FROM client_count GROUP BY 1 ORDER BY 2 DESC```
+  ```sql
+  SELECT country,
+         cardinality(merge(cast(hll AS HLL))) AS client_count
+  FROM client_count
+  GROUP BY 1
+  ORDER BY 2 DESC
+  ```
 
 If you type that into the main query edit box and then click on the "Execute"
 button, you should see a blue bar appear below the edit box containing the text
@@ -174,7 +196,7 @@ only problem; queries that return millions of rows can tax the system, failing
 to return the desired results, and negatively impacting the performance of all
 of the other users of the system. Thus, a very important warning:
 
-  ALL QUERIES SHOULD INCLUDE A "LIMIT" STATEMENT BY DEFAULT!
+  **ALL QUERIES SHOULD INCLUDE A "LIMIT" STATEMENT BY DEFAULT!**
 
 You should be in the habit of adding a "LIMIT 100" clause to the end of all new
 queries, to prevent your query from returning a gigantic data set that causes
