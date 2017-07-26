@@ -448,6 +448,19 @@
             
         </li>
     
+        <li class="chapter " data-level="1.3.3.2.10" data-path="../datasets/batch_view/new_profile/reference.html">
+            
+                <a href="../datasets/batch_view/new_profile/reference.html">
+            
+                    
+                    New Profile
+            
+                </a>
+            
+
+            
+        </li>
+    
 
             </ul>
             
@@ -842,6 +855,7 @@ take a look at our <a href="../tools/experiments.html">tools for experimentation
 <li><a href="#crashsummary">crash_summary</a></li>
 </ul>
 </li>
+<li><a href="#new-profile-derived-datasets">New-Profile Derived Datasets</a></li>
 <li><a href="#appendix">Appendix</a><ul>
 <li><a href="#mobile-metrics">Mobile Metrics</a></li>
 </ul>
@@ -1076,6 +1090,22 @@ Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/4793/source" t
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/docs/CrashSummary.md" target="_blank">telemetry-batch-view documentation</a>.</p>
 <p>The code responsible for generating this dataset is
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/CrashSummaryView.scala" target="_blank">here</a></p>
+<h1 id="new-profile-derived-datasets">New-Profile Derived Datasets</h1>
+<p>The <a href="http://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/new-profile-ping.html" target="_blank">new-profile ping</a>
+is sent from Firefox Desktop on the first session of a newly created profile and contains the initial
+information about the user environment.</p>
+<p>This data is available in the <strong>telemetry_new_profile_parquet</strong> dataset.</p>
+<p>The <code>telemetry_new_profile_parquet</code> table is the most direct representation of a new-profile ping.</p>
+<h4 id="contents">Contents</h4>
+<p>The table contains one row for each ping. Each column represents one field from the new-profile ping payload, though only a subset of all fields are included.</p>
+<h4 id="accessing-the-data">Accessing the Data</h4>
+<p>The data is stored as a parquet table in S3 at the following address.
+See <a href="../cookbooks/parquet.html">this cookbook</a> to get started working with the data in Spark.</p>
+<pre><code>s3://net-mozaws-prod-us-west-2-pipeline-data/telemetry-new-profile-parquet/v1/
+</code></pre><p>The <code>telemetry_new_profile_parquet</code> is accessible through re:dash.
+Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/5888#table" target="_blank">example query</a>.</p>
+<h4 id="further-reading">Further Reading</h4>
+<p>This dataset is generated automatically using direct to parquet. The configuration responsible for generating this dataset was introdueced in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1360256" target="_blank">bug 1360256</a>.</p>
 <h1 id="appendix">Appendix</h1>
 <h2 id="mobile-metrics">Mobile Metrics</h2>
 <p>There are several tables owned by the mobile team documented
@@ -1129,7 +1159,7 @@ Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/4793/source" t
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.3","depth":2,"next":{"title":"Intro to STMO","level":"1.2.4","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"previous":{"title":"Data Privacy","level":"1.2.2","depth":2,"path":"concepts/data_privacy.md","ref":"concepts/data_privacy.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc"],"pluginsConfig":{"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2017-06-08T13:00:16.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-26T13:18:18.145Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.3","depth":2,"next":{"title":"Intro to STMO","level":"1.2.4","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"previous":{"title":"Data Privacy","level":"1.2.2","depth":2,"path":"concepts/data_privacy.md","ref":"concepts/data_privacy.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc"],"pluginsConfig":{"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2017-07-26T15:36:43.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-26T15:37:32.742Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
