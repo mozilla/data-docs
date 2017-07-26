@@ -24,6 +24,7 @@
       * [Sync Summary](datasets/batch_view/sync_summary/reference.md)
       * [Addons](datasets/batch_view/addons/reference.md)
       * [Client Count](datasets/batch_view/client_count/reference.md)
+      * [New Profile](datasets/batch_view/new_profile/reference.md)
     * [Experimental Datasets](tools/experiments.md)
       * [Accessing Shield Study data](datasets/shield.md)
 * [Tools](tools/README.adoc)
