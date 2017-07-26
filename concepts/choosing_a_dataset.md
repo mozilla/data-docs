@@ -58,6 +58,16 @@ This section describes the derived datasets we provide to make analyzing this da
 
 {% include "/datasets/batch_view/crash_summary/intro.md" %}
 
+# New-Profile Derived Datasets
+
+The [new-profile ping](http://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/new-profile-ping.html)
+is sent from Firefox Desktop on the first session of a newly created profile and contains the initial
+information about the user environment.
+
+This data is available in the **telemetry_new_profile_parquet** dataset.
+
+{% include "/datasets/batch_view/new_profile/intro.md" %}
+
 # Appendix
 
 ## Mobile Metrics
