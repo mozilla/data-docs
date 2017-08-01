@@ -29,6 +29,7 @@ WITH search_data AS
           s.count AS search_count
    FROM main_summary CROSS JOIN UNNEST(search_counts) AS t(s)
    WHERE submission_date_s3 = '20160510'
+     AND sample_id = '42'
      AND search_counts IS NOT NULL)
 SELECT search_source, sum(search_count) as total_searches
 FROM search_data

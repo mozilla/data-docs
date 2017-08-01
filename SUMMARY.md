@@ -36,7 +36,7 @@
     * [Distribution Viewer](tools/distribution_viewer.md)
     * [HBase](tools/hbase.md)
     * [RTMO](tools/rtmo.md)
-    * [Alerts] (tools/alerts.md)
+    * [Alerts](tools/alerts.md)
 * [Cookbooks](cookbooks/README.adoc)
   * [Working with Parquet Data on ATMO Clusters](cookbooks/parquet.md)
   * [Creating a custom re:dash dataset](cookbooks/create_a_dataset.md)
