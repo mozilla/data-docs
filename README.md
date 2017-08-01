@@ -13,6 +13,12 @@ To build the documentation locally, you'll need to install the gitbook-cli app w
 npm install gitbook-cli -g
 ```
 
+and install the gitbook plugins with
+
+```bash
+gitbook install
+```
+
 You can then clone the repository and serve the documentation locally with:
 ```
 gitbook serve
@@ -24,13 +30,13 @@ The complete documentation for the gitbook toolchain is at: https://toolchain.gi
 
 This documentation is under active development,
 so we may already be working on the documentation you need.
-Take a look at 
+Take a look at
 [this bug tree](https://bugzilla.mozilla.org/showdependencytree.cgi?id=1341617&hide_resolved=1)
 to check.
 Please open a new bug if you spot any missing documentation.
 
-Articles can be written in either 
-[Markdown](https://daringfireball.net/projects/markdown/syntax) or 
+Articles can be written in either
+[Markdown](https://daringfireball.net/projects/markdown/syntax) or
 [AsciiDoc](http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/).
 I recommend using Markdown by default.
 If you run into any technical limitations, let me (@harter) know.
@@ -40,7 +46,7 @@ Be sure to link to your new article from `SUMMARY.md`, or GitBook will not rende
 
 ### Review
 
-Once your happy with your contribution, please open a PR and flag @harterrt for review. 
+Once your happy with your contribution, please open a PR and flag @harterrt for review.
 Please squash your changes  into meaningful commits  and follow these
 [commit message guidelines](https://chris.beams.io/posts/git-commit/).
 

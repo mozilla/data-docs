@@ -7,6 +7,6 @@ gitbook build . $build_dir && \
 touch $build_dir/.nojekyll && \
 ghp-import \
     -b gh-pages \
-    -c docs.telemetry.mozilla.org \
+    -c docs-origin.telemetry.mozilla.org \
     $build_dir && \
 git push origin gh-pages
