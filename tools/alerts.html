@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>HBase · GitBook</title>
+        <title>Alerts · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="rtmo.html" />
+    <link rel="next" href="../cookbooks/" />
     
     
-    <link rel="prev" href="distribution_viewer.html" />
+    <link rel="prev" href="rtmo.html" />
     
 
     </head>
@@ -601,7 +601,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.4.2.5" data-path="hbase.html">
+        <li class="chapter " data-level="1.4.2.5" data-path="hbase.html">
             
                 <a href="hbase.html">
             
@@ -627,7 +627,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.2.7" data-path="alerts.html">
+        <li class="chapter active" data-level="1.4.2.7" data-path="alerts.html">
             
                 <a href="alerts.html">
             
@@ -816,7 +816,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >HBase</a>
+        <a href=".." >Alerts</a>
     </h1>
 </div>
 
@@ -831,9 +831,154 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="hbase">HBase</h1>
-<p>What is it and why?</p>
-<p><a href="https://python-moztelemetry.readthedocs.io/en/stable/api.html#module-moztelemetry.hbase" target="_blank">https://python-moztelemetry.readthedocs.io/en/stable/api.html#module-moztelemetry.hbase</a></p>
+                                <h1 id="telemetry-alerts">Telemetry Alerts</h1>
+<p>Many Telemetry probes were created to show performance trends over time.
+Sudden changes happening in Nightly could be the sign of an
+unintentional performance regression, so we introduced a system to
+automatically detect and alert developers about such changes.</p>
+<p>Thus we created Telemetry Alerts. It comes in two pieces:
+<a href="https://github.com/mozilla/cerberus/" target="_blank">Cerberus</a> the Detector and
+<a href="https://github.com/mozilla/medusa/" target="_blank">Medusa</a> the Front-end.</p>
+<h3 id="cerberus">Cerberus</h3>
+<p>Every day Cerberus grabs the latest aggregated information about all
+non-keyed Telemetry probes from aggregates.telemetry.mozilla.org and
+compares the distribution of values from the <strong>Nightly</strong> builds of the
+past two days to the distribution of values from the Nightly builds of
+the past seven days.</p>
+<p>It does this by calculating the <a href="https://en.wikipedia.org/wiki/Bhattacharyya_distance" target="_blank">Bhattacharyya
+distance</a> between
+the two distributions and guessing whether or not they are <a href="https://github.com/mozilla/cerberus/blob/master/alert/alert.py#L72" target="_blank">significant
+and
+narrow</a>.</p>
+<p>It places all detected changes in a file for ingestion by Medusa.</p>
+<h3 id="medusa">Medusa</h3>
+<p>Medusa is in charge of emailing people when distributions change and for
+displaying the website <a href="https://alerts.telemetry.mozilla.org" target="_blank">https://alerts.telemetry.mozilla.org</a> which
+contains pertinent information about each detected regression.</p>
+<p>Medusa also checks for expiring histograms and sends emails notifying of
+their expiry.</p>
+<h2 id="what-it-can-do">What it can do</h2>
+<p>Telemetry Alerts is very good at identifying sudden changes in the
+shapes of normalized distributions of Telemetry probes. If you can see
+the distribution of <a href="https://mzl.la/2vdMRax" target="_blank">GC_MS</a> shift from one day
+to the next, then likely so can Cerberus.</p>
+<h2 id="what-cant-it-do">What can&apos;t it do</h2>
+<p>Telemetry Alerts is not able to see sudden shifts in volume. It is also
+very easily fooled if a change happens over a long period of time or
+doesn&apos;t fundamentally alter the shape of the probe&apos;s histogram.</p>
+<p>So if you have a probe like
+<a href="https://mzl.la/2vdiuRx" target="_blank">SCALARS_BROWSER.ENGAGEMENT.MAX_CONCURRENT_TAB_COUNT</a>,
+Cerberus won&apos;t notice if:</p>
+<ul>
+<li>The number of pings reporting this value decreased in half, but
+otherwise reported the same spread of numbers</li>
+<li>The value increases very slowly over time (which I&apos;d expect it to do
+given how good Session Restore is these days)</li>
+<li>We suddenly received twice as many pings from 200-tab subsessions
+(the dominance of 1-tab pings would likely ensure the overall shape
+of the distribution changed insufficiently much for Cerberus to pick
+up on it)</li>
+</ul>
+<h2 id="telemetry-alert-emails">Telemetry Alert Emails</h2>
+<p>One of the main ways humans interact with Telemetry Alerts is through
+the emails sent by Medusa.</p>
+<p>At present the email contains a link to the alert&apos;s page on
+<a href="https://alerts.telemetry.mozilla.org" target="_blank">https://alerts.telemetry.mozilla.org</a> and a link to a pushlog on
+<a href="https://hg.mozilla.org" target="_blank">https://hg.mozilla.org</a> detailing the changes newly-present in the
+Nightly build that exhibited the change.</p>
+<h2 id="triaging-a-telemetry-alert-email">Triaging a Telemetry Alert Email</h2>
+<p>Congratulations! You have just received a Telemetry Alert!</p>
+<p>Now what?</p>
+<p><strong>Assumption:</strong> Alerts happen because of changes in probes. Changes in
+probes happen because of changes in related code. If we can identify the
+code change, we can find the bug that introduced the code change. If we
+can find the bug, we can ni? the person who made the change.</p>
+<p><strong>Goal:</strong> Identify the human responsible for the Alert so they can
+identify if it is
+good/bad/intentional/exceptional/temporary/permanent/still
+relevant/having its alerts properly looked after.</p>
+<p><strong>Guide:</strong></p>
+<p>1. Is this alert just one of a group of similar changes by topic? By
+build?</p>
+<ul>
+<li>If there&apos;s a group by topic (SPDY, URLCLASSIFIER, ...) check to see
+if the changes are similar in direction/magnitude. They usually are.</li>
+<li>If there&apos;s a group by build but not topic, maybe a large merge
+kicked things over. Unfortunate, as that&apos;ll make finding the source
+more difficult.</li>
+</ul>
+<p>2. Open the hg.mozilla.org and alerts.telemetry.mozilla.org links in
+tabs</p>
+<ul>
+<li>On alerts.tmo, does it look like an improvement or regression? (This
+is just a first idea and might change. There are often extenuating
+circumstances that make something that looks bad into an
+improvement, and vice versa.)</li>
+<li>On hg.mo, does the topic of the changed probe exist in the pushlog?
+In other words, does any part of the probe&apos;s name show up in the
+summaries of any of the commits?</li>
+</ul>
+<p>3. From alerts.tmo, open the <a href="https://telemetry.mozilla.org" target="_blank">https://telemetry.mozilla.org</a> link by
+clicking on the plot&apos;s title. Open another tab to the Evolution View.</p>
+<ul>
+<li>Is the change temporary? (might&apos;ve been noticed elsewhere and
+backed out)</li>
+<li>Is the change up or down?</li>
+<li>Has it happened before?</li>
+<li>Was it accompanied by a decrease in submission volume? (the second
+graph at the bottom of the Evolution View)</li>
+<li>On the Distribution View, did the Sample Count increase? Decrease?
+(this signifies that the change could be because of the addition or
+subtraction of a population of values. For instance, we could
+suddenly stop sending 0 values which would shift the graph to
+the right. This could be a good thing (we&apos;re not handling useless
+things anymore) a bad thing (something broke and we&apos;re no longer
+measuring the same thing we used to measure) or indifferent)</li>
+</ul>
+<p>4. If you still don&apos;t have a cause</p>
+<ul>
+<li>Use DXR or searchfox to find where the probe is accumulated.</li>
+<li>Click &quot;Log&quot; in that view.</li>
+<li>Are there any changesets in the resultant hg.mo list that ended up
+in the build we received the Alert for?</li>
+</ul>
+<p>5. If you _still_ don&apos;t know what&apos;s going on</p>
+<ul>
+<li>find a domain expert on IRC and bother them to help you out. Domain
+knowledge is awesome.</li>
+</ul>
+<p>From pursuing these steps or substeps you should now have two things: a
+bug that likely caused the alert, and an idea of what the alert is
+about.</p>
+<p>Now comment on the bug. Feel free to use this script:</p>
+<pre><code class="lang-text">This bug may have contributed to a sudden change in the Telemetry probe &lt;PROBE_NAME&gt;[1] which seems to have occurred in Nightly &lt;builddate&gt;[2][3].
+
+There was a &lt;describe the change: increase/decrease, population addition/subtraction, regression/improvement, change in submission/sample volume...&gt;.
+This might mean &lt;wild speculation. It&apos;ll encourage the ni? to refute it :) &gt;
+
+Is this an improvement? A regression?
+
+Is this intentional? Is this expected?
+
+Is this probe still measuring something useful?
+
+[1]: &lt;the alerts.tmo link&gt;
+[2]: &lt;the hg.mo link for the pushlog&gt;
+[3]: &lt;the telemetry.mozilla.org link showing the Evolution View&gt;
+</code></pre>
+<p>Then ni? the person who pushed the change. Reply-all to the
+dev-telemetry-alerts mail with a link to the bug and some short notes on
+what you found.</p>
+<p>From here the user on ni? should get back to you in fairly short order
+and either help you find the real bug that caused it, or help explain
+what the Alert was all about. More often than not it is an expected
+change from a probe that is still operating correctly and there is no
+action to take...</p>
+<p>...except making sure you never have to respond to an Alert for this
+probe again, that is. File a bug in that bug&apos;s component to update the
+Alert&apos;ing probe to have a valid, monitored &quot;alert_emails&quot; field so that
+the next time it misbehaves <em>they</em> can be the ones to explain themselves
+without you having to spend all this time tracking them down.</p>
 
                                 
                                 </section>
@@ -861,12 +1006,12 @@
 
             
                 
-                <a href="distribution_viewer.html" class="navigation navigation-prev " aria-label="Previous page: Distribution Viewer">
+                <a href="rtmo.html" class="navigation navigation-prev " aria-label="Previous page: RTMO">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="rtmo.html" class="navigation navigation-next " aria-label="Next page: RTMO">
+                <a href="../cookbooks/" class="navigation navigation-next " aria-label="Next page: Cookbooks">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -877,7 +1022,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"HBase","level":"1.4.2.5","depth":3,"next":{"title":"RTMO","level":"1.4.2.6","depth":3,"path":"tools/rtmo.md","ref":"tools/rtmo.md","articles":[]},"previous":{"title":"Distribution Viewer","level":"1.4.2.4","depth":3,"path":"tools/distribution_viewer.md","ref":"tools/distribution_viewer.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc"],"pluginsConfig":{"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"tools/hbase.md","mtime":"2017-07-25T13:31:50.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-08-01T19:25:55.339Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Alerts","level":"1.4.2.7","depth":3,"next":{"title":"Cookbooks","level":"1.5","depth":1,"path":"cookbooks/README.adoc","ref":"cookbooks/README.adoc","articles":[{"title":"Working with Parquet Data on ATMO Clusters","level":"1.5.1","depth":2,"path":"cookbooks/parquet.md","ref":"cookbooks/parquet.md","articles":[]},{"title":"Creating a custom re:dash dataset","level":"1.5.2","depth":2,"path":"cookbooks/create_a_dataset.md","ref":"cookbooks/create_a_dataset.md","articles":[]},{"title":"Creating a Real-time Analysis Plugin","level":"1.5.3","depth":2,"path":"cookbooks/realtime_analysis_plugin.md","ref":"cookbooks/realtime_analysis_plugin.md","articles":[]},{"title":"Longitudinal Examples","level":"1.5.4","depth":2,"path":"cookbooks/longitudinal_examples.md","ref":"cookbooks/longitudinal_examples.md","articles":[]}]},"previous":{"title":"RTMO","level":"1.4.2.6","depth":3,"path":"tools/rtmo.md","ref":"tools/rtmo.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc"],"pluginsConfig":{"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"tools/alerts.md","mtime":"2017-07-26T13:17:46.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-08-01T19:25:55.339Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
