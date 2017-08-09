@@ -1,7 +1,13 @@
 {
-    "plugins":[
-        "toc"
+    "plugins": [
+        "toc",
+        "ga"
     ],
+    "pluginsConfig": {
+        "ga": {
+            "token": "UA-104326577-1"
+        }
+    },
     "structure": {
         "readme": "introduction.md"
     }
