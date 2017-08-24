@@ -11,7 +11,7 @@ The documentation is intended to be read as HTML at
 [docs.telemetry.mozilla.org](https://docs.telemetry.mozilla.org).
 However, we store the documentation in raw text files in the
 [firefox-data-docs repo](https://github.com/mozilla/firefox-data-docs).
-To begin contributing to the docs, clone the firefox-data-docs repo.
+To begin contributing to the docs, fork the firefox-data-docs repo.
 
 ## Building the Documentation
 
@@ -75,6 +75,20 @@ Short paragraphs that describe one concept each makes finding important informat
 Once your happy with your contribution, please open a PR and flag @harterrt for review.
 Please squash your changes  into meaningful commits  and follow these
 [commit message guidelines](https://chris.beams.io/posts/git-commit/).
+
+## Publishing
+
+The documentation is hosted on [Github Pages](https://pages.github.com/).
+Updates to the documentation still need to be pushed manually.
+Use the [deploy script](https://github.com/mozilla/firefox-data-docs/blob/master/scripts/deploy.sh)
+to publish new changes.
+
+This script depends on 
+[ghp-import](https://github.com/davisp/ghp-import).
+
+Keep in mind that this will deploy the docs to your `origin` repo.
+If you're working from a fork (which you should be),
+`deploy.sh` will update the docs hosted from your fork - not the production docs.
 
 # Colophone
 
