@@ -17,13 +17,14 @@ To begin contributing to the docs, fork the firefox-data-docs repo.
 
 The documentation is rendered with [Gitbook](https://www.gitbook.com/)
 To build the documentation locally,
-you'll need to install the gitbook-cli app with npm:
+you'll need to install the gitbook-cli app with 
+[npm](https://www.npmjs.com/get-npm):
 
 ```bash
 npm install gitbook-cli -g
 ```
 
-and install the gitbook plugins with
+and install the gitbook plugins with:
 
 ```bash
 gitbook install
@@ -57,13 +58,13 @@ Articles should be written in
 Markdown is usually powerful enough and is a more common technology than Asciidoc.
 
 Limit lines to **100 characters** where possible.
-Try to split lines at the end of sentances.
+Try to split lines at the end of sentences.
 This makes it easier to reorganize your thoughts later.
 
 This documentation is meant to be read digitally.
 Keep in mind that people read digital content much differently than other media.
 Specifically, readers are going to skim your writing,
-so make it easy to identify important information
+so make it easy to identify important information.
 
 Use **visual markup** like **bold text**, `code blocks`, and section headers.
 Avoid long paragraphs.
@@ -72,7 +73,7 @@ Short paragraphs that describe one concept each makes finding important informat
 
 ## Review
 
-Once your happy with your contribution, please open a PR and flag @harterrt for review.
+Once you're happy with your contribution, please open a PR and flag @harterrt for review.
 Please squash your changes  into meaningful commits  and follow these
 [commit message guidelines](https://chris.beams.io/posts/git-commit/).
 
@@ -90,7 +91,7 @@ Keep in mind that this will deploy the docs to your `origin` repo.
 If you're working from a fork (which you should be),
 `deploy.sh` will update the docs hosted from your fork - not the production docs.
 
-# Colophone
+# Colophon
 
 This document's structure is heavily influenced by
 [Django's Documentation Style Guide](https://docs.djangoproject.com/en/1.11/internals/contributing/writing-documentation/).
