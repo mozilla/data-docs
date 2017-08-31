@@ -86,7 +86,7 @@ There is a vast ecosystem of tools for processing data at scale, each with their
 [histograms]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/histograms.html
 [scalars]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/scalars.html
 [timings]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/measuring-time.html
-[events]: https://docs.google.com/document/d/1hNuS9lUJMvMqgntZXbFA6xZBU9zBpQgo7x73-sXKRpI/edit#heading=h.r5uzjaihw03a
+[events]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html
 [probes]: ../datasets/new_data.md
 [collection policy]: https://wiki.mozilla.org/Firefox/Data_Collection
 [subsessions]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/sessions.html#subsessions
