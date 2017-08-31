@@ -82,19 +82,19 @@ No, not really. For example, the DWL pushes some of the Telemetry data to Redshi
 
 There is a vast ecosystem of tools for processing data at scale, each with their pros & cons. The pipeline grew organically and we added new tools as new use-cases came up that we couldn’t solve with our existing stack. There are still scars left from that growth though which require some effort to get rid of, like ingesting data from schema-less format.
 
-[collect data]: https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/collection/index.html
-[histograms]: https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/collection/histograms.html
-[scalars]: https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/collection/scalars.html
-[timings]: https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/collection/measuring-time.html
+[collect data]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/index.html
+[histograms]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/histograms.html
+[scalars]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/scalars.html
+[timings]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/measuring-time.html
 [events]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html
 [probes]: ../datasets/new_data.md
 [collection policy]: https://wiki.mozilla.org/Firefox/Data_Collection
-[subsessions]: https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/concepts/sessions.html#subsessions
-[main ping]: https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/main-ping.html
-[ping types]: https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/concepts/pings.html#ping-types
-[create their own ping types]: https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/collection/custom-pings.html
+[subsessions]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/sessions.html#subsessions
+[main ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html
+[ping types]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/pings.html#ping-types
+[create their own ping types]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html
 [API]: https://dxr.mozilla.org/mozilla-central/rev/6a23526fe5168087d7e4132c0705aefcaed5f571/toolkit/components/telemetry/TelemetryController.jsm#202
-[submit]: https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/concepts/submission.html#submission
+[submit]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/submission.html#submission
 [load balancer]: https://aws.amazon.com/elasticloadbalancing/
 [module]: https://github.com/mozilla-services/nginx_moz_ingest
 [HTTP request]: https://wiki.mozilla.org/CloudServices/DataPipeline/HTTPEdgeServerSpecification
