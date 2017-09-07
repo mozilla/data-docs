@@ -461,6 +461,19 @@
             
         </li>
     
+        <li class="chapter " data-level="1.3.3.2.11" data-path="../datasets/batch_view/update/reference.html">
+            
+                <a href="../datasets/batch_view/update/reference.html">
+            
+                    
+                    Update
+            
+                </a>
+            
+
+            
+        </li>
+    
 
             </ul>
             
@@ -856,6 +869,7 @@ take a look at our <a href="../tools/experiments.html">tools for experimentation
 </ul>
 </li>
 <li><a href="#new-profile-derived-datasets">New-Profile Derived Datasets</a></li>
+<li><a href="#update-derived-dataset">Update Derived Dataset</a></li>
 <li><a href="#appendix">Appendix</a><ul>
 <li><a href="#mobile-metrics">Mobile Metrics</a></li>
 </ul>
@@ -1023,7 +1037,7 @@ See <a href="../cookbooks/parquet.html">this cookbook</a> to get started working
 Take a look at <a href="https://sql.telemetry.mozilla.org/queries/4203/source" target="_blank">this query</a> for a schema.</p>
 <h2 id="clientcount">client_count</h2>
 <p>The <code>client_count</code> dataset is useful for estimating user counts over a few 
-<a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/ClientCountView.scala#L22" target="_blank">pre-defined dimensions</a>.</p>
+<a href="https://github.com/mozilla/telemetry-airflow/blob/master/jobs/client_count_view.sh" target="_blank">pre-defined dimensions</a>.</p>
 <h4 id="content">Content</h4>
 <p>This dataset includes columns for a dozen factors and an HLL variable.
 The <code>hll</code> column contains a
@@ -1106,6 +1120,22 @@ See <a href="../cookbooks/parquet.html">this cookbook</a> to get started working
 Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/5888#table" target="_blank">example query</a>.</p>
 <h4 id="further-reading">Further Reading</h4>
 <p>This dataset is generated automatically using direct to parquet. The configuration responsible for generating this dataset was introdueced in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1360256" target="_blank">bug 1360256</a>.</p>
+<h1 id="update-derived-dataset">Update Derived Dataset</h1>
+<p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/update-ping.html" target="_blank">update ping</a>
+is sent from Firefox Desktop when a browser update is ready to be applied and after it was correctly applied.
+It contains the build information and the update blob information, in addition to some information about the
+user environment.
+The <code>telemetry_update_parquet</code> table is the most direct representation of an update ping.</p>
+<h4 id="contents">Contents</h4>
+<p>The table contains one row for each ping. Each column represents one field from the update ping payload, though only a subset of all fields are included.</p>
+<h4 id="accessing-the-data">Accessing the Data</h4>
+<p>The data is stored as a parquet table in S3 at the following address.
+See <a href="../cookbooks/parquet.html">this cookbook</a> to get started working with the data in Spark.</p>
+<pre><code>s3://net-mozaws-prod-us-west-2-pipeline-data/telemetry-update-parquet/v1/
+</code></pre><p>The <code>telemetry_update_parquet</code> is accessible through re:dash.
+Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/31267#table" target="_blank">example query</a>.</p>
+<h4 id="further-reading">Further Reading</h4>
+<p>This dataset is generated automatically using direct to parquet. The configuration responsible for generating this dataset was introdueced in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1384861" target="_blank">bug 1384861</a>.</p>
 <h1 id="appendix">Appendix</h1>
 <h2 id="mobile-metrics">Mobile Metrics</h2>
 <p>There are several tables owned by the mobile team documented
@@ -1159,7 +1189,7 @@ Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/5888#table" ta
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.3","depth":2,"next":{"title":"Intro to STMO","level":"1.2.4","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"previous":{"title":"Data Privacy","level":"1.2.2","depth":2,"path":"concepts/data_privacy.md","ref":"concepts/data_privacy.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","ga"],"pluginsConfig":{"ga":{"configuration":"auto","token":"UA-104326577-1"},"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2017-07-26T15:36:43.054Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-08-31T17:31:09.347Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.3","depth":2,"next":{"title":"Intro to STMO","level":"1.2.4","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"previous":{"title":"Data Privacy","level":"1.2.2","depth":2,"path":"concepts/data_privacy.md","ref":"concepts/data_privacy.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","ga"],"pluginsConfig":{"ga":{"configuration":"auto","token":"UA-104326577-1"},"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2017-09-07T17:04:54.400Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-09-07T17:04:59.655Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

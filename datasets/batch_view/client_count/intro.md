@@ -1,5 +1,5 @@
 The `client_count` dataset is useful for estimating user counts over a few 
-[pre-defined dimensions](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/ClientCountView.scala#L22).
+[pre-defined dimensions](https://github.com/mozilla/telemetry-airflow/blob/master/jobs/client_count_view.sh).
 
 #### Content
 

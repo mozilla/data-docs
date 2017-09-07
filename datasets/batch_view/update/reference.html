@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>New Profile · GitBook</title>
+        <title>Update · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../../../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="../update/reference.html" />
+    <link rel="next" href="../../../tools/experiments.html" />
     
     
-    <link rel="prev" href="../client_count/reference.html" />
+    <link rel="prev" href="../new_profile/reference.html" />
     
 
     </head>
@@ -448,9 +448,9 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.3.3.2.10" data-path="reference.html">
+        <li class="chapter " data-level="1.3.3.2.10" data-path="../new_profile/reference.html">
             
-                <a href="reference.html">
+                <a href="../new_profile/reference.html">
             
                     
                     New Profile
@@ -461,9 +461,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3.2.11" data-path="../update/reference.html">
+        <li class="chapter active" data-level="1.3.3.2.11" data-path="reference.html">
             
-                <a href="../update/reference.html">
+                <a href="reference.html">
             
                     
                     Update
@@ -829,7 +829,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../../.." >New Profile</a>
+        <a href="../../.." >Update</a>
     </h1>
 </div>
 
@@ -844,7 +844,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="new-profile">New Profile</h1>
+                                <h1 id="update">Update</h1>
 <!-- toc -->
 <ul>
 <li><a href="#introduction">Introduction</a></li>
@@ -855,20 +855,24 @@
 </ul>
 <!-- toc stop -->
 <h1 id="introduction">Introduction</h1>
-<p>The <code>telemetry_new_profile_parquet</code> table is the most direct representation of a new-profile ping.</p>
+<p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/update-ping.html" target="_blank">update ping</a>
+is sent from Firefox Desktop when a browser update is ready to be applied and after it was correctly applied.
+It contains the build information and the update blob information, in addition to some information about the
+user environment.
+The <code>telemetry_update_parquet</code> table is the most direct representation of an update ping.</p>
 <h4 id="contents">Contents</h4>
-<p>The table contains one row for each ping. Each column represents one field from the new-profile ping payload, though only a subset of all fields are included.</p>
+<p>The table contains one row for each ping. Each column represents one field from the update ping payload, though only a subset of all fields are included.</p>
 <h4 id="accessing-the-data">Accessing the Data</h4>
 <p>The data is stored as a parquet table in S3 at the following address.
 See <a href="../../../cookbooks/parquet.html">this cookbook</a> to get started working with the data in Spark.</p>
-<pre><code>s3://net-mozaws-prod-us-west-2-pipeline-data/telemetry-new-profile-parquet/v1/
-</code></pre><p>The <code>telemetry_new_profile_parquet</code> is accessible through re:dash.
-Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/5888#table" target="_blank">example query</a>.</p>
+<pre><code>s3://net-mozaws-prod-us-west-2-pipeline-data/telemetry-update-parquet/v1/
+</code></pre><p>The <code>telemetry_update_parquet</code> is accessible through re:dash.
+Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/31267#table" target="_blank">example query</a>.</p>
 <h4 id="further-reading">Further Reading</h4>
-<p>This dataset is generated automatically using direct to parquet. The configuration responsible for generating this dataset was introdueced in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1360256" target="_blank">bug 1360256</a>.</p>
+<p>This dataset is generated automatically using direct to parquet. The configuration responsible for generating this dataset was introdueced in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1384861" target="_blank">bug 1384861</a>.</p>
 <h1 id="data-reference">Data Reference</h1>
 <h2 id="schema">Schema</h2>
-<p>As of 2017-07-24, the current version of the <code>telemetry_new_profile_parquet</code> dataset is <code>v1</code>, and has a schema as follows:</p>
+<p>As of 2017-09-07, the current version of the <code>telemetry_update_parquet</code> dataset is <code>v1</code>, and has a schema as follows:</p>
 <pre><code>root
  |-- id: string (nullable = true)
  |-- client_id: string (nullable = true)
@@ -897,20 +901,8 @@ Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/5888#table" ta
  |    |    |-- partner_names: array (nullable = true)
  |    |    |    |-- element: string (containsNull = true)
  |    |-- settings: struct (nullable = true)
- |    |    |-- is_default_browser: boolean (nullable = true)
- |    |    |-- default_search_engine: string (nullable = true)
- |    |    |-- default_search_engine_data: struct (nullable = true)
- |    |    |    |-- name: string (nullable = true)
- |    |    |    |-- load_path: string (nullable = true)
- |    |    |    |-- origin: string (nullable = true)
- |    |    |    |-- submission_url: string (nullable = true)
  |    |    |-- telemetry_enabled: boolean (nullable = true)
  |    |    |-- locale: string (nullable = true)
- |    |    |-- attribution: struct (nullable = true)
- |    |    |    |-- source: string (nullable = true)
- |    |    |    |-- medium: string (nullable = true)
- |    |    |    |-- campaign: string (nullable = true)
- |    |    |    |-- content: string (nullable = true)
  |    |    |-- update: struct (nullable = true)
  |    |    |    |-- channel: string (nullable = true)
  |    |    |    |-- enabled: boolean (nullable = true)
@@ -924,9 +916,15 @@ Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/5888#table" ta
  |    |    |-- creation_date: long (nullable = true)
  |-- payload: struct (nullable = true)
  |    |-- reason: string (nullable = true)
- |-- submission: string (nullable = true)
+ |    |-- target_channel: string (nullable = true)
+ |    |-- target_version: string (nullable = true)
+ |    |-- target_build_id: string (nullable = true)
+ |    |-- previous_channel: string (nullable = true)
+ |    |-- previous_version: string (nullable = true)
+ |    |-- previous_build_id: string (nullable = true)
+ |-- submission_date_s3: string (nullable = true)
 </code></pre><p>For more detail on the raw ping these fields come from, see the
-<a href="https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/new-profile-ping.html" target="_blank">raw data</a>.</p>
+<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/update-ping.html" target="_blank">raw data</a>.</p>
 
                                 
                                 </section>
@@ -954,12 +952,12 @@ Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/5888#table" ta
 
             
                 
-                <a href="../client_count/reference.html" class="navigation navigation-prev " aria-label="Previous page: Client Count">
+                <a href="../new_profile/reference.html" class="navigation navigation-prev " aria-label="Previous page: New Profile">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="../update/reference.html" class="navigation navigation-next " aria-label="Next page: Update">
+                <a href="../../../tools/experiments.html" class="navigation navigation-next " aria-label="Next page: Experimental Datasets">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -970,7 +968,7 @@ Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/5888#table" ta
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"New Profile","level":"1.3.3.2.10","depth":4,"next":{"title":"Update","level":"1.3.3.2.11","depth":4,"path":"datasets/batch_view/update/reference.md","ref":"datasets/batch_view/update/reference.md","articles":[]},"previous":{"title":"Client Count","level":"1.3.3.2.9","depth":4,"path":"datasets/batch_view/client_count/reference.md","ref":"datasets/batch_view/client_count/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","ga"],"pluginsConfig":{"ga":{"configuration":"auto","token":"UA-104326577-1"},"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/new_profile/reference.md","mtime":"2017-07-26T15:36:43.054Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-09-07T17:04:59.655Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Update","level":"1.3.3.2.11","depth":4,"next":{"title":"Experimental Datasets","level":"1.3.3.3","depth":3,"path":"tools/experiments.md","ref":"tools/experiments.md","articles":[{"title":"Accessing Shield Study data","level":"1.3.3.3.1","depth":4,"path":"datasets/shield.md","ref":"datasets/shield.md","articles":[]}]},"previous":{"title":"New Profile","level":"1.3.3.2.10","depth":4,"path":"datasets/batch_view/new_profile/reference.md","ref":"datasets/batch_view/new_profile/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","ga"],"pluginsConfig":{"ga":{"configuration":"auto","token":"UA-104326577-1"},"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/update/reference.md","mtime":"2017-09-07T17:04:54.404Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-09-07T17:04:59.655Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
