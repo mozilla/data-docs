@@ -68,6 +68,10 @@ This data is available in the **telemetry_new_profile_parquet** dataset.
 
 {% include "/datasets/batch_view/new_profile/intro.md" %}
 
+# Update Derived Dataset
+
+{% include "/datasets/batch_view/update/intro.md" %}
+
 # Appendix
 
 ## Mobile Metrics
