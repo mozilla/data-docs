@@ -59,6 +59,6 @@ root
 For more detail on where these fields come from in the
 [raw data](https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/environment.html#addons),
 please look 
-[in the AddonsView code](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/views/AddonsView.scala).
+[in the AddonsView code](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/AddonsView.scala).
 
 The fields are all simple scalar values.
