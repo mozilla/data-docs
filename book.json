@@ -1,6 +1,7 @@
 {
     "plugins": [
         "toc",
+        "anchors",
         "ga"
     ],
     "pluginsConfig": {
