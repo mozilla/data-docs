@@ -17,6 +17,10 @@
     
             
                 
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
                 <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-highlight/website.css">
                 
             
@@ -844,7 +848,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="update">Update</h1>
+                                <h1 id="update"><a name="update" class="plugin-anchor" href="#update"><i class="fa fa-link" aria-hidden="true"></i></a>Update</h1>
 <!-- toc -->
 <ul>
 <li><a href="#introduction">Introduction</a></li>
@@ -853,25 +857,25 @@
 </ul>
 </li>
 </ul>
-<!-- toc stop -->
-<h1 id="introduction">Introduction</h1>
+<!-- tocstop -->
+<h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/update-ping.html" target="_blank">update ping</a>
 is sent from Firefox Desktop when a browser update is ready to be applied and after it was correctly applied.
 It contains the build information and the update blob information, in addition to some information about the
 user environment.
 The <code>telemetry_update_parquet</code> table is the most direct representation of an update ping.</p>
-<h4 id="contents">Contents</h4>
+<h4 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h4>
 <p>The table contains one row for each ping. Each column represents one field from the update ping payload, though only a subset of all fields are included.</p>
-<h4 id="accessing-the-data">Accessing the Data</h4>
+<h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
 <p>The data is stored as a parquet table in S3 at the following address.
 See <a href="../../../cookbooks/parquet.html">this cookbook</a> to get started working with the data in Spark.</p>
 <pre><code>s3://net-mozaws-prod-us-west-2-pipeline-data/telemetry-update-parquet/v1/
 </code></pre><p>The <code>telemetry_update_parquet</code> is accessible through re:dash.
 Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/31267#table" target="_blank">example query</a>.</p>
-<h4 id="further-reading">Further Reading</h4>
+<h4 id="further-reading"><a name="further-reading" class="plugin-anchor" href="#further-reading"><i class="fa fa-link" aria-hidden="true"></i></a>Further Reading</h4>
 <p>This dataset is generated automatically using direct to parquet. The configuration responsible for generating this dataset was introdueced in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1384861" target="_blank">bug 1384861</a>.</p>
-<h1 id="data-reference">Data Reference</h1>
-<h2 id="schema">Schema</h2>
+<h1 id="data-reference"><a name="data-reference" class="plugin-anchor" href="#data-reference"><i class="fa fa-link" aria-hidden="true"></i></a>Data Reference</h1>
+<h2 id="schema"><a name="schema" class="plugin-anchor" href="#schema"><i class="fa fa-link" aria-hidden="true"></i></a>Schema</h2>
 <p>As of 2017-09-07, the current version of the <code>telemetry_update_parquet</code> dataset is <code>v1</code>, and has a schema as follows:</p>
 <pre><code>root
  |-- id: string (nullable = true)
@@ -968,7 +972,7 @@ Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/31267#table" t
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Update","level":"1.3.3.2.11","depth":4,"next":{"title":"Experimental Datasets","level":"1.3.3.3","depth":3,"path":"tools/experiments.md","ref":"tools/experiments.md","articles":[{"title":"Accessing Shield Study data","level":"1.3.3.3.1","depth":4,"path":"datasets/shield.md","ref":"datasets/shield.md","articles":[]}]},"previous":{"title":"New Profile","level":"1.3.3.2.10","depth":4,"path":"datasets/batch_view/new_profile/reference.md","ref":"datasets/batch_view/new_profile/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","ga"],"pluginsConfig":{"ga":{"configuration":"auto","token":"UA-104326577-1"},"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/update/reference.md","mtime":"2017-09-07T17:04:54.404Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-09-07T17:04:59.655Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Update","level":"1.3.3.2.11","depth":4,"next":{"title":"Experimental Datasets","level":"1.3.3.3","depth":3,"path":"tools/experiments.md","ref":"tools/experiments.md","articles":[{"title":"Accessing Shield Study data","level":"1.3.3.3.1","depth":4,"path":"datasets/shield.md","ref":"datasets/shield.md","articles":[]}]},"previous":{"title":"New Profile","level":"1.3.3.2.10","depth":4,"path":"datasets/batch_view/new_profile/reference.md","ref":"datasets/batch_view/new_profile/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/update/reference.md","mtime":"2017-09-07T17:04:54.404Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-09-11T16:06:46.593Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

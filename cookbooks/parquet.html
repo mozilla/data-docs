@@ -17,6 +17,10 @@
     
             
                 
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
                 <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
                 
             
@@ -844,7 +848,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="working-with-parquet">Working with Parquet</h1>
+                                <h1 id="working-with-parquet"><a name="working-with-parquet" class="plugin-anchor" href="#working-with-parquet"><i class="fa fa-link" aria-hidden="true"></i></a>Working with Parquet</h1>
 <p>This guide will give you a quick introduction to working with 
 <a href="https://parquet.apache.org/" target="_blank">Parquet</a> files at Mozilla.
 You can also refer to Spark&apos;s documentation on the subject
@@ -857,7 +861,7 @@ but you may want to access the data from an
 <a href="https://analysis.telemetry.mozilla.org/" target="_blank">ATMO</a> cluster
 if SQL isn&apos;t powerful enough for your analysis
 or if a sample of the data will not suffice.</p>
-<h2 id="table-of-contents">Table of Contents</h2>
+<h2 id="table-of-contents"><a name="table-of-contents" class="plugin-anchor" href="#table-of-contents"><i class="fa fa-link" aria-hidden="true"></i></a>Table of Contents</h2>
 <!-- toc -->
 <ul>
 <li><a href="#reading-parquet-tables">Reading Parquet Tables</a></li>
@@ -866,10 +870,10 @@ or if a sample of the data will not suffice.</p>
 <li><a href="#how-to-save-data">How to save data</a></li>
 </ul>
 </li>
-<li><a href="#accessing-parquet-tables-from-redash">Accessing Parquet Tables from Re:dash</a></li>
+<li><a href="#accessing-parquet-tables-from-re:dash">Accessing Parquet Tables from Re:dash</a></li>
 </ul>
-<!-- toc stop -->
-<h1 id="reading-parquet-tables">Reading Parquet Tables</h1>
+<!-- tocstop -->
+<h1 id="reading-parquet-tables"><a name="reading-parquet-tables" class="plugin-anchor" href="#reading-parquet-tables"><i class="fa fa-link" aria-hidden="true"></i></a>Reading Parquet Tables</h1>
 <p>Spark provides native support for reading parquet files.
 The result of loading a parquet file is a 
 <a href="http://spark.apache.org/docs/2.1.0/api/python/pyspark.sql.html#pyspark.sql.DataFrame" target="_blank">DataFrame</a>.
@@ -880,22 +884,22 @@ main_summary = spark.read.parquet(<span class="hljs-string">&apos;s3://telemetry
 <p>You can find the S3 path for common datasets in
 <a href="../concepts/choosing_a_dataset.html">Choosing a Dataset</a>
 or in the reference documentation.</p>
-<h1 id="writing-parquet-tables">Writing Parquet Tables</h1>
+<h1 id="writing-parquet-tables"><a name="writing-parquet-tables" class="plugin-anchor" href="#writing-parquet-tables"><i class="fa fa-link" aria-hidden="true"></i></a>Writing Parquet Tables</h1>
 <p>Saving a table to parquet is a great way to share an intermediate dataset.</p>
-<h2 id="where-to-save-data">Where to save data</h2>
+<h2 id="where-to-save-data"><a name="where-to-save-data" class="plugin-anchor" href="#where-to-save-data"><i class="fa fa-link" aria-hidden="true"></i></a>Where to save data</h2>
 <p>You can save data to a subdirectory of the following bucket: 
 <code>s3://net-mozaws-prod-us-west-2-pipeline-analysis/&lt;username&gt;/</code>
 Use your username for the subdirectory name.
 This bucket is available to all ATMO clusters and Airflow.</p>
 <p>When your analysis is production ready,
 open a PR against <a href="https://github.com/mozilla/python_mozetl" target="_blank">python_mozetl</a>.</p>
-<h2 id="how-to-save-data">How to save data</h2>
+<h2 id="how-to-save-data"><a name="how-to-save-data" class="plugin-anchor" href="#how-to-save-data"><i class="fa fa-link" aria-hidden="true"></i></a>How to save data</h2>
 <p>You can save the dataframe <code>test_dataframe</code>
  to the <code>telemetry-test-bucket</code> with the following command:</p>
 <pre><code class="lang-python">test_dataframe.write.mode(<span class="hljs-string">&apos;error&apos;</span>) \
     .parquet(<span class="hljs-string">&apos;s3://telemetry-test-bucket/my_subdir/table_name&apos;</span>)
 </code></pre>
-<h1 id="accessing-parquet-tables-from-redash">Accessing Parquet Tables from Re:dash</h1>
+<h1 id="accessing-parquet-tables-from-redash"><a name="accessing-parquet-tables-from-redash" class="plugin-anchor" href="#accessing-parquet-tables-from-redash"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing Parquet Tables from Re:dash</h1>
 <p>See <a href="create_a_dataset.html">Creating a custom re:dash dataset</a>.</p>
 
                                 
@@ -940,7 +944,7 @@ open a PR against <a href="https://github.com/mozilla/python_mozetl" target="_bl
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Working with Parquet Data on ATMO Clusters","level":"1.5.1","depth":2,"next":{"title":"Creating a custom re:dash dataset","level":"1.5.2","depth":2,"path":"cookbooks/create_a_dataset.md","ref":"cookbooks/create_a_dataset.md","articles":[]},"previous":{"title":"Cookbooks","level":"1.5","depth":1,"path":"cookbooks/README.adoc","ref":"cookbooks/README.adoc","articles":[{"title":"Working with Parquet Data on ATMO Clusters","level":"1.5.1","depth":2,"path":"cookbooks/parquet.md","ref":"cookbooks/parquet.md","articles":[]},{"title":"Creating a custom re:dash dataset","level":"1.5.2","depth":2,"path":"cookbooks/create_a_dataset.md","ref":"cookbooks/create_a_dataset.md","articles":[]},{"title":"Creating a Real-time Analysis Plugin","level":"1.5.3","depth":2,"path":"cookbooks/realtime_analysis_plugin.md","ref":"cookbooks/realtime_analysis_plugin.md","articles":[]},{"title":"Longitudinal Examples","level":"1.5.4","depth":2,"path":"cookbooks/longitudinal_examples.md","ref":"cookbooks/longitudinal_examples.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","ga"],"pluginsConfig":{"ga":{"configuration":"auto","token":"UA-104326577-1"},"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"cookbooks/parquet.md","mtime":"2017-07-25T13:31:50.687Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-09-07T17:04:59.655Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Working with Parquet Data on ATMO Clusters","level":"1.5.1","depth":2,"next":{"title":"Creating a custom re:dash dataset","level":"1.5.2","depth":2,"path":"cookbooks/create_a_dataset.md","ref":"cookbooks/create_a_dataset.md","articles":[]},"previous":{"title":"Cookbooks","level":"1.5","depth":1,"path":"cookbooks/README.adoc","ref":"cookbooks/README.adoc","articles":[{"title":"Working with Parquet Data on ATMO Clusters","level":"1.5.1","depth":2,"path":"cookbooks/parquet.md","ref":"cookbooks/parquet.md","articles":[]},{"title":"Creating a custom re:dash dataset","level":"1.5.2","depth":2,"path":"cookbooks/create_a_dataset.md","ref":"cookbooks/create_a_dataset.md","articles":[]},{"title":"Creating a Real-time Analysis Plugin","level":"1.5.3","depth":2,"path":"cookbooks/realtime_analysis_plugin.md","ref":"cookbooks/realtime_analysis_plugin.md","articles":[]},{"title":"Longitudinal Examples","level":"1.5.4","depth":2,"path":"cookbooks/longitudinal_examples.md","ref":"cookbooks/longitudinal_examples.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"cookbooks/parquet.md","mtime":"2017-07-25T13:31:50.687Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-09-11T16:06:46.593Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

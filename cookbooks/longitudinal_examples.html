@@ -17,6 +17,10 @@
     
             
                 
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
                 <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
                 
             
@@ -842,7 +846,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h3 id="introduction">Introduction</h3>
+                                <h3 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h3>
 <p>The longitudinal dataset is a summary of main pings. If you&apos;re not sure which
 dataset to use for your query, this is probably what you want. It differs from
 the main_summary table in two important ways:</p>
@@ -865,7 +869,7 @@ received for that profile. [...]
 The current version of the longitudinal dataset has been build with all
 main pings received from 1% of profiles across all channels with [...] up to
 180 days of data.
-</code></pre><h3 id="table-structure">Table structure</h3>
+</code></pre><h3 id="table-structure"><a name="table-structure" class="plugin-anchor" href="#table-structure"><i class="fa fa-link" aria-hidden="true"></i></a>Table structure</h3>
 <p>To get an overview of the longitudinal data table:</p>
 <pre><code class="lang-sql"><span class="hljs-keyword">DESCRIBE</span> longitudinal
 </code></pre>
@@ -881,7 +885,7 @@ directly available to query on:</p>
 <span class="hljs-keyword">FROM</span> longitudinal
 <span class="hljs-keyword">WHERE</span> os = <span class="hljs-string">&apos;Linux&apos;</span>
 </code></pre>
-<h4 id="arrays">Arrays</h4>
+<h4 id="arrays"><a name="arrays" class="plugin-anchor" href="#arrays"><i class="fa fa-link" aria-hidden="true"></i></a>Arrays</h4>
 <p>Most properties are arrays, which contain one entry for each submission
 from a given client (newest first). Note that indexing starts at 1:</p>
 <pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> reason[<span class="hljs-number">1</span>] <span class="hljs-keyword">AS</span> newest_reason
@@ -908,7 +912,7 @@ functions</a></li>
 <li><a href="https://prestodb.io/docs/current/sql/select.html#unnest" target="_blank"><code>UNNEST</code>
 documentation</a></li>
 </ul>
-<h4 id="maps">Maps</h4>
+<h4 id="maps"><a name="maps" class="plugin-anchor" href="#maps"><i class="fa fa-link" aria-hidden="true"></i></a>Maps</h4>
 <p>Some fields like <code>active_addons</code> or <code>user_prefs</code> are handled as maps, on
 which you can use the <code>[]</code> operator and special functions:</p>
 <pre><code class="lang-sql">WITH adp AS
@@ -923,7 +927,7 @@ which you can use the <code>[]</code> operator and special functions:</p>
 <li><a href="https://prestodb.io/docs/current/functions/map.html" target="_blank">Documentation on map
 functions</a></li>
 </ul>
-<h3 id="sampling">Sampling</h3>
+<h3 id="sampling"><a name="sampling" class="plugin-anchor" href="#sampling"><i class="fa fa-link" aria-hidden="true"></i></a>Sampling</h3>
 <p>While composing queries, it can be helpful to work on small samples to
 reduce query runtimes:</p>
 <pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> longitudinal <span class="hljs-keyword">LIMIT</span> <span class="hljs-number">1000</span> ...
@@ -931,30 +935,30 @@ reduce query runtimes:</p>
 <p>There&apos;s no need to use other sampling methods, such as TABLESAMPLE, on
 the longitudinal set. Rows are randomly ordered, so a LIMIT sample is
 expected to be random.</p>
-<h3 id="example-queries">Example Queries</h3>
-<h4 id="blocklist-urls-extensionsblocklisturl">Blocklist URLs (extensions.blocklist.url)</h4>
+<h3 id="example-queries"><a name="example-queries" class="plugin-anchor" href="#example-queries"><i class="fa fa-link" aria-hidden="true"></i></a>Example Queries</h3>
+<h4 id="blocklist-urls-extensionsblocklisturl"><a name="blocklist-urls-extensionsblocklisturl" class="plugin-anchor" href="#blocklist-urls-extensionsblocklisturl"><i class="fa fa-link" aria-hidden="true"></i></a>Blocklist URLs (extensions.blocklist.url)</h4>
 <pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> bl, <span class="hljs-keyword">COUNT</span>(bl)
 <span class="hljs-keyword">FROM</span>
   (<span class="hljs-keyword">SELECT</span> element_at(<span class="hljs-keyword">settings</span>, <span class="hljs-number">1</span>).user_prefs[<span class="hljs-string">&apos;extensions.blocklist.url&apos;</span>] <span class="hljs-keyword">AS</span> bl
    <span class="hljs-keyword">FROM</span> longitudinal)
 <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> bl
 </code></pre>
-<h4 id="blocklist-enableddisabled-extensionsblocklistenabled-count">Blocklist enabled/disabled (extensions.blocklist.enabled) count:</h4>
+<h4 id="blocklist-enableddisabled-extensionsblocklistenabled-count"><a name="blocklist-enableddisabled-extensionsblocklistenabled-count" class="plugin-anchor" href="#blocklist-enableddisabled-extensionsblocklistenabled-count"><i class="fa fa-link" aria-hidden="true"></i></a>Blocklist enabled/disabled (extensions.blocklist.enabled) count:</h4>
 <pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> bl, <span class="hljs-keyword">COUNT</span>(bl)
 <span class="hljs-keyword">FROM</span>
   (<span class="hljs-keyword">SELECT</span> element_at(<span class="hljs-keyword">settings</span>, <span class="hljs-number">1</span>).blocklist_enabled <span class="hljs-keyword">AS</span> bl
    <span class="hljs-keyword">FROM</span> longitudinal)
 <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> bl
 </code></pre>
-<h4 id="parsing-most-recent-submissiondate">Parsing most recent submission_date</h4>
+<h4 id="parsing-most-recent-submissiondate"><a name="parsing-most-recent-submissiondate" class="plugin-anchor" href="#parsing-most-recent-submissiondate"><i class="fa fa-link" aria-hidden="true"></i></a>Parsing most recent submission_date</h4>
 <pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> DATE_PARSE(submission_date[<span class="hljs-number">1</span>], <span class="hljs-string">&apos;%Y-%m-%dT00:00:00.000Z&apos;</span>) <span class="hljs-keyword">as</span> parsed_submission_date
 <span class="hljs-keyword">FROM</span> longitudinal
 </code></pre>
-<h4 id="limiting-to-most-recent-ping-in-the-last-7-days">Limiting to most recent ping in the last 7 days</h4>
+<h4 id="limiting-to-most-recent-ping-in-the-last-7-days"><a name="limiting-to-most-recent-ping-in-the-last-7-days" class="plugin-anchor" href="#limiting-to-most-recent-ping-in-the-last-7-days"><i class="fa fa-link" aria-hidden="true"></i></a>Limiting to most recent ping in the last 7 days</h4>
 <pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> longitudinal
 <span class="hljs-keyword">WHERE</span> DATE_DIFF(<span class="hljs-string">&apos;day&apos;</span>, DATE_PARSE(submission_date[<span class="hljs-number">1</span>], <span class="hljs-string">&apos;%Y-%m-%dT00:00:00.000Z&apos;</span>), <span class="hljs-keyword">current_date</span>) &lt; <span class="hljs-number">7</span>
 </code></pre>
-<h4 id="scalar-measurement-how-many-users-with-more-than-100-tabs">Scalar measurement (how many users with more than 100 tabs)</h4>
+<h4 id="scalar-measurement-how-many-users-with-more-than-100-tabs"><a name="scalar-measurement-how-many-users-with-more-than-100-tabs" class="plugin-anchor" href="#scalar-measurement-how-many-users-with-more-than-100-tabs"><i class="fa fa-link" aria-hidden="true"></i></a>Scalar measurement (how many users with more than 100 tabs)</h4>
 <pre><code class="lang-sql">WITH samples AS
  (<span class="hljs-keyword">SELECT</span>
    client_id,
@@ -968,7 +972,7 @@ expected to be random.</p>
    normalized_channel = <span class="hljs-string">&apos;nightly&apos;</span>)
 <span class="hljs-keyword">SELECT</span> approx_distinct(client_id) <span class="hljs-keyword">FROM</span> samples <span class="hljs-keyword">WHERE</span> max_concurrent_tabs &gt; <span class="hljs-number">100</span>
 </code></pre>
-<h3 id="using-views">Using Views</h3>
+<h3 id="using-views"><a name="using-views" class="plugin-anchor" href="#using-views"><i class="fa fa-link" aria-hidden="true"></i></a>Using Views</h3>
 <p>If you find yourself copy/pasting SQL between different queries,
 consider using a Presto VIEW to allow for code reuse. Views create
 logical tables which you can reuse in other queries. For example, <a href="https://sql.telemetry.mozilla.org/queries/776/source" target="_blank">this
@@ -983,7 +987,7 @@ query</a>.</p>
 important.</p>
 <p>Find more information
 <a href="https://prestodb.io/docs/current/sql/create-view.html" target="_blank">here</a>.</p>
-<h3 id="working-offline">Working offline</h3>
+<h3 id="working-offline"><a name="working-offline" class="plugin-anchor" href="#working-offline"><i class="fa fa-link" aria-hidden="true"></i></a>Working offline</h3>
 <p>It&apos;s often useful to keep a local sample of the l10l data when
 prototyping an analysis. The data is stored in
 s3://telemetry-parquet/longitudinal/. Once you have AWS credentials you
@@ -992,11 +996,11 @@ cp [filename] .</code></p>
 <p>To request AWS credentials, see <a href="https://mana.mozilla.org/wiki/display/SVCOPS/Requesting+A+Dev+IAM+account+from+Cloud+Operations" target="_blank">this
 page</a>.
 To initiate your AWS config, try <code>aws configure</code></p>
-<h3 id="faq">FAQ</h3>
-<h4 id="im-getting-an-error--cannot-be-resolved">I&apos;m getting an error, &quot;... cannot be resolved&quot;</h4>
+<h3 id="faq"><a name="faq" class="plugin-anchor" href="#faq"><i class="fa fa-link" aria-hidden="true"></i></a>FAQ</h3>
+<h4 id="im-getting-an-error--cannot-be-resolved"><a name="im-getting-an-error--cannot-be-resolved" class="plugin-anchor" href="#im-getting-an-error--cannot-be-resolved"><i class="fa fa-link" aria-hidden="true"></i></a>I&apos;m getting an error, &quot;... cannot be resolved&quot;</h4>
 <p>For some reason, re:dash has trouble parsing SQL strings with double
 quotes. Try using single quotes instead.</p>
-<h3 id="other-resources">Other Resources</h3>
+<h3 id="other-resources"><a name="other-resources" class="plugin-anchor" href="#other-resources"><i class="fa fa-link" aria-hidden="true"></i></a>Other Resources</h3>
 <ul>
 <li><a href="https://prestodb.io/docs/current/sql.html" target="_blank">Presto Docs</a></li>
 <li><a href="https://docs.treasuredata.com/articles/presto-query-faq" target="_blank">Helpful FAQ covering
@@ -1044,7 +1048,7 @@ definition</a></li>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Longitudinal Examples","level":"1.5.4","depth":2,"next":{"title":"About this Documentation","level":"2.1","depth":1,"ref":"","articles":[{"title":"Contributing","level":"2.1.1","depth":2,"path":"meta/contributing.md","ref":"meta/contributing.md","articles":[]},{"title":"Bug Template","level":"2.1.2","depth":2,"url":"https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&component=Documentation%20and%20Knowledge%20Repo%20%28RTMO%29&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=P3&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&target_milestone=---&version=unspecified","ref":"https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&component=Documentation%20and%20Knowledge%20Repo%20%28RTMO%29&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=P3&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&target_milestone=---&version=unspecified","articles":[]},{"title":"Structure","level":"2.1.3","depth":2,"path":"meta/structure.md","ref":"meta/structure.md","articles":[]}]},"previous":{"title":"Creating a Real-time Analysis Plugin","level":"1.5.3","depth":2,"path":"cookbooks/realtime_analysis_plugin.md","ref":"cookbooks/realtime_analysis_plugin.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","ga"],"pluginsConfig":{"ga":{"configuration":"auto","token":"UA-104326577-1"},"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"cookbooks/longitudinal_examples.md","mtime":"2017-07-25T13:31:50.687Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-09-07T17:04:59.655Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Longitudinal Examples","level":"1.5.4","depth":2,"next":{"title":"About this Documentation","level":"2.1","depth":1,"ref":"","articles":[{"title":"Contributing","level":"2.1.1","depth":2,"path":"meta/contributing.md","ref":"meta/contributing.md","articles":[]},{"title":"Bug Template","level":"2.1.2","depth":2,"url":"https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&component=Documentation%20and%20Knowledge%20Repo%20%28RTMO%29&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=P3&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&target_milestone=---&version=unspecified","ref":"https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&component=Documentation%20and%20Knowledge%20Repo%20%28RTMO%29&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=P3&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&target_milestone=---&version=unspecified","articles":[]},{"title":"Structure","level":"2.1.3","depth":2,"path":"meta/structure.md","ref":"meta/structure.md","articles":[]}]},"previous":{"title":"Creating a Real-time Analysis Plugin","level":"1.5.3","depth":2,"path":"cookbooks/realtime_analysis_plugin.md","ref":"cookbooks/realtime_analysis_plugin.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"cookbooks/longitudinal_examples.md","mtime":"2017-07-25T13:31:50.687Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-09-11T16:06:46.593Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

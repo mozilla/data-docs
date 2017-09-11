@@ -17,6 +17,10 @@
     
             
                 
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
                 <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
                 
             
@@ -844,7 +848,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="telemetry-alerts">Telemetry Alerts</h1>
+                                <h1 id="telemetry-alerts"><a name="telemetry-alerts" class="plugin-anchor" href="#telemetry-alerts"><i class="fa fa-link" aria-hidden="true"></i></a>Telemetry Alerts</h1>
 <p>Many Telemetry probes were created to show performance trends over time.
 Sudden changes happening in Nightly could be the sign of an
 unintentional performance regression, so we introduced a system to
@@ -852,7 +856,7 @@ automatically detect and alert developers about such changes.</p>
 <p>Thus we created Telemetry Alerts. It comes in two pieces:
 <a href="https://github.com/mozilla/cerberus/" target="_blank">Cerberus</a> the Detector and
 <a href="https://github.com/mozilla/medusa/" target="_blank">Medusa</a> the Front-end.</p>
-<h3 id="cerberus">Cerberus</h3>
+<h3 id="cerberus"><a name="cerberus" class="plugin-anchor" href="#cerberus"><i class="fa fa-link" aria-hidden="true"></i></a>Cerberus</h3>
 <p>Every day Cerberus grabs the latest aggregated information about all
 non-keyed Telemetry probes from aggregates.telemetry.mozilla.org and
 compares the distribution of values from the <strong>Nightly</strong> builds of the
@@ -864,18 +868,18 @@ the two distributions and guessing whether or not they are <a href="https://gith
 and
 narrow</a>.</p>
 <p>It places all detected changes in a file for ingestion by Medusa.</p>
-<h3 id="medusa">Medusa</h3>
+<h3 id="medusa"><a name="medusa" class="plugin-anchor" href="#medusa"><i class="fa fa-link" aria-hidden="true"></i></a>Medusa</h3>
 <p>Medusa is in charge of emailing people when distributions change and for
 displaying the website <a href="https://alerts.telemetry.mozilla.org" target="_blank">https://alerts.telemetry.mozilla.org</a> which
 contains pertinent information about each detected regression.</p>
 <p>Medusa also checks for expiring histograms and sends emails notifying of
 their expiry.</p>
-<h2 id="what-it-can-do">What it can do</h2>
+<h2 id="what-it-can-do"><a name="what-it-can-do" class="plugin-anchor" href="#what-it-can-do"><i class="fa fa-link" aria-hidden="true"></i></a>What it can do</h2>
 <p>Telemetry Alerts is very good at identifying sudden changes in the
 shapes of normalized distributions of Telemetry probes. If you can see
 the distribution of <a href="https://mzl.la/2vdMRax" target="_blank">GC_MS</a> shift from one day
 to the next, then likely so can Cerberus.</p>
-<h2 id="what-cant-it-do">What can&apos;t it do</h2>
+<h2 id="what-cant-it-do"><a name="what-cant-it-do" class="plugin-anchor" href="#what-cant-it-do"><i class="fa fa-link" aria-hidden="true"></i></a>What can&apos;t it do</h2>
 <p>Telemetry Alerts is not able to see sudden shifts in volume. It is also
 very easily fooled if a change happens over a long period of time or
 doesn&apos;t fundamentally alter the shape of the probe&apos;s histogram.</p>
@@ -892,14 +896,14 @@ given how good Session Restore is these days)</li>
 of the distribution changed insufficiently much for Cerberus to pick
 up on it)</li>
 </ul>
-<h2 id="telemetry-alert-emails">Telemetry Alert Emails</h2>
+<h2 id="telemetry-alert-emails"><a name="telemetry-alert-emails" class="plugin-anchor" href="#telemetry-alert-emails"><i class="fa fa-link" aria-hidden="true"></i></a>Telemetry Alert Emails</h2>
 <p>One of the main ways humans interact with Telemetry Alerts is through
 the emails sent by Medusa.</p>
 <p>At present the email contains a link to the alert&apos;s page on
 <a href="https://alerts.telemetry.mozilla.org" target="_blank">https://alerts.telemetry.mozilla.org</a> and a link to a pushlog on
 <a href="https://hg.mozilla.org" target="_blank">https://hg.mozilla.org</a> detailing the changes newly-present in the
 Nightly build that exhibited the change.</p>
-<h2 id="triaging-a-telemetry-alert-email">Triaging a Telemetry Alert Email</h2>
+<h2 id="triaging-a-telemetry-alert-email"><a name="triaging-a-telemetry-alert-email" class="plugin-anchor" href="#triaging-a-telemetry-alert-email"><i class="fa fa-link" aria-hidden="true"></i></a>Triaging a Telemetry Alert Email</h2>
 <p>Congratulations! You have just received a Telemetry Alert!</p>
 <p>Now what?</p>
 <p><strong>Assumption:</strong> Alerts happen because of changes in probes. Changes in
@@ -1035,7 +1039,7 @@ without you having to spend all this time tracking them down.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Alerts","level":"1.4.2.7","depth":3,"next":{"title":"Cookbooks","level":"1.5","depth":1,"path":"cookbooks/README.adoc","ref":"cookbooks/README.adoc","articles":[{"title":"Working with Parquet Data on ATMO Clusters","level":"1.5.1","depth":2,"path":"cookbooks/parquet.md","ref":"cookbooks/parquet.md","articles":[]},{"title":"Creating a custom re:dash dataset","level":"1.5.2","depth":2,"path":"cookbooks/create_a_dataset.md","ref":"cookbooks/create_a_dataset.md","articles":[]},{"title":"Creating a Real-time Analysis Plugin","level":"1.5.3","depth":2,"path":"cookbooks/realtime_analysis_plugin.md","ref":"cookbooks/realtime_analysis_plugin.md","articles":[]},{"title":"Longitudinal Examples","level":"1.5.4","depth":2,"path":"cookbooks/longitudinal_examples.md","ref":"cookbooks/longitudinal_examples.md","articles":[]}]},"previous":{"title":"RTMO","level":"1.4.2.6","depth":3,"path":"tools/rtmo.md","ref":"tools/rtmo.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","ga"],"pluginsConfig":{"ga":{"configuration":"auto","token":"UA-104326577-1"},"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"tools/alerts.md","mtime":"2017-07-26T13:17:46.561Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-09-07T17:04:59.655Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Alerts","level":"1.4.2.7","depth":3,"next":{"title":"Cookbooks","level":"1.5","depth":1,"path":"cookbooks/README.adoc","ref":"cookbooks/README.adoc","articles":[{"title":"Working with Parquet Data on ATMO Clusters","level":"1.5.1","depth":2,"path":"cookbooks/parquet.md","ref":"cookbooks/parquet.md","articles":[]},{"title":"Creating a custom re:dash dataset","level":"1.5.2","depth":2,"path":"cookbooks/create_a_dataset.md","ref":"cookbooks/create_a_dataset.md","articles":[]},{"title":"Creating a Real-time Analysis Plugin","level":"1.5.3","depth":2,"path":"cookbooks/realtime_analysis_plugin.md","ref":"cookbooks/realtime_analysis_plugin.md","articles":[]},{"title":"Longitudinal Examples","level":"1.5.4","depth":2,"path":"cookbooks/longitudinal_examples.md","ref":"cookbooks/longitudinal_examples.md","articles":[]}]},"previous":{"title":"RTMO","level":"1.4.2.6","depth":3,"path":"tools/rtmo.md","ref":"tools/rtmo.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"tools/alerts.md","mtime":"2017-07-26T13:17:46.561Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-09-11T16:06:46.593Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

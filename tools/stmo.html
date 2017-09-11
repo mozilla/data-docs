@@ -17,6 +17,10 @@
     
             
                 
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
                 <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
                 
             
@@ -844,7 +848,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h2 id="introduction">Introduction</h2>
+                                <h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
 <p>STMO is shorthand for
 <a href="https://sql.telemetry.mozilla.org" target="_blank">sql.telemetry.mozilla.org</a>, an installation
 of the excellent <a href="https://redash.io/" target="_blank">redash</a> data analysis and dashboarding
@@ -853,10 +857,10 @@ Firefox organization&apos;s data sets. As the name and URL imply, effective use 
 this tool requires familiarity with the
 <a href="https://en.wikipedia.org/wiki/SQL" target="_blank">SQL</a> query language, with which all of the
 tool&apos;s data extraction and analysis are performed.</p>
-<h2 id="concepts">Concepts</h2>
+<h2 id="concepts"><a name="concepts" class="plugin-anchor" href="#concepts"><i class="fa fa-link" aria-hidden="true"></i></a>Concepts</h2>
 <p>There are three building block from which analyses in STMO are constructed:
 queries, visualizations, and dashboards.</p>
-<h4 id="queries">Queries</h4>
+<h4 id="queries"><a name="queries" class="plugin-anchor" href="#queries"><i class="fa fa-link" aria-hidden="true"></i></a>Queries</h4>
 <p>STMO&apos;s basic unit of analysis is the query. A query is a block of SQL code that
 extracts and (optionally) transforms data from a single data source. Queries
 can vary widely in complexity. Some queries are trivial one liners
@@ -866,7 +870,7 @@ small programs in their own right.</p>
 return values for the query&apos;s output columns. A query can be run manually or it
 can be specified to have a refresh schedule, where it will execute
 automatically after a specified interval of time.</p>
-<h4 id="visualizations">Visualizations</h4>
+<h4 id="visualizations"><a name="visualizations" class="plugin-anchor" href="#visualizations"><i class="fa fa-link" aria-hidden="true"></i></a>Visualizations</h4>
 <p>Tabular data is great, but rarely is a grid of values the best way to make
 sense of your data. Each query can be associated with multiple visualizations,
 each visualization rendering the extracted data in some more useful
@@ -876,13 +880,13 @@ provides a set of configuration parameters that allow you to specify how to map
 from the raw query output to the desired visualization. Some visualization types
 make demands of the query output; a map visualization requires each row to contain
 a longitude value and a latitude value, for instance.</p>
-<h4 id="dashboards">Dashboards</h4>
+<h4 id="dashboards"><a name="dashboards" class="plugin-anchor" href="#dashboards"><i class="fa fa-link" aria-hidden="true"></i></a>Dashboards</h4>
 <p>A dashboard is a collection of visualizations, combined into a single visual
 presentation for convenient perusal. A dashboard is decoupled from any
 particular queries. While it is possible to include multiple visualizations
 from a single query in one dashboard, it is not required; users can add any
 visualizations they can access to the dashboards they create.</p>
-<h2 id="data-sources">Data Sources</h2>
+<h2 id="data-sources"><a name="data-sources" class="plugin-anchor" href="#data-sources"><i class="fa fa-link" aria-hidden="true"></i></a>Data Sources</h2>
 <p>SQL provides the ability to extract and manipulate the data, but you won&apos;t get
 very far without having some familiarity with what data is actually available,
 and how that data is structured. Each query in STMO is associated with exactly
@@ -902,10 +906,10 @@ dataset</a> page. If you have data set
 questions, or would like to know if specific data is or can be made available
 in STMO, please inquire in the #datapipeline or #datatools channels on
 irc.mozilla.org.</p>
-<h2 id="creating-an-example-dashboard">Creating an Example Dashboard</h2>
+<h2 id="creating-an-example-dashboard"><a name="creating-an-example-dashboard" class="plugin-anchor" href="#creating-an-example-dashboard"><i class="fa fa-link" aria-hidden="true"></i></a>Creating an Example Dashboard</h2>
 <p>The rest of this document will take you through the process of creating a
 simple dashboard using STMO.</p>
-<h4 id="creating-a-query">Creating A Query</h4>
+<h4 id="creating-a-query"><a name="creating-a-query" class="plugin-anchor" href="#creating-a-query"><i class="fa fa-link" aria-hidden="true"></i></a>Creating A Query</h4>
 <p>We start by creating a query. Our first query will count the number of client
 ids that we have coming from each country, for the top N countries. Clicking on
 the &apos;New Query&apos; button near the top left of the site will bring you to the
@@ -967,7 +971,7 @@ the page; it should turn into an edit box, allowing you to rename the
 query. For this exercise, you should use a unique prefix (such as your name)
 for your query name, so it will be easy to find your query later; I used
 &quot;rmiller:Top Countries&quot;.</p>
-<h4 id="creating-a-visualization">Creating A Visualization</h4>
+<h4 id="creating-a-visualization"><a name="creating-a-visualization" class="plugin-anchor" href="#creating-a-visualization"><i class="fa fa-link" aria-hidden="true"></i></a>Creating A Visualization</h4>
 <p>Now that the query is created, we&apos;ll want to provide a simple
 visualization. The table with results from the first query execution should be
 showing up underneath the query edit box. Next to the <code>TABLE</code> heading should be
@@ -983,7 +987,7 @@ more settings on the <code>X AXIS</code> tab. You&apos;ll want to click on this 
 change the &apos;Scale&apos; setting to &apos;Category&apos;, and uncheck the &apos;Sort Values&apos;
 checkbox to allow the query&apos;s sort order to take precedence:</p>
 <p><img src="../assets/STMO_screenshots/x_axis_editor.png" alt="Visualization X Axis" title="Visualization X Axis"></p>
-<h4 id="a-note-about-limits">A Note About Limits</h4>
+<h4 id="a-note-about-limits"><a name="a-note-about-limits" class="plugin-anchor" href="#a-note-about-limits"><i class="fa fa-link" aria-hidden="true"></i></a>A Note About Limits</h4>
 <p>Once you save the visualization settings and return to the query source page,
 you should have a nice bar graph near the bottom of the page. You may notice,
 however, that the graph has quite a long tail. Rather than seeing <em>all</em> of
@@ -1005,7 +1009,7 @@ queries, to prevent your query from returning a gigantic data set that causes
 UI and performance problems. You may learn that the total result set is small
 enough that the limit is unnecessary, but unless you&apos;re certain that is the
 case specifying an explicit LIMIT helps prevent unnecessary issues.</p>
-<h4 id="query-parameters">Query Parameters</h4>
+<h4 id="query-parameters"><a name="query-parameters" class="plugin-anchor" href="#query-parameters"><i class="fa fa-link" aria-hidden="true"></i></a>Query Parameters</h4>
 <p>We got our chart under control by adding a &quot;LIMIT 20&quot; clause at the end. But
 what if we only want the top 10? Or maybe sometimes we want to see the top 30?
 We don&apos;t always know how many results our users will want. Is it possible to
@@ -1019,7 +1023,7 @@ see an input field show up directly above the bar chart. If you enter a numeric
 value into this input box and click on &apos;Execute&apos; the query will run with the
 specified limit. Clicking on the &apos;Save&apos; button will then save the query, using
 the entered parameter value as the default.</p>
-<h4 id="creating-a-dashboard">Creating A Dashboard</h4>
+<h4 id="creating-a-dashboard"><a name="creating-a-dashboard" class="plugin-anchor" href="#creating-a-dashboard"><i class="fa fa-link" aria-hidden="true"></i></a>Creating A Dashboard</h4>
 <p>Now we can create a dashboard to display our visualization. Do this by clicking
 on the &apos;Dashboards&apos; dropdown near the top left of the page, and then clicking
 the &apos;New Dashboard&apos; option. Choose a name for your dashboard, and you will be
@@ -1042,7 +1046,7 @@ visualizations to use. Choose the bar chart you created and then click on the
 &quot;Add to Dashboard&quot; button. Voila! Now your dashboard should have a bar chart,
 and you should be able to edit the &apos;country_count&apos; value and click the refresh
 button to change the number of countries that show up on the chart.</p>
-<h4 id="completing-the-dashboard">Completing the Dashboard</h4>
+<h4 id="completing-the-dashboard"><a name="completing-the-dashboard" class="plugin-anchor" href="#completing-the-dashboard"><i class="fa fa-link" aria-hidden="true"></i></a>Completing the Dashboard</h4>
 <p>A dashboard with just one graph is a bit sad, so let&apos;s flesh it out by adding a
 handful of additional widgets. We&apos;re going to create three more queries, each
 with a very similar bar chart. The text of the queries will be provided here,
@@ -1130,7 +1134,7 @@ diving into redash and all of its capabilities.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Intro to STMO","level":"1.2.4","depth":2,"next":{"title":"Common Analysis Gotchas","level":"1.2.5","depth":2,"path":"concepts/analysis_gotchas.md","ref":"concepts/analysis_gotchas.md","articles":[]},"previous":{"title":"Choosing a Dataset","level":"1.2.3","depth":2,"path":"concepts/choosing_a_dataset.md","ref":"concepts/choosing_a_dataset.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","ga"],"pluginsConfig":{"ga":{"configuration":"auto","token":"UA-104326577-1"},"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"tools/stmo.md","mtime":"2017-07-25T14:29:40.498Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-09-07T17:04:59.655Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Intro to STMO","level":"1.2.4","depth":2,"next":{"title":"Common Analysis Gotchas","level":"1.2.5","depth":2,"path":"concepts/analysis_gotchas.md","ref":"concepts/analysis_gotchas.md","articles":[]},"previous":{"title":"Choosing a Dataset","level":"1.2.3","depth":2,"path":"concepts/choosing_a_dataset.md","ref":"concepts/choosing_a_dataset.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"tools/stmo.md","mtime":"2017-07-25T14:29:40.498Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-09-11T16:06:46.593Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

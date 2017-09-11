@@ -17,6 +17,10 @@
     
             
                 
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
                 <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
                 
             
@@ -844,19 +848,19 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="analysis-gotchas">Analysis Gotchas</h1>
+                                <h1 id="analysis-gotchas"><a name="analysis-gotchas" class="plugin-anchor" href="#analysis-gotchas"><i class="fa fa-link" aria-hidden="true"></i></a>Analysis Gotchas</h1>
 <p>When performing analysis on any data there are some mistakes that are easy to make and details that are easy to overlook. Do you know exactly what question you hope to answer? Is your sample representative of your population? Is your result &quot;real&quot;? How precisely can you state your conclusion?</p>
 <p>This document is not about those traps. Instead, it is about quirks and pitfalls specific to <a href="http://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/index.html" target="_blank">Telemetry</a>.</p>
-<h3 id="pseudo-replication">Pseudo-replication</h3>
+<h3 id="pseudo-replication"><a name="pseudo-replication" class="plugin-anchor" href="#pseudo-replication"><i class="fa fa-link" aria-hidden="true"></i></a>Pseudo-replication</h3>
 <p>Telemetry data is a collection of pings. A single main-ping represents a single subsession. Some clients have more subsessions than others.</p>
 <p>So when you say <a href="https://mzl.la/2q75dbF" target="_blank">&quot;63% of beta 53 has Firefox set as its default browser&quot;</a>, make sure you specify it is 63% of <em>pings</em>, since it is only around 46% of clients. (Apparently users with Firefox Beta 53 set as their default browser submit more main-pings than users who don&apos;t).</p>
-<h3 id="profiles-vs-users">Profiles vs Users</h3>
+<h3 id="profiles-vs-users"><a name="profiles-vs-users" class="plugin-anchor" href="#profiles-vs-users"><i class="fa fa-link" aria-hidden="true"></i></a>Profiles vs Users</h3>
 <p>In the section above you&apos;ll notice I said &quot;clients&quot; not &quot;users.&quot; That is because of all the things we&apos;re able to count, users isn&apos;t one of them.</p>
 <p>Users can have multiple Firefox profiles running on the same computer at the same time (like developers).</p>
 <p>Users can have the same Firefox profile running on several computers on different days of the week (also developers).</p>
 <p>The only things we can count are pings and clients. Clients we can count because we send a <code>client_id</code> with each ping that uniquely identifies the profile from which it came. This is generally close enough to our idea of &quot;user&quot; that we can get away with counting profiles and calling them users, but you may run into some instances where the distinction matters.</p>
 <p>When in doubt, be precise. You&apos;re counting <em>clients</em>.</p>
-<h3 id="opt-in-vs-opt-out">Opt-in vs Opt-out</h3>
+<h3 id="opt-in-vs-opt-out"><a name="opt-in-vs-opt-out" class="plugin-anchor" href="#opt-in-vs-opt-out"><i class="fa fa-link" aria-hidden="true"></i></a>Opt-in vs Opt-out</h3>
 <p>We don&apos;t collect the same information from everyone.</p>
 <p>Every profile that doesn&apos;t have Telemetry disabled sends us &quot;opt-out&quot; Telemetry. This includes:</p>
 <ul>
@@ -869,18 +873,18 @@
 <li>Installing any pre-release version of Firefox</li>
 </ol>
 <p>The nature of selection bias is such that the population in #1 is useless for analysis. If you want to encourage users to collect good information for us, ask them to install Beta: it&apos;s only slightly harder than finding and checking the opt-in checkbox in Firefox.</p>
-<h3 id="trusting-dates">Trusting Dates</h3>
+<h3 id="trusting-dates"><a name="trusting-dates" class="plugin-anchor" href="#trusting-dates"><i class="fa fa-link" aria-hidden="true"></i></a>Trusting Dates</h3>
 <p>Don&apos;t trust client times.</p>
 <p>Any timestamp recorded by the user is subject to &quot;clock skew.&quot; The user&apos;s clock can be set (purposefully or accidentally) to any time at all. The nature of SSL certificates tends to keep this within a certain relatively-accurate window, because a user who&apos;s clock is too far in the past or too far in the future might confuse certain expiration-date-checking code.</p>
 <p>Examples of client times: <code>crashDate</code>, <code>crashTime</code>, <code>meta/Date</code>, <code>sessionStartDate</code>, <code>subsessionStartDate</code>, <code>profile/creationDate</code></p>
 <p>Examples of server times you can trust: <code>Timestamp</code></p>
-<h3 id="date-formats">Date Formats</h3>
+<h3 id="date-formats"><a name="date-formats" class="plugin-anchor" href="#date-formats"><i class="fa fa-link" aria-hidden="true"></i></a>Date Formats</h3>
 <p>Not all dates and times are created equal. Most of the dates and times in Telemetry pings are <a href="https://en.wikipedia.org/wiki/ISO_8601" target="_blank">ISO 8601</a>. Most are full timestamps, though their resolution may differ from being per-second to being per-day.</p>
 <p>Then there&apos;s <code>profile/creationDate</code> which is just a number of days since epoch. Like <code>17177</code> for the date 2017-01-11.</p>
 <p><strong>Tip:</strong> To convert <code>profile/creationDate</code> to a usable date in SQL: <code>DATE_ADD(&apos;day&apos;, profile_created, DATE &apos;1970-01-01&apos;)</code></p>
 <p>In derived datasets ISO dates are sometimes converted to strings in one of two formats: <code>%Y-%m-%d</code> or <code>%Y%m%d</code>.</p>
 <p>Build ids look like dates but aren&apos;t. If you take the first eight characters you can use that as a proxy for the day the build was released.</p>
-<h3 id="delays">Delays</h3>
+<h3 id="delays"><a name="delays" class="plugin-anchor" href="#delays"><i class="fa fa-link" aria-hidden="true"></i></a>Delays</h3>
 <p>Telemetry data takes a while to get into our hands. The largest data mule in Telemetry is the main-ping. It is (pending <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1336360" target="_blank">bug 1336360</a>) sent at the beginning of a client&apos;s <em>next</em> Firefox session. If the user shuts down their Firefox for the weekend, we won&apos;t get their Friday data until Monday morning.</p>
 <p>A rule of thumb (pending <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1336360" target="_blank">bug 1336360</a>) is data from two days ago is usually fairly representative.</p>
 <p>If you&apos;d like to read more about this subject and look at pretty graphs, there are a series of blogposts <a href="https://chuttenblog.wordpress.com/2017/02/09/data-science-is-hard-client-delays-for-crash-pings/" target="_blank">here</a>.</p>
@@ -927,7 +931,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Common Analysis Gotchas","level":"1.2.5","depth":2,"next":{"title":"Getting Review","level":"1.2.6","depth":2,"path":"concepts/review.md","ref":"concepts/review.md","articles":[]},"previous":{"title":"Intro to STMO","level":"1.2.4","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","ga"],"pluginsConfig":{"ga":{"configuration":"auto","token":"UA-104326577-1"},"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/analysis_gotchas.md","mtime":"2017-05-02T14:56:08.544Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-09-07T17:04:59.655Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Common Analysis Gotchas","level":"1.2.5","depth":2,"next":{"title":"Getting Review","level":"1.2.6","depth":2,"path":"concepts/review.md","ref":"concepts/review.md","articles":[]},"previous":{"title":"Intro to STMO","level":"1.2.4","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/analysis_gotchas.md","mtime":"2017-05-02T14:56:08.544Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-09-11T16:06:46.593Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

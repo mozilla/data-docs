@@ -17,6 +17,10 @@
     
             
                 
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
                 <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-highlight/website.css">
                 
             
@@ -844,7 +848,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="crash-aggregates-reference">Crash Aggregates Reference</h1>
+                                <h1 id="crash-aggregates-reference"><a name="crash-aggregates-reference" class="plugin-anchor" href="#crash-aggregates-reference"><i class="fa fa-link" aria-hidden="true"></i></a>Crash Aggregates Reference</h1>
 <!-- toc -->
 <ul>
 <li><a href="#introduction">Introduction</a></li>
@@ -859,10 +863,10 @@
 </ul>
 </li>
 </ul>
-<!-- toc stop -->
-<h1 id="introduction">Introduction</h1>
+<!-- tocstop -->
+<h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
 <p>The <code>crash_aggregates</code> dataset compiles crash statistics over various dimensions for each day.</p>
-<h4 id="rows-and-columns">Rows and Columns</h4>
+<h4 id="rows-and-columns"><a name="rows-and-columns" class="plugin-anchor" href="#rows-and-columns"><i class="fa fa-link" aria-hidden="true"></i></a>Rows and Columns</h4>
 <p>There&apos;s one column for each of the stratifying dimensions and the crash statistics.
 Each row is a distinct set of dimensions, along with their associated crash stats.
 Example stratifying dimensions include channel and country,
@@ -870,16 +874,16 @@ example statistics include usage hours and plugin crashes.
 See the <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/docs/CrashAggregateView.md" target="_blank">complete documentation</a>
 for all available dimensions
 and statistics.</p>
-<h4 id="accessing-the-data">Accessing the Data</h4>
+<h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
 <p>This dataset is accessible via re:dash.</p>
 <p>The data is stored as a parquet table in S3 at the following address.
 See <a href="../../../cookbooks/parquet.html">this cookbook</a> to get started working with the data in Spark.</p>
 <pre><code>s3://telemetry-parquet/crash_aggregates/v1/
-</code></pre><h4 id="further-reading">Further Reading</h4>
+</code></pre><h4 id="further-reading"><a name="further-reading" class="plugin-anchor" href="#further-reading"><i class="fa fa-link" aria-hidden="true"></i></a>Further Reading</h4>
 <p>The technical documentation for this dataset can be found in the
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/docs/CrashAggregateView.md" target="_blank">telemetry-batch-view documentation</a></p>
-<h1 id="data-reference">Data Reference</h1>
-<h2 id="example-queries">Example Queries</h2>
+<h1 id="data-reference"><a name="data-reference" class="plugin-anchor" href="#data-reference"><i class="fa fa-link" aria-hidden="true"></i></a>Data Reference</h1>
+<h2 id="example-queries"><a name="example-queries" class="plugin-anchor" href="#example-queries"><i class="fa fa-link" aria-hidden="true"></i></a>Example Queries</h2>
 <p>Here&apos;s an example query that computes crash rates
 for each channel (sorted by number of usage hours):</p>
 <pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> dimensions[<span class="hljs-string">&apos;channel&apos;</span>] <span class="hljs-keyword">AS</span> channel,
@@ -913,8 +917,8 @@ for each channel (sorted by number of usage hours):</p>
 <span class="hljs-keyword">WHERE</span> usage_kilohours &gt; <span class="hljs-number">100</span> <span class="hljs-comment">-- only aggregates that have statistically significant usage hours</span>
 <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> build_id <span class="hljs-keyword">ASC</span>
 </code></pre>
-<h2 id="sampling">Sampling</h2>
-<h3 id="invalid-pings">Invalid Pings</h3>
+<h2 id="sampling"><a name="sampling" class="plugin-anchor" href="#sampling"><i class="fa fa-link" aria-hidden="true"></i></a>Sampling</h2>
+<h3 id="invalid-pings"><a name="invalid-pings" class="plugin-anchor" href="#invalid-pings"><i class="fa fa-link" aria-hidden="true"></i></a>Invalid Pings</h3>
 <p>We ignore invalid pings in our processing. Invalid pings are defined as those that:</p>
 <ul>
 <li>The submission dates or activity dates are invalid or missing.</li>
@@ -922,11 +926,11 @@ for each channel (sorted by number of usage hours):</p>
 <li>The docType field is missing or unknown.</li>
 <li>The ping is a main ping without usage hours or a crash ping with usage hours.</li>
 </ul>
-<h2 id="scheduling">Scheduling</h2>
+<h2 id="scheduling"><a name="scheduling" class="plugin-anchor" href="#scheduling"><i class="fa fa-link" aria-hidden="true"></i></a>Scheduling</h2>
 <p>The <code>crash_aggregates</code> job is run daily, at midnight UTC.
 The job is scheduled on <a href="https://github.com/mozilla/telemetry-airflow" target="_blank">Airflow</a>.
 The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/crash_aggregates.py" target="_blank">here</a></p>
-<h2 id="schema">Schema</h2>
+<h2 id="schema"><a name="schema" class="plugin-anchor" href="#schema"><i class="fa fa-link" aria-hidden="true"></i></a>Schema</h2>
 <p>The <code>crash_aggregates</code> table has 4 commonly-used columns:</p>
 <ul>
 <li><code>submission_date</code> is the date pings were submitted for a particular aggregate.<ul>
@@ -1012,7 +1016,7 @@ The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dag
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Crash Aggregate","level":"1.3.3.2.5","depth":4,"next":{"title":"Events","level":"1.3.3.2.6","depth":4,"path":"datasets/batch_view/events/reference.md","ref":"datasets/batch_view/events/reference.md","articles":[]},"previous":{"title":"Crash Summary","level":"1.3.3.2.4","depth":4,"path":"datasets/batch_view/crash_summary/reference.md","ref":"datasets/batch_view/crash_summary/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","ga"],"pluginsConfig":{"ga":{"configuration":"auto","token":"UA-104326577-1"},"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/crash_aggregates/reference.md","mtime":"2017-05-12T14:20:07.455Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-09-07T17:04:59.655Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Crash Aggregate","level":"1.3.3.2.5","depth":4,"next":{"title":"Events","level":"1.3.3.2.6","depth":4,"path":"datasets/batch_view/events/reference.md","ref":"datasets/batch_view/events/reference.md","articles":[]},"previous":{"title":"Crash Summary","level":"1.3.3.2.4","depth":4,"path":"datasets/batch_view/crash_summary/reference.md","ref":"datasets/batch_view/crash_summary/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/crash_aggregates/reference.md","mtime":"2017-05-12T14:20:07.455Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-09-11T16:06:46.593Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

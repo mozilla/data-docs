@@ -17,6 +17,10 @@
     
             
                 
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
                 <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
                 
             
@@ -840,18 +844,18 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="contributing">Contributing</h1>
+                                <h1 id="contributing"><a name="contributing" class="plugin-anchor" href="#contributing"><i class="fa fa-link" aria-hidden="true"></i></a>Contributing</h1>
 <p>Documentation is critical to making a usable data platform.
 When surveying our users,
 their most common complain has been our lack of documentation.
 It&apos;s important that we improve our documentation as often as possible.</p>
-<h2 id="getting-the-raw-documentation">Getting the Raw Documentation</h2>
+<h2 id="getting-the-raw-documentation"><a name="getting-the-raw-documentation" class="plugin-anchor" href="#getting-the-raw-documentation"><i class="fa fa-link" aria-hidden="true"></i></a>Getting the Raw Documentation</h2>
 <p>The documentation is intended to be read as HTML at 
 <a href="https://docs.telemetry.mozilla.org" target="_blank">docs.telemetry.mozilla.org</a>.
 However, we store the documentation in raw text files in the
 <a href="https://github.com/mozilla/firefox-data-docs" target="_blank">firefox-data-docs repo</a>.
 To begin contributing to the docs, fork the firefox-data-docs repo.</p>
-<h2 id="building-the-documentation">Building the Documentation</h2>
+<h2 id="building-the-documentation"><a name="building-the-documentation" class="plugin-anchor" href="#building-the-documentation"><i class="fa fa-link" aria-hidden="true"></i></a>Building the Documentation</h2>
 <p>The documentation is rendered with <a href="https://www.gitbook.com/" target="_blank">Gitbook</a>
 To build the documentation locally,
 you&apos;ll need to install the gitbook-cli app with 
@@ -866,14 +870,14 @@ you&apos;ll need to install the gitbook-cli app with
 </code></pre><p>The complete documentation for the gitbook toolchain is at: <a href="https://toolchain.gitbook.com/" target="_blank">https://toolchain.gitbook.com/</a>.
 If you run into any technical limitations, let me (@harterrt) know.
 I&apos;m happy to change the tooling to make it as much fun as possible to write.</p>
-<h2 id="adding-a-new-article">Adding a new article</h2>
+<h2 id="adding-a-new-article"><a name="adding-a-new-article" class="plugin-anchor" href="#adding-a-new-article"><i class="fa fa-link" aria-hidden="true"></i></a>Adding a new article</h2>
 <p>Be sure to link to your new article from <code>SUMMARY.md</code>, or GitBook will not render the file.</p>
 <p>This documentation is under active development,
 so we may already be working on the documentation you need.
 Take a look at
 <a href="https://bugzilla.mozilla.org/buglist.cgi?product=Data%20Platform%20and%20Tools&amp;component=Documentation%20and%20Knowledge%20Repo%20%28RTMO%29&amp;resolution=---" target="_blank">this bug component</a>
 to check.</p>
-<h2 id="style-guide">Style Guide</h2>
+<h2 id="style-guide"><a name="style-guide" class="plugin-anchor" href="#style-guide"><i class="fa fa-link" aria-hidden="true"></i></a>Style Guide</h2>
 <p>Articles should be written in
 <a href="https://daringfireball.net/projects/markdown/syntax" target="_blank">Markdown</a>
 (not <a href="http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/" target="_blank">AsciiDoc</a>).
@@ -888,11 +892,11 @@ so make it easy to identify important information.</p>
 <p>Use <strong>visual markup</strong> like <strong>bold text</strong>, <code>code blocks</code>, and section headers.
 Avoid long paragraphs.
 Short paragraphs that describe one concept each makes finding important information easier.</p>
-<h2 id="review">Review</h2>
+<h2 id="review"><a name="review" class="plugin-anchor" href="#review"><i class="fa fa-link" aria-hidden="true"></i></a>Review</h2>
 <p>Once you&apos;re happy with your contribution, please open a PR and flag @harterrt for review.
 Please squash your changes  into meaningful commits  and follow these
 <a href="https://chris.beams.io/posts/git-commit/" target="_blank">commit message guidelines</a>.</p>
-<h2 id="publishing">Publishing</h2>
+<h2 id="publishing"><a name="publishing" class="plugin-anchor" href="#publishing"><i class="fa fa-link" aria-hidden="true"></i></a>Publishing</h2>
 <p>The documentation is hosted on <a href="https://pages.github.com/" target="_blank">Github Pages</a>.
 Updates to the documentation still need to be pushed manually.
 Use the <a href="https://github.com/mozilla/firefox-data-docs/blob/master/scripts/deploy.sh" target="_blank">deploy script</a>
@@ -902,7 +906,7 @@ to publish new changes.</p>
 <p>Keep in mind that this will deploy the docs to your <code>origin</code> repo.
 If you&apos;re working from a fork (which you should be),
 <code>deploy.sh</code> will update the docs hosted from your fork - not the production docs.</p>
-<h1 id="colophon">Colophon</h1>
+<h1 id="colophon"><a name="colophon" class="plugin-anchor" href="#colophon"><i class="fa fa-link" aria-hidden="true"></i></a>Colophon</h1>
 <p>This document&apos;s structure is heavily influenced by
 <a href="https://docs.djangoproject.com/en/1.11/internals/contributing/writing-documentation/" target="_blank">Django&apos;s Documentation Style Guide</a>.</p>
 <p>You can find more context for this document in
@@ -942,7 +946,7 @@ If you&apos;re working from a fork (which you should be),
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Contributing","level":"2.1.1","depth":2,"next":{"title":"Bug Template","level":"2.1.2","depth":2,"url":"https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&component=Documentation%20and%20Knowledge%20Repo%20%28RTMO%29&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=P3&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&target_milestone=---&version=unspecified","ref":"https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&component=Documentation%20and%20Knowledge%20Repo%20%28RTMO%29&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=P3&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&target_milestone=---&version=unspecified","articles":[]},"previous":{"title":"About this Documentation","level":"2.1","depth":1,"ref":"","articles":[{"title":"Contributing","level":"2.1.1","depth":2,"path":"meta/contributing.md","ref":"meta/contributing.md","articles":[]},{"title":"Bug Template","level":"2.1.2","depth":2,"url":"https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&component=Documentation%20and%20Knowledge%20Repo%20%28RTMO%29&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=P3&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&target_milestone=---&version=unspecified","ref":"https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&component=Documentation%20and%20Knowledge%20Repo%20%28RTMO%29&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=P3&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&target_milestone=---&version=unspecified","articles":[]},{"title":"Structure","level":"2.1.3","depth":2,"path":"meta/structure.md","ref":"meta/structure.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","ga"],"pluginsConfig":{"ga":{"configuration":"auto","token":"UA-104326577-1"},"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"meta/contributing.md","mtime":"2017-08-29T20:01:00.106Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-09-07T17:04:59.655Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Contributing","level":"2.1.1","depth":2,"next":{"title":"Bug Template","level":"2.1.2","depth":2,"url":"https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&component=Documentation%20and%20Knowledge%20Repo%20%28RTMO%29&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=P3&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&target_milestone=---&version=unspecified","ref":"https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&component=Documentation%20and%20Knowledge%20Repo%20%28RTMO%29&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=P3&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&target_milestone=---&version=unspecified","articles":[]},"previous":{"title":"About this Documentation","level":"2.1","depth":1,"ref":"","articles":[{"title":"Contributing","level":"2.1.1","depth":2,"path":"meta/contributing.md","ref":"meta/contributing.md","articles":[]},{"title":"Bug Template","level":"2.1.2","depth":2,"url":"https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&component=Documentation%20and%20Knowledge%20Repo%20%28RTMO%29&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=P3&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&target_milestone=---&version=unspecified","ref":"https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&component=Documentation%20and%20Knowledge%20Repo%20%28RTMO%29&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=P3&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&target_milestone=---&version=unspecified","articles":[]},{"title":"Structure","level":"2.1.3","depth":2,"path":"meta/structure.md","ref":"meta/structure.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"meta/contributing.md","mtime":"2017-08-29T20:01:00.106Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-09-11T16:06:46.593Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

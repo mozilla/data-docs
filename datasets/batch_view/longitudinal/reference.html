@@ -17,6 +17,10 @@
     
             
                 
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
                 <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-highlight/website.css">
                 
             
@@ -844,7 +848,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="longitudinal-reference">Longitudinal Reference</h1>
+                                <h1 id="longitudinal-reference"><a name="longitudinal-reference" class="plugin-anchor" href="#longitudinal-reference"><i class="fa fa-link" aria-hidden="true"></i></a>Longitudinal Reference</h1>
 <!-- toc -->
 <ul>
 <li><a href="#introduction">Introduction</a></li>
@@ -852,7 +856,7 @@
 <li><a href="#example-queries">Example Queries</a></li>
 <li><a href="#sampling">Sampling</a><ul>
 <li><a href="#pings-within-last-6-months">Pings Within Last 6 Months</a></li>
-<li><a href="#1-sample">1% Sample</a></li>
+<li><a href="#1%25-sample">1% Sample</a></li>
 </ul>
 </li>
 <li><a href="#scheduling">Scheduling</a></li>
@@ -861,13 +865,13 @@
 </li>
 <li><a href="#code-reference">Code Reference</a></li>
 </ul>
-<!-- toc stop -->
-<h1 id="introduction">Introduction</h1>
+<!-- tocstop -->
+<h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
 <p>The <code>longitudinal</code> dataset is a 1% sample of main ping data
 organized so that each row corresponds to a client_id.
 If you&apos;re not sure which dataset to use for your analysis,
 this is probably what you want.</p>
-<h4 id="contents">Contents</h4>
+<h4 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h4>
 <p>Each row in the <code>longitudinal</code> dataset represents one <code>client_id</code>,
 which is approximately a user.
 Each column represents a field from the main ping.
@@ -877,7 +881,7 @@ but can be difficult to work with from SQL.
 Here&apos;s a <a href="https://sql.telemetry.mozilla.org/queries/4188#table" target="_blank">query showing some sample data</a>
 to help illustrate.
 Take a look at the <a href="../../../cookbooks/longitudinal.md">longitudinal examples</a> if you get stuck.</p>
-<h4 id="background-and-caveats">Background and Caveats</h4>
+<h4 id="background-and-caveats"><a name="background-and-caveats" class="plugin-anchor" href="#background-and-caveats"><i class="fa fa-link" aria-hidden="true"></i></a>Background and Caveats</h4>
 <p>Think of the longitudinal table as wide and short.
 The dataset contains more columns than <code>main_summary</code>
 and down-samples to 1% of all clients to reduce query computation time and save resources.</p>
@@ -886,7 +890,7 @@ and down-samples to 1% of all clients to reduce query computation time and save 
 <li>The longitudinal dataset groups all data so that one row represents a client_id</li>
 <li>The longitudinal dataset samples to 1% of all client_ids</li>
 </ul>
-<h4 id="accessing-the-data">Accessing the Data</h4>
+<h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
 <p>The <code>longitudinal</code> is available in re:dash,
 though it can be difficult to work with the array values in SQL.
 Take a look at this <a href="https://sql.telemetry.mozilla.org/queries/4189/source" target="_blank">example query</a>.</p>
@@ -894,14 +898,14 @@ Take a look at this <a href="https://sql.telemetry.mozilla.org/queries/4189/sour
 See <a href="../../../cookbooks/parquet.html">this cookbook</a> to get started working with the data
 in <a href="http://spark.apache.org/docs/latest/quick-start.html" target="_blank">Spark</a>.</p>
 <pre><code>s3://telemetry-parquet/longitudinal/
-</code></pre><h1 id="data-reference">Data Reference</h1>
-<h2 id="example-queries">Example Queries</h2>
+</code></pre><h1 id="data-reference"><a name="data-reference" class="plugin-anchor" href="#data-reference"><i class="fa fa-link" aria-hidden="true"></i></a>Data Reference</h1>
+<h2 id="example-queries"><a name="example-queries" class="plugin-anchor" href="#example-queries"><i class="fa fa-link" aria-hidden="true"></i></a>Example Queries</h2>
 <p>Take a look at the 
 <a href="../../../cookbooks/longitudinal_examples.html">Longitudinal Examples Cookbook</a>.</p>
-<h2 id="sampling">Sampling</h2>
-<h3 id="pings-within-last-6-months">Pings Within Last 6 Months</h3>
+<h2 id="sampling"><a name="sampling" class="plugin-anchor" href="#sampling"><i class="fa fa-link" aria-hidden="true"></i></a>Sampling</h2>
+<h3 id="pings-within-last-6-months"><a name="pings-within-last-6-months" class="plugin-anchor" href="#pings-within-last-6-months"><i class="fa fa-link" aria-hidden="true"></i></a>Pings Within Last 6 Months</h3>
 <p>The <code>longitudinal</code> filters to <code>main</code> pings from within the last 6 months.</p>
-<h3 id="1-sample">1% Sample</h3>
+<h3 id="1-sample"><a name="1-sample" class="plugin-anchor" href="#1-sample"><i class="fa fa-link" aria-hidden="true"></i></a>1% Sample</h3>
 <p>The longitudinal dataset samples down to 1% of all clients in the above sample.
 The sample is generated by the following process:</p>
 <ul>
@@ -922,13 +926,13 @@ or clients without a ping in the last 180 days.</li>
 the sample is created by filtering to pings with <code>main_summary.sample_id == 42</code>.
 If you&apos;re working with <code>main_summary</code>,
 you can recreate this sample by doing this filter manually.</p>
-<h2 id="scheduling">Scheduling</h2>
+<h2 id="scheduling"><a name="scheduling" class="plugin-anchor" href="#scheduling"><i class="fa fa-link" aria-hidden="true"></i></a>Scheduling</h2>
 <p>The <code>longitudinal</code> job is run weekly, early on Sunday morning UTC.
 The job is scheduled on <a href="https://github.com/mozilla/telemetry-airflow" target="_blank">Airflow</a>.
 The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/longitudinal.py" target="_blank">here</a>.</p>
-<h2 id="schema">Schema</h2>
+<h2 id="schema"><a name="schema" class="plugin-anchor" href="#schema"><i class="fa fa-link" aria-hidden="true"></i></a>Schema</h2>
 <p>TODO(harter): <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1361862" target="_blank">https://bugzilla.mozilla.org/show_bug.cgi?id=1361862</a></p>
-<h1 id="code-reference">Code Reference</h1>
+<h1 id="code-reference"><a name="code-reference" class="plugin-anchor" href="#code-reference"><i class="fa fa-link" aria-hidden="true"></i></a>Code Reference</h1>
 <p>This dataset is generated by 
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/Longitudinal.scala" target="_blank">telemetry-batch-view</a>.
 Refer to this repository for information on how to run or augment the dataset.</p>
@@ -975,7 +979,7 @@ Refer to this repository for information on how to run or augment the dataset.</
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Longitudinal","level":"1.3.3.2.1","depth":4,"next":{"title":"Cross Sectional","level":"1.3.3.2.2","depth":4,"path":"datasets/batch_view/cross_sectional/reference.md","ref":"datasets/batch_view/cross_sectional/reference.md","articles":[]},"previous":{"title":"Derived Datasets","level":"1.3.3.2","depth":3,"path":"datasets/derived.md","ref":"datasets/derived.md","articles":[{"title":"Longitudinal","level":"1.3.3.2.1","depth":4,"path":"datasets/batch_view/longitudinal/reference.md","ref":"datasets/batch_view/longitudinal/reference.md","articles":[]},{"title":"Cross Sectional","level":"1.3.3.2.2","depth":4,"path":"datasets/batch_view/cross_sectional/reference.md","ref":"datasets/batch_view/cross_sectional/reference.md","articles":[]},{"title":"Main Summary","level":"1.3.3.2.3","depth":4,"path":"datasets/batch_view/main_summary/reference.md","ref":"datasets/batch_view/main_summary/reference.md","articles":[]},{"title":"Crash Summary","level":"1.3.3.2.4","depth":4,"path":"datasets/batch_view/crash_summary/reference.md","ref":"datasets/batch_view/crash_summary/reference.md","articles":[]},{"title":"Crash Aggregate","level":"1.3.3.2.5","depth":4,"path":"datasets/batch_view/crash_aggregates/reference.md","ref":"datasets/batch_view/crash_aggregates/reference.md","articles":[]},{"title":"Events","level":"1.3.3.2.6","depth":4,"path":"datasets/batch_view/events/reference.md","ref":"datasets/batch_view/events/reference.md","articles":[]},{"title":"Sync Summary","level":"1.3.3.2.7","depth":4,"path":"datasets/batch_view/sync_summary/reference.md","ref":"datasets/batch_view/sync_summary/reference.md","articles":[]},{"title":"Addons","level":"1.3.3.2.8","depth":4,"path":"datasets/batch_view/addons/reference.md","ref":"datasets/batch_view/addons/reference.md","articles":[]},{"title":"Client Count","level":"1.3.3.2.9","depth":4,"path":"datasets/batch_view/client_count/reference.md","ref":"datasets/batch_view/client_count/reference.md","articles":[]},{"title":"New Profile","level":"1.3.3.2.10","depth":4,"path":"datasets/batch_view/new_profile/reference.md","ref":"datasets/batch_view/new_profile/reference.md","articles":[]},{"title":"Update","level":"1.3.3.2.11","depth":4,"path":"datasets/batch_view/update/reference.md","ref":"datasets/batch_view/update/reference.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","ga"],"pluginsConfig":{"ga":{"configuration":"auto","token":"UA-104326577-1"},"toc":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/longitudinal/reference.md","mtime":"2017-05-12T14:20:07.455Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-09-07T17:04:59.655Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Longitudinal","level":"1.3.3.2.1","depth":4,"next":{"title":"Cross Sectional","level":"1.3.3.2.2","depth":4,"path":"datasets/batch_view/cross_sectional/reference.md","ref":"datasets/batch_view/cross_sectional/reference.md","articles":[]},"previous":{"title":"Derived Datasets","level":"1.3.3.2","depth":3,"path":"datasets/derived.md","ref":"datasets/derived.md","articles":[{"title":"Longitudinal","level":"1.3.3.2.1","depth":4,"path":"datasets/batch_view/longitudinal/reference.md","ref":"datasets/batch_view/longitudinal/reference.md","articles":[]},{"title":"Cross Sectional","level":"1.3.3.2.2","depth":4,"path":"datasets/batch_view/cross_sectional/reference.md","ref":"datasets/batch_view/cross_sectional/reference.md","articles":[]},{"title":"Main Summary","level":"1.3.3.2.3","depth":4,"path":"datasets/batch_view/main_summary/reference.md","ref":"datasets/batch_view/main_summary/reference.md","articles":[]},{"title":"Crash Summary","level":"1.3.3.2.4","depth":4,"path":"datasets/batch_view/crash_summary/reference.md","ref":"datasets/batch_view/crash_summary/reference.md","articles":[]},{"title":"Crash Aggregate","level":"1.3.3.2.5","depth":4,"path":"datasets/batch_view/crash_aggregates/reference.md","ref":"datasets/batch_view/crash_aggregates/reference.md","articles":[]},{"title":"Events","level":"1.3.3.2.6","depth":4,"path":"datasets/batch_view/events/reference.md","ref":"datasets/batch_view/events/reference.md","articles":[]},{"title":"Sync Summary","level":"1.3.3.2.7","depth":4,"path":"datasets/batch_view/sync_summary/reference.md","ref":"datasets/batch_view/sync_summary/reference.md","articles":[]},{"title":"Addons","level":"1.3.3.2.8","depth":4,"path":"datasets/batch_view/addons/reference.md","ref":"datasets/batch_view/addons/reference.md","articles":[]},{"title":"Client Count","level":"1.3.3.2.9","depth":4,"path":"datasets/batch_view/client_count/reference.md","ref":"datasets/batch_view/client_count/reference.md","articles":[]},{"title":"New Profile","level":"1.3.3.2.10","depth":4,"path":"datasets/batch_view/new_profile/reference.md","ref":"datasets/batch_view/new_profile/reference.md","articles":[]},{"title":"Update","level":"1.3.3.2.11","depth":4,"path":"datasets/batch_view/update/reference.md","ref":"datasets/batch_view/update/reference.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/longitudinal/reference.md","mtime":"2017-05-12T14:20:07.455Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-09-11T16:06:46.593Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
