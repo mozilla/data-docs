@@ -11,14 +11,14 @@ The work is being tracked in
 * For the moment, it sends back data in its own `shield` type ping, so there's lots of flexibility in data you can collect.
 * Uses the Normandy server to serve out study “recipes” (?)
 * Annotates the main ping in the environment/experiments block
-* The shield system is itself a system add-on, so rolling out changes to the entire system is out-of-band with release trains
-* S&I team are product owners and shepherd the study development and release process along
+* The shield system is itself a system add-on, so rolling out changes to the entire system does not require riding release trains
+* Strategy and Insights (strategyandinsights@mozilla.com) team are product owners and shepherd the study development and release process along
 * Opt-out experiments should be available soon?
 * Further reading:
-* https://wiki.mozilla.org/Firefox/SHIELD
-* https://wiki.mozilla.org/Firefox/Shield/Shield_Studies
-* https://mozilla.github.io/shield-studies-docs/study-process/
-* When should you use SHIELD over other options?
+    * https://wiki.mozilla.org/Firefox/SHIELD
+    * https://wiki.mozilla.org/Firefox/Shield/Shield_Studies
+    * https://mozilla.github.io/shield-studies-docs/study-process/
+    * When should you use SHIELD over other options?
  
 ## Preference Flipping experiments
 Uses Normandy, requires NO additional addon as long as a preference rides the release train
