@@ -171,6 +171,8 @@ root
  |    |    |-- update_day: integer (nullable = true)
  |    |    |-- signed_state: integer (nullable = true)
  |    |    |-- is_system: boolean (nullable = true)
+ |-- disabled_addons_ids: array (nullable = true)
+ |    |-- element: string (containsNull = true)
  |-- active_theme: struct (nullable = true)
  |    |-- addon_id: string (nullable = true)
  |    |-- blocklisted: boolean (nullable = true)
@@ -240,6 +242,14 @@ Most of the fields are simple scalar values, with a few notable exceptions:
 * The `active_addons` field contains an array of structs, one for each entry in
   the `environment.addons.activeAddons` section of the payload. More detail in
   [Bug 1290181](https://bugzilla.mozilla.org/show_bug.cgi?id=1290181).
+* The `disabled_addons_ids` field contains an array of strings, one for each entry in
+  the `payload.addonDetails` which is not already reported in the `environment.addons.activeAddons`
+  section of the payload. More detail in
+  [Bug 1390814](https://bugzilla.mozilla.org/show_bug.cgi?id=1390814).
+  Please note that while using this field is generally ok, this was introduced to support
+  the [TAAR](https://github.com/mozilla/taar/pulls) project and you should not count on it
+  in the future. The field can stay in the main_summary, but we might need to slightly change
+  the ping structure to something better than `payload.addonDetails`.
 * The `theme` field contains a single struct in the same shape as the items in the
   `active_addons` array. It contains information about the currently active browser
   theme.
