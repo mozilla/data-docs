@@ -853,6 +853,32 @@
 The work is being tracked in
 <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1341812" target="_blank">this bug</a>.</p>
 <h1 id="guide-to-our-experimental-tools"><a name="guide-to-our-experimental-tools" class="plugin-anchor" href="#guide-to-our-experimental-tools"><i class="fa fa-link" aria-hidden="true"></i></a>Guide to our Experimental Tools</h1>
+<h2 id="shield"><a name="shield" class="plugin-anchor" href="#shield"><i class="fa fa-link" aria-hidden="true"></i></a>Shield</h2>
+<ul>
+<li>Shield is an addon-based experimentation platform with fine-tuned enrollment criteria. The system add-on landed in FF 53.</li>
+<li>For the moment, it sends back data in its own <code>shield</code> type ping, so there&apos;s lots of flexibility in data you can collect.</li>
+<li>Uses the Normandy server to serve out study &#x201C;recipes&#x201D; (?)</li>
+<li>Annotates the main ping in the environment/experiments block</li>
+<li>The shield system is itself a system add-on, so rolling out changes to the entire system does not require riding release trains</li>
+<li>Strategy and Insights (strategyandinsights@mozilla.com) team are product owners and shepherd the study development and release process along</li>
+<li>Opt-out experiments should be available soon?</li>
+<li>Further reading:<ul>
+<li><a href="https://wiki.mozilla.org/Firefox/SHIELD" target="_blank">https://wiki.mozilla.org/Firefox/SHIELD</a></li>
+<li><a href="https://wiki.mozilla.org/Firefox/Shield/Shield_Studies" target="_blank">https://wiki.mozilla.org/Firefox/Shield/Shield_Studies</a></li>
+<li><a href="https://mozilla.github.io/shield-studies-docs/study-process/" target="_blank">https://mozilla.github.io/shield-studies-docs/study-process/</a></li>
+<li>When should you use SHIELD over other options?</li>
+</ul>
+</li>
+</ul>
+<h2 id="preference-flipping-experiments"><a name="preference-flipping-experiments" class="plugin-anchor" href="#preference-flipping-experiments"><i class="fa fa-link" aria-hidden="true"></i></a>Preference Flipping experiments</h2>
+<p>Uses Normandy, requires NO additional addon as long as a preference rides the release train</p>
+<h2 id="heartbeat"><a name="heartbeat" class="plugin-anchor" href="#heartbeat"><i class="fa fa-link" aria-hidden="true"></i></a>Heartbeat</h2>
+<p>Survey mechanism, also run via Normandy</p>
+<h2 id="telemetry-experiments"><a name="telemetry-experiments" class="plugin-anchor" href="#telemetry-experiments"><i class="fa fa-link" aria-hidden="true"></i></a>Telemetry Experiments</h2>
+<p>Pre-release only
+<a href="https://gecko.readthedocs.io/en/latest/browser/experiments/experiments/index.html" target="_blank">https://gecko.readthedocs.io/en/latest/browser/experiments/experiments/index.html</a></p>
+<h2 id="funnelcake"><a name="funnelcake" class="plugin-anchor" href="#funnelcake"><i class="fa fa-link" aria-hidden="true"></i></a>Funnelcake</h2>
+<p>Custom builds of Firefox that are served to some percentage of the direct download population</p>
 
                                 
                                 </section>
@@ -896,7 +922,7 @@ The work is being tracked in
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Experimental Datasets","level":"1.3.3.3","depth":3,"next":{"title":"Accessing Shield Study data","level":"1.3.3.3.1","depth":4,"path":"datasets/shield.md","ref":"datasets/shield.md","articles":[]},"previous":{"title":"Update","level":"1.3.3.2.11","depth":4,"path":"datasets/batch_view/update/reference.md","ref":"datasets/batch_view/update/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"tools/experiments.md","mtime":"2017-04-26T15:25:07.527Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-09-11T16:06:46.593Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Experimental Datasets","level":"1.3.3.3","depth":3,"next":{"title":"Accessing Shield Study data","level":"1.3.3.3.1","depth":4,"path":"datasets/shield.md","ref":"datasets/shield.md","articles":[]},"previous":{"title":"Update","level":"1.3.3.2.11","depth":4,"path":"datasets/batch_view/update/reference.md","ref":"datasets/batch_view/update/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"tools/experiments.md","mtime":"2017-09-15T22:41:55.033Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-09-15T22:42:01.723Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
