@@ -2,7 +2,7 @@
 
 When performing analysis on any data there are some mistakes that are easy to make and details that are easy to overlook. Do you know exactly what question you hope to answer? Is your sample representative of your population? Is your result "real"? How precisely can you state your conclusion?
 
-This document is not about those traps. Instead, it is about quirks and pitfalls specific to [Telemetry](http://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/index.html).
+This document is not about those traps. Instead, it is about quirks and pitfalls specific to [Telemetry](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/index.html).
 
 ### Pseudo-replication
 
@@ -27,8 +27,8 @@ When in doubt, be precise. You're counting _clients_.
 We don't collect the same information from everyone.
 
 Every profile that doesn't have Telemetry disabled sends us "opt-out" Telemetry. This includes:
-* Nearly everything in the [Environment](http://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/environment.html)
-* Some very specific [Histograms](http://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/collection/histograms.html), [Scalars](http://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/collection/scalars.html), and [Events](http://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/collection/events.html) that are marked `"releaseChannelCollection": "opt-out"`
+* Nearly everything in the [Environment](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/environment.html)
+* Some very specific [Histograms](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/histograms.html), [Scalars](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/scalars.html), and [Events](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html) that are marked `"releaseChannelCollection": "opt-out"`
 
 Most probes are "opt-in": we do not get information from them unless the user opts into sending us this information. Users can opt-in in two ways:
 1. Using Firefox's Options UI to tick the box that gives us permission

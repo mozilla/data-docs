@@ -19,7 +19,7 @@ take a look at our [tools for experimentation](/tools/experiments.md).
 
 # Main Ping Derived Datasets
 
-The [main ping](http://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/main-ping.html)
+The [main ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html)
 contains most of the measurements used to track performance and health of Firefox in the wild.
 This ping includes histograms and scalars.
 
@@ -43,7 +43,7 @@ This section describes the derived datasets we provide to make analyzing this da
 
 # Crash Ping Derived Datasets
 
-The [crash ping](http://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/crash-ping.html)
+The [crash ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html)
 is captured after the main Firefox process crashes or after a content process crashes,
 whether or not the crash report is submitted to crash-stats.mozilla.org.
 It includes non-identifying metadata about the crash.
@@ -60,7 +60,7 @@ This section describes the derived datasets we provide to make analyzing this da
 
 # New-Profile Derived Datasets
 
-The [new-profile ping](http://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/new-profile-ping.html)
+The [new-profile ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/new-profile-ping.html)
 is sent from Firefox Desktop on the first session of a newly created profile and contains the initial
 information about the user environment.
 

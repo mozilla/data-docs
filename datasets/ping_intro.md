@@ -2,12 +2,12 @@ We receive data from our users via **pings**.
 There are several types of pings,
 each containing different measurements and sent for different purposes.
 To review a complete list of ping types and their schemata, see 
-[this section of the Mozilla Source Tree Docs](http://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/index.html).
+[this section of the Mozilla Source Tree Docs](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/index.html).
 
 #### Background and Caveats
 
 The large majority of analyses can be completed using only the
-[main ping](http://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/main-ping.html).
+[main ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html).
 This ping includes histograms, scalars, and other performance and diagnostic data.
 
 Few analyses actually rely directly on the raw ping data.
@@ -31,6 +31,6 @@ Raw ping data are not available in [re:dash](https://sql.telemetry.mozilla.org/)
 
 #### Further Reading
 
-You can find [the complete ping documentation](http://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/index.html).
+You can find [the complete ping documentation](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/index.html).
 To augment our data collection, see
 [Collecting New Data](https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Adding_a_new_Telemetry_probe)

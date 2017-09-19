@@ -9,4 +9,4 @@
 # Data Reference
 
 You can find the reference documentation for all ping types
-[here](http://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/concepts/pings.html).
+[here](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/pings.html).
