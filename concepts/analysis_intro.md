@@ -1,7 +1,7 @@
 Getting Started with Firefox Data
 =================================
 
-Firefox clients out in the wild send us data as *pings*. [Main pings](http://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/main-ping.html) contain some combination of *environment* data (e.g. operating system, hardware, Firefox version), *measurements* (e.g. max number of open tabs, time spent running in Javascript garbage collection), and *events* (a work in progress). We have quite a few different pings, but most of our data for Firefox Desktop comes in from main pings.
+Firefox clients out in the wild send us data as *pings*. [Main pings](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html) contain some combination of *environment* data (e.g. operating system, hardware, Firefox version), *measurements* (e.g. max number of open tabs, time spent running in Javascript garbage collection), and *events* (a work in progress). We have quite a few different pings, but most of our data for Firefox Desktop comes in from main pings.
 
 Measurement Types
 ------
