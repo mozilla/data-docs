@@ -58,6 +58,10 @@ In derived datasets ISO dates are sometimes converted to strings in one of two f
 
 Build ids look like dates but aren't. If you take the first eight characters you can use that as a proxy for the day the build was released.
 
+`metadata/Date` is an HTTP Date header in a [RFC 7231](http://tools.ietf.org/html/rfc7231#section-7.1.1.1)-compatible format.
+
+**Tip:** To parse `metadata/Date` to a usable date in SQL: `DATE_PARSE(SUBSTR(client_submission_date, 1, 25), '%a, %d %b %Y %H:%i:%s')`
+
 ### Delays
 
 Telemetry data takes a while to get into our hands. The largest data mule in Telemetry is the main-ping. It is (pending [bug 1336360](https://bugzilla.mozilla.org/show_bug.cgi?id=1336360)) sent at the beginning of a client's _next_ Firefox session. If the user shuts down their Firefox for the weekend, we won't get their Friday data until Monday morning.
