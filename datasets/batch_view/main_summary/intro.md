@@ -26,7 +26,7 @@ make use of the `sample_id` field and limit to a short submission date range.
 The data is stored as a parquet table in S3 at the following address.
 See [this cookbook](/cookbooks/parquet.md) to get started working with the data in Spark.
 ```
-s3://telemetry-parquet/main_summary/v3/
+s3://telemetry-parquet/main_summary/v4/
 ```
 
 Though **not recommended** `main_summary` is accessible through re:dash. 

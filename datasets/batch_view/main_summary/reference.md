@@ -11,14 +11,14 @@
 ## Example Queries
 
 We recommend working with this dataset via Spark rather than sql.t.m.o.
-Due to the large number of records, 
-queries can consume a lot of resources on the 
+Due to the large number of records,
+queries can consume a lot of resources on the
 **shared cluster and impact other users**.
 Queries via sql.t.m.o should limit to a short `submission_date_s3` range,
 and ideally make use of the `sample_id` field.
 
 When using Presto to query the data from sql.t.m.o,
-you can use the UNNEST feature to access items in the 
+you can use the UNNEST feature to access items in the
 `search_counts`, `popup_notification_stats` and `active_addons` fields.
 
 For example, to compare the search volume for different search source values,
@@ -40,7 +40,7 @@ ORDER BY sum(search_count) DESC
 ## Sampling
 
 The `main_summary` dataset contains one record for each `main` ping
-as long as the record contains a non-null value for 
+as long as the record contains a non-null value for
 `documentId`, `submissionDate`, and `Timestamp`.
 We do not ever expect nulls for these fields.
 
@@ -53,7 +53,7 @@ You can find the job definition
 
 ## Schema
 
-As of 2016-07-05, the current version of the `main_summary` dataset is `v3`, and has a schema as follows:
+As of 2017-09-28, the current version of the `main_summary` dataset is `v4`, and has a schema as follows:
 
 ```
 root
@@ -70,9 +70,14 @@ root
  |-- windows_build_number: long (nullable = true)
  |-- windows_ubr: long (nullable = true)
  |-- install_year: long (nullable = true)
+ |-- is_wow64: boolean (nullable = true)
+ |-- memory_mb: integer (nullable = true)
  |-- profile_creation_date: long (nullable = true)
  |-- subsession_start_date: string (nullable = true)
  |-- subsession_length: long (nullable = true)
+ |-- subsession_counter: integer (nullable = true)
+ |-- profile_subsession_counter: integer (nullable = true)
+ |-- creation_date: string (nullable = true)
  |-- distribution_id: string (nullable = true)
  |-- submission_date: string (nullable = true)
  |-- sync_configured: boolean (nullable = true)
@@ -89,6 +94,11 @@ root
  |-- e10s_enabled: boolean (nullable = true)
  |-- e10s_cohort: string (nullable = true)
  |-- locale: string (nullable = true)
+ |-- attribution: struct (nullable = true)
+ |    |-- source: string (nullable = true)
+ |    |-- medium: string (nullable = true)
+ |    |-- campaign: string (nullable = true)
+ |    |-- content: string (nullable = true)
  |-- active_experiment_id: string (nullable = true)
  |-- active_experiment_branch: string (nullable = true)
  |-- reason: string (nullable = true)
@@ -112,13 +122,10 @@ root
  |-- vendor: string (nullable = true)
  |-- is_default_browser: boolean (nullable = true)
  |-- default_search_engine_data_name: string (nullable = true)
+ |-- default_search_engine_data_load_path: string (nullable = true)
+ |-- default_search_engine_data_origin: string (nullable = true)
+ |-- default_search_engine_data_submission_url: string (nullable = true)
  |-- default_search_engine: string (nullable = true)
- |-- loop_activity_counter: struct (nullable = true)
- |    |-- open_panel: integer (nullable = true)
- |    |-- open_conversation: integer (nullable = true)
- |    |-- room_open: integer (nullable = true)
- |    |-- room_share: integer (nullable = true)
- |    |-- room_delete: integer (nullable = true)
  |-- devtools_toolbox_opened_count: integer (nullable = true)
  |-- client_submission_date: string (nullable = true)
  |-- places_bookmarks_count: integer (nullable = true)
@@ -171,6 +178,8 @@ root
  |    |    |-- update_day: integer (nullable = true)
  |    |    |-- signed_state: integer (nullable = true)
  |    |    |-- is_system: boolean (nullable = true)
+ |    |    |-- is_web_extension: boolean (nullable = true)
+ |    |    |-- multiprocess_compatible: boolean (nullable = true)
  |-- disabled_addons_ids: array (nullable = true)
  |    |-- element: string (containsNull = true)
  |-- active_theme: struct (nullable = true)
@@ -188,35 +197,78 @@ root
  |    |-- update_day: integer (nullable = true)
  |    |-- signed_state: integer (nullable = true)
  |    |-- is_system: boolean (nullable = true)
+ |    |-- is_web_extension: boolean (nullable = true)
+ |    |-- multiprocess_compatible: boolean (nullable = true)
  |-- blocklist_enabled: boolean (nullable = true)
  |-- addon_compatibility_check_enabled: boolean (nullable = true)
  |-- telemetry_enabled: boolean (nullable = true)
  |-- user_prefs: struct (nullable = true)
  |    |-- dom_ipc_process_count: integer (nullable = true)
- |-- max_concurrent_tab_count: integer (nullable = true)
- |-- tab_open_event_count: integer (nullable = true)
- |-- max_concurrent_window_count: integer (nullable = true)
- |-- window_open_event_count: integer (nullable = true)
- |-- total_uri_count: integer (nullable = true)
- |-- unfiltered_uri_count: integer (nullable = true)
- |-- unique_domains_count: integer (nullable = true)
- |-- submission_date_s3: string (nullable = true)
- |-- sample_id: string (nullable = true)
+ |    |-- extensions_allow_non_mpc_extensions: boolean (nullable = true)
  |-- events: array (nullable = true)
  |    |-- element: struct (containsNull = true)
- |    |    |-- timestamp: long (nullable = false)
- |    |    |-- category: string (nullable = false)
- |    |    |-- method: string (nullable = false)
- |    |    |-- object: string (nullable = false)
+ |    |    |-- timestamp: long (nullable = true)
+ |    |    |-- category: string (nullable = true)
+ |    |    |-- method: string (nullable = true)
+ |    |    |-- object: string (nullable = true)
  |    |    |-- string_value: string (nullable = true)
  |    |    |-- map_values: map (nullable = true)
  |    |    |    |-- key: string
- |    |    |    |-- value: string
+ |    |    |    |-- value: string (valueContainsNull = true)
+ |-- ssl_handshake_result_success: integer (nullable = true)
+ |-- ssl_handshake_result_failure: integer (nullable = true)
+ |-- ssl_handshake_result: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: integer (valueContainsNull = true)
+ |-- active_ticks: integer (nullable = true)
+ |-- main: integer (nullable = true)
+ |-- first_paint: integer (nullable = true)
+ |-- session_restored: integer (nullable = true)
+ |-- total_time: integer (nullable = true)
+ |-- plugins_notification_shown: integer (nullable = true)
+ |-- plugins_notification_user_action: struct (nullable = true)
+ |    |-- allow_now: integer (nullable = true)
+ |    |-- allow_always: integer (nullable = true)
+ |    |-- block: integer (nullable = true)
+ |-- plugins_infobar_shown: integer (nullable = true)
+ |-- plugins_infobar_block: integer (nullable = true)
+ |-- plugins_infobar_allow: integer (nullable = true)
+ |-- plugins_infobar_dismissed: integer (nullable = true)
+ |-- experiments: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: string (valueContainsNull = true)
+ |-- search_cohort: string (nullable = true)
+ |-- gfx_compositor: string (nullable = true)
+ |-- quantum_ready: boolean (nullable = true)
+ |-- gc_max_pause_ms_main_above_150: long (nullable = true)
+ |-- gc_max_pause_ms_main_above_250: long (nullable = true)
+ |-- gc_max_pause_ms_main_above_2500: long (nullable = true)
+ |-- gc_max_pause_ms_content_above_150: long (nullable = true)
+ |-- gc_max_pause_ms_content_above_250: long (nullable = true)
+ |-- gc_max_pause_ms_content_above_2500: long (nullable = true)
+ |-- cycle_collector_max_pause_main_above_150: long (nullable = true)
+ |-- cycle_collector_max_pause_main_above_250: long (nullable = true)
+ |-- cycle_collector_max_pause_main_above_2500: long (nullable = true)
+ |-- cycle_collector_max_pause_content_above_150: long (nullable = true)
+ |-- cycle_collector_max_pause_content_above_250: long (nullable = true)
+ |-- cycle_collector_max_pause_content_above_2500: long (nullable = true)
+ |-- input_event_response_coalesced_ms_main_above_150: long (nullable = true)
+ |-- input_event_response_coalesced_ms_main_above_250: long (nullable = true)
+ |-- input_event_response_coalesced_ms_main_above_2500: long (nullable = true)
+ |-- input_event_response_coalesced_ms_content_above_150: long (nullable = true)
+ |-- input_event_response_coalesced_ms_content_above_250: long (nullable = true)
+ |-- input_event_response_coalesced_ms_content_above_2500: long (nullable = true)
+ |-- ghost_windows_main_above_1: long (nullable = true)
+ |-- ghost_windows_content_above_1: long (nullable = true)
+ |-- ** dynamically included scalar fields, see source **
+ |-- ** dynamically include whitelisted histograms, see source **
+ |-- submission_date_s3: string (nullable = true)
+ |-- sample_id: integer (nullable = true)
 ```
 
 For more detail on where these fields come from in the
 [raw data](https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/main-ping.html),
-please look 
+please look
 [in the MainSummaryView code](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/MainSummaryView.scala).
 in the `buildSchema` function.
 
@@ -254,9 +306,12 @@ Most of the fields are simple scalar values, with a few notable exceptions:
   `active_addons` array. It contains information about the currently active browser
   theme.
 * The `user_prefs` field contains a struct with values for preferences of interest.
+* The `events` field contains an array of event structs.
+* Dynamically-included histogram fields are present as key->value maps,
+  or key->(key->value) nested maps for keyed histograms.
 
 # Code Reference
 
-This dataset is generated by 
+This dataset is generated by
 [telemetry-batch-view](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/MainSummaryView.scala).
 Refer to this repository for information on how to run or augment the dataset.
