@@ -857,7 +857,7 @@ can be found in <a href="https://github.com/mozilla/firefox-data-docs" target="_
   After reading these articles, you will be able to confidently perform analysis
   over telemetry data.</p>
 <h3 id="data-collection-and-datasets"><a name="data-collection-and-datasets" class="plugin-anchor" href="#data-collection-and-datasets"><i class="fa fa-link" aria-hidden="true"></i></a><a href="datasets/">Data Collection and Datasets</a></h3>
-<p>  Describes all available data we have on our users. 
+<p>  Describes all available data we have on our users.
   For each dataset, we include a description of the dataset&apos;s purpose,
   what data is included, how the data is collected,
   and how you can change or augment the dataset.
@@ -873,6 +873,47 @@ can be found in <a href="https://github.com/mozilla/firefox-data-docs" target="_
 but there&apos;s always going to be confusing or missing documentation.
 If you can&apos;t find what you need, please
 <a href="https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&amp;bug_file_loc=http%3A%2F%2F&amp;bug_ignored=0&amp;bug_severity=normal&amp;bug_status=NEW&amp;cf_fx_iteration=---&amp;cf_fx_points=---&amp;component=Documentation%20and%20Knowledge%20Repo%20%28RTMO%29&amp;contenttypemethod=autodetect&amp;contenttypeselection=text%2Fplain&amp;defined_groups=1&amp;flag_type-4=X&amp;flag_type-607=X&amp;flag_type-800=X&amp;flag_type-803=X&amp;flag_type-916=X&amp;form_name=enter_bug&amp;maketemplate=Remember%20values%20as%20bookmarkable%20template&amp;op_sys=Linux&amp;priority=P3&amp;product=Data%20Platform%20and%20Tools&amp;rep_platform=x86_64&amp;target_milestone=---&amp;version=unspecified" target="_blank">file a bug</a>.</p>
+<h2 id="reporting-a-problem"><a name="reporting-a-problem" class="plugin-anchor" href="#reporting-a-problem"><i class="fa fa-link" aria-hidden="true"></i></a>Reporting a problem</h2>
+<p>If you have a problem with data tools, datasets, or other pieces of infrastructure,
+please help us out by reporting it.</p>
+<p>Most of our work is tracked in Bugzilla in the <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools" target="_blank">Data Platform and Tools</a> product.</p>
+<p>Bugs should be filed in the closest-matching component in the Data Platform and Tools
+product, but if there is no component for the item in question, please file an issue
+in the <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&amp;component=General" target="_blank">General component</a>.</p>
+<p>Components are triaged at least weekly by the component owner(s). For issues needing
+urgent attention, it is recommended that you use the <code>needinfo</code> flag to attract attention
+from a specific person. If an issue doesn&apos;t receive the appropriate attention within a
+week, you can send email to the <code>fx-data-dev</code> mailing list or reach out on IRC
+in <code>#datapipeline</code>.</p>
+<p>When a bug is triaged, it will be assigned a <strong>priority</strong> and <strong>points</strong>. <strong>Priorities</strong> have the
+following meanings:</p>
+<ul>
+<li><strong>P1</strong>: in active development in the current sprint</li>
+<li><strong>P2</strong>: planned to be worked on in the current quarter</li>
+<li><strong>P3</strong>: planned to be worked on next quarter</li>
+<li><strong>P4</strong> and beyond: nice to have, we would accept a patch, but not actively being worked on.</li>
+</ul>
+<p><strong>Points</strong> reflect the amount of effort required for a bug and are assigned as follows:</p>
+<ul>
+<li><strong>1 point</strong>: one day or less of effort</li>
+<li><strong>2 points</strong>: two days of effort</li>
+<li><strong>3 points</strong>: three days to a week of effort</li>
+<li><strong>5 points</strong> or more: SO MUCH EFFORT, major project.</li>
+</ul>
+<h3 id="problems-with-the-data"><a name="problems-with-the-data" class="plugin-anchor" href="#problems-with-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Problems with the data</h3>
+<p>There are bugzilla components for several of core <a href="datasets/">datasets</a>
+described in this documentation, so if possible, please use a specific component.</p>
+<p>If there is a problem with a dataset that does not have its own component, please
+file an issue in the <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&amp;component=Datasets%3A%20General" target="_blank">Datasets: General component</a>.</p>
+<h3 id="problems-with-tools"><a name="problems-with-tools" class="plugin-anchor" href="#problems-with-tools"><i class="fa fa-link" aria-hidden="true"></i></a>Problems with tools</h3>
+<p>There are bugzilla components for several of the <a href="tools/">tools</a> that
+comprise the <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools" target="_blank">Data Platform</a>,
+so please file a bug in the specific component that most closely matches the
+tool in question.</p>
+<p>Operational bugs, such as services being unavailable, should be filed either in
+the component for the service itself or in the <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&amp;component=Operations" target="_blank">Operations component</a>.</p>
+<h3 id="other-problems"><a name="other-problems" class="plugin-anchor" href="#other-problems"><i class="fa fa-link" aria-hidden="true"></i></a>Other problems</h3>
+<p>When in doubt, please file issues in the <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&amp;component=General" target="_blank">General component</a>.</p>
 
                                 
                                 </section>
@@ -912,7 +953,7 @@ If you can&apos;t find what you need, please
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Firefox Data Documentation","level":"1.1","depth":1,"next":{"title":"Terminology","level":"1.1.1","depth":2,"path":"concepts/terminology.md","ref":"concepts/terminology.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"introduction.md","mtime":"2017-08-01T19:25:20.328Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-09-29T16:37:26.225Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Firefox Data Documentation","level":"1.1","depth":1,"next":{"title":"Terminology","level":"1.1.1","depth":2,"path":"concepts/terminology.md","ref":"concepts/terminology.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"introduction.md","mtime":"2017-10-02T20:00:32.609Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-10-02T20:00:40.731Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
