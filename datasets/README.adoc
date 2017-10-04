@@ -8,7 +8,7 @@ This section contains a series of tutorials which will help you understand our d
 
 Reading this section front to back is not recommended.
 Instead, identify a dataset you'd like to understand better and read through 
-the relavent documentation.
+the relevant documentation.
 
 
 // Uses to consider in this section:
