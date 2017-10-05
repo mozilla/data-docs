@@ -30,15 +30,8 @@ spark.read.parquet("s3://telemetry-parquet/heavy_users/v1")
 
 In SQL:
 ```sql
-SELECT * FROM heavy_users
+SELECT * FROM heavy_users LIMIT 3
 ```
-
-Example queries:
-
-- [Join heavy_users with main_summary to get distribution of max_concurrent_tab_count for heavy vs. non-heavy users](https://sql.telemetry.mozilla.org/queries/47041/source#127382)
-- [Join heavy_users with longitudinal to get crash rates for heavy vs. non-heavy users](https://sql.telemetry.mozilla.org/queries/47044/source#127385)
-
-You'll note that it seems that heavy_users use more tabs, but crash less. These results probably require more investigation.
 
 #### Further Reading
 
