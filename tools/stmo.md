@@ -299,3 +299,59 @@ Some final notes to help you create your dashboards:
 
 * The [redash help center](https://redash.io/help/) is useful for further deep
   diving into redash and all of its capabilities.
+
+#### Prototyping Queries
+
+Sometimes you want to start working on your query before the data is available.
+You can do this with most of the data sources by selecting a static test data
+set, then working with it as usual. You can also use this method to explore
+how a given SQL backend behaves.
+
+Note that `UNION ALL` will retain duplicate rows while `UNION` will discard them.
+
+Here are a couple of examples:
+
+**Simple three-column test dataset**
+
+```sql
+WITH test AS (
+ SELECT 1 AS client_id, 'foo' AS v1, 'bar' AS v2 UNION ALL
+ SELECT 2 AS client_id, 'bla' AS v1, 'baz' AS v2 UNION ALL
+ SELECT 3 AS client_id, 'bla' AS v1, 'bar' AS v2 UNION ALL
+ SELECT 2 AS client_id, 'bla' AS v1, 'baz' AS v2 UNION ALL
+ SELECT 3 AS client_id, 'bla' AS v1, 'bar' AS v2
+)
+
+SELECT * FROM test
+```
+
+**Convert a semantic version string to a sortable array field**
+
+```sql
+WITH foo AS (
+ SELECT '1.0.1' AS v UNION
+ SELECT '1.10.3' AS v UNION
+ SELECT '1.0.2' AS v UNION
+ SELECT '1.1' AS v UNION
+ -- Doesn't work with these type of strings due to casting
+ -- SELECT '1.3a1' AS v UNION
+ SELECT '1.2.1' AS v
+)
+
+SELECT cast(split(v, '.') AS array<bigint>) FROM foo ORDER BY 1
+```
+
+**How do boolean fields get parsed from strings?**
+
+```sql
+WITH bar AS (
+ SELECT '1' AS b UNION
+ SELECT '0' UNION
+ SELECT 't' UNION
+ SELECT 'f' UNION
+ SELECT 'true' UNION
+ SELECT 'false' UNION
+ SELECT 'turkey'
+)
+SELECT b, try(cast(b AS boolean)) from bar
+```
