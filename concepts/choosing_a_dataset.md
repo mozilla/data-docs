@@ -41,6 +41,10 @@ This section describes the derived datasets we provide to make analyzing this da
 
 {% include "/datasets/batch_view/client_count/intro.md" %}
 
+## heavy_users
+
+{% include "/datasets/batch_view/heavy_users/intro.md" %}
+
 # Crash Ping Derived Datasets
 
 The [crash ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html)
@@ -77,7 +81,7 @@ This data is available in the **telemetry_new_profile_parquet** dataset.
 ## Mobile Metrics
 
 There are several tables owned by the mobile team documented
-[here](https://wiki.mozilla.org/Mobile/Metrics/Redash): 
+[here](https://wiki.mozilla.org/Mobile/Metrics/Redash):
 
 * android_events
 * android_clients
