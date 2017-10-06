@@ -12,17 +12,15 @@
 
 Example queries:
 
-- [Join heavy_users with main_summary to get distribution of max_concurrent_tab_count for heavy vs. non-heavy users](https://sql.telemetry.mozilla.org/queries/47041/source#127382)
-- [Join heavy_users with longitudinal to get crash rates for heavy vs. non-heavy users](https://sql.telemetry.mozilla.org/queries/47044/source#127385)
-
-You'll note that it seems that heavy_users use more tabs, but crash less. These results probably require more investigation.
+- [Join `heavy_users` with `main_summary` to get distribution of `max_concurrent_tab_count` for heavy vs. non-heavy users](https://sql.telemetry.mozilla.org/queries/47041/source#127382)
+- [Join `heavy_users` with `longitudinal` to get crash rates for heavy vs. non-heavy users](https://sql.telemetry.mozilla.org/queries/47044/source#127385)
 
 ## Scheduling
 
 This dataset is updated daily via the [telemetry-airflow](https://github.com/mozilla/telemetry-airflow) infrastructure.
 The job DAG runs every day after main_summary is complete.
 You can find the job definition
-[here](https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py#L187-L195)
+[here](https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py#L187-L195).
 
 ## Schema
 
