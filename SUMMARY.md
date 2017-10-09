@@ -24,6 +24,7 @@
       * [Sync Summary](datasets/batch_view/sync_summary/reference.md)
       * [Addons](datasets/batch_view/addons/reference.md)
       * [Client Count](datasets/batch_view/client_count/reference.md)
+      * [Retention](datasets/batch_view/retention/reference.md)
       * [New Profile](datasets/batch_view/new_profile/reference.md)
       * [Update](datasets/batch_view/update/reference.md)
     * [Experimental Datasets](tools/experiments.md)
