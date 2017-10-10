@@ -848,10 +848,133 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="work-in-progress"><a name="work-in-progress" class="plugin-anchor" href="#work-in-progress"><i class="fa fa-link" aria-hidden="true"></i></a>Work in Progress</h1>
-<p>This article is a work in progress.
-The work is being tracked in
-<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1341710" target="_blank">this bug</a></p>
+                                <h1 id="getting-analysis-review"><a name="getting-analysis-review" class="plugin-anchor" href="#getting-analysis-review"><i class="fa fa-link" aria-hidden="true"></i></a>Getting Analysis Review</h1>
+<p>The current process for getting analysis review has not been optimized.
+If you run into problems, feel free to ask #datapipeline</p>
+<h2 id="table-of-contents"><a name="table-of-contents" class="plugin-anchor" href="#table-of-contents"><i class="fa fa-link" aria-hidden="true"></i></a>Table of Contents</h2>
+<!-- toc -->
+<ul>
+<li><a href="#finding-a-reviewer">Finding a Reviewer</a><ul>
+<li><a href="#data-reviewers">Data Reviewers</a></li>
+</ul>
+</li>
+<li><a href="#jupyter-notebooks">Jupyter Notebooks</a><ul>
+<li><a href="#rtmo">RTMO</a></li>
+<li><a href="#start-a-repository">Start a Repository</a><ul>
+<li><a href="#where-to-store-the-package">Where to store the package</a></li>
+<li><a href="#nbconvert">nbconvert</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+<h1 id="finding-a-reviewer"><a name="finding-a-reviewer" class="plugin-anchor" href="#finding-a-reviewer"><i class="fa fa-link" aria-hidden="true"></i></a>Finding a Reviewer</h1>
+<p>There are two major types of review for most analyses:
+<strong>Data review</strong> and <strong>Methodology review</strong>.</p>
+<p>A <strong>data reviewer</strong> has <strong>expert understanding of the dataset</strong> your analysis is based upon.
+During data review, your reviewer will try to identify
+any issues with your analysis that come from misapplying the data.
+For example, sampling issues or data collection oddities.</p>
+<p><strong>Methodology review</strong> primarily covers <strong>statistical concepts</strong>.
+For example, if you&apos;re training regressions, forecasting data, or doing complex
+statistical tests, you should probably get Methodology review.
+Many (most?) analyses at Mozilla use simple aggregations and little to no statistical inference.
+These analyses only require data review.</p>
+<p>Accordingly, we suggest you <strong>first find a data reviewer for your analysis</strong>.
+Your data reviewer will tell you if you should get methodology review
+and will help you find a reviewer.</p>
+<h2 id="data-reviewers"><a name="data-reviewers" class="plugin-anchor" href="#data-reviewers"><i class="fa fa-link" aria-hidden="true"></i></a>Data Reviewers</h2>
+<p>To get review for your analysis,
+contact one of the data reviewers listed for the dataset your analysis is based upon:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Dataset</th>
+<th style="text-align:left">Reviewers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Longitudinal</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Cross Sectional</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Main Summary</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Crash Summary</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Crash Aggregate</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Events</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Sync Summary</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Addons</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Client Count</td>
+</tr>
+</tbody>
+</table>
+<h1 id="jupyter-notebooks"><a name="jupyter-notebooks" class="plugin-anchor" href="#jupyter-notebooks"><i class="fa fa-link" aria-hidden="true"></i></a>Jupyter Notebooks</h1>
+<p>It&apos;s difficult to review Jupyter notebooks on Github.
+The notebook is stored as a JSON object, with python code stored in strings.
+This makes <strong>commenting on particular lines very difficult</strong>.
+Because the output is stored next to the code,
+it&apos;s also very <strong>difficult to review the diff</strong> for a given notebook.</p>
+<h2 id="rtmo"><a name="rtmo" class="plugin-anchor" href="#rtmo"><i class="fa fa-link" aria-hidden="true"></i></a>RTMO</h2>
+<p>For simple notebooks, the best way to get review is through the
+<a href="https://github.com/mozilla/mozilla-reports" target="_blank">knowledge repo</a>.
+The knowledge repo renders your Jupyter notebooks to markdown
+while keeping the original source code next to the document.
+This gives your reviewer an <strong>easy-to-review markdown file</strong>.
+Your analysis will also be available at
+<a href="http://reports.telemetry.mozilla.org/feed" target="_blank">RTMO</a>.
+This will aid discoverability and help others find your analysis.
+Note that RTMO is public so your <strong>analysis will also be public</strong>.</p>
+<h2 id="start-a-repository"><a name="start-a-repository" class="plugin-anchor" href="#start-a-repository"><i class="fa fa-link" aria-hidden="true"></i></a>Start a Repository</h2>
+<p>Notebooks are great for presenting information,
+but are not a good medium for storing code.
+If your notebook contains complicated logic or a significant amount of custom code,
+you should consider moving most of the logic to a python package.
+Your reviewer may ask you for tests,
+which also requires moving the code out of a notebook.</p>
+<h3 id="where-to-store-the-package"><a name="where-to-store-the-package" class="plugin-anchor" href="#where-to-store-the-package"><i class="fa fa-link" aria-hidden="true"></i></a>Where to store the package</h3>
+<p>The data platform team maintains a python repository of analyses and ETL called
+<a href="https://github.com/mozilla/python_mozetl" target="_blank">python_mozetl</a>.
+Feel free to file a pull request against that repository.
+Your reviewer will provide analysis review during the code review.
+You&apos;ll need review for each commit to python_mozetl&apos;s master branch.</p>
+<p>If you are still prototyping your job but want to move out of a Jupyter notebook,
+take a look at
+<a href="https://github.com/harterrt/cookiecutter-python-etl" target="_blank">cookiecutter-python-etl</a>.
+This tool will help you configure a new python repository
+so you can hack quickly without getting review.</p>
+<h3 id="nbconvert"><a name="nbconvert" class="plugin-anchor" href="#nbconvert"><i class="fa fa-link" aria-hidden="true"></i></a>nbconvert</h3>
+<p>The easiest way to get your code out of a Jupyter notebook
+is to use <code>nbconvert</code> command from Jupyter.
+If you have a notebook called <code>analysis.ipynb</code>
+you can dump your analysis to a python script using the following command:</p>
+<pre><code class="lang-python">jupyter nbconvert --to python analysis.ipynb
+</code></pre>
+<p>You&apos;ll need to clean up some formatting in the resulting <code>analysis.py</code> file,
+but most of the work has been done for you.</p>
 
                                 
                                 </section>
@@ -895,7 +1018,7 @@ The work is being tracked in
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Getting Review","level":"1.2.6","depth":2,"next":{"title":"Data Collection and Datasets","level":"1.3","depth":1,"path":"datasets/README.adoc","ref":"datasets/README.adoc","articles":[{"title":"Understanding our Data","level":"1.3.1","depth":2,"ref":"","articles":[{"title":"Choosing a dataset","level":"1.3.1.1","depth":3,"path":"concepts/choosing_a_dataset.md","ref":"concepts/choosing_a_dataset.md","articles":[]},{"title":"Common Analysis Gotchas","level":"1.3.1.2","depth":3,"path":"concepts/analysis_gotchas.md","ref":"concepts/analysis_gotchas.md","articles":[]}]},{"title":"Collecting New Data","level":"1.3.2","depth":2,"path":"datasets/new_data.md","ref":"datasets/new_data.md","articles":[]},{"title":"Dataset Reference","level":"1.3.3","depth":2,"path":"datasets/reference.md","ref":"datasets/reference.md","articles":[{"title":"Pings","level":"1.3.3.1","depth":3,"path":"datasets/pings.md","ref":"datasets/pings.md","articles":[]},{"title":"Derived Datasets","level":"1.3.3.2","depth":3,"path":"datasets/derived.md","ref":"datasets/derived.md","articles":[{"title":"Longitudinal","level":"1.3.3.2.1","depth":4,"path":"datasets/batch_view/longitudinal/reference.md","ref":"datasets/batch_view/longitudinal/reference.md","articles":[]},{"title":"Cross Sectional","level":"1.3.3.2.2","depth":4,"path":"datasets/batch_view/cross_sectional/reference.md","ref":"datasets/batch_view/cross_sectional/reference.md","articles":[]},{"title":"Main Summary","level":"1.3.3.2.3","depth":4,"path":"datasets/batch_view/main_summary/reference.md","ref":"datasets/batch_view/main_summary/reference.md","articles":[]},{"title":"Crash Summary","level":"1.3.3.2.4","depth":4,"path":"datasets/batch_view/crash_summary/reference.md","ref":"datasets/batch_view/crash_summary/reference.md","articles":[]},{"title":"Crash Aggregate","level":"1.3.3.2.5","depth":4,"path":"datasets/batch_view/crash_aggregates/reference.md","ref":"datasets/batch_view/crash_aggregates/reference.md","articles":[]},{"title":"Events","level":"1.3.3.2.6","depth":4,"path":"datasets/batch_view/events/reference.md","ref":"datasets/batch_view/events/reference.md","articles":[]},{"title":"Sync Summary","level":"1.3.3.2.7","depth":4,"path":"datasets/batch_view/sync_summary/reference.md","ref":"datasets/batch_view/sync_summary/reference.md","articles":[]},{"title":"Addons","level":"1.3.3.2.8","depth":4,"path":"datasets/batch_view/addons/reference.md","ref":"datasets/batch_view/addons/reference.md","articles":[]},{"title":"Client Count","level":"1.3.3.2.9","depth":4,"path":"datasets/batch_view/client_count/reference.md","ref":"datasets/batch_view/client_count/reference.md","articles":[]},{"title":"New Profile","level":"1.3.3.2.10","depth":4,"path":"datasets/batch_view/new_profile/reference.md","ref":"datasets/batch_view/new_profile/reference.md","articles":[]},{"title":"Update","level":"1.3.3.2.11","depth":4,"path":"datasets/batch_view/update/reference.md","ref":"datasets/batch_view/update/reference.md","articles":[]}]},{"title":"Experimental Datasets","level":"1.3.3.3","depth":3,"path":"tools/experiments.md","ref":"tools/experiments.md","articles":[{"title":"Accessing Shield Study data","level":"1.3.3.3.1","depth":4,"path":"datasets/shield.md","ref":"datasets/shield.md","articles":[]}]}]}]},"previous":{"title":"Common Analysis Gotchas","level":"1.2.5","depth":2,"path":"concepts/analysis_gotchas.md","ref":"concepts/analysis_gotchas.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/review.md","mtime":"2017-04-26T15:25:07.527Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-10-02T20:00:40.731Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Getting Review","level":"1.2.6","depth":2,"next":{"title":"Data Collection and Datasets","level":"1.3","depth":1,"path":"datasets/README.adoc","ref":"datasets/README.adoc","articles":[{"title":"Understanding our Data","level":"1.3.1","depth":2,"ref":"","articles":[{"title":"Choosing a dataset","level":"1.3.1.1","depth":3,"path":"concepts/choosing_a_dataset.md","ref":"concepts/choosing_a_dataset.md","articles":[]},{"title":"Common Analysis Gotchas","level":"1.3.1.2","depth":3,"path":"concepts/analysis_gotchas.md","ref":"concepts/analysis_gotchas.md","articles":[]}]},{"title":"Collecting New Data","level":"1.3.2","depth":2,"path":"datasets/new_data.md","ref":"datasets/new_data.md","articles":[]},{"title":"Dataset Reference","level":"1.3.3","depth":2,"path":"datasets/reference.md","ref":"datasets/reference.md","articles":[{"title":"Pings","level":"1.3.3.1","depth":3,"path":"datasets/pings.md","ref":"datasets/pings.md","articles":[]},{"title":"Derived Datasets","level":"1.3.3.2","depth":3,"path":"datasets/derived.md","ref":"datasets/derived.md","articles":[{"title":"Longitudinal","level":"1.3.3.2.1","depth":4,"path":"datasets/batch_view/longitudinal/reference.md","ref":"datasets/batch_view/longitudinal/reference.md","articles":[]},{"title":"Cross Sectional","level":"1.3.3.2.2","depth":4,"path":"datasets/batch_view/cross_sectional/reference.md","ref":"datasets/batch_view/cross_sectional/reference.md","articles":[]},{"title":"Main Summary","level":"1.3.3.2.3","depth":4,"path":"datasets/batch_view/main_summary/reference.md","ref":"datasets/batch_view/main_summary/reference.md","articles":[]},{"title":"Crash Summary","level":"1.3.3.2.4","depth":4,"path":"datasets/batch_view/crash_summary/reference.md","ref":"datasets/batch_view/crash_summary/reference.md","articles":[]},{"title":"Crash Aggregate","level":"1.3.3.2.5","depth":4,"path":"datasets/batch_view/crash_aggregates/reference.md","ref":"datasets/batch_view/crash_aggregates/reference.md","articles":[]},{"title":"Events","level":"1.3.3.2.6","depth":4,"path":"datasets/batch_view/events/reference.md","ref":"datasets/batch_view/events/reference.md","articles":[]},{"title":"Sync Summary","level":"1.3.3.2.7","depth":4,"path":"datasets/batch_view/sync_summary/reference.md","ref":"datasets/batch_view/sync_summary/reference.md","articles":[]},{"title":"Addons","level":"1.3.3.2.8","depth":4,"path":"datasets/batch_view/addons/reference.md","ref":"datasets/batch_view/addons/reference.md","articles":[]},{"title":"Client Count","level":"1.3.3.2.9","depth":4,"path":"datasets/batch_view/client_count/reference.md","ref":"datasets/batch_view/client_count/reference.md","articles":[]},{"title":"New Profile","level":"1.3.3.2.10","depth":4,"path":"datasets/batch_view/new_profile/reference.md","ref":"datasets/batch_view/new_profile/reference.md","articles":[]},{"title":"Update","level":"1.3.3.2.11","depth":4,"path":"datasets/batch_view/update/reference.md","ref":"datasets/batch_view/update/reference.md","articles":[]}]},{"title":"Experimental Datasets","level":"1.3.3.3","depth":3,"path":"tools/experiments.md","ref":"tools/experiments.md","articles":[{"title":"Accessing Shield Study data","level":"1.3.3.3.1","depth":4,"path":"datasets/shield.md","ref":"datasets/shield.md","articles":[]}]}]}]},"previous":{"title":"Common Analysis Gotchas","level":"1.2.5","depth":2,"path":"concepts/analysis_gotchas.md","ref":"concepts/analysis_gotchas.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/review.md","mtime":"2017-10-10T13:22:31.810Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-10-10T13:22:44.017Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

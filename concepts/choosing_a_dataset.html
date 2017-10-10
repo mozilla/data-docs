@@ -865,6 +865,7 @@ take a look at our <a href="../tools/experiments.html">tools for experimentation
 <li><a href="#main_summary">main_summary</a></li>
 <li><a href="#cross_sectional">cross_sectional</a></li>
 <li><a href="#client_count">client_count</a></li>
+<li><a href="#heavy_users">heavy_users</a></li>
 </ul>
 </li>
 <li><a href="#crash-ping-derived-datasets">Crash Ping Derived Datasets</a><ul>
@@ -1067,6 +1068,47 @@ Take a look at this
 <a href="https://sql.telemetry.mozilla.org/queries/81/source#129" target="_blank">example query</a>.</p>
 <p>I don&apos;t recommend accessing this data from ATMO.</p>
 <h4 id="further-reading"><a name="further-reading" class="plugin-anchor" href="#further-reading"><i class="fa fa-link" aria-hidden="true"></i></a>Further Reading</h4>
+<h2 id="heavyusers"><a name="heavyusers" class="plugin-anchor" href="#heavyusers"><i class="fa fa-link" aria-hidden="true"></i></a>heavy_users</h2>
+<p>The <code>heavy_users</code> table provides information about whether a given client_id is
+considered a &quot;heavy user&quot; on each day (using submission date).</p>
+<h4 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h4>
+<p>The <code>heavy_users</code> table contains one row per client-day, where day is
+<code>submission_date</code>. A client has a row for a specific <code>submission_date</code> if
+they were active at all in the 28 day window ending on that <code>submission_date</code>.</p>
+<p>A user is a &quot;heavy user&quot; as of day N if, for the 28 day period ending
+on day N, the sum of their active_ticks is in the 90th percentile (or
+above) of all clients during that period. For more analysis on this,
+and a discussion of new profiles, see
+<a href="https://metrics.mozilla.com/protected/sguha/heavy/heavycutoffs5.html" target="_blank">this link</a>.</p>
+<h4 id="background-and-caveats"><a name="background-and-caveats" class="plugin-anchor" href="#background-and-caveats"><i class="fa fa-link" aria-hidden="true"></i></a>Background and Caveats</h4>
+<ol>
+<li>Data starts at 20170801. There is technically data in the table before
+this, but the <code>heavy_user</code> column is <code>NULL</code> for those dates because it
+needed to bootstrap the first 28 day window.</li>
+<li>Because it is top the 10% of clients for each 28 day period, more
+than 10% of clients active on a given <code>submission_date</code> will be
+considered heavy users. If you join with another data source
+(<code>main_summary</code>, for example), you may see a larger proportion of heavy
+users than expected.</li>
+<li>Each day has a separate, but related, set of heavy users. Initial
+investigations show that approximately 97.5% of heavy users as of a
+certain day are still considered heavy users as of the next day.</li>
+<li>There is no &quot;fixing&quot; or weighting of new profiles - days before the
+profile was created are counted as zero <code>active_ticks</code>. Analyses may
+need to use the included <code>profile_creation_date</code> field to take this
+into account.</li>
+</ol>
+<h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
+<p>The data is available both via sql.t.m.o and Spark.</p>
+<p>In Spark:</p>
+<pre><code class="lang-python">spark.read.parquet(<span class="hljs-string">&quot;s3://telemetry-parquet/heavy_users/v1&quot;</span>)
+</code></pre>
+<p>In SQL:</p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> heavy_users <span class="hljs-keyword">LIMIT</span> <span class="hljs-number">3</span>
+</code></pre>
+<h4 id="further-reading"><a name="further-reading" class="plugin-anchor" href="#further-reading"><i class="fa fa-link" aria-hidden="true"></i></a>Further Reading</h4>
+<p>The code responsible for generating this dataset is
+<a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/HeavyUsersView.scala" target="_blank">here</a></p>
 <h1 id="crash-ping-derived-datasets"><a name="crash-ping-derived-datasets" class="plugin-anchor" href="#crash-ping-derived-datasets"><i class="fa fa-link" aria-hidden="true"></i></a>Crash Ping Derived Datasets</h1>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html" target="_blank">crash ping</a>
 is captured after the main Firefox process crashes or after a content process crashes,
@@ -1139,11 +1181,11 @@ See <a href="../cookbooks/parquet.html">this cookbook</a> to get started working
 </code></pre><p>The <code>telemetry_update_parquet</code> is accessible through re:dash.
 Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/31267#table" target="_blank">example query</a>.</p>
 <h4 id="further-reading"><a name="further-reading" class="plugin-anchor" href="#further-reading"><i class="fa fa-link" aria-hidden="true"></i></a>Further Reading</h4>
-<p>This dataset is generated automatically using direct to parquet. The configuration responsible for generating this dataset was introdueced in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1384861" target="_blank">bug 1384861</a>.</p>
+<p>This dataset is generated automatically using direct to parquet. The configuration responsible for generating this dataset was introduced in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1384861" target="_blank">bug 1384861</a>.</p>
 <h1 id="appendix"><a name="appendix" class="plugin-anchor" href="#appendix"><i class="fa fa-link" aria-hidden="true"></i></a>Appendix</h1>
 <h2 id="mobile-metrics"><a name="mobile-metrics" class="plugin-anchor" href="#mobile-metrics"><i class="fa fa-link" aria-hidden="true"></i></a>Mobile Metrics</h2>
 <p>There are several tables owned by the mobile team documented
-<a href="https://wiki.mozilla.org/Mobile/Metrics/Redash" target="_blank">here</a>: </p>
+<a href="https://wiki.mozilla.org/Mobile/Metrics/Redash" target="_blank">here</a>:</p>
 <ul>
 <li>android_events</li>
 <li>android_clients</li>
@@ -1193,7 +1235,7 @@ Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/31267#table" t
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.3","depth":2,"next":{"title":"Intro to STMO","level":"1.2.4","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"previous":{"title":"Data Privacy","level":"1.2.2","depth":2,"path":"concepts/data_privacy.md","ref":"concepts/data_privacy.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2017-09-21T13:31:51.913Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-10-02T20:00:40.731Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.3","depth":2,"next":{"title":"Intro to STMO","level":"1.2.4","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"previous":{"title":"Data Privacy","level":"1.2.2","depth":2,"path":"concepts/data_privacy.md","ref":"concepts/data_privacy.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2017-10-10T13:22:31.810Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-10-10T13:22:44.017Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
