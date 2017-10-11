@@ -26,6 +26,7 @@
       * [Client Count](datasets/batch_view/client_count/reference.md)
       * [New Profile](datasets/batch_view/new_profile/reference.md)
       * [Update](datasets/batch_view/update/reference.md)
+      * [Heavy Users](datasets/batch_view/heavy_users/reference.md)
     * [Experimental Datasets](tools/experiments.md)
       * [Accessing Shield Study data](datasets/shield.md)
 * [Tools](tools/README.adoc)
