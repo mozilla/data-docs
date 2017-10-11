@@ -24,6 +24,8 @@ root
  |    |-- geo_city: string (nullable = true)
  |    |-- creation_timestamp: long (nullable = true)
  |    |-- x_ping_sender_version: string (nullable = true)
+ |-- application: struct (nullable = true)
+ |    |-- displayVersion: string (nullable = true)
  |-- environment: struct (nullable = true)
  |    |-- build: struct (nullable = true)
  |    |    |-- application_name: string (nullable = true)
