@@ -452,7 +452,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3.2.10" data-path="../datasets/batch_view/new_profile/reference.html">
+        <li class="chapter " data-level="1.3.3.2.10" data-path="../datasets/batch_view/retention/reference.html">
+            
+                <a href="../datasets/batch_view/retention/reference.html">
+            
+                    
+                    Retention
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.2.11" data-path="../datasets/batch_view/new_profile/reference.html">
             
                 <a href="../datasets/batch_view/new_profile/reference.html">
             
@@ -465,12 +478,25 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3.2.11" data-path="../datasets/batch_view/update/reference.html">
+        <li class="chapter " data-level="1.3.3.2.12" data-path="../datasets/batch_view/update/reference.html">
             
                 <a href="../datasets/batch_view/update/reference.html">
             
                     
                     Update
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.2.13" data-path="../datasets/batch_view/heavy_users/reference.html">
+            
+                <a href="../datasets/batch_view/heavy_users/reference.html">
+            
+                    
+                    Heavy Users
             
                 </a>
             
@@ -1091,6 +1117,49 @@ the work that has been published by others.</p>
 diving into redash and all of its capabilities.</p>
 </li>
 </ul>
+<h4 id="prototyping-queries"><a name="prototyping-queries" class="plugin-anchor" href="#prototyping-queries"><i class="fa fa-link" aria-hidden="true"></i></a>Prototyping Queries</h4>
+<p>Sometimes you want to start working on your query before the data is available.
+You can do this with most of the data sources by selecting a static test data
+set, then working with it as usual. You can also use this method to explore
+how a given SQL backend behaves.</p>
+<p>Note that <code>UNION ALL</code> will retain duplicate rows while <code>UNION</code> will discard them.</p>
+<p>Here are a couple of examples:</p>
+<p><strong>Simple three-column test dataset</strong></p>
+<pre><code class="lang-sql">WITH test AS (
+ <span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span> <span class="hljs-keyword">AS</span> client_id, <span class="hljs-string">&apos;foo&apos;</span> <span class="hljs-keyword">AS</span> v1, <span class="hljs-string">&apos;bar&apos;</span> <span class="hljs-keyword">AS</span> v2 <span class="hljs-keyword">UNION</span> ALL
+ <span class="hljs-keyword">SELECT</span> <span class="hljs-number">2</span> <span class="hljs-keyword">AS</span> client_id, <span class="hljs-string">&apos;bla&apos;</span> <span class="hljs-keyword">AS</span> v1, <span class="hljs-string">&apos;baz&apos;</span> <span class="hljs-keyword">AS</span> v2 <span class="hljs-keyword">UNION</span> ALL
+ <span class="hljs-keyword">SELECT</span> <span class="hljs-number">3</span> <span class="hljs-keyword">AS</span> client_id, <span class="hljs-string">&apos;bla&apos;</span> <span class="hljs-keyword">AS</span> v1, <span class="hljs-string">&apos;bar&apos;</span> <span class="hljs-keyword">AS</span> v2 <span class="hljs-keyword">UNION</span> ALL
+ <span class="hljs-keyword">SELECT</span> <span class="hljs-number">2</span> <span class="hljs-keyword">AS</span> client_id, <span class="hljs-string">&apos;bla&apos;</span> <span class="hljs-keyword">AS</span> v1, <span class="hljs-string">&apos;baz&apos;</span> <span class="hljs-keyword">AS</span> v2 <span class="hljs-keyword">UNION</span> ALL
+ <span class="hljs-keyword">SELECT</span> <span class="hljs-number">3</span> <span class="hljs-keyword">AS</span> client_id, <span class="hljs-string">&apos;bla&apos;</span> <span class="hljs-keyword">AS</span> v1, <span class="hljs-string">&apos;bar&apos;</span> <span class="hljs-keyword">AS</span> v2
+)
+
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> <span class="hljs-keyword">test</span>
+</code></pre>
+<p><strong>Convert a semantic version string to a sortable array field</strong></p>
+<pre><code class="lang-sql">WITH foo AS (
+ <span class="hljs-keyword">SELECT</span> <span class="hljs-string">&apos;1.0.1&apos;</span> <span class="hljs-keyword">AS</span> v <span class="hljs-keyword">UNION</span>
+ <span class="hljs-keyword">SELECT</span> <span class="hljs-string">&apos;1.10.3&apos;</span> <span class="hljs-keyword">AS</span> v <span class="hljs-keyword">UNION</span>
+ <span class="hljs-keyword">SELECT</span> <span class="hljs-string">&apos;1.0.2&apos;</span> <span class="hljs-keyword">AS</span> v <span class="hljs-keyword">UNION</span>
+ <span class="hljs-keyword">SELECT</span> <span class="hljs-string">&apos;1.1&apos;</span> <span class="hljs-keyword">AS</span> v <span class="hljs-keyword">UNION</span>
+ <span class="hljs-comment">-- Doesn&apos;t work with these type of strings due to casting</span>
+ <span class="hljs-comment">-- SELECT &apos;1.3a1&apos; AS v UNION</span>
+ <span class="hljs-keyword">SELECT</span> <span class="hljs-string">&apos;1.2.1&apos;</span> <span class="hljs-keyword">AS</span> v
+)
+
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">cast</span>(<span class="hljs-keyword">split</span>(v, <span class="hljs-string">&apos;.&apos;</span>) <span class="hljs-keyword">AS</span> <span class="hljs-built_in">array</span>&lt;<span class="hljs-built_in">bigint</span>&gt;) <span class="hljs-keyword">FROM</span> foo <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> <span class="hljs-number">1</span>
+</code></pre>
+<p><strong>How do boolean fields get parsed from strings?</strong></p>
+<pre><code class="lang-sql">WITH bar AS (
+ <span class="hljs-keyword">SELECT</span> <span class="hljs-string">&apos;1&apos;</span> <span class="hljs-keyword">AS</span> b <span class="hljs-keyword">UNION</span>
+ <span class="hljs-keyword">SELECT</span> <span class="hljs-string">&apos;0&apos;</span> <span class="hljs-keyword">UNION</span>
+ <span class="hljs-keyword">SELECT</span> <span class="hljs-string">&apos;t&apos;</span> <span class="hljs-keyword">UNION</span>
+ <span class="hljs-keyword">SELECT</span> <span class="hljs-string">&apos;f&apos;</span> <span class="hljs-keyword">UNION</span>
+ <span class="hljs-keyword">SELECT</span> <span class="hljs-string">&apos;true&apos;</span> <span class="hljs-keyword">UNION</span>
+ <span class="hljs-keyword">SELECT</span> <span class="hljs-string">&apos;false&apos;</span> <span class="hljs-keyword">UNION</span>
+ <span class="hljs-keyword">SELECT</span> <span class="hljs-string">&apos;turkey&apos;</span>
+)
+<span class="hljs-keyword">SELECT</span> b, try(<span class="hljs-keyword">cast</span>(b <span class="hljs-keyword">AS</span> <span class="hljs-built_in">boolean</span>)) <span class="hljs-keyword">from</span> bar
+</code></pre>
 
                                 
                                 </section>
@@ -1134,7 +1203,7 @@ diving into redash and all of its capabilities.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Intro to STMO","level":"1.2.4","depth":2,"next":{"title":"Common Analysis Gotchas","level":"1.2.5","depth":2,"path":"concepts/analysis_gotchas.md","ref":"concepts/analysis_gotchas.md","articles":[]},"previous":{"title":"Choosing a Dataset","level":"1.2.3","depth":2,"path":"concepts/choosing_a_dataset.md","ref":"concepts/choosing_a_dataset.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"tools/stmo.md","mtime":"2017-07-25T14:29:40.498Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-10-10T13:22:44.017Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Intro to STMO","level":"1.2.4","depth":2,"next":{"title":"Common Analysis Gotchas","level":"1.2.5","depth":2,"path":"concepts/analysis_gotchas.md","ref":"concepts/analysis_gotchas.md","articles":[]},"previous":{"title":"Choosing a Dataset","level":"1.2.3","depth":2,"path":"concepts/choosing_a_dataset.md","ref":"concepts/choosing_a_dataset.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"tools/stmo.md","mtime":"2017-10-12T15:53:30.059Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-10-12T15:53:35.951Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

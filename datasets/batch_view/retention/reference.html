@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Events · GitBook</title>
+        <title>Retention · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -61,10 +61,10 @@
     <link rel="shortcut icon" href="../../../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="../sync_summary/reference.html" />
+    <link rel="next" href="../new_profile/reference.html" />
     
     
-    <link rel="prev" href="../crash_aggregates/reference.html" />
+    <link rel="prev" href="../client_count/reference.html" />
     
 
     </head>
@@ -400,9 +400,9 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.3.3.2.6" data-path="reference.html">
+        <li class="chapter " data-level="1.3.3.2.6" data-path="../events/reference.html">
             
-                <a href="reference.html">
+                <a href="../events/reference.html">
             
                     
                     Events
@@ -452,9 +452,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3.2.10" data-path="../retention/reference.html">
+        <li class="chapter active" data-level="1.3.3.2.10" data-path="reference.html">
             
-                <a href="../retention/reference.html">
+                <a href="reference.html">
             
                     
                     Retention
@@ -859,7 +859,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../../.." >Events</a>
+        <a href="../../.." >Retention</a>
     </h1>
 </div>
 
@@ -874,56 +874,113 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
-<p>Tis is a work in progress.
-The work is being tracked
-<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1364170" target="_blank">here</a>.</p>
+                                <h1 id="1-day-retention"><a name="1-day-retention" class="plugin-anchor" href="#1-day-retention"><i class="fa fa-link" aria-hidden="true"></i></a>1 Day Retention</h1>
+<!-- toc -->
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#data-reference">Data Reference</a><ul>
+<li><a href="#example-queries">Example Queries</a></li>
+<li><a href="#scheduling">Scheduling</a></li>
+<li><a href="#schema">Schema</a></li>
+</ul>
+</li>
+<li><a href="#code-reference">Code Reference</a></li>
+</ul>
+<!-- tocstop -->
+<h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+<p>The <code>retention</code> table provides client counts relevant to client retention at a
+1-day granularity. The project is tracked in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1381840" target="_blank">Bug 1381840</a></p>
+<h3 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h3>
+<p>The <code>retention</code> table contains a set of attribute columns used to specify a
+cohort of users and a set of metric columns to describe cohort activity. Each
+row contains a permutation of attributes, an approximate set of clients in a
+cohort, and the aggregate engagement metrics.</p>
+<p>This table uses the HyperLogLog (HLL) sketch to create an approximate set of
+clients in a cohort. HLL allows counting across overlapping cohorts in a single
+pass while avoiding the problem of double counting. This data-structure has the
+benefit of being compact and performant in the context of retention analysis,
+at the expense of precision. For example, calculating a 7-day retention period
+can be obtained by aggregating over a week of retention data using the union
+operation. With SQL primitive, this requires a recomputation of COUNT DISTINCT
+over <code>client_id</code>&apos;s in the 7-day window.</p>
+<h4 id="background-and-caveats"><a name="background-and-caveats" class="plugin-anchor" href="#background-and-caveats"><i class="fa fa-link" aria-hidden="true"></i></a>Background and Caveats</h4>
+<ol>
+<li>The data starts at 2017-03-06, the <a href="https://wiki.mozilla.org/RapidRelease/Calendar" target="_blank">merge date where Nightly started to
+track Firefox 55 in Mozilla-Central</a>. However, there was
+not a consistent view into the behavior of first session profiles until the
+<a href="../new_profile/reference.html"><code>new_profile</code> ping</a>. This means much of the data is inaccurate
+before 2017-06-26.</li>
+<li>This dataset uses 4-day reporting latency to aggregate at least 99% of the
+data in a given submission date. This figure is derived from the
+<a href="https://sql.telemetry.mozilla.org/dashboard/telemetry-health" target="_blank">telemetry-health measurements on submission latency</a>, with
+the discussion in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1407410" target="_blank">Bug 1407410</a>. This latency metric was reduced
+Firefox 55 with the introduction of the shutdown ping-sender mechanism.</li>
+<li>Caution should be taken before adding new columns. Additional attribute
+columns will grow the number of rows exponentially.</li>
+<li>The number of HLL bits chosen for this dataset is 13. This means the default
+size of the HLL object is 2^13 bits or 1KiB. This maintains about a 1% error
+on average. See <a href="https://github.com/twitter/algebird/blob/develop/algebird-core/src/main/scala/com/twitter/algebird/HyperLogLog.scala#L230-L255" target="_blank">this table from Algebird&apos;s HLL implementation</a> for
+more details.</li>
+</ol>
+<h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
+<p>The data is primarily available through <a href="sql.telemetry.mozilla.org">Redash on STMO</a> via
+the Presto source. This service has been configured to use predefined HLL
+functions.</p>
+<p>The column should first be cast to the HLL type. The scalar
+<code>cardinality(&lt;hll_column&gt;)</code> function will approximate the number of unique
+items per HLL object. The aggregate <code>merge(&lt;hll_column&gt;)</code> function will perform
+the set union between all objects in a column.</p>
+<p>Example: Cast the count column into the appropriate type.</p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">cast</span>(hll <span class="hljs-keyword">as</span> HLL) <span class="hljs-keyword">as</span> n_profiles_hll <span class="hljs-keyword">FROM</span> <span class="hljs-keyword">retention</span>
+</code></pre>
+<p>Count the number of clients seen over all attribute combinations.</p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> cardinality(<span class="hljs-keyword">cast</span>(hll <span class="hljs-keyword">as</span> HLL)) <span class="hljs-keyword">FROM</span> <span class="hljs-keyword">retention</span>
+</code></pre>
+<p>Group-by and aggregate client counts over different release channels.</p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> channel, cardinality(<span class="hljs-keyword">merge</span>(<span class="hljs-keyword">cast</span>(hll <span class="hljs-keyword">AS</span> HLL))
+<span class="hljs-keyword">FROM</span> <span class="hljs-keyword">retention</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> channel
+</code></pre>
+<p>The HyperLogLog library wrappers are available for use outside of the
+configured STMO environment, <a href="https://github.com/mozilla/spark-hyperloglog" target="_blank"><code>spark-hyperloglog</code></a> and
+<a href="https://github.com/vitillo/presto-hyperloglog" target="_blank"><code>presto-hyperloglog</code></a>.</p>
+<p>Also see the <a href="../client_count/reference.html"><code>client_count</code> dataset</a>.</p>
 <h1 id="data-reference"><a name="data-reference" class="plugin-anchor" href="#data-reference"><i class="fa fa-link" aria-hidden="true"></i></a>Data Reference</h1>
 <h2 id="example-queries"><a name="example-queries" class="plugin-anchor" href="#example-queries"><i class="fa fa-link" aria-hidden="true"></i></a>Example Queries</h2>
-<p>This is a work in progress.
-The work is being tracked
-<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1364170" target="_blank">here</a>.</p>
-<h2 id="sampling"><a name="sampling" class="plugin-anchor" href="#sampling"><i class="fa fa-link" aria-hidden="true"></i></a>Sampling</h2>
-<p>The events dataset contains one row for each event in a main ping.
-This dataset is derived from <a href="../main_summary/reference.html">main_summary</a>
-so any of <code>main_summary</code>&apos;s filters affect this dataset as well.</p>
-<p>Data is currently available from 2017-01-05 on.</p>
+<p>See the <a href="https://sql.telemetry.mozilla.org/dashboard/firefox-telemetry-retention-dataset-example-usage" target="_blank">Example Usage Dashboard</a> for more usages of datasets of
+the same shape.</p>
 <h2 id="scheduling"><a name="scheduling" class="plugin-anchor" href="#scheduling"><i class="fa fa-link" aria-hidden="true"></i></a>Scheduling</h2>
-<p>The events dataset is updated daily, shortly after 
-<a href="../main_summary/reference.html">main_summary</a> is updated.
-The job is scheduled on <a href="https://github.com/mozilla/telemetry-airflow" target="_blank">Airflow</a>.
-The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py#L63" target="_blank">here</a>.</p>
+<p>The job is scheduled on Airflow on a daily basis after <code>main_summary</code> is run
+for the day. This job requires both <code>mozetl</code> and <code>telemetry-batch-view</code> as
+dependencies.</p>
 <h2 id="schema"><a name="schema" class="plugin-anchor" href="#schema"><i class="fa fa-link" aria-hidden="true"></i></a>Schema</h2>
-<p>As of 2017-01-26, the current version of the <code>events</code> dataset is <code>v1</code>, and has a schema as follows:</p>
+<p>As of 2017-10-10, the current version of <code>retention</code> is <code>v1</code> and has a schema
+as follows:</p>
 <pre><code>root
- |-- document_id: string (nullable = true)
- |-- client_id: string (nullable = true)
- |-- normalized_channel: string (nullable = true)
- |-- country: string (nullable = true)
- |-- locale: string (nullable = true)
- |-- app_name: string (nullable = true)
+ |-- subsession_start: string (nullable = true)
+ |-- profile_creation: string (nullable = true)
+ |-- days_since_creation: long (nullable = true)
+ |-- channel: string (nullable = true)
  |-- app_version: string (nullable = true)
- |-- os: string (nullable = true)
- |-- os_version: string (nullable = true)
- |-- subsession_start_date: string (nullable = true)
- |-- subsession_length: long (nullable = true)
- |-- sync_configured: boolean (nullable = true)
- |-- sync_count_desktop: integer (nullable = true)
- |-- sync_count_mobile: integer (nullable = true)
- |-- timestamp: long (nullable = true)
- |-- sample_id: string (nullable = true)
- |-- event_timestamp: long (nullable = false)
- |-- event_category: string (nullable = false)
- |-- event_method: string (nullable = false)
- |-- event_object: string (nullable = false)
- |-- event_string_value: string (nullable = true)
- |-- event_map_values: map (nullable = true)
- |    |-- key: string
- |    |-- value: string
- |-- submission_date_s3: string (nullable = true)
- |-- doc_type: string (nullable = true)
-</code></pre><p>Currently, client-side event telemetry is undocumented.
-This doc will link to those once they&apos;re published.</p>
+ |-- geo: string (nullable = true)
+ |-- distribution_id: string (nullable = true)
+ |-- is_funnelcake: boolean (nullable = true)
+ |-- source: string (nullable = true)
+ |-- medium: string (nullable = true)
+ |-- content: string (nullable = true)
+ |-- sync_usage: string (nullable = true)
+ |-- is_active: boolean (nullable = true)
+ |-- hll: binary (nullable = true)
+ |-- usage_hours: double (nullable = true)
+ |-- sum_squared_usage_hours: double (nullable = true)
+ |-- total_uri_count: long (nullable = true)
+ |-- unique_domains_count: double (nullable = true)
+</code></pre><h1 id="code-reference"><a name="code-reference" class="plugin-anchor" href="#code-reference"><i class="fa fa-link" aria-hidden="true"></i></a>Code Reference</h1>
+<p>The ETL script for processing the data before aggregation is found in
+<a href="https://github.com/mozilla/python_mozetl/blob/master/mozetl/engagement/retention/job.py" target="_blank"><code>mozetl.engagement.retention</code></a>. The aggregate job is found in
+<a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/RetentionView.scala" target="_blank">telemetry-batch-view</a> as the <code>RetentionView</code>.</p>
+<p>The <a href="https://github.com/acmiyaguchi/telemetry-airflow/blob/1b4b11d23cdd1191ed2d2be905f116d7c3c67533/jobs/retention.sh" target="_blank">runner script</a> performs all the necessary setup to run on
+EMR. This script can be used to perform backfill.</p>
 
                                 
                                 </section>
@@ -951,12 +1008,12 @@ This doc will link to those once they&apos;re published.</p>
 
             
                 
-                <a href="../crash_aggregates/reference.html" class="navigation navigation-prev " aria-label="Previous page: Crash Aggregate">
+                <a href="../client_count/reference.html" class="navigation navigation-prev " aria-label="Previous page: Client Count">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="../sync_summary/reference.html" class="navigation navigation-next " aria-label="Next page: Sync Summary">
+                <a href="../new_profile/reference.html" class="navigation navigation-next " aria-label="Next page: New Profile">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -967,7 +1024,7 @@ This doc will link to those once they&apos;re published.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Events","level":"1.3.3.2.6","depth":4,"next":{"title":"Sync Summary","level":"1.3.3.2.7","depth":4,"path":"datasets/batch_view/sync_summary/reference.md","ref":"datasets/batch_view/sync_summary/reference.md","articles":[]},"previous":{"title":"Crash Aggregate","level":"1.3.3.2.5","depth":4,"path":"datasets/batch_view/crash_aggregates/reference.md","ref":"datasets/batch_view/crash_aggregates/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/events/reference.md","mtime":"2017-05-12T14:20:07.455Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-10-12T15:53:35.951Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Retention","level":"1.3.3.2.10","depth":4,"next":{"title":"New Profile","level":"1.3.3.2.11","depth":4,"path":"datasets/batch_view/new_profile/reference.md","ref":"datasets/batch_view/new_profile/reference.md","articles":[]},"previous":{"title":"Client Count","level":"1.3.3.2.9","depth":4,"path":"datasets/batch_view/client_count/reference.md","ref":"datasets/batch_view/client_count/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/retention/reference.md","mtime":"2017-10-12T15:53:30.059Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-10-12T15:53:35.951Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

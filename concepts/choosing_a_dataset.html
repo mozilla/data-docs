@@ -452,7 +452,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3.2.10" data-path="../datasets/batch_view/new_profile/reference.html">
+        <li class="chapter " data-level="1.3.3.2.10" data-path="../datasets/batch_view/retention/reference.html">
+            
+                <a href="../datasets/batch_view/retention/reference.html">
+            
+                    
+                    Retention
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.2.11" data-path="../datasets/batch_view/new_profile/reference.html">
             
                 <a href="../datasets/batch_view/new_profile/reference.html">
             
@@ -465,12 +478,25 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3.2.11" data-path="../datasets/batch_view/update/reference.html">
+        <li class="chapter " data-level="1.3.3.2.12" data-path="../datasets/batch_view/update/reference.html">
             
                 <a href="../datasets/batch_view/update/reference.html">
             
                     
                     Update
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.2.13" data-path="../datasets/batch_view/heavy_users/reference.html">
+            
+                <a href="../datasets/batch_view/heavy_users/reference.html">
+            
+                    
+                    Heavy Users
             
                 </a>
             
@@ -866,6 +892,7 @@ take a look at our <a href="../tools/experiments.html">tools for experimentation
 <li><a href="#cross_sectional">cross_sectional</a></li>
 <li><a href="#client_count">client_count</a></li>
 <li><a href="#heavy_users">heavy_users</a></li>
+<li><a href="#retention">retention</a></li>
 </ul>
 </li>
 <li><a href="#crash-ping-derived-datasets">Crash Ping Derived Datasets</a><ul>
@@ -1109,6 +1136,64 @@ into account.</li>
 <h4 id="further-reading"><a name="further-reading" class="plugin-anchor" href="#further-reading"><i class="fa fa-link" aria-hidden="true"></i></a>Further Reading</h4>
 <p>The code responsible for generating this dataset is
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/HeavyUsersView.scala" target="_blank">here</a></p>
+<h2 id="retention"><a name="retention" class="plugin-anchor" href="#retention"><i class="fa fa-link" aria-hidden="true"></i></a>retention</h2>
+<p>The <code>retention</code> table provides client counts relevant to client retention at a
+1-day granularity. The project is tracked in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1381840" target="_blank">Bug 1381840</a></p>
+<h3 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h3>
+<p>The <code>retention</code> table contains a set of attribute columns used to specify a
+cohort of users and a set of metric columns to describe cohort activity. Each
+row contains a permutation of attributes, an approximate set of clients in a
+cohort, and the aggregate engagement metrics.</p>
+<p>This table uses the HyperLogLog (HLL) sketch to create an approximate set of
+clients in a cohort. HLL allows counting across overlapping cohorts in a single
+pass while avoiding the problem of double counting. This data-structure has the
+benefit of being compact and performant in the context of retention analysis,
+at the expense of precision. For example, calculating a 7-day retention period
+can be obtained by aggregating over a week of retention data using the union
+operation. With SQL primitive, this requires a recomputation of COUNT DISTINCT
+over <code>client_id</code>&apos;s in the 7-day window.</p>
+<h4 id="background-and-caveats"><a name="background-and-caveats" class="plugin-anchor" href="#background-and-caveats"><i class="fa fa-link" aria-hidden="true"></i></a>Background and Caveats</h4>
+<ol>
+<li>The data starts at 2017-03-06, the <a href="https://wiki.mozilla.org/RapidRelease/Calendar" target="_blank">merge date where Nightly started to
+track Firefox 55 in Mozilla-Central</a>. However, there was
+not a consistent view into the behavior of first session profiles until the
+<a href="../new_profile/reference.md"><code>new_profile</code> ping</a>. This means much of the data is inaccurate
+before 2017-06-26.</li>
+<li>This dataset uses 4-day reporting latency to aggregate at least 99% of the
+data in a given submission date. This figure is derived from the
+<a href="https://sql.telemetry.mozilla.org/dashboard/telemetry-health" target="_blank">telemetry-health measurements on submission latency</a>, with
+the discussion in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1407410" target="_blank">Bug 1407410</a>. This latency metric was reduced
+Firefox 55 with the introduction of the shutdown ping-sender mechanism.</li>
+<li>Caution should be taken before adding new columns. Additional attribute
+columns will grow the number of rows exponentially.</li>
+<li>The number of HLL bits chosen for this dataset is 13. This means the default
+size of the HLL object is 2^13 bits or 1KiB. This maintains about a 1% error
+on average. See <a href="https://github.com/twitter/algebird/blob/develop/algebird-core/src/main/scala/com/twitter/algebird/HyperLogLog.scala#L230-L255" target="_blank">this table from Algebird&apos;s HLL implementation</a> for
+more details.</li>
+</ol>
+<h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
+<p>The data is primarily available through <a href="sql.telemetry.mozilla.org">Redash on STMO</a> via
+the Presto source. This service has been configured to use predefined HLL
+functions.</p>
+<p>The column should first be cast to the HLL type. The scalar
+<code>cardinality(&lt;hll_column&gt;)</code> function will approximate the number of unique
+items per HLL object. The aggregate <code>merge(&lt;hll_column&gt;)</code> function will perform
+the set union between all objects in a column.</p>
+<p>Example: Cast the count column into the appropriate type.</p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">cast</span>(hll <span class="hljs-keyword">as</span> HLL) <span class="hljs-keyword">as</span> n_profiles_hll <span class="hljs-keyword">FROM</span> <span class="hljs-keyword">retention</span>
+</code></pre>
+<p>Count the number of clients seen over all attribute combinations.</p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> cardinality(<span class="hljs-keyword">cast</span>(hll <span class="hljs-keyword">as</span> HLL)) <span class="hljs-keyword">FROM</span> <span class="hljs-keyword">retention</span>
+</code></pre>
+<p>Group-by and aggregate client counts over different release channels.</p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> channel, cardinality(<span class="hljs-keyword">merge</span>(<span class="hljs-keyword">cast</span>(hll <span class="hljs-keyword">AS</span> HLL))
+<span class="hljs-keyword">FROM</span> <span class="hljs-keyword">retention</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> channel
+</code></pre>
+<p>The HyperLogLog library wrappers are available for use outside of the
+configured STMO environment, <a href="https://github.com/mozilla/spark-hyperloglog" target="_blank"><code>spark-hyperloglog</code></a> and
+<a href="https://github.com/vitillo/presto-hyperloglog" target="_blank"><code>presto-hyperloglog</code></a>.</p>
+<p>Also see the <a href="../client_count/reference.md"><code>client_count</code> dataset</a>.</p>
 <h1 id="crash-ping-derived-datasets"><a name="crash-ping-derived-datasets" class="plugin-anchor" href="#crash-ping-derived-datasets"><i class="fa fa-link" aria-hidden="true"></i></a>Crash Ping Derived Datasets</h1>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html" target="_blank">crash ping</a>
 is captured after the main Firefox process crashes or after a content process crashes,
@@ -1235,7 +1320,7 @@ Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/31267#table" t
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.3","depth":2,"next":{"title":"Intro to STMO","level":"1.2.4","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"previous":{"title":"Data Privacy","level":"1.2.2","depth":2,"path":"concepts/data_privacy.md","ref":"concepts/data_privacy.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2017-10-10T13:22:31.810Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-10-10T13:22:44.017Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.3","depth":2,"next":{"title":"Intro to STMO","level":"1.2.4","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"previous":{"title":"Data Privacy","level":"1.2.2","depth":2,"path":"concepts/data_privacy.md","ref":"concepts/data_privacy.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2017-10-12T15:53:30.059Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-10-12T15:53:35.951Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
