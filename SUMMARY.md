@@ -45,6 +45,7 @@
   * [Creating a custom re:dash dataset](cookbooks/create_a_dataset.md)
   * [Creating a Real-time Analysis Plugin](cookbooks/realtime_analysis_plugin.md)
   * [Longitudinal Examples](cookbooks/longitudinal_examples.md)
+  * [Using HyperLogLog in Zeppelin](cookbooks/hll_zeppelin.md)
 
 
 * About this Documentation
