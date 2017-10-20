@@ -61,6 +61,7 @@ root
  |    |-- target_channel: string (nullable = true)
  |    |-- target_version: string (nullable = true)
  |    |-- target_build_id: string (nullable = true)
+ |    |-- target_display_version: string (nullable = true)
  |    |-- previous_channel: string (nullable = true)
  |    |-- previous_version: string (nullable = true)
  |    |-- previous_build_id: string (nullable = true)
