@@ -49,6 +49,10 @@ This section describes the derived datasets we provide to make analyzing this da
 
 {% include "/datasets/batch_view/retention/intro.md" %}
 
+## clients_daily
+
+{% include "/datasets/batch_view/clients_daily/intro.md" %}
+
 # Crash Ping Derived Datasets
 
 The [crash ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html)
