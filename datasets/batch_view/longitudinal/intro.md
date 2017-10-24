@@ -24,6 +24,8 @@ In summary, the longitudinal table differs from `main_summary` in two important 
 * The longitudinal dataset groups all data so that one row represents a client_id
 * The longitudinal dataset samples to 1% of all client_ids
 
+Please note that this dataset only contains pre-release (or opt-out) histograms and scalars.
+
 #### Accessing the Data
 
 The `longitudinal` is available in re:dash,
