@@ -51,7 +51,7 @@ This section describes the derived datasets we provide to make analyzing this da
 
 ## clients_daily
 
-{% include "/datasets/batch_view/clients_daily/intro.md" %}
+{% include "/datasets/mozetl/clients_daily/intro.md" %}
 
 # Crash Ping Derived Datasets
 
