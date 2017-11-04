@@ -26,7 +26,7 @@
       * [Client Count](datasets/batch_view/client_count/reference.md)
       * [Churn](datasets/mozetl/churn/reference.md)
       * [Retention](datasets/batch_view/retention/reference.md)
-      * [Clients Daily](datasets/batch_view/clients_daily/reference.md)
+      * [Clients Daily](datasets/mozetl/clients_daily/reference.md)
       * [New Profile](datasets/batch_view/new_profile/reference.md)
       * [Update](datasets/batch_view/update/reference.md)
       * [Heavy Users](datasets/batch_view/heavy_users/reference.md)
