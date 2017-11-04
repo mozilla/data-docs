@@ -45,6 +45,10 @@ This section describes the derived datasets we provide to make analyzing this da
 
 {% include "/datasets/batch_view/heavy_users/intro.md" %}
 
+## churn
+
+{% include "/datasets/mozetl/churn/intro.md" %}
+
 ## retention
 
 {% include "/datasets/batch_view/retention/intro.md" %}
