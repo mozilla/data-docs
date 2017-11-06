@@ -714,6 +714,19 @@
             
         </li>
     
+        <li class="chapter " data-level="1.4.3" data-path="../tools/projects.html">
+            
+                <a href="../tools/projects.html">
+            
+                    
+                    Project Glossary
+            
+                </a>
+            
+
+            
+        </li>
+    
 
             </ul>
             
@@ -916,10 +929,12 @@
                                 <h1 id="choosing-a-dataset"><a name="choosing-a-dataset" class="plugin-anchor" href="#choosing-a-dataset"><i class="fa fa-link" aria-hidden="true"></i></a>Choosing a Dataset</h1>
 <p>This document will help you find the best data source for a given analysis.</p>
 <p>This guide focuses on descriptive datasets and does not cover experimentation.
-For example, this guide will help if you need to answer questions like:
-how many users do we have in Germany, how many crashes we see per day,
-or how many users have a given addon installed.
-If you&apos;re interested in figuring out whether there&apos;s a causal link between two events
+For example, this guide will help if you need to answer questions like:</p>
+<ul>
+<li>How many users do we have in Germany, how many crashes we see per day?</li>
+<li>How many users have a given addon installed?</li>
+</ul>
+<p>If you&apos;re interested in figuring out whether there&apos;s a causal link between two events
 take a look at our <a href="../tools/experiments.html">tools for experimentation</a>.</p>
 <h2 id="table-of-contents"><a name="table-of-contents" class="plugin-anchor" href="#table-of-contents"><i class="fa fa-link" aria-hidden="true"></i></a>Table of Contents</h2>
 <!-- toc -->
@@ -953,12 +968,13 @@ take a look at our <a href="../tools/experiments.html">tools for experimentation
 <p>We receive data from our users via <strong>pings</strong>.
 There are several types of pings,
 each containing different measurements and sent for different purposes.
-To review a complete list of ping types and their schemata, see 
+To review a complete list of ping types and their schemata, see
 <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/index.html" target="_blank">this section of the Mozilla Source Tree Docs</a>.</p>
+<p>Many pings are also described by a JSONSchema specification which can be found in <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/master/schemas/telemetry" target="_blank">this repository</a>.</p>
 <h4 id="background-and-caveats"><a name="background-and-caveats" class="plugin-anchor" href="#background-and-caveats"><i class="fa fa-link" aria-hidden="true"></i></a>Background and Caveats</h4>
 <p>The large majority of analyses can be completed using only the
 <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html" target="_blank">main ping</a>.
-This ping includes histograms, scalars, and other performance and diagnostic data.</p>
+This ping includes histograms, scalars, events, and other performance and diagnostic data.</p>
 <p>Few analyses actually rely directly on the raw ping data.
 Instead, we provide <strong>derived datasets</strong> which are processed versions of these data,
 made to be:</p>
@@ -972,18 +988,16 @@ made to be:</p>
 If you do need to work with raw ping data, be aware that loading the data can take a while.
 Try to limit the size of your data by controlling the date range, etc.</p>
 <h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
-<p>You can access raw ping data from an 
-<a href="https://analysis.telemetry.mozilla.org/" target="_blank">ATMO cluster</a> using the 
-<a href="https://python-moztelemetry.readthedocs.io/en/stable/api.html#module-moztelemetry.dataset" target="_blank">Dataset API</a>.
-Raw ping data are not available in <a href="https://sql.telemetry.mozilla.org/" target="_blank">re:dash</a>.</p>
+<p>You can access raw ping data from an <a href="https://analysis.telemetry.mozilla.org/" target="_blank">ATMO cluster</a> using the <a href="https://python-moztelemetry.readthedocs.io/en/stable/api.html#module-moztelemetry.dataset" target="_blank">Dataset API</a>.
+Raw ping data are not available in <a href="sql.telemetry.mozilla.org">re:dash</a>.</p>
 <h4 id="further-reading"><a name="further-reading" class="plugin-anchor" href="#further-reading"><i class="fa fa-link" aria-hidden="true"></i></a>Further Reading</h4>
 <p>You can find <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/index.html" target="_blank">the complete ping documentation</a>.
-To augment our data collection, see
-<a href="https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Adding_a_new_Telemetry_probe" target="_blank">Collecting New Data</a></p>
+To augment our data collection, see <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Adding_a_new_Telemetry_probe" target="_blank">Collecting New Data</a> and the
+<a href="https://wiki.mozilla.org/Firefox/Data_Collection" target="_blank">Data Collection Policy</a>.</p>
 <h1 id="main-ping-derived-datasets"><a name="main-ping-derived-datasets" class="plugin-anchor" href="#main-ping-derived-datasets"><i class="fa fa-link" aria-hidden="true"></i></a>Main Ping Derived Datasets</h1>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html" target="_blank">main ping</a>
 contains most of the measurements used to track performance and health of Firefox in the wild.
-This ping includes histograms and scalars.</p>
+This ping includes histograms, scalars, and events.</p>
 <p>This section describes the derived datasets we provide to make analyzing this data easier.</p>
 <h2 id="longitudinal"><a name="longitudinal" class="plugin-anchor" href="#longitudinal"><i class="fa fa-link" aria-hidden="true"></i></a>longitudinal</h2>
 <p>The <code>longitudinal</code> dataset is a 1% sample of main ping data
@@ -1545,7 +1559,7 @@ Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/31267#table" t
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.3","depth":2,"next":{"title":"Intro to STMO","level":"1.2.4","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"previous":{"title":"Data Privacy","level":"1.2.2","depth":2,"path":"concepts/data_privacy.md","ref":"concepts/data_privacy.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2017-11-06T16:54:44.472Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-11-06T16:55:11.639Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.3","depth":2,"next":{"title":"Intro to STMO","level":"1.2.4","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"previous":{"title":"Data Privacy","level":"1.2.2","depth":2,"path":"concepts/data_privacy.md","ref":"concepts/data_privacy.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2017-11-06T22:57:17.089Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-11-06T22:57:20.976Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
