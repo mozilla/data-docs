@@ -2,7 +2,7 @@
 
 ## Data Sharing guidelines
 
-This document will give you an overview of what types of analyses you
+This section will give you an overview of what types of analyses you
 can and cannot share publically.
 
 This article is under development.
