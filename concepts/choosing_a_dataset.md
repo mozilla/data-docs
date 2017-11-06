@@ -4,8 +4,10 @@ This document will help you find the best data source for a given analysis.
 
 This guide focuses on descriptive datasets and does not cover experimentation.
 For example, this guide will help if you need to answer questions like:
-how many users do we have in Germany, how many crashes we see per day,
-or how many users have a given addon installed.
+
+- How many users do we have in Germany, how many crashes we see per day?
+- How many users have a given addon installed?
+
 If you're interested in figuring out whether there's a causal link between two events
 take a look at our [tools for experimentation](/tools/experiments.md).
 
@@ -21,7 +23,7 @@ take a look at our [tools for experimentation](/tools/experiments.md).
 
 The [main ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html)
 contains most of the measurements used to track performance and health of Firefox in the wild.
-This ping includes histograms and scalars.
+This ping includes histograms, scalars, and events.
 
 This section describes the derived datasets we provide to make analyzing this data easier.
 
