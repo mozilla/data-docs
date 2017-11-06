@@ -452,7 +452,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3.2.10" data-path="../datasets/batch_view/retention/reference.html">
+        <li class="chapter " data-level="1.3.3.2.10" data-path="../datasets/mozetl/churn/reference.html">
+            
+                <a href="../datasets/mozetl/churn/reference.html">
+            
+                    
+                    Churn
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.2.11" data-path="../datasets/batch_view/retention/reference.html">
             
                 <a href="../datasets/batch_view/retention/reference.html">
             
@@ -465,9 +478,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3.2.11" data-path="../datasets/batch_view/clients_daily/reference.md">
+        <li class="chapter " data-level="1.3.3.2.12" data-path="../datasets/mozetl/clients_daily/reference.html">
             
-                <span>
+                <a href="../datasets/mozetl/clients_daily/reference.html">
             
                     
                     Clients Daily
@@ -478,7 +491,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3.2.12" data-path="../datasets/batch_view/new_profile/reference.html">
+        <li class="chapter " data-level="1.3.3.2.13" data-path="../datasets/batch_view/new_profile/reference.html">
             
                 <a href="../datasets/batch_view/new_profile/reference.html">
             
@@ -491,7 +504,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3.2.13" data-path="../datasets/batch_view/update/reference.html">
+        <li class="chapter " data-level="1.3.3.2.14" data-path="../datasets/batch_view/update/reference.html">
             
                 <a href="../datasets/batch_view/update/reference.html">
             
@@ -504,7 +517,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3.2.14" data-path="../datasets/batch_view/heavy_users/reference.html">
+        <li class="chapter " data-level="1.3.3.2.15" data-path="../datasets/batch_view/heavy_users/reference.html">
             
                 <a href="../datasets/batch_view/heavy_users/reference.html">
             
@@ -918,6 +931,7 @@ take a look at our <a href="../tools/experiments.html">tools for experimentation
 <li><a href="#cross_sectional">cross_sectional</a></li>
 <li><a href="#client_count">client_count</a></li>
 <li><a href="#heavy_users">heavy_users</a></li>
+<li><a href="#churn">churn</a></li>
 <li><a href="#retention">retention</a></li>
 <li><a href="#clients_daily">clients_daily</a></li>
 </ul>
@@ -1164,6 +1178,164 @@ into account.</li>
 <h4 id="further-reading"><a name="further-reading" class="plugin-anchor" href="#further-reading"><i class="fa fa-link" aria-hidden="true"></i></a>Further Reading</h4>
 <p>The code responsible for generating this dataset is
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/HeavyUsersView.scala" target="_blank">here</a></p>
+<h2 id="churn"><a name="churn" class="plugin-anchor" href="#churn"><i class="fa fa-link" aria-hidden="true"></i></a>churn</h2>
+<p>The churn dataset tracks the 7-day churn rate of telemetry profiles. This
+dataset is generally used for analyzing cohort churn across segments and time.</p>
+<h4 id="content"><a name="content" class="plugin-anchor" href="#content"><i class="fa fa-link" aria-hidden="true"></i></a>Content</h4>
+<p>Churn is the rate of attrition defined by <code>(clients seen in week N)/(clients seen in week 0)</code>
+for groups of clients with some shared attributes. A group of clients with
+shared attributes is called a <em>cohort</em>. The cohorts in this dataset are created
+every week and can be tracked over time using the <code>acquisition_date</code> and the
+weeks since acquisition or <code>current_week</code>.</p>
+<p>The following example demonstrates the current logic for generating this
+dataset. Each column represents the days since some arbitrary starting date.</p>
+<table>
+<thead>
+<tr>
+<th>client</th>
+<th>00</th>
+<th>01</th>
+<th>02</th>
+<th>03</th>
+<th>04</th>
+<th>05</th>
+<th>06</th>
+<th>07</th>
+<th>08</th>
+<th>09</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>X</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>X</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>B</td>
+<td></td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>C</td>
+<td>X</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>X</td>
+</tr>
+</tbody>
+</table>
+<p>All three clients are part of the same cohort. Client A is retained for weeks 0
+and 1 since there is activity in both periods. A client only needs to show up
+once in the period to be counted as retained. Client B is acquired in week 0 and
+is active frequently but does not appear in following weeks. Client B is
+considered churned on week 1. However, a client that is churned can become
+retained again. Client C is considered churned on week 1 but retained on week 3.</p>
+<p>The following table summarizes the above daily activity into the following view
+where every column represents the current week since acquisition date..</p>
+<table>
+<thead>
+<tr>
+<th>client</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>B</td>
+<td>X</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>C</td>
+<td>X</td>
+<td></td>
+<td>X</td>
+</tr>
+</tbody>
+</table>
+<p>The clients are then grouped into cohorts by attributes. An attribute describes
+a property about the cohort such as the country of origin or the binary
+distribution channel. Each group also contains descriptive aggregates of
+engagement. Each metric describes the activity of a cohort such as size and
+overall usage at a given time instance.</p>
+<h4 id="background-and-caveats"><a name="background-and-caveats" class="plugin-anchor" href="#background-and-caveats"><i class="fa fa-link" aria-hidden="true"></i></a>Background and Caveats</h4>
+<ul>
+<li>Each row in this dataset describes a unique segment of users<ul>
+<li>The number of rows is exponential with the number of dimensions</li>
+<li>New fields should be added sparing to account for data-set size</li>
+</ul>
+</li>
+<li>The dataset lags by 10 days in order account for submission latency<ul>
+<li>This value was determined to be time for 99% of main pings to arrive at the
+server. With the shutdown-ping sender, this has been reduced to 4 days.
+However, <code>churn_v3</code> still tracks releases older than Firefox 55.</li>
+</ul>
+</li>
+<li>The start of the period is fixed to Sundays. Once it has been aggregated, the
+period cannot be shifted due to the way clients are counted.<ul>
+<li>A supplementary 1-day <code>retention</code> dataset using HyperLogLog for client
+counts is available for counting over arbitrary retention periods and date
+offsets. Additionally, calculating churn or retention over specific cohorts
+is tractable in STMO with <code>main_summary</code> or <code>clients_daily</code> datasets.</li>
+</ul>
+</li>
+</ul>
+<h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
+<p><code>churn</code> is available in Redash under Athena and Presto. The data is also
+available in parquet for consumption by columnar data engines at
+<code>s3://telemetry-parquet/churn/v3</code>.</p>
 <h2 id="retention"><a name="retention" class="plugin-anchor" href="#retention"><i class="fa fa-link" aria-hidden="true"></i></a>retention</h2>
 <p>The <code>retention</code> table provides client counts relevant to client retention at a
 1-day granularity. The project is tracked in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1381840" target="_blank">Bug 1381840</a></p>
@@ -1373,7 +1545,7 @@ Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/31267#table" t
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.3","depth":2,"next":{"title":"Intro to STMO","level":"1.2.4","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"previous":{"title":"Data Privacy","level":"1.2.2","depth":2,"path":"concepts/data_privacy.md","ref":"concepts/data_privacy.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2017-10-24T14:12:44.083Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-10-24T20:09:41.819Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.3","depth":2,"next":{"title":"Intro to STMO","level":"1.2.4","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"previous":{"title":"Data Privacy","level":"1.2.2","depth":2,"path":"concepts/data_privacy.md","ref":"concepts/data_privacy.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2017-11-06T16:54:44.472Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-11-06T16:55:11.639Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
