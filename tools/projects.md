@@ -61,11 +61,9 @@ See also [firefox-data-docs][docs] for documentation on datasets.
 |-----------------------------------|-----------------------------------------|
 | [emr-bootstrap-spark][eb_spark]   | AWS bootstrap scripts for Spark.
 | [emr-bootstrap-presto][eb_presto] | AWS bootstrap scripts for Presto.
-| [emr-bootstrap-hbase][eb_hbase]   | AWS bootstrap scripts for HBase.
 
 [eb_spark]: https://github.com/mozilla/emr-bootstrap-spark
 [eb_presto]: https://github.com/mozilla/emr-bootstrap-presto
-[eb_hbase]: https://github.com/mozilla/emr-bootstrap-hbase
 
 ## Data applications
 

@@ -39,7 +39,6 @@
     * [Custom analysis with Spark](tools/spark.md)
     * [Creating a Real-time Analysis Plugin](cookbooks/realtime_analysis_plugin.md)
     * [Distribution Viewer](tools/distribution_viewer.md)
-    * [HBase](tools/hbase.md)
     * [RTMO](tools/rtmo.md)
     * [Alerts](tools/alerts.md)
   * [Project Glossary](tools/projects.md)
