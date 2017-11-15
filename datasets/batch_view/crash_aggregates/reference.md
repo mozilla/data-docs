@@ -26,23 +26,23 @@ GROUP BY dimensions['channel']
 ORDER BY -sum(stats['usage_hours'])
 ```
 
-Main process crashes by build date and E10S cohort.
+Main process crashes by build date and os version.
 
 ```sql
 WITH channel_rates AS (
   SELECT dimensions['build_id'] AS build_id,
          SUM(stats['main_crashes']) AS main_crashes, -- total number of crashes
          SUM(stats['usage_hours']) / 1000 AS usage_kilohours, -- thousand hours of usage
-         dimensions['e10s_cohort'] AS e10s_cohort -- e10s cohort
+         dimensions['os_version'] AS os_version -- os version
    FROM crash_aggregates
    WHERE dimensions['experiment_id'] is null -- not in an experiment
      AND regexp_like(dimensions['build_id'], '^\d{14}$') -- validate build IDs
      AND dimensions['build_id'] > '20160201000000' -- only in the date range that we care about
-   GROUP BY dimensions['build_id'], dimensions['e10s_cohort']
+   GROUP BY dimensions['build_id'], dimensions['os_version']
 )
 SELECT cast(parse_datetime(build_id, 'yyyyMMddHHmmss') as date) as build_id, -- program build date
        usage_kilohours, -- thousands of usage hours
-       e10s_cohort, -- e10s cohort
+       os_version, -- os version
        main_crashes / usage_kilohours AS main_crash_rate -- crash rate being defined as crashes per thousand usage hours
 FROM channel_rates
 WHERE usage_kilohours > 100 -- only aggregates that have statistically significant usage hours
@@ -90,7 +90,6 @@ The `crash_aggregates` table has 4 commonly-used columns:
     * `dimensions['experiment_id']` is the identifier of the experiment being participated in, such as `e10s-beta46-noapz@experiments.mozilla.org`, or null if no experiment.
     * `dimensions['experiment_branch']` is the branch of the experiment being participated in, such as `control` or `experiment`, or null if no experiment.
     * `dimensions['e10s_enabled']` is whether E10S is enabled.
-    * `dimensions['e10s_cohort']` is the E10S cohort the user is part of, such as `control`, `test`, or `disqualified`.
     * `dimensions['gfx_compositor']` is the graphics backend compositor used by the program, such as `d3d11`, `opengl` and `simple`. Null values may be reported as `none` as well.
     * All of the above fields can potentially be blank, which means "not present". That means that in the actual pings, the corresponding fields were null.
 * `stats` contains the aggregate values that we care about:
