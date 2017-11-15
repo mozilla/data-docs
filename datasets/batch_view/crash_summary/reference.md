@@ -52,7 +52,6 @@ root
  |-- experiment_id: string (nullable = true)
  |-- experiment_branch: string (nullable = true)
  |-- e10s_enabled: boolean (nullable = true)
- |-- e10s_cohort: string (nullable = true)
  |-- gfx_compositor: string (nullable = true)
  |-- payload: struct (nullable = true)
  |    |-- crashDate: string (nullable = true)

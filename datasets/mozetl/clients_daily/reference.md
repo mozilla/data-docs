@@ -93,7 +93,6 @@ root
  |-- default_search_engine_data_submission_url: string (nullable = true)
  |-- devtools_toolbox_opened_count_sum: long (nullable = true)
  |-- distribution_id: string (nullable = true)
- |-- e10s_cohort: string (nullable = true)
  |-- e10s_enabled: boolean (nullable = true)
  |-- env_build_arch: string (nullable = true)
  |-- env_build_id: string (nullable = true)
