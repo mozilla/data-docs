@@ -14,7 +14,7 @@ Use JSON Schema to start with. See the examples schemas in the
 [Mozilla Pipeline Schemas repo](https://github.com/mozilla-services/mozilla-pipeline-schemas/).
 This schema is just used to validate the incoming data; any ping that doesn't match the schema
 will be removed. Validate your JSON Schema using a
-[validation tool](https://jsonschemalint.com/#/version/draft-04/markup/json),
+[validation tool](https://jsonschemalint.com/#/version/draft-04/markup/json).
 
 We already have automatic deduping based on docId, which catches about 90% of duplicates and removes
 them from the dataset.
@@ -29,16 +29,37 @@ as an example. Consider where the data falls in the
 Submit Schema to mozilla-services/mozilla-pipeline-schemas
 ----------------------------------------------------------
 The first schema added should be the JSON Schema made in step 2.
-Make sure you add at least one example ping which the data can be validated against. Additionally,
+Add at least one example ping which the data can be validated against.
+These test pings will be validated automatically during the build.
+
+Additionally,
 a [Parquet output](https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/master/schemas/telemetry/core/core.9.parquetmr.txt)
 schema should be added. This would add a new dataset, available in [Re:dash](https://sql.telemetry.mozilla.org).
-
+The best documentation we have for the Parquet schema is by looking at the examples in
+[mozilla-pipeline-schemas](https://github.com/mozilla-services/mozilla-pipeline-schemas).
 
 Parquet output also has a `metadata` section. These are fields added to the ping at ingestion time;
 they might come from the URL submitted to the edge server, or the IP Address used to make the request.
-For now, take a look at [the ingestion code](https://github.com/mozilla-services/lua_sandbox_extensions/blob/master/moz_telemetry/io_modules/decoders/moz_ingest/telemetry.lua)
-to see which fields are added. Note: We deeply apologize for making you look there. Feel free to reach
-out to us in the #datapipeline IRC channel with questions.
+[This document](https://hsadmin.trink.com/dashboard_output/analysis.trink.telemetry_schema.parquet.txt)
+lists available metadata fields for all pings.
+
+The stream you're interested in is probably `telemetry`.
+For example, look at `system-addon-deployment-diagnostics` immediately under the `telemetry` top-level
+field. The `schema` element has top-level fields (e.g. `Timestamp`, `Type`), as well as more fields
+under the `Fields` element. Any of these can be used in the `metadata` section of your parquet schema,
+except for `submission`.
+
+Some common ones might be:
+- Date
+- submissionDate
+- geoCountry
+- geoCity
+- normalizedChannel
+- appVersion
+- appBuildId
+
+*Important Note*: Schema evolution of nested structs is currently broken, so you will not be able to add
+any fields in the future to your `metadata` section. We recommend adding any that may seem useful.
 
 ### Testing The Schema
 
