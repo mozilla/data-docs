@@ -72,10 +72,6 @@ Presto, and other databases, are behind a [re:dash] service ([STMO]) which provi
 
 ![STMO](../assets/STMO_example.jpeg "STMO – who doesn’t love SQL?")
 
-# HBase
-
-We use HBase to store the history of pings by client. It’s a relatively new addition and it provides support for fast [needle-in-haystack queries].
-
 # Is that it?
 
 No, not really. For example, the DWL pushes some of the Telemetry data to Redshift and Elasticsearch but those tools satisfy more niche needs. The pipeline ingests logs from services as well and there are many specialized dashboards out there I haven’t mentioned. We also use [Zeppelin] as a means to create interactive data analysis notebooks that supports Spark, SQL, Scala and more.
@@ -122,5 +118,4 @@ There is a vast ecosystem of tools for processing data at scale, each with their
 [re:dash]: https://sql.telemetry.mozilla.org/
 [STMO]: https://sql.telemetry.mozilla.org/
 [fork of re:dash]: https://github.com/mozilla/redash
-[needle-in-haystack queries]: https://python-moztelemetry.readthedocs.io/en/stable/api.html#module-moztelemetry.hbase
 [Zeppelin]: https://bugzilla.mozilla.org/show_bug.cgi?id=1369519
