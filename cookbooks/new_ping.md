@@ -4,7 +4,7 @@ to find out.
 Write Your Questions
 --------------------
 Do not try and implement new pings unless you know specifically what questions you're trying to
-answerer. General questions about "How do users use our product?" won't cut it - these need to be
+answer. General questions about "How do users use our product?" won't cut it - these need to be
 specific, concrete asks that can be translated to data points. This will also make it easier down
 the line as you start data review.
 
@@ -14,14 +14,14 @@ Use JSON Schema to start with. See the examples schemas in the
 [Mozilla Pipeline Schemas repo](https://github.com/mozilla-services/mozilla-pipeline-schemas/).
 This schema is just used to validate the incoming data; any ping that doesn't match the schema
 will be removed. Validate your JSON Schema using a
-[validation tool](https://jsonschemalint.com/#/version/draft-04/markup/json),
+[validation tool](https://jsonschemalint.com/#/version/draft-04/markup/json).
 
 We already have automatic deduping based on docId, which catches about 90% of duplicates and removes
 them from the dataset.
 
 Start a Data Review
 -------------------
-Data review for new pings is a more complicated than when adding new probes. See
+Data review for new pings is more complicated than when adding new probes. See
 [Data Review for Focus-Event Ping](https://bugzilla.mozilla.org/show_bug.cgi?id=1347266)
 as an example. Consider where the data falls in the
 [Data Collection Categories](https://wiki.mozilla.org/Firefox/Data_Collection).
@@ -55,7 +55,7 @@ Deploy the Plugin
 -----------------
 File [a bug to deploy the new schema.](https://bugzilla.mozilla.org/show_bug.cgi?id=1333203)
 
-Real-time analysis will be key to ensuring your data is coming being processed and parsed correctly.
+Real-time analysis will be key to ensuring your data is being processed and parsed correctly.
 It should follow the format specified in
 [Moztelemetry doctype monitor](https://mozilla-services.github.io/lua_sandbox_extensions/moz_telemetry/sandboxes/heka/analysis/moz_telemetry_doctype_monitor.html).
 This allows you to check validation errors, size changes, duplicates, and more. Once you have
@@ -96,7 +96,7 @@ or [client-count](https://github.com/mozilla/telemetry-batch-view/blob/master/sr
 like dataset. Otherwise, you'll have to write your own.
 
 You can schedule it on [Airflow](http://workflow.telemetry.mozilla.org/), or you can
-run it as a job in ATMO. If this output parquet, you can again add it the Hive metastore to have it
+run it as a job in ATMO. If the output is parquet, you can add it to the Hive metastore to have it
 available in re:dash. Check the docs on [creating your own datasets](cookbooks/create_a_dataset.md).
 
 Build Dashboards Using ATMO or STMO
