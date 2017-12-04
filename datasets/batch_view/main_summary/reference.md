@@ -53,7 +53,7 @@ You can find the job definition
 
 ## Schema
 
-As of 2017-09-28, the current version of the `main_summary` dataset is `v4`, and has a schema as follows:
+As of 2017-12-03, the current version of the `main_summary` dataset is `v4`, and has a schema as follows:
 
 ```
 root
@@ -72,6 +72,7 @@ root
  |-- install_year: long (nullable = true)
  |-- is_wow64: boolean (nullable = true)
  |-- memory_mb: integer (nullable = true)
+ |-- apple_model_id: string (nullable = true)
  |-- profile_creation_date: long (nullable = true)
  |-- subsession_start_date: string (nullable = true)
  |-- subsession_length: long (nullable = true)
@@ -92,6 +93,8 @@ root
  |-- env_build_version: string (nullable = true)
  |-- env_build_arch: string (nullable = true)
  |-- e10s_enabled: boolean (nullable = true)
+ |-- e10s_cohort: string (nullable = true)
+ |-- e10s_multi_processes: long (nullable = true)
  |-- locale: string (nullable = true)
  |-- attribution: struct (nullable = true)
  |    |-- source: string (nullable = true)
@@ -259,10 +262,470 @@ root
  |-- input_event_response_coalesced_ms_content_above_2500: long (nullable = true)
  |-- ghost_windows_main_above_1: long (nullable = true)
  |-- ghost_windows_content_above_1: long (nullable = true)
- |-- ** dynamically included scalar fields, see source **
- |-- ** dynamically include whitelisted histograms, see source **
+ |-- user_pref_dom_ipc_processcount: integer (nullable = true)
+ |-- user_pref_extensions_allow_non_mpc_extensions: boolean (nullable = true)
+ |-- user_pref_extensions_legacy_enabled: boolean (nullable = true)
+ |-- scalar_content_browser_usage_graphite: integer (nullable = true)
+ |-- scalar_content_browser_usage_plugin_instantiated: integer (nullable = true)
+ |-- scalar_content_gfx_omtp_paint_wait_ratio: integer (nullable = true)
+ |-- scalar_content_idb_type_persistent_count: integer (nullable = true)
+ |-- scalar_content_idb_type_temporary_count: integer (nullable = true)
+ |-- scalar_content_mathml_doc_count: integer (nullable = true)
+ |-- scalar_content_mediarecorder_recording_count: integer (nullable = true)
+ |-- scalar_content_navigator_storage_estimate_count: integer (nullable = true)
+ |-- scalar_content_navigator_storage_persist_count: integer (nullable = true)
+ |-- scalar_content_telemetry_accumulate_unknown_histogram_keys: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: integer (valueContainsNull = true)
+ |-- scalar_content_telemetry_discarded_accumulations: integer (nullable = true)
+ |-- scalar_content_telemetry_discarded_child_events: integer (nullable = true)
+ |-- scalar_content_telemetry_discarded_keyed_accumulations: integer (nullable = true)
+ |-- scalar_content_telemetry_discarded_keyed_scalar_actions: integer (nullable = true)
+ |-- scalar_content_telemetry_discarded_scalar_actions: integer (nullable = true)
+ |-- scalar_content_webrtc_nicer_stun_retransmits: integer (nullable = true)
+ |-- scalar_content_webrtc_nicer_turn_401s: integer (nullable = true)
+ |-- scalar_content_webrtc_nicer_turn_403s: integer (nullable = true)
+ |-- scalar_content_webrtc_nicer_turn_438s: integer (nullable = true)
+ |-- scalar_gpu_browser_usage_graphite: integer (nullable = true)
+ |-- scalar_gpu_telemetry_accumulate_unknown_histogram_keys: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: integer (valueContainsNull = true)
+ |-- scalar_gpu_telemetry_discarded_accumulations: integer (nullable = true)
+ |-- scalar_gpu_telemetry_discarded_child_events: integer (nullable = true)
+ |-- scalar_gpu_telemetry_discarded_keyed_accumulations: integer (nullable = true)
+ |-- scalar_gpu_telemetry_discarded_keyed_scalar_actions: integer (nullable = true)
+ |-- scalar_gpu_telemetry_discarded_scalar_actions: integer (nullable = true)
+ |-- scalar_parent_a11y_indicator_acted_on: boolean (nullable = true)
+ |-- scalar_parent_a11y_instantiators: string (nullable = true)
+ |-- scalar_parent_aushelper_websense_reg_version: string (nullable = true)
+ |-- scalar_parent_browser_engagement_active_ticks: integer (nullable = true)
+ |-- scalar_parent_browser_engagement_max_concurrent_tab_count: integer (nullable = true)
+ |-- scalar_parent_browser_engagement_max_concurrent_window_count: integer (nullable = true)
+ |-- scalar_parent_browser_engagement_navigation_about_home: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: integer (valueContainsNull = true)
+ |-- scalar_parent_browser_engagement_navigation_about_newtab: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: integer (valueContainsNull = true)
+ |-- scalar_parent_browser_engagement_navigation_contextmenu: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: integer (valueContainsNull = true)
+ |-- scalar_parent_browser_engagement_navigation_searchbar: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: integer (valueContainsNull = true)
+ |-- scalar_parent_browser_engagement_navigation_urlbar: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: integer (valueContainsNull = true)
+ |-- scalar_parent_browser_engagement_restored_pinned_tabs_count: integer (nullable = true)
+ |-- scalar_parent_browser_engagement_tab_open_event_count: integer (nullable = true)
+ |-- scalar_parent_browser_engagement_total_uri_count: integer (nullable = true)
+ |-- scalar_parent_browser_engagement_unfiltered_uri_count: integer (nullable = true)
+ |-- scalar_parent_browser_engagement_unique_domains_count: integer (nullable = true)
+ |-- scalar_parent_browser_engagement_window_open_event_count: integer (nullable = true)
+ |-- scalar_parent_browser_session_restore_browser_startup_page: integer (nullable = true)
+ |-- scalar_parent_browser_session_restore_browser_tabs_restorebutton: integer (nullable = true)
+ |-- scalar_parent_browser_session_restore_number_of_tabs: integer (nullable = true)
+ |-- scalar_parent_browser_session_restore_number_of_win: integer (nullable = true)
+ |-- scalar_parent_browser_session_restore_tabbar_restore_available: boolean (nullable = true)
+ |-- scalar_parent_browser_session_restore_tabbar_restore_clicked: boolean (nullable = true)
+ |-- scalar_parent_browser_session_restore_worker_restart_count: integer (nullable = true)
+ |-- scalar_parent_browser_usage_graphite: integer (nullable = true)
+ |-- scalar_parent_browser_usage_plugin_instantiated: integer (nullable = true)
+ |-- scalar_parent_devtools_aboutdevtools_installed: integer (nullable = true)
+ |-- scalar_parent_devtools_aboutdevtools_noinstall_exits: integer (nullable = true)
+ |-- scalar_parent_devtools_aboutdevtools_opened: integer (nullable = true)
+ |-- scalar_parent_devtools_copy_full_css_selector_opened: integer (nullable = true)
+ |-- scalar_parent_devtools_copy_unique_css_selector_opened: integer (nullable = true)
+ |-- scalar_parent_devtools_copy_xpath_opened: integer (nullable = true)
+ |-- scalar_parent_devtools_current_theme: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: integer (valueContainsNull = true)
+ |-- scalar_parent_devtools_grid_gridinspector_opened: integer (nullable = true)
+ |-- scalar_parent_devtools_grid_showgridareasoverlay_checked: integer (nullable = true)
+ |-- scalar_parent_devtools_grid_showgridlinenumbers_checked: integer (nullable = true)
+ |-- scalar_parent_devtools_grid_showinfinitelines_checked: integer (nullable = true)
+ |-- scalar_parent_devtools_rules_gridinspector_opened: integer (nullable = true)
+ |-- scalar_parent_devtools_toolbar_eyedropper_opened: integer (nullable = true)
+ |-- scalar_parent_dom_contentprocess_troubled_due_to_memory: integer (nullable = true)
+ |-- scalar_parent_formautofill_addresses_fill_type_autofill: integer (nullable = true)
+ |-- scalar_parent_formautofill_addresses_fill_type_autofill_update: integer (nullable = true)
+ |-- scalar_parent_formautofill_addresses_fill_type_manual: integer (nullable = true)
+ |-- scalar_parent_formautofill_availability: boolean (nullable = true)
+ |-- scalar_parent_formautofill_creditcards_fill_type_autofill: integer (nullable = true)
+ |-- scalar_parent_formautofill_creditcards_fill_type_autofill_modified: integer (nullable = true)
+ |-- scalar_parent_formautofill_creditcards_fill_type_manual: integer (nullable = true)
+ |-- scalar_parent_gfx_advanced_layers_failure_id: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: integer (valueContainsNull = true)
+ |-- scalar_parent_idb_type_persistent_count: integer (nullable = true)
+ |-- scalar_parent_idb_type_temporary_count: integer (nullable = true)
+ |-- scalar_parent_mediarecorder_recording_count: integer (nullable = true)
+ |-- scalar_parent_navigator_storage_estimate_count: integer (nullable = true)
+ |-- scalar_parent_navigator_storage_persist_count: integer (nullable = true)
+ |-- scalar_parent_network_tcp_overlapped_io_canceled_before_finished: integer (nullable = true)
+ |-- scalar_parent_network_tcp_overlapped_result_delayed: integer (nullable = true)
+ |-- scalar_parent_preferences_browser_home_page_change: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: integer (valueContainsNull = true)
+ |-- scalar_parent_preferences_browser_home_page_count: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: integer (valueContainsNull = true)
+ |-- scalar_parent_preferences_created_new_user_prefs_file: boolean (nullable = true)
+ |-- scalar_parent_preferences_prefs_file_was_invalid: boolean (nullable = true)
+ |-- scalar_parent_preferences_prevent_accessibility_services: boolean (nullable = true)
+ |-- scalar_parent_preferences_read_user_js: boolean (nullable = true)
+ |-- scalar_parent_preferences_search_query: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: integer (valueContainsNull = true)
+ |-- scalar_parent_preferences_use_bookmark: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: integer (valueContainsNull = true)
+ |-- scalar_parent_preferences_use_current_page: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: integer (valueContainsNull = true)
+ |-- scalar_parent_sandbox_no_job: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: boolean (valueContainsNull = true)
+ |-- scalar_parent_screenshots_copy: integer (nullable = true)
+ |-- scalar_parent_screenshots_download: integer (nullable = true)
+ |-- scalar_parent_screenshots_upload: integer (nullable = true)
+ |-- scalar_parent_security_pkcs11_modules_loaded: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: boolean (valueContainsNull = true)
+ |-- scalar_parent_security_webauthn_used: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: integer (valueContainsNull = true)
+ |-- scalar_parent_services_sync_fxa_verification_method: string (nullable = true)
+ |-- scalar_parent_services_sync_sync_login_state_transitions: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: boolean (valueContainsNull = true)
+ |-- scalar_parent_storage_sync_api_usage_extensions_using: integer (nullable = true)
+ |-- scalar_parent_storage_sync_api_usage_items_stored: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: integer (valueContainsNull = true)
+ |-- scalar_parent_storage_sync_api_usage_storage_consumed: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: integer (valueContainsNull = true)
+ |-- scalar_parent_telemetry_accumulate_unknown_histogram_keys: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: integer (valueContainsNull = true)
+ |-- scalar_parent_timestamps_first_paint: integer (nullable = true)
+ |-- scalar_parent_webrtc_nicer_stun_retransmits: integer (nullable = true)
+ |-- scalar_parent_webrtc_nicer_turn_401s: integer (nullable = true)
+ |-- scalar_parent_webrtc_nicer_turn_403s: integer (nullable = true)
+ |-- scalar_parent_webrtc_nicer_turn_438s: integer (nullable = true)
+ |-- histogram_content_a11y_consumers: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_a11y_instantiated_flag: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_cert_validation_success_by_ca: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_cycle_collector_max_pause: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_fx_searchbar_selected_result_method: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_fx_urlbar_selected_result_index: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_fx_urlbar_selected_result_index_by_type: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: map (valueContainsNull = true)
+ |    |    |-- key: integer
+ |    |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_fx_urlbar_selected_result_method: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_fx_urlbar_selected_result_type: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_gc_max_pause_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_gc_max_pause_ms_2: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_ghost_windows: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_http_channel_disposition: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_http_pageload_is_ssl: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_input_event_response_coalesced_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_search_reset_result: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_ssl_handshake_result: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_ssl_handshake_version: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_ssl_tls12_intolerance_reason_pre: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_ssl_tls13_intolerance_reason_pre: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_time_to_dom_complete_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_time_to_dom_content_loaded_end_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_time_to_dom_content_loaded_start_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_time_to_dom_interactive_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_time_to_dom_loading_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_time_to_first_click_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_time_to_first_interaction_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_time_to_first_key_input_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_time_to_first_mouse_move_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_time_to_first_scroll_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_time_to_load_event_end_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_time_to_load_event_start_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_time_to_non_blank_paint_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_time_to_response_start_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_touch_enabled_device: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_tracking_protection_enabled: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_uptake_remote_content_result_1: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: map (valueContainsNull = true)
+ |    |    |-- key: string
+ |    |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_webvr_time_spent_viewing_in_2d: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_content_webvr_users_view_in: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_gpu_a11y_consumers: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_gpu_a11y_instantiated_flag: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_gpu_cert_validation_success_by_ca: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_gpu_cycle_collector_max_pause: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_gpu_fx_urlbar_selected_result_index: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_gpu_fx_urlbar_selected_result_type: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_gpu_gc_max_pause_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_gpu_ghost_windows: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_gpu_http_channel_disposition: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_gpu_http_pageload_is_ssl: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_gpu_search_reset_result: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_gpu_ssl_handshake_result: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_gpu_ssl_handshake_version: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_gpu_ssl_tls12_intolerance_reason_pre: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_gpu_ssl_tls13_intolerance_reason_pre: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_gpu_time_to_first_click_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_gpu_time_to_first_interaction_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_gpu_time_to_first_key_input_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_gpu_time_to_first_mouse_move_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_gpu_time_to_first_scroll_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_gpu_time_to_non_blank_paint_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_gpu_touch_enabled_device: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_gpu_tracking_protection_enabled: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_gpu_uptake_remote_content_result_1: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: map (valueContainsNull = true)
+ |    |    |-- key: string
+ |    |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_gpu_webvr_time_spent_viewing_in_oculus: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_gpu_webvr_time_spent_viewing_in_openvr: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_gpu_webvr_users_view_in: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_a11y_consumers: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_a11y_instantiated_flag: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_cert_validation_success_by_ca: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_cycle_collector_max_pause: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_fx_searchbar_selected_result_method: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_fx_urlbar_selected_result_index: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_fx_urlbar_selected_result_index_by_type: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: map (valueContainsNull = true)
+ |    |    |-- key: integer
+ |    |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_fx_urlbar_selected_result_method: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_fx_urlbar_selected_result_type: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_gc_max_pause_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_gc_max_pause_ms_2: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_ghost_windows: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_http_channel_disposition: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_http_pageload_is_ssl: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_input_event_response_coalesced_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_search_reset_result: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_ssl_handshake_result: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_ssl_handshake_version: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_ssl_tls12_intolerance_reason_pre: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_ssl_tls13_intolerance_reason_pre: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_time_to_first_click_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_time_to_first_interaction_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_time_to_first_key_input_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_time_to_first_mouse_move_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_time_to_first_scroll_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_time_to_non_blank_paint_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_time_to_response_start_ms: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_touch_enabled_device: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_tracking_protection_enabled: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_uptake_remote_content_result_1: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: map (valueContainsNull = true)
+ |    |    |-- key: string
+ |    |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_webvr_time_spent_viewing_in_2d: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_webvr_time_spent_viewing_in_oculus: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_webvr_time_spent_viewing_in_openvr: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
+ |-- histogram_parent_webvr_users_view_in: map (nullable = true)
+ |    |-- key: integer
+ |    |-- value: integer (valueContainsNull = true)
  |-- submission_date_s3: string (nullable = true)
- |-- sample_id: integer (nullable = true)
+ |-- sample_id: string (nullable = true)
 ```
 
 For more detail on where these fields come from in the
