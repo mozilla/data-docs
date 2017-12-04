@@ -53,7 +53,7 @@ You can find the job definition
 
 ## Schema
 
-As of 2017-09-28, the current version of the `main_summary` dataset is `v4`, and has a schema as follows:
+As of 2017-12-03, the current version of the `main_summary` dataset is `v4`, and has a schema as follows:
 
 ```
 root
@@ -72,6 +72,7 @@ root
  |-- install_year: long (nullable = true)
  |-- is_wow64: boolean (nullable = true)
  |-- memory_mb: integer (nullable = true)
+ |-- apple_model_id: string (nullable = true)
  |-- profile_creation_date: long (nullable = true)
  |-- subsession_start_date: string (nullable = true)
  |-- subsession_length: long (nullable = true)
@@ -92,6 +93,8 @@ root
  |-- env_build_version: string (nullable = true)
  |-- env_build_arch: string (nullable = true)
  |-- e10s_enabled: boolean (nullable = true)
+ |-- e10s_cohort: string (nullable = true)
+ |-- e10s_multi_processes: long (nullable = true)
  |-- locale: string (nullable = true)
  |-- attribution: struct (nullable = true)
  |    |-- source: string (nullable = true)
@@ -259,10 +262,13 @@ root
  |-- input_event_response_coalesced_ms_content_above_2500: long (nullable = true)
  |-- ghost_windows_main_above_1: long (nullable = true)
  |-- ghost_windows_content_above_1: long (nullable = true)
+ |-- user_pref_dom_ipc_processcount: integer (nullable = true)
+ |-- user_pref_extensions_allow_non_mpc_extensions: boolean (nullable = true)
+ |-- user_pref_extensions_legacy_enabled: boolean (nullable = true)
  |-- ** dynamically included scalar fields, see source **
  |-- ** dynamically include whitelisted histograms, see source **
  |-- submission_date_s3: string (nullable = true)
- |-- sample_id: integer (nullable = true)
+ |-- sample_id: string (nullable = true)
 ```
 
 For more detail on where these fields come from in the
