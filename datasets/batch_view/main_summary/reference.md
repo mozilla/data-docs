@@ -93,7 +93,6 @@ root
  |-- env_build_version: string (nullable = true)
  |-- env_build_arch: string (nullable = true)
  |-- e10s_enabled: boolean (nullable = true)
- |-- e10s_cohort: string (nullable = true)
  |-- e10s_multi_processes: long (nullable = true)
  |-- locale: string (nullable = true)
  |-- attribution: struct (nullable = true)
