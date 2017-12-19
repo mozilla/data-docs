@@ -1008,7 +1008,7 @@ The job DAG runs every day shortly after midnight UTC.
 You can find the job definition
 <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py" target="_blank">here</a></p>
 <h2 id="schema"><a name="schema" class="plugin-anchor" href="#schema"><i class="fa fa-link" aria-hidden="true"></i></a>Schema</h2>
-<p>As of 2017-09-28, the current version of the <code>main_summary</code> dataset is <code>v4</code>, and has a schema as follows:</p>
+<p>As of 2017-12-03, the current version of the <code>main_summary</code> dataset is <code>v4</code>, and has a schema as follows:</p>
 <pre><code>root
  |-- document_id: string (nullable = true)
  |-- client_id: string (nullable = true)
@@ -1025,6 +1025,7 @@ You can find the job definition
  |-- install_year: long (nullable = true)
  |-- is_wow64: boolean (nullable = true)
  |-- memory_mb: integer (nullable = true)
+ |-- apple_model_id: string (nullable = true)
  |-- profile_creation_date: long (nullable = true)
  |-- subsession_start_date: string (nullable = true)
  |-- subsession_length: long (nullable = true)
@@ -1045,6 +1046,7 @@ You can find the job definition
  |-- env_build_version: string (nullable = true)
  |-- env_build_arch: string (nullable = true)
  |-- e10s_enabled: boolean (nullable = true)
+ |-- e10s_multi_processes: long (nullable = true)
  |-- locale: string (nullable = true)
  |-- attribution: struct (nullable = true)
  |    |-- source: string (nullable = true)
@@ -1212,10 +1214,13 @@ You can find the job definition
  |-- input_event_response_coalesced_ms_content_above_2500: long (nullable = true)
  |-- ghost_windows_main_above_1: long (nullable = true)
  |-- ghost_windows_content_above_1: long (nullable = true)
+ |-- user_pref_dom_ipc_processcount: integer (nullable = true)
+ |-- user_pref_extensions_allow_non_mpc_extensions: boolean (nullable = true)
+ |-- user_pref_extensions_legacy_enabled: boolean (nullable = true)
  |-- ** dynamically included scalar fields, see source **
  |-- ** dynamically include whitelisted histograms, see source **
  |-- submission_date_s3: string (nullable = true)
- |-- sample_id: integer (nullable = true)
+ |-- sample_id: string (nullable = true)
 </code></pre><p>For more detail on where these fields come from in the
 <a href="https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/main-ping.html" target="_blank">raw data</a>,
 please look
@@ -1306,7 +1311,7 @@ Refer to this repository for information on how to run or augment the dataset.</
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Main Summary","level":"1.3.3.2.3","depth":4,"next":{"title":"Crash Summary","level":"1.3.3.2.4","depth":4,"path":"datasets/batch_view/crash_summary/reference.md","ref":"datasets/batch_view/crash_summary/reference.md","articles":[]},"previous":{"title":"Cross Sectional","level":"1.3.3.2.2","depth":4,"path":"datasets/batch_view/cross_sectional/reference.md","ref":"datasets/batch_view/cross_sectional/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/main_summary/reference.md","mtime":"2017-11-27T15:24:06.477Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-11-27T15:24:11.947Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Main Summary","level":"1.3.3.2.3","depth":4,"next":{"title":"Crash Summary","level":"1.3.3.2.4","depth":4,"path":"datasets/batch_view/crash_summary/reference.md","ref":"datasets/batch_view/crash_summary/reference.md","articles":[]},"previous":{"title":"Cross Sectional","level":"1.3.3.2.2","depth":4,"path":"datasets/batch_view/cross_sectional/reference.md","ref":"datasets/batch_view/cross_sectional/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/main_summary/reference.md","mtime":"2017-12-19T21:03:34.787Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-12-19T21:03:41.141Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
