@@ -6,23 +6,41 @@ To make the examples concrete, the following description is centered around the 
 
 ```mermaid
 graph TD
-  Firefox((fa:fa-firefox Firefox))-->|JSON| ELB
-  ELB[Load Balancer]-->|JSON| nginx
-  nginx-->|JSON| Landfill(fa:fa-database S3 Landfill)
-  nginx-->|protobuf| Kafka[fa:fa-files-o Kafka]
-  Kafka-->|protobuf| CEP(Hindsight CEP)
-  Kafka-->|protobuf| DWL(Hindsight DWL)
-  CEP--> HSUI(fa:fa-area-chart Hindsight UI)
-  DWL-->|protobuf| datalake(fa:fa-database S3 Data Lake)
-  DWL-->|parquet| datalake
+  firefox((fa:fa-firefox Firefox))-->|JSON| elb
+  elb[Load Balancer]-->|JSON| nginx
+  nginx-->|JSON| landfill(fa:fa-database S3 Landfill)
+  nginx-->|protobuf| kafka[fa:fa-files-o Kafka]
+  kafka-->|protobuf| cep(Hindsight CEP)
+  kafka-->|protobuf| dwl(Hindsight DWL)
+  cep--> hsui(Hindsight UI)
+  dwl-->|protobuf| datalake(fa:fa-database S3 Data Lake)
+  dwl-->|parquet| datalake
   datalake-->|parquet| prestodb
   prestodb-->redash[fa:fa-line-chart Re:dash]
-  datalake-->Spark
-  Spark-->datalake
-  Airflow[fa:fa-clock-o Airflow]-->|Scheduled tasks|Spark{fa:fa-star Spark}
-  Spark-->|aggregations|RDBMS(fa:fa-database PostgreSQL)
-  RDBMS-->TMO[fa:fa-bar-chart TMO]
-  RDBMS-->Cerberus[fa:fa-search-plus Cerberus]
+  datalake-->spark
+  spark-->datalake
+  airflow[fa:fa-clock-o Airflow]-->|Scheduled tasks|spark{fa:fa-star Spark}
+  spark-->|aggregations|rdbms(fa:fa-database PostgreSQL)
+  rdbms-->tmo[fa:fa-bar-chart TMO]
+  rdbms-->cerberus[fa:fa-search-plus Cerberus]
+
+
+style firefox fill:#f61
+style elb fill:#777
+style nginx fill:green
+style landfill fill:tomato
+style datalake fill:tomato
+style kafka fill:#aaa
+style cep fill:palegoldenrod
+style dwl fill:palegoldenrod
+style hsui fill:palegoldenrod
+style prestodb fill:cornflowerblue
+style redash fill:salmon
+style spark fill:darkorange
+style airflow fill:lawngreen
+style rdbms fill:cornflowerblue
+style tmo fill:lightgrey
+style cerberus fill:royalblue
 ```
 
 # Firefox
