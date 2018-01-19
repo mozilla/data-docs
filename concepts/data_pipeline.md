@@ -4,7 +4,26 @@ This post describes the architecture of Mozilla’s data pipeline, which is used
 
 To make the examples concrete, the following description is centered around the collection of Telemetry data. The same tool-chain is used to collect, store and analyze data coming from disparate sources though, such as service logs.
 
-![Pipeline Flowchart](../assets/pipeline_flowchart.jpeg)
+```mermaid
+graph TD
+  Firefox((fa:fa-firefox Firefox))-->|JSON| ELB
+  ELB[Load Balancer]-->|JSON| nginx
+  nginx-->|JSON| Landfill(fa:fa-database S3 Landfill)
+  nginx-->|protobuf| Kafka[fa:fa-files-o Kafka]
+  Kafka-->|protobuf| CEP(Hindsight CEP)
+  Kafka-->|protobuf| DWL(Hindsight DWL)
+  CEP--> HSUI(fa:fa-area-chart Hindsight UI)
+  DWL-->|protobuf| datalake(fa:fa-database S3 Data Lake)
+  DWL-->|parquet| datalake
+  datalake-->|parquet| prestodb
+  prestodb-->redash[fa:fa-line-chart Re:dash]
+  datalake-->Spark
+  Spark-->datalake
+  Airflow[fa:fa-clock-o Airflow]-->|Scheduled tasks|Spark{fa:fa-star Spark}
+  Spark-->|aggregations|RDBMS(fa:fa-database PostgreSQL)
+  RDBMS-->TMO[fa:fa-bar-chart TMO]
+  RDBMS-->Cerberus[fa:fa-search-plus Cerberus]
+```
 
 # Firefox
 

@@ -2,7 +2,8 @@
     "plugins": [
         "toc",
         "anchors",
-        "ga"
+        "ga",
+        "mermaid-gb3"
     ],
     "pluginsConfig": {
         "ga": {
