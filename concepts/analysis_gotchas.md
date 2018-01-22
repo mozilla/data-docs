@@ -44,7 +44,7 @@ Any timestamp recorded by the user is subject to "clock skew." The user's clock 
 
 Examples of client times: `crashDate`, `crashTime`, `meta/Date`, `sessionStartDate`, `subsessionStartDate`, `profile/creationDate`
 
-Examples of server times you can trust: `Timestamp`
+Examples of server times you can trust: `Timestamp`, `submission_date`
 
 ### Date Formats
 
@@ -66,6 +66,28 @@ Build ids look like dates but aren't. If you take the first eight characters you
 
 Telemetry data takes a while to get into our hands. The largest data mule in Telemetry is the main-ping. It is (pending [bug 1336360](https://bugzilla.mozilla.org/show_bug.cgi?id=1336360)) sent at the beginning of a client's _next_ Firefox session. If the user shuts down their Firefox for the weekend, we won't get their Friday data until Monday morning.
 
-A rule of thumb (pending [bug 1336360](https://bugzilla.mozilla.org/show_bug.cgi?id=1336360)) is data from two days ago is usually fairly representative.
+A rule of thumb is data from two days ago is usually fairly representative.
 
-If you'd like to read more about this subject and look at pretty graphs, there are a series of blogposts [here](https://chuttenblog.wordpress.com/2017/02/09/data-science-is-hard-client-delays-for-crash-pings/).
+If you'd like to read more about this subject and look at pretty graphs, there are a series of blogposts [here](https://chuttenblog.wordpress.com/2017/02/09/data-science-is-hard-client-delays-for-crash-pings/), [here](https://chuttenblog.wordpress.com/2017/07/12/latency-improvements-or-yet-another-satisfying-graph/) and [here](https://chuttenblog.wordpress.com/2017/09/12/two-days-or-how-long-until-the-data-is-in/).
+
+#### Pinsender
+
+Pingsender greatly reduces delay in sending pings to mozilla, but only some types of pings are sent by pingsender. [Bug 1310703](https://bugzilla.mozilla.org/show_bug.cgi?id=1310703) introduced pingsender for crash pings and was merged in Firefox 54, which hit release on June 13, 2017. [Bug 1336360](https://bugzilla.mozilla.org/show_bug.cgi?id=1336360) moved shutdown pings to pingsender and was merged in Firefox 55, which hit release on August 8, 2017. [Bug 1374270](https://bugzilla.mozilla.org/show_bug.cgi?id=1374270) added sending health pings on shutdown via pingsender and was merged in Firefox 56, which hit release on Sept 28, 2017. Other types of pings are not sent with pingsender. This is usually okay because Firefox is expected to continue running long enough to send those pings.
+
+Mobile clients do not have pingsender, so they suffer delay as given in [this query](https://sql.telemetry.mozilla.org/queries/49867#134105).
+
+### Submission Date
+
+`submission_date` is the server time at which a ping is received from the client. We use it to
+partition many of our data sets.
+
+In [bug 1422892](https://bugzilla.mozilla.org/show_bug.cgi?id=1422892) we decided to standardize
+on `submission_date`.
+
+TL;DR
+
+* not subject to client clock skew
+* doesn't require normalization
+* good for backfill
+* good for daily processing
+* and usually good enough
