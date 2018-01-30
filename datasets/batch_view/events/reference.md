@@ -25,6 +25,10 @@ The events dataset is updated daily, shortly after
 The job is scheduled on [Airflow](https://github.com/mozilla/telemetry-airflow).
 The DAG is [here](https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py#L63).
 
+## Firefox events
+
+Firefox has an API to record events, which are then submitted through the main ping.
+The format and mechanism of event collection in Firefox is documented [here](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html).
 
 ## Schema
 
@@ -58,6 +62,3 @@ root
  |-- submission_date_s3: string (nullable = true)
  |-- doc_type: string (nullable = true)
 ```
-
-Currently, client-side event telemetry is undocumented.
-This doc will link to those once they're published.
