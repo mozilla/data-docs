@@ -11,7 +11,6 @@
   * Understanding our Data
     * [Choosing a dataset](concepts/choosing_a_dataset.md)
     * [Common Analysis Gotchas](concepts/analysis_gotchas.md)
-    * [Submission Date](concepts/submission_date.md)
   * [Collecting New Data](datasets/new_data.md)
   * [Dataset Reference](datasets/reference.md)
     * [Pings](datasets/pings.md)
