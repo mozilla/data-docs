@@ -118,7 +118,7 @@ like dataset. Otherwise, you'll have to write your own.
 
 You can schedule it on [Airflow](http://workflow.telemetry.mozilla.org/), or you can
 run it as a job in ATMO. If the output is parquet, you can add it to the Hive metastore to have it
-available in re:dash. Check the docs on [creating your own datasets](cookbooks/create_a_dataset.md).
+available in re:dash. Check the docs on [creating your own datasets](create_a_dataset.md).
 
 Build Dashboards Using ATMO or STMO
 -----------------------------------
