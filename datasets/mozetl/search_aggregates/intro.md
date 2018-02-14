@@ -1,5 +1,5 @@
 `search_aggregates` is designed to power high level search dashboards.
-It's quick and easy to query from, but the data is coarse.
+It's quick and easy to query, but the data are coarse.
 If you need fine-grained data, consider using `search_clients_daily`.
 
 #### Contents
@@ -19,7 +19,8 @@ Unless otherwise noted, these columns are taken directly from main_summary.
 * `distribution_id`
 * `search_cohort`
 
-There are three aggregation columns, `sap`, `tagged-sap`, and `tagged-follow-on`.
+There are three aggregation columns:
+`sap`, `tagged-sap`, and `tagged-follow-on`.
 Each of these columns represent different types of searches.
 For more details, see the [search data documentation]
 
@@ -33,10 +34,9 @@ Access to `search_aggregates` is heavily restricted.
 You will not be able to access this table without additional permissions.
 For more details see the [search data documentation].
 
-
-
-
+<!--
 #### Further Reading
+-->
 
 
 [followonsearch addon]: https://github.com/mozilla/followonsearch
