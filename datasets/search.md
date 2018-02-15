@@ -71,12 +71,13 @@ We report three types of searches in our search datasets:
 `SAP`, `tagged-sap`, and `tagged-follow-on`.
 These aggregates show up as columns in the
 `search_aggregates` and `search_clients_daily` datasets.
+Our search datasets are all derived from `main_summary`.
+The aggregate columns are derived from the `SEARCH_COUNTS` histogram.
 
 The **`SAP` column counts all SAP (or direct) searches**.
-`SAP` search counts are collected via `UI telemetry`.
-`UI telemetry` refers to the probes integrated with the Firefox UI.
-`UI telemetry`, and thus `SAP` search counts,
- are **very reliable, but do not count follow-on queries**.
+`SAP` search counts are collected via probes within the Firefox UI
+(sometimes called `UI telemetry`).
+These counts are **very reliable, but do not count follow-on queries**.
 
 In 2017-06 we deployed the [followonsearch addon],
 which adds probes for `tagged-sap` and `tagged-follow-on` searches.
