@@ -15,10 +15,15 @@ you should understand the search datasets well enough to produce moderately comp
 Access to both `search_aggregates` and `search_clients_daily`
 is heavily restricted in re:dash.
 We also maintain a restricted group for search on Github and Bugzilla.
-To get access permissions, file a bug using the [search permissions template]
-
 If you reach a 404 on Github or don't have access to a re:dash query or bug
 this is likely your issue.
+To get access permissions, file a bug using the [search permissions template]
+
+Once you have proper permissions,
+you'll have access to a new source in re:dash called `Presto Search`.
+**You will not be able to access any of the search datasets
+via the standard `Presto` datasource**, even with proper permissions.
+
 
 # Terminology
 
