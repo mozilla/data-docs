@@ -87,6 +87,12 @@ since they exclude untagged searches and include follow-on searches.
 However, these search counts have **important caveats affecting their reliability**.
 See [In Content Telemetry Issues](#in-content-telemetry-issues) for more information.
 
+## Outlier Filtering
+
+We remove search count observations representing more than
+10,000 searches for a single search engine in a single ping.
+
+
 # In Content Telemetry Issues
 
 The [followonsearch addon] implements the probe

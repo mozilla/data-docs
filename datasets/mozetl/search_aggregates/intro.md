@@ -1,6 +1,7 @@
 `search_aggregates` is designed to power high level search dashboards.
 It's quick and easy to query, but the data are coarse.
-If you need fine-grained data, consider using `search_clients_daily`.
+If you need fine-grained data, consider using `search_clients_daily`
+which breaks down search counts by client
 
 #### Contents
 

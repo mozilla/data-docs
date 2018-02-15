@@ -1,6 +1,6 @@
 `search_clients_daily` is designed to enable client-level search analyses.
 Querying this dataset can be slow;
-Consider using `search_aggregates` for coarse analyses.
+consider using `search_aggregates` for coarse analyses.
 
 #### Contents
 
