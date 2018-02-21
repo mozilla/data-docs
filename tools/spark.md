@@ -1,10 +1,10 @@
 Introduction
 ------------
 
-[Spark](http://spark.apache.org/)
+[Spark](https://spark.apache.org/)
 is a data processing engine designed to be fast and easy to use.
 We have setup
-[Jupyter notebooks](http://jupyter.org/)
+[Jupyter notebooks](https://jupyter.org/)
 that use Spark to analyze our Telemetry data.
 Jupyter workbooks can be easily shared and updated among colleagues,
 and, when combined with Spark, enable richer analysis than SQL alone.
@@ -15,7 +15,7 @@ The Spark Python API is called pyspark.
 Setting Up a Spark Cluster On ATMO
 ----------------------------------
 
-1.  Go to http://analysis.telemetry.mozilla.org
+1.  Go to https://analysis.telemetry.mozilla.org
 2.  Click “Launch an ad-hoc Spark cluster”.
 3.  Enter some details:
     1.  The “Cluster Name” field should be a short descriptive name,
@@ -88,7 +88,7 @@ easily shared. Furthermore, all files stored in the notebook's local
 working directory at the end of the job will be automatically uploaded
 to S3, which comes in handy for simple ETL workloads for example.
 
-For reference, see 
+For reference, see
 [Simple Dashboard with Scheduled Spark Jobs and Plotly](https://robertovitillo.com/2015/03/13/simple-dashboards-with-scheduled-spark-jobs-and-plotly).
 
 ### Sharing a Notebook
@@ -100,9 +100,9 @@ Jupyter notebooks can be shared in a few different ways.
 An easy way to share is using a gist on github.
 
 1.  Download file as .ipynb
-2.  Upload to a gist on [gist.github.com](http://gist.github.com)
+2.  Upload to a gist on [gist.github.com](https://gist.github.com)
 3.  Enter the gist URL at [Jupyter
-    nbviewer](http://nbviewer.jupyter.org/)
+    nbviewer](https://nbviewer.jupyter.org/)
 4.  Share with your colleagues!
 
 #### Sharing a Scheduled Notebook
@@ -111,13 +111,13 @@ Setup your scheduled notebook. After it's run, do the following:
 
 1.  Go to the 'Schedule a Spark job' tab in atmo
 2.  Get the URL for the notebook (under 'Currently Scheduled Jobs')
-3.  Paste that URL into [Jupyter nbviewer](http://nbviewer.jupyter.org/)
+3.  Paste that URL into [Jupyter nbviewer](https://nbviewer.jupyter.org/)
 
 Zeppelin Notebooks
 ------------------
 
 We also have \*experimental\* support for [Apache
-Zeppelin](http://zeppelin.apache.org/) notebooks. The notebook server
+Zeppelin](https://zeppelin.apache.org/) notebooks. The notebook server
 for that is running on port 8890, so you can connect to it just by
 tunneling the port (instead of port 8888 for Jupyter). For example:
 
@@ -133,7 +133,7 @@ Java. The Jupyter notebook utilizes the Python API. In a nutshell, it
 provides a way to run functional code (e.g. map, reduce, etc.) on large,
 distributed data.
 
-Check out 
+Check out
 [Spark Best Practices](https://robertovitillo.com/2015/06/30/spark-best-practices/)
 for tips on using Spark to it's full capabilities.
 
@@ -205,16 +205,16 @@ To Transform the DataFrame object to an RDD, simply do:
 In general, however, the DataFrames are performance optimized, so it's
 worth the effort to learn the DataFrame API.
 
-For more overview, see the 
+For more overview, see the
 [SQL Programming Guide](https://spark.apache.org/docs/latest/sql-programming-guide.html).
-See also the 
-[Longitudinal Tutorial](http://reports.telemetry.mozilla.org/post/tutorials/longitudinal_dataset.kp),
+See also the
+[Longitudinal Tutorial](https://reports.telemetry.mozilla.org/post/tutorials/longitudinal_dataset.kp),
 one of the available example notebooks when you start a cluster.
 
 ### Available Data Sources for SparkSQL
 
-For information about available queryable data sources (e.g.  Longitudinal dataset), 
-see 
+For information about available queryable data sources (e.g.  Longitudinal dataset),
+see
 [Choosing a Dataset](/concepts/choosing_a_dataset.md).
 
 These datasets are optimized for fast access, and will far out-perform
@@ -231,44 +231,47 @@ The MozTelemetry Library
 ------------------------
 
 We have provided a library that gives easy access to the raw telemetry ping data.
-For example usage, see the 
-[Telemetry Hello World](http://reports.telemetry.mozilla.org/post/tutorials/telemetry_hello_world.kp)
+For example usage, see the
+[Telemetry Hello World](https://reports.telemetry.mozilla.org/post/tutorials/telemetry_hello_world.kp)
 example notebook.
-Detailed documentation for the library can be found at the 
-[Python MozTelemetry Documentation](http://python-moztelemetry.readthedocs.io).
+Detailed documentation for the library can be found at the
+[Python MozTelemetry Documentation](https://python-moztelemetry.readthedocs.io).
 
 ### Using the Raw Ping Data
 
-First off, import the moztelemetry library using the following:
+First off, import the `moztelemetry` library using the following:
 
-`from moztelemetry import get_pings`
+`from moztelemetry.dataset import Dataset`
 
-If you need any other functions, just comma separate them with
-`get_pings`.
 
 The ping data is an RDD of JSON elements. For example, using the
 following:
 
 ```python
-pings = get_pings(sc, app="Firefox", channel="nightly", build_id=("20160901000000", "20160901999999"), fraction=0.01)
+pings = Dataset.from_source("telemetry") \
+    .where(docType='main') \
+    .where(submissionDate="20180101") \
+    .where(appUpdateChannel="nightly") \
+    .records(sc, sample=0.01)
 ```
 
-returns an RDD of 1/100th of Firefox Nightly JSON pings for all builds
-from September 1 2016. Now, because it's JSON, pings are easy to access.
+returns an RDD of 1/100th of Firefox Nightly JSON pings submitted on
+from January 1 2018. Now, because it's JSON, pings are easy to access.
 For example, to get the count of each OS type:
 
 ```python
-os_names = pings.map(lambda x : (x['environment']['system']['os']['name'], 1))`\
-os_counts = os_names.reduceByKey(lambda x, y : x+y)`\
-os_counts.collect()`
+os_names = pings.map(lambda x: (x['environment']['system']['os']['name'], 1))
+os_counts = os_names.reduceByKey(lambda x, y: x + y)
+os_counts.collect()
 ```
 
-Alternatively, moztelemetry provides the \`get\_pings\_properties\`
+Alternatively, moztelemetry provides the `get_pings_properties`
 function, which will gather the data for you:
 
 ```python
-subset = get_pings_properties(pings, ["environment/system/os/name"])`\
-subset.map(lambda x : (x["environment/system/os/name"], 1)).reduceByKey(lambda x, y : x+y).collect()`
+from moztelemetry import get_pings_properties
+subset = get_pings_properties(pings, ["environment/system/os/name"])
+subset.map(lambda x: (x["environment/system/os/name"], 1)).reduceByKey(lambda x, y: x + y).collect()
 ```
 
 FAQ
@@ -323,7 +326,7 @@ To alleviate this, there are a few options:
 
 1. Have everything output to a variable. These values should still be
    available when you reconnect.
-2. Put %%capture at the beginning of the cell to store all output. 
+2. Put %%capture at the beginning of the cell to store all output.
    [See the documentation](https://ipython.org/ipython-doc/3/interactive/magics.html#cellmagic-capture).
 
 ### How do I load an external library into the cluster?
