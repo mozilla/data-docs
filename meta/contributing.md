@@ -7,7 +7,7 @@ It's important that we improve our documentation as often as possible.
 
 ## Getting the Raw Documentation
 
-The documentation is intended to be read as HTML at 
+The documentation is intended to be read as HTML at
 [docs.telemetry.mozilla.org](https://docs.telemetry.mozilla.org).
 However, we store the documentation in raw text files in the
 [firefox-data-docs repo](https://github.com/mozilla/firefox-data-docs).
@@ -17,7 +17,7 @@ To begin contributing to the docs, fork the firefox-data-docs repo.
 
 The documentation is rendered with [Gitbook](https://www.gitbook.com/)
 To build the documentation locally,
-you'll need to install the gitbook-cli app with 
+you'll need to install the gitbook-cli app with
 [npm](https://www.npmjs.com/get-npm):
 
 ```bash
@@ -70,6 +70,21 @@ Use **visual markup** like **bold text**, `code blocks`, and section headers.
 Avoid long paragraphs.
 Short paragraphs that describe one concept each makes finding important information easier.
 
+You may also use [mermaid.js](https://mermaidjs.github.io/) diagrams in code blocks:
+```
+graph LR
+  you -->|write|docs
+  docs --> profit!
+```
+
+Which will be rendered as:
+
+```mermaid
+graph LR
+  you -->|write|docs
+  docs --> profit!
+```
+
 
 ## Review
 
@@ -84,7 +99,7 @@ Updates to the documentation still need to be pushed manually.
 Use the [deploy script](https://github.com/mozilla/firefox-data-docs/blob/master/scripts/deploy.sh)
 to publish new changes.
 
-This script depends on 
+This script depends on
 [ghp-import](https://github.com/davisp/ghp-import).
 
 Keep in mind that this will deploy the docs to your `origin` repo.
