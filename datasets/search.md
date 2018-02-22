@@ -29,22 +29,27 @@ via the standard `Presto` datasource**, even with proper permissions.
 
 ## Direct vs Follow-on Search
 
-Searches can be split into two major classes `direct` and `follow-on`.
+Searches can be split into two major classes: *direct* and *follow-on*.
 
-Direct searches result from a direct interaction with a `search access point` (SAP).
+Direct searches result from a direct interaction with a `search access point` (SAP),
+which is part of the Firefox UI.
 These searches are often called SAP searches.
 There are currently 6 SAPs:
 
-* `urlbar`
-* `searchbar`
-* `newtab`
-* `abouthome`
-* `contextmenu`
-* `system`
+* `urlbar` - entering a search query in the Awesomebar
+* `searchbar` - the main search bar; not present by default for new profiles on v57+
+* `newtab` - the search bar on the `about:newtab` page
+* `abouthome` - the search bar on the `about:home` page
+* `contextmenu` - selecting text and clicking "Search" from the context menu
+* `system` - starting Firefox from the command line with an option that immediately makes a search
 
 Users will often interact with the Search Engine Results Page (SERP)
 to create "downstream" queries.
 These queries are called `follow-on queries`.
+These are sometimes also referred to as **in-content queries**
+since they are initiated from the content of the page itself
+and not from the Firefox UI.
+
 For example, follow-on queries can be caused by:
 
 * Revising a query (`restaurants` becomes `restaurants near me`)
@@ -75,8 +80,9 @@ Our search datasets are all derived from `main_summary`.
 The aggregate columns are derived from the `SEARCH_COUNTS` histogram.
 
 The **`SAP` column counts all SAP (or direct) searches**.
-`SAP` search counts are collected via probes within the Firefox UI
-(sometimes called `UI telemetry`).
+`SAP` search counts are collected via 
+[probes](https://firefox-source-docs.mozilla.org/browser/browser/BrowserUsageTelemetry.html#search-telemetry)
+within the Firefox UI
 These counts are **very reliable, but do not count follow-on queries**.
 
 In 2017-06 we deployed the [followonsearch addon],

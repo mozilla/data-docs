@@ -25,7 +25,10 @@ to run daily.
 
 ## Schema
 
-As of 2018-02-13, the current version of `search_aggregates` is `v3`, and has a schema as follows:
+As of 2018-02-13,
+the current version of `search_aggregates` is `v3`,
+and has a schema as follows.
+The dataset is backfilled through 2018-06
 
 ```
 root 
