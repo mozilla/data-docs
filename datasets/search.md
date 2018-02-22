@@ -94,6 +94,10 @@ since they exclude untagged searches and include follow-on searches.
 However, these search counts have **important caveats affecting their reliability**.
 See [In Content Telemetry Issues](#in-content-telemetry-issues) for more information.
 
+In `main_summary`, all of these searches are stored in `search_counts.count`,
+**which makes it easy to over count searches**.
+Avoid using `main_summary` for search analyses.
+
 ## Outlier Filtering
 
 We remove search count observations representing more than

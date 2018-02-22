@@ -23,7 +23,9 @@ This dataset is not currently scheduled.
 
 ## Schema
 
-As of 2018-02-13, the current version of `search_clients_daily` is `v1`, and has a schema as follows:
+As of 2018-02-13, the current version of `search_clients_daily` is `v1`,
+and has a schema as follows.
+It's backfilled through 2016-06-07
 
 ```
 root 

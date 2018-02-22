@@ -30,6 +30,8 @@ if we did not receive a ping for that `submission_date`
 or if the ping contained no searches.
 In other words,
 This dataset **does not include `client_ids` that do not search**.
+Note: pings with no searches can be identified in `main_summary`
+using the condition `where search_counts is null`.
 
 #### Accessing the Data
 
