@@ -3,7 +3,8 @@
         "toc",
         "anchors",
         "ga",
-        "mermaid-gb3"
+        "mermaid-gb3",
+        "-fontsettings"
     ],
     "pluginsConfig": {
         "ga": {
