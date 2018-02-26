@@ -55,7 +55,7 @@ GROUP BY window_start
 ### Data sources
 
 The aggregates in this data source are derived from main and crash [pings](../../pings.md).
-Crash pings are only used to count/gather main crash events, all other errors are gathered from main ones.
+Crash pings are only used to count/gather main crash events, all other errors (including all other crashes) are gathered from main pings.
 
 ## Scheduling
 
