@@ -7,3 +7,11 @@ script:
 - gitbook install
 - gitbook build
 skip_cleanup: true
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard, marked secure
+  keep-history: true
+  local-dir: _book
+  on:
+    branch: master
