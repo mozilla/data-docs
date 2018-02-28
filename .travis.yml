@@ -1,12 +1,11 @@
 language: node_js
 node_js:
-- "4.1"
+  - "4.1"
 install:
-- npm install gitbook-cli -g
+  - npm install gitbook-cli -g
 script:
-- gitbook install
-- gitbook build
-skip_cleanup: true
+  - gitbook install
+  - gitbook build
 deploy:
   provider: pages
   skip-cleanup: true
