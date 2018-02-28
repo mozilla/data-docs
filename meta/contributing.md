@@ -72,7 +72,11 @@ Use **visual markup** like **bold text**, `code blocks`, and section headers.
 Avoid long paragraphs.
 Short paragraphs that describe one concept each makes finding important information easier.
 
-You may also use [mermaid.js](https://mermaidjs.github.io/) diagrams in code blocks:
+## Supported Plugins
+
+### Mermaid
+
+You may use [mermaid.js](https://mermaidjs.github.io/) diagrams in code blocks:
 ```
 graph LR
   you -->|write|docs
