@@ -1,5 +1,7 @@
 The `error_aggregates` table represents counts of errors counted from main and crash
-pings, aggregated every 5 minutes.
+pings, aggregated every 5 minutes. It is the dataset backing the main [mission
+control](https://data-missioncontrol.dev.mozaws.net/) view, but may also be queried
+independently.
 
 #### Contents
 
