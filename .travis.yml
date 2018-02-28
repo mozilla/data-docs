@@ -12,5 +12,6 @@ deploy:
   github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard, marked secure
   keep-history: true
   local-dir: _book
+  fqdn: docs-origin.telemetry.mozilla.org
   on:
     branch: master
