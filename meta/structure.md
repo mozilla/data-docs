@@ -1,6 +1,6 @@
 # Documentation Structure
 
-The directory structure is meant to feel comfortable for those intimately 
+The directory structure is meant to feel comfortable for those
 familiar with the data platform:
 
 ```
@@ -11,7 +11,7 @@ familiar with the data platform:
 |--cookbooks - focused code examples for reference
 ```
 
-The prose documentation is meant to take the reader from neophyte to expert.
+The prose documentation is meant to take the reader from beginner to expert.
 To this end, the rendered documentation has an order different from the directory structure:
 
 * Getting Started: Get some simple analysis completed so the user understands

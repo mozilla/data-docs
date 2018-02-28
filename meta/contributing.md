@@ -2,7 +2,7 @@
 
 Documentation is critical to making a usable data platform.
 When surveying our users,
-their most common complain has been our lack of documentation.
+their most common complaint has been our lack of documentation.
 It's important that we improve our documentation as often as possible.
 
 ## Getting the Raw Documentation
@@ -43,6 +43,8 @@ I'm happy to change the tooling to make it as much fun as possible to write.
 ## Adding a new article
 
 Be sure to link to your new article from `SUMMARY.md`, or GitBook will not render the file.
+
+The structure of the repository is outlined in [this article](./structure.md).
 
 This documentation is under active development,
 so we may already be working on the documentation you need.
