@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - "4.1"
+install:
+  - npm install gitbook-cli -g
+script:
+  - gitbook install
+  - gitbook build
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard, marked secure
+  keep-history: true
+  local-dir: _book
+  on:
+    branch: master
