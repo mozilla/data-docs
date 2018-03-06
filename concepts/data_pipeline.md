@@ -52,14 +52,16 @@ There are different APIs and formats to [collect data] in Firefox, all suiting d
 * [timings] – for measuring how long operations take;
 * [events] – for recording time-stamped events.
 
-These are commonly referred to as [probes]. Each probe must declare the [collection policy] it conforms to: either opt-out (aka base telemetry) or opt-in (aka extended telemetry). When adding a new measurement data-reviewers carefully inspect the probe and eventually approve the requested collection policy:
+These are commonly referred to as *[probes]*. Each probe must declare the [collection policy] it conforms to: either *release* or *prerelease*. When adding a new measurement data-reviewers carefully inspect the probe and eventually approve the requested collection policy:
 
-* opt-out (base telemetry) data is collected by default from all Firefox users; users may choose to turn this data collection off in preferences;
-* opt-in (extended telemetry) data is collected from users who explicitly express a choice to help with Firefox development; this includes all users who install pre-release & testing builds, plus release users who have explicitly checked the box in preferences.
+* Release data is collected from all Firefox users.
+* Prerelease data is collected from users on Firefox Nightly and Beta channels.
 
-A session begins when Firefox starts up and ends when it shuts down. As a session could be long-running and last weeks, it gets sliced into smaller logical units called [subsessions]. Each subsession generates a batch of data containing the current state of all probes collected so far, i.e. a [main ping], which is sent to our servers. The main ping is just one of the many [ping types] we support. Developers can [create their own ping types] if needed.
+Users may choose to turn the data collection off in preferences.
 
-Pings are submitted via an [API] that performs a HTTP POST request to our edge servers. If a ping fails to successfully [submit] (e.g. because of missing internet connection), Firefox will store the ping on disk and retry to send it until the maximum ping age is exceeded.
+A *session* begins when Firefox starts up and ends when it shuts down. As a session could be long-running and last weeks, it gets sliced into smaller logical units called [subsessions]. Each subsession generates a batch of data containing the current state of all probes collected so far, i.e. a [main ping], which is sent to our servers. The main ping is just one of the many [ping types] we support. Developers can [create their own ping types] if needed.
+
+*Pings* are submitted via an [API] that performs a HTTP POST request to our edge servers. If a ping fails to successfully [submit] (e.g. because of missing internet connection), Firefox will store the ping on disk and retry to send it until the maximum ping age is exceeded.
 
 # Kafka
 
