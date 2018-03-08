@@ -72,6 +72,24 @@ Use **visual markup** like **bold text**, `code blocks`, and section headers.
 Avoid long paragraphs.
 Short paragraphs that describe one concept each makes finding important information easier.
 
+## Spell checking
+
+Articles should use proper spelling, and pull requests will be automatically checked for spelling
+errors.
+
+Technical articles often contain words that are not recognized by common dictionaries, if this
+happens you may either put specialized terms in `code blocks`, or you may add an exception to
+the `.spelling` file in the code repository.
+
+For things like dataset names or field names, `code blocks` should be preferred. Things like
+project names or common technical terms should be added to the `.spelling` file.
+
+To run the spell checker locally, [install the `markdown-spellcheck` library](https://www.npmjs.com/package/markdown-spellcheck), then run the following command from the root of the repository:
+
+`mdspell '**/*.md' '!**/node_modules/**/*.md' '!**/_book/**/*.md' --ignore-numbers --report`
+
+You may also omit the `--report` parameter to begin an interactive fixing session.
+
 ## Supported Plugins
 
 ### Mermaid
