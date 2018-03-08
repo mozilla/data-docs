@@ -6,30 +6,30 @@ Firefox-related data analysis tools. There are a number of different tools
 available, all with their own strengths, tailored to a variety of use cases and
 skill sets.
 
-#### [sql.telemetry.mozilla.org](stmo.md) (STMO)
+#### [`sql.telemetry.mozilla.org`](stmo.md) (STMO)
 
-The [sql.telemetry.mozilla.org](https://sql.telemetry.mozilla.org) (STMO) site
-is an instance of the very fine [redash](https://redash.io/) software, allowing
+The [`sql.telemetry.mozilla.org`](https://sql.telemetry.mozilla.org) (STMO) site
+is an instance of the very fine [Re:dash](https://redash.io/) software, allowing
 for SQL-based exploratory analysis and visualization / dashboard
-construction. Requires (surprise!)  familiarity with SQL, and for your data to
+construction. Requires (surprise!) familiarity with SQL, and for your data to
 be explicitly exposed as an STMO data source. Bugs or feature requests can be
 reported in our [issue tracker](https://github.com/mozilla/redash/issues).
 
-#### [analysis.telemetry.mozilla.org](spark.md) (ATMO)
+#### [`analysis.telemetry.mozilla.org`](spark.md) (ATMO)
 
 The
-[analysis.telemetry.mozilla.org](https://https://analysis.telemetry.mozilla.org)
+[`analysis.telemetry.mozilla.org`](https://https://analysis.telemetry.mozilla.org)
 (ATMO) site can be used to launch and gain access to virtual machines running
 Apache Spark clusters which have been preconfigured with access to the raw data
-stored in our long term storage (LTS) S3 buckets. Spark allows you to use
+stored in our long term storage S3 buckets. Spark allows you to use
 Python or Scala to perform arbitrary analysis and generate arbitrary
-output. Once developed, a.t.m.o can also be used to run recurring Spark jobs
+output. Once developed, ATMO can also be used to run recurring Spark jobs
 for data transformation, processing, or reporting. Requires Python or Scala
 programming skills and knowledge of various data APIs. Learn more by visiting
 the [documentation](https://wiki.mozilla.org/Telemetry) or
 [tutorials](spark.md).
 
-#### [telemetry.mozilla.org](analysis_intro.md) (TMO)
+#### [`telemetry.mozilla.org`](analysis_intro.md) (TMO)
 
 Our [telemetry.mozilla.org](https://telemetry.mozilla.org) (TMO) site is the
 'venerable standby' of Firefox telemetry analysis tools. It uses aggregate
@@ -46,18 +46,18 @@ for novice users.
 that provides a set of [cumulative distribution
 graphs](http://math.stackexchange.com/questions/52400/what-is-cdf-cumulative-distribution-function)
 for a pre-specified selection of Firefox user metrics. These metrics are
-extracted from a 1% sample of the clientIds from Unified Telemetry. These plots
+extracted from a 1% sample of the `clientId`s from Firefox Telemetry. These plots
 will allow you to understand how values of different metrics are spread out
 among our population of users rather than just using a one number summary (such
 as a mean or median). By viewing the entire distribution, you can get a sense
-of the importance of behavior at the extremes as well as anomalies within the
-population that might indicate interesting behavior. Very simple to use (no
+of the importance of behaviour at the extremes as well as anomalies within the
+population that might indicate interesting behaviour. Very simple to use (no
 programming required) and able to provide interesting insights, but not usually
 suitable for ad-hoc analysis.
 
 #### [Real Time / CEP](../cookbooks/realtime_analysis_plugin.md)
 
-The 'real time' or 'complex event processing' (CEP)
+The "real time" or "complex event processing" (CEP)
 [system](https://pipeline-cep.prod.mozaws.net/) is part of the ingestion
 infrastructure that processes all of our Firefox telemetry data. It provides
 extremely low latency access to the data as it's flowing through our ingestion

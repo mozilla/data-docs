@@ -1,4 +1,4 @@
-# Addons Datsets
+# Addons Datasets
 
 <!-- toc -->
 
@@ -12,7 +12,7 @@
 
 ## Sampling
 
-It contains one or more records for every 
+It contains one or more records for every
 [Main Summary](/datasets/batch_view/main_summary/reference.md)
 record that contains a non-null value for `client_id`.
 Each Addons record contains info for a single addon,
@@ -24,7 +24,7 @@ Like the Main Summary dataset, No attempt is made to de-duplicate submissions by
 
 ## Scheduling
 
-This dataset is updated daily via the 
+This dataset is updated daily via the
 [telemetry-airflow](https://github.com/mozilla/telemetry-airflow) infrastructure.
 The job DAG runs every day after the Main Summary data has been generated.
 The DAG is [here](https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py#L36).
@@ -58,7 +58,7 @@ root
 ```
 For more detail on where these fields come from in the
 [raw data](https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/environment.html#addons),
-please look 
-[in the AddonsView code](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/AddonsView.scala).
+please look
+[in the `AddonsView` code](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/AddonsView.scala).
 
 The fields are all simple scalar values.

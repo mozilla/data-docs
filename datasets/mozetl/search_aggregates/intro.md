@@ -28,7 +28,7 @@ There are three aggregation columns:
 Each of these columns represent different types of searches.
 For more details, see the [search data documentation]
 Note that, if there were no such searches in a row's segment
-(ie. the count would be 0),
+(i.e. the count would be 0),
 the column value is `null`.
 
 <!--

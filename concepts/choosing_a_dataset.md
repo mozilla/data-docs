@@ -27,35 +27,35 @@ This ping includes histograms, scalars, and events.
 
 This section describes the derived datasets we provide to make analyzing this data easier.
 
-## longitudinal
+## `longitudinal`
 
 {% include "/datasets/batch_view/longitudinal/intro.md" %}
 
-## main_summary
+## `main_summary`
 
 {% include "/datasets/batch_view/main_summary/intro.md" %}
 
-## cross_sectional
+## `cross_sectional`
 
 {% include "/datasets/batch_view/cross_sectional/intro.md" %}
 
-## client_count
+## `client_count`
 
 {% include "/datasets/batch_view/client_count/intro.md" %}
 
-## heavy_users
+## `heavy_users`
 
 {% include "/datasets/batch_view/heavy_users/intro.md" %}
 
-## churn
+## `churn`
 
 {% include "/datasets/mozetl/churn/intro.md" %}
 
-## retention
+## `retention`
 
 {% include "/datasets/batch_view/retention/intro.md" %}
 
-## clients_daily
+## `clients_daily`
 
 {% include "/datasets/mozetl/clients_daily/intro.md" %}
 
@@ -68,11 +68,11 @@ It includes non-identifying metadata about the crash.
 
 This section describes the derived datasets we provide to make analyzing this data easier.
 
-## crash_aggregates
+## `crash_aggregates`
 
 {% include "/datasets/batch_view/crash_aggregates/intro.md" %}
 
-## crash_summary
+## `crash_summary`
 
 {% include "/datasets/batch_view/crash_summary/intro.md" %}
 
@@ -82,7 +82,7 @@ The [new-profile ping](https://firefox-source-docs.mozilla.org/toolkit/component
 is sent from Firefox Desktop on the first session of a newly created profile and contains the initial
 information about the user environment.
 
-This data is available in the **telemetry_new_profile_parquet** dataset.
+This data is available in the `telemetry_new_profile_parquet` dataset.
 
 {% include "/datasets/batch_view/new_profile/intro.md" %}
 
@@ -97,8 +97,8 @@ This data is available in the **telemetry_new_profile_parquet** dataset.
 There are several tables owned by the mobile team documented
 [here](https://wiki.mozilla.org/Mobile/Metrics/Redash):
 
-* android_events
-* android_clients
-* android_addons
-* mobile_clients
+* `android_events`
+* `android_clients`
+* `android_addons`
+* `mobile_clients`
 

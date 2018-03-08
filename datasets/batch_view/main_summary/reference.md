@@ -10,15 +10,15 @@
 
 ## Example Queries
 
-We recommend working with this dataset via Spark rather than sql.t.m.o.
+We recommend working with this dataset via Spark rather than `sql.t.m.o`.
 Due to the large number of records,
 queries can consume a lot of resources on the
 **shared cluster and impact other users**.
-Queries via sql.t.m.o should limit to a short `submission_date_s3` range,
+Queries via `sql.t.m.o` should limit to a short `submission_date_s3` range,
 and ideally make use of the `sample_id` field.
 
 When using Presto to query the data from sql.t.m.o,
-you can use the UNNEST feature to access items in the
+you can use the `UNNEST` feature to access items in the
 `search_counts`, `popup_notification_stats` and `active_addons` fields.
 
 For example, to compare the search volume for different search source values,
@@ -273,7 +273,7 @@ root
 For more detail on where these fields come from in the
 [raw data](https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/main-ping.html),
 please look
-[in the MainSummaryView code](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/MainSummaryView.scala).
+[in the `MainSummaryView` code](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/MainSummaryView.scala).
 in the `buildSchema` function.
 
 Most of the fields are simple scalar values, with a few notable exceptions:
@@ -282,7 +282,7 @@ Most of the fields are simple scalar values, with a few notable exceptions:
   a 3-tuple of (`engine`, `source`, `count`). The `engine` field represents the name of
   the search engine against which the searches were done. The `source` field represents
   the part of the Firefox UI that was used to perform the search. It contains values
-  such as "abouthome", "urlbar", and "searchbar". The `count` field contains the number
+  such as `abouthome`, `urlbar`, and `searchbar`. The `count` field contains the number
   of searches performed against this engine+source combination during that subsession.
   Any of the fields in the struct may be null (for example if the search key did not
   match the expected pattern, or if the count was non-numeric).
@@ -302,9 +302,9 @@ Most of the fields are simple scalar values, with a few notable exceptions:
   the `payload.addonDetails` which is not already reported in the `environment.addons.activeAddons`
   section of the payload. More detail in
   [Bug 1390814](https://bugzilla.mozilla.org/show_bug.cgi?id=1390814).
-  Please note that while using this field is generally ok, this was introduced to support
+  Please note that while using this field is generally OK, this was introduced to support
   the [TAAR](https://github.com/mozilla/taar/pulls) project and you should not count on it
-  in the future. The field can stay in the main_summary, but we might need to slightly change
+  in the future. The field can stay in the `main_summary`, but we might need to slightly change
   the ping structure to something better than `payload.addonDetails`.
 * The `theme` field contains a single struct in the same shape as the items in the
   `active_addons` array. It contains information about the currently active browser

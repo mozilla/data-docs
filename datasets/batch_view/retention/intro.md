@@ -14,17 +14,17 @@ pass while avoiding the problem of double counting. This data-structure has the
 benefit of being compact and performant in the context of retention analysis,
 at the expense of precision. For example, calculating a 7-day retention period
 can be obtained by aggregating over a week of retention data using the union
-operation. With SQL primitive, this requires a recomputation of COUNT DISTINCT
+operation. With SQL primitive, this requires a recalculation of COUNT DISTINCT
 over `client_id`'s in the 7-day window.
 
 #### Background and Caveats
 
 1. The data starts at 2017-03-06, the [merge date where Nightly started to
    track Firefox 55 in Mozilla-Central][release_calendar]. However, there was
-not a consistent view into the behavior of first session profiles until the
+not a consistent view into the behaviour of first session profiles until the
 [`new_profile` ping][new_profile]. This means much of the data is inaccurate
 before 2017-06-26.
-2. This dataset uses 4-day reporting latency to aggregate at least 99% of the
+2. This dataset uses 4 day reporting latency to aggregate at least 99% of the
    data in a given submission date. This figure is derived from the
 [telemetry-health measurements on submission latency][telemetry-health], with
 the discussion in [Bug 1407410][bug_1407410]. This latency metric was reduced
@@ -39,7 +39,7 @@ more details.
 
 #### Accessing the Data
 
-The data is primarily available through [Redash on STMO][stmo] via
+The data is primarily available through [Re:dash on STMO][stmo] via
 the Presto source. This service has been configured to use predefined HLL
 functions.
 

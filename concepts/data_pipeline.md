@@ -91,13 +91,13 @@ The deployment scripts and configuration files of the CEP & DWL live in a [priva
 
 # Spark
 
-Once the data reaches our data lake on S3 it can be processed with Spark. We provide a portal ([ATMO]) that allows Mozilla employees to create their own Spark cluster pre-loaded with a set of libraries & tools, like jupyter, numpy, scipy, pandas etc., and [an API] to conveniently read data stored in Protobuf form on S3 in a Spark RDD using a ORM-like interface. Behind the scenes we use [EMR] to create Spark clusters, which are then monitored by ATMO.
+Once the data reaches our data lake on S3 it can be processed with Spark. We provide a portal ([ATMO]) that allows Mozilla employees to create their own Spark cluster pre-loaded with a set of libraries & tools, like Jupyter, NumPy, SciPy, Pandas etc., and [an API] to conveniently read data stored in Protobuf form on S3 in a Spark RDD using a ORM-like interface. Behind the scenes we use [EMR] to create Spark clusters, which are then monitored by ATMO.
 
 ![ATMO](../assets/ATMO_example.jpeg "ATMO – monitoring clusters")
 
-ATMO is mainly used to write custom ad-hoc analyses; since our users aren’t necessary data engineers/scientists we chose Python as the main supported language to interface with Spark. From ATMO it’s also possible to schedule periodic notebook runs and inspect the results from a web UI.
+ATMO is mainly used to write custom analyses; since our users aren’t necessary data engineers/scientists we chose Python as the main supported language to interface with Spark. From ATMO it’s also possible to schedule periodic notebook runs and inspect the results from a web UI.
 
-As mentioned earlier, most of our data lake contains data serialized to Protobuf with free-form JSON fields. Needless to say, parsing JSON is terribly slow when ingesting TBs of data per day. A set of [ETL jobs], written in Scala by Data Engineers and scheduled with [Airflow], create [Parquet views] of our raw data. We have a Github repository [telemetry-batch-view] that showcases this.
+As mentioned earlier, most of our data lake contains data serialized to Protobuf with free-form JSON fields. Needless to say, parsing JSON is terribly slow when ingesting Terabytes of data per day. A set of [ETL jobs], written in Scala by Data Engineers and scheduled with [Airflow], create [Parquet views] of our raw data. We have a Github repository [telemetry-batch-view] that showcases this.
 
 A dedicated Spark job feeds daily aggregates to a Postgres database which powers a [HTTP service] to easily retrieve faceted roll-ups. The service is mainly used by [TMO], a dashboard that visualizes distributions and time-series, and cerberus, an anomaly detection tool that detects and alerts developers of changes in the distributions. Originally the sole purpose of the Telemetry pipeline was to feed data into this dashboard but in time its scope and flexibility grew to support more general use-cases.
 
@@ -113,7 +113,7 @@ Presto, and other databases, are behind a [re:dash] service ([STMO]) which provi
 
 # Is that it?
 
-No, not really. For example, the DWL pushes some of the Telemetry data to Redshift and Elasticsearch but those tools satisfy more niche needs. The pipeline ingests logs from services as well and there are many specialized dashboards out there I haven’t mentioned. We also use [Zeppelin] as a means to create interactive data analysis notebooks that supports Spark, SQL, Scala and more.
+No, not really. For example, the DWL pushes some of the Telemetry data to Redshift and ElasticSearch but those tools satisfy more niche needs. The pipeline ingests logs from services as well and there are many specialized dashboards out there I haven’t mentioned. We also use [Zeppelin] as a means to create interactive data analysis notebooks that supports Spark, SQL, Scala and more.
 
 There is a vast ecosystem of tools for processing data at scale, each with their pros & cons. The pipeline grew organically and we added new tools as new use-cases came up that we couldn’t solve with our existing stack. There are still scars left from that growth though which require some effort to get rid of, like ingesting data from schema-less format.
 

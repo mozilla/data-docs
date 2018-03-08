@@ -14,11 +14,11 @@ visualization.
 
 | field | type | description |
 |-------|------|-------------|
-| cohort_date | common, attribute |  The start date bucket of the cohort. This is week the client was acquired.
-| elapsed_periods | common, attribute | The number of periods that have elapsed since the cohort date. In this dataset, the retention period is 7 days.
-| channel | attribute | Part of the release train model. An attribute that distinguishes cohorts.
-| geo | filter attribute | Country code. Used to filter out all countries other than the 'US'
-| n_profiles | metric | Count of users in a cohort. Use sum to aggregate.
+| `cohort_date` | common, attribute |  The start date bucket of the cohort. This is week the client was acquired.
+| `elapsed_periods` | common, attribute | The number of periods that have elapsed since the cohort date. In this dataset, the retention period is 7 days.
+| `channel` | attribute | Part of the release train model. An attribute that distinguishes cohorts.
+| `geo` | filter attribute | Country code. Used to filter out all countries other than the 'US'
+| `n_profiles` | metric | Count of users in a cohort. Use sum to aggregate.
 
 First the fields are extracted and aliased for consistency. `cohort_date` and
 `elapsed_periods` are common to most retention queries and are useful concepts
@@ -73,8 +73,8 @@ analysis.
 ```
 The table will have the following structure. The table is sorted by the first three columns for demonstration.
 
-| channel | cohort_date | elapsed_periods | n_profiles |
-|---------|-------------|-----------------|------------|
+| `channel` | `cohort_date` | `elapsed_periods` | `n_profiles` |
+|-----------|---------------|-------------------|--------------|
 | release | 20170101 | 0 | 100 |
 | release | 20170101 | 1 | 90 |
 | release | 20170101 | 2 | 80 |
@@ -102,13 +102,13 @@ results AS (
 )
 ```
 
-| channel | cohort_date | elapsed_periods | n_profiles | total_n_profiles | percentage_n_profiles |
-|---------|-------------|-----------------|------------|------------------|-----------------------|
-| release | 20170101    | 0               | 100        | 100              | 1.0                   |
-| release | 20170101    | 1               | 90         | 100              | 0.9                   |
-| release | 20170101    | 2               | 80         | 100              | 0.8                   |
-| ...     | ....        | ...             | ...        | ...              | ...                   |
-| beta    | 20170128    | 10              | 25         | 50               | 0.5                   |
+| `channel` | `cohort_date` | `elapsed_periods` | `n_profiles` | `total_n_profiles` | `percentage_n_profiles` |
+|-----------|---------------|-------------------|--------------|--------------------|-------------------------|
+| release   | 20170101      | 0                 | 100          | 100                | 1.0                     |
+| release   | 20170101      | 1                 | 90           | 100                | 0.9                     |
+| release   | 20170101      | 2                 | 80           | 100                | 0.8                     |
+| ...       | ....          | ...               | ...          | ...                | ...                     |
+| beta      | 20170128      | 10                | 25           | 50                 | 0.5                     |
 
 Obtain the results.
 

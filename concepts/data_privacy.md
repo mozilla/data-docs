@@ -3,7 +3,7 @@
 ## Data Sharing guidelines
 
 This section will give you an overview of what types of analyses you
-can and cannot share publically.
+can and cannot share publicly.
 
 This article is under development.
 The work is being tracked in

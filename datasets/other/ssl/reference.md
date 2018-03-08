@@ -18,7 +18,7 @@ If you're reluctant, for product reasons, to share the numbers 10 and 20, this g
 
 So what we've done is normalize the whole batch of 30 down to 1. That means we tell you that
 50% of one-third of the loads (0.333...) was SSL and 5% of the other two-thirds of the loads
-(0.666...) was SSL. Then you can figure out the overall 20% figure by this cacluation:
+(0.666...) was SSL. Then you can figure out the overall 20% figure by this calculation:
 
 `0.5 * 0.333 + 0.05 * 0.666 = 0.2`
 

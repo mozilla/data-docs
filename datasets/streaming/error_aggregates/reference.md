@@ -11,7 +11,7 @@
 ## Example Queries
 
 Getting a large number of different crash measures across many platforms and channels
-([view on redash](https://sql.telemetry.mozilla.org/queries/4769/source)):
+([view on Re:dash](https://sql.telemetry.mozilla.org/queries/4769/source)):
 
 ```sql
 SELECT window_start,
@@ -26,7 +26,7 @@ SELECT window_start,
        sum(plugin_crashes) AS plugin,
        sum(gmplugin_crashes) AS gmplugin
 FROM telemetry.error_aggregates
-  WHERE application = 'Firefox' 
+  WHERE application = 'Firefox'
   AND (os_name = 'Darwin' or os_name = 'Linux' or os_name = 'Windows_NT')
   AND (channel = 'beta' or channel = 'release' or channel = 'nightly' or channel = 'esr')
   AND build_id > '201801'
@@ -35,8 +35,8 @@ GROUP BY window_start, channel, build_id, version, os_name
 ```
 
 
-Get the number of main_crashes on Windows over a small interval
-([view on redash](https://sql.telemetry.mozilla.org/queries/51677)):
+Get the number of `main_crashes` on Windows over a small interval
+([view on Re:dash](https://sql.telemetry.mozilla.org/queries/51677)):
 
 ```sql
 SELECT window_start as time, sum(main_crashes) AS main_crashes
@@ -59,7 +59,7 @@ Crash pings are only used to count/gather main crash events, all other errors (i
 
 ## Scheduling
 
-The `error_aggregates` job is run continously, using the spark streaming infrastructure
+The `error_aggregates` job is run continuously, using the Spark Streaming infrastructure
 
 ## Schema
 
@@ -71,7 +71,7 @@ The `error_aggregates` table has the following columns which define its dimensio
 * `channel`: the channel, like `release` or `beta`
 * `version`: the version e.g. `57.0.1`
 * `display_version`: like version, but includes beta number if applicable e.g. `57.0.1b4`
-* `build_id`: the YYYYMMDDhhmmss timestamp the program was built, like `20160123180541`. This is also known as the "build ID" or "buildid"
+* `build_id`: the `YYYYMMDDhhmmss` timestamp the program was built, like `20160123180541`. This is also known as the `build ID` or `buildid`
 * `application`: application name (e.g. `Firefox`)
 * `os_name`: name of the OS (e.g. `Darwin` or `Windows_NT`)
 * `os_version`: version of the OS
@@ -88,12 +88,12 @@ And these are the various measures we are counting:
 * `main_crashes`: number of main process crashes (or just program crashes, in the non-e10s case)
 * `content_crashes`: number of content process crashes
 * `plugin_crashes`: number of plugin process crashes
-* `gmplugin_crashes`: number of Gecko media plugin (often abbreviated GMPlugin) process crashes
+* `gmplugin_crashes`: number of Gecko media plugin (often abbreviated `GMPlugin`) process crashes
 * `content_shutdown_crashes`: number of content process crashes that were caused by failure to shut down in a timely manner (should always be
   less than the number of `content_crashes`)
 * `gpu_crashes`: number of gpu process crashes
 * `browser_shim_usage_blocked`: number of times a CPOW shim was blocked from being created by browser code
 * `permissions_sql_corrupted`: number of times the permissions SQL error occurred (beta/nightly only)
-* `defective_permissions_sql_removed`: number of times there was a removal of defective permissions.sqlite (beta/nightly only)
+* `defective_permissions_sql_removed`: number of times there was a removal of defective `permissions.sqlite` (beta/nightly only)
 * `slow_script_notice_count`: number of times the slow script notice count was shown (beta/nightly only)
 * `slow_script_page_count`: number of pages that trigger slow script notices (beta/nightly only)

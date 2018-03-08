@@ -55,10 +55,10 @@ in `#datapipeline`.
 When a bug is triaged, it will be assigned a **priority** and **points**. **Priorities** have the
 following meanings:
 
-- **P1**: in active development in the current sprint
-- **P2**: planned to be worked on in the current quarter
-- **P3**: planned to be worked on next quarter
-- **P4** and beyond: nice to have, we would accept a patch, but not actively being worked on.
+- **`P1`**: in active development in the current sprint
+- **`P2`**: planned to be worked on in the current quarter
+- **`P3`**: planned to be worked on next quarter
+- **`P4`** and beyond: nice to have, we would accept a patch, but not actively being worked on.
 
 **Points** reflect the amount of effort required for a bug and are assigned as follows:
 

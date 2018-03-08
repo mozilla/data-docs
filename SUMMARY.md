@@ -49,7 +49,7 @@
   * [Project Glossary](tools/projects.md)
 * [Cookbooks](cookbooks/README.adoc)
   * [Working with Parquet Data on ATMO Clusters](cookbooks/parquet.md)
-  * [Creating a custom re:dash dataset](cookbooks/create_a_dataset.md)
+  * [Creating a custom Re:dash dataset](cookbooks/create_a_dataset.md)
   * [Creating a Real-time Analysis Plugin](cookbooks/realtime_analysis_plugin.md)
   * [Longitudinal Examples](cookbooks/longitudinal_examples.md)
   * [Using HyperLogLog in Zeppelin](cookbooks/hll_zeppelin.md)

@@ -18,7 +18,7 @@ Example queries:
 ## Scheduling
 
 This dataset is updated daily via the [telemetry-airflow](https://github.com/mozilla/telemetry-airflow) infrastructure.
-The job DAG runs every day after main_summary is complete.
+The job DAG runs every day after `main_summary` is complete.
 You can find the job definition
 [here](https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py#L187-L195).
 
