@@ -57,7 +57,7 @@ val frame = examples.toDF()
 ```
 
 
-In a single expression, we can create and count the unique id's that appear in the Dataframe.
+In a single expression, we can create and count the unique id's that appear in the DataFrame.
 ```scala
 >>> frame
   .select(expr("hll_create(uid, 12) as hll"))
@@ -86,8 +86,8 @@ val example = frame
 example.createOrReplaceTempView("example")
 ```
 
-This groups uid's by the color attribute and registers the table with the SQL
-context. Each row contains a HLL binary object representing the set of uid's.
+This groups `uid`s by the `color` attribute and registers the table with the SQL
+context. Each row contains a HLL binary object representing the set of `uid`s.
 
 ```scala
 >>> example.show()
@@ -100,7 +100,7 @@ context. Each row contains a HLL binary object representing the set of uid's.
 ```
 Each HLL object takes up `2^12` bits of space. This configurable size parameter
 affects the size and standard error of the cardinality estimates. The
-cardinality operator can count the number of uid's associated with each color.
+cardinality operator can count the number of `uid`s associated with each `color`.
 
 ```scala
 >>> example.select($"color", HllCardinality($"hll").alias("count")).show()
@@ -122,8 +122,8 @@ FROM example
 GROUP BY color
 ```
 
-Finally, note that the color HLL sets have an overlapping uid. We obtain the
-count of uids and avoid double counting by merging the sets.
+Finally, note that the `color` HLL sets have an overlapping `uid`. We obtain the
+count of `uid`s and avoid double counting by merging the sets.
 
 ```scala
 >>> example.groupBy().agg(HllCardinality(HllMerge($"hll")).alias("count")).show()

@@ -1,21 +1,21 @@
 Introduction
 ------------
 
-[Spark](https://spark.apache.org/)
+[Apache Spark](https://spark.apache.org/)
 is a data processing engine designed to be fast and easy to use.
 We have setup
 [Jupyter notebooks](https://jupyter.org/)
 that use Spark to analyze our Telemetry data.
-Jupyter workbooks can be easily shared and updated among colleagues,
+Jupyter notebooks can be easily shared and updated among colleagues,
 and, when combined with Spark, enable richer analysis than SQL alone.
 
-The Spark clusters can be spun up on [ATMO](https://analysis.telemetry.mozilla.org).
-The Spark Python API is called pyspark.
+The Spark clusters can be launched from [ATMO](https://analysis.telemetry.mozilla.org).
+The Spark Python API is called PySpark.
 
 Setting Up a Spark Cluster On ATMO
 ----------------------------------
 
-1.  Go to https://analysis.telemetry.mozilla.org
+1.  Go to <https://analysis.telemetry.mozilla.org>
 2.  Click “Launch an ad-hoc Spark cluster”.
 3.  Enter some details:
     1.  The “Cluster Name” field should be a short descriptive name,
@@ -25,10 +25,10 @@ Setting Up a Spark Cluster On ATMO
         debug your job.
     3.  Upload your SSH public key.
 4.  Click “Submit”.
-5.  A cluster will be launched on AWS preconfigured with Spark, IPython
-    and some handy data analysis libraries like pandas and matplotlib.
+5.  A cluster will be launched on AWS pre-configured with Spark, Jupyter
+    and some handy data analysis libraries like `pandas` and `matplotlib`.
 
-Once the cluster is ready, you can tunnel IPython through SSH by
+Once the cluster is ready, you can tunnel Jupyter through SSH by
 following the instructions on the dashboard.
 For example:
 
@@ -36,7 +36,7 @@ For example:
 ssh -i ~/.ssh/id_rsa -L 8888:localhost:8888 hadoop@ec2-54-70-129-221.us-west-2.compute.amazonaws.com
 ```
 
-Finally, you can launch IPython in Firefox by visiting http://localhost:8888.
+Finally, you can launch Jupyter in Firefox by visiting http://localhost:8888.
 
 The Python Jupyter Notebook
 ---------------------------
@@ -47,13 +47,13 @@ are available to peruse.
 Starting out, we recommend looking through the
 [Telemetry Hello World](https://github.com/mozilla/mozilla-reports/blob/master/tutorials/telemetry_hello_world.kp/orig_src/Telemetry%20Hello%20World.ipynb)
 notebook.
-It gives a nice overview of Jupyter and analyzing telemetry data using pyspark and the RDD API.
+It gives a nice overview of Jupyter and analyzing telemetry data using PySpark and the RDD API.
 
 ### Using Jupyter
 
 Jupyter Notebooks contain a series of cells.
 Each cell contains code or markdown.
-To switch between the two, use the dropdown at the top.
+To switch between the two, use the drop-down at the top.
 To run a cell, use shift-enter;
 this either compiles the markdown or runs the code.
 To create new cell, select Insert -> Insert Cell Below.
@@ -73,12 +73,12 @@ making a nice and easy-to-use dashboard.
 To schedule a Spark job:
 
 1.  Visit the analysis provisioning dashboard at
-    telemetry-dash.mozilla.org and sign in
+    <https://analysis.telemetry.mozilla.org> and sign in
 2.  Click “Schedule a Spark Job”
 3.  Enter some details:
     1.  The “Job Name” field should be a short descriptive name, like
         “chromehangs analysis”.
-    2.  Upload your IPython notebook containing the analysis.
+    2.  Upload your Jupyter notebook containing the analysis.
     3.  Set the number of workers of the cluster in the “Cluster Size”
         field.
     4.  Set a schedule frequency using the remaining fields.
@@ -97,32 +97,34 @@ Jupyter notebooks can be shared in a few different ways.
 
 #### Sharing a Static Notebook
 
-An easy way to share is using a gist on github.
+An easy way to share is using a gist on Github.
 
-1.  Download file as .ipynb
-2.  Upload to a gist on [gist.github.com](https://gist.github.com)
-3.  Enter the gist URL at [Jupyter
-    nbviewer](https://nbviewer.jupyter.org/)
+1.  Download file as `.ipynb`
+2.  Upload to a gist on [`gist.github.com`](https://gist.github.com)
+3.  Enter the gist URL at [Jupyter nbviewer](https://nbviewer.jupyter.org/)
 4.  Share with your colleagues!
 
 #### Sharing a Scheduled Notebook
 
 Setup your scheduled notebook. After it's run, do the following:
 
-1.  Go to the 'Schedule a Spark job' tab in atmo
+1.  Go to the "Schedule a Spark job" tab in ATMO
 2.  Get the URL for the notebook (under 'Currently Scheduled Jobs')
 3.  Paste that URL into [Jupyter nbviewer](https://nbviewer.jupyter.org/)
 
 Zeppelin Notebooks
 ------------------
 
-We also have \*experimental\* support for [Apache
-Zeppelin](https://zeppelin.apache.org/) notebooks. The notebook server
-for that is running on port 8890, so you can connect to it just by
-tunneling the port (instead of port 8888 for Jupyter). For example:
+We also have support for [Apache Zeppelin](https://zeppelin.apache.org/)
+notebooks. The notebook server for that is running on port 8890, so you
+can connect to it just by tunnelling the port (instead of port 8888 for
+Jupyter). For example:
 
+```
 ssh -i \~/.ssh/id\_rsa -L 8890:localhost:8890
 hadoop@ec2-54-70-129-221.us-west-2.compute.amazonaws.com
+```
+
 
 Using Spark
 -----------
@@ -137,15 +139,15 @@ Check out
 [Spark Best Practices](https://robertovitillo.com/2015/06/30/spark-best-practices/)
 for tips on using Spark to it's full capabilities.
 
-### SparkContext (sc)
+### `SparkContext` (`sc`)
 
-Access to the Spark API is provided through SparkContext. In the Jupyter
-notebook, this is the \`sc\` object. For example, to create a
+Access to the Spark API is provided through `SparkContext`. In the Jupyter
+notebook, this is the `sc` object. For example, to create a
 distributed RDD of monotonically increasing numbers 1-1000:
 
 ```python
 numbers = range(1000)
-#no need to initialize sc in the Jupyter notebook
+# no need to initialize sc in the Jupyter notebook
 numsRdd = sc.parallelize(numbers)
 nums.take(10) #no guaranteed order
 ```
@@ -181,19 +183,19 @@ sin_values.takeOrdered(5, lambda x : -x[1])
 For jumping into working with Spark RDD's, we recommend reading the
 [Spark Programming Guide](https://spark.apache.org/docs/latest/programming-guide.html).
 
-### Spark SQL and Spark Dataframes/Datasets
+### Spark SQL and Spark DataFrames/Datasets
 
 Spark also supports traditional SQL, along with special data structures
 that require schemas. The Spark SQL API can be accessed with the
-\`spark\` object. For example:
+`spark` object. For example:
 
 `   longitudinal = spark.sql('SELECT * FROM longitudinal')`
 
 creates a DataFrame that contains all the longitudinal data. A Spark
 DataFrame is essentially a distributed table, a la Pandas or R
-Dataframes. Under the covers they are an RDD of Row objects, and thus
+DataFrames. Under the covers they are an RDD of Row objects, and thus
 the entirety of the RDD API is available for DataFrames, as well as a
-DataFrame specific API. For example, a sql-like way to get the count of
+DataFrame specific API. For example, a SQL-like way to get the count of
 a specific OS:
 
 `   longitudinal.select("os").where("os = 'Darwin'").count()`
@@ -211,23 +213,22 @@ See also the
 [Longitudinal Tutorial](https://reports.telemetry.mozilla.org/post/tutorials/longitudinal_dataset.kp),
 one of the available example notebooks when you start a cluster.
 
-### Available Data Sources for SparkSQL
+### Available Data Sources for `SparkSQL`
 
-For information about available queryable data sources (e.g.  Longitudinal dataset),
-see
-[Choosing a Dataset](/concepts/choosing_a_dataset.md).
+For information about data sources available for querying (e.g. Longitudinal dataset),
+see [Choosing a Dataset](/concepts/choosing_a_dataset.md).
 
 These datasets are optimized for fast access, and will far out-perform
-analysis on the raw telemetry ping data.
+analysis on the raw Telemetry ping data.
 
 ### Accessing the Spark UI
 
-Go to https://localhost:8888/spark after ssh-ing into the spark cluster
+After establishing an SSH connection to the Spark cluster, go to https://localhost:8888/spark
 to see the Spark UI.
 It has information about job statuses and task completion,
 and may help you debug your job.
 
-The MozTelemetry Library
+The `MozTelemetry` Library
 ------------------------
 
 We have provided a library that gives easy access to the raw telemetry ping data.
@@ -265,7 +266,7 @@ os_counts = os_names.reduceByKey(lambda x, y: x + y)
 os_counts.collect()
 ```
 
-Alternatively, moztelemetry provides the `get_pings_properties`
+Alternatively, `moztelemetry` provides the `get_pings_properties`
 function, which will gather the data for you:
 
 ```python
@@ -281,19 +282,18 @@ Please add more FAQ as questions are answered by you or for you.
 
 ### How can I load parquet datasets in a Jupyter notebook?
 
-Use spark.read.parquet, e.g.:
+Use `spark.read.parquet`, e.g.:
 
 ```python
 dataset = spark.read.parquet("s3://the_bucket/the_prefix/the_version")`
 ```
 
-For more information see
-[Working with Parquet](/cookbooks/parquet.md).
+For more information see [Working with Parquet](/cookbooks/parquet.md).
 
 ### I got a REMOTE HOST IDENTIFICATION HAS CHANGED! error
 
 AWS recycles hostnames, so this warning is expected.
-Removing the offending key from $HOME/.ssh/known_hosts will remove the warning.
+Removing the offending key from `$HOME/.ssh/known_hosts` will remove the warning.
 You can find the line to remove by finding the line in the output that says
 
 `Offending key in /path/to/hosts/known_hosts:2`
@@ -308,18 +308,18 @@ There are a few common causes for this:
 1. Currently, our Spark notebooks can only run a single Python kernel at
    a time. If you open multiple notebooks on the same cluster and try to
    run both, the second notebook will hang. Be sure to close notebooks
-   using "Close and Halt" under the "File" dropdown.
+   using "Close and Halt" under the "File" drop-down.
 2. The connection from PySpark to the Spark driver might be lost.
    Unfortunately the best way to recover from this for the moment seems to
    be spinning up a new cluster.
-3. Canceling execution of a notebook cell doesn't cancel any spark jobs
+3. Cancelling execution of a notebook cell doesn't cancel any spark jobs
    that might be running in the background. If your spark commands seem to
    be hanging, try running \`sc.cancelAllJobs()\`.
 
 ### How can I keep running after closing the notebook?
 
 For long-running computation, it might be nice to close the notebook
-(and the ssh session) and look at the results later.
+(and the SSH session) and look at the results later.
 Unfortunately, **all cell output will be lost when a notebook is closed**
 (for the running cell).
 To alleviate this, there are a few options:
@@ -331,7 +331,7 @@ To alleviate this, there are a few options:
 
 ### How do I load an external library into the cluster?
 
-Assuming you've got a url for the repo, you can create an egg for it
+Assuming you've got a URL for the repo, you can create an egg for it
 this way:
 
 ```python
@@ -351,4 +351,4 @@ sc.addPyFile('mylibrary.egg')`
 ```
 
 You will want to do this **before** you load the library. If the library
-is already loaded, restart the kernel in the ipython notebook.
+is already loaded, restart the kernel in the Jupyter notebook.

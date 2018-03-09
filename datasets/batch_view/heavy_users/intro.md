@@ -1,4 +1,4 @@
-The `heavy_users` table provides information about whether a given client_id is
+The `heavy_users` table provides information about whether a given `client_id` is
 considered a "heavy user" on each day (using submission date).
 
 #### Contents
@@ -8,7 +8,7 @@ The `heavy_users` table contains one row per client-day, where day is
 they were active at all in the 28 day window ending on that `submission_date`.
 
 A user is a "heavy user" as of day N if, for the 28 day period ending
-on day N, the sum of their active_ticks is in the 90th percentile (or
+on day N, the sum of their `active_ticks` is in the 90th percentile (or
 above) of all clients during that period. For more analysis on this,
 and a discussion of new profiles, see
 [this link](https://metrics.mozilla.com/protected/sguha/heavy/heavycutoffs5.html).
@@ -33,7 +33,7 @@ and a discussion of new profiles, see
 
 #### Accessing the Data
 
-The data is available both via sql.t.m.o and Spark.
+The data is available both via `sql.t.m.o` and Spark.
 
 In Spark:
 

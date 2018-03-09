@@ -13,7 +13,7 @@ Thus we created Telemetry Alerts. It comes in two pieces:
 ### Cerberus
 
 Every day Cerberus grabs the latest aggregated information about all
-non-keyed Telemetry probes from aggregates.telemetry.mozilla.org and
+non-keyed Telemetry probes from `aggregates.telemetry.mozilla.org` and
 compares the distribution of values from the **Nightly** builds of the
 past two days to the distribution of values from the Nightly builds of
 the past seven days.
@@ -40,7 +40,7 @@ What it can do
 
 Telemetry Alerts is very good at identifying sudden changes in the
 shapes of normalized distributions of Telemetry probes. If you can see
-the distribution of [GC\_MS](https://mzl.la/2vdMRax) shift from one day
+the distribution of [`GC_MS`](https://mzl.la/2vdMRax) shift from one day
 to the next, then likely so can Cerberus.
 
 What can't it do
@@ -51,7 +51,7 @@ very easily fooled if a change happens over a long period of time or
 doesn't fundamentally alter the shape of the probe's histogram.
 
 So if you have a probe like
-[SCALARS\_BROWSER.ENGAGEMENT.MAX\_CONCURRENT\_TAB\_COUNT](https://mzl.la/2vdiuRx),
+[`SCALARS_BROWSER.ENGAGEMENT.MAX_CONCURRENT_TAB_COUNT`](https://mzl.la/2vdiuRx),
 Cerberus won't notice if:
 
 -   The number of pings reporting this value decreased in half, but
@@ -96,27 +96,27 @@ relevant/having its alerts properly looked after.
 1\. Is this alert just one of a group of similar changes by topic? By
 build?
 
--   If there's a group by topic (SPDY, URLCLASSIFIER, ...) check to see
+-   If there's a group by topic (`SPDY`, `URLCLASSIFIER`, ...) check to see
     if the changes are similar in direction/magnitude. They usually are.
 -   If there's a group by build but not topic, maybe a large merge
-    kicked things over. Unfortunate, as that'll make finding the source
+    kicked things over. Unfortunate, as that will make finding the source
     more difficult.
 
-2\. Open the hg.mozilla.org and alerts.telemetry.mozilla.org links in
+2\. Open the `hg.mozilla.org` and `alerts.telemetry.mozilla.org` links in
 tabs
 
--   On alerts.tmo, does it look like an improvement or regression? (This
+-   On `alerts.tmo`, does it look like an improvement or regression? (This
     is just a first idea and might change. There are often extenuating
     circumstances that make something that looks bad into an
     improvement, and vice versa.)
--   On hg.mo, does the topic of the changed probe exist in the pushlog?
+-   On `hg.mo`, does the topic of the changed probe exist in the pushlog?
     In other words, does any part of the probe's name show up in the
     summaries of any of the commits?
 
-3\. From alerts.tmo, open the <https://telemetry.mozilla.org> link by
+3\. From `alerts.tmo`, open the <https://telemetry.mozilla.org> link by
 clicking on the plot's title. Open another tab to the Evolution View.
 
--   Is the change temporary? (might've been noticed elsewhere and
+-   Is the change temporary? (might have been noticed elsewhere and
     backed out)
 -   Is the change up or down?
 -   Has it happened before?
@@ -127,22 +127,22 @@ clicking on the plot's title. Open another tab to the Evolution View.
     subtraction of a population of values. For instance, we could
     suddenly stop sending 0 values which would shift the graph to
     the right. This could be a good thing (we're not handling useless
-    things anymore) a bad thing (something broke and we're no longer
+    things any longer) a bad thing (something broke and we're no longer
     measuring the same thing we used to measure) or indifferent)
 
 4\. If you still don't have a cause
 
 -   Use DXR or searchfox to find where the probe is accumulated.
 -   Click "Log" in that view.
--   Are there any changesets in the resultant hg.mo list that ended up
+-   Are there any changesets in the resultant `hg.mo` list that ended up
     in the build we received the Alert for?
 
-5\. If you \_still\_ don't know what's going on
+5\. If you _still_ don't know what's going on
 
 -   find a domain expert on IRC and bother them to help you out. Domain
     knowledge is awesome.
 
-From pursuing these steps or substeps you should now have two things: a
+From pursuing these steps or sub-steps you should now have two things: a
 bug that likely caused the alert, and an idea of what the alert is
 about.
 
@@ -165,7 +165,7 @@ Is this probe still measuring something useful?
 ```
 
 Then ni? the person who pushed the change. Reply-all to the
-dev-telemetry-alerts mail with a link to the bug and some short notes on
+`dev-telemetry-alerts` mail with a link to the bug and some short notes on
 what you found.
 
 From here the user on ni? should get back to you in fairly short order
@@ -176,6 +176,6 @@ action to take...
 
 ...except making sure you never have to respond to an Alert for this
 probe again, that is. File a bug in that bug's component to update the
-Alert'ing probe to have a valid, monitored "alert\_emails" field so that
+Alerting probe to have a valid, monitored `alert_emails` field so that
 the next time it misbehaves *they* can be the ones to explain themselves
 without you having to spend all this time tracking them down.

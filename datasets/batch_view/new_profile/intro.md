@@ -17,4 +17,4 @@ Here's an [example query](https://sql.telemetry.mozilla.org/queries/5888#table).
 
 #### Further Reading
 
-This dataset is generated automatically using direct to parquet. The configuration responsible for generating this dataset was introdueced in [bug 1360256](https://bugzilla.mozilla.org/show_bug.cgi?id=1360256).
+This dataset is generated automatically using direct to parquet. The configuration responsible for generating this dataset was introduced in [bug 1360256](https://bugzilla.mozilla.org/show_bug.cgi?id=1360256).

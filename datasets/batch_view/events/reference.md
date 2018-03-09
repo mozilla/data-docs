@@ -13,15 +13,15 @@ The work is being tracked
 ## Sampling
 
 The events dataset contains one row for each event in a main ping.
-This dataset is derived from [main_summary](../main_summary/reference.md)
+This dataset is derived from [`main_summary`](../main_summary/reference.md)
 so any of `main_summary`'s filters affect this dataset as well.
 
 Data is currently available from 2017-01-05 on.
 
 ## Scheduling
 
-The events dataset is updated daily, shortly after 
-[main_summary](../main_summary/reference.md) is updated.
+The events dataset is updated daily, shortly after
+[`main_summary`](../main_summary/reference.md) is updated.
 The job is scheduled on [Airflow](https://github.com/mozilla/telemetry-airflow).
 The DAG is [here](https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py#L63).
 

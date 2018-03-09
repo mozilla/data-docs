@@ -1,6 +1,6 @@
 # Working with Parquet
 
-This guide will give you a quick introduction to working with 
+This guide will give you a quick introduction to working with
 [Parquet](https://parquet.apache.org/) files at Mozilla.
 You can also refer to Spark's documentation on the subject
 [here](http://spark.apache.org/docs/latest/sql-programming-guide.html#parquet-files).
@@ -20,7 +20,7 @@ or if a sample of the data will not suffice.
 # Reading Parquet Tables
 
 Spark provides native support for reading parquet files.
-The result of loading a parquet file is a 
+The result of loading a parquet file is a
 [DataFrame](http://spark.apache.org/docs/2.1.0/api/python/pyspark.sql.html#pyspark.sql.DataFrame).
 For example, you can load `main_summary` with the following snippet:
 
@@ -39,17 +39,17 @@ Saving a table to parquet is a great way to share an intermediate dataset.
 
 ## Where to save data
 
-You can save data to a subdirectory of the following bucket: 
+You can save data to a subdirectory of the following bucket:
 `s3://net-mozaws-prod-us-west-2-pipeline-analysis/<username>/`
 Use your username for the subdirectory name.
 This bucket is available to all ATMO clusters and Airflow.
 
 When your analysis is production ready,
-open a PR against [python_mozetl](https://github.com/mozilla/python_mozetl).
+open a PR against [`python_mozetl`](https://github.com/mozilla/python_mozetl).
 
 ## How to save data
 
-You can save the dataframe `test_dataframe`
+You can save the DataFrame `test_dataframe`
  to the `telemetry-test-bucket` with the following command:
 
 ```python

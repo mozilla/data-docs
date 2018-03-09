@@ -2,10 +2,10 @@
 
 The longitudinal dataset is a summary of main pings. If you're not sure which
 dataset to use for your query, this is probably what you want. It differs from
-the main_summary table in two important ways:
+the `main_summary` table in two important ways:
 
 * The longitudinal dataset groups all data for a client-id in the same row.
-  This makes it easy to report profile level metrics. Without this deduping,
+  This makes it easy to report profile level metrics. Without this deduplicating,
   metrics would be weighted by the number of submissions instead of by clients.
 * The dataset uses a 1% of all recent profiles, which will reduce query
   computation time and save resources. The sample of clients will be stable over
@@ -74,7 +74,7 @@ FROM lengths
 GROUP BY days, os ORDER BY days ASC
 ```
 
-However, it may be better to use a sample from the main_summary table
+However, it may be better to use a sample from the `main_summary` table
 instead.
 
 Links:
@@ -106,19 +106,19 @@ Links:
 ### Sampling
 
 While composing queries, it can be helpful to work on small samples to
-reduce query runtimes:
+reduce query runtime:
 
 ```sql
 SELECT * FROM longitudinal LIMIT 1000 ...
 ```
 
-There's no need to use other sampling methods, such as TABLESAMPLE, on
-the longitudinal set. Rows are randomly ordered, so a LIMIT sample is
+There's no need to use other sampling methods, such as `TABLESAMPLE`, on
+the longitudinal set. Rows are randomly ordered, so a `LIMIT` sample is
 expected to be random.
 
 ### Example Queries
 
-#### Blocklist URLs (extensions.blocklist.url)
+#### Blocklist URLs (`extensions.blocklist.url`)
 
 ```sql
 SELECT bl, COUNT(bl)
@@ -128,7 +128,7 @@ FROM
 GROUP BY bl
 ```
 
-#### Blocklist enabled/disabled (extensions.blocklist.enabled) count:
+#### Blocklist enabled/disabled (`extensions.blocklist.enabled`) count:
 ```sql
 SELECT bl, COUNT(bl)
 FROM
@@ -137,7 +137,7 @@ FROM
 GROUP BY bl
 ```
 
-#### Parsing most recent submission_date
+#### Parsing most recent `submission_date`
 
 ```sql
 SELECT DATE_PARSE(submission_date[1], '%Y-%m-%dT00:00:00.000Z') as parsed_submission_date
@@ -192,15 +192,15 @@ Find more information
 
 ### Working offline
 
-It's often useful to keep a local sample of the l10l data when
+It's often useful to keep a local sample of the longitudinal data when
 prototyping an analysis. The data is stored in
-s3://telemetry-parquet/longitudinal/. Once you have AWS credentials you
-can copy a shard of the parquet dataset to a local directory using `aws
-cp [filename] .`
+`s3://telemetry-parquet/longitudinal/`. Once you have AWS credentials you
+can copy a shard of the parquet dataset to a local directory using
+`aws s3 cp [filename] .`
 
 To request AWS credentials, see [this
 page](https://mana.mozilla.org/wiki/display/SVCOPS/Requesting+A+Dev+IAM+account+from+Cloud+Operations).
-To initiate your AWS config, try `aws configure`
+To initialize your AWS credentials, try `aws configure`
 
 ### FAQ
 
@@ -212,10 +212,8 @@ quotes. Try using single quotes instead.
 ### Other Resources
 
 - [Presto Docs](https://prestodb.io/docs/current/sql.html)
-- [Helpful FAQ covering
-  perf/distribution](https://docs.treasuredata.com/articles/presto-query-faq)
-- [Longitudinal schema
-  definition](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/Longitudinal.scala#L194)
-- [Custom_dashboards_with_re:dash](https://wiki.mozilla.org/Custom_dashboards_with_re:dash)
+- [Helpful FAQ covering Presto performance](https://docs.treasuredata.com/articles/presto-query-faq)
+- [Longitudinal schema definition](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/Longitudinal.scala#L194)
+- [Custom dashboards with Re:dash](https://wiki.mozilla.org/Custom_dashboards_with_re:dash)
 
 [1]: http://reports.telemetry.mozilla.org/post/tutorials/longitudinal_dataset.kp

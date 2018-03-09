@@ -2,8 +2,8 @@ Introduction
 ------------
 
 STMO is shorthand for
-[sql.telemetry.mozilla.org](https://sql.telemetry.mozilla.org), an installation
-of the excellent [redash](https://redash.io/) data analysis and dashboarding
+[`sql.telemetry.mozilla.org`](https://sql.telemetry.mozilla.org), an installation
+of the excellent [Re:dash](https://redash.io/) data analysis and dashboarding
 tool that has been customized and configured for use with a number of the
 Firefox organization's data sets. As the name and URL imply, effective use of
 this tool requires familiarity with the
@@ -64,14 +64,14 @@ source is slowly replacing the *Presto* data source. *Presto* contains all of
 the data that's exposed via *Athena* and more, but returns query results much
 more slowly.
 
-Other available data sources include *Crash-DB*, *Tiles*, *Sync Stats*, *Push*,
-*Test Pilot*, *ATMO*, and even a *re:dash metadata* which connects to STMO's
-own redash database. You can learn more about the available data sets and how
+Other available data sources include *Crash DB*, *Tiles*, *Sync Stats*, *Push*,
+*Test Pilot*, *ATMO*, and even a *Re:dash metadata* which connects to STMO's
+own Re:dash database. You can learn more about the available data sets and how
 to find the one that's right for you on the [Choosing a
 dataset](../concepts/choosing_a_dataset.md) page. If you have data set
 questions, or would like to know if specific data is or can be made available
-in STMO, please inquire in the #datapipeline or #datatools channels on
-irc.mozilla.org.
+in STMO, please inquire in the `#datapipeline` or `#datatools` channels on
+`irc.mozilla.org`.
 
 Creating an Example Dashboard
 -----------------------------
@@ -89,7 +89,7 @@ query editing page:
 ![New Query Page](/../assets/STMO_screenshots/new_query.png "New Query page")
 
 For this (and most queries where we're counting distinct client IDs) we'll want
-to use the ["client_count" data
+to use the [`client_count` data
 set](../datasets/batch_view/client_count/reference.md) that is generated from
 Firefox telemetry pings.
 
@@ -97,32 +97,32 @@ Firefox telemetry pings.
 
   As mentioned above, Athena is faster than Presto, but not all data sets are
   yet available in Athena. We can check to see if the one we want is available
-  in the by typing "client_count" into the "Search schema..."  search box above
+  in the by typing `client_count` into the "Search schema..."  search box above
   the schema browser interface to the left of the main query edit box. As of
-  this writing, alas, there are no matches for "client_count", which means this
+  this writing, alas, there are no matches for `client_count`, which means this
   data set is not available in *Athena*.
 
 * Verify the data set exists in Presto
 
   It's not in Athena, so now we should check to see if it's in Presto. If you
-  click on the 'Data Source' dropdown and change the selection from 'Athena' to
-  'Presto' (with "client_count" still populating the filter input), you should
-  see that there is, in fact, a client_count data set (showing up as
-  'default.client_count'), as well as a number of historical client_count data
-  sets (showing up as 'default.client_count_v<TIMESTAMP>').
+  click on the 'Data Source' drop-down and change the selection from 'Athena' to
+  'Presto' (with `client_count` still populating the filter input), you should
+  see that there is, in fact, a `client_count` data set (showing up as
+  `default.client_count`), as well as a number of historical `client_count` data
+  sets (showing up as `default.client_count_v<TIMESTAMP>`).
 
 * Introspect the available columns
 
-  Clicking on the "default.client_count" in the schema browser exposes the
+  Clicking on the `default.client_count` in the schema browser exposes the
   columns that are available in the data set. Two of the columns are of
-  interest to us for this query: *country* (for obvious reasons) and *hll*.
+  interest to us for this query: `country` (for obvious reasons) and `hll`.
 
-The *hll* column bears some explanation. "hll" stands for
+The `hll` column bears some explanation. `hll` stands for
 [HyperLogLog](https://en.wikipedia.org/wiki/HyperLogLog), a sophisticated
 algorithm that allows for the counting of extremely high numbers of items,
 sacrificing a small amount of accuracy in exchange for using much less memory
-than a simple counting structure. The *client_count* data set uses the *hll*
-column for all of its counting functionality. Converting the *hll* value back
+than a simple counting structure. The `client_count` data set uses the `hll`
+column for all of its counting functionality. Converting the `hll` value back
 to a regular numeric value requires the use of the following magic SQL
 incantation:
 
@@ -151,7 +151,7 @@ Now would be a good time to click on the large "New Query" text near the top of
 the page; it should turn into an edit box, allowing you to rename the
 query. For this exercise, you should use a unique prefix (such as your name)
 for your query name, so it will be easy to find your query later; I used
-"rmiller:Top Countries".
+`rmiller:Top Countries`.
 
 #### Creating A Visualization
 
@@ -164,15 +164,15 @@ another heading entitled `+NEW VISUALIZATION`.
 
 Clicking on the `+NEW VISUALIZATION` link should bring you to the
 "Visualization Editor" screen, where you can specify a visualization name ("Top
-Countries bar chart"), a chart type ("Bar"), an x-axis column ("country"), and
-a y-axis column ("client_count").:
+Countries bar chart"), a chart type ("Bar"), an x-axis column (`country`), and
+a y-axis column (`client_count`).:
 
 ![Visualization Editor](../assets/STMO_screenshots/vis_editor.png "Visualization Editor")
 
 After the `GENERAL` settings have been specified, we'll want to tweak a few
 more settings on the `X AXIS` tab. You'll want to click on this tab and then
-change the 'Scale' setting to 'Category', and uncheck the 'Sort Values'
-checkbox to allow the query's sort order to take precedence:
+change the 'Scale' setting to 'Category', and un-check the 'Sort Values'
+check-box to allow the query's sort order to take precedence:
 
 ![Visualization X Axis](../assets/STMO_screenshots/x_axis_editor.png "Visualization X Axis")
 
@@ -226,7 +226,7 @@ the entered parameter value as the default.
 #### Creating A Dashboard
 
 Now we can create a dashboard to display our visualization. Do this by clicking
-on the 'Dashboards' dropdown near the top left of the page, and then clicking
+on the 'Dashboards' drop-down near the top left of the page, and then clicking
 the 'New Dashboard' option. Choose a name for your dashboard, and you will be
 brought to a mostly empty page. Clicking on the '...' button near the top right
 of the page will give you the option to 'Add Widget'. This displays the
@@ -245,10 +245,10 @@ source page and clicking the "Publish" button near the top right of the screen.
 Once your query is published, it should show up in the search results when you
 type your unique prefix into the "Search a query by name" field on the "Add
 Widget" dialog. When you select your query, a new "Choose Visualization"
-dropdown will appear, allowing you to choose which of the query's
+drop-down will appear, allowing you to choose which of the query's
 visualizations to use. Choose the bar chart you created and then click on the
 "Add to Dashboard" button. Voila! Now your dashboard should have a bar chart,
-and you should be able to edit the 'country_count' value and click the refresh
+and you should be able to edit the `country_count` value and click the refresh
 button to change the number of countries that show up on the chart.
 
 #### Completing the Dashboard
@@ -259,7 +259,7 @@ with a very similar bar chart. The text of the queries will be provided here,
 but creating the queries and the visualizations and wiring them up to the
 dashboard will be left as an exercise to the user. The queries are as follows:
 
-* Top OSes (recommended os_count value == 6)
+* Top OSes (recommended `os_count` value == 6)
 
   ```SELECT os, cardinality(merge(cast(hll AS HLL))) AS client_count FROM client_count GROUP BY 1 ORDER BY 2 DESC LIMIT {{os_count}}```
 
@@ -267,7 +267,7 @@ dashboard will be left as an exercise to the user. The queries are as follows:
 
   ```SELECT normalized_channel AS channel, cardinality(merge(cast(hll AS HLL))) AS client_count FROM client_count GROUP BY 1 ORDER BY 2 DESC```
 
-* App Version Counts (recommended app_version_count value == 20)
+* App Version Counts (recommended `app_version_count value` == 20)
 
   ```SELECT app_name, app_version, cardinality(merge(cast(hll AS HLL))) AS client_count FROM client_count GROUP BY 1, 2 ORDER BY 3 DESC LIMIT {{app_version_count}}```
 
@@ -281,8 +281,8 @@ Some final notes to help you create your dashboards:
 * Don't forget that you'll need to publish each of your queries before you can
   add its visualizations to your dashboard.
 
-* Similarly, it's a good idea to unpublish any test queries after you've used
-  them in a dashboard so as not to permanently pollute everyon's search results
+* Similarly, it's a good idea to un-publish any test queries after you've used
+  them in a dashboard so as not to permanently pollute everyone's search results
   with your tests and experiments. Queries that are the result of actual
   work-related analysis should usually remain published, so others can see and
   learn from them.
@@ -297,8 +297,8 @@ Some final notes to help you create your dashboards:
   more sophisticated queries and dashboards by browsing around and exploring
   the work that has been published by others.
 
-* The [redash help center](https://redash.io/help/) is useful for further deep
-  diving into redash and all of its capabilities.
+* The [Re:dash help center](https://redash.io/help/) is useful for further deep
+  diving into Re:dash and all of its capabilities.
 
 #### Prototyping Queries
 

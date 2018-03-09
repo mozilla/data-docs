@@ -1,4 +1,4 @@
-The public SSL dataset publishes the percentage of pageloads Firefox users have performed
+The public SSL dataset publishes the percentage of page loads Firefox users have performed
 that were conducted over SSL. This dataset is used to produce graphs like
 [Let's Encrypt's](https://letsencrypt.org/stats/) to determine SSL adoption on the Web
 over time.
@@ -11,11 +11,11 @@ statistics are `reporting_ratio`, `normalized_pageloads`, and `ratio`.
 
 #### Background and Caveats
 
-* We're using normalized values in `normalized_pageloads` to obscure absolute pageload counts.
+* We're using normalized values in `normalized_pageloads` to obscure absolute page load counts.
 * This is across the entirety of release, not per-version, because we're looking at Web health,
 not Firefox user health.
 * Any dimension tuple (any given combination of `submission_date`, `os`, and `country`) with 
-fewer than 5000 pageloads is omitted from the dataset.
+fewer than 5000 page loads is omitted from the dataset.
 * This is hopefully just a temporary dataset to stopgap release aggregates going away
 until we can come up with a better way to publicly publish datasets.
 

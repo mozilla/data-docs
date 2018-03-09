@@ -60,7 +60,7 @@ root
 # Code Reference
 
 The `search_clients_daily` job is 
-[defined in python_mozetl](https://github.com/mozilla/python_mozetl/blob/master/mozetl/search/aggregates.py)
+[defined in `python_mozetl`](https://github.com/mozilla/python_mozetl/blob/master/mozetl/search/aggregates.py)
 
 
 [search data documentation]: /datasets/search.md

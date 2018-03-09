@@ -8,23 +8,23 @@ It's important that we improve our documentation as often as possible.
 ## Getting the Raw Documentation
 
 The documentation is intended to be read as HTML at
-[docs.telemetry.mozilla.org](https://docs.telemetry.mozilla.org).
+[`docs.telemetry.mozilla.org`](https://docs.telemetry.mozilla.org).
 However, we store the documentation in raw text files in the
-[firefox-data-docs repo](https://github.com/mozilla/firefox-data-docs).
-To begin contributing to the docs, fork the firefox-data-docs repo.
+[`firefox-data-docs` repo](https://github.com/mozilla/firefox-data-docs).
+To begin contributing to the docs, fork the `firefox-data-docs` repo.
 
 ## Building the Documentation
 
-The documentation is rendered with [Gitbook](https://www.gitbook.com/)
+The documentation is rendered with [GitBook](https://www.gitbook.com/)
 To build the documentation locally,
-you'll need to install the gitbook-cli app with
+you'll need to install the `gitbook-cli` app with
 [npm](https://www.npmjs.com/get-npm):
 
 ```bash
 npm install gitbook-cli -g
 ```
 
-and install the gitbook plugins with:
+and install the GitBook plugins with:
 
 ```bash
 gitbook install
@@ -36,8 +36,8 @@ You can then serve the documentation locally with:
 gitbook serve
 ```
 
-The complete documentation for the gitbook toolchain is at: https://toolchain.gitbook.com/.
-If you run into any technical limitations, let me (@harterrt) know.
+The complete documentation for the GitBook toolchain is at: https://toolchain.gitbook.com/.
+If you run into any technical limitations, let me (`@harterrt`) know.
 I'm happy to change the tooling to make it as much fun as possible to write.
 
 ## Adding a new article
@@ -57,7 +57,7 @@ to check.
 Articles should be written in
 [Markdown](https://daringfireball.net/projects/markdown/syntax)
 (not [AsciiDoc](http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/)).
-Markdown is usually powerful enough and is a more common technology than Asciidoc.
+Markdown is usually powerful enough and is a more common technology than AsciiDoc.
 
 Limit lines to **100 characters** where possible.
 Try to split lines at the end of sentences.
@@ -72,11 +72,31 @@ Use **visual markup** like **bold text**, `code blocks`, and section headers.
 Avoid long paragraphs.
 Short paragraphs that describe one concept each makes finding important information easier.
 
+## Spell checking
+
+Articles should use proper spelling, and pull requests will be automatically checked for spelling
+errors.
+
+Technical articles often contain words that are not recognized by common dictionaries, if this
+happens you may either put specialized terms in `code blocks`, or you may add an exception to
+the `.spelling` file in the code repository.
+
+For things like dataset names or field names, `code blocks` should be preferred. Things like
+project names or common technical terms should be added to the `.spelling` file.
+
+To run the spell checker locally, [install the `markdown-spellcheck` library](https://www.npmjs.com/package/markdown-spellcheck), then run the following command from the root of the repository:
+
+`mdspell '**/*.md' '!**/node_modules/**/*.md' '!**/_book/**/*.md' --ignore-numbers --en-us --report`
+
+You may also omit the `--report` parameter to begin an interactive fixing session. In this
+case, it is highly recommended to also add the `--no-suggestions` parameter, which greatly
+speeds things up.
+
 ## Supported Plugins
 
 ### Mermaid
 
-You may use [mermaid.js](https://mermaidjs.github.io/) diagrams in code blocks:
+You may use [`mermaid.js`](https://mermaidjs.github.io/) diagrams in code blocks:
 ```
 graph LR
   you -->|write|docs
@@ -94,7 +114,7 @@ graph LR
 
 ## Review
 
-Once you're happy with your contribution, please open a PR and flag @harterrt for review.
+Once you're happy with your contribution, please open a PR and flag `@harterrt` for review.
 Please squash your changes  into meaningful commits  and follow these
 [commit message guidelines](https://chris.beams.io/posts/git-commit/).
 
@@ -106,7 +126,7 @@ Use the [deploy script](https://github.com/mozilla/firefox-data-docs/blob/master
 to publish new changes.
 
 This script depends on
-[ghp-import](https://github.com/davisp/ghp-import).
+[`ghp-import`](https://github.com/davisp/ghp-import).
 
 Keep in mind that this will deploy the docs to your `origin` repo.
 If you're working from a fork (which you should be),

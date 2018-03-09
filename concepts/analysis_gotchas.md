@@ -34,7 +34,7 @@ Most probes are "opt-in": we do not get information from them unless the user op
 1. Using Firefox's Options UI to tick the box that gives us permission
 2. Installing any pre-release version of Firefox
 
-The nature of selection bias is such that the population in #1 is useless for analysis. If you want to encourage users to collect good information for us, ask them to install Beta: it's only slightly harder than finding and checking the opt-in checkbox in Firefox.
+The nature of selection bias is such that the population in #1 is useless for analysis. If you want to encourage users to collect good information for us, ask them to install Beta: it's only slightly harder than finding and checking the opt-in check-box in Firefox.
 
 ### Trusting Dates
 
@@ -68,13 +68,13 @@ Telemetry data takes a while to get into our hands. The largest data mule in Tel
 
 A rule of thumb is data from two days ago is usually fairly representative.
 
-If you'd like to read more about this subject and look at pretty graphs, there are a series of blogposts [here](https://chuttenblog.wordpress.com/2017/02/09/data-science-is-hard-client-delays-for-crash-pings/), [here](https://chuttenblog.wordpress.com/2017/07/12/latency-improvements-or-yet-another-satisfying-graph/) and [here](https://chuttenblog.wordpress.com/2017/09/12/two-days-or-how-long-until-the-data-is-in/).
+If you'd like to read more about this subject and look at pretty graphs, there are a series of blog posts [here](https://chuttenblog.wordpress.com/2017/02/09/data-science-is-hard-client-delays-for-crash-pings/), [here](https://chuttenblog.wordpress.com/2017/07/12/latency-improvements-or-yet-another-satisfying-graph/) and [here](https://chuttenblog.wordpress.com/2017/09/12/two-days-or-how-long-until-the-data-is-in/).
 
 #### Pingsender
 
-Pingsender greatly reduces delay in sending pings to mozilla, but only some types of pings are sent by pingsender. [Bug 1310703](https://bugzilla.mozilla.org/show_bug.cgi?id=1310703) introduced pingsender for crash pings and was merged in Firefox 54, which hit release on June 13, 2017. [Bug 1336360](https://bugzilla.mozilla.org/show_bug.cgi?id=1336360) moved shutdown pings to pingsender and was merged in Firefox 55, which hit release on August 8, 2017. [Bug 1374270](https://bugzilla.mozilla.org/show_bug.cgi?id=1374270) added sending health pings on shutdown via pingsender and was merged in Firefox 56, which hit release on Sept 28, 2017. Other types of pings are not sent with pingsender. This is usually okay because Firefox is expected to continue running long enough to send those pings.
+Pingsender greatly reduces delay in sending pings to Mozilla, but only some types of pings are sent by Pingsender. [Bug 1310703](https://bugzilla.mozilla.org/show_bug.cgi?id=1310703) introduced Pingsender for crash pings and was merged in Firefox 54, which hit release on June 13, 2017. [Bug 1336360](https://bugzilla.mozilla.org/show_bug.cgi?id=1336360) moved shutdown pings to Pingsender and was merged in Firefox 55, which hit release on August 8, 2017. [Bug 1374270](https://bugzilla.mozilla.org/show_bug.cgi?id=1374270) added sending health pings on shutdown via Pingsender and was merged in Firefox 56, which hit release on Sept 28, 2017. Other types of pings are not sent with Pingsender. This is usually okay because Firefox is expected to continue running long enough to send those pings.
 
-Mobile clients do not have pingsender, so they suffer delay as given in [this query](https://sql.telemetry.mozilla.org/queries/49867#134105).
+Mobile clients do not have Pingsender, so they suffer delay as given in [this query](https://sql.telemetry.mozilla.org/queries/49867#134105).
 
 ### Submission Date
 

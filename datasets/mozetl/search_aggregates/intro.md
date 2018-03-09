@@ -18,7 +18,7 @@ Unless otherwise noted, these columns are taken directly from `main_summary`.
 * `source` - The UI component used to issue a search - e.g. `urlbar`, `abouthome`
 * `country`
 * `locale`
-* `addon_version` - The installed version of the [followonsearch addon]
+* `addon_version` - The installed version of the [`followonsearch` addon]
 * `app_version`
 * `distribution_id` - `NULL` means the standard Firefox build
 * `search_cohort` - `NULL` except for small segments relating to search experimentation
@@ -28,7 +28,7 @@ There are three aggregation columns:
 Each of these columns represent different types of searches.
 For more details, see the [search data documentation]
 Note that, if there were no such searches in a row's segment
-(ie. the count would be 0),
+(i.e. the count would be 0),
 the column value is `null`.
 
 <!--

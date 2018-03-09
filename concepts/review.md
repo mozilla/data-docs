@@ -1,7 +1,7 @@
 # Getting Analysis Review
 
 The current process for getting analysis review has not been optimized.
-If you run into problems, feel free to ask #datapipeline
+If you run into problems, feel free to ask in the `#datapipeline` channel on IRC.
 
 ## Table of Contents
 
@@ -33,7 +33,7 @@ To get review for your analysis,
 contact one of the data reviewers listed for the dataset your analysis is based upon:
 
 | Dataset           | Reviewers   |
-| :---              | :---        | 
+| :---              | :---        |
 | Longitudinal      |             |
 | Cross Sectional   |             |
 | Main Summary      |             |
@@ -76,14 +76,14 @@ which also requires moving the code out of a notebook.
 ### Where to store the package
 
 The data platform team maintains a python repository of analyses and ETL called
-[python_mozetl](https://github.com/mozilla/python_mozetl).
+[`python_mozetl`](https://github.com/mozilla/python_mozetl).
 Feel free to file a pull request against that repository.
 Your reviewer will provide analysis review during the code review.
-You'll need review for each commit to python_mozetl's master branch.
+You'll need review for each commit to `python_mozetl`'s master branch.
 
 If you are still prototyping your job but want to move out of a Jupyter notebook,
 take a look at
-[cookiecutter-python-etl](https://github.com/harterrt/cookiecutter-python-etl).
+[`cookiecutter-python-etl`](https://github.com/harterrt/cookiecutter-python-etl).
 This tool will help you configure a new python repository
 so you can hack quickly without getting review.
 

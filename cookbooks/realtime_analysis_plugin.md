@@ -10,7 +10,7 @@ Creating an analysis plugin consists of three steps:
 
 2. Writing the analysis code/business logic
 
-   The analysis code allows one to aggregrate, detect anomalies, apply machine
+   The analysis code allows one to aggregate, detect anomalies, apply machine
    learning algorithms etc.
 
 3. Writing the output code
@@ -23,7 +23,7 @@ Creating an analysis plugin consists of three steps:
 
 1. Go to the CEP site: https://pipeline-cep.prod.mozaws.net/
 
-1. Login/Register using your Google @mozilla.com account
+1. Login/Register using your Google `@mozilla.com` account
 
 1. Click on the `Plugin Deployment` tab
 
@@ -31,7 +31,7 @@ Creating an analysis plugin consists of three steps:
 
     1. Edit the `message_matcher` variable in the `Heka Analysis Plugin Configuration`
        text area. For this example we are selecting all telemetry messages. The
-       full syntax of the message matcher can be found here: 
+       full syntax of the message matcher can be found here:
        http://mozilla-services.github.io/lua_sandbox/util/message_matcher.html
 
        ```lua
@@ -49,28 +49,28 @@ Creating an analysis plugin consists of three steps:
 
 1. Delete the code in the `Heka Analysis Plugin` text area
 
-1. Create the Analysis Code (process_message)
+1. Create the Analysis Code (`process_message`)
 
    The `process_message` function is invoked every time a message is matched and
    should return 0 for success and -1 for failure. Full interface documentation:
    http://mozilla-services.github.io/lua_sandbox/heka/analysis.html
 
-    1. Here is the minimum  implementation; type it into the 
+    1. Here is the minimum  implementation; type it into the
        `Heka Analysis Plugin` text area:
-       
+
        ```lua
        function process_message()
            return 0 -- success
        end
        ```
 
-1. Create the Output Code (timer_event)
+1. Create the Output Code (`timer_event`)
 
    The `timer_event` function is invoked every `ticker_interval` seconds.
 
-    1. Here is the minimum inplementation; type it into the `Heka Analysis Plugin`
+    1. Here is the minimum implementation; type it into the `Heka Analysis Plugin`
        text area:
-       
+
        ```lua
        function timer_event()
        end
@@ -81,7 +81,7 @@ Creating an analysis plugin consists of three steps:
 
        Your results or error message will appear to the right. If an error is
        output, correct it and test again.
-   
+
 
 1. Extend the Code to Perform a Simple Message Count Analysis/Output
 
@@ -94,7 +94,7 @@ Creating an analysis plugin consists of three steps:
           cnt = cnt + 1                       -- count the number of messages that matched
           return 0
       end
-      
+
       function timer_event()
           inject_payload("txt", "types", cnt) -- output the count
       end
@@ -116,7 +116,7 @@ Creating an analysis plugin consists of three steps:
       function process_message()
           -- read the docType from the message, if it doesn't exist set it to "unknown"
           local dt = read_message("Fields[docType]") or "unknown"
-      
+
           -- look up the docType in the types hash
           local cnt = types[dt]
           if cnt then
@@ -143,7 +143,7 @@ Creating an analysis plugin consists of three steps:
        output, correct it and test again.
 
 1. Deploy the plugin
-    1. Click the `Deploy Plugin` button and dismiss the successfully deployed 
+    1. Click the `Deploy Plugin` button and dismiss the successfully deployed
        dialog.
 
 1. View the running plugin
@@ -155,11 +155,11 @@ Creating an analysis plugin consists of three steps:
 1. View the plugin output
     1. Click on the `Dashboards` tab
     1. Click on the `Raw Dashboard Output` link
-    1. Click on analysis.{user}.example.types.txt link
+    1. Click on `analysis.{user}.example.types.txt` link
 
 ### Where to go from here
 - Lua Reference: http://www.lua.org/manual/5.1/manual.html
 - Available Lua Modules: https://mozilla-services.github.io/lua_sandbox_extensions/
 - Support
-    - IRC: [#hindsight on irc.mozilla.org](irc://irc.mozilla.org/hindsight)
+    - IRC: [#hindsight on `irc.mozilla.org`](irc://irc.mozilla.org/hindsight)
     - Mailing list: https://mail.mozilla.org/listinfo/hindsight

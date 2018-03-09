@@ -16,8 +16,8 @@ This schema is just used to validate the incoming data; any ping that doesn't ma
 will be removed. Validate your JSON Schema using a
 [validation tool](https://jsonschemalint.com/#/version/draft-04/markup/json).
 
-We already have automatic deduping based on docId, which catches about 90% of duplicates and removes
-them from the dataset.
+We already have automatic deduplicating based on `docId`, which catches about 90% of duplicates and
+removes them from the dataset.
 
 Start a Data Review
 -------------------
@@ -26,7 +26,7 @@ Data review for new pings is more complicated than when adding new probes. See
 as an example. Consider where the data falls in the
 [Data Collection Categories](https://wiki.mozilla.org/Firefox/Data_Collection).
 
-Submit Schema to mozilla-services/mozilla-pipeline-schemas
+Submit Schema to `mozilla-services/mozilla-pipeline-schemas`
 ----------------------------------------------------------
 The first schema added should be the JSON Schema made in step 2.
 Add at least one example ping which the data can be validated against.
@@ -36,7 +36,7 @@ Additionally,
 a [Parquet output](https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/master/schemas/telemetry/core/core.9.parquetmr.txt)
 schema should be added. This would add a new dataset, available in [Re:dash](https://sql.telemetry.mozilla.org).
 The best documentation we have for the Parquet schema is by looking at the examples in
-[mozilla-pipeline-schemas](https://github.com/mozilla-services/mozilla-pipeline-schemas).
+[`mozilla-pipeline-schemas`](https://github.com/mozilla-services/mozilla-pipeline-schemas).
 
 Parquet output also has a `metadata` section. These are fields added to the ping at ingestion time;
 they might come from the URL submitted to the edge server, or the IP Address used to make the request.
@@ -50,13 +50,13 @@ under the `Fields` element. Any of these can be used in the `metadata` section o
 except for `submission`.
 
 Some common ones might be:
-- Date
-- submissionDate
-- geoCountry
-- geoCity
-- normalizedChannel
-- appVersion
-- appBuildId
+- `Date`
+- `submissionDate`
+- `geoCountry`
+- `geoCity`
+- `normalizedChannel`
+- `appVersion`
+- `appBuildId`
 
 *Important Note*: Schema evolution of nested structs is currently broken, so you will not be able to add
 any fields in the future to your `metadata` section. We recommend adding any that may seem useful.
@@ -78,23 +78,23 @@ File [a bug to deploy the new schema.](https://bugzilla.mozilla.org/show_bug.cgi
 
 Real-time analysis will be key to ensuring your data is being processed and parsed correctly.
 It should follow the format specified in
-[Moztelemetry doctype monitor](https://mozilla-services.github.io/lua_sandbox_extensions/moz_telemetry/sandboxes/heka/analysis/moz_telemetry_doctype_monitor.html).
+[MozTelemetry `docType` monitor](https://mozilla-services.github.io/lua_sandbox_extensions/moz_telemetry/sandboxes/heka/analysis/moz_telemetry_doctype_monitor.html).
 This allows you to check validation errors, size changes, duplicates, and more. Once you have
 the numbers set, file a
 [bug to let ops deploy it](https://bugzilla.mozilla.org/show_bug.cgi?id=1356380)
 
-(Telemetry-Specific) Register Doctype
+(Telemetry-Specific) Register `docType`
 -------------------------------------
 Data Platform Operations takes care of this. It will then be available to query more easily using
 the Dataset API. To do so, make a bug like
 [Bug 1292493](https://bugzilla.mozilla.org/show_bug.cgi?id=1292493).
 
-(Non-Telemetry) Add ping name to sources.json
+(Non-Telemetry) Add ping name to `sources.json`
 -------------------------------------------
-This will make it available with the [Dataset API](http://python-moztelemetry.readthedocs.io/en/stable/api.html#dataset) (used with pyspark on ATMO machines).
-There also needs to be a schema for the layout of the heka files in
-net-mozaws-prod-us-west-2-pipeline-metadata/<ping-name>/schema.json, where <ping-name> is located in source.json. If you want to do this, talk to
-:whd or :mreid.
+This will make it available with the [Dataset API](http://python-moztelemetry.readthedocs.io/en/stable/api.html#dataset) (used with PySpark on ATMO machines).
+There also needs to be a schema for the layout of the Heka files in
+`net-mozaws-prod-us-west-2-pipeline-metadata/<ping-name>/schema.json`, where <ping-name> is located in `sources.json`. If you want to do this, talk to
+`:whd` or `:mreid`.
 
 Start Sending Data
 ------------------
@@ -104,7 +104,7 @@ the [Android Telemetry APIs](https://github.com/mozilla-mobile/telemetry-android
 [iOS Telemetry APIs](https://github.com/mozilla-mobile/telemetry-ios). Otherwise, see
 [here for the endpoint and expected format](https://wiki.mozilla.org/CloudServices/DataPipeline/HTTPEdgeServerSpecification).
 
-Work is happening to make a 
+Work is happening to make a
 [generic endpoint](https://bugzilla.mozilla.org/show_bug.cgi?id=1363160).
 These pings can be easily registered and sent to our servers and will
 be automatically available in Re:dash. Please check back later for those docs.
@@ -122,4 +122,4 @@ available in re:dash. Check the docs on [creating your own datasets](create_a_da
 
 Build Dashboards Using ATMO or STMO
 -----------------------------------
-Last steps! What are you using this data for anyways?
+Last steps! What are you using this data for anyway?

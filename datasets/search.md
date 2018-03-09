@@ -22,7 +22,7 @@ To get access permissions, file a bug using the [search permissions template]
 Once you have proper permissions,
 you'll have access to a new source in re:dash called `Presto Search`.
 **You will not be able to access any of the search datasets
-via the standard `Presto` datasource**, even with proper permissions.
+via the standard `Presto` data source**, even with proper permissions.
 
 
 # Terminology
@@ -37,7 +37,7 @@ These searches are often called SAP searches.
 There are currently 6 SAPs:
 
 * `urlbar` - entering a search query in the Awesomebar
-* `searchbar` - the main search bar; not present by default for new profiles on v57+
+* `searchbar` - the main search bar; not present by default for new profiles on Firefox 57+
 * `newtab` - the search bar on the `about:newtab` page
 * `abouthome` - the search bar on the `about:home` page
 * `contextmenu` - selecting text and clicking "Search" from the context menu
@@ -80,12 +80,12 @@ Our search datasets are all derived from `main_summary`.
 The aggregate columns are derived from the `SEARCH_COUNTS` histogram.
 
 The **`SAP` column counts all SAP (or direct) searches**.
-`SAP` search counts are collected via 
+`SAP` search counts are collected via
 [probes](https://firefox-source-docs.mozilla.org/browser/browser/BrowserUsageTelemetry.html#search-telemetry)
 within the Firefox UI
 These counts are **very reliable, but do not count follow-on queries**.
 
-In 2017-06 we deployed the [followonsearch addon],
+In 2017-06 we deployed the [`followonsearch` addon],
 which adds probes for `tagged-sap` and `tagged-follow-on` searches.
 These columns **attempt to count all tagged searches**
 by looking for Mozilla partner codes in the URL of requests to partner search engines.
@@ -106,7 +106,7 @@ We remove search count observations representing more than
 
 # In Content Telemetry Issues
 
-The [followonsearch addon] implements the probe
+The [`followonsearch` addon] implements the probe
 used to measure `tagged-sap` and `tagged-follow-on` searches.
 This probe is critical to understanding our revenue.
 It's the only tool that gives us a view of follow-on searches
@@ -115,14 +115,14 @@ However, it comes with some notable caveats.
 
 ## Relies on whitelists
 
-The [followonsearch addon] attempts to count all tagged searches
+The [`followonsearch` addon] attempts to count all tagged searches
 by looking for Mozilla partner codes in the URL of requests to partner search engines.
 To do this, the addon relies on a whitelist of partner codes and URL formats.
 The list of partner codes is incomplete and only covers a few top partners.
 These codes also occasionally change so there will be gaps in the data.
 
 Additionally, changes to search engine URL formats can cause problems with our data collection.
-See 
+See
 [this query](https://sql.telemetry.mozilla.org/queries/47631/source#128887)
 for a notable example.
 

@@ -19,16 +19,16 @@ The work is being tracked in
     * https://wiki.mozilla.org/Firefox/Shield/Shield_Studies
     * https://mozilla.github.io/shield-studies-docs/study-process/
     * When should you use SHIELD over other options?
- 
+
 ## Preference Flipping experiments
 Uses Normandy, requires NO additional addon as long as a preference rides the release train
- 
+
 ## Heartbeat
 Survey mechanism, also run via Normandy
- 
+
 ## Telemetry Experiments
 Pre-release only
 https://gecko.readthedocs.io/en/latest/browser/experiments/experiments/index.html
- 
+
 ## Funnelcake
 Custom builds of Firefox that are served to some percentage of the direct download population

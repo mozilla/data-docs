@@ -6,11 +6,11 @@ Each tutorial should include:
 
 * Introduction
   * A short overview of why we built the dataset and what need it's meant to solve
-  * What datasource the data is collected from,
+  * What data source the data is collected from,
     and a high level overview of how the data is organized
   * How it is stored and how to access the data including
     * whether the data is available in re:dash
-    * s3 paths
+    * S3 paths
 * Reference
   * An example query to give the reader an idea of what the data looks like
     and how it is meant to be used
