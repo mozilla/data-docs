@@ -15,7 +15,7 @@ The Spark Python API is called PySpark.
 Setting Up a Spark Cluster On ATMO
 ----------------------------------
 
-1.  Go to https://analysis.telemetry.mozilla.org
+1.  Go to <https://analysis.telemetry.mozilla.org>
 2.  Click “Launch an ad-hoc Spark cluster”.
 3.  Enter some details:
     1.  The “Cluster Name” field should be a short descriptive name,
@@ -25,7 +25,7 @@ Setting Up a Spark Cluster On ATMO
         debug your job.
     3.  Upload your SSH public key.
 4.  Click “Submit”.
-5.  A cluster will be launched on AWS preconfigured with Spark, Jupyter
+5.  A cluster will be launched on AWS pre-configured with Spark, Jupyter
     and some handy data analysis libraries like `pandas` and `matplotlib`.
 
 Once the cluster is ready, you can tunnel Jupyter through SSH by
@@ -73,7 +73,7 @@ making a nice and easy-to-use dashboard.
 To schedule a Spark job:
 
 1.  Visit the analysis provisioning dashboard at
-    telemetry-dash.mozilla.org and sign in
+    <https://analysis.telemetry.mozilla.org> and sign in
 2.  Click “Schedule a Spark Job”
 3.  Enter some details:
     1.  The “Job Name” field should be a short descriptive name, like
@@ -97,7 +97,7 @@ Jupyter notebooks can be shared in a few different ways.
 
 #### Sharing a Static Notebook
 
-An easy way to share is using a gist on github.
+An easy way to share is using a gist on Github.
 
 1.  Download file as `.ipynb`
 2.  Upload to a gist on [`gist.github.com`](https://gist.github.com)

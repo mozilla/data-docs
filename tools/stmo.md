@@ -171,8 +171,8 @@ a y-axis column (`client_count`).:
 
 After the `GENERAL` settings have been specified, we'll want to tweak a few
 more settings on the `X AXIS` tab. You'll want to click on this tab and then
-change the 'Scale' setting to 'Category', and uncheck the 'Sort Values'
-checkbox to allow the query's sort order to take precedence:
+change the 'Scale' setting to 'Category', and un-check the 'Sort Values'
+check-box to allow the query's sort order to take precedence:
 
 ![Visualization X Axis](../assets/STMO_screenshots/x_axis_editor.png "Visualization X Axis")
 
@@ -281,7 +281,7 @@ Some final notes to help you create your dashboards:
 * Don't forget that you'll need to publish each of your queries before you can
   add its visualizations to your dashboard.
 
-* Similarly, it's a good idea to unpublish any test queries after you've used
+* Similarly, it's a good idea to un-publish any test queries after you've used
   them in a dashboard so as not to permanently pollute everyone's search results
   with your tests and experiments. Queries that are the result of actual
   work-related analysis should usually remain published, so others can see and

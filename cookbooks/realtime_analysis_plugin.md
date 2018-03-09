@@ -23,7 +23,7 @@ Creating an analysis plugin consists of three steps:
 
 1. Go to the CEP site: https://pipeline-cep.prod.mozaws.net/
 
-1. Login/Register using your Google @mozilla.com account
+1. Login/Register using your Google `@mozilla.com` account
 
 1. Click on the `Plugin Deployment` tab
 
@@ -49,7 +49,7 @@ Creating an analysis plugin consists of three steps:
 
 1. Delete the code in the `Heka Analysis Plugin` text area
 
-1. Create the Analysis Code (process_message)
+1. Create the Analysis Code (`process_message`)
 
    The `process_message` function is invoked every time a message is matched and
    should return 0 for success and -1 for failure. Full interface documentation:
@@ -64,7 +64,7 @@ Creating an analysis plugin consists of three steps:
        end
        ```
 
-1. Create the Output Code (timer_event)
+1. Create the Output Code (`timer_event`)
 
    The `timer_event` function is invoked every `ticker_interval` seconds.
 
@@ -155,11 +155,11 @@ Creating an analysis plugin consists of three steps:
 1. View the plugin output
     1. Click on the `Dashboards` tab
     1. Click on the `Raw Dashboard Output` link
-    1. Click on analysis.{user}.example.types.txt link
+    1. Click on `analysis.{user}.example.types.txt` link
 
 ### Where to go from here
 - Lua Reference: http://www.lua.org/manual/5.1/manual.html
 - Available Lua Modules: https://mozilla-services.github.io/lua_sandbox_extensions/
 - Support
-    - IRC: [#hindsight on irc.mozilla.org](irc://irc.mozilla.org/hindsight)
+    - IRC: [#hindsight on `irc.mozilla.org`](irc://irc.mozilla.org/hindsight)
     - Mailing list: https://mail.mozilla.org/listinfo/hindsight

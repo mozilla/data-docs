@@ -18,7 +18,7 @@ record that contains a non-null value for `client_id`.
 Each Addons record contains info for a single addon,
 or if the main ping did not contain any active addons,
 there will be a row with nulls for all the addon fields
-(to identify client_ids/records without any addons).
+(to identify `client_id`s/records without any addons).
 
 Like the Main Summary dataset, No attempt is made to de-duplicate submissions by `documentId`, so any analysis that could be affected by duplicate records should take care to remove duplicates using the `documentId` field.
 

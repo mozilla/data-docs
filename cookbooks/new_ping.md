@@ -26,7 +26,7 @@ Data review for new pings is more complicated than when adding new probes. See
 as an example. Consider where the data falls in the
 [Data Collection Categories](https://wiki.mozilla.org/Firefox/Data_Collection).
 
-Submit Schema to mozilla-services/mozilla-pipeline-schemas
+Submit Schema to `mozilla-services/mozilla-pipeline-schemas`
 ----------------------------------------------------------
 The first schema added should be the JSON Schema made in step 2.
 Add at least one example ping which the data can be validated against.
@@ -36,7 +36,7 @@ Additionally,
 a [Parquet output](https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/master/schemas/telemetry/core/core.9.parquetmr.txt)
 schema should be added. This would add a new dataset, available in [Re:dash](https://sql.telemetry.mozilla.org).
 The best documentation we have for the Parquet schema is by looking at the examples in
-[mozilla-pipeline-schemas](https://github.com/mozilla-services/mozilla-pipeline-schemas).
+[`mozilla-pipeline-schemas`](https://github.com/mozilla-services/mozilla-pipeline-schemas).
 
 Parquet output also has a `metadata` section. These are fields added to the ping at ingestion time;
 they might come from the URL submitted to the edge server, or the IP Address used to make the request.
@@ -92,7 +92,7 @@ the Dataset API. To do so, make a bug like
 (Non-Telemetry) Add ping name to `sources.json`
 -------------------------------------------
 This will make it available with the [Dataset API](http://python-moztelemetry.readthedocs.io/en/stable/api.html#dataset) (used with PySpark on ATMO machines).
-There also needs to be a schema for the layout of the heka files in
+There also needs to be a schema for the layout of the Heka files in
 `net-mozaws-prod-us-west-2-pipeline-metadata/<ping-name>/schema.json`, where <ping-name> is located in `sources.json`. If you want to do this, talk to
 `:whd` or `:mreid`.
 

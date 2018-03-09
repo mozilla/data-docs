@@ -20,7 +20,7 @@ reported in our [issue tracker](https://github.com/mozilla/redash/issues).
 The
 [`analysis.telemetry.mozilla.org`](https://https://analysis.telemetry.mozilla.org)
 (ATMO) site can be used to launch and gain access to virtual machines running
-Apache Spark clusters which have been preconfigured with access to the raw data
+Apache Spark clusters which have been pre-configured with access to the raw data
 stored in our long term storage S3 buckets. Spark allows you to use
 Python or Scala to perform arbitrary analysis and generate arbitrary
 output. Once developed, ATMO can also be used to run recurring Spark jobs
@@ -31,7 +31,7 @@ the [documentation](https://wiki.mozilla.org/Telemetry) or
 
 #### [`telemetry.mozilla.org`](analysis_intro.md) (TMO)
 
-Our [telemetry.mozilla.org](https://telemetry.mozilla.org) (TMO) site is the
+Our [`telemetry.mozilla.org`](https://telemetry.mozilla.org) (TMO) site is the
 'venerable standby' of Firefox telemetry analysis tools. It uses aggregate
 telemetry data (as opposed to the collated data sets that are exposed to most
 of the other tools) so it provides less latency than most but is unsuitable for
@@ -50,8 +50,8 @@ extracted from a 1% sample of the `clientId`s from Firefox Telemetry. These plot
 will allow you to understand how values of different metrics are spread out
 among our population of users rather than just using a one number summary (such
 as a mean or median). By viewing the entire distribution, you can get a sense
-of the importance of behaviour at the extremes as well as anomalies within the
-population that might indicate interesting behaviour. Very simple to use (no
+of the importance of behavior at the extremes as well as anomalies within the
+population that might indicate interesting behavior. Very simple to use (no
 programming required) and able to provide interesting insights, but not usually
 suitable for ad-hoc analysis.
 

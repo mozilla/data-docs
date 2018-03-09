@@ -63,7 +63,7 @@ This section describes the derived datasets we provide to make analyzing this da
 
 The [crash ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html)
 is captured after the main Firefox process crashes or after a content process crashes,
-whether or not the crash report is submitted to crash-stats.mozilla.org.
+whether or not the crash report is submitted to `crash-stats.mozilla.org`.
 It includes non-identifying metadata about the crash.
 
 This section describes the derived datasets we provide to make analyzing this data easier.

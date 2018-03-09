@@ -89,7 +89,7 @@ The `crash_aggregates` table has 4 commonly-used columns:
     * `dimensions['country']` is the country code for the user (determined using geoIP), like `US` or `UK`.
     * `dimensions['experiment_id']` is the identifier of the experiment being participated in, such as `e10s-beta46-noapz@experiments.mozilla.org`, or null if no experiment.
     * `dimensions['experiment_branch']` is the branch of the experiment being participated in, such as `control` or `experiment`, or null if no experiment.
-    * `dimensions['e10s_enabled']` is whether E10S is enabled.
+    * `dimensions['e10s_enabled']` is whether E10s is enabled.
     * `dimensions['gfx_compositor']` is the graphics backend compositor used by the program, such as `d3d11`, `opengl` and `simple`. Null values may be reported as `none` as well.
     * All of the above fields can potentially be blank, which means "not present". That means that in the actual pings, the corresponding fields were null.
 * `stats` contains the aggregate values that we care about:
@@ -99,6 +99,6 @@ The `crash_aggregates` table has 4 commonly-used columns:
     * `stats['plugin_crashes']` is the number of plugin process crashes represented by the aggregate.
     * `stats['gmplugin_crashes']` is the number of Gecko media plugin (often abbreviated `GMPlugin`) process crashes represented by the aggregate.
     * `stats['content_shutdown_crashes']` is the number of content process crashes that were caused by failure to shut down in a timely manner.
-    * `stats['gpu_crashes']` is the number of gpu process crashes represented by the aggregate.
+    * `stats['gpu_crashes']` is the number of GPU process crashes represented by the aggregate.
 
 `TODO(harter)`: https://bugzilla.mozilla.org/show_bug.cgi?id=1361862

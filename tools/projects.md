@@ -21,7 +21,7 @@ Below are a number of trailheads that lead into the projects and code that compr
 | [`telemetry-batch-view`][tbv]   | Scala ETL code for derived datasets
 | [`python_mozetl`][pyetl]        | Python ETL code for derived datasets
 | [`telemetry-airflow`][airflow]  | Airflow configuration and DAGs for scheduled jobs
-| [`python_mozaggregator`][pyagg] | Aggregation job for telemetry.mozilla.org aggregates
+| [`python_mozaggregator`][pyagg] | Aggregation job for `telemetry.mozilla.org` aggregates
 | [`telemetry-streaming`][stream] | Spark Streaming ETL jobs for Mozilla Telemetry
 
 See also [`firefox-data-docs`][docs] for documentation on datasets.

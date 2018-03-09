@@ -1,5 +1,5 @@
 The `longitudinal` dataset is a 1% sample of main ping data
-organized so that each row corresponds to a client_id.
+organized so that each row corresponds to a `client_id`.
 If you're not sure which dataset to use for your analysis,
 this is probably what you want.
 
@@ -7,7 +7,7 @@ this is probably what you want.
 Each row in the `longitudinal` dataset represents one `client_id`,
 which is approximately a user.
 Each column represents a field from the main ping.
-Most fields contain **arrays of values**, with one value for each ping associated with a client_id.
+Most fields contain **arrays of values**, with one value for each ping associated with a `client_id`.
 Using arrays give you access to the raw data from each ping,
 but can be difficult to work with from SQL.
 Here's a [query showing some sample data](https://sql.telemetry.mozilla.org/queries/4188#table)
@@ -21,8 +21,8 @@ and down-samples to 1% of all clients to reduce query computation time and save 
 
 In summary, the longitudinal table differs from `main_summary` in two important ways:
 
-* The longitudinal dataset groups all data so that one row represents a client_id
-* The longitudinal dataset samples to 1% of all client_ids
+* The longitudinal dataset groups all data so that one row represents a `client_id`
+* The longitudinal dataset samples to 1% of all `client_id`s
 
 Please note that this dataset only contains release (or opt-out) histograms and scalars.
 

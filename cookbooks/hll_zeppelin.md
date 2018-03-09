@@ -43,7 +43,7 @@ spark.udf.register("hll_cardinality", HllCardinality)
 
 ## Example Usage
 
-This is a short example which can also be used to verify expected behaviour.
+This is a short example which can also be used to verify expected behavior.
 ```scala
 case class Example(uid: String, color: String)
 

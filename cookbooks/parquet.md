@@ -45,7 +45,7 @@ Use your username for the subdirectory name.
 This bucket is available to all ATMO clusters and Airflow.
 
 When your analysis is production ready,
-open a PR against [python_mozetl](https://github.com/mozilla/python_mozetl).
+open a PR against [`python_mozetl`](https://github.com/mozilla/python_mozetl).
 
 ## How to save data
 

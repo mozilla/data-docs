@@ -78,9 +78,9 @@ The `error_aggregates` table has the following columns which define its dimensio
 * `country`: country code for the user (determined using geoIP), like `US` or `UK`
 * `experiment_id`: identifier of the experiment being participated in, such as `e10s-beta46-noapz@experiments.mozilla.org`, or null if no experiment
 * `experiment_branch`: the branch of the experiment being participated in, such as `control` or `experiment`, or null if no experiment
-* `e10s_enabled`: whether e10s is enabled
+* `e10s_enabled`: whether E10s is enabled
 * `gfx_compositor`: the graphics backend compositor used by the program, such as `d3d11`, `opengl` and `simple`. Null values may be reported as `none` as well
-* `quantum_ready`: whether the ping was submitted from an instance of Firefox that was Quantum-ready (i.e. no old-style add-ons)
+* `quantum_ready`: whether the ping was submitted from an instance of Firefox that was Quantum-ready (i.e. no old-style addons)
 
 And these are the various measures we are counting:
 
@@ -91,7 +91,7 @@ And these are the various measures we are counting:
 * `gmplugin_crashes`: number of Gecko media plugin (often abbreviated `GMPlugin`) process crashes
 * `content_shutdown_crashes`: number of content process crashes that were caused by failure to shut down in a timely manner (should always be
   less than the number of `content_crashes`)
-* `gpu_crashes`: number of gpu process crashes
+* `gpu_crashes`: number of GPU process crashes
 * `browser_shim_usage_blocked`: number of times a CPOW shim was blocked from being created by browser code
 * `permissions_sql_corrupted`: number of times the permissions SQL error occurred (beta/nightly only)
 * `defective_permissions_sql_removed`: number of times there was a removal of defective `permissions.sqlite` (beta/nightly only)

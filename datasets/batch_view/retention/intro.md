@@ -21,7 +21,7 @@ over `client_id`'s in the 7-day window.
 
 1. The data starts at 2017-03-06, the [merge date where Nightly started to
    track Firefox 55 in Mozilla-Central][release_calendar]. However, there was
-not a consistent view into the behaviour of first session profiles until the
+not a consistent view into the behavior of first session profiles until the
 [`new_profile` ping][new_profile]. This means much of the data is inaccurate
 before 2017-06-26.
 2. This dataset uses 4 day reporting latency to aggregate at least 99% of the

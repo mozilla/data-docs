@@ -17,7 +17,7 @@ queries can consume a lot of resources on the
 Queries via `sql.t.m.o` should limit to a short `submission_date_s3` range,
 and ideally make use of the `sample_id` field.
 
-When using Presto to query the data from sql.t.m.o,
+When using Presto to query the data from `sql.t.m.o`,
 you can use the `UNNEST` feature to access items in the
 `search_counts`, `popup_notification_stats` and `active_addons` fields.
 

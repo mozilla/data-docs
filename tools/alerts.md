@@ -99,7 +99,7 @@ build?
 -   If there's a group by topic (`SPDY`, `URLCLASSIFIER`, ...) check to see
     if the changes are similar in direction/magnitude. They usually are.
 -   If there's a group by build but not topic, maybe a large merge
-    kicked things over. Unfortunate, as that'll make finding the source
+    kicked things over. Unfortunate, as that will make finding the source
     more difficult.
 
 2\. Open the `hg.mozilla.org` and `alerts.telemetry.mozilla.org` links in
@@ -116,7 +116,7 @@ tabs
 3\. From `alerts.tmo`, open the <https://telemetry.mozilla.org> link by
 clicking on the plot's title. Open another tab to the Evolution View.
 
--   Is the change temporary? (might've been noticed elsewhere and
+-   Is the change temporary? (might have been noticed elsewhere and
     backed out)
 -   Is the change up or down?
 -   Has it happened before?
@@ -165,7 +165,7 @@ Is this probe still measuring something useful?
 ```
 
 Then ni? the person who pushed the change. Reply-all to the
-dev-telemetry-alerts mail with a link to the bug and some short notes on
+`dev-telemetry-alerts` mail with a link to the bug and some short notes on
 what you found.
 
 From here the user on ni? should get back to you in fairly short order

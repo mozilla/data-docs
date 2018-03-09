@@ -7,7 +7,7 @@ The work is being tracked in
 # Guide to our Experimental Tools
 
 ## Shield
-* Shield is an addon-based experimentation platform with fine-tuned enrolment criteria. The system add-on landed in FF 53.
+* Shield is an addon-based experimentation platform with fine-tuned enrollment criteria. The system add-on landed in FF 53.
 * For the moment, it sends back data in its own `shield` type ping, so there's lots of flexibility in data you can collect.
 * Uses the Normandy server to serve out study “recipes” (?)
 * Annotates the main ping in the environment/experiments block

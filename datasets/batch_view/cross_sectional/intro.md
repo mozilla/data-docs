@@ -1,5 +1,5 @@
 The `cross_sectional` dataset provides descriptive statistics
-for each client_id in a 1% sample of main ping data.
+for each `client_id` in a 1% sample of main ping data.
 This dataset simplifies the longitudinal table by replacing
 the longitudinal arrays with summary statistics.
 This is the most useful dataset for describing our user base.
@@ -7,7 +7,7 @@ This is the most useful dataset for describing our user base.
 #### Content
 Each row in the `cross_sectional` dataset represents one `client_id`,
 which is approximately a user.
-Each column is a summary statistic describing the client_id.
+Each column is a summary statistic describing the `client_id`.
 
 For example, the longitudinal table has a row called `geo_country`
 which contains an array of country codes.
@@ -29,7 +29,7 @@ This table has a limited number of pre-computed summary statistics
 so you're metric may not be included.
 
 Note that this dataset is a summary of the longitudinal dataset,
-so it is also a 1% sample of all client_ids.
+so it is also a 1% sample of all `client_id`s.
 
 All summary statistics are computed over the last 180 days,
 so this dataset can be insensitive to changes over time.

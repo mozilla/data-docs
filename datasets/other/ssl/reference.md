@@ -26,7 +26,7 @@ For this dataset the same rule applies. To combine rows' ratios (to, for example
 SSL ratio was across all `os` and `country` for a given `submission_date`), you must first
 multiply them by the rows' `normalized_pageviews` values.
 
-Or, in Javascript:
+Or, in JavaScript:
 
 ```js
 let rows = query_result.data.rows;

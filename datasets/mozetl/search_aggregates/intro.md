@@ -18,7 +18,7 @@ Unless otherwise noted, these columns are taken directly from `main_summary`.
 * `source` - The UI component used to issue a search - e.g. `urlbar`, `abouthome`
 * `country`
 * `locale`
-* `addon_version` - The installed version of the [followonsearch addon]
+* `addon_version` - The installed version of the [`followonsearch` addon]
 * `app_version`
 * `distribution_id` - `NULL` means the standard Firefox build
 * `search_cohort` - `NULL` except for small segments relating to search experimentation
