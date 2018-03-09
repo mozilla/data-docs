@@ -86,7 +86,7 @@ project names or common technical terms should be added to the `.spelling` file.
 
 To run the spell checker locally, [install the `markdown-spellcheck` library](https://www.npmjs.com/package/markdown-spellcheck), then run the following command from the root of the repository:
 
-`mdspell '**/*.md' '!**/node_modules/**/*.md' '!**/_book/**/*.md' --ignore-numbers --report`
+`mdspell '**/*.md' '!**/node_modules/**/*.md' '!**/_book/**/*.md' --ignore-numbers --en-us --report`
 
 You may also omit the `--report` parameter to begin an interactive fixing session.
 

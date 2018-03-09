@@ -6,7 +6,7 @@ install:
 script:
   - gitbook install
   - gitbook build
-  - mdspell '**/*.md' '!**/node_modules/**/*.md' '!**/_book/**/*.md' --ignore-numbers --report
+  - mdspell '**/*.md' '!**/node_modules/**/*.md' '!**/_book/**/*.md' --ignore-numbers --en-us --report
 deploy:
   provider: pages
   skip-cleanup: true
