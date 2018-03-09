@@ -88,7 +88,9 @@ To run the spell checker locally, [install the `markdown-spellcheck` library](ht
 
 `mdspell '**/*.md' '!**/node_modules/**/*.md' '!**/_book/**/*.md' --ignore-numbers --en-us --report`
 
-You may also omit the `--report` parameter to begin an interactive fixing session.
+You may also omit the `--report` parameter to begin an interactive fixing session. In this
+case, it is highly recommended to also add the `--no-suggestions` parameter, which greatly
+speeds things up.
 
 ## Supported Plugins
 
