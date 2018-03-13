@@ -137,7 +137,7 @@ distributed data.
 
 Check out
 [Spark Best Practices](https://robertovitillo.com/2015/06/30/spark-best-practices/)
-for tips on using Spark to it's full capabilities.
+for tips on using Spark to its full capabilities.
 
 ### `SparkContext` (`sc`)
 

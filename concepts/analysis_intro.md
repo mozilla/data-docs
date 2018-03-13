@@ -8,7 +8,7 @@ Measurement Types
 
 When we need to measure specific things about clients, we use probes. A single ping will send in many different probes. There are two types of probes that we are interested in here: *Histograms* and *Scalars*.
 
-Histograms are bucketed counts. The [`Histograms.json`](https://github.com/mozilla/gecko-dev/blob/master/toolkit/components/telemetry/Histograms.json) file has the definitions for all histograms, which includes the minimum, maximum, and number of buckets. Any recorded value instead just increments it's associated bucket. We have four main types of histograms:
+Histograms are bucketed counts. The [`Histograms.json`](https://github.com/mozilla/gecko-dev/blob/master/toolkit/components/telemetry/Histograms.json) file has the definitions for all histograms, which includes the minimum, maximum, and number of buckets. Any recorded value instead just increments its associated bucket. We have four main types of histograms:
 1. Boolean - Only two buckets, associated with true and false.
 2. Enumerated - Integer buckets, where usually each bucket has a label.
 3. Linear - Buckets are divided evenly between the minimum and maximum; e.g. [1-2] is a bucket, and so is [100-101].
