@@ -826,7 +826,7 @@
                 <a href="../../../cookbooks/create_a_dataset.html">
             
                     
-                    Creating a custom re:dash dataset
+                    Creating a custom Re:dash dataset
             
                 </a>
             
@@ -1015,14 +1015,14 @@
 </ul>
 <!-- tocstop -->
 <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
-<p>The <code>heavy_users</code> table provides information about whether a given client_id is
+<p>The <code>heavy_users</code> table provides information about whether a given <code>client_id</code> is
 considered a &quot;heavy user&quot; on each day (using submission date).</p>
 <h4 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h4>
 <p>The <code>heavy_users</code> table contains one row per client-day, where day is
 <code>submission_date</code>. A client has a row for a specific <code>submission_date</code> if
 they were active at all in the 28 day window ending on that <code>submission_date</code>.</p>
 <p>A user is a &quot;heavy user&quot; as of day N if, for the 28 day period ending
-on day N, the sum of their active_ticks is in the 90th percentile (or
+on day N, the sum of their <code>active_ticks</code> is in the 90th percentile (or
 above) of all clients during that period. For more analysis on this,
 and a discussion of new profiles, see
 <a href="https://metrics.mozilla.com/protected/sguha/heavy/heavycutoffs5.html" target="_blank">this link</a>.</p>
@@ -1045,7 +1045,7 @@ need to use the included <code>profile_creation_date</code> field to take this
 into account.</li>
 </ol>
 <h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
-<p>The data is available both via sql.t.m.o and Spark.</p>
+<p>The data is available both via <code>sql.t.m.o</code> and Spark.</p>
 <p>In Spark:</p>
 <pre><code class="lang-python">spark.read.parquet(<span class="hljs-string">&quot;s3://telemetry-parquet/heavy_users/v1&quot;</span>)
 </code></pre>
@@ -1064,7 +1064,7 @@ into account.</li>
 </ul>
 <h2 id="scheduling"><a name="scheduling" class="plugin-anchor" href="#scheduling"><i class="fa fa-link" aria-hidden="true"></i></a>Scheduling</h2>
 <p>This dataset is updated daily via the <a href="https://github.com/mozilla/telemetry-airflow" target="_blank">telemetry-airflow</a> infrastructure.
-The job DAG runs every day after main_summary is complete.
+The job DAG runs every day after <code>main_summary</code> is complete.
 You can find the job definition
 <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py#L187-L195" target="_blank">here</a>.</p>
 <h2 id="schema"><a name="schema" class="plugin-anchor" href="#schema"><i class="fa fa-link" aria-hidden="true"></i></a>Schema</h2>
@@ -1125,7 +1125,7 @@ Refer to this repository for information on how to run or augment the dataset.</
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Heavy Users","level":"1.3.3.2.15","depth":4,"next":{"title":"SSL Ratios (public)","level":"1.3.3.2.16","depth":4,"path":"datasets/other/ssl/reference.md","ref":"datasets/other/ssl/reference.md","articles":[]},"previous":{"title":"Update","level":"1.3.3.2.14","depth":4,"path":"datasets/batch_view/update/reference.md","ref":"datasets/batch_view/update/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/heavy_users/reference.md","mtime":"2018-03-06T13:15:17.618Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-06T13:16:45.146Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Heavy Users","level":"1.3.3.2.15","depth":4,"next":{"title":"SSL Ratios (public)","level":"1.3.3.2.16","depth":4,"path":"datasets/other/ssl/reference.md","ref":"datasets/other/ssl/reference.md","articles":[]},"previous":{"title":"Update","level":"1.3.3.2.14","depth":4,"path":"datasets/batch_view/update/reference.md","ref":"datasets/batch_view/update/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/heavy_users/reference.md","mtime":"2018-03-13T14:25:18.809Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-13T14:26:43.685Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

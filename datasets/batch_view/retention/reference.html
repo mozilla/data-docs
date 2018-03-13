@@ -826,7 +826,7 @@
                 <a href="../../../cookbooks/create_a_dataset.html">
             
                     
-                    Creating a custom re:dash dataset
+                    Creating a custom Re:dash dataset
             
                 </a>
             
@@ -1028,7 +1028,7 @@ pass while avoiding the problem of double counting. This data-structure has the
 benefit of being compact and performant in the context of retention analysis,
 at the expense of precision. For example, calculating a 7-day retention period
 can be obtained by aggregating over a week of retention data using the union
-operation. With SQL primitive, this requires a recomputation of COUNT DISTINCT
+operation. With SQL primitive, this requires a recalculation of COUNT DISTINCT
 over <code>client_id</code>&apos;s in the 7-day window.</p>
 <h4 id="background-and-caveats"><a name="background-and-caveats" class="plugin-anchor" href="#background-and-caveats"><i class="fa fa-link" aria-hidden="true"></i></a>Background and Caveats</h4>
 <ol>
@@ -1037,7 +1037,7 @@ track Firefox 55 in Mozilla-Central</a>. However, there was
 not a consistent view into the behavior of first session profiles until the
 <a href="../new_profile/reference.html"><code>new_profile</code> ping</a>. This means much of the data is inaccurate
 before 2017-06-26.</li>
-<li>This dataset uses 4-day reporting latency to aggregate at least 99% of the
+<li>This dataset uses 4 day reporting latency to aggregate at least 99% of the
 data in a given submission date. This figure is derived from the
 <a href="https://sql.telemetry.mozilla.org/dashboard/telemetry-health" target="_blank">telemetry-health measurements on submission latency</a>, with
 the discussion in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1407410" target="_blank">Bug 1407410</a>. This latency metric was reduced
@@ -1050,7 +1050,7 @@ on average. See <a href="https://github.com/twitter/algebird/blob/develop/algebi
 more details.</li>
 </ol>
 <h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
-<p>The data is primarily available through <a href="sql.telemetry.mozilla.org">Redash on STMO</a> via
+<p>The data is primarily available through <a href="sql.telemetry.mozilla.org">Re:dash on STMO</a> via
 the Presto source. This service has been configured to use predefined HLL
 functions.</p>
 <p>The column should first be cast to the HLL type. The scalar
@@ -1151,7 +1151,7 @@ EMR. This script can be used to perform backfill.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Retention","level":"1.3.3.2.11","depth":4,"next":{"title":"Clients Daily","level":"1.3.3.2.12","depth":4,"path":"datasets/mozetl/clients_daily/reference.md","ref":"datasets/mozetl/clients_daily/reference.md","articles":[]},"previous":{"title":"Churn","level":"1.3.3.2.10","depth":4,"path":"datasets/mozetl/churn/reference.md","ref":"datasets/mozetl/churn/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/retention/reference.md","mtime":"2018-03-06T13:15:17.618Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-06T13:16:45.146Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Retention","level":"1.3.3.2.11","depth":4,"next":{"title":"Clients Daily","level":"1.3.3.2.12","depth":4,"path":"datasets/mozetl/clients_daily/reference.md","ref":"datasets/mozetl/clients_daily/reference.md","articles":[]},"previous":{"title":"Churn","level":"1.3.3.2.10","depth":4,"path":"datasets/mozetl/churn/reference.md","ref":"datasets/mozetl/churn/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/retention/reference.md","mtime":"2018-03-13T14:25:18.809Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-13T14:26:43.685Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

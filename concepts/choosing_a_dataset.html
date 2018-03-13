@@ -826,7 +826,7 @@
                 <a href="../cookbooks/create_a_dataset.html">
             
                     
-                    Creating a custom re:dash dataset
+                    Creating a custom Re:dash dataset
             
                 </a>
             
@@ -1016,19 +1016,19 @@ take a look at our <a href="../tools/experiments.html">tools for experimentation
 <ul>
 <li><a href="#raw-pings">Raw Pings</a></li>
 <li><a href="#main-ping-derived-datasets">Main Ping Derived Datasets</a><ul>
-<li><a href="#longitudinal">longitudinal</a></li>
-<li><a href="#main_summary">main_summary</a></li>
-<li><a href="#cross_sectional">cross_sectional</a></li>
-<li><a href="#client_count">client_count</a></li>
-<li><a href="#heavy_users">heavy_users</a></li>
-<li><a href="#churn">churn</a></li>
-<li><a href="#retention">retention</a></li>
-<li><a href="#clients_daily">clients_daily</a></li>
+<li><a href="#%60longitudinal%60"><code>longitudinal</code></a></li>
+<li><a href="#%60main_summary%60"><code>main_summary</code></a></li>
+<li><a href="#%60cross_sectional%60"><code>cross_sectional</code></a></li>
+<li><a href="#%60client_count%60"><code>client_count</code></a></li>
+<li><a href="#%60heavy_users%60"><code>heavy_users</code></a></li>
+<li><a href="#%60churn%60"><code>churn</code></a></li>
+<li><a href="#%60retention%60"><code>retention</code></a></li>
+<li><a href="#%60clients_daily%60"><code>clients_daily</code></a></li>
 </ul>
 </li>
 <li><a href="#crash-ping-derived-datasets">Crash Ping Derived Datasets</a><ul>
-<li><a href="#crash_aggregates">crash_aggregates</a></li>
-<li><a href="#crash_summary">crash_summary</a></li>
+<li><a href="#%60crash_aggregates%60"><code>crash_aggregates</code></a></li>
+<li><a href="#%60crash_summary%60"><code>crash_summary</code></a></li>
 </ul>
 </li>
 <li><a href="#new-profile-derived-datasets">New-Profile Derived Datasets</a></li>
@@ -1074,16 +1074,16 @@ To augment our data collection, see <a href="https://developer.mozilla.org/en-US
 contains most of the measurements used to track performance and health of Firefox in the wild.
 This ping includes histograms, scalars, and events.</p>
 <p>This section describes the derived datasets we provide to make analyzing this data easier.</p>
-<h2 id="longitudinal"><a name="longitudinal" class="plugin-anchor" href="#longitudinal"><i class="fa fa-link" aria-hidden="true"></i></a>longitudinal</h2>
+<h2 id="longitudinal"><a name="longitudinal" class="plugin-anchor" href="#longitudinal"><i class="fa fa-link" aria-hidden="true"></i></a><code>longitudinal</code></h2>
 <p>The <code>longitudinal</code> dataset is a 1% sample of main ping data
-organized so that each row corresponds to a client_id.
+organized so that each row corresponds to a <code>client_id</code>.
 If you&apos;re not sure which dataset to use for your analysis,
 this is probably what you want.</p>
 <h4 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h4>
 <p>Each row in the <code>longitudinal</code> dataset represents one <code>client_id</code>,
 which is approximately a user.
 Each column represents a field from the main ping.
-Most fields contain <strong>arrays of values</strong>, with one value for each ping associated with a client_id.
+Most fields contain <strong>arrays of values</strong>, with one value for each ping associated with a <code>client_id</code>.
 Using arrays give you access to the raw data from each ping,
 but can be difficult to work with from SQL.
 Here&apos;s a <a href="https://sql.telemetry.mozilla.org/queries/4188#table" target="_blank">query showing some sample data</a>
@@ -1095,8 +1095,8 @@ The dataset contains more columns than <code>main_summary</code>
 and down-samples to 1% of all clients to reduce query computation time and save resources.</p>
 <p>In summary, the longitudinal table differs from <code>main_summary</code> in two important ways:</p>
 <ul>
-<li>The longitudinal dataset groups all data so that one row represents a client_id</li>
-<li>The longitudinal dataset samples to 1% of all client_ids</li>
+<li>The longitudinal dataset groups all data so that one row represents a <code>client_id</code></li>
+<li>The longitudinal dataset samples to 1% of all <code>client_id</code>s</li>
 </ul>
 <p>Please note that this dataset only contains release (or opt-out) histograms and scalars.</p>
 <h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
@@ -1107,7 +1107,7 @@ Take a look at this <a href="https://sql.telemetry.mozilla.org/queries/4189/sour
 See <a href="../cookbooks/parquet.html">this cookbook</a> to get started working with the data
 in <a href="http://spark.apache.org/docs/latest/quick-start.html" target="_blank">Spark</a>.</p>
 <pre><code>s3://telemetry-parquet/longitudinal/
-</code></pre><h2 id="mainsummary"><a name="mainsummary" class="plugin-anchor" href="#mainsummary"><i class="fa fa-link" aria-hidden="true"></i></a>main_summary</h2>
+</code></pre><h2 id="mainsummary"><a name="mainsummary" class="plugin-anchor" href="#mainsummary"><i class="fa fa-link" aria-hidden="true"></i></a><code>main_summary</code></h2>
 <p>The <code>main_summary</code> table is the most direct representation of a main ping
 but can be difficult to work with due to its size. 
 Prefer the <code>longitudinal</code> dataset unless using the sampled data is prohibitive.</p>
@@ -1117,7 +1117,7 @@ Each column represents one field from the main ping payload,
 though only a subset of all main ping fields are included.
 This dataset <strong>does not include histograms</strong>.</p>
 <h4 id="background-and-caveats"><a name="background-and-caveats" class="plugin-anchor" href="#background-and-caveats"><i class="fa fa-link" aria-hidden="true"></i></a>Background and Caveats</h4>
-<p>This table is massive, and due to it&apos;s size, it can be difficult to work with.
+<p>This table is massive, and due to its size, it can be difficult to work with.
 You should <strong>avoid querying <code>main_summary</code></strong> from <a href="https://sql.telemetry.mozilla.org" target="_blank">re:dash</a>.
 Your queries will be <strong>slow to complete</strong> and can <strong>impact performance for other users</strong>,
 since re:dash on a shared cluster.</p>
@@ -1139,21 +1139,21 @@ since re:dash is on a shared cluster.</p>
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/docs/MainSummary.md" target="_blank">telemetry-batch-view documentation</a>.</p>
 <p>The code responsible for generating this dataset is 
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/MainSummaryView.scala" target="_blank">here</a></p>
-<h2 id="crosssectional"><a name="crosssectional" class="plugin-anchor" href="#crosssectional"><i class="fa fa-link" aria-hidden="true"></i></a>cross_sectional</h2>
+<h2 id="crosssectional"><a name="crosssectional" class="plugin-anchor" href="#crosssectional"><i class="fa fa-link" aria-hidden="true"></i></a><code>cross_sectional</code></h2>
 <p>The <code>cross_sectional</code> dataset provides descriptive statistics
-for each client_id in a 1% sample of main ping data.
-This dataset simplifies the longitudinal table by replacing 
-the longitudinal arrays with summary statistics. 
+for each <code>client_id</code> in a 1% sample of main ping data.
+This dataset simplifies the longitudinal table by replacing
+the longitudinal arrays with summary statistics.
 This is the most useful dataset for describing our user base.</p>
 <h4 id="content"><a name="content" class="plugin-anchor" href="#content"><i class="fa fa-link" aria-hidden="true"></i></a>Content</h4>
 <p>Each row in the <code>cross_sectional</code> dataset represents one <code>client_id</code>,
 which is approximately a user.
-Each column is a summary statistic describing the client_id.</p>
-<p>For example, the longitudinal table has a row called <code>geo_country</code> 
+Each column is a summary statistic describing the <code>client_id</code>.</p>
+<p>For example, the longitudinal table has a row called <code>geo_country</code>
 which contains an array of country codes.
-For the same <code>client_id</code> the <code>cross_sectional</code> table 
-has columns called <code>geo_country_mode</code> and <code>geo_country_configs</code> 
-containing single summary statistics for 
+For the same <code>client_id</code> the <code>cross_sectional</code> table
+has columns called <code>geo_country_mode</code> and <code>geo_country_configs</code>
+containing single summary statistics for
 the modal country and the number of distinct countries in the array.</p>
 <table>
 <thead>
@@ -1185,21 +1185,21 @@ you don&apos;t need to work with arrays.
 This table has a limited number of pre-computed summary statistics
 so you&apos;re metric may not be included.</p>
 <p>Note that this dataset is a summary of the longitudinal dataset,
-so it is also a 1% sample of all client_ids.</p>
+so it is also a 1% sample of all <code>client_id</code>s.</p>
 <p>All summary statistics are computed over the last 180 days,
 so this dataset can be insensitive to changes over time.</p>
 <h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
-<p>The cross_sectional dataset is available in re:dash.
+<p>The <code>cross_sectional</code> dataset is available in Re:dash.
 Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/4202/source" target="_blank">example query</a>.</p>
 <p>The data is stored as a parquet table in S3 at the following address.
 See <a href="../cookbooks/parquet.html">this cookbook</a> to get started working with the data in Spark.</p>
 <pre><code>s3://telemetry-parquet/cross_sectional/v1/
 </code></pre><h4 id="further-reading"><a name="further-reading" class="plugin-anchor" href="#further-reading"><i class="fa fa-link" aria-hidden="true"></i></a>Further Reading</h4>
-<p>The <code>cross_sectional</code> dataset is generated by 
+<p>The <code>cross_sectional</code> dataset is generated by
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/CrossSectionalView.scala" target="_blank">this code</a>.
 Take a look at <a href="https://sql.telemetry.mozilla.org/queries/4203/source" target="_blank">this query</a> for a schema.</p>
-<h2 id="clientcount"><a name="clientcount" class="plugin-anchor" href="#clientcount"><i class="fa fa-link" aria-hidden="true"></i></a>client_count</h2>
-<p>The <code>client_count</code> dataset is useful for estimating user counts over a few 
+<h2 id="clientcount"><a name="clientcount" class="plugin-anchor" href="#clientcount"><i class="fa fa-link" aria-hidden="true"></i></a><code>client_count</code></h2>
+<p>The <code>client_count</code> dataset is useful for estimating user counts over a few
 <a href="https://github.com/mozilla/telemetry-airflow/blob/master/jobs/client_count_view.sh" target="_blank">pre-defined dimensions</a>.</p>
 <h4 id="content"><a name="content" class="plugin-anchor" href="#content"><i class="fa fa-link" aria-hidden="true"></i></a>Content</h4>
 <p>This dataset includes columns for a dozen factors and an HLL variable.
@@ -1218,23 +1218,23 @@ To find the cardinality of an HLL use <code>cardinality(cast(hll AS HLL))</code>
 To find the union of two HLL&apos;s over different dates, use <code>merge(cast(hll AS HLL))</code>.
 The <a href="https://sql.telemetry.mozilla.org/queries/81/source#129" target="_blank">Firefox ER Reporting Query</a>
 is a good example to review.
-Finally, Roberto has a relevant writeup
+Finally, Roberto has a relevant write-up
 <a href="https://robertovitillo.com/2016/04/12/measuring-product-engagment-at-scale/" target="_blank">here</a>.</p>
 <h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
-<p>The data is available in re:dash.
-Take a look at this 
+<p>The data is available in Re:dash.
+Take a look at this
 <a href="https://sql.telemetry.mozilla.org/queries/81/source#129" target="_blank">example query</a>.</p>
 <p>I don&apos;t recommend accessing this data from ATMO.</p>
 <h4 id="further-reading"><a name="further-reading" class="plugin-anchor" href="#further-reading"><i class="fa fa-link" aria-hidden="true"></i></a>Further Reading</h4>
-<h2 id="heavyusers"><a name="heavyusers" class="plugin-anchor" href="#heavyusers"><i class="fa fa-link" aria-hidden="true"></i></a>heavy_users</h2>
-<p>The <code>heavy_users</code> table provides information about whether a given client_id is
+<h2 id="heavyusers"><a name="heavyusers" class="plugin-anchor" href="#heavyusers"><i class="fa fa-link" aria-hidden="true"></i></a><code>heavy_users</code></h2>
+<p>The <code>heavy_users</code> table provides information about whether a given <code>client_id</code> is
 considered a &quot;heavy user&quot; on each day (using submission date).</p>
 <h4 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h4>
 <p>The <code>heavy_users</code> table contains one row per client-day, where day is
 <code>submission_date</code>. A client has a row for a specific <code>submission_date</code> if
 they were active at all in the 28 day window ending on that <code>submission_date</code>.</p>
 <p>A user is a &quot;heavy user&quot; as of day N if, for the 28 day period ending
-on day N, the sum of their active_ticks is in the 90th percentile (or
+on day N, the sum of their <code>active_ticks</code> is in the 90th percentile (or
 above) of all clients during that period. For more analysis on this,
 and a discussion of new profiles, see
 <a href="https://metrics.mozilla.com/protected/sguha/heavy/heavycutoffs5.html" target="_blank">this link</a>.</p>
@@ -1257,7 +1257,7 @@ need to use the included <code>profile_creation_date</code> field to take this
 into account.</li>
 </ol>
 <h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
-<p>The data is available both via sql.t.m.o and Spark.</p>
+<p>The data is available both via <code>sql.t.m.o</code> and Spark.</p>
 <p>In Spark:</p>
 <pre><code class="lang-python">spark.read.parquet(<span class="hljs-string">&quot;s3://telemetry-parquet/heavy_users/v1&quot;</span>)
 </code></pre>
@@ -1267,7 +1267,7 @@ into account.</li>
 <h4 id="further-reading"><a name="further-reading" class="plugin-anchor" href="#further-reading"><i class="fa fa-link" aria-hidden="true"></i></a>Further Reading</h4>
 <p>The code responsible for generating this dataset is
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/HeavyUsersView.scala" target="_blank">here</a></p>
-<h2 id="churn"><a name="churn" class="plugin-anchor" href="#churn"><i class="fa fa-link" aria-hidden="true"></i></a>churn</h2>
+<h2 id="churn"><a name="churn" class="plugin-anchor" href="#churn"><i class="fa fa-link" aria-hidden="true"></i></a><code>churn</code></h2>
 <p>The churn dataset tracks the 7-day churn rate of telemetry profiles. This
 dataset is generally used for analyzing cohort churn across segments and time.</p>
 <h4 id="content"><a name="content" class="plugin-anchor" href="#content"><i class="fa fa-link" aria-hidden="true"></i></a>Content</h4>
@@ -1422,10 +1422,10 @@ is tractable in STMO with <code>main_summary</code> or <code>clients_daily</code
 </li>
 </ul>
 <h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
-<p><code>churn</code> is available in Redash under Athena and Presto. The data is also
+<p><code>churn</code> is available in Re:dash under Athena and Presto. The data is also
 available in parquet for consumption by columnar data engines at
 <code>s3://telemetry-parquet/churn/v3</code>.</p>
-<h2 id="retention"><a name="retention" class="plugin-anchor" href="#retention"><i class="fa fa-link" aria-hidden="true"></i></a>retention</h2>
+<h2 id="retention"><a name="retention" class="plugin-anchor" href="#retention"><i class="fa fa-link" aria-hidden="true"></i></a><code>retention</code></h2>
 <p>The <code>retention</code> table provides client counts relevant to client retention at a
 1-day granularity. The project is tracked in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1381840" target="_blank">Bug 1381840</a></p>
 <h3 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h3>
@@ -1439,7 +1439,7 @@ pass while avoiding the problem of double counting. This data-structure has the
 benefit of being compact and performant in the context of retention analysis,
 at the expense of precision. For example, calculating a 7-day retention period
 can be obtained by aggregating over a week of retention data using the union
-operation. With SQL primitive, this requires a recomputation of COUNT DISTINCT
+operation. With SQL primitive, this requires a recalculation of COUNT DISTINCT
 over <code>client_id</code>&apos;s in the 7-day window.</p>
 <h4 id="background-and-caveats"><a name="background-and-caveats" class="plugin-anchor" href="#background-and-caveats"><i class="fa fa-link" aria-hidden="true"></i></a>Background and Caveats</h4>
 <ol>
@@ -1448,7 +1448,7 @@ track Firefox 55 in Mozilla-Central</a>. However, there was
 not a consistent view into the behavior of first session profiles until the
 <a href="../new_profile/reference.md"><code>new_profile</code> ping</a>. This means much of the data is inaccurate
 before 2017-06-26.</li>
-<li>This dataset uses 4-day reporting latency to aggregate at least 99% of the
+<li>This dataset uses 4 day reporting latency to aggregate at least 99% of the
 data in a given submission date. This figure is derived from the
 <a href="https://sql.telemetry.mozilla.org/dashboard/telemetry-health" target="_blank">telemetry-health measurements on submission latency</a>, with
 the discussion in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1407410" target="_blank">Bug 1407410</a>. This latency metric was reduced
@@ -1461,7 +1461,7 @@ on average. See <a href="https://github.com/twitter/algebird/blob/develop/algebi
 more details.</li>
 </ol>
 <h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
-<p>The data is primarily available through <a href="sql.telemetry.mozilla.org">Redash on STMO</a> via
+<p>The data is primarily available through <a href="sql.telemetry.mozilla.org">Re:dash on STMO</a> via
 the Presto source. This service has been configured to use predefined HLL
 functions.</p>
 <p>The column should first be cast to the HLL type. The scalar
@@ -1483,7 +1483,7 @@ the set union between all objects in a column.</p>
 configured STMO environment, <a href="https://github.com/mozilla/spark-hyperloglog" target="_blank"><code>spark-hyperloglog</code></a> and
 <a href="https://github.com/vitillo/presto-hyperloglog" target="_blank"><code>presto-hyperloglog</code></a>.</p>
 <p>Also see the <a href="../client_count/reference.md"><code>client_count</code> dataset</a>.</p>
-<h2 id="clientsdaily"><a name="clientsdaily" class="plugin-anchor" href="#clientsdaily"><i class="fa fa-link" aria-hidden="true"></i></a>clients_daily</h2>
+<h2 id="clientsdaily"><a name="clientsdaily" class="plugin-anchor" href="#clientsdaily"><i class="fa fa-link" aria-hidden="true"></i></a><code>clients_daily</code></h2>
 <p>The <code>clients_daily</code> table is intended as the first stop for asking questions
 about how people use Firefox. It should be easy to answer simple questions.
 Each row in the table is a (<code>client_id</code>, <code>activity_date</code>) and contains a
@@ -1511,10 +1511,10 @@ data source. It is also available via the <code>Presto</code> data source, thoug
 <h1 id="crash-ping-derived-datasets"><a name="crash-ping-derived-datasets" class="plugin-anchor" href="#crash-ping-derived-datasets"><i class="fa fa-link" aria-hidden="true"></i></a>Crash Ping Derived Datasets</h1>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html" target="_blank">crash ping</a>
 is captured after the main Firefox process crashes or after a content process crashes,
-whether or not the crash report is submitted to crash-stats.mozilla.org.
+whether or not the crash report is submitted to <code>crash-stats.mozilla.org</code>.
 It includes non-identifying metadata about the crash.</p>
 <p>This section describes the derived datasets we provide to make analyzing this data easier.</p>
-<h2 id="crashaggregates"><a name="crashaggregates" class="plugin-anchor" href="#crashaggregates"><i class="fa fa-link" aria-hidden="true"></i></a>crash_aggregates</h2>
+<h2 id="crashaggregates"><a name="crashaggregates" class="plugin-anchor" href="#crashaggregates"><i class="fa fa-link" aria-hidden="true"></i></a><code>crash_aggregates</code></h2>
 <p>The <code>crash_aggregates</code> dataset compiles crash statistics over various dimensions for each day.</p>
 <h4 id="rows-and-columns"><a name="rows-and-columns" class="plugin-anchor" href="#rows-and-columns"><i class="fa fa-link" aria-hidden="true"></i></a>Rows and Columns</h4>
 <p>There&apos;s one column for each of the stratifying dimensions and the crash statistics.
@@ -1532,7 +1532,7 @@ See <a href="../cookbooks/parquet.html">this cookbook</a> to get started working
 </code></pre><h4 id="further-reading"><a name="further-reading" class="plugin-anchor" href="#further-reading"><i class="fa fa-link" aria-hidden="true"></i></a>Further Reading</h4>
 <p>The technical documentation for this dataset can be found in the
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/docs/CrashAggregateView.md" target="_blank">telemetry-batch-view documentation</a></p>
-<h2 id="crashsummary"><a name="crashsummary" class="plugin-anchor" href="#crashsummary"><i class="fa fa-link" aria-hidden="true"></i></a>crash_summary</h2>
+<h2 id="crashsummary"><a name="crashsummary" class="plugin-anchor" href="#crashsummary"><i class="fa fa-link" aria-hidden="true"></i></a><code>crash_summary</code></h2>
 <p>The <code>crash_summary</code> table is the most direct representation of a crash ping.</p>
 <h4 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h4>
 <p>The <code>crash_summary</code> table contains one row for each crash ping.
@@ -1553,7 +1553,7 @@ Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/4793/source" t
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/new-profile-ping.html" target="_blank">new-profile ping</a>
 is sent from Firefox Desktop on the first session of a newly created profile and contains the initial
 information about the user environment.</p>
-<p>This data is available in the <strong>telemetry_new_profile_parquet</strong> dataset.</p>
+<p>This data is available in the <code>telemetry_new_profile_parquet</code> dataset.</p>
 <p>The <code>telemetry_new_profile_parquet</code> table is the most direct representation of a new-profile ping.</p>
 <h4 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h4>
 <p>The table contains one row for each ping. Each column represents one field from the new-profile ping payload, though only a subset of all fields are included.</p>
@@ -1564,7 +1564,7 @@ See <a href="../cookbooks/parquet.html">this cookbook</a> to get started working
 </code></pre><p>The <code>telemetry_new_profile_parquet</code> is accessible through re:dash.
 Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/5888#table" target="_blank">example query</a>.</p>
 <h4 id="further-reading"><a name="further-reading" class="plugin-anchor" href="#further-reading"><i class="fa fa-link" aria-hidden="true"></i></a>Further Reading</h4>
-<p>This dataset is generated automatically using direct to parquet. The configuration responsible for generating this dataset was introdueced in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1360256" target="_blank">bug 1360256</a>.</p>
+<p>This dataset is generated automatically using direct to parquet. The configuration responsible for generating this dataset was introduced in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1360256" target="_blank">bug 1360256</a>.</p>
 <h1 id="update-derived-dataset"><a name="update-derived-dataset" class="plugin-anchor" href="#update-derived-dataset"><i class="fa fa-link" aria-hidden="true"></i></a>Update Derived Dataset</h1>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/update-ping.html" target="_blank">update ping</a>
 is sent from Firefox Desktop when a browser update is ready to be applied and after it was correctly applied.
@@ -1586,10 +1586,10 @@ Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/31267#table" t
 <p>There are several tables owned by the mobile team documented
 <a href="https://wiki.mozilla.org/Mobile/Metrics/Redash" target="_blank">here</a>:</p>
 <ul>
-<li>android_events</li>
-<li>android_clients</li>
-<li>android_addons</li>
-<li>mobile_clients</li>
+<li><code>android_events</code></li>
+<li><code>android_clients</code></li>
+<li><code>android_addons</code></li>
+<li><code>mobile_clients</code></li>
 </ul>
 
                                 
@@ -1634,7 +1634,7 @@ Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/31267#table" t
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.3","depth":2,"next":{"title":"Intro to STMO","level":"1.2.4","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"previous":{"title":"Data Privacy","level":"1.2.2","depth":2,"path":"concepts/data_privacy.md","ref":"concepts/data_privacy.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2018-03-06T13:15:17.618Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-06T13:16:45.146Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.3","depth":2,"next":{"title":"Intro to STMO","level":"1.2.4","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"previous":{"title":"Data Privacy","level":"1.2.2","depth":2,"path":"concepts/data_privacy.md","ref":"concepts/data_privacy.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2018-03-13T14:25:18.805Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-13T14:26:43.685Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

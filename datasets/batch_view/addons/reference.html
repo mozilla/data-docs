@@ -826,7 +826,7 @@
                 <a href="../../../cookbooks/create_a_dataset.html">
             
                     
-                    Creating a custom re:dash dataset
+                    Creating a custom Re:dash dataset
             
                 </a>
             
@@ -1001,7 +1001,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="addons-datsets"><a name="addons-datsets" class="plugin-anchor" href="#addons-datsets"><i class="fa fa-link" aria-hidden="true"></i></a>Addons Datsets</h1>
+                                <h1 id="addons-datasets"><a name="addons-datasets" class="plugin-anchor" href="#addons-datasets"><i class="fa fa-link" aria-hidden="true"></i></a>Addons Datasets</h1>
 <!-- toc -->
 <ul>
 <li><a href="#introduction">Introduction</a></li>
@@ -1021,16 +1021,16 @@ The work is being tracked
 <h1 id="data-reference"><a name="data-reference" class="plugin-anchor" href="#data-reference"><i class="fa fa-link" aria-hidden="true"></i></a>Data Reference</h1>
 <h2 id="example-queries"><a name="example-queries" class="plugin-anchor" href="#example-queries"><i class="fa fa-link" aria-hidden="true"></i></a>Example Queries</h2>
 <h2 id="sampling"><a name="sampling" class="plugin-anchor" href="#sampling"><i class="fa fa-link" aria-hidden="true"></i></a>Sampling</h2>
-<p>It contains one or more records for every 
+<p>It contains one or more records for every
 <a href="../main_summary/reference.html">Main Summary</a>
 record that contains a non-null value for <code>client_id</code>.
 Each Addons record contains info for a single addon,
 or if the main ping did not contain any active addons,
 there will be a row with nulls for all the addon fields
-(to identify client_ids/records without any addons).</p>
+(to identify <code>client_id</code>s/records without any addons).</p>
 <p>Like the Main Summary dataset, No attempt is made to de-duplicate submissions by <code>documentId</code>, so any analysis that could be affected by duplicate records should take care to remove duplicates using the <code>documentId</code> field.</p>
 <h2 id="scheduling"><a name="scheduling" class="plugin-anchor" href="#scheduling"><i class="fa fa-link" aria-hidden="true"></i></a>Scheduling</h2>
-<p>This dataset is updated daily via the 
+<p>This dataset is updated daily via the
 <a href="https://github.com/mozilla/telemetry-airflow" target="_blank">telemetry-airflow</a> infrastructure.
 The job DAG runs every day after the Main Summary data has been generated.
 The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py#L36" target="_blank">here</a>.</p>
@@ -1060,8 +1060,8 @@ The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dag
  |-- sample_id: string (nullable = true)
 </code></pre><p>For more detail on where these fields come from in the
 <a href="https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/environment.html#addons" target="_blank">raw data</a>,
-please look 
-<a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/AddonsView.scala" target="_blank">in the AddonsView code</a>.</p>
+please look
+<a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/AddonsView.scala" target="_blank">in the <code>AddonsView</code> code</a>.</p>
 <p>The fields are all simple scalar values.</p>
 
                                 
@@ -1106,7 +1106,7 @@ please look
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Addons","level":"1.3.3.2.8","depth":4,"next":{"title":"Client Count","level":"1.3.3.2.9","depth":4,"path":"datasets/batch_view/client_count/reference.md","ref":"datasets/batch_view/client_count/reference.md","articles":[]},"previous":{"title":"Sync Summary","level":"1.3.3.2.7","depth":4,"path":"datasets/batch_view/sync_summary/reference.md","ref":"datasets/batch_view/sync_summary/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/addons/reference.md","mtime":"2018-03-06T13:15:17.618Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-06T13:16:45.146Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Addons","level":"1.3.3.2.8","depth":4,"next":{"title":"Client Count","level":"1.3.3.2.9","depth":4,"path":"datasets/batch_view/client_count/reference.md","ref":"datasets/batch_view/client_count/reference.md","articles":[]},"previous":{"title":"Sync Summary","level":"1.3.3.2.7","depth":4,"path":"datasets/batch_view/sync_summary/reference.md","ref":"datasets/batch_view/sync_summary/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/addons/reference.md","mtime":"2018-03-13T14:25:18.805Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-13T14:26:43.685Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

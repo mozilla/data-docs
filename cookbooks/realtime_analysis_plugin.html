@@ -826,7 +826,7 @@
                 <a href="create_a_dataset.html">
             
                     
-                    Creating a custom re:dash dataset
+                    Creating a custom Re:dash dataset
             
                 </a>
             
@@ -1009,7 +1009,7 @@
 <p>The message matcher allows one to select specific data from the data stream.</p>
 </li>
 <li><p>Writing the analysis code/business logic</p>
-<p>The analysis code allows one to aggregrate, detect anomalies, apply machine
+<p>The analysis code allows one to aggregate, detect anomalies, apply machine
 learning algorithms etc.</p>
 </li>
 <li><p>Writing the output code</p>
@@ -1021,7 +1021,7 @@ consume format.</p>
 <ol>
 <li><p>Go to the CEP site: <a href="https://pipeline-cep.prod.mozaws.net/" target="_blank">https://pipeline-cep.prod.mozaws.net/</a></p>
 </li>
-<li><p>Login/Register using your Google @mozilla.com account</p>
+<li><p>Login/Register using your Google <code>@mozilla.com</code> account</p>
 </li>
 <li><p>Click on the <code>Plugin Deployment</code> tab</p>
 </li>
@@ -1029,7 +1029,7 @@ consume format.</p>
 <ol>
 <li><p>Edit the <code>message_matcher</code> variable in the <code>Heka Analysis Plugin Configuration</code>
 text area. For this example we are selecting all telemetry messages. The
-full syntax of the message matcher can be found here: 
+full syntax of the message matcher can be found here:
 <a href="http://mozilla-services.github.io/lua_sandbox/util/message_matcher.html" target="_blank">http://mozilla-services.github.io/lua_sandbox/util/message_matcher.html</a></p>
 <pre><code class="lang-lua">message_matcher = <span class="hljs-string">&quot;Type == &apos;telemetry&apos;&quot;</span>
 </code></pre>
@@ -1048,12 +1048,12 @@ also useful for data exploration even when not developing a plugin.</p>
 </li>
 <li><p>Delete the code in the <code>Heka Analysis Plugin</code> text area</p>
 </li>
-<li><p>Create the Analysis Code (process_message)</p>
+<li><p>Create the Analysis Code (<code>process_message</code>)</p>
 <p>The <code>process_message</code> function is invoked every time a message is matched and
 should return 0 for success and -1 for failure. Full interface documentation:
 <a href="http://mozilla-services.github.io/lua_sandbox/heka/analysis.html" target="_blank">http://mozilla-services.github.io/lua_sandbox/heka/analysis.html</a></p>
 <ol>
-<li><p>Here is the minimum  implementation; type it into the 
+<li><p>Here is the minimum  implementation; type it into the
 <code>Heka Analysis Plugin</code> text area:</p>
 <pre><code class="lang-lua"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">process_message</span><span class="hljs-params">()</span></span>
     <span class="hljs-keyword">return</span> <span class="hljs-number">0</span> <span class="hljs-comment">-- success</span>
@@ -1062,10 +1062,10 @@ should return 0 for success and -1 for failure. Full interface documentation:
 </li>
 </ol>
 </li>
-<li><p>Create the Output Code (timer_event)</p>
+<li><p>Create the Output Code (<code>timer_event</code>)</p>
 <p>The <code>timer_event</code> function is invoked every <code>ticker_interval</code> seconds.</p>
 <ol>
-<li><p>Here is the minimum inplementation; type it into the <code>Heka Analysis Plugin</code>
+<li><p>Here is the minimum implementation; type it into the <code>Heka Analysis Plugin</code>
 text area:</p>
 <pre><code class="lang-lua"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">timer_event</span><span class="hljs-params">()</span></span>
 <span class="hljs-keyword">end</span>
@@ -1148,7 +1148,7 @@ output, correct it and test again.</p>
 </li>
 <li><p>Deploy the plugin</p>
 <ol>
-<li>Click the <code>Deploy Plugin</code> button and dismiss the successfully deployed 
+<li>Click the <code>Deploy Plugin</code> button and dismiss the successfully deployed
 dialog.</li>
 </ol>
 </li>
@@ -1164,7 +1164,7 @@ the source or stop the plugin.</li>
 <ol>
 <li>Click on the <code>Dashboards</code> tab</li>
 <li>Click on the <code>Raw Dashboard Output</code> link</li>
-<li>Click on analysis.{user}.example.types.txt link</li>
+<li>Click on <code>analysis.{user}.example.types.txt</code> link</li>
 </ol>
 </li>
 </ol>
@@ -1173,7 +1173,7 @@ the source or stop the plugin.</li>
 <li>Lua Reference: <a href="http://www.lua.org/manual/5.1/manual.html" target="_blank">http://www.lua.org/manual/5.1/manual.html</a></li>
 <li>Available Lua Modules: <a href="https://mozilla-services.github.io/lua_sandbox_extensions/" target="_blank">https://mozilla-services.github.io/lua_sandbox_extensions/</a></li>
 <li>Support<ul>
-<li>IRC: <a href="irc://irc.mozilla.org/hindsight" target="_blank">#hindsight on irc.mozilla.org</a></li>
+<li>IRC: <a href="irc://irc.mozilla.org/hindsight" target="_blank">#hindsight on <code>irc.mozilla.org</code></a></li>
 <li>Mailing list: <a href="https://mail.mozilla.org/listinfo/hindsight" target="_blank">https://mail.mozilla.org/listinfo/hindsight</a></li>
 </ul>
 </li>
@@ -1221,7 +1221,7 @@ the source or stop the plugin.</li>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Creating a Real-time Analysis Plugin","level":"1.4.2.3","depth":3,"next":{"title":"Distribution Viewer","level":"1.4.2.4","depth":3,"path":"tools/distribution_viewer.md","ref":"tools/distribution_viewer.md","articles":[]},"previous":{"title":"Custom analysis with Spark","level":"1.4.2.2","depth":3,"path":"tools/spark.md","ref":"tools/spark.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"cookbooks/realtime_analysis_plugin.md","mtime":"2018-03-06T13:15:17.618Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-06T13:16:45.146Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Creating a Real-time Analysis Plugin","level":"1.4.2.3","depth":3,"next":{"title":"Distribution Viewer","level":"1.4.2.4","depth":3,"path":"tools/distribution_viewer.md","ref":"tools/distribution_viewer.md","articles":[]},"previous":{"title":"Custom analysis with Spark","level":"1.4.2.2","depth":3,"path":"tools/spark.md","ref":"tools/spark.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"cookbooks/realtime_analysis_plugin.md","mtime":"2018-03-13T14:25:18.805Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-13T14:26:43.685Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

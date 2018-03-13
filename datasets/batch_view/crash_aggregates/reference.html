@@ -826,7 +826,7 @@
                 <a href="../../../cookbooks/create_a_dataset.html">
             
                     
-                    Creating a custom re:dash dataset
+                    Creating a custom Re:dash dataset
             
                 </a>
             
@@ -1050,7 +1050,7 @@ for each channel (sorted by number of usage hours):</p>
 <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> dimensions[<span class="hljs-string">&apos;channel&apos;</span>]
 <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> -<span class="hljs-keyword">sum</span>(stats[<span class="hljs-string">&apos;usage_hours&apos;</span>])
 </code></pre>
-<p>Main process crashes by build date and os version.</p>
+<p>Main process crashes by build date and OS version.</p>
 <pre><code class="lang-sql">WITH channel_rates AS (
   <span class="hljs-keyword">SELECT</span> dimensions[<span class="hljs-string">&apos;build_id&apos;</span>] <span class="hljs-keyword">AS</span> build_id,
          <span class="hljs-keyword">SUM</span>(stats[<span class="hljs-string">&apos;main_crashes&apos;</span>]) <span class="hljs-keyword">AS</span> main_crashes, <span class="hljs-comment">-- total number of crashes</span>
@@ -1076,7 +1076,7 @@ for each channel (sorted by number of usage hours):</p>
 <ul>
 <li>The submission dates or activity dates are invalid or missing.</li>
 <li>The build ID is malformed.</li>
-<li>The docType field is missing or unknown.</li>
+<li>The <code>docType</code> field is missing or unknown.</li>
 <li>The ping is a main ping without usage hours or a crash ping with usage hours.</li>
 </ul>
 <h2 id="scheduling"><a name="scheduling" class="plugin-anchor" href="#scheduling"><i class="fa fa-link" aria-hidden="true"></i></a>Scheduling</h2>
@@ -1099,7 +1099,7 @@ The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dag
 </li>
 <li><code>dimensions</code> is a map of all the other dimensions that we currently care about. These fields include:<ul>
 <li><code>dimensions[&apos;build_version&apos;]</code> is the program version, like <code>46.0a1</code>.</li>
-<li><code>dimensions[&apos;build_id&apos;]</code> is the YYYYMMDDhhmmss timestamp the program was built, like <code>20160123180541</code>. This is also known as the &quot;build ID&quot; or &quot;buildid&quot;.</li>
+<li><code>dimensions[&apos;build_id&apos;]</code> is the <code>YYYYMMDDhhmmss</code> timestamp the program was built, like <code>20160123180541</code>. This is also known as the <code>build ID</code> or <code>buildid</code>.</li>
 <li><code>dimensions[&apos;channel&apos;]</code> is the channel, like <code>release</code> or <code>beta</code>.</li>
 <li><code>dimensions[&apos;application&apos;]</code> is the program name, like <code>Firefox</code> or <code>Fennec</code>.</li>
 <li><code>dimensions[&apos;os_name&apos;]</code> is the name of the OS the program is running on, like <code>Darwin</code> or <code>Windows_NT</code>.</li>
@@ -1108,7 +1108,7 @@ The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dag
 <li><code>dimensions[&apos;country&apos;]</code> is the country code for the user (determined using geoIP), like <code>US</code> or <code>UK</code>.</li>
 <li><code>dimensions[&apos;experiment_id&apos;]</code> is the identifier of the experiment being participated in, such as <code>e10s-beta46-noapz@experiments.mozilla.org</code>, or null if no experiment.</li>
 <li><code>dimensions[&apos;experiment_branch&apos;]</code> is the branch of the experiment being participated in, such as <code>control</code> or <code>experiment</code>, or null if no experiment.</li>
-<li><code>dimensions[&apos;e10s_enabled&apos;]</code> is whether E10S is enabled.</li>
+<li><code>dimensions[&apos;e10s_enabled&apos;]</code> is whether E10s is enabled.</li>
 <li><code>dimensions[&apos;gfx_compositor&apos;]</code> is the graphics backend compositor used by the program, such as <code>d3d11</code>, <code>opengl</code> and <code>simple</code>. Null values may be reported as <code>none</code> as well.</li>
 <li>All of the above fields can potentially be blank, which means &quot;not present&quot;. That means that in the actual pings, the corresponding fields were null.</li>
 </ul>
@@ -1118,13 +1118,13 @@ The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dag
 <li><code>stats[&apos;main_crashes&apos;]</code> is the number of main process crashes represented by the aggregate (or just program crashes, in the non-E10S case).</li>
 <li><code>stats[&apos;content_crashes&apos;]</code> is the number of content process crashes represented by the aggregate.</li>
 <li><code>stats[&apos;plugin_crashes&apos;]</code> is the number of plugin process crashes represented by the aggregate.</li>
-<li><code>stats[&apos;gmplugin_crashes&apos;]</code> is the number of Gecko media plugin (often abbreviated GMPlugin) process crashes represented by the aggregate.</li>
+<li><code>stats[&apos;gmplugin_crashes&apos;]</code> is the number of Gecko media plugin (often abbreviated <code>GMPlugin</code>) process crashes represented by the aggregate.</li>
 <li><code>stats[&apos;content_shutdown_crashes&apos;]</code> is the number of content process crashes that were caused by failure to shut down in a timely manner.</li>
-<li><code>stats[&apos;gpu_crashes&apos;]</code> is the number of gpu process crashes represented by the aggregate.</li>
+<li><code>stats[&apos;gpu_crashes&apos;]</code> is the number of GPU process crashes represented by the aggregate.</li>
 </ul>
 </li>
 </ul>
-<p>TODO(harter): <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1361862" target="_blank">https://bugzilla.mozilla.org/show_bug.cgi?id=1361862</a></p>
+<p><code>TODO(harter)</code>: <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1361862" target="_blank">https://bugzilla.mozilla.org/show_bug.cgi?id=1361862</a></p>
 
                                 
                                 </section>
@@ -1168,7 +1168,7 @@ The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dag
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Crash Aggregate","level":"1.3.3.2.5","depth":4,"next":{"title":"Events","level":"1.3.3.2.6","depth":4,"path":"datasets/batch_view/events/reference.md","ref":"datasets/batch_view/events/reference.md","articles":[]},"previous":{"title":"Crash Summary","level":"1.3.3.2.4","depth":4,"path":"datasets/batch_view/crash_summary/reference.md","ref":"datasets/batch_view/crash_summary/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/crash_aggregates/reference.md","mtime":"2018-03-06T13:15:17.618Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-06T13:16:45.146Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Crash Aggregate","level":"1.3.3.2.5","depth":4,"next":{"title":"Events","level":"1.3.3.2.6","depth":4,"path":"datasets/batch_view/events/reference.md","ref":"datasets/batch_view/events/reference.md","articles":[]},"previous":{"title":"Crash Summary","level":"1.3.3.2.4","depth":4,"path":"datasets/batch_view/crash_summary/reference.md","ref":"datasets/batch_view/crash_summary/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/crash_aggregates/reference.md","mtime":"2018-03-13T14:25:18.805Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-13T14:26:43.685Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

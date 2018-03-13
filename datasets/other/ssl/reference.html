@@ -826,7 +826,7 @@
                 <a href="../../../cookbooks/create_a_dataset.html">
             
                     
-                    Creating a custom re:dash dataset
+                    Creating a custom Re:dash dataset
             
                 </a>
             
@@ -1015,7 +1015,7 @@
 </ul>
 <!-- tocstop -->
 <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
-<p>The public SSL dataset publishes the percentage of pageloads Firefox users have performed
+<p>The public SSL dataset publishes the percentage of page loads Firefox users have performed
 that were conducted over SSL. This dataset is used to produce graphs like
 <a href="https://letsencrypt.org/stats/" target="_blank">Let&apos;s Encrypt&apos;s</a> to determine SSL adoption on the Web
 over time.</p>
@@ -1025,11 +1025,11 @@ associated SSL statistics. The dimensions are <code>submission_date</code>, <cod
 statistics are <code>reporting_ratio</code>, <code>normalized_pageloads</code>, and <code>ratio</code>.</p>
 <h4 id="background-and-caveats"><a name="background-and-caveats" class="plugin-anchor" href="#background-and-caveats"><i class="fa fa-link" aria-hidden="true"></i></a>Background and Caveats</h4>
 <ul>
-<li>We&apos;re using normalized values in <code>normalized_pageloads</code> to obscure absolute pageload counts.</li>
+<li>We&apos;re using normalized values in <code>normalized_pageloads</code> to obscure absolute page load counts.</li>
 <li>This is across the entirety of release, not per-version, because we&apos;re looking at Web health,
 not Firefox user health.</li>
 <li>Any dimension tuple (any given combination of <code>submission_date</code>, <code>os</code>, and <code>country</code>) with 
-fewer than 5000 pageloads is omitted from the dataset.</li>
+fewer than 5000 page loads is omitted from the dataset.</li>
 <li>This is hopefully just a temporary dataset to stopgap release aggregates going away
 until we can come up with a better way to publicly publish datasets.</li>
 </ul>
@@ -1045,12 +1045,12 @@ that 20% (6 loads) of the total loads (30 loads) were SSL unless you know that t
 <p>If you&apos;re reluctant, for product reasons, to share the numbers 10 and 20, this gets tricky.</p>
 <p>So what we&apos;ve done is normalize the whole batch of 30 down to 1. That means we tell you that
 50% of one-third of the loads (0.333...) was SSL and 5% of the other two-thirds of the loads
-(0.666...) was SSL. Then you can figure out the overall 20% figure by this cacluation:</p>
+(0.666...) was SSL. Then you can figure out the overall 20% figure by this calculation:</p>
 <p><code>0.5 * 0.333 + 0.05 * 0.666 = 0.2</code></p>
 <p>For this dataset the same rule applies. To combine rows&apos; ratios (to, for example, see what the
 SSL ratio was across all <code>os</code> and <code>country</code> for a given <code>submission_date</code>), you must first
 multiply them by the rows&apos; <code>normalized_pageviews</code> values.</p>
-<p>Or, in Javascript:</p>
+<p>Or, in JavaScript:</p>
 <pre><code class="lang-js"><span class="hljs-keyword">let</span> rows = query_result.data.rows;
 <span class="hljs-keyword">let</span> ratioForDateInQuestion = rows
   .filter(row =&gt; row.submission_date == dateInQuestion)
@@ -1136,7 +1136,7 @@ multiply them by the rows&apos; <code>normalized_pageviews</code> values.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"SSL Ratios (public)","level":"1.3.3.2.16","depth":4,"next":{"title":"Error Aggregates","level":"1.3.3.2.17","depth":4,"path":"datasets/streaming/error_aggregates/reference.md","ref":"datasets/streaming/error_aggregates/reference.md","articles":[]},"previous":{"title":"Heavy Users","level":"1.3.3.2.15","depth":4,"path":"datasets/batch_view/heavy_users/reference.md","ref":"datasets/batch_view/heavy_users/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/other/ssl/reference.md","mtime":"2018-03-06T13:15:17.622Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-06T13:16:45.146Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"SSL Ratios (public)","level":"1.3.3.2.16","depth":4,"next":{"title":"Error Aggregates","level":"1.3.3.2.17","depth":4,"path":"datasets/streaming/error_aggregates/reference.md","ref":"datasets/streaming/error_aggregates/reference.md","articles":[]},"previous":{"title":"Heavy Users","level":"1.3.3.2.15","depth":4,"path":"datasets/batch_view/heavy_users/reference.md","ref":"datasets/batch_view/heavy_users/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/other/ssl/reference.md","mtime":"2018-03-13T14:25:18.809Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-13T14:26:43.685Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

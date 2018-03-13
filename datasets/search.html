@@ -826,7 +826,7 @@
                 <a href="../cookbooks/create_a_dataset.html">
             
                     
-                    Creating a custom re:dash dataset
+                    Creating a custom Re:dash dataset
             
                 </a>
             
@@ -1037,7 +1037,7 @@ To get access permissions, file a bug using the <a href="https://bugzilla.mozill
 <p>Once you have proper permissions,
 you&apos;ll have access to a new source in re:dash called <code>Presto Search</code>.
 <strong>You will not be able to access any of the search datasets
-via the standard <code>Presto</code> datasource</strong>, even with proper permissions.</p>
+via the standard <code>Presto</code> data source</strong>, even with proper permissions.</p>
 <h1 id="terminology"><a name="terminology" class="plugin-anchor" href="#terminology"><i class="fa fa-link" aria-hidden="true"></i></a>Terminology</h1>
 <h2 id="direct-vs-follow-on-search"><a name="direct-vs-follow-on-search" class="plugin-anchor" href="#direct-vs-follow-on-search"><i class="fa fa-link" aria-hidden="true"></i></a>Direct vs Follow-on Search</h2>
 <p>Searches can be split into two major classes: <em>direct</em> and <em>follow-on</em>.</p>
@@ -1047,7 +1047,7 @@ These searches are often called SAP searches.
 There are currently 6 SAPs:</p>
 <ul>
 <li><code>urlbar</code> - entering a search query in the Awesomebar</li>
-<li><code>searchbar</code> - the main search bar; not present by default for new profiles on v57+</li>
+<li><code>searchbar</code> - the main search bar; not present by default for new profiles on Firefox 57+</li>
 <li><code>newtab</code> - the search bar on the <code>about:newtab</code> page</li>
 <li><code>abouthome</code> - the search bar on the <code>about:home</code> page</li>
 <li><code>contextmenu</code> - selecting text and clicking &quot;Search&quot; from the context menu</li>
@@ -1082,11 +1082,11 @@ These aggregates show up as columns in the
 Our search datasets are all derived from <code>main_summary</code>.
 The aggregate columns are derived from the <code>SEARCH_COUNTS</code> histogram.</p>
 <p>The <strong><code>SAP</code> column counts all SAP (or direct) searches</strong>.
-<code>SAP</code> search counts are collected via 
+<code>SAP</code> search counts are collected via
 <a href="https://firefox-source-docs.mozilla.org/browser/browser/BrowserUsageTelemetry.html#search-telemetry" target="_blank">probes</a>
 within the Firefox UI
 These counts are <strong>very reliable, but do not count follow-on queries</strong>.</p>
-<p>In 2017-06 we deployed the <a href="https://github.com/mozilla/followonsearch" target="_blank">followonsearch addon</a>,
+<p>In 2017-06 we deployed the [<code>followonsearch</code> addon],
 which adds probes for <code>tagged-sap</code> and <code>tagged-follow-on</code> searches.
 These columns <strong>attempt to count all tagged searches</strong>
 by looking for Mozilla partner codes in the URL of requests to partner search engines.
@@ -1101,20 +1101,20 @@ Avoid using <code>main_summary</code> for search analyses.</p>
 <p>We remove search count observations representing more than
 10,000 searches for a single search engine in a single ping.</p>
 <h1 id="in-content-telemetry-issues"><a name="in-content-telemetry-issues" class="plugin-anchor" href="#in-content-telemetry-issues"><i class="fa fa-link" aria-hidden="true"></i></a>In Content Telemetry Issues</h1>
-<p>The <a href="https://github.com/mozilla/followonsearch" target="_blank">followonsearch addon</a> implements the probe
+<p>The [<code>followonsearch</code> addon] implements the probe
 used to measure <code>tagged-sap</code> and <code>tagged-follow-on</code> searches.
 This probe is critical to understanding our revenue.
 It&apos;s the only tool that gives us a view of follow-on searches
 and differentiates between tagged and untagged queries.
 However, it comes with some notable caveats.</p>
 <h2 id="relies-on-whitelists"><a name="relies-on-whitelists" class="plugin-anchor" href="#relies-on-whitelists"><i class="fa fa-link" aria-hidden="true"></i></a>Relies on whitelists</h2>
-<p>The <a href="https://github.com/mozilla/followonsearch" target="_blank">followonsearch addon</a> attempts to count all tagged searches
+<p>The [<code>followonsearch</code> addon] attempts to count all tagged searches
 by looking for Mozilla partner codes in the URL of requests to partner search engines.
 To do this, the addon relies on a whitelist of partner codes and URL formats.
 The list of partner codes is incomplete and only covers a few top partners.
 These codes also occasionally change so there will be gaps in the data.</p>
 <p>Additionally, changes to search engine URL formats can cause problems with our data collection.
-See 
+See
 <a href="https://sql.telemetry.mozilla.org/queries/47631/source#128887" target="_blank">this query</a>
 for a notable example.</p>
 <h2 id="addon-uptake"><a name="addon-uptake" class="plugin-anchor" href="#addon-uptake"><i class="fa fa-link" aria-hidden="true"></i></a>Addon uptake</h2>
@@ -1169,7 +1169,7 @@ There is no <code>tagged-*</code> search data available before this.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Search Datasets","level":"1.3.3.4","depth":3,"next":{"title":"Search Aggregates","level":"1.3.3.4.1","depth":4,"path":"datasets/mozetl/search_aggregates/reference.md","ref":"datasets/mozetl/search_aggregates/reference.md","articles":[]},"previous":{"title":"Accessing Shield Study data","level":"1.3.3.3.1","depth":4,"path":"datasets/shield.md","ref":"datasets/shield.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/search.md","mtime":"2018-03-06T13:15:17.622Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-06T13:16:45.146Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Search Datasets","level":"1.3.3.4","depth":3,"next":{"title":"Search Aggregates","level":"1.3.3.4.1","depth":4,"path":"datasets/mozetl/search_aggregates/reference.md","ref":"datasets/mozetl/search_aggregates/reference.md","articles":[]},"previous":{"title":"Accessing Shield Study data","level":"1.3.3.3.1","depth":4,"path":"datasets/shield.md","ref":"datasets/shield.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/search.md","mtime":"2018-03-13T14:25:18.809Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-13T14:26:43.685Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

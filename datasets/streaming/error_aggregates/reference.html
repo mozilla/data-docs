@@ -826,7 +826,7 @@
                 <a href="../../../cookbooks/create_a_dataset.html">
             
                     
-                    Creating a custom re:dash dataset
+                    Creating a custom Re:dash dataset
             
                 </a>
             
@@ -1036,7 +1036,7 @@ by summing using SQL.</p>
 <h1 id="data-reference"><a name="data-reference" class="plugin-anchor" href="#data-reference"><i class="fa fa-link" aria-hidden="true"></i></a>Data Reference</h1>
 <h2 id="example-queries"><a name="example-queries" class="plugin-anchor" href="#example-queries"><i class="fa fa-link" aria-hidden="true"></i></a>Example Queries</h2>
 <p>Getting a large number of different crash measures across many platforms and channels
-(<a href="https://sql.telemetry.mozilla.org/queries/4769/source" target="_blank">view on redash</a>):</p>
+(<a href="https://sql.telemetry.mozilla.org/queries/4769/source" target="_blank">view on Re:dash</a>):</p>
 <pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> window_start,
        build_id,
        channel,
@@ -1049,15 +1049,15 @@ by summing using SQL.</p>
        <span class="hljs-keyword">sum</span>(plugin_crashes) <span class="hljs-keyword">AS</span> <span class="hljs-keyword">plugin</span>,
        <span class="hljs-keyword">sum</span>(gmplugin_crashes) <span class="hljs-keyword">AS</span> gmplugin
 <span class="hljs-keyword">FROM</span> telemetry.error_aggregates
-  <span class="hljs-keyword">WHERE</span> application = <span class="hljs-string">&apos;Firefox&apos;</span> 
+  <span class="hljs-keyword">WHERE</span> application = <span class="hljs-string">&apos;Firefox&apos;</span>
   <span class="hljs-keyword">AND</span> (os_name = <span class="hljs-string">&apos;Darwin&apos;</span> <span class="hljs-keyword">or</span> os_name = <span class="hljs-string">&apos;Linux&apos;</span> <span class="hljs-keyword">or</span> os_name = <span class="hljs-string">&apos;Windows_NT&apos;</span>)
   <span class="hljs-keyword">AND</span> (channel = <span class="hljs-string">&apos;beta&apos;</span> <span class="hljs-keyword">or</span> channel = <span class="hljs-string">&apos;release&apos;</span> <span class="hljs-keyword">or</span> channel = <span class="hljs-string">&apos;nightly&apos;</span> <span class="hljs-keyword">or</span> channel = <span class="hljs-string">&apos;esr&apos;</span>)
   <span class="hljs-keyword">AND</span> build_id &gt; <span class="hljs-string">&apos;201801&apos;</span>
   <span class="hljs-keyword">AND</span> window_start &gt; <span class="hljs-keyword">current_timestamp</span> - (<span class="hljs-number">1</span> * <span class="hljs-built_in">interval</span> <span class="hljs-string">&apos;24&apos;</span> <span class="hljs-keyword">hour</span>)
 <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> window_start, channel, build_id, <span class="hljs-keyword">version</span>, os_name
 </code></pre>
-<p>Get the number of main_crashes on Windows over a small interval
-(<a href="https://sql.telemetry.mozilla.org/queries/51677" target="_blank">view on redash</a>):</p>
+<p>Get the number of <code>main_crashes</code> on Windows over a small interval
+(<a href="https://sql.telemetry.mozilla.org/queries/51677" target="_blank">view on Re:dash</a>):</p>
 <pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> window_start <span class="hljs-keyword">as</span> <span class="hljs-keyword">time</span>, <span class="hljs-keyword">sum</span>(main_crashes) <span class="hljs-keyword">AS</span> main_crashes
 <span class="hljs-keyword">FROM</span> telemetry.error_aggregates_v1
   <span class="hljs-keyword">WHERE</span> application = <span class="hljs-string">&apos;Firefox&apos;</span>
@@ -1073,7 +1073,7 @@ by summing using SQL.</p>
 <p>The aggregates in this data source are derived from main and crash <a href="../../pings.html">pings</a>.
 Crash pings are only used to count/gather main crash events, all other errors (including all other crashes) are gathered from main pings.</p>
 <h2 id="scheduling"><a name="scheduling" class="plugin-anchor" href="#scheduling"><i class="fa fa-link" aria-hidden="true"></i></a>Scheduling</h2>
-<p>The <code>error_aggregates</code> job is run continously, using the spark streaming infrastructure</p>
+<p>The <code>error_aggregates</code> job is run continuously, using the Spark Streaming infrastructure</p>
 <h2 id="schema"><a name="schema" class="plugin-anchor" href="#schema"><i class="fa fa-link" aria-hidden="true"></i></a>Schema</h2>
 <p>The <code>error_aggregates</code> table has the following columns which define its dimensions:</p>
 <ul>
@@ -1083,16 +1083,16 @@ than <code>window_start</code> for any given row)</li>
 <li><code>channel</code>: the channel, like <code>release</code> or <code>beta</code></li>
 <li><code>version</code>: the version e.g. <code>57.0.1</code></li>
 <li><code>display_version</code>: like version, but includes beta number if applicable e.g. <code>57.0.1b4</code></li>
-<li><code>build_id</code>: the YYYYMMDDhhmmss timestamp the program was built, like <code>20160123180541</code>. This is also known as the &quot;build ID&quot; or &quot;buildid&quot;</li>
+<li><code>build_id</code>: the <code>YYYYMMDDhhmmss</code> timestamp the program was built, like <code>20160123180541</code>. This is also known as the <code>build ID</code> or <code>buildid</code></li>
 <li><code>application</code>: application name (e.g. <code>Firefox</code>)</li>
 <li><code>os_name</code>: name of the OS (e.g. <code>Darwin</code> or <code>Windows_NT</code>)</li>
 <li><code>os_version</code>: version of the OS</li>
 <li><code>country</code>: country code for the user (determined using geoIP), like <code>US</code> or <code>UK</code></li>
 <li><code>experiment_id</code>: identifier of the experiment being participated in, such as <code>e10s-beta46-noapz@experiments.mozilla.org</code>, or null if no experiment</li>
 <li><code>experiment_branch</code>: the branch of the experiment being participated in, such as <code>control</code> or <code>experiment</code>, or null if no experiment</li>
-<li><code>e10s_enabled</code>: whether e10s is enabled</li>
+<li><code>e10s_enabled</code>: whether E10s is enabled</li>
 <li><code>gfx_compositor</code>: the graphics backend compositor used by the program, such as <code>d3d11</code>, <code>opengl</code> and <code>simple</code>. Null values may be reported as <code>none</code> as well</li>
-<li><code>quantum_ready</code>: whether the ping was submitted from an instance of Firefox that was Quantum-ready (i.e. no old-style add-ons)</li>
+<li><code>quantum_ready</code>: whether the ping was submitted from an instance of Firefox that was Quantum-ready (i.e. no old-style addons)</li>
 </ul>
 <p>And these are the various measures we are counting:</p>
 <ul>
@@ -1100,13 +1100,13 @@ than <code>window_start</code> for any given row)</li>
 <li><code>main_crashes</code>: number of main process crashes (or just program crashes, in the non-e10s case)</li>
 <li><code>content_crashes</code>: number of content process crashes</li>
 <li><code>plugin_crashes</code>: number of plugin process crashes</li>
-<li><code>gmplugin_crashes</code>: number of Gecko media plugin (often abbreviated GMPlugin) process crashes</li>
+<li><code>gmplugin_crashes</code>: number of Gecko media plugin (often abbreviated <code>GMPlugin</code>) process crashes</li>
 <li><code>content_shutdown_crashes</code>: number of content process crashes that were caused by failure to shut down in a timely manner (should always be
 less than the number of <code>content_crashes</code>)</li>
-<li><code>gpu_crashes</code>: number of gpu process crashes</li>
+<li><code>gpu_crashes</code>: number of GPU process crashes</li>
 <li><code>browser_shim_usage_blocked</code>: number of times a CPOW shim was blocked from being created by browser code</li>
 <li><code>permissions_sql_corrupted</code>: number of times the permissions SQL error occurred (beta/nightly only)</li>
-<li><code>defective_permissions_sql_removed</code>: number of times there was a removal of defective permissions.sqlite (beta/nightly only)</li>
+<li><code>defective_permissions_sql_removed</code>: number of times there was a removal of defective <code>permissions.sqlite</code> (beta/nightly only)</li>
 <li><code>slow_script_notice_count</code>: number of times the slow script notice count was shown (beta/nightly only)</li>
 <li><code>slow_script_page_count</code>: number of pages that trigger slow script notices (beta/nightly only)</li>
 </ul>
@@ -1153,7 +1153,7 @@ less than the number of <code>content_crashes</code>)</li>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Error Aggregates","level":"1.3.3.2.17","depth":4,"next":{"title":"Experimental Datasets","level":"1.3.3.3","depth":3,"path":"tools/experiments.md","ref":"tools/experiments.md","articles":[{"title":"Accessing Shield Study data","level":"1.3.3.3.1","depth":4,"path":"datasets/shield.md","ref":"datasets/shield.md","articles":[]}]},"previous":{"title":"SSL Ratios (public)","level":"1.3.3.2.16","depth":4,"path":"datasets/other/ssl/reference.md","ref":"datasets/other/ssl/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/streaming/error_aggregates/reference.md","mtime":"2018-03-06T13:15:17.622Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-06T13:16:45.146Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Error Aggregates","level":"1.3.3.2.17","depth":4,"next":{"title":"Experimental Datasets","level":"1.3.3.3","depth":3,"path":"tools/experiments.md","ref":"tools/experiments.md","articles":[{"title":"Accessing Shield Study data","level":"1.3.3.3.1","depth":4,"path":"datasets/shield.md","ref":"datasets/shield.md","articles":[]}]},"previous":{"title":"SSL Ratios (public)","level":"1.3.3.2.16","depth":4,"path":"datasets/other/ssl/reference.md","ref":"datasets/other/ssl/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/streaming/error_aggregates/reference.md","mtime":"2018-03-13T14:25:18.809Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-13T14:26:43.685Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

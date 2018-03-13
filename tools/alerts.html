@@ -826,7 +826,7 @@
                 <a href="../cookbooks/create_a_dataset.html">
             
                     
-                    Creating a custom re:dash dataset
+                    Creating a custom Re:dash dataset
             
                 </a>
             
@@ -1011,7 +1011,7 @@ automatically detect and alert developers about such changes.</p>
 <a href="https://github.com/mozilla/medusa/" target="_blank">Medusa</a> the Front-end.</p>
 <h3 id="cerberus"><a name="cerberus" class="plugin-anchor" href="#cerberus"><i class="fa fa-link" aria-hidden="true"></i></a>Cerberus</h3>
 <p>Every day Cerberus grabs the latest aggregated information about all
-non-keyed Telemetry probes from aggregates.telemetry.mozilla.org and
+non-keyed Telemetry probes from <code>aggregates.telemetry.mozilla.org</code> and
 compares the distribution of values from the <strong>Nightly</strong> builds of the
 past two days to the distribution of values from the Nightly builds of
 the past seven days.</p>
@@ -1030,14 +1030,14 @@ their expiry.</p>
 <h2 id="what-it-can-do"><a name="what-it-can-do" class="plugin-anchor" href="#what-it-can-do"><i class="fa fa-link" aria-hidden="true"></i></a>What it can do</h2>
 <p>Telemetry Alerts is very good at identifying sudden changes in the
 shapes of normalized distributions of Telemetry probes. If you can see
-the distribution of <a href="https://mzl.la/2vdMRax" target="_blank">GC_MS</a> shift from one day
+the distribution of <a href="https://mzl.la/2vdMRax" target="_blank"><code>GC_MS</code></a> shift from one day
 to the next, then likely so can Cerberus.</p>
 <h2 id="what-cant-it-do"><a name="what-cant-it-do" class="plugin-anchor" href="#what-cant-it-do"><i class="fa fa-link" aria-hidden="true"></i></a>What can&apos;t it do</h2>
 <p>Telemetry Alerts is not able to see sudden shifts in volume. It is also
 very easily fooled if a change happens over a long period of time or
 doesn&apos;t fundamentally alter the shape of the probe&apos;s histogram.</p>
 <p>So if you have a probe like
-<a href="https://mzl.la/2vdiuRx" target="_blank">SCALARS_BROWSER.ENGAGEMENT.MAX_CONCURRENT_TAB_COUNT</a>,
+<a href="https://mzl.la/2vdiuRx" target="_blank"><code>SCALARS_BROWSER.ENGAGEMENT.MAX_CONCURRENT_TAB_COUNT</code></a>,
 Cerberus won&apos;t notice if:</p>
 <ul>
 <li>The number of pings reporting this value decreased in half, but
@@ -1071,27 +1071,27 @@ relevant/having its alerts properly looked after.</p>
 <p>1. Is this alert just one of a group of similar changes by topic? By
 build?</p>
 <ul>
-<li>If there&apos;s a group by topic (SPDY, URLCLASSIFIER, ...) check to see
+<li>If there&apos;s a group by topic (<code>SPDY</code>, <code>URLCLASSIFIER</code>, ...) check to see
 if the changes are similar in direction/magnitude. They usually are.</li>
 <li>If there&apos;s a group by build but not topic, maybe a large merge
-kicked things over. Unfortunate, as that&apos;ll make finding the source
+kicked things over. Unfortunate, as that will make finding the source
 more difficult.</li>
 </ul>
-<p>2. Open the hg.mozilla.org and alerts.telemetry.mozilla.org links in
+<p>2. Open the <code>hg.mozilla.org</code> and <code>alerts.telemetry.mozilla.org</code> links in
 tabs</p>
 <ul>
-<li>On alerts.tmo, does it look like an improvement or regression? (This
+<li>On <code>alerts.tmo</code>, does it look like an improvement or regression? (This
 is just a first idea and might change. There are often extenuating
 circumstances that make something that looks bad into an
 improvement, and vice versa.)</li>
-<li>On hg.mo, does the topic of the changed probe exist in the pushlog?
+<li>On <code>hg.mo</code>, does the topic of the changed probe exist in the pushlog?
 In other words, does any part of the probe&apos;s name show up in the
 summaries of any of the commits?</li>
 </ul>
-<p>3. From alerts.tmo, open the <a href="https://telemetry.mozilla.org" target="_blank">https://telemetry.mozilla.org</a> link by
+<p>3. From <code>alerts.tmo</code>, open the <a href="https://telemetry.mozilla.org" target="_blank">https://telemetry.mozilla.org</a> link by
 clicking on the plot&apos;s title. Open another tab to the Evolution View.</p>
 <ul>
-<li>Is the change temporary? (might&apos;ve been noticed elsewhere and
+<li>Is the change temporary? (might have been noticed elsewhere and
 backed out)</li>
 <li>Is the change up or down?</li>
 <li>Has it happened before?</li>
@@ -1102,22 +1102,22 @@ graph at the bottom of the Evolution View)</li>
 subtraction of a population of values. For instance, we could
 suddenly stop sending 0 values which would shift the graph to
 the right. This could be a good thing (we&apos;re not handling useless
-things anymore) a bad thing (something broke and we&apos;re no longer
+things any longer) a bad thing (something broke and we&apos;re no longer
 measuring the same thing we used to measure) or indifferent)</li>
 </ul>
 <p>4. If you still don&apos;t have a cause</p>
 <ul>
 <li>Use DXR or searchfox to find where the probe is accumulated.</li>
 <li>Click &quot;Log&quot; in that view.</li>
-<li>Are there any changesets in the resultant hg.mo list that ended up
+<li>Are there any changesets in the resultant <code>hg.mo</code> list that ended up
 in the build we received the Alert for?</li>
 </ul>
-<p>5. If you _still_ don&apos;t know what&apos;s going on</p>
+<p>5. If you <em>still</em> don&apos;t know what&apos;s going on</p>
 <ul>
 <li>find a domain expert on IRC and bother them to help you out. Domain
 knowledge is awesome.</li>
 </ul>
-<p>From pursuing these steps or substeps you should now have two things: a
+<p>From pursuing these steps or sub-steps you should now have two things: a
 bug that likely caused the alert, and an idea of what the alert is
 about.</p>
 <p>Now comment on the bug. Feel free to use this script:</p>
@@ -1137,7 +1137,7 @@ Is this probe still measuring something useful?
 [3]: &lt;the telemetry.mozilla.org link showing the Evolution View&gt;
 </code></pre>
 <p>Then ni? the person who pushed the change. Reply-all to the
-dev-telemetry-alerts mail with a link to the bug and some short notes on
+<code>dev-telemetry-alerts</code> mail with a link to the bug and some short notes on
 what you found.</p>
 <p>From here the user on ni? should get back to you in fairly short order
 and either help you find the real bug that caused it, or help explain
@@ -1146,7 +1146,7 @@ change from a probe that is still operating correctly and there is no
 action to take...</p>
 <p>...except making sure you never have to respond to an Alert for this
 probe again, that is. File a bug in that bug&apos;s component to update the
-Alert&apos;ing probe to have a valid, monitored &quot;alert_emails&quot; field so that
+Alerting probe to have a valid, monitored <code>alert_emails</code> field so that
 the next time it misbehaves <em>they</em> can be the ones to explain themselves
 without you having to spend all this time tracking them down.</p>
 
@@ -1192,7 +1192,7 @@ without you having to spend all this time tracking them down.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Alerts","level":"1.4.2.6","depth":3,"next":{"title":"Project Glossary","level":"1.4.3","depth":2,"path":"tools/projects.md","ref":"tools/projects.md","articles":[]},"previous":{"title":"RTMO","level":"1.4.2.5","depth":3,"path":"tools/rtmo.md","ref":"tools/rtmo.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"tools/alerts.md","mtime":"2018-03-06T13:15:17.622Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-06T13:16:45.146Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Alerts","level":"1.4.2.6","depth":3,"next":{"title":"Project Glossary","level":"1.4.3","depth":2,"path":"tools/projects.md","ref":"tools/projects.md","articles":[]},"previous":{"title":"RTMO","level":"1.4.2.5","depth":3,"path":"tools/rtmo.md","ref":"tools/rtmo.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"tools/alerts.md","mtime":"2018-03-13T14:25:18.809Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-13T14:26:43.685Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

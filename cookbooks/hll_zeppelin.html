@@ -826,7 +826,7 @@
                 <a href="create_a_dataset.html">
             
                     
-                    Creating a custom re:dash dataset
+                    Creating a custom Re:dash dataset
             
                 </a>
             
@@ -1053,7 +1053,7 @@ spark.udf.register(<span class="hljs-string">&quot;hll_cardinality&quot;</span>,
 
 <span class="hljs-keyword">val</span> frame = examples.toDF()
 </code></pre>
-<p>In a single expression, we can create and count the unique id&apos;s that appear in the Dataframe.</p>
+<p>In a single expression, we can create and count the unique id&apos;s that appear in the DataFrame.</p>
 <pre><code class="lang-scala">&gt;&gt;&gt; frame
   .select(expr(<span class="hljs-string">&quot;hll_create(uid, 12) as hll&quot;</span>))
   .groupBy()
@@ -1076,8 +1076,8 @@ slightly more detail.</p>
 
 example.createOrReplaceTempView(<span class="hljs-string">&quot;example&quot;</span>)
 </code></pre>
-<p>This groups uid&apos;s by the color attribute and registers the table with the SQL
-context. Each row contains a HLL binary object representing the set of uid&apos;s.</p>
+<p>This groups <code>uid</code>s by the <code>color</code> attribute and registers the table with the SQL
+context. Each row contains a HLL binary object representing the set of <code>uid</code>s.</p>
 <pre><code class="lang-scala">&gt;&gt;&gt; example.show()
 +-----|--------------------+
 |color|                 hll|
@@ -1088,7 +1088,7 @@ context. Each row contains a HLL binary object representing the set of uid&apos;
 </code></pre>
 <p>Each HLL object takes up <code>2^12</code> bits of space. This configurable size parameter
 affects the size and standard error of the cardinality estimates. The
-cardinality operator can count the number of uid&apos;s associated with each color.</p>
+cardinality operator can count the number of <code>uid</code>s associated with each <code>color</code>.</p>
 <pre><code class="lang-scala">&gt;&gt;&gt; example.select($<span class="hljs-string">&quot;color&quot;</span>, <span class="hljs-type">HllCardinality</span>($<span class="hljs-string">&quot;hll&quot;</span>).alias(<span class="hljs-string">&quot;count&quot;</span>)).show()
 +-----|-----+
 |color|count|
@@ -1104,8 +1104,8 @@ cardinality operator can count the number of uid&apos;s associated with each col
 <span class="hljs-keyword">FROM</span> example
 <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> color
 </code></pre>
-<p>Finally, note that the color HLL sets have an overlapping uid. We obtain the
-count of uids and avoid double counting by merging the sets.</p>
+<p>Finally, note that the <code>color</code> HLL sets have an overlapping <code>uid</code>. We obtain the
+count of <code>uid</code>s and avoid double counting by merging the sets.</p>
 <pre><code class="lang-scala">&gt;&gt;&gt; example.groupBy().agg(<span class="hljs-type">HllCardinality</span>(<span class="hljs-type">HllMerge</span>($<span class="hljs-string">&quot;hll&quot;</span>)).alias(<span class="hljs-string">&quot;count&quot;</span>)).show()
 +-----+
 |count|
@@ -1156,7 +1156,7 @@ count of uids and avoid double counting by merging the sets.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Using HyperLogLog in Zeppelin","level":"1.5.5","depth":2,"next":{"title":"Sending a Custom Ping","level":"1.5.6","depth":2,"path":"cookbooks/new_ping.md","ref":"cookbooks/new_ping.md","articles":[]},"previous":{"title":"Longitudinal Examples","level":"1.5.4","depth":2,"path":"cookbooks/longitudinal_examples.md","ref":"cookbooks/longitudinal_examples.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"cookbooks/hll_zeppelin.md","mtime":"2018-03-06T13:15:17.618Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-06T13:16:45.146Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Using HyperLogLog in Zeppelin","level":"1.5.5","depth":2,"next":{"title":"Sending a Custom Ping","level":"1.5.6","depth":2,"path":"cookbooks/new_ping.md","ref":"cookbooks/new_ping.md","articles":[]},"previous":{"title":"Longitudinal Examples","level":"1.5.4","depth":2,"path":"cookbooks/longitudinal_examples.md","ref":"cookbooks/longitudinal_examples.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"cookbooks/hll_zeppelin.md","mtime":"2018-03-13T14:25:18.805Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-13T14:26:43.685Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

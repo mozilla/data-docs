@@ -60,6 +60,6 @@ overall usage at a given time instance.
 
 #### Accessing the Data
 
-`churn` is available in Redash under Athena and Presto. The data is also
+`churn` is available in Re:dash under Athena and Presto. The data is also
 available in parquet for consumption by columnar data engines at
 `s3://telemetry-parquet/churn/v3`.
