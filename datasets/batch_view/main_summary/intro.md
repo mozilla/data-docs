@@ -10,7 +10,7 @@ though only a subset of all main ping fields are included.
 This dataset **does not include histograms**.
 
 #### Background and Caveats
-This table is massive, and due to it's size, it can be difficult to work with.
+This table is massive, and due to its size, it can be difficult to work with.
 You should **avoid querying `main_summary`** from [re:dash](https://sql.telemetry.mozilla.org).
 Your queries will be **slow to complete** and can **impact performance for other users**,
 since re:dash on a shared cluster.
