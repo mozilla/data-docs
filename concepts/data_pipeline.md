@@ -99,7 +99,57 @@ ATMO is mainly used to write custom analyses; since our users aren’t necessary
 
 As mentioned earlier, most of our data lake contains data serialized to Protobuf with free-form JSON fields. Needless to say, parsing JSON is terribly slow when ingesting Terabytes of data per day. A set of [ETL jobs], written in Scala by Data Engineers and scheduled with [Airflow], create [Parquet views] of our raw data. We have a Github repository [telemetry-batch-view] that showcases this.
 
-A dedicated Spark job feeds daily aggregates to a PostgreSQL database which powers a [HTTP service] to easily retrieve faceted roll-ups. The service is mainly used by [TMO], a dashboard that visualizes distributions and time-series, and Cerberus, an anomaly detection tool that detects and alerts developers of changes in the distributions. Originally the sole purpose of the Telemetry pipeline was to feed data into this dashboard but in time its scope and flexibility grew to support more general use-cases.
+# Aggregates Dataset
+
+```mermaid
+graph TD
+%% Data Flow Diagram for mozaggregator/TMO-adjacent services
+firefox((fa:fa-firefox Firefox)) --> |main ping| pipeline
+fennec((fa:fa-firefox Fennec)) --> |saved-session ping| pipeline
+pipeline((Telemetry Pipeline))
+
+subgraph mozaggregator
+  service(service)
+  aggregator
+  rdbms(fa:fa-database PostgreSQL)
+end
+
+pipeline --> aggregator 
+pipeline --> spark{fa:fa-star Spark}
+pipeline --> redash[fa:fa-line-chart Re:dash]
+
+subgraph telemetry.mozilla.org
+  telemetry.js(telemetry.js) --> dist
+  telemetry.js --> evo
+  orphan[Update Orphaning]
+  crashdash[tmo/crashes]
+end
+
+redash --> crashdash
+service --> telemetry.js
+spark --> orphan
+
+telemetry.js --> telemetry-next-node(telemetry-next-node)
+subgraph alerts.tmo
+  cerberus[fa:fa-search-plus Cerberus] -->medusa
+  medusa --> html
+  medusa --> email
+end
+
+telemetry-next-node --> cerberus
+
+style redash fill:salmon
+style spark fill:darkorange
+style rdbms fill:cornflowerblue
+style cerberus fill:royalblue
+style firefox fill:#f61
+style fennec fill:#f61
+style telemetry.js fill:lightgrey
+style dist fill:lightgrey
+style evo fill:lightgrey
+```
+
+A dedicated Spark job feeds daily aggregates to a PostgreSQL database which powers a [HTTP service] to easily retrieve faceted roll-ups. The service is mainly used by [TMO], a dashboard that visualizes distributions and time-series, and [Cerberus](https://github.com/mozilla/cerberus/), an anomaly detection tool that detects and alerts developers of changes in the distributions. Originally the sole purpose of the Telemetry pipeline was to feed data into this dashboard but in time its scope and flexibility grew to support more general use-cases.
 
 ![TMO](../assets/TMO_example.jpeg "TMO – timeseries")
 
