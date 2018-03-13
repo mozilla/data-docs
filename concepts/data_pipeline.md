@@ -104,20 +104,19 @@ As mentioned earlier, most of our data lake contains data serialized to Protobuf
 ```mermaid
 graph TD
 %% Data Flow Diagram for mozaggregator/TMO-adjacent services
-%% Anything rounded has other consumers not pictured, known and unknown
-Firefox --> |main ping| pipeline
-Fennec --> |saved-session ping| pipeline
+firefox((fa:fa-firefox Firefox)) --> |main ping| pipeline
+fennec((fa:fa-firefox Fennec)) --> |saved-session ping| pipeline
 pipeline((Telemetry Pipeline))
 
 subgraph mozaggregator
   service(service)
   aggregator
-  db
+  rdbms(fa:fa-database PostgreSQL)
 end
 
 pipeline --> aggregator 
-pipeline --> spark(Custom Spark)
-pipeline --> redash(re:dash)
+pipeline --> spark{fa:fa-star Spark}
+pipeline --> redash[fa:fa-line-chart Re:dash]
 
 subgraph telemetry.mozilla.org
   telemetry.js(telemetry.js) --> dist
@@ -132,12 +131,22 @@ spark --> orphan
 
 telemetry.js --> telemetry-next-node(telemetry-next-node)
 subgraph alerts.tmo
-  cerberus -->medusa
+  cerberus[fa:fa-search-plus Cerberus] -->medusa
   medusa --> html
   medusa --> email
 end
 
 telemetry-next-node --> cerberus
+
+style redash fill:salmon
+style spark fill:darkorange
+style rdbms fill:cornflowerblue
+style cerberus fill:royalblue
+style firefox fill:#f61
+style fennec fill:#f61
+style telemetry.js fill:lightgrey
+style dist fill:lightgrey
+style evo fill:lightgrey
 ```
 
 A dedicated Spark job feeds daily aggregates to a PostgreSQL database which powers a [HTTP service] to easily retrieve faceted roll-ups. The service is mainly used by [TMO], a dashboard that visualizes distributions and time-series, and [Cerberus](https://github.com/mozilla/cerberus/), an anomaly detection tool that detects and alerts developers of changes in the distributions. Originally the sole purpose of the Telemetry pipeline was to feed data into this dashboard but in time its scope and flexibility grew to support more general use-cases.
