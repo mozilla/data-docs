@@ -1080,7 +1080,56 @@ style cerberus fill:royalblue
 <p><img src="../assets/ATMO_example.jpeg" alt="ATMO" title="ATMO &#x2013; monitoring clusters"></p>
 <p>ATMO is mainly used to write custom analyses; since our users aren&#x2019;t necessary data engineers/scientists we chose Python as the main supported language to interface with Spark. From ATMO it&#x2019;s also possible to schedule periodic notebook runs and inspect the results from a web UI.</p>
 <p>As mentioned earlier, most of our data lake contains data serialized to Protobuf with free-form JSON fields. Needless to say, parsing JSON is terribly slow when ingesting Terabytes of data per day. A set of <a href="https://github.com/mozilla/telemetry-batch-view" target="_blank">ETL jobs</a>, written in Scala by Data Engineers and scheduled with <a href="https://github.com/mozilla/telemetry-airflow/" target="_blank">Airflow</a>, create <a href="choosing_a_dataset.html">Parquet views</a> of our raw data. We have a Github repository <a href="https://github.com/mozilla/telemetry-batch-view/" target="_blank">telemetry-batch-view</a> that showcases this.</p>
-<p>A dedicated Spark job feeds daily aggregates to a PostgreSQL database which powers a <a href="https://github.com/mozilla/python_mozaggregator/#api" target="_blank">HTTP service</a> to easily retrieve faceted roll-ups. The service is mainly used by <a href="https://telemetry.mozilla.org/" target="_blank">TMO</a>, a dashboard that visualizes distributions and time-series, and Cerberus, an anomaly detection tool that detects and alerts developers of changes in the distributions. Originally the sole purpose of the Telemetry pipeline was to feed data into this dashboard but in time its scope and flexibility grew to support more general use-cases.</p>
+<h1 id="aggregates-dataset"><a name="aggregates-dataset" class="plugin-anchor" href="#aggregates-dataset"><i class="fa fa-link" aria-hidden="true"></i></a>Aggregates Dataset</h1>
+<div class="mermaid">
+graph TD
+%% Data Flow Diagram for mozaggregator/TMO-adjacent services
+firefox((fa:fa-firefox Firefox)) --&gt; |main ping| pipeline
+fennec((fa:fa-firefox Fennec)) --&gt; |saved-session ping| pipeline
+pipeline((Telemetry Pipeline))
+
+subgraph mozaggregator
+  service(service)
+  aggregator
+  rdbms(fa:fa-database PostgreSQL)
+end
+
+pipeline --&gt; aggregator 
+pipeline --&gt; spark{fa:fa-star Spark}
+pipeline --&gt; redash[fa:fa-line-chart Re:dash]
+
+subgraph telemetry.mozilla.org
+  telemetry.js(telemetry.js) --&gt; dist
+  telemetry.js --&gt; evo
+  orphan[Update Orphaning]
+  crashdash[tmo/crashes]
+end
+
+redash --&gt; crashdash
+service --&gt; telemetry.js
+spark --&gt; orphan
+
+telemetry.js --&gt; telemetry-next-node(telemetry-next-node)
+subgraph alerts.tmo
+  cerberus[fa:fa-search-plus Cerberus] --&gt;medusa
+  medusa --&gt; html
+  medusa --&gt; email
+end
+
+telemetry-next-node --&gt; cerberus
+
+style redash fill:salmon
+style spark fill:darkorange
+style rdbms fill:cornflowerblue
+style cerberus fill:royalblue
+style firefox fill:#f61
+style fennec fill:#f61
+style telemetry.js fill:lightgrey
+style dist fill:lightgrey
+style evo fill:lightgrey
+</div>
+
+<p>A dedicated Spark job feeds daily aggregates to a PostgreSQL database which powers a <a href="https://github.com/mozilla/python_mozaggregator/#api" target="_blank">HTTP service</a> to easily retrieve faceted roll-ups. The service is mainly used by <a href="https://telemetry.mozilla.org/" target="_blank">TMO</a>, a dashboard that visualizes distributions and time-series, and <a href="https://github.com/mozilla/cerberus/" target="_blank">Cerberus</a>, an anomaly detection tool that detects and alerts developers of changes in the distributions. Originally the sole purpose of the Telemetry pipeline was to feed data into this dashboard but in time its scope and flexibility grew to support more general use-cases.</p>
 <p><img src="../assets/TMO_example.jpeg" alt="TMO" title="TMO &#x2013; timeseries"></p>
 <h1 id="presto--redash"><a name="presto--redash" class="plugin-anchor" href="#presto--redash"><i class="fa fa-link" aria-hidden="true"></i></a>Presto &amp; re:dash</h1>
 <p>We maintain a couple of <a href="https://github.com/mozilla/emr-bootstrap-presto" target="_blank">Presto clusters</a> and a centralized Hive metastore to query Parquet data with SQL. The Hive metastore provides an universal view of our Parquet dataset to both Spark and Presto clusters.</p>
@@ -1132,7 +1181,7 @@ style cerberus fill:royalblue
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Overview of Mozilla's Data Pipeline","level":"1.4.1","depth":2,"next":{"title":"Interfaces","level":"1.4.2","depth":2,"path":"tools/interfaces.md","ref":"tools/interfaces.md","articles":[{"title":"Analysis Intro / TMO","level":"1.4.2.1","depth":3,"path":"concepts/analysis_intro.md","ref":"concepts/analysis_intro.md","articles":[]},{"title":"Custom analysis with Spark","level":"1.4.2.2","depth":3,"path":"tools/spark.md","ref":"tools/spark.md","articles":[]},{"title":"Creating a Real-time Analysis Plugin","level":"1.4.2.3","depth":3,"path":"cookbooks/realtime_analysis_plugin.md","ref":"cookbooks/realtime_analysis_plugin.md","articles":[]},{"title":"Distribution Viewer","level":"1.4.2.4","depth":3,"path":"tools/distribution_viewer.md","ref":"tools/distribution_viewer.md","articles":[]},{"title":"RTMO","level":"1.4.2.5","depth":3,"path":"tools/rtmo.md","ref":"tools/rtmo.md","articles":[]},{"title":"Alerts","level":"1.4.2.6","depth":3,"path":"tools/alerts.md","ref":"tools/alerts.md","articles":[]}]},"previous":{"title":"Tools","level":"1.4","depth":1,"path":"tools/README.adoc","ref":"tools/README.adoc","articles":[{"title":"Overview of Mozilla's Data Pipeline","level":"1.4.1","depth":2,"path":"concepts/data_pipeline.md","ref":"concepts/data_pipeline.md","articles":[]},{"title":"Interfaces","level":"1.4.2","depth":2,"path":"tools/interfaces.md","ref":"tools/interfaces.md","articles":[{"title":"Analysis Intro / TMO","level":"1.4.2.1","depth":3,"path":"concepts/analysis_intro.md","ref":"concepts/analysis_intro.md","articles":[]},{"title":"Custom analysis with Spark","level":"1.4.2.2","depth":3,"path":"tools/spark.md","ref":"tools/spark.md","articles":[]},{"title":"Creating a Real-time Analysis Plugin","level":"1.4.2.3","depth":3,"path":"cookbooks/realtime_analysis_plugin.md","ref":"cookbooks/realtime_analysis_plugin.md","articles":[]},{"title":"Distribution Viewer","level":"1.4.2.4","depth":3,"path":"tools/distribution_viewer.md","ref":"tools/distribution_viewer.md","articles":[]},{"title":"RTMO","level":"1.4.2.5","depth":3,"path":"tools/rtmo.md","ref":"tools/rtmo.md","articles":[]},{"title":"Alerts","level":"1.4.2.6","depth":3,"path":"tools/alerts.md","ref":"tools/alerts.md","articles":[]}]},{"title":"Project Glossary","level":"1.4.3","depth":2,"path":"tools/projects.md","ref":"tools/projects.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/data_pipeline.md","mtime":"2018-03-13T14:25:18.805Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-13T14:26:43.685Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Overview of Mozilla's Data Pipeline","level":"1.4.1","depth":2,"next":{"title":"Interfaces","level":"1.4.2","depth":2,"path":"tools/interfaces.md","ref":"tools/interfaces.md","articles":[{"title":"Analysis Intro / TMO","level":"1.4.2.1","depth":3,"path":"concepts/analysis_intro.md","ref":"concepts/analysis_intro.md","articles":[]},{"title":"Custom analysis with Spark","level":"1.4.2.2","depth":3,"path":"tools/spark.md","ref":"tools/spark.md","articles":[]},{"title":"Creating a Real-time Analysis Plugin","level":"1.4.2.3","depth":3,"path":"cookbooks/realtime_analysis_plugin.md","ref":"cookbooks/realtime_analysis_plugin.md","articles":[]},{"title":"Distribution Viewer","level":"1.4.2.4","depth":3,"path":"tools/distribution_viewer.md","ref":"tools/distribution_viewer.md","articles":[]},{"title":"RTMO","level":"1.4.2.5","depth":3,"path":"tools/rtmo.md","ref":"tools/rtmo.md","articles":[]},{"title":"Alerts","level":"1.4.2.6","depth":3,"path":"tools/alerts.md","ref":"tools/alerts.md","articles":[]}]},"previous":{"title":"Tools","level":"1.4","depth":1,"path":"tools/README.adoc","ref":"tools/README.adoc","articles":[{"title":"Overview of Mozilla's Data Pipeline","level":"1.4.1","depth":2,"path":"concepts/data_pipeline.md","ref":"concepts/data_pipeline.md","articles":[]},{"title":"Interfaces","level":"1.4.2","depth":2,"path":"tools/interfaces.md","ref":"tools/interfaces.md","articles":[{"title":"Analysis Intro / TMO","level":"1.4.2.1","depth":3,"path":"concepts/analysis_intro.md","ref":"concepts/analysis_intro.md","articles":[]},{"title":"Custom analysis with Spark","level":"1.4.2.2","depth":3,"path":"tools/spark.md","ref":"tools/spark.md","articles":[]},{"title":"Creating a Real-time Analysis Plugin","level":"1.4.2.3","depth":3,"path":"cookbooks/realtime_analysis_plugin.md","ref":"cookbooks/realtime_analysis_plugin.md","articles":[]},{"title":"Distribution Viewer","level":"1.4.2.4","depth":3,"path":"tools/distribution_viewer.md","ref":"tools/distribution_viewer.md","articles":[]},{"title":"RTMO","level":"1.4.2.5","depth":3,"path":"tools/rtmo.md","ref":"tools/rtmo.md","articles":[]},{"title":"Alerts","level":"1.4.2.6","depth":3,"path":"tools/alerts.md","ref":"tools/alerts.md","articles":[]}]},{"title":"Project Glossary","level":"1.4.3","depth":2,"path":"tools/projects.md","ref":"tools/projects.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/data_pipeline.md","mtime":"2018-03-13T19:11:58.004Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-13T19:13:48.798Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
