@@ -1,3 +1,5 @@
+# Sending a Custom Ping
+
 Got some new data you want to send to us? How in the world do you send a new ping? Follow this guide
 to find out.
 
