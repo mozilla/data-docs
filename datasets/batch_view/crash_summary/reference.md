@@ -51,8 +51,12 @@ root
  |-- country: string (nullable = true)
  |-- experiment_id: string (nullable = true)
  |-- experiment_branch: string (nullable = true)
+ |-- experiments: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: string (valueContainsNull = true)
  |-- e10s_enabled: boolean (nullable = true)
  |-- gfx_compositor: string (nullable = true)
+ |-- profile_created: integer (nullable = true)
  |-- payload: struct (nullable = true)
  |    |-- crashDate: string (nullable = true)
  |    |-- processType: string (nullable = true)
@@ -61,6 +65,7 @@ root
  |    |    |-- key: string
  |    |    |-- value: string (valueContainsNull = true)
  |    |-- version: integer (nullable = true)
+ |-- submission_date: string (nullable = true)
 ```
 
 For more detail on where these fields come from in the
