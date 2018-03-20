@@ -36,6 +36,7 @@ The second plot on the Evolution View is the number of pings we saw containing t
 ### TMO Caveats
 * Data is aggregated on a per-ping basis, meaning *these dashboards cannot be used to say something definitive about users*. Please repeat that to yourself. A trend in the evolution view may be caused not by a change affecting lots of users, but a change affecting _one_ single user who is now sending 50% of the pings we see. [And yes, that does happen.][problem_client]
 * Sometimes it looks like no data is there, but you think there should be. Check under advanced settings and check "Don't Sanitize" and "Don't Trim Buckets". If it's still not there, let us know in IRC on #telemetry.
+* TMO Measurement Dashboards do not currently show release-channel data. Release-channel data [ceased being aggregated](https://medium.com/georg-fritzsche/data-preference-changes-in-firefox-58-2d5df9c428b5) as of Firefox 58. We're looking into ways of doing this correctly in the near future.
 
 Where to go next
 ----------------
