@@ -49,6 +49,7 @@
   * [Project Glossary](tools/projects.md)
 * [Cookbooks](cookbooks/README.adoc)
   * [Working with Parquet Data on ATMO Clusters](cookbooks/parquet.md)
+  * [Working with Crash Pings](cookbooks/crash_pings.md)
   * [Creating a custom Re:dash dataset](cookbooks/create_a_dataset.md)
   * [Creating a Real-time Analysis Plugin](cookbooks/realtime_analysis_plugin.md)
   * [Longitudinal Examples](cookbooks/longitudinal_examples.md)
