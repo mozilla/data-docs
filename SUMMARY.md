@@ -55,7 +55,7 @@
   * [Longitudinal Examples](cookbooks/longitudinal_examples.md)
   * [Using HyperLogLog in Zeppelin](cookbooks/hll_zeppelin.md)
   * [Sending a Custom Ping](cookbooks/new_ping.md)
-
+  * [Seeing Your Own Pings](cookbooks/view_pings_cep.md)
 
 * About this Documentation
   * [Contributing](meta/contributing.md)
