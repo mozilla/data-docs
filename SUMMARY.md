@@ -46,6 +46,7 @@
     * [Distribution Viewer](tools/distribution_viewer.md)
     * [RTMO](tools/rtmo.md)
     * [Alerts](tools/alerts.md)
+    * [CEP Matcher](tools/cep_matcher.md)
   * [Project Glossary](tools/projects.md)
 * [Cookbooks](cookbooks/README.adoc)
   * [Working with Parquet Data on ATMO Clusters](cookbooks/parquet.md)
