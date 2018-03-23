@@ -1,7 +1,7 @@
 # Working with Crash Pings
 
 Here are some snippets to get you started querying crash pings
-from the Dataset api.
+from the Dataset API.
 
 We can first load and instantiate a Dataset object to query
 the crash pings, and look at the possible fields to filter on:
@@ -15,7 +15,7 @@ telem.schema
 ```
 
 The more specific these filters, the faster it can be pulled.
-The fields can be filtered on by either value or a callable.
+The fields can be filtered by either value or a callable.
 For example, a version and date range can be specified from the
 `v5758` and `dates`lambdas below:
 
