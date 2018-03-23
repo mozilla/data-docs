@@ -46,6 +46,7 @@
     * [Distribution Viewer](tools/distribution_viewer.md)
     * [RTMO](tools/rtmo.md)
     * [Alerts](tools/alerts.md)
+    * [CEP Matcher](tools/cep_matcher.md)
   * [Project Glossary](tools/projects.md)
 * [Cookbooks](cookbooks/README.adoc)
   * [Working with Parquet Data on ATMO Clusters](cookbooks/parquet.md)
@@ -55,7 +56,7 @@
   * [Working with Crash Pings](cookbooks/crash_pings.md)
   * [Using HyperLogLog in Zeppelin](cookbooks/hll_zeppelin.md)
   * [Sending a Custom Ping](cookbooks/new_ping.md)
-
+  * [Seeing Your Own Pings](cookbooks/view_pings_cep.md)
 
 * About this Documentation
   * [Contributing](meta/contributing.md)

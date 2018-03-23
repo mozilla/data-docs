@@ -58,6 +58,8 @@ JSON
 JSONSchema
 Jupyter
 Lua
+matcher
+matchers
 metadata
 metastore
 MozTelemetry
