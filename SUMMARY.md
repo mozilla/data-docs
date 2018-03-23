@@ -7,6 +7,7 @@
   * [Intro to STMO](tools/stmo.md)
   * [Common Analysis Gotchas](concepts/analysis_gotchas.md)
   * [Getting Review](concepts/review.md)
+  * [Optimizing Queries](concepts/sql_optimization.md)
 * [Data Collection and Datasets](/datasets/README.adoc)
   * Understanding our Data
     * [Choosing a dataset](concepts/choosing_a_dataset.md)
