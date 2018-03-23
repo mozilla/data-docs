@@ -10,9 +10,12 @@ and Spark notebooks in general.
 ## TL;DR: What to do for quick improvements
 
 - Switch to [Athena](https://aws.amazon.com/athena/)
-- Filter on a partitioned column (_even_ if you have a `LIMIT`)
+- Filter on a partitioned column† (_even_ if you have a `LIMIT`)
 - Select the columns you want explicitly (Don't use `SELECT *`)
 - Use approximate algorithms: e.g. `approx_distinct(...)` instead of `COUNT(DISTINCT ...)`
+
+† Partitioned columns can be identified in the Schema Explorer in [re:dash](https://sql.telemetry.mozilla.org).
+  They are the first few columns under a table name, and their name is preceded by a `[P]`.
 
 ## Some Explanations
 
@@ -21,7 +24,7 @@ learn how to properly optimize queries.
 
 ### What are these databases?
 
-The databases we use are not traditional relation databases like Postgres or MySQL. They are
+The databases we use are not traditional relational databases like PostgreSQL or MySQL. They are
 distributed SQL engines, where the data is stored separately from the cluster itself. They
 include multiple machines all working together in a coordinated fashion. This is why the
 clusters can get slow when there are lots of competing queries - because the queries are
@@ -32,7 +35,7 @@ Note that Athena is serverless, which is why we recommend people use that when t
 #### How does this impact my queries?
 
 What that means is that multiple machines will be working together to get the result of your
-query. Because there is more than one machine, we worry alot about _Data Shuffles_: when all
+query. Because there is more than one machine, we worry a lot about _Data Shuffles_: when all
 of the machines have to send data around to all of the other machines.
 
 For example, consider the following query, which gives the number of rows present for each
