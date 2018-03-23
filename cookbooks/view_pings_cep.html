@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Cookbooks · GitBook</title>
+        <title>Seeing Your Own Pings · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -65,10 +65,8 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="parquet.html" />
     
-    
-    <link rel="prev" href="../tools/projects.html" />
+    <link rel="prev" href="new_ping.html" />
     
 
     </head>
@@ -807,7 +805,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.5" data-path="./">
+        <li class="chapter " data-level="1.5" data-path="./">
             
                 <a href="./">
             
@@ -912,7 +910,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.5.8" data-path="view_pings_cep.html">
+        <li class="chapter active" data-level="1.5.8" data-path="view_pings_cep.html">
             
                 <a href="view_pings_cep.html">
             
@@ -1018,7 +1016,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Cookbooks</a>
+        <a href=".." >Seeing Your Own Pings</a>
     </h1>
 </div>
 
@@ -1033,7 +1031,60 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="cookbooks"><a name="cookbooks" class="plugin-anchor" href="#cookbooks"><i class="fa fa-link" aria-hidden="true"></i></a>Cookbooks</h1>
+                                <h1 id="see-my-pings"><a name="see-my-pings" class="plugin-anchor" href="#see-my-pings"><i class="fa fa-link" aria-hidden="true"></i></a>See My Pings</h1>
+<p>So you want to see what you&apos;re sending the telemetry pipeline, huh? Well follow these steps and we&apos;ll have you reading some JSON in no time.</p>
+<p>For a more thorough introduction, see <a href="realtime_analysis_plugin.html">Creating a Real-Time Analysis Plugin Cookbook</a>.</p>
+<h2 id="steps-to-create-a-viewing-output"><a name="steps-to-create-a-viewing-output" class="plugin-anchor" href="#steps-to-create-a-viewing-output"><i class="fa fa-link" aria-hidden="true"></i></a>Steps to Create a Viewing Output</h2>
+<ol>
+<li><p>Get your <code>clientId</code> from whatever product you&apos;re using. For desktop, it&apos;s available in <code>about:telemetry</code>.</p>
+</li>
+<li><p>Go to the CEP site: <a href="https://pipeline-cep.prod.mozaws.net/" target="_blank">https://pipeline-cep.prod.mozaws.net/</a></p>
+</li>
+<li><p>Login/Register using your Google <code>@mozilla.com</code> account</p>
+</li>
+<li><p>Click on the &quot;Analysis Plugin Deployment&quot; tab</p>
+</li>
+<li><p>Under &quot;Heka Analysis Plugin Configuration&quot;, put the following config:</p>
+</li>
+</ol>
+<pre><code>filename = &apos;&lt;your_name&gt;_&lt;product&gt;_pings.lua&apos;
+message_matcher = &apos;Type == &quot;telemetry&quot; &amp;&amp; Fields[docType] == &quot;&lt;doctype&gt;&quot; &amp;&amp; Fields[clientId] == &quot;&lt;your_client_id&gt;&quot;&apos;
+preserve_data = false
+ticker_interval = 60
+</code></pre><p>Where <code>&lt;product&gt;</code> is whatever product you&apos;re testing, and <code>&lt;doctype&gt;</code> is whatever ping you&apos;re testing (e.g. <code>main</code>, <code>core</code>, <code>mobile-event</code>, etc.).</p>
+<ol>
+<li>Under &quot;Heka Analysis Plugin&quot; put the following. This will, by default, show the most recent 10 pings that match your <code>clientId</code> on the specified <code>docType</code>.</li>
+</ol>
+<p>NOTE: If you are looking at <code>main</code>, <code>saved-session</code>, or <code>crash</code> pings, the submitted data is split out into several pieces. Reading just <code>Fields[submission]</code>
+will not give you the entire submitted ping contents. You can change that to e.g. <code>Fields[environment.system]</code>, <code>Fields[payload.histograms]</code>, <code>Fields[payload.keyedHistograms]</code>.
+To see all of the available fields, <a href="tools/cep_matcher.md">look at a ping in the Matcher tab</a>.</p>
+<pre><code>require &quot;string&quot;
+require &quot;table&quot;
+
+output = {}
+max_len = 10
+cur_ind = 1
+
+function process_message()
+    output[cur_ind] = read_message(&quot;Fields[submission]&quot;)
+    cur_ind = cur_ind + 1
+    if cur_ind &gt; max_len then
+        cur_ind = 1
+    end
+    return 0
+end
+
+function timer_event(ns, shutdown)
+    local res = table.concat(output, &quot;,&quot;)
+    add_to_payload(&quot;[&quot; .. res .. &quot;]&quot;)
+    inject_payload(&quot;json&quot;)
+end
+</code></pre><ol>
+<li><p>Click &quot;Run Matcher&quot;, then &quot;Test Plugin&quot;. Check that no errors appear in &quot;Debug Output&quot;</p>
+</li>
+<li><p>Click &quot;Deploy Plugin&quot;. Your output will be available at <code>https://pipeline-cep.prod.mozaws.net/dashboard_output/analysis.&lt;username&gt;_mozilla_com.&lt;your_name&gt;_&lt;product&gt;_pings..json</code></p>
+</li>
+</ol>
 
                                 
                                 </section>
@@ -1061,14 +1112,10 @@
 
             
                 
-                <a href="../tools/projects.html" class="navigation navigation-prev " aria-label="Previous page: Project Glossary">
+                <a href="new_ping.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Sending a Custom Ping">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
-                
-                <a href="parquet.html" class="navigation navigation-next " aria-label="Next page: Working with Parquet Data on ATMO Clusters">
-                    <i class="fa fa-angle-right"></i>
-                </a>
                 
             
         
@@ -1077,7 +1124,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Cookbooks","level":"1.5","depth":1,"next":{"title":"Working with Parquet Data on ATMO Clusters","level":"1.5.1","depth":2,"path":"cookbooks/parquet.md","ref":"cookbooks/parquet.md","articles":[]},"previous":{"title":"Project Glossary","level":"1.4.3","depth":2,"path":"tools/projects.md","ref":"tools/projects.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"cookbooks/README.adoc","mtime":"2018-03-23T19:33:12.705Z","type":"asciidoc"},"gitbook":{"version":"3.2.3","time":"2018-03-23T19:35:15.447Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Seeing Your Own Pings","level":"1.5.8","depth":2,"next":{"title":"About this Documentation","level":"1.6","depth":1,"ref":"","articles":[{"title":"Contributing","level":"1.6.1","depth":2,"path":"meta/contributing.md","ref":"meta/contributing.md","articles":[]},{"title":"Bug Template","level":"1.6.2","depth":2,"url":"https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&component=Documentation%20and%20Knowledge%20Repo%20%28RTMO%29&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=--&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&target_milestone=---&version=unspecified","ref":"https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&component=Documentation%20and%20Knowledge%20Repo%20%28RTMO%29&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=--&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&target_milestone=---&version=unspecified","articles":[]},{"title":"Structure","level":"1.6.3","depth":2,"path":"meta/structure.md","ref":"meta/structure.md","articles":[]}]},"previous":{"title":"Sending a Custom Ping","level":"1.5.7","depth":2,"path":"cookbooks/new_ping.md","ref":"cookbooks/new_ping.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"cookbooks/view_pings_cep.md","mtime":"2018-03-23T19:33:12.705Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-23T19:35:15.447Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
