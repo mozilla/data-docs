@@ -42,6 +42,7 @@ E10s
 ElasticSearch
 EMR
 ETL
+filename
 funnelcake
 geoip
 GitBook
@@ -63,6 +64,7 @@ matchers
 metadata
 metastore
 MozTelemetry
+MySQL
 nbconvert
 nbviewer
 nginx
@@ -76,6 +78,7 @@ performant
 Pingsender
 Plotly
 PostgreSQL
+Postgres
 pre-computed
 pre-configured
 pre-defined
@@ -97,6 +100,7 @@ schemas
 SciPy
 searchfox
 SERP
+serverless
 Sonatype
 SSL
 STMO
@@ -115,6 +119,7 @@ triaged
 triaging
 tunnelling
 UDF
+UDFs
 UI
 un-check
 un-publish
