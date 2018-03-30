@@ -19,11 +19,12 @@ For more details see the [search data documentation].
 
 ## Scheduling
 
-This dataset is not currently scheduled.
+This dataset is scheduled on Airflow
+([source](https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py#L164)).
 
 ## Schema
 
-As of 2018-02-13, the current version of `search_clients_daily` is `v1`,
+As of 2018-03-23, the current version of `search_clients_daily` is `v2`,
 and has a schema as follows.
 It's backfilled through 2016-06-07
 
@@ -45,6 +46,7 @@ root
  |-- default_search_engine: string (nullable = true) 
  |-- default_search_engine_data_load_path: string (nullable = true) 
  |-- default_search_engine_data_submission_url: string (nullable = true) 
+ |-- sample_id: string (nullable = true) 
  |-- sessions_started_on_this_day: long (nullable = true) 
  |-- profile_age_in_days: integer (nullable = true) 
  |-- subsession_hours_sum: double (nullable = true) 
@@ -54,7 +56,10 @@ root
  |-- active_hours_sum: double (nullable = true) 
  |-- tagged-sap: long (nullable = true) 
  |-- tagged-follow-on: long (nullable = true) 
- |-- sap: long (nullable = true)
+ |-- sap: long (nullable = true) 
+ |-- tagged_sap: long (nullable = true) 
+ |-- tagged_follow_on: long (nullable = true) 
+ |-- submission_date_s3: string (nullable = true) 
 ```
 
 # Code Reference
