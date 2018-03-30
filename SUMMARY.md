@@ -19,6 +19,7 @@
       * [Longitudinal](datasets/batch_view/longitudinal/reference.md)
       * [Cross Sectional](datasets/batch_view/cross_sectional/reference.md)
       * [Main Summary](datasets/batch_view/main_summary/reference.md)
+      * [First Shutdown Summary](datasets/batch_view/first_shutdown_summary/reference.md)
       * [Crash Summary](datasets/batch_view/crash_summary/reference.md)
       * [Crash Aggregate](datasets/batch_view/crash_aggregates/reference.md)
       * [Events](datasets/batch_view/events/reference.md)

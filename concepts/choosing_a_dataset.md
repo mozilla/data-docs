@@ -35,6 +35,10 @@ This section describes the derived datasets we provide to make analyzing this da
 
 {% include "/datasets/batch_view/main_summary/intro.md" %}
 
+## `first_shutdown_summary`
+
+{% include "/datasets/batch_view/first_shutdown_summary/intro.md" %}
+
 ## `cross_sectional`
 
 {% include "/datasets/batch_view/cross_sectional/intro.md" %}
