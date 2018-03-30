@@ -26,12 +26,16 @@ For more details, see the [search data documentation]
 
 `search_clients_daily` does not include
 (`client_id` `submission_date`) pairs
-if we did not receive a ping for that `submission_date`
-or if the ping contained no searches.
-In other words,
-This dataset **does not include `client_ids` that do not search**.
-Note: pings with no searches can be identified in `main_summary`
-using the condition `where search_counts is null`.
+if we did not receive a ping for that `submission_date`.
+
+We impute a `NULL` `engine` and `source` for pings with no search counts.
+This ensures users who never search are included in this dataset.
+
+This dataset is large.
+Consider using an [ATMO Spark cluster](../tools/spark.md) for heavy analyses.
+If you're querying this dataset from re:dash,
+heavily limit the data you read using `submission_date_s3` or `sample_id`.
+
 
 #### Accessing the Data
 
