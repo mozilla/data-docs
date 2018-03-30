@@ -1082,12 +1082,13 @@ For more details, see the <a href="../../search.html">search data documentation<
 <h4 id="background-and-caveats"><a name="background-and-caveats" class="plugin-anchor" href="#background-and-caveats"><i class="fa fa-link" aria-hidden="true"></i></a>Background and Caveats</h4>
 <p><code>search_clients_daily</code> does not include
 (<code>client_id</code> <code>submission_date</code>) pairs
-if we did not receive a ping for that <code>submission_date</code>
-or if the ping contained no searches.
-In other words,
-This dataset <strong>does not include <code>client_ids</code> that do not search</strong>.
-Note: pings with no searches can be identified in <code>main_summary</code>
-using the condition <code>where search_counts is null</code>.</p>
+if we did not receive a ping for that <code>submission_date</code>.</p>
+<p>We impute a <code>NULL</code> <code>engine</code> and <code>source</code> for pings with no search counts.
+This ensures users who never search are included in this dataset.</p>
+<p>This dataset is large.
+Consider using an <a href="../tools/spark.md">ATMO Spark cluster</a> for heavy analyses.
+If you&apos;re querying this dataset from re:dash,
+heavily limit the data you read using <code>submission_date_s3</code> or <code>sample_id</code>.</p>
 <h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
 <p>Access to <code>search_clients_daily</code> is heavily restricted.
 You will not be able to access this table without additional permissions.
@@ -1103,9 +1104,10 @@ If you have trouble viewing this query,
 it&apos;s likely you don&apos;t have the proper permissions.
 For more details see the <a href="../../search.html">search data documentation</a>.</p>
 <h2 id="scheduling"><a name="scheduling" class="plugin-anchor" href="#scheduling"><i class="fa fa-link" aria-hidden="true"></i></a>Scheduling</h2>
-<p>This dataset is not currently scheduled.</p>
+<p>This dataset is scheduled on Airflow
+(<a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py#L164" target="_blank">source</a>).</p>
 <h2 id="schema"><a name="schema" class="plugin-anchor" href="#schema"><i class="fa fa-link" aria-hidden="true"></i></a>Schema</h2>
-<p>As of 2018-02-13, the current version of <code>search_clients_daily</code> is <code>v1</code>,
+<p>As of 2018-03-23, the current version of <code>search_clients_daily</code> is <code>v2</code>,
 and has a schema as follows.
 It&apos;s backfilled through 2016-06-07</p>
 <pre><code>root 
@@ -1125,6 +1127,7 @@ It&apos;s backfilled through 2016-06-07</p>
  |-- default_search_engine: string (nullable = true) 
  |-- default_search_engine_data_load_path: string (nullable = true) 
  |-- default_search_engine_data_submission_url: string (nullable = true) 
+ |-- sample_id: string (nullable = true) 
  |-- sessions_started_on_this_day: long (nullable = true) 
  |-- profile_age_in_days: integer (nullable = true) 
  |-- subsession_hours_sum: double (nullable = true) 
@@ -1134,7 +1137,10 @@ It&apos;s backfilled through 2016-06-07</p>
  |-- active_hours_sum: double (nullable = true) 
  |-- tagged-sap: long (nullable = true) 
  |-- tagged-follow-on: long (nullable = true) 
- |-- sap: long (nullable = true)
+ |-- sap: long (nullable = true) 
+ |-- tagged_sap: long (nullable = true) 
+ |-- tagged_follow_on: long (nullable = true) 
+ |-- submission_date_s3: string (nullable = true)
 </code></pre><h1 id="code-reference"><a name="code-reference" class="plugin-anchor" href="#code-reference"><i class="fa fa-link" aria-hidden="true"></i></a>Code Reference</h1>
 <p>The <code>search_clients_daily</code> job is 
 <a href="https://github.com/mozilla/python_mozetl/blob/master/mozetl/search/aggregates.py" target="_blank">defined in <code>python_mozetl</code></a></p>
@@ -1181,7 +1187,7 @@ It&apos;s backfilled through 2016-06-07</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Search Clients Daily","level":"1.3.3.4.2","depth":4,"next":{"title":"Tools","level":"1.4","depth":1,"path":"tools/README.adoc","ref":"tools/README.adoc","articles":[{"title":"Overview of Mozilla's Data Pipeline","level":"1.4.1","depth":2,"path":"concepts/data_pipeline.md","ref":"concepts/data_pipeline.md","articles":[]},{"title":"Interfaces","level":"1.4.2","depth":2,"path":"tools/interfaces.md","ref":"tools/interfaces.md","articles":[{"title":"Analysis Intro / TMO","level":"1.4.2.1","depth":3,"path":"concepts/analysis_intro.md","ref":"concepts/analysis_intro.md","articles":[]},{"title":"Custom analysis with Spark","level":"1.4.2.2","depth":3,"path":"tools/spark.md","ref":"tools/spark.md","articles":[]},{"title":"Creating a Real-time Analysis Plugin","level":"1.4.2.3","depth":3,"path":"cookbooks/realtime_analysis_plugin.md","ref":"cookbooks/realtime_analysis_plugin.md","articles":[]},{"title":"Distribution Viewer","level":"1.4.2.4","depth":3,"path":"tools/distribution_viewer.md","ref":"tools/distribution_viewer.md","articles":[]},{"title":"RTMO","level":"1.4.2.5","depth":3,"path":"tools/rtmo.md","ref":"tools/rtmo.md","articles":[]},{"title":"Alerts","level":"1.4.2.6","depth":3,"path":"tools/alerts.md","ref":"tools/alerts.md","articles":[]},{"title":"CEP Matcher","level":"1.4.2.7","depth":3,"path":"tools/cep_matcher.md","ref":"tools/cep_matcher.md","articles":[]}]},{"title":"Project Glossary","level":"1.4.3","depth":2,"path":"tools/projects.md","ref":"tools/projects.md","articles":[]}]},"previous":{"title":"Search Aggregates","level":"1.3.3.4.1","depth":4,"path":"datasets/mozetl/search_aggregates/reference.md","ref":"datasets/mozetl/search_aggregates/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/mozetl/search_clients_daily/reference.md","mtime":"2018-03-23T20:04:19.710Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-23T20:05:53.087Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Search Clients Daily","level":"1.3.3.4.2","depth":4,"next":{"title":"Tools","level":"1.4","depth":1,"path":"tools/README.adoc","ref":"tools/README.adoc","articles":[{"title":"Overview of Mozilla's Data Pipeline","level":"1.4.1","depth":2,"path":"concepts/data_pipeline.md","ref":"concepts/data_pipeline.md","articles":[]},{"title":"Interfaces","level":"1.4.2","depth":2,"path":"tools/interfaces.md","ref":"tools/interfaces.md","articles":[{"title":"Analysis Intro / TMO","level":"1.4.2.1","depth":3,"path":"concepts/analysis_intro.md","ref":"concepts/analysis_intro.md","articles":[]},{"title":"Custom analysis with Spark","level":"1.4.2.2","depth":3,"path":"tools/spark.md","ref":"tools/spark.md","articles":[]},{"title":"Creating a Real-time Analysis Plugin","level":"1.4.2.3","depth":3,"path":"cookbooks/realtime_analysis_plugin.md","ref":"cookbooks/realtime_analysis_plugin.md","articles":[]},{"title":"Distribution Viewer","level":"1.4.2.4","depth":3,"path":"tools/distribution_viewer.md","ref":"tools/distribution_viewer.md","articles":[]},{"title":"RTMO","level":"1.4.2.5","depth":3,"path":"tools/rtmo.md","ref":"tools/rtmo.md","articles":[]},{"title":"Alerts","level":"1.4.2.6","depth":3,"path":"tools/alerts.md","ref":"tools/alerts.md","articles":[]},{"title":"CEP Matcher","level":"1.4.2.7","depth":3,"path":"tools/cep_matcher.md","ref":"tools/cep_matcher.md","articles":[]}]},{"title":"Project Glossary","level":"1.4.3","depth":2,"path":"tools/projects.md","ref":"tools/projects.md","articles":[]}]},"previous":{"title":"Search Aggregates","level":"1.3.3.4.1","depth":4,"path":"datasets/mozetl/search_aggregates/reference.md","ref":"datasets/mozetl/search_aggregates/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/mozetl/search_clients_daily/reference.md","mtime":"2018-03-30T19:40:23.211Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-30T19:42:01.993Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
