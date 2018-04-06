@@ -1,9 +1,9 @@
-The `client_count` dataset is useful for estimating user counts over a few
-[pre-defined dimensions](https://github.com/mozilla/telemetry-airflow/blob/master/jobs/client_count_view.sh).
+The `client_count_daily` dataset is useful for estimating user counts over a few
+[pre-defined dimensions](https://github.com/mozilla/telemetry-airflow/blob/master/jobs/client_count_daily_view.sh).
 
-The `client_count` dataset is deprecated in favor of
-[client_count_daily](../client_count_daily/reference.md),
-which is aggregated by submission date instead of activity date.
+The `client_count_daily` dataset is similar to the deprecated
+[`client_count` dataset](../client_count/reference.md)
+except that is aggregated by submission date and not activity date.
 
 #### Content
 
@@ -11,8 +11,8 @@ This dataset includes columns for a dozen factors and an HLL variable.
 The `hll` column contains a
 [HyperLogLog](https://en.wikipedia.org/wiki/HyperLogLog)
 variable, which is an approximation to the exact count.
-The factor columns include **activity** date and the dimensions listed
-[here](https://github.com/mozilla/telemetry-airflow/blob/master/jobs/client_count_view.sh).
+The factor columns include **submission** date and the dimensions listed
+[here](https://github.com/mozilla/telemetry-airflow/blob/master/jobs/client_count_daily_view.sh).
 Each row represents one combinations of the factor columns.
 
 #### Background and Caveats
