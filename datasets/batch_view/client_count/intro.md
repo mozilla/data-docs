@@ -8,7 +8,7 @@ The `hll` column contains a
 [HyperLogLog](https://en.wikipedia.org/wiki/HyperLogLog)
 variable, which is an approximation to the exact count.
 The factor columns include activity date and the dimensions listed
-[here](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/ClientCountView.scala#L22).
+[here](https://github.com/mozilla/telemetry-airflow/blob/master/jobs/client_count_view.sh).
 Each row represents one combinations of the factor columns.
 
 #### Background and Caveats
