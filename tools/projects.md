@@ -80,6 +80,7 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 | [Hardware Report][hwreport_gh]    | Firefox Hardware Report, [available here][hwreport]
 | [`python-zeppelin`][pyzep]        | Convert Zeppelin notebooks to Markdown
 | [St. Mocli][stmocli]              | A command-line interface to [STMO][stmo]
+| [probe-scraper]                   | Scrape and publish Telemetry probe data from Firefox
 
 [tmo_gh]: https://github.com/mozilla/telemetry-dashboard
 [cer]: https://github.com/mozilla/cerberus
@@ -98,6 +99,7 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 [hwreport]: https://hardware.metrics.mozilla.com/
 [pyzep]: https://github.com/mozilla/python-zeppelin
 [stmocli]: https://github.com/mozilla/stmocli
+[probe-scraper]: https://github.com/mozilla/probe-scraper
 
 ## Reference materials
 

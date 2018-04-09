@@ -48,7 +48,6 @@ E10s
 ElasticSearch
 EMR
 ETL
-failsafe
 filename
 funnelcake
 geoip
@@ -56,6 +55,7 @@ GitBook
 Github
 GoFaster
 gzip
+gzipped
 Heka
 HLL
 hostname
@@ -87,7 +87,6 @@ non-e10s
 NoSQL
 npm
 NumPy
-optionally-gzipped
 ORM-like
 parquet2hive
 performant

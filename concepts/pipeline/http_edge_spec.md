@@ -5,7 +5,7 @@ This document specifies the behavior of the server which is accepts Telemetry su
 The original implementation of the HTTP Edge Server was tracked in [Bug 1129222](https://bugzilla.mozilla.org/show_bug.cgi?id=1129222).
 
 ## General Data Flow
-HTTP submissions come in from the wild, hit a load balancer, then optionally an nginx proxy, then the HTTP Edge Server described in this document. Data is accepted via a POST/PUT request from clients, which the server will wrap in a [Heka message](https://hekad.readthedocs.io/en/dev/message/index.html) and forward to two places: the [Services Data Pipeline](data_pipeline.md), where any further processing, analysis, and storage will be handled; as well as to a short-lived S3 bucket which will act as a failsafe in case there is a processing error and/or data loss within the main Data Pipeline.
+HTTP submissions come in from the wild, hit a load balancer, then optionally an nginx proxy, then the HTTP Edge Server described in this document. Data is accepted via a POST/PUT request from clients, which the server will wrap in a [Heka message](https://hekad.readthedocs.io/en/dev/message/index.html) and forward to two places: the [Services Data Pipeline](data_pipeline.md), where any further processing, analysis, and storage will be handled; as well as to a short-lived S3 bucket which will act as a fail-safe in case there is a processing error and/or data loss within the main Data Pipeline.
 
 ## GET Requests
 Accept GET on `/status`, returning `OK` if all is well. This can be used to check the health of web servers.
@@ -83,7 +83,7 @@ The above meta-message keeps track of messages that were too large and various o
 * *500* - internal error
 
 ## Forwarding to S3
-As a failsafe, we archive the incoming requests to S3 with as little processing as possible. Requests are written to local files and rotated and uploaded externally to the web server.
+As a fail-safe, we archive the incoming requests to S3 with as little processing as possible. Requests are written to local files and rotated and uploaded externally to the web server.
 
 ## Other Considerations
 ### Compression

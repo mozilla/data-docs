@@ -72,11 +72,11 @@ graph LR
   sparkstreaming --> s3_parquet
 ```
 
-Data arrives as an HTTP POST of an optionally-gzipped payload of JSON. See the common [Edge Server] specification for details.
+Data arrives as an HTTP POST of an optionally gzipped payload of JSON. See the common [Edge Server] specification for details.
 
 Submissions hit a load balancer which handles the SSL connection, then forwards to a "tee" server, which may direct some or all submissions to alternate backends. In the past, the tee was used to manage the [cutover between different versions of the backend][cutover] infrastructure. It is implemented as an [`OpenResty`][OpenResty] plugin.
 
-From there, the [`mozingest`][mozingest] HTTP Server receives submissions from the tee and batches and stores data durably on Amazon S3 as a failsafe (we call this "Landfill"). Data is then passed along via [Kafka] for validation and further processing. If there is a problem with decoding, validation, or any of the code described in the rest of this section, data can be re-processed from this failsafe store. The `mozingest` server is implemented as an `nginx` module.
+From there, the [`mozingest`][mozingest] HTTP Server receives submissions from the tee and batches and stores data durably on Amazon S3 as a fail-safe (we call this "Landfill"). Data is then passed along via [Kafka] for validation and further processing. If there is a problem with decoding, validation, or any of the code described in the rest of this section, data can be re-processed from this fail-safe store. The `mozingest` server is implemented as an `nginx` module.
 
 Validation, at a minimum, ensures that a payload is valid JSON (possibly compressed). Many document types also have a [JSONSchema specification][mps], and are further validated against that.
 
@@ -170,9 +170,9 @@ The data stored in Heka format is [readable from Spark](/tools/spark.md) using l
 
 Parquet data can be read and written natively from Spark, and many datasets are indexed in a [Hive] Metastore, making them available through a SQL interface on Re:dash and in notebooks via Spark SQL. Many other SQL data sources are also made available via Re:dash, see [this article](/tools/stmo.md) for more information on accessing data using SQL.
 
-There is a separate data store for self-serve **Analysis Outputs**, intended to keep ad-hoc, temporary data out of the Data Lake. This is implemented as a separate S3 location, with personal output locations prefixed with each person's user id, similar to the layout of the `/home` directory on a Unix system.
+There is a separate data store for self-serve **Analysis Outputs**, intended to keep ad-hoc, temporary data out of the Data Lake. This is implemented as a separate S3 location, with personal output locations prefixed with each person's user id, similar to the layout of the `/home` directory on a Unix system. See the [Working with Parquet data] cookbook for more details.
 
-Analysis outputs can also be made public using the **Public Outputs** bucket. This is a web-accessible S3 location for powering public dashboards.
+Analysis outputs can also be made public using the **Public Outputs** bucket. This is a web-accessible S3 location for powering public dashboards. This public data is available at `https://analysis-output.telemetry.mozilla.org/<job name>/data/<files>`.
 
 ## Stream Processing
 
@@ -209,12 +209,12 @@ graph TD
     atmo_service[ATMO Service] -->|launch| emr_cluster
     atmo_service -->|schedule| emr_job[fa:fa-clock-o Scheduled EMR Job]
     emr_cluster -->|mount| EFS
-    emr_cluster --> lake
-    emr_job --> s3_output_public
-    emr_job --> s3_output_private
+    emr_cluster -->|read + write| lake
+    emr_job -->|read + write| s3_output_public
+    emr_job -->|read + write| s3_output_private
   end
   subgraph STMO
-    redash[Re:dash] -->|Presto| lake
+    redash[Re:dash] -->|read| lake
   end
   subgraph TMO
     evo[Evolution Dashboard]
@@ -225,7 +225,7 @@ graph TD
   end
   subgraph Databricks
     db_notebook[Notebook]
-    db_notebook -->|Spark SQL| lake
+    db_notebook -->|read + write| lake
   end
 ```
 
@@ -239,13 +239,13 @@ The use of these self-serve tools is described in the [Getting Started] article.
 
 Jupyter or Zeppelin notebooks are the usual interface to getting work done using a cluster, though you get full SSH access to the cluster.
 
-Clusters launched via ATMO are automatically killed after a user-defined period of time (by default, 8 hours), though their lifetime can be extended as needed. Each cluster has an **`EFS`** volume mounted on the `/home/hadoop` directory, which means that data stored locally on the cluster persists from one cluster to the next.
+Clusters launched via ATMO are automatically killed after a user-defined period of time (by default, 8 hours), though their lifetime can be extended as needed. Each cluster has a user-specific **`EFS`** volume mounted on the `/home/hadoop` directory, which means that data stored locally on the cluster persists from one cluster to the next. This volume is shared by all clusters launched by a given ATMO user.
 
 ##### STMO: SQL Analysis
 
 [STMO] is a customized [Re:dash] installation that provides self-serve access to a a variety of different [datasets](/concepts/choosing_a_dataset.md). From here, you can query data in the Parquet Data Lake as well as various RDBMS data sources.
 
-STMO interfaces with the data lake using both [Presto] and Amazon [Athena]. Each has its own data source in Re:dash. Since Athena currently lacks the ability to use custom user-defined functions, access to datasets with HyperLogLog columns, such as [`client_count`](/datasets/batch_view/client_count/intro.md) are only available via Presto.
+STMO interfaces with the data lake using both [Presto] and Amazon [Athena]. Each has its own data source in Re:dash. Since Athena does not support user-defined functions, datasets with HyperLogLog columns, such as [`client_count`](/datasets/batch_view/client_count/intro.md), are only available via Presto..
 
 Different **Data Sources** in STMO connect to different backends, and each backend might use a slightly different flavor of SQL. You should find a link to the documentation for the expected SQL variant next to the Data Sources list.
 
@@ -256,6 +256,8 @@ There is a command-line interface to STMO called [St. Mocli], if you prefer writ
 ##### Databricks: Managed Spark Analysis
 
 [Databricks] offers another notebook interface for doing analysis in Scala, SQL, Python and R.
+
+Databricks provides an always-on shared server which is nice for quick data investigations. ATMO clusters take some time to start up, usually on the order of tens of minutes. The shared server allows you to avoid this start-up cost. Prefer ATMO for heavy analyses since you will have dedicated resources.
 
 ##### TMO: Aggregate Graphs
 
@@ -427,3 +429,5 @@ graph LR
 [St. Mocli]: https://github.com/mozilla/stmocli
 [Kafka]: https://kafka.apache.org/
 [Spark]: https://spark.apache.org/docs/latest/index.html
+[Working with Parquet data]: https://docs.telemetry.mozilla.org/cookbooks/parquet.html#where-to-save-data
+[Athena]: https://aws.amazon.com/athena/

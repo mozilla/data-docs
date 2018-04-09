@@ -114,7 +114,7 @@ subgraph mozaggregator
   rdbms(fa:fa-database PostgreSQL)
 end
 
-pipeline --> aggregator 
+pipeline --> aggregator
 pipeline --> spark{fa:fa-star Spark}
 pipeline --> redash[fa:fa-line-chart Re:dash]
 
@@ -163,7 +163,7 @@ Presto, and other databases, are behind a [re:dash] service ([STMO]) which provi
 
 # Is that it?
 
-No, not really. For example, the DWL pushes some of the Telemetry data to Redshift and ElasticSearch but those tools satisfy more niche needs. The pipeline ingests logs from services as well and there are many specialized dashboards out there I haven’t mentioned. We also use [Zeppelin] as a means to create interactive data analysis notebooks that supports Spark, SQL, Scala and more.
+No, not really. If you want to read more, check out [this article](data_pipeline_detail.md). For example, the DWL pushes some of the Telemetry data to Redshift and other tools that satisfy more niche needs. The pipeline ingests logs from services as well and there are many specialized dashboards out there I haven’t mentioned. We also use [Zeppelin] as a means to create interactive data analysis notebooks that supports Spark, SQL, Scala and more.
 
 There is a vast ecosystem of tools for processing data at scale, each with their pros & cons. The pipeline grew organically and we added new tools as new use-cases came up that we couldn’t solve with our existing stack. There are still scars left from that growth though which require some effort to get rid of, like ingesting data from schema-less format.
 
