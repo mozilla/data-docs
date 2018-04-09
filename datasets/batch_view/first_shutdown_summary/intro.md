@@ -3,22 +3,20 @@ ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telem
 
 #### Contents
 
-The first shutdown ping contains a client's first session usage data. This
-table contains rows similar to the
+The first shutdown ping contains first session usage data. The
+dataset has rows similar to the
 [`telemetry_new_profile_parquet`](/datasets/batch_view/new_profile/reference.md),
 but in the shape of
 [`main_summary`](/datasets/batch_view/main_summary/reference.md). 
 
 #### Background and Caveats
 
-Data collection latency was vastly improved with the introduction of the
+Ping latency was reduced through the
 shutdown ping-sender mechanism in Firefox 55. To maintain consistent historical
-behavior, the first main ping is not sent until the second start up. Instead, a
-separate first-shutdown ping was created to maintain backwards compatibility.
+behavior, the first main ping is not sent until the second start up. In Firefox 57, a
+separate first-shutdown ping was created to evaluate first-shutdown behavior while maintaining backwards compatibility.
 
-In many cases, the first-shutdown ping is a duplicate of the main ping. To
-avoid duplicate documents, take the `outer join` of the two datasets on
-their `document_id`.
+In many cases, the first-shutdown ping is a duplicate of the main ping. The first-shutdown summary can be used in conjunction with the main summary by taking the union and deduplicating on the `document_id`.
 
 #### Accessing the Data
 
@@ -28,3 +26,4 @@ The data can be accessed as `first_shutdown_summary`. It is currently stored in 
 s3://telemetry-parquet/first_shutdown_summary/v4/
 ```
 
+The data is backfilled to 2017-09-22, the date of its first nightly appearance. This data should be available to all releases on and after Firefox 57.
