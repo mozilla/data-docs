@@ -32,7 +32,8 @@ The work is being tracked
 
 ## Schema
 
+The `activity_date` column is formatted as `%Y-%m-%d`, like `2018-01-30`.
+
 This document is a work in progress.
 The work is being tracked
 [here](https://bugzilla.mozilla.org/show_bug.cgi?id=1364175).
-

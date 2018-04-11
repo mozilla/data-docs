@@ -32,6 +32,8 @@ The work is being tracked
 
 ## Schema
 
+`submission_date` is formatted as `%Y%m%d`, like `20180130`.
+
 This document is a work in progress.
 The work is being tracked
 [here](https://bugzilla.mozilla.org/show_bug.cgi?id=1364175).
