@@ -8,7 +8,7 @@ It's important that we improve our documentation as often as possible.
 ## Getting the Raw Documentation
 
 The documentation is intended to be read as HTML at
-[`docs.telemetry.mozilla.org`](https://docs.telemetry.mozilla.org).
+[`docs.telemetry.mozilla.org`][dtmo].
 However, we store the documentation in raw text files in the
 [`firefox-data-docs` repo](https://github.com/mozilla/firefox-data-docs).
 To begin contributing to the docs, fork the `firefox-data-docs` repo.
@@ -121,7 +121,11 @@ Please squash your changes  into meaningful commits  and follow these
 ## Publishing
 
 The documentation is hosted on [Github Pages](https://pages.github.com/).
-Updates to the documentation still need to be pushed manually.
+
+Updates to the documentation are automatically published to
+[`docs.telemetry.mozilla.org`][dtmo] when changes are merged.
+
+To publish to your own fork of this repo, changes need to be pushed manually.
 Use the [deploy script](https://github.com/mozilla/firefox-data-docs/blob/master/scripts/deploy.sh)
 to publish new changes.
 
@@ -139,3 +143,5 @@ This document's structure is heavily influenced by
 
 You can find more context for this document in
 [this blog post](http://blog.harterrt.com/lit-review.html).
+
+[dtmo]: https://docs.telemetry.mozilla.org
