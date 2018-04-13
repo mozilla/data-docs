@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Client Count · GitBook</title>
+        <title>Client Count Daily · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -65,10 +65,10 @@
     <link rel="shortcut icon" href="../../../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="../client_count_daily/reference.html" />
+    <link rel="next" href="../../mozetl/churn/reference.html" />
     
     
-    <link rel="prev" href="../addons/reference.html" />
+    <link rel="prev" href="../client_count/reference.html" />
     
 
     </head>
@@ -469,9 +469,9 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.3.3.2.10" data-path="reference.html">
+        <li class="chapter " data-level="1.3.3.2.10" data-path="../client_count/reference.html">
             
-                <a href="reference.html">
+                <a href="../client_count/reference.html">
             
                     
                     Client Count
@@ -482,9 +482,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3.2.11" data-path="../client_count_daily/reference.html">
+        <li class="chapter active" data-level="1.3.3.2.11" data-path="reference.html">
             
-                <a href="../client_count_daily/reference.html">
+                <a href="reference.html">
             
                     
                     Client Count Daily
@@ -1089,7 +1089,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../../.." >Client Count</a>
+        <a href="../../.." >Client Count Daily</a>
     </h1>
 </div>
 
@@ -1104,7 +1104,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="client-count-reference"><a name="client-count-reference" class="plugin-anchor" href="#client-count-reference"><i class="fa fa-link" aria-hidden="true"></i></a>Client Count Reference</h1>
+                                <h1 id="client-count-daily-reference"><a name="client-count-daily-reference" class="plugin-anchor" href="#client-count-daily-reference"><i class="fa fa-link" aria-hidden="true"></i></a>Client Count Daily Reference</h1>
 <p>This document is a work in progress.
 The work is being tracked
 <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1364175" target="_blank">here</a>.</p>
@@ -1121,18 +1121,18 @@ The work is being tracked
 </ul>
 <!-- tocstop -->
 <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
-<p>The <code>client_count</code> dataset is useful for estimating user counts over a few
-<a href="https://github.com/mozilla/telemetry-airflow/blob/master/jobs/client_count_view.sh" target="_blank">pre-defined dimensions</a>.</p>
-<p>The <code>client_count</code> dataset is deprecated in favor of
-<a href="../client_count_daily/reference.html"><code>client_count_daily</code></a>,
-which is aggregated by submission date instead of activity date.</p>
+<p>The <code>client_count_daily</code> dataset is useful for estimating user counts over a few
+<a href="https://github.com/mozilla/telemetry-airflow/blob/master/jobs/client_count_daily_view.sh" target="_blank">pre-defined dimensions</a>.</p>
+<p>The <code>client_count_daily</code> dataset is similar to the deprecated
+<a href="../client_count/reference.html"><code>client_count</code> dataset</a>
+except that is aggregated by submission date and not activity date.</p>
 <h4 id="content"><a name="content" class="plugin-anchor" href="#content"><i class="fa fa-link" aria-hidden="true"></i></a>Content</h4>
 <p>This dataset includes columns for a dozen factors and an HLL variable.
 The <code>hll</code> column contains a
 <a href="https://en.wikipedia.org/wiki/HyperLogLog" target="_blank">HyperLogLog</a>
 variable, which is an approximation to the exact count.
-The factor columns include <strong>activity</strong> date and the dimensions listed
-<a href="https://github.com/mozilla/telemetry-airflow/blob/master/jobs/client_count_view.sh" target="_blank">here</a>.
+The factor columns include <strong>submission</strong> date and the dimensions listed
+<a href="https://github.com/mozilla/telemetry-airflow/blob/master/jobs/client_count_daily_view.sh" target="_blank">here</a>.
 Each row represents one combinations of the factor columns.</p>
 <h4 id="background-and-caveats"><a name="background-and-caveats" class="plugin-anchor" href="#background-and-caveats"><i class="fa fa-link" aria-hidden="true"></i></a>Background and Caveats</h4>
 <p>It&apos;s important to understand that the <code>hll</code> column is <strong>not a standard count</strong>.
@@ -1165,7 +1165,7 @@ The work is being tracked
 The work is being tracked
 <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1364175" target="_blank">here</a>.</p>
 <h2 id="schema"><a name="schema" class="plugin-anchor" href="#schema"><i class="fa fa-link" aria-hidden="true"></i></a>Schema</h2>
-<p>The <code>activity_date</code> column is formatted as <code>%Y-%m-%d</code>, like <code>2018-01-30</code>.</p>
+<p><code>submission_date</code> is formatted as <code>%Y%m%d</code>, like <code>20180130</code>.</p>
 <p>This document is a work in progress.
 The work is being tracked
 <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1364175" target="_blank">here</a>.</p>
@@ -1196,12 +1196,12 @@ The work is being tracked
 
             
                 
-                <a href="../addons/reference.html" class="navigation navigation-prev " aria-label="Previous page: Addons">
+                <a href="../client_count/reference.html" class="navigation navigation-prev " aria-label="Previous page: Client Count">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="../client_count_daily/reference.html" class="navigation navigation-next " aria-label="Next page: Client Count Daily">
+                <a href="../../mozetl/churn/reference.html" class="navigation navigation-next " aria-label="Next page: Churn">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1212,7 +1212,7 @@ The work is being tracked
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Client Count","level":"1.3.3.2.10","depth":4,"next":{"title":"Client Count Daily","level":"1.3.3.2.11","depth":4,"path":"datasets/batch_view/client_count_daily/reference.md","ref":"datasets/batch_view/client_count_daily/reference.md","articles":[]},"previous":{"title":"Addons","level":"1.3.3.2.9","depth":4,"path":"datasets/batch_view/addons/reference.md","ref":"datasets/batch_view/addons/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/client_count/reference.md","mtime":"2018-04-13T22:29:34.080Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-13T22:31:22.534Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Client Count Daily","level":"1.3.3.2.11","depth":4,"next":{"title":"Churn","level":"1.3.3.2.12","depth":4,"path":"datasets/mozetl/churn/reference.md","ref":"datasets/mozetl/churn/reference.md","articles":[]},"previous":{"title":"Client Count","level":"1.3.3.2.10","depth":4,"path":"datasets/batch_view/client_count/reference.md","ref":"datasets/batch_view/client_count/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/client_count_daily/reference.md","mtime":"2018-04-13T22:29:34.080Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-13T22:31:22.534Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
