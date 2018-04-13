@@ -63,6 +63,7 @@ hostnames
 HyperLogLog
 i.e.
 inlined
+int64
 iOS
 JSON
 JSONSchema
@@ -92,8 +93,8 @@ parquet2hive
 performant
 Pingsender
 Plotly
-PostgreSQL
 Postgres
+PostgreSQL
 pre-computed
 pre-configured
 pre-defined
@@ -143,6 +144,7 @@ UI
 un-check
 un-encoded
 un-publish
+uri
 UUID
 whitelist
 whitelists
