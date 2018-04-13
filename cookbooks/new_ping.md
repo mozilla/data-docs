@@ -10,6 +10,8 @@ answer. General questions about "How do users use our product?" won't cut it - t
 specific, concrete asks that can be translated to data points. This will also make it easier down
 the line as you start data review.
 
+More detail on how to design and implement new pings [can be found here](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html).
+
 Create a Schema
 ---------------
 Use JSON Schema to start with. See the examples schemas in the
