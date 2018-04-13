@@ -26,6 +26,7 @@
       * [Sync Summary](datasets/batch_view/sync_summary/reference.md)
       * [Addons](datasets/batch_view/addons/reference.md)
       * [Client Count](datasets/batch_view/client_count/reference.md)
+      * [Client Count Daily](datasets/batch_view/client_count_daily/reference.md)
       * [Churn](datasets/mozetl/churn/reference.md)
       * [Retention](datasets/batch_view/retention/reference.md)
       * [Clients Daily](datasets/mozetl/clients_daily/reference.md)

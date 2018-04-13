@@ -1,4 +1,4 @@
-# Client Count Reference
+# Client Count Daily Reference
 
 This document is a work in progress.
 The work is being tracked
@@ -32,7 +32,7 @@ The work is being tracked
 
 ## Schema
 
-The `activity_date` column is formatted as `%Y-%m-%d`, like `2018-01-30`.
+`submission_date` is formatted as `%Y%m%d`, like `20180130`.
 
 This document is a work in progress.
 The work is being tracked
