@@ -30,6 +30,8 @@ The DAG is [here](https://github.com/mozilla/telemetry-airflow/blob/master/dags/
 Firefox has an API to record events, which are then submitted through the main ping.
 The format and mechanism of event collection in Firefox is documented [here](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html).
 
+The full events data pipeline is [documented here](/concepts/pipeline/event_pipeline.md).
+
 ## Schema
 
 As of 2017-01-26, the current version of the `events` dataset is `v1`, and has a schema as follows:
