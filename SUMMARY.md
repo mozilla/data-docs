@@ -44,6 +44,7 @@
   * [Overview of Mozilla's Data Pipeline](/concepts/pipeline/data_pipeline.md)
     * [In-depth Data Pipeline Detail](/concepts/pipeline/data_pipeline_detail.md)
     * [HTTP Edge Server Specification](/concepts/pipeline/http_edge_spec.md)
+    * [Event Pipeline Detail](/concepts/pipeline/event_pipeline.md)
   * [Interfaces](tools/interfaces.md)
     * [Analysis Intro / TMO](concepts/analysis_intro.md)
     * [Custom analysis with Spark](tools/spark.md)
