@@ -30,7 +30,7 @@ style mobile_telemetry fill:#f61,stroke-width:0px
 style pipeline fill:#79d,stroke-width:0px
 style main_summary fill:lightblue,stroke-width:0px
 style events_table fill:lightblue,stroke-width:0px
-style mobile_events_table fill:lightblue,stroke-width:0px
+style focus_events_table fill:lightblue,stroke-width:0px
 style redash fill:salmon,stroke-width:0px
 style amplitude fill:salmon,stroke-width:0px
 ```
