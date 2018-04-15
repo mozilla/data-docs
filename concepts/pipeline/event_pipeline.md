@@ -86,12 +86,12 @@ use cases:
 - The [*Telemetry event API*](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html)
   allows easy recording of events from Firefox code.
 - The [*dynamic event API*](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html#registerevents)
-  allows code from Mozilla add-ons to record new events into Telemetry without shipping Firefox
+  allows code from Mozilla addons to record new events into Telemetry without shipping Firefox
   code.
-- The *Telemetry extension API* ([WIP](https://bugzilla.mozilla.org/show_bug.cgi?id=1280234))
+- The *Telemetry extension API* ([work in progress](https://bugzilla.mozilla.org/show_bug.cgi?id=1280234))
   will allow Mozilla extensions to record new events into Telemetry.
 - The [*Hybrid-content API*](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/hybrid-content.html)
-  allows specific whitelisted Mozilla content code to record new events into Telemetry.
+  allows specific white-listed Mozilla content code to record new events into Telemetry.
 
 For all these APIs, events will get sent to the pipeline through the
 [main ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html),
@@ -105,8 +105,8 @@ can follow the event data format and potentially connect to the existing tooling
 ## Mobile event collection
 
 On mobile, event data is currently collected through the [`focus-events` ping](https://github.com/mozilla-mobile/focus-ios/wiki/Event-Tracking-with-Mozilla%27s-Telemetry-Service#event-ping),
-using the [telemetry-ios](https://github.com/mozilla-mobile/telemetry-ios) and
-[telemetry-android](https://github.com/mozilla-mobile/telemetry-android) libraries.
+using the [`telemetry-ios`](https://github.com/mozilla-mobile/telemetry-ios) and
+[`telemetry-android`](https://github.com/mozilla-mobile/telemetry-android) libraries.
 In the future event data will be mainly collected through the planned mobile events ping.
 
 # Datasets
@@ -119,7 +119,7 @@ On the pipeline side, the event data is made available in different datasets:
 
 # Data tooling
 
-The above datasets are all accessible through [Redash](/tools/stmo.md) and [Spark jobs](/tools/stmo.md).
+The above datasets are all accessible through [Re:dash](/tools/stmo.md) and [Spark jobs](/tools/stmo.md).
 
 For product analytics based on event data, we have [Amplitude](https://sso.mozilla.com/amplitude)
 (hosted by the IT data team). We can connect our event data sources data to Amplitude.
