@@ -1105,65 +1105,76 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="http-edge-server-specification"><a name="http-edge-server-specification" class="plugin-anchor" href="#http-edge-server-specification"><i class="fa fa-link" aria-hidden="true"></i></a>HTTP Edge Server Specification</h1>
-<p>This document specifies the behavior of the server which is accepts Telemetry submissions from Firefox.</p>
-<p>The original implementation of the HTTP Edge Server was tracked in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1129222" target="_blank">Bug 1129222</a>.</p>
+<p>This document specifies the behavior of the server that accepts submissions from
+any HTTP client e.g. Firefox telemetry.</p>
+<p>The original implementation of the HTTP Edge Server was tracked in
+<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1129222" target="_blank">Bug 1129222</a>.</p>
 <h2 id="general-data-flow"><a name="general-data-flow" class="plugin-anchor" href="#general-data-flow"><i class="fa fa-link" aria-hidden="true"></i></a>General Data Flow</h2>
-<p>HTTP submissions come in from the wild, hit a load balancer, then optionally an nginx proxy, then the HTTP Edge Server described in this document. Data is accepted via a POST/PUT request from clients, which the server will wrap in a <a href="https://hekad.readthedocs.io/en/dev/message/index.html" target="_blank">Heka message</a> and forward to two places: the <a href="data_pipeline.html">Services Data Pipeline</a>, where any further processing, analysis, and storage will be handled; as well as to a short-lived S3 bucket which will act as a fail-safe in case there is a processing error and/or data loss within the main Data Pipeline.</p>
-<h2 id="get-requests"><a name="get-requests" class="plugin-anchor" href="#get-requests"><i class="fa fa-link" aria-hidden="true"></i></a>GET Requests</h2>
-<p>Accept GET on <code>/status</code>, returning <code>OK</code> if all is well. This can be used to check the health of web servers.</p>
-<h2 id="postput-requests"><a name="postput-requests" class="plugin-anchor" href="#postput-requests"><i class="fa fa-link" aria-hidden="true"></i></a>POST/PUT Requests</h2>
-<p>Treat POST and PUT the same. Accept POST or PUT to URLs of the form</p>
-<p><code>^/submit/namespace/[id[/dimensions]]$</code></p>
-<p>Example Telemetry format:</p>
-<p><code>/submit/telemetry/docId/docType/appName/appVersion/appUpdateChannel/appBuildID</code></p>
-<p>Specific Telemetry example:</p>
-<p><code>/submit/telemetry/ce39b608-f595-4c69-b6a6-f7a436604648/main/Firefox/61.0a1/nightly/20180328030202</code></p>
-<p>Note that <code>id</code> above is a unique document ID, which is used for de-duping submissions. This is <em>not</em> intended to be the <code>clientId</code> field from Telemetry. If <code>id</code> is omitted, we will not be able to de-dupe based on submission URLs.</p>
+<p>HTTP submissions come in from the wild, hit a load balancer, then optionally an
+Nginx proxy, then the HTTP Edge Server described in this document. Data is
+accepted via a POST/PUT request from clients, which the server will wrap in a
+<a href="http://mozilla-services.github.io/lua_sandbox/heka/message.html" target="_blank">Heka message</a>
+and forward to two places: the <a href="data_pipeline.html">Services Data Pipeline</a>, where
+any further processing, analysis, and storage will be handled; as well as to a
+short-lived S3 bucket which will act as a fail-safe in case there is a
+processing error and/or data loss within the main Data Pipeline.</p>
 <h3 id="namespaces"><a name="namespaces" class="plugin-anchor" href="#namespaces"><i class="fa fa-link" aria-hidden="true"></i></a>Namespaces</h3>
-<p>Each allowed namespace should have some configuration, and it should be relatively easy to add new namespaces.</p>
-<p>Per-namespace configuration:</p>
-<ul>
-<li>Required: Max Payload size</li>
-<li>Required: Max path length</li>
-<li>Required: Include Client IP y/n</li>
-<li>Optional: Mapping of dimension index -&gt; field name</li>
-<li>Optional: &#x201C;logger&#x201D; value (default is to use the namespace, but could be useful to re-map)</li>
-</ul>
-<h3 id="creating-a-heka-message-from-submission"><a name="creating-a-heka-message-from-submission" class="plugin-anchor" href="#creating-a-heka-message-from-submission"><i class="fa fa-link" aria-hidden="true"></i></a>Creating a Heka message from submission</h3>
-<p>Main message fields:</p>
-<ul>
-<li>POST Body -&gt; <code>Payload</code></li>
-<li>Client IP -&gt; <code>remote_addr</code> (if indicated by the namespace config)</li>
-<li>Now -&gt; <code>timestamp</code> (&quot;Now&quot; means the current time on the edge server node. Should use <code>ntp</code> or similar to ensure correct server time)</li>
-<li>namespace -&gt; <code>logger</code></li>
-<li>id -&gt; <code>uuid</code> (if supplied, otherwise randomly generate a UUID)</li>
-<li>Edge hostname -&gt; <code>hostname</code></li>
-<li>Type -&gt; <code>incoming</code> (open to suggestions for naming) Some indication that this is a raw message.</li>
-</ul>
-<p>Other fields:</p>
-<ul>
-<li>Store the part of the path after the namespace in <code>Fields[&quot;path&quot;]</code></li>
-<li>Try to get the host the client used (<code>incoming.telemetry.m.o</code> vs. <code>fxos.t.m.o</code> etc).</li>
-</ul>
+<p>Namespaces are used to control the processing of data from different types of
+clients, from the metadata that is collected to the destinations where the data
+is written, processed and accessible. Namespaces are
+<a href="https://github.com/mozilla-services/nginx_moz_ingest#example-configuration" target="_blank">configured</a>
+in Nginx using a location directive, to request a new namespace file a bug
+against the <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&amp;component=Pipeline%20Ingestion" target="_blank">Data Platform Team</a>
+with a short description of what the namespace will be used for and the desired
+configuration options.</p>
 <h3 id="forwarding-to-the-pipeline"><a name="forwarding-to-the-pipeline" class="plugin-anchor" href="#forwarding-to-the-pipeline"><i class="fa fa-link" aria-hidden="true"></i></a>Forwarding to the pipeline</h3>
-<p>Send the constructed message into the pipeline, retrying as needed. The preferred transport is Heka&apos;s <code>KafkaOutput</code>, but we may use another transport such as TCP for testing / development.</p>
-<p>Also send a meta-message into the pipeline for stats/monitoring purposes:</p>
-<pre><code>  stat = {
-    &quot;url&quot;: request_url,
-    &quot;duration_ms&quot;: duration_ms, // how long it took to serve this request
-    &quot;code&quot;: code, // http status code
-    &quot;size&quot;: payload_bytes, // may also want &#x201C;message_size&#x201D;
-    &quot;message&quot;: msg, // error message (if any) or &#x201C;OK&quot;
-    &quot;timestamp&quot;: new Date() // same as the Heka Message timestamp
-  };
-</code></pre><p>The above meta-message keeps track of messages that were too large and various other errors.</p>
-<h2 id="server-responses"><a name="server-responses" class="plugin-anchor" href="#server-responses"><i class="fa fa-link" aria-hidden="true"></i></a>Server Responses</h2>
+<p>The constructed Heka protobuf message to is written to disk and the pub/sub
+pipeline (currently Kafka). The messages written to disk serve as a fail-safe,
+they are batched and written to S3 (landfill) when they reach a certain size or
+timeout.</p>
+<h4 id="edge-server-heka-message-schema"><a name="edge-server-heka-message-schema" class="plugin-anchor" href="#edge-server-heka-message-schema"><i class="fa fa-link" aria-hidden="true"></i></a>Edge Server Heka Message Schema</h4>
+<ul>
+<li>required binary <strong><code>Uuid</code></strong>;                   // Internal identifier randomly generated</li>
+<li>required int64  <strong><code>Timestamp</code></strong>;              // Submission time (server clock)</li>
+<li>required string <strong><code>Hostname</code></strong>;               // Hostname of the edge server e.g. <code>ip-172-31-2-68</code></li>
+<li>required string <strong><code>Type</code></strong>;                   // Kafka topic name e.g. <code>telemetry-raw</code></li>
+<li>required group  <strong><code>Fields</code></strong><ul>
+<li>required string <strong><code>uri</code></strong>;                 // Submission URI e.g. <code>/submit/telemetry/6c49ec73-4350-45a0-9c8a-6c8f5aded0cf/main/Firefox/58.0.2/release/20180206200532</code></li>
+<li>required binary <strong><code>content</code></strong>;             // POST Body</li>
+<li>required string <strong><code>protocol</code></strong>;            // e.g. <code>HTTP/1.1</code></li>
+<li>optional string <strong><code>args</code></strong>;                // Query parameters e.g. <code>v=4</code></li>
+<li>optional string <strong><code>remote_addr</code></strong>;         // In our setup it is usually a load balancer e.g. <code>172.31.32.229</code></li>
+<li>// HTTP Headers specified in the <a href="https://github.com/mozilla-services/puppet-config/blob/06ec0beae535184cc7455c3c2c32b6571160196d/pipeline/modules/pipeline/templates/edge/nginx.conf.erb#L24" target="_blank">production edge server configuration</a></li>
+<li>optional string <strong><code>Content-Length</code></strong>;      // e.g. <code>4722</code></li>
+<li>optional string <strong><code>Date</code></strong>;                // e.g. <code>Mon, 12 Mar 2018 00:02:18 GMT</code></li>
+<li>optional string <strong><code>DNT</code></strong>;                 // e.g. <code>1</code></li>
+<li>optional string <strong><code>Host</code></strong>;                // e.g. <code>incoming.telemetry.mozilla.org</code></li>
+<li>optional string <strong><code>User-Agent</code></strong>;          // e.g. <code>pingsender/1.0</code></li>
+<li>optional string <strong><code>X-Forwarded-For</code></strong>;     // Last entry is treated as the client IP for geoIP lookup e.g. <code>10.98.132.74, 103.3.237.12</code></li>
+<li>optional string <strong><code>X-PingSender-Version</code></strong>;// e.g. <code>1.0</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="server-requestresponse"><a name="server-requestresponse" class="plugin-anchor" href="#server-requestresponse"><i class="fa fa-link" aria-hidden="true"></i></a>Server Request/Response</h2>
+<h3 id="get-request"><a name="get-request" class="plugin-anchor" href="#get-request"><i class="fa fa-link" aria-hidden="true"></i></a>GET Request</h3>
+<p>Accept GET on <code>/status</code>, returning <code>OK</code> if all is well. This can be used to
+check the health of web servers.</p>
 <h3 id="get-response-codes"><a name="get-response-codes" class="plugin-anchor" href="#get-response-codes"><i class="fa fa-link" aria-hidden="true"></i></a>GET Response codes</h3>
 <ul>
 <li><em>200</em> - OK. <code>/status</code> and all&#x2019;s well</li>
 <li><em>404</em> - Any GET other than <code>/status</code></li>
 <li><em>500</em> - All is not well</li>
 </ul>
+<h3 id="postput-request"><a name="postput-request" class="plugin-anchor" href="#postput-request"><i class="fa fa-link" aria-hidden="true"></i></a>POST/PUT Request</h3>
+<p>Treat POST and PUT the same. Accept POST or PUT to URLs of the form</p>
+<p><code>^/submit/namespace/[id[/dimensions]]$</code></p>
+<p>Example Telemetry format:</p>
+<p><code>/submit/telemetry/docId/docType/appName/appVersion/appUpdateChannel/appBuildID</code></p>
+<p>Specific Telemetry example:</p>
+<p><code>/submit/telemetry/ce39b608-f595-4c69-b6a6-f7a436604648/main/Firefox/61.0a1/nightly/20180328030202</code></p>
+<p>Note that <code>id</code> above is a unique document ID, which is used for de-duping
+submissions. This is <em>not</em> intended to be the <code>clientId</code> field from Telemetry.
+If <code>id</code> is omitted, we will not be able to de-dupe based on submission URLs.</p>
 <h3 id="postput-response-codes"><a name="postput-response-codes" class="plugin-anchor" href="#postput-response-codes"><i class="fa fa-link" aria-hidden="true"></i></a>POST/PUT Response codes</h3>
 <ul>
 <li><em>200</em> - OK. Request accepted into the pipeline.</li>
@@ -1175,20 +1186,25 @@
 <li><em>414</em> - request path too long (See above)</li>
 <li><em>500</em> - internal error</li>
 </ul>
-<h2 id="forwarding-to-s3"><a name="forwarding-to-s3" class="plugin-anchor" href="#forwarding-to-s3"><i class="fa fa-link" aria-hidden="true"></i></a>Forwarding to S3</h2>
-<p>As a fail-safe, we archive the incoming requests to S3 with as little processing as possible. Requests are written to local files and rotated and uploaded externally to the web server.</p>
 <h2 id="other-considerations"><a name="other-considerations" class="plugin-anchor" href="#other-considerations"><i class="fa fa-link" aria-hidden="true"></i></a>Other Considerations</h2>
 <h3 id="compression"><a name="compression" class="plugin-anchor" href="#compression"><i class="fa fa-link" aria-hidden="true"></i></a>Compression</h3>
-<p>It is not desirable to do decompression on the edge node. We want to pass along messages from the HTTP Edge node without &quot;cracking the egg&quot; of the payload.</p>
-<p>We may also receive badly formed payloads, and we will want to track the incidence of such things within the main pipeline.</p>
+<p>It is not desirable to do decompression on the edge node. We want to pass along
+messages from the HTTP Edge node without &quot;cracking the egg&quot; of the payload.</p>
+<p>We may also receive badly formed payloads, and we will want to track the
+incidence of such things within the main pipeline.</p>
 <h3 id="bad-messages"><a name="bad-messages" class="plugin-anchor" href="#bad-messages"><i class="fa fa-link" aria-hidden="true"></i></a>Bad Messages</h3>
-<p>We should provide examples / recipes for sending various bad messages out to a &#x201C;landfill&#x201D; output - ideally an S3 bucket with short TTL. We want to be able to investigate these messages since we get a lot of failed JSON parsing, bad gzip encoding, etc, and capturing the bad messages will be helpful for debugging.</p>
+<p>Since the actual message is not examined by the edge server the only failures
+that occur are defined by the response status codes above. Messages are only
+forwarded to the pipeline when a response code of 200 is returned to the client.</p>
 <h3 id="geoip-lookups"><a name="geoip-lookups" class="plugin-anchor" href="#geoip-lookups"><i class="fa fa-link" aria-hidden="true"></i></a>GeoIP Lookups</h3>
-<p>The GeoIP lookup is currently planned to be a part of the main pipeline (after the Edge node described herein).  So the namespace config for whether or not to include Client IP would determine whether or not we are able to later do the GeoIP lookup.  It might be better to do the lookup on the Edge node, though, then we would not need to pass the Client IP in to the pipeline at all.</p>
-<p>In either case, the Client IP address will be removed before the message hits long-term storage.</p>
-<p>The Geo information will not be stored in the JSON Payload, but will rather be stored in a protobuf field in the Heka message.</p>
+<p>No GeoIP lookup is performed by the edge server. If a client IP is available the
+the data warehouse loader performs the lookup and then discards the IP before
+the message hits long-term storage.</p>
 <h3 id="data-retention"><a name="data-retention" class="plugin-anchor" href="#data-retention"><i class="fa fa-link" aria-hidden="true"></i></a>Data Retention</h3>
-<p>We need a mechanism for specifying the retention period for various data sources that will be sent into the pipeline. This is probably not within the scope of the HTTP Edge Server, but the per-endpoint configuration may be a good enough place to specify the retention period.</p>
+<p>The edge server only stores data while batching and will have a retention time
+of <code>moz_ingest_landfill_roll_timeout</code> which is generally only a few minutes.
+Retention time for the S3 landfill, pub/sub, and the data warehouse is outside
+the scope of this document.</p>
 
                                 
                                 </section>
@@ -1232,7 +1248,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"HTTP Edge Server Specification","level":"1.4.1.2","depth":3,"next":{"title":"Interfaces","level":"1.4.2","depth":2,"path":"tools/interfaces.md","ref":"tools/interfaces.md","articles":[{"title":"Analysis Intro / TMO","level":"1.4.2.1","depth":3,"path":"concepts/analysis_intro.md","ref":"concepts/analysis_intro.md","articles":[]},{"title":"Custom analysis with Spark","level":"1.4.2.2","depth":3,"path":"tools/spark.md","ref":"tools/spark.md","articles":[]},{"title":"Creating a Real-time Analysis Plugin","level":"1.4.2.3","depth":3,"path":"cookbooks/realtime_analysis_plugin.md","ref":"cookbooks/realtime_analysis_plugin.md","articles":[]},{"title":"Distribution Viewer","level":"1.4.2.4","depth":3,"path":"tools/distribution_viewer.md","ref":"tools/distribution_viewer.md","articles":[]},{"title":"RTMO","level":"1.4.2.5","depth":3,"path":"tools/rtmo.md","ref":"tools/rtmo.md","articles":[]},{"title":"Alerts","level":"1.4.2.6","depth":3,"path":"tools/alerts.md","ref":"tools/alerts.md","articles":[]},{"title":"CEP Matcher","level":"1.4.2.7","depth":3,"path":"tools/cep_matcher.md","ref":"tools/cep_matcher.md","articles":[]}]},"previous":{"title":"In-depth Data Pipeline Detail","level":"1.4.1.1","depth":3,"path":"concepts/pipeline/data_pipeline_detail.md","ref":"concepts/pipeline/data_pipeline_detail.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/pipeline/http_edge_spec.md","mtime":"2018-04-13T22:29:34.080Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-13T22:31:22.534Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"HTTP Edge Server Specification","level":"1.4.1.2","depth":3,"next":{"title":"Interfaces","level":"1.4.2","depth":2,"path":"tools/interfaces.md","ref":"tools/interfaces.md","articles":[{"title":"Analysis Intro / TMO","level":"1.4.2.1","depth":3,"path":"concepts/analysis_intro.md","ref":"concepts/analysis_intro.md","articles":[]},{"title":"Custom analysis with Spark","level":"1.4.2.2","depth":3,"path":"tools/spark.md","ref":"tools/spark.md","articles":[]},{"title":"Creating a Real-time Analysis Plugin","level":"1.4.2.3","depth":3,"path":"cookbooks/realtime_analysis_plugin.md","ref":"cookbooks/realtime_analysis_plugin.md","articles":[]},{"title":"Distribution Viewer","level":"1.4.2.4","depth":3,"path":"tools/distribution_viewer.md","ref":"tools/distribution_viewer.md","articles":[]},{"title":"RTMO","level":"1.4.2.5","depth":3,"path":"tools/rtmo.md","ref":"tools/rtmo.md","articles":[]},{"title":"Alerts","level":"1.4.2.6","depth":3,"path":"tools/alerts.md","ref":"tools/alerts.md","articles":[]},{"title":"CEP Matcher","level":"1.4.2.7","depth":3,"path":"tools/cep_matcher.md","ref":"tools/cep_matcher.md","articles":[]}]},"previous":{"title":"In-depth Data Pipeline Detail","level":"1.4.1.1","depth":3,"path":"concepts/pipeline/data_pipeline_detail.md","ref":"concepts/pipeline/data_pipeline_detail.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/pipeline/http_edge_spec.md","mtime":"2018-04-16T22:08:00.433Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-16T22:09:19.684Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
