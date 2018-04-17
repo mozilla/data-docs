@@ -6,6 +6,73 @@
 
 {% include "./intro.md" %}
 
+# Adding New Fields
+
+We support a few basic types that can be easily added to `main_summary`.
+
+Non-addon scalars are automatically added to `main_summary`.
+
+## User Preferences
+
+These are added in the `userPrefsList`, near the top of the
+[Main Summary file](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/MainSummaryView.scala).
+They must be available in the [ping environment](http://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/environment.html)
+to be included here. There is more information in the file itself.
+
+Once added, they will show as top-level fields, with the string `user_pref` prepended. For example, `IntegerUserPref("dom.ipc.processCount")` becomes `user_pref_dom_ipc_processcount`.
+
+## Histograms
+
+Histograms can simply be added to the `histogramsWhitelist` near the top of
+[Main Summary file](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/MainSummaryView.scala).
+Simply add the name of the histogram in the alphabetically-sorted position in the list.
+
+Each process a histogram is recorded in will have a column in `main_summary`, with the string `histogram_` prepended. For example, `CYCLE_COLLECTOR_MAX_PAUSE`
+is recorded in the `parent`, `content`, and `gpu` processes (according to the [definition](https://telemetry.mozilla.org/probe-dictionary/?search=CYCLE_COLLECTOR_MAX_PAUSE&detailView=histogram%2FCYCLE_COLLECTOR_MAX_PAUSE)).
+It will then result in three columns:
+- `histogram_parent_cycle_collector_max_pause`
+- `histogram_content_cycle_collector_max_pause`
+- `histogram_gpu_cycle_collector_max_pause`
+
+## Addon Scalars
+
+Addon scalars are recorded by an addon. To include one of these, add the [definition](https://dxr.mozilla.org/mozilla-central/rev/tip/toolkit/components/telemetry/Scalars.yaml) to the
+[addon scalars definition file](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/resources/addon/Scalars.yaml) in [telemetry-batch-view](https://github.com/mozilla/telemetry-batch-view).
+Be sure to include the section:
+```
+    record_in_processes:
+      - 'dynamic'
+```
+
+The addon scalars can then be found in the associated column, depending on their type:
+- `string_addon_scalars`
+- `keyed_string_addon_scalars`
+- `uint_addon_scalars`
+- `keyed_uint_addon_scalars`
+- `boolean_addon_scalars`
+- `keyed_boolean_addon_scalars`
+
+These columns are all maps. Each addon scalar will be a key within that map, concatenating the top-level subsection within `Scalars.yaml` with its name to get the key. As an example, consider the following scalar definition:
+```
+test:
+  misunderestimated_nucular:
+    description: A test scalar, no soup for you!
+    expires: never
+    kind: string
+    keyed: true
+    notification_emails:
+      - frank@mozilla.com
+    record_in_processes:
+      - 'dynamic'
+```
+
+For example, you could find the addon scalar `test.misunderestimated_nucular`, a keyed string scalar, using `keyed_string_addon_scalars['test_misunderestimated_nucular']`.
+In general, use `element_at`, which returns `NULL` when the key is not found: `element_at(keyed_string_addon_scalars, 'test_misunderestimated_nucular')`
+
+## Other Fields
+
+We can include other types of fields as well, for example if there needs to be a specific transformation done. We do need the data to be available in the [Main Ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html)
+
 # Data Reference
 
 ## Example Queries
