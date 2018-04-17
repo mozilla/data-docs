@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>HTTP Edge Server Specification · GitBook</title>
+        <title>Event Pipeline Detail · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -65,10 +65,10 @@
     <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="event_pipeline.html" />
+    <link rel="next" href="../../tools/interfaces.html" />
     
     
-    <link rel="prev" href="data_pipeline_detail.html" />
+    <link rel="prev" href="http_edge_spec.html" />
     
 
     </head>
@@ -732,7 +732,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.4.1.2" data-path="http_edge_spec.html">
+        <li class="chapter " data-level="1.4.1.2" data-path="http_edge_spec.html">
             
                 <a href="http_edge_spec.html">
             
@@ -745,7 +745,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.1.3" data-path="event_pipeline.html">
+        <li class="chapter active" data-level="1.4.1.3" data-path="event_pipeline.html">
             
                 <a href="event_pipeline.html">
             
@@ -1102,7 +1102,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../.." >HTTP Edge Server Specification</a>
+        <a href="../.." >Event Pipeline Detail</a>
     </h1>
 </div>
 
@@ -1117,107 +1117,115 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="http-edge-server-specification"><a name="http-edge-server-specification" class="plugin-anchor" href="#http-edge-server-specification"><i class="fa fa-link" aria-hidden="true"></i></a>HTTP Edge Server Specification</h1>
-<p>This document specifies the behavior of the server that accepts submissions from
-any HTTP client e.g. Firefox telemetry.</p>
-<p>The original implementation of the HTTP Edge Server was tracked in
-<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1129222" target="_blank">Bug 1129222</a>.</p>
-<h2 id="general-data-flow"><a name="general-data-flow" class="plugin-anchor" href="#general-data-flow"><i class="fa fa-link" aria-hidden="true"></i></a>General Data Flow</h2>
-<p>HTTP submissions come in from the wild, hit a load balancer, then optionally an
-Nginx proxy, then the HTTP Edge Server described in this document. Data is
-accepted via a POST/PUT request from clients, which the server will wrap in a
-<a href="http://mozilla-services.github.io/lua_sandbox/heka/message.html" target="_blank">Heka message</a>
-and forward to two places: the <a href="data_pipeline.html">Services Data Pipeline</a>, where
-any further processing, analysis, and storage will be handled; as well as to a
-short-lived S3 bucket which will act as a fail-safe in case there is a
-processing error and/or data loss within the main Data Pipeline.</p>
-<h3 id="namespaces"><a name="namespaces" class="plugin-anchor" href="#namespaces"><i class="fa fa-link" aria-hidden="true"></i></a>Namespaces</h3>
-<p>Namespaces are used to control the processing of data from different types of
-clients, from the metadata that is collected to the destinations where the data
-is written, processed and accessible. Namespaces are
-<a href="https://github.com/mozilla-services/nginx_moz_ingest#example-configuration" target="_blank">configured</a>
-in Nginx using a location directive, to request a new namespace file a bug
-against the <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&amp;component=Pipeline%20Ingestion" target="_blank">Data Platform Team</a>
-with a short description of what the namespace will be used for and the desired
-configuration options.</p>
-<h3 id="forwarding-to-the-pipeline"><a name="forwarding-to-the-pipeline" class="plugin-anchor" href="#forwarding-to-the-pipeline"><i class="fa fa-link" aria-hidden="true"></i></a>Forwarding to the pipeline</h3>
-<p>The constructed Heka protobuf message to is written to disk and the pub/sub
-pipeline (currently Kafka). The messages written to disk serve as a fail-safe,
-they are batched and written to S3 (landfill) when they reach a certain size or
-timeout.</p>
-<h4 id="edge-server-heka-message-schema"><a name="edge-server-heka-message-schema" class="plugin-anchor" href="#edge-server-heka-message-schema"><i class="fa fa-link" aria-hidden="true"></i></a>Edge Server Heka Message Schema</h4>
+                                <h1 id="event-data-pipeline"><a name="event-data-pipeline" class="plugin-anchor" href="#event-data-pipeline"><i class="fa fa-link" aria-hidden="true"></i></a>Event Data Pipeline</h1>
+<p>We collect event-oriented data from different sources. This data is collected and processed in a
+specific path through our data pipeline, which we will detail here.</p>
+<div class="mermaid">
+graph TD
+fx_code(fa:fa-cog Firefox code) --&gt; firefox(fa:fa-firefox Firefox Telemetry)
+fx_extensions(fa:fa-cog Mozilla extensions) --&gt; firefox
+fx_hybrid(fa:fa-cog Hybrid Content) --&gt; firefox
+mobile(fa:fa-cog Mobile products) --&gt; mobile_telemetry(fa:fa-firefox Mobile Telemetry)
+firefox --&gt;|main ping| pipeline((fa:fa-database Firefox Data Pipeline))
+firefox -.-&gt;|events ping, planned| pipeline
+mobile_telemetry --&gt; |mobile events ping| pipeline
+pipeline --&gt;|Firefox events| main_summary[fa:fa-bars main summary table]
+main_summary --&gt; events_table[fa:fa-bars events table]
+pipeline --&gt;|Mobile events| mobile_events_table[fa:fa-bars mobile events table]
+main_summary --&gt; redash(fa:fa-bar-chart Redash)
+events_table --&gt; redash
+events_table -.-&gt;|planned| amplitude(fa:fa-bar-chart Amplitude)
+mobile_events_table --&gt; redash
+mobile_events_table --&gt; amplitude
+
+style fx_code fill:#f94,stroke-width:0px
+style fx_extensions fill:#f94,stroke-width:0px
+style fx_hybrid fill:#f94,stroke-width:0px
+style mobile fill:#f94,stroke-width:0px
+style firefox fill:#f61,stroke-width:0px
+style mobile_telemetry fill:#f61,stroke-width:0px
+style pipeline fill:#79d,stroke-width:0px
+style main_summary fill:lightblue,stroke-width:0px
+style events_table fill:lightblue,stroke-width:0px
+style mobile_events_table fill:lightblue,stroke-width:0px
+style redash fill:salmon,stroke-width:0px
+style amplitude fill:salmon,stroke-width:0px
+</div>
+
+<h1 id="overview"><a name="overview" class="plugin-anchor" href="#overview"><i class="fa fa-link" aria-hidden="true"></i></a>Overview</h1>
+<p>Across the different Firefox teams there is a common need for a more fine grained understanding of
+product usage, like understanding the order of interactions or how they occur over time.
+To address that our data pipeline needs to support working with event-oriented data.</p>
+<p>We specify a common event data format, which allows for broader, shared usage of data processing tools.
+To make working with event data feasible, we provide different mechanisms to get the event data
+from products to our data pipeline and make the data available in tools for analysis.</p>
+<h1 id="the-event-format"><a name="the-event-format" class="plugin-anchor" href="#the-event-format"><i class="fa fa-link" aria-hidden="true"></i></a>The event format</h1>
+<p>Events are submitted as an array, e.g.:</p>
+<pre><code class="lang-javascript">[
+  [<span class="hljs-number">2147</span>, <span class="hljs-string">&quot;ui&quot;</span>, <span class="hljs-string">&quot;click&quot;</span>, <span class="hljs-string">&quot;back_button&quot;</span>],
+  [<span class="hljs-number">2213</span>, <span class="hljs-string">&quot;ui&quot;</span>, <span class="hljs-string">&quot;search&quot;</span>, <span class="hljs-string">&quot;search_bar&quot;</span>, <span class="hljs-string">&quot;google&quot;</span>],
+  [<span class="hljs-number">2892</span>, <span class="hljs-string">&quot;ui&quot;</span>, <span class="hljs-string">&quot;completion&quot;</span>, <span class="hljs-string">&quot;search_bar&quot;</span>, <span class="hljs-string">&quot;yahoo&quot;</span>,
+    {<span class="hljs-string">&quot;querylen&quot;</span>: <span class="hljs-string">&quot;7&quot;</span>, <span class="hljs-string">&quot;results&quot;</span>: <span class="hljs-string">&quot;23&quot;</span>}],
+  [<span class="hljs-number">5434</span>, <span class="hljs-string">&quot;dom&quot;</span>, <span class="hljs-string">&quot;load&quot;</span>, <span class="hljs-string">&quot;frame&quot;</span>, <span class="hljs-literal">null</span>,
+    {<span class="hljs-string">&quot;prot&quot;</span>: <span class="hljs-string">&quot;https&quot;</span>, <span class="hljs-string">&quot;src&quot;</span>: <span class="hljs-string">&quot;script&quot;</span>}],
+  <span class="hljs-comment">// ...</span>
+]
+</code></pre>
+<p>Each event is of the form:</p>
+<pre><code class="lang-javascript">[timestamp, category, method, object, value, extra]
+</code></pre>
+<p>Where the individual fields are:</p>
 <ul>
-<li>required binary <strong><code>Uuid</code></strong>;                   // Internal identifier randomly generated</li>
-<li>required int64  <strong><code>Timestamp</code></strong>;              // Submission time (server clock)</li>
-<li>required string <strong><code>Hostname</code></strong>;               // Hostname of the edge server e.g. <code>ip-172-31-2-68</code></li>
-<li>required string <strong><code>Type</code></strong>;                   // Kafka topic name e.g. <code>telemetry-raw</code></li>
-<li>required group  <strong><code>Fields</code></strong><ul>
-<li>required string <strong><code>uri</code></strong>;                 // Submission URI e.g. <code>/submit/telemetry/6c49ec73-4350-45a0-9c8a-6c8f5aded0cf/main/Firefox/58.0.2/release/20180206200532</code></li>
-<li>required binary <strong><code>content</code></strong>;             // POST Body</li>
-<li>required string <strong><code>protocol</code></strong>;            // e.g. <code>HTTP/1.1</code></li>
-<li>optional string <strong><code>args</code></strong>;                // Query parameters e.g. <code>v=4</code></li>
-<li>optional string <strong><code>remote_addr</code></strong>;         // In our setup it is usually a load balancer e.g. <code>172.31.32.229</code></li>
-<li>// HTTP Headers specified in the <a href="https://github.com/mozilla-services/puppet-config/blob/06ec0beae535184cc7455c3c2c32b6571160196d/pipeline/modules/pipeline/templates/edge/nginx.conf.erb#L24" target="_blank">production edge server configuration</a></li>
-<li>optional string <strong><code>Content-Length</code></strong>;      // e.g. <code>4722</code></li>
-<li>optional string <strong><code>Date</code></strong>;                // e.g. <code>Mon, 12 Mar 2018 00:02:18 GMT</code></li>
-<li>optional string <strong><code>DNT</code></strong>;                 // e.g. <code>1</code></li>
-<li>optional string <strong><code>Host</code></strong>;                // e.g. <code>incoming.telemetry.mozilla.org</code></li>
-<li>optional string <strong><code>User-Agent</code></strong>;          // e.g. <code>pingsender/1.0</code></li>
-<li>optional string <strong><code>X-Forwarded-For</code></strong>;     // Last entry is treated as the client IP for geoIP lookup e.g. <code>10.98.132.74, 103.3.237.12</code></li>
-<li>optional string <strong><code>X-PingSender-Version</code></strong>;// e.g. <code>1.0</code></li>
+<li><code>timestamp</code>: <code>Number</code>, positive integer. This is the time in ms when the event was recorded, relative to the main process start time.</li>
+<li><code>category</code>: <code>String</code>, identifier. The category is a group name for events and helps to avoid name conflicts.</li>
+<li><code>method</code>: <code>String</code>, identifier. This describes the type of event that occurred, e.g. <code>click</code>, <code>keydown</code> or <code>focus</code>.</li>
+<li><code>object</code>: <code>String</code>, identifier. This is the object the event occurred on, e.g. <code>reload_button</code> or <code>urlbar</code>.</li>
+<li><code>value</code>: <code>String</code>, optional, may be null. This is a user defined value, providing context for the event.</li>
+<li><code>extra</code>: <code>Object</code>, optional, may be null. This is an object of the form <code>{&quot;key&quot;: &quot;value&quot;, ...}</code>, both keys and values need to be strings. This is used for events when additional richer context is needed.</li>
 </ul>
-</li>
-</ul>
-<h2 id="server-requestresponse"><a name="server-requestresponse" class="plugin-anchor" href="#server-requestresponse"><i class="fa fa-link" aria-hidden="true"></i></a>Server Request/Response</h2>
-<h3 id="get-request"><a name="get-request" class="plugin-anchor" href="#get-request"><i class="fa fa-link" aria-hidden="true"></i></a>GET Request</h3>
-<p>Accept GET on <code>/status</code>, returning <code>OK</code> if all is well. This can be used to
-check the health of web servers.</p>
-<h3 id="get-response-codes"><a name="get-response-codes" class="plugin-anchor" href="#get-response-codes"><i class="fa fa-link" aria-hidden="true"></i></a>GET Response codes</h3>
+<p>See also the <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html#serialization-format" target="_blank">Firefox Telemetry documentation</a>.</p>
+<h1 id="event-data-collection"><a name="event-data-collection" class="plugin-anchor" href="#event-data-collection"><i class="fa fa-link" aria-hidden="true"></i></a>Event data collection</h1>
+<h2 id="firefox-event-collection"><a name="firefox-event-collection" class="plugin-anchor" href="#firefox-event-collection"><i class="fa fa-link" aria-hidden="true"></i></a>Firefox event collection</h2>
+<p>To collect this event data in Firefox there are different APIs in Firefox, all addressing different
+use cases:</p>
 <ul>
-<li><em>200</em> - OK. <code>/status</code> and all&#x2019;s well</li>
-<li><em>404</em> - Any GET other than <code>/status</code></li>
-<li><em>500</em> - All is not well</li>
+<li>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html" target="_blank"><em>Telemetry event API</em></a>
+allows easy recording of events from Firefox code.</li>
+<li>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html#registerevents" target="_blank"><em>dynamic event API</em></a>
+allows code from Mozilla addons to record new events into Telemetry without shipping Firefox
+code.</li>
+<li>The <em>Telemetry extension API</em> (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1280234" target="_blank">work in progress</a>)
+will allow Mozilla extensions to record new events into Telemetry.</li>
+<li>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/hybrid-content.html" target="_blank"><em>Hybrid-content API</em></a>
+allows specific white-listed Mozilla content code to record new events into Telemetry.</li>
 </ul>
-<h3 id="postput-request"><a name="postput-request" class="plugin-anchor" href="#postput-request"><i class="fa fa-link" aria-hidden="true"></i></a>POST/PUT Request</h3>
-<p>Treat POST and PUT the same. Accept POST or PUT to URLs of the form</p>
-<p><code>^/submit/namespace/[id[/dimensions]]$</code></p>
-<p>Example Telemetry format:</p>
-<p><code>/submit/telemetry/docId/docType/appName/appVersion/appUpdateChannel/appBuildID</code></p>
-<p>Specific Telemetry example:</p>
-<p><code>/submit/telemetry/ce39b608-f595-4c69-b6a6-f7a436604648/main/Firefox/61.0a1/nightly/20180328030202</code></p>
-<p>Note that <code>id</code> above is a unique document ID, which is used for de-duping
-submissions. This is <em>not</em> intended to be the <code>clientId</code> field from Telemetry.
-If <code>id</code> is omitted, we will not be able to de-dupe based on submission URLs.</p>
-<h3 id="postput-response-codes"><a name="postput-response-codes" class="plugin-anchor" href="#postput-response-codes"><i class="fa fa-link" aria-hidden="true"></i></a>POST/PUT Response codes</h3>
+<p>For all these APIs, events will get sent to the pipeline through the
+<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html" target="_blank">main ping</a>,
+with a hard limit of 500 events per ping.
+In the future, Firefox events will be sent through a separate <em>events ping</em>, removing the hard limit.
+As of Firefox 61, all events recorded through these APIs are <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1440673" target="_blank">automatically counted in scalars</a>.</p>
+<p>Finally, <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html" target="_blank"><em>custom pings</em></a>
+can follow the event data format and potentially connect to the existing tooling with some integration work.</p>
+<h2 id="mobile-event-collection"><a name="mobile-event-collection" class="plugin-anchor" href="#mobile-event-collection"><i class="fa fa-link" aria-hidden="true"></i></a>Mobile event collection</h2>
+<p>Mobile events data primarily flows through the mobile events ping (<a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/dev/schemas/telemetry/mobile-event" target="_blank">ping schema</a>), from e.g. <a href="https://github.com/mozilla-mobile/firefox-ios/wiki/Event-Tracking-with-Mozilla&apos;s-Telemetry-Service#event-ping" target="_blank">Firefox iOS</a>, Firefox for Fire TV and Rocket.</p>
+<p>Currently we also collect event data from Firefox Focus through the <a href="https://github.com/mozilla-mobile/focus-ios/wiki/Event-Tracking-with-Mozilla%27s-Telemetry-Service#event-ping" target="_blank"><code>focus-events</code> ping</a>,
+using the <a href="https://github.com/mozilla-mobile/telemetry-ios" target="_blank"><code>telemetry-ios</code></a> and
+<a href="https://github.com/mozilla-mobile/telemetry-android" target="_blank"><code>telemetry-android</code></a> libraries.</p>
+<h1 id="datasets"><a name="datasets" class="plugin-anchor" href="#datasets"><i class="fa fa-link" aria-hidden="true"></i></a>Datasets</h1>
+<p>On the pipeline side, the event data is made available in different datasets:</p>
 <ul>
-<li><em>200</em> - OK. Request accepted into the pipeline.</li>
-<li><em>400</em> - Bad request, for example an un-encoded space in the URL.</li>
-<li><em>404</em> - not found - POST/PUT to an unknown namespace</li>
-<li><em>405</em> - wrong request type (anything other than POST/PUT)</li>
-<li><em>411</em> - missing content-length header</li>
-<li><em>413</em> - request body too large (Note that if we have badly-behaved clients that retry on <code>4XX</code>, we should send back 202 on body/path too long).</li>
-<li><em>414</em> - request path too long (See above)</li>
-<li><em>500</em> - internal error</li>
+<li><a href="../choosing_a_dataset.html#mainsummary"><code>main_summary</code></a> has a row for each main ping and includes
+its event payload.</li>
+<li><a href="../../datasets/batch_view/events/reference.html"><code>events</code></a> contains a row for each event received. See <a href="https://sql.telemetry.mozilla.org/queries/52582/source" target="_blank">this sample query</a>.</li>
+<li><code>telemetry_mobile_event_parquet</code> contains a row for each mobile event ping. See <a href="https://sql.telemetry.mozilla.org/queries/52581/source" target="_blank">this sample query</a>.</li>
+<li><code>focus_events_longitudinal</code> currently contains events from Firefox Focus.</li>
 </ul>
-<h2 id="other-considerations"><a name="other-considerations" class="plugin-anchor" href="#other-considerations"><i class="fa fa-link" aria-hidden="true"></i></a>Other Considerations</h2>
-<h3 id="compression"><a name="compression" class="plugin-anchor" href="#compression"><i class="fa fa-link" aria-hidden="true"></i></a>Compression</h3>
-<p>It is not desirable to do decompression on the edge node. We want to pass along
-messages from the HTTP Edge node without &quot;cracking the egg&quot; of the payload.</p>
-<p>We may also receive badly formed payloads, and we will want to track the
-incidence of such things within the main pipeline.</p>
-<h3 id="bad-messages"><a name="bad-messages" class="plugin-anchor" href="#bad-messages"><i class="fa fa-link" aria-hidden="true"></i></a>Bad Messages</h3>
-<p>Since the actual message is not examined by the edge server the only failures
-that occur are defined by the response status codes above. Messages are only
-forwarded to the pipeline when a response code of 200 is returned to the client.</p>
-<h3 id="geoip-lookups"><a name="geoip-lookups" class="plugin-anchor" href="#geoip-lookups"><i class="fa fa-link" aria-hidden="true"></i></a>GeoIP Lookups</h3>
-<p>No GeoIP lookup is performed by the edge server. If a client IP is available the
-the data warehouse loader performs the lookup and then discards the IP before
-the message hits long-term storage.</p>
-<h3 id="data-retention"><a name="data-retention" class="plugin-anchor" href="#data-retention"><i class="fa fa-link" aria-hidden="true"></i></a>Data Retention</h3>
-<p>The edge server only stores data while batching and will have a retention time
-of <code>moz_ingest_landfill_roll_timeout</code> which is generally only a few minutes.
-Retention time for the S3 landfill, pub/sub, and the data warehouse is outside
-the scope of this document.</p>
+<h1 id="data-tooling"><a name="data-tooling" class="plugin-anchor" href="#data-tooling"><i class="fa fa-link" aria-hidden="true"></i></a>Data tooling</h1>
+<p>The above datasets are all accessible through <a href="../../tools/stmo.html">Re:dash</a> and <a href="../../tools/spark.html">Spark jobs</a>.</p>
+<p>For product analytics based on event data, we have <a href="https://sso.mozilla.com/amplitude" target="_blank">Amplitude</a>
+(hosted by the IT data team). We can connect our event data sources data to Amplitude.
+We have an active connector to Amplitude for mobile events, which can push event data over
+daily. For Firefox Desktop events this will be available soon.</p>
 
                                 
                                 </section>
@@ -1245,12 +1253,12 @@ the scope of this document.</p>
 
             
                 
-                <a href="data_pipeline_detail.html" class="navigation navigation-prev " aria-label="Previous page: In-depth Data Pipeline Detail">
+                <a href="http_edge_spec.html" class="navigation navigation-prev " aria-label="Previous page: HTTP Edge Server Specification">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="event_pipeline.html" class="navigation navigation-next " aria-label="Next page: Event Pipeline Detail">
+                <a href="../../tools/interfaces.html" class="navigation navigation-next " aria-label="Next page: Interfaces">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1261,7 +1269,7 @@ the scope of this document.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"HTTP Edge Server Specification","level":"1.4.1.2","depth":3,"next":{"title":"Event Pipeline Detail","level":"1.4.1.3","depth":3,"path":"concepts/pipeline/event_pipeline.md","ref":"concepts/pipeline/event_pipeline.md","articles":[]},"previous":{"title":"In-depth Data Pipeline Detail","level":"1.4.1.1","depth":3,"path":"concepts/pipeline/data_pipeline_detail.md","ref":"concepts/pipeline/data_pipeline_detail.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/pipeline/http_edge_spec.md","mtime":"2018-04-17T14:41:21.252Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-17T14:42:45.683Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Event Pipeline Detail","level":"1.4.1.3","depth":3,"next":{"title":"Interfaces","level":"1.4.2","depth":2,"path":"tools/interfaces.md","ref":"tools/interfaces.md","articles":[{"title":"Analysis Intro / TMO","level":"1.4.2.1","depth":3,"path":"concepts/analysis_intro.md","ref":"concepts/analysis_intro.md","articles":[]},{"title":"Custom analysis with Spark","level":"1.4.2.2","depth":3,"path":"tools/spark.md","ref":"tools/spark.md","articles":[]},{"title":"Creating a Real-time Analysis Plugin","level":"1.4.2.3","depth":3,"path":"cookbooks/realtime_analysis_plugin.md","ref":"cookbooks/realtime_analysis_plugin.md","articles":[]},{"title":"Distribution Viewer","level":"1.4.2.4","depth":3,"path":"tools/distribution_viewer.md","ref":"tools/distribution_viewer.md","articles":[]},{"title":"RTMO","level":"1.4.2.5","depth":3,"path":"tools/rtmo.md","ref":"tools/rtmo.md","articles":[]},{"title":"Alerts","level":"1.4.2.6","depth":3,"path":"tools/alerts.md","ref":"tools/alerts.md","articles":[]},{"title":"CEP Matcher","level":"1.4.2.7","depth":3,"path":"tools/cep_matcher.md","ref":"tools/cep_matcher.md","articles":[]}]},"previous":{"title":"HTTP Edge Server Specification","level":"1.4.1.2","depth":3,"path":"concepts/pipeline/http_edge_spec.md","ref":"concepts/pipeline/http_edge_spec.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/pipeline/event_pipeline.md","mtime":"2018-04-17T14:41:21.252Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-17T14:42:45.683Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
