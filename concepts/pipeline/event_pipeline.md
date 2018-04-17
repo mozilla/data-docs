@@ -14,12 +14,12 @@ firefox -.->|events ping, planned| pipeline
 mobile_telemetry --> |mobile events ping| pipeline
 pipeline -->|Firefox events| main_summary[fa:fa-bars main summary table]
 main_summary --> events_table[fa:fa-bars events table]
-pipeline -->|Mobile events| focus_events_table[fa:fa-bars mobile events table]
+pipeline -->|Mobile events| mobile_events_table[fa:fa-bars mobile events table]
 main_summary --> redash(fa:fa-bar-chart Redash)
 events_table --> redash
 events_table -.->|planned| amplitude(fa:fa-bar-chart Amplitude)
-focus_events_table --> redash
-focus_events_table --> amplitude
+mobile_events_table --> redash
+mobile_events_table --> amplitude
 
 style fx_code fill:#f94,stroke-width:0px
 style fx_extensions fill:#f94,stroke-width:0px
@@ -30,7 +30,7 @@ style mobile_telemetry fill:#f61,stroke-width:0px
 style pipeline fill:#79d,stroke-width:0px
 style main_summary fill:lightblue,stroke-width:0px
 style events_table fill:lightblue,stroke-width:0px
-style focus_events_table fill:lightblue,stroke-width:0px
+style mobile_events_table fill:lightblue,stroke-width:0px
 style redash fill:salmon,stroke-width:0px
 style amplitude fill:salmon,stroke-width:0px
 ```
@@ -104,10 +104,11 @@ can follow the event data format and potentially connect to the existing tooling
 
 ## Mobile event collection
 
-On mobile, event data is currently collected through the [`focus-events` ping](https://github.com/mozilla-mobile/focus-ios/wiki/Event-Tracking-with-Mozilla%27s-Telemetry-Service#event-ping),
+Mobile events data primarily flows through the mobile events ping ([ping schema](https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/dev/schemas/telemetry/mobile-event)), from e.g. [Firefox iOS](https://github.com/mozilla-mobile/firefox-ios/wiki/Event-Tracking-with-Mozilla's-Telemetry-Service#event-ping), Firefox for Fire TV and Rocket.
+
+Currently we also collect event data from Firefox Focus through the [`focus-events` ping](https://github.com/mozilla-mobile/focus-ios/wiki/Event-Tracking-with-Mozilla%27s-Telemetry-Service#event-ping),
 using the [`telemetry-ios`](https://github.com/mozilla-mobile/telemetry-ios) and
 [`telemetry-android`](https://github.com/mozilla-mobile/telemetry-android) libraries.
-In the future event data will be mainly collected through the planned mobile events ping.
 
 # Datasets
 
@@ -115,7 +116,8 @@ On the pipeline side, the event data is made available in different datasets:
 - [`main_summary`](/concepts/choosing_a_dataset.md#mainsummary) has a row for each main ping and includes
   its event payload.
 - [`events`](/datasets/batch_view/events/reference.md) contains a row for each event received.
-- `focus_events_longitudinal` contains the current mobile events.
+- `telemetry_mobile_event_parquet` contains a row for each mobile event ping. See [this sample query](https://sql.telemetry.mozilla.org/queries/52581/source).
+- `focus_events_longitudinal` currently contains events from Firefox Focus.
 
 # Data tooling
 
