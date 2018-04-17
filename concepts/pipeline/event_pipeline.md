@@ -76,6 +76,8 @@ Where the individual fields are:
 - `value`: `String`, optional, may be null. This is a user defined value, providing context for the event.
 - `extra`: `Object`, optional, may be null. This is an object of the form `{"key": "value", ...}`, both keys and values need to be strings. This is used for events when additional richer context is needed.
 
+See also the [Firefox Telemetry documentation](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html#serialization-format).
+
 
 # Event data collection
 
@@ -115,7 +117,7 @@ using the [`telemetry-ios`](https://github.com/mozilla-mobile/telemetry-ios) and
 On the pipeline side, the event data is made available in different datasets:
 - [`main_summary`](/concepts/choosing_a_dataset.md#mainsummary) has a row for each main ping and includes
   its event payload.
-- [`events`](/datasets/batch_view/events/reference.md) contains a row for each event received.
+- [`events`](/datasets/batch_view/events/reference.md) contains a row for each event received. See [this sample query](https://sql.telemetry.mozilla.org/queries/52582/source).
 - `telemetry_mobile_event_parquet` contains a row for each mobile event ping. See [this sample query](https://sql.telemetry.mozilla.org/queries/52581/source).
 - `focus_events_longitudinal` currently contains events from Firefox Focus.
 
@@ -126,4 +128,4 @@ The above datasets are all accessible through [Re:dash](/tools/stmo.md) and [Spa
 For product analytics based on event data, we have [Amplitude](https://sso.mozilla.com/amplitude)
 (hosted by the IT data team). We can connect our event data sources data to Amplitude.
 We have an active connector to Amplitude for mobile events, which can push event data over
-daily. For Firefox Desktop events this is planned and available soon.
+daily. For Firefox Desktop events this will be available soon.
