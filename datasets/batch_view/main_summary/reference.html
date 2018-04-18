@@ -1121,6 +1121,13 @@
 <!-- toc -->
 <ul>
 <li><a href="#introduction">Introduction</a></li>
+<li><a href="#adding-new-fields">Adding New Fields</a><ul>
+<li><a href="#user-preferences">User Preferences</a></li>
+<li><a href="#histograms">Histograms</a></li>
+<li><a href="#addon-scalars">Addon Scalars</a></li>
+<li><a href="#other-fields">Other Fields</a></li>
+</ul>
+</li>
 <li><a href="#data-reference">Data Reference</a><ul>
 <li><a href="#example-queries">Example Queries</a></li>
 <li><a href="#sampling">Sampling</a></li>
@@ -1163,6 +1170,57 @@ since re:dash is on a shared cluster.</p>
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/docs/MainSummary.md" target="_blank">telemetry-batch-view documentation</a>.</p>
 <p>The code responsible for generating this dataset is 
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/MainSummaryView.scala" target="_blank">here</a></p>
+<h1 id="adding-new-fields"><a name="adding-new-fields" class="plugin-anchor" href="#adding-new-fields"><i class="fa fa-link" aria-hidden="true"></i></a>Adding New Fields</h1>
+<p>We support a few basic types that can be easily added to <code>main_summary</code>.</p>
+<p>Non-addon scalars are automatically added to <code>main_summary</code>.</p>
+<h2 id="user-preferences"><a name="user-preferences" class="plugin-anchor" href="#user-preferences"><i class="fa fa-link" aria-hidden="true"></i></a>User Preferences</h2>
+<p>These are added in the <code>userPrefsList</code>, near the top of the
+<a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/MainSummaryView.scala" target="_blank">Main Summary file</a>.
+They must be available in the <a href="http://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/environment.html" target="_blank">ping environment</a>
+to be included here. There is more information in the file itself.</p>
+<p>Once added, they will show as top-level fields, with the string <code>user_pref</code> prepended. For example, <code>IntegerUserPref(&quot;dom.ipc.processCount&quot;)</code> becomes <code>user_pref_dom_ipc_processcount</code>.</p>
+<h2 id="histograms"><a name="histograms" class="plugin-anchor" href="#histograms"><i class="fa fa-link" aria-hidden="true"></i></a>Histograms</h2>
+<p>Histograms can simply be added to the <code>histogramsWhitelist</code> near the top of
+<a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/MainSummaryView.scala" target="_blank">Main Summary file</a>.
+Simply add the name of the histogram in the alphabetically-sorted position in the list.</p>
+<p>Each process a histogram is recorded in will have a column in <code>main_summary</code>, with the string <code>histogram_</code> prepended. For example, <code>CYCLE_COLLECTOR_MAX_PAUSE</code>
+is recorded in the <code>parent</code>, <code>content</code>, and <code>gpu</code> processes (according to the <a href="https://telemetry.mozilla.org/probe-dictionary/?search=CYCLE_COLLECTOR_MAX_PAUSE&amp;detailView=histogram%2FCYCLE_COLLECTOR_MAX_PAUSE" target="_blank">definition</a>).
+It will then result in three columns:</p>
+<ul>
+<li><code>histogram_parent_cycle_collector_max_pause</code></li>
+<li><code>histogram_content_cycle_collector_max_pause</code></li>
+<li><code>histogram_gpu_cycle_collector_max_pause</code></li>
+</ul>
+<h2 id="addon-scalars"><a name="addon-scalars" class="plugin-anchor" href="#addon-scalars"><i class="fa fa-link" aria-hidden="true"></i></a>Addon Scalars</h2>
+<p>Addon scalars are recorded by an addon. To include one of these, add the <a href="https://dxr.mozilla.org/mozilla-central/rev/tip/toolkit/components/telemetry/Scalars.yaml" target="_blank">definition</a> to the
+<a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/resources/addon/Scalars.yaml" target="_blank">addon scalars definition file</a> in <a href="https://github.com/mozilla/telemetry-batch-view" target="_blank">telemetry-batch-view</a>.
+Be sure to include the section:</p>
+<pre><code>    record_in_processes:
+      - &apos;dynamic&apos;
+</code></pre><p>The addon scalars can then be found in the associated column, depending on their type:</p>
+<ul>
+<li><code>string_addon_scalars</code></li>
+<li><code>keyed_string_addon_scalars</code></li>
+<li><code>uint_addon_scalars</code></li>
+<li><code>keyed_uint_addon_scalars</code></li>
+<li><code>boolean_addon_scalars</code></li>
+<li><code>keyed_boolean_addon_scalars</code></li>
+</ul>
+<p>These columns are all maps. Each addon scalar will be a key within that map, concatenating the top-level subsection within <code>Scalars.yaml</code> with its name to get the key. As an example, consider the following scalar definition:</p>
+<pre><code>test:
+  misunderestimated_nucular:
+    description: A test scalar, no soup for you!
+    expires: never
+    kind: string
+    keyed: true
+    notification_emails:
+      - frank@mozilla.com
+    record_in_processes:
+      - &apos;dynamic&apos;
+</code></pre><p>For example, you could find the addon scalar <code>test.misunderestimated_nucular</code>, a keyed string scalar, using <code>keyed_string_addon_scalars[&apos;test_misunderestimated_nucular&apos;]</code>.
+In general, use <code>element_at</code>, which returns <code>NULL</code> when the key is not found: <code>element_at(keyed_string_addon_scalars, &apos;test_misunderestimated_nucular&apos;)</code></p>
+<h2 id="other-fields"><a name="other-fields" class="plugin-anchor" href="#other-fields"><i class="fa fa-link" aria-hidden="true"></i></a>Other Fields</h2>
+<p>We can include other types of fields as well, for example if there needs to be a specific transformation done. We do need the data to be available in the <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html" target="_blank">Main Ping</a></p>
 <h1 id="data-reference"><a name="data-reference" class="plugin-anchor" href="#data-reference"><i class="fa fa-link" aria-hidden="true"></i></a>Data Reference</h1>
 <h2 id="example-queries"><a name="example-queries" class="plugin-anchor" href="#example-queries"><i class="fa fa-link" aria-hidden="true"></i></a>Example Queries</h2>
 <p>We recommend working with this dataset via Spark rather than <code>sql.t.m.o</code>.
@@ -1502,7 +1560,7 @@ Refer to this repository for information on how to run or augment the dataset.</
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Main Summary","level":"1.3.3.2.3","depth":4,"next":{"title":"First Shutdown Summary","level":"1.3.3.2.4","depth":4,"path":"datasets/batch_view/first_shutdown_summary/reference.md","ref":"datasets/batch_view/first_shutdown_summary/reference.md","articles":[]},"previous":{"title":"Cross Sectional","level":"1.3.3.2.2","depth":4,"path":"datasets/batch_view/cross_sectional/reference.md","ref":"datasets/batch_view/cross_sectional/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/main_summary/reference.md","mtime":"2018-04-17T14:41:21.252Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-17T14:42:45.683Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Main Summary","level":"1.3.3.2.3","depth":4,"next":{"title":"First Shutdown Summary","level":"1.3.3.2.4","depth":4,"path":"datasets/batch_view/first_shutdown_summary/reference.md","ref":"datasets/batch_view/first_shutdown_summary/reference.md","articles":[]},"previous":{"title":"Cross Sectional","level":"1.3.3.2.2","depth":4,"path":"datasets/batch_view/cross_sectional/reference.md","ref":"datasets/batch_view/cross_sectional/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/main_summary/reference.md","mtime":"2018-04-18T16:14:28.361Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-18T16:16:05.765Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
