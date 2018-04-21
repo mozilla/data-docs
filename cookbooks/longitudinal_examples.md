@@ -170,6 +170,26 @@ WITH samples AS
 SELECT approx_distinct(client_id) FROM samples WHERE max_concurrent_tabs > 100
 ```
 
+#### Keyed scalars
+
+Retrieve all the keys for a given scalar and sum all values for each key giving
+one row per key:
+
+```sql
+SELECT t.key as open_type,
+       SUM(REDUCE(t.val, 0, (s, x) -> s + COALESCE(x.value, 0), s -> s)) as open_count,
+       normalized_channel AS "channel::multi-filter"
+FROM longitudinal
+CROSS JOIN UNNEST(scalar_parent_devtools_responsive_open_trigger) AS t(key, val)
+GROUP BY t.key, normalized_channel
+```
+
+This query also makes use of `multi-filter` to show an interactive filter in
+Re:dash.
+
+This query requires a modern version of Presto, and because of this it currently
+with the Presto data source but it doesn't work with the Athena data source.
+
 ### Using Views
 
 If you find yourself copy/pasting SQL between different queries,
