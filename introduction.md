@@ -1,7 +1,7 @@
 # Firefox Data Documentation
 
 This document will teach you how to use Firefox data
-to answer questions about our products and their users. The source for this documentation
+to answer questions about how users interact with our products. The source for this documentation
 can be found in [this repo](https://github.com/mozilla/firefox-data-docs).
 
 ## Using this document
