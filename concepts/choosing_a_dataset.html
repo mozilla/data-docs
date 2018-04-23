@@ -1135,7 +1135,6 @@ take a look at our <a href="../tools/experiments.html">tools for experimentation
 <li><a href="#%60longitudinal%60"><code>longitudinal</code></a></li>
 <li><a href="#%60main_summary%60"><code>main_summary</code></a></li>
 <li><a href="#%60first_shutdown_summary%60"><code>first_shutdown_summary</code></a></li>
-<li><a href="#%60cross_sectional%60"><code>cross_sectional</code></a></li>
 <li><a href="#%60client_count%60"><code>client_count</code></a></li>
 <li><a href="#%60heavy_users%60"><code>heavy_users</code></a></li>
 <li><a href="#%60churn%60"><code>churn</code></a></li>
@@ -1238,7 +1237,7 @@ This dataset <strong>does not include histograms</strong>.</p>
 You should <strong>avoid querying <code>main_summary</code></strong> from <a href="https://sql.telemetry.mozilla.org" target="_blank">re:dash</a>.
 Your queries will be <strong>slow to complete</strong> and can <strong>impact performance for other users</strong>,
 since re:dash on a shared cluster.</p>
-<p>Instead, we recommend using the <code>longitudinal</code> or <code>cross_sectional</code> dataset where possible.
+<p>Instead, we recommend using the <code>longitudinal</code> or <code>clients_daily</code> dataset where possible.
 If these datasets do not suffice, consider using Spark on an
 <a href="https://analysis.telemetry.mozilla.org" target="_blank">ATMO</a> cluster.
 In the odd case where these queries are necessary,
@@ -1275,65 +1274,6 @@ separate first-shutdown ping was created to evaluate first-shutdown behavior whi
 <p>The data can be accessed as <code>first_shutdown_summary</code>. It is currently stored in the following path.</p>
 <pre><code>s3://telemetry-parquet/first_shutdown_summary/v4/
 </code></pre><p>The data is backfilled to 2017-09-22, the date of its first nightly appearance. This data should be available to all releases on and after Firefox 57.</p>
-<h2 id="crosssectional"><a name="crosssectional" class="plugin-anchor" href="#crosssectional"><i class="fa fa-link" aria-hidden="true"></i></a><code>cross_sectional</code></h2>
-<p>The <code>cross_sectional</code> dataset provides descriptive statistics
-for each <code>client_id</code> in a 1% sample of main ping data.
-This dataset simplifies the longitudinal table by replacing
-the longitudinal arrays with summary statistics.
-This is the most useful dataset for describing our user base.</p>
-<h4 id="content"><a name="content" class="plugin-anchor" href="#content"><i class="fa fa-link" aria-hidden="true"></i></a>Content</h4>
-<p>Each row in the <code>cross_sectional</code> dataset represents one <code>client_id</code>,
-which is approximately a user.
-Each column is a summary statistic describing the <code>client_id</code>.</p>
-<p>For example, the longitudinal table has a row called <code>geo_country</code>
-which contains an array of country codes.
-For the same <code>client_id</code> the <code>cross_sectional</code> table
-has columns called <code>geo_country_mode</code> and <code>geo_country_configs</code>
-containing single summary statistics for
-the modal country and the number of distinct countries in the array.</p>
-<table>
-<thead>
-<tr>
-<th><code>client_id</code></th>
-<th style="text-align:center"><code>geo_country</code></th>
-<th style="text-align:center"><code>geo_country_mode</code></th>
-<th style="text-align:center"><code>geo_country_configs</code></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td style="text-align:center">array&lt;&quot;US&quot;&gt;</td>
-<td style="text-align:center">&quot;US&quot;</td>
-<td style="text-align:center">1</td>
-</tr>
-<tr>
-<td>2</td>
-<td style="text-align:center">array&lt;&quot;DE&quot;, &quot;DE&quot; &quot;US&quot;&gt;</td>
-<td style="text-align:center">&quot;DE&quot;</td>
-<td style="text-align:center">2</td>
-</tr>
-</tbody>
-</table>
-<h4 id="background-and-caveats"><a name="background-and-caveats" class="plugin-anchor" href="#background-and-caveats"><i class="fa fa-link" aria-hidden="true"></i></a>Background and Caveats</h4>
-<p>This table is much easier to work with than the longitudinal dataset because
-you don&apos;t need to work with arrays.
-This table has a limited number of pre-computed summary statistics
-so you&apos;re metric may not be included.</p>
-<p>Note that this dataset is a summary of the longitudinal dataset,
-so it is also a 1% sample of all <code>client_id</code>s.</p>
-<p>All summary statistics are computed over the last 180 days,
-so this dataset can be insensitive to changes over time.</p>
-<h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
-<p>The <code>cross_sectional</code> dataset is available in Re:dash.
-Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/4202/source" target="_blank">example query</a>.</p>
-<p>The data is stored as a parquet table in S3 at the following address.
-See <a href="../cookbooks/parquet.html">this cookbook</a> to get started working with the data in Spark.</p>
-<pre><code>s3://telemetry-parquet/cross_sectional/v1/
-</code></pre><h4 id="further-reading"><a name="further-reading" class="plugin-anchor" href="#further-reading"><i class="fa fa-link" aria-hidden="true"></i></a>Further Reading</h4>
-<p>The <code>cross_sectional</code> dataset is generated by
-<a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/CrossSectionalView.scala" target="_blank">this code</a>.
-Take a look at <a href="https://sql.telemetry.mozilla.org/queries/4203/source" target="_blank">this query</a> for a schema.</p>
 <h2 id="clientcount"><a name="clientcount" class="plugin-anchor" href="#clientcount"><i class="fa fa-link" aria-hidden="true"></i></a><code>client_count</code></h2>
 <p>The <code>client_count</code> dataset is useful for estimating user counts over a few
 <a href="https://github.com/mozilla/telemetry-airflow/blob/master/jobs/client_count_view.sh" target="_blank">pre-defined dimensions</a>.</p>
@@ -1773,7 +1713,7 @@ Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/31267#table" t
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.3","depth":2,"next":{"title":"Intro to STMO","level":"1.2.4","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"previous":{"title":"Data Privacy","level":"1.2.2","depth":2,"path":"concepts/data_privacy.md","ref":"concepts/data_privacy.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2018-04-23T17:38:40.464Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-23T17:40:12.658Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.3","depth":2,"next":{"title":"Intro to STMO","level":"1.2.4","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"previous":{"title":"Data Privacy","level":"1.2.2","depth":2,"path":"concepts/data_privacy.md","ref":"concepts/data_privacy.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2018-04-23T21:13:56.851Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-23T21:15:34.791Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
