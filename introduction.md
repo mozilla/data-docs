@@ -1,7 +1,7 @@
 # Firefox Data Documentation
 
 This document will teach you how to use Firefox data
-to answer questions about our users. The source for this documentation
+to answer questions about how users interact with our products. The source for this documentation
 can be found in [this repo](https://github.com/mozilla/firefox-data-docs).
 
 ## Using this document
@@ -14,14 +14,14 @@ This documentation is divided into four main sections:
   over telemetry data.
 
 ### [Data Collection and Datasets](datasets/README.adoc)
-  Describes all available data we have on our users.
+  Describes all available data we have from our products.
   For each dataset, we include a description of the dataset's purpose,
   what data is included, how the data is collected,
   and how you can change or augment the dataset.
   You do not need to read this section end-to-end.
 
 ### [Tools](tools/README.adoc)
-  Describes the tools we maintain to access and analyze user data.
+  Describes the tools we maintain to access and analyze product data.
   For each tool we include a description of the purpose, relative strengths
   and weaknesses, and what data you can access from the tool.
 
