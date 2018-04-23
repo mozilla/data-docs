@@ -15,7 +15,7 @@ You should **avoid querying `main_summary`** from [re:dash](https://sql.telemetr
 Your queries will be **slow to complete** and can **impact performance for other users**,
 since re:dash on a shared cluster.
 
-Instead, we recommend using the `longitudinal` or `cross_sectional` dataset where possible.
+Instead, we recommend using the `longitudinal` or `clients_daily` dataset where possible.
 If these datasets do not suffice, consider using Spark on an
 [ATMO](https://analysis.telemetry.mozilla.org) cluster.
 In the odd case where these queries are necessary,
