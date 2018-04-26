@@ -86,11 +86,11 @@ And these are the various measures we are counting:
 
 * `usage_hours`: number of usage hours (i.e. total number of hours of usage reported by the pings in this aggregate)
 * `main_crashes`: number of main process crashes (or just program crashes, in the non-e10s case)
-* `content_crashes`: number of content process crashes
+* `content_crashes`: number of content process crashes (`version => 58` only)
 * `plugin_crashes`: number of plugin process crashes
 * `gmplugin_crashes`: number of Gecko media plugin (often abbreviated `GMPlugin`) process crashes
 * `content_shutdown_crashes`: number of content process crashes that were caused by failure to shut down in a timely manner (should always be
-  less than the number of `content_crashes`)
+  less than the number of `content_crashes`; `version => 58` only)
 * `gpu_crashes`: number of GPU process crashes
 * `browser_shim_usage_blocked`: number of times a CPOW shim was blocked from being created by browser code
 * `permissions_sql_corrupted`: number of times the permissions SQL error occurred (beta/nightly only)
