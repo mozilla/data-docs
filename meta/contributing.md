@@ -84,11 +84,11 @@ the `.spelling` file in the code repository.
 For things like dataset names or field names, `code blocks` should be preferred. Things like
 project names or common technical terms should be added to the `.spelling` file.
 
-To run the spell checker locally, [install the `markdown-spellcheck` library](https://www.npmjs.com/package/markdown-spellcheck), then run the following command from the root of the repository:
+To run the spell checker locally,
+[install the `markdown-spellcheck` library](https://www.npmjs.com/package/markdown-spellcheck),
+then run the `scripts/spell_check.sh` script from the root of the repository.
 
-`mdspell '**/*.md' '!**/node_modules/**/*.md' '!**/_book/**/*.md' --ignore-numbers --en-us --report`
-
-You may also omit the `--report` parameter to begin an interactive fixing session. In this
+You may also remove the `--report` parameter to begin an interactive fixing session. In this
 case, it is highly recommended to also add the `--no-suggestions` parameter, which greatly
 speeds things up.
 

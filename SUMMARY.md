@@ -26,7 +26,7 @@
   * Dataset Specific
     * [Longitudinal Examples](cookbooks/longitudinal_examples.md)
     * [Working with Crash Pings](cookbooks/crash_pings.md)
-  * Realtime
+  * Real-time
     * [Creating a Real-time Analysis Plugin](cookbooks/realtime_analysis_plugin.md)
     * [Seeing Your Own Pings](cookbooks/view_pings_cep.md)
     * [CEP Matcher](tools/cep_matcher.md)
