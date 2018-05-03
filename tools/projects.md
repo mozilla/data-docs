@@ -81,6 +81,9 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 | [`python-zeppelin`][pyzep]        | Convert Zeppelin notebooks to Markdown
 | [St. Mocli][stmocli]              | A command-line interface to [STMO][stmo]
 | [probe-scraper]                   | Scrape and publish Telemetry probe data from Firefox
+| [test-tube]                       | Compare data across branches in experiments
+| [experimenter]                    | A web application for managing experiments
+| [St. Moab][stmoab]                | Automatically generate Re:dash dashboard for A/B experiments
 
 [tmo_gh]: https://github.com/mozilla/telemetry-dashboard
 [cer]: https://github.com/mozilla/cerberus
@@ -100,6 +103,9 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 [pyzep]: https://github.com/mozilla/python-zeppelin
 [stmocli]: https://github.com/mozilla/stmocli
 [probe-scraper]: https://github.com/mozilla/probe-scraper
+[test-tube]: https://github.com/mozilla/firefox-test-tube
+[experimenter]: https://github.com/mozilla/experimenter
+[stmoab]: https://github.com/mozilla/stmoab
 
 ## Reference materials
 
