@@ -1,4 +1,5 @@
 * [Firefox Data Documentation](introduction.md)
+  * [Reporting a problem](concepts/reporting_a_problem.md)
   * [Terminology](concepts/terminology.md)
 * [Getting Started](concepts/getting_started.md)
   * [Analysis Quick Start](concepts/analysis_intro.md)
