@@ -63,6 +63,7 @@
   * [Using HyperLogLog in Zeppelin](cookbooks/hll_zeppelin.md)
   * [Sending a Custom Ping](cookbooks/new_ping.md)
   * [Seeing Your Own Pings](cookbooks/view_pings_cep.md)
+  * [Active DAU Definition](cookbooks/active_dau.md)
 
 * About this Documentation
   * [Contributing](meta/contributing.md)
