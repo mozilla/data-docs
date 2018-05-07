@@ -30,6 +30,8 @@
     * [Creating a Real-time Analysis Plugin](cookbooks/realtime_analysis_plugin.md)
     * [Seeing Your Own Pings](cookbooks/view_pings_cep.md)
     * [CEP Matcher](tools/cep_matcher.md)
+  * Metrics
+    * [Active DAU Definition](cookbooks/active_dau.md)
 
 ---
 
