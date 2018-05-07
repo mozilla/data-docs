@@ -22,7 +22,6 @@
   * [Working with Parquet Data on ATMO Clusters](cookbooks/parquet.md)
   * [Creating a custom Re:dash dataset](cookbooks/create_a_dataset.md)
   * [Sending a Custom Ping](cookbooks/new_ping.md)
-  * [Seeing Your Own Pings](cookbooks/view_pings_cep.md)
   * [Using HyperLogLog in Zeppelin](cookbooks/hll_zeppelin.md)
   * Dataset Specific
     * [Longitudinal Examples](cookbooks/longitudinal_examples.md)
