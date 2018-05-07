@@ -108,7 +108,6 @@ pushlog
 PySpark
 RDBMS
 RDD
-realtime
 recommender
 release_calendar
 repo

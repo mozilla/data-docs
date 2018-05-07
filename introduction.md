@@ -19,7 +19,7 @@ This documentation is divided into four main sections:
 ### [Cookbooks & Tutorials](cookbooks/README.md)
   This section contains tutorials presented in a simple problem/solution format.
 
-### [Data Collection and Datasets](datasets/README.adoc)
+### [Data Collection and Datasets](datasets/reference.md)
   Describes all available data we have from our products.
   For each dataset, we include a description of the dataset's purpose,
   what data is included, how the data is collected,
