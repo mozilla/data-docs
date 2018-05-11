@@ -84,7 +84,8 @@ The `error_aggregates` table has the following columns which define its dimensio
 
 And these are the various measures we are counting:
 
-* `usage_hours`: number of usage hours (i.e. total number of hours of usage reported by the pings in this aggregate)
+* `usage_hours`: number of usage hours (i.e. total number of session hours reported by the pings in this aggregate, note that this might include time where
+  people are not actively using the browser or their computer is asleep)
 * `main_crashes`: number of main process crashes (or just program crashes, in the non-e10s case)
 * `content_crashes`: number of content process crashes
 * `plugin_crashes`: number of plugin process crashes
