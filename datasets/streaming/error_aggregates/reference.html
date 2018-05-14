@@ -1126,7 +1126,7 @@ by summing using SQL.</p>
        <span class="hljs-keyword">sum</span>(gpu_crashes) <span class="hljs-keyword">AS</span> gpu,
        <span class="hljs-keyword">sum</span>(plugin_crashes) <span class="hljs-keyword">AS</span> <span class="hljs-keyword">plugin</span>,
        <span class="hljs-keyword">sum</span>(gmplugin_crashes) <span class="hljs-keyword">AS</span> gmplugin
-<span class="hljs-keyword">FROM</span> telemetry.error_aggregates
+<span class="hljs-keyword">FROM</span> telemetry.error_aggregates_v2
   <span class="hljs-keyword">WHERE</span> application = <span class="hljs-string">&apos;Firefox&apos;</span>
   <span class="hljs-keyword">AND</span> (os_name = <span class="hljs-string">&apos;Darwin&apos;</span> <span class="hljs-keyword">or</span> os_name = <span class="hljs-string">&apos;Linux&apos;</span> <span class="hljs-keyword">or</span> os_name = <span class="hljs-string">&apos;Windows_NT&apos;</span>)
   <span class="hljs-keyword">AND</span> (channel = <span class="hljs-string">&apos;beta&apos;</span> <span class="hljs-keyword">or</span> channel = <span class="hljs-string">&apos;release&apos;</span> <span class="hljs-keyword">or</span> channel = <span class="hljs-string">&apos;nightly&apos;</span> <span class="hljs-keyword">or</span> channel = <span class="hljs-string">&apos;esr&apos;</span>)
@@ -1137,7 +1137,7 @@ by summing using SQL.</p>
 <p>Get the number of <code>main_crashes</code> on Windows over a small interval
 (<a href="https://sql.telemetry.mozilla.org/queries/51677" target="_blank">view on Re:dash</a>):</p>
 <pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> window_start <span class="hljs-keyword">as</span> <span class="hljs-keyword">time</span>, <span class="hljs-keyword">sum</span>(main_crashes) <span class="hljs-keyword">AS</span> main_crashes
-<span class="hljs-keyword">FROM</span> telemetry.error_aggregates_v1
+<span class="hljs-keyword">FROM</span> telemetry.error_aggregates_v2
   <span class="hljs-keyword">WHERE</span> application = <span class="hljs-string">&apos;Firefox&apos;</span>
   <span class="hljs-keyword">AND</span> os_name = <span class="hljs-string">&apos;Windows_NT&apos;</span>
   <span class="hljs-keyword">AND</span> channel = <span class="hljs-string">&apos;release&apos;</span>
@@ -1148,41 +1148,44 @@ by summing using SQL.</p>
 </code></pre>
 <h2 id="sampling"><a name="sampling" class="plugin-anchor" href="#sampling"><i class="fa fa-link" aria-hidden="true"></i></a>Sampling</h2>
 <h3 id="data-sources"><a name="data-sources" class="plugin-anchor" href="#data-sources"><i class="fa fa-link" aria-hidden="true"></i></a>Data sources</h3>
-<p>The aggregates in this data source are derived from main and crash <a href="../../pings.html">pings</a>.
-Crash pings are only used to count/gather main crash events, all other errors (including all other crashes) are gathered from main pings.</p>
+<p>The aggregates in this data source are derived from main, crash and core <a href="../../pings.html">pings</a>:</p>
+<ul>
+<li>crash pings are used to count/gather main and content crash events, all other errors from desktop clients (including all other crashes) are gathered from main pings</li>
+<li>core pings are used to count usage hours, first subsession and unique client counts.</li>
+</ul>
 <h2 id="scheduling"><a name="scheduling" class="plugin-anchor" href="#scheduling"><i class="fa fa-link" aria-hidden="true"></i></a>Scheduling</h2>
 <p>The <code>error_aggregates</code> job is run continuously, using the Spark Streaming infrastructure</p>
 <h2 id="schema"><a name="schema" class="plugin-anchor" href="#schema"><i class="fa fa-link" aria-hidden="true"></i></a>Schema</h2>
-<p>The <code>error_aggregates</code> table has the following columns which define its dimensions:</p>
+<p>The <code>error_aggregates_v2</code> table has the following columns which define its dimensions:</p>
 <ul>
-<li><code>window_start</code>: Beginning of interval when this sample was taken</li>
-<li><code>window_end</code>: End of interval when this sample was taken (will always be 5 minutes more
+<li><code>window_start</code>: beginning of interval when this sample was taken</li>
+<li><code>window_end</code>: end of interval when this sample was taken (will always be 5 minutes more
 than <code>window_start</code> for any given row)</li>
+<li><code>submission_date_s3</code>: the date pings were submitted for a particular aggregate</li>
 <li><code>channel</code>: the channel, like <code>release</code> or <code>beta</code></li>
 <li><code>version</code>: the version e.g. <code>57.0.1</code></li>
 <li><code>display_version</code>: like version, but includes beta number if applicable e.g. <code>57.0.1b4</code></li>
 <li><code>build_id</code>: the <code>YYYYMMDDhhmmss</code> timestamp the program was built, like <code>20160123180541</code>. This is also known as the <code>build ID</code> or <code>buildid</code></li>
-<li><code>application</code>: application name (e.g. <code>Firefox</code>)</li>
+<li><code>application</code>: application name (e.g. <code>Firefox</code> or <code>Fennec</code>)</li>
 <li><code>os_name</code>: name of the OS (e.g. <code>Darwin</code> or <code>Windows_NT</code>)</li>
 <li><code>os_version</code>: version of the OS</li>
+<li><code>architecture</code>: build architecture, e.g. <code>x86</code></li>
 <li><code>country</code>: country code for the user (determined using geoIP), like <code>US</code> or <code>UK</code></li>
 <li><code>experiment_id</code>: identifier of the experiment being participated in, such as <code>e10s-beta46-noapz@experiments.mozilla.org</code>, or null if no experiment</li>
 <li><code>experiment_branch</code>: the branch of the experiment being participated in, such as <code>control</code> or <code>experiment</code>, or null if no experiment</li>
-<li><code>e10s_enabled</code>: whether E10s is enabled</li>
-<li><code>gfx_compositor</code>: the graphics backend compositor used by the program, such as <code>d3d11</code>, <code>opengl</code> and <code>simple</code>. Null values may be reported as <code>none</code> as well</li>
-<li><code>quantum_ready</code>: whether the ping was submitted from an instance of Firefox that was Quantum-ready (i.e. no old-style addons)</li>
 </ul>
 <p>And these are the various measures we are counting:</p>
 <ul>
 <li><code>usage_hours</code>: number of usage hours (i.e. total number of session hours reported by the pings in this aggregate, note that this might include time where
 people are not actively using the browser or their computer is asleep)</li>
+<li><code>count</code>: number of pings processed in this aggregate</li>
 <li><code>main_crashes</code>: number of main process crashes (or just program crashes, in the non-e10s case)</li>
-<li><code>content_crashes</code>: number of content process crashes</li>
+<li><code>startup_crashes</code> : number of startup crashes</li>
+<li><code>content_crashes</code>: number of content process crashes (<code>version =&gt; 58</code> only)</li>
+<li><code>gpu_crashes</code>: number of GPU process crashes</li>
 <li><code>plugin_crashes</code>: number of plugin process crashes</li>
 <li><code>gmplugin_crashes</code>: number of Gecko media plugin (often abbreviated <code>GMPlugin</code>) process crashes</li>
-<li><code>content_shutdown_crashes</code>: number of content process crashes that were caused by failure to shut down in a timely manner (should always be
-less than the number of <code>content_crashes</code>)</li>
-<li><code>gpu_crashes</code>: number of GPU process crashes</li>
+<li><code>content_shutdown_crashes</code>: number of content process crashes that were caused by failure to shut down in a timely manner (<code>version =&gt; 58</code> only) </li>
 <li><code>browser_shim_usage_blocked</code>: number of times a CPOW shim was blocked from being created by browser code</li>
 <li><code>permissions_sql_corrupted</code>: number of times the permissions SQL error occurred (beta/nightly only)</li>
 <li><code>defective_permissions_sql_removed</code>: number of times there was a removal of defective <code>permissions.sqlite</code> (beta/nightly only)</li>
@@ -1232,7 +1235,7 @@ less than the number of <code>content_crashes</code>)</li>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Error Aggregates","level":"2.1.2.19","depth":3,"next":{"title":"Experimental Datasets","level":"2.1.3","depth":2,"path":"tools/experiments.md","ref":"tools/experiments.md","articles":[{"title":"Accessing Shield Study data","level":"2.1.3.1","depth":3,"path":"datasets/shield.md","ref":"datasets/shield.md","articles":[]}]},"previous":{"title":"SSL Ratios (public)","level":"2.1.2.18","depth":3,"path":"datasets/other/ssl/reference.md","ref":"datasets/other/ssl/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/streaming/error_aggregates/reference.md","mtime":"2018-05-11T18:39:17.936Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-05-11T18:40:51.849Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Error Aggregates","level":"2.1.2.19","depth":3,"next":{"title":"Experimental Datasets","level":"2.1.3","depth":2,"path":"tools/experiments.md","ref":"tools/experiments.md","articles":[{"title":"Accessing Shield Study data","level":"2.1.3.1","depth":3,"path":"datasets/shield.md","ref":"datasets/shield.md","articles":[]}]},"previous":{"title":"SSL Ratios (public)","level":"2.1.2.18","depth":3,"path":"datasets/other/ssl/reference.md","ref":"datasets/other/ssl/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/streaming/error_aggregates/reference.md","mtime":"2018-05-14T15:11:17.172Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-05-14T15:12:44.216Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
