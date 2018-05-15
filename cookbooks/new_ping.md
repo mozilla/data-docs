@@ -117,7 +117,7 @@ Write ETL Jobs
 --------------
 We have some basic generalized ETL jobs you can use to transform your data on a batch basis - for example,
 a [Longitudinal](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/GenericLongitudinal.scala)
-or [client-count](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/GenericCountView.scala)
+or [client-count-daily](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/GenericCountView.scala)
 like dataset. Otherwise, you'll have to write your own.
 
 You can schedule it on [Airflow](http://workflow.telemetry.mozilla.org/), or you can

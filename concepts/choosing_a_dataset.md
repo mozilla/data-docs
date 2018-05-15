@@ -39,9 +39,9 @@ This section describes the derived datasets we provide to make analyzing this da
 
 {% include "/datasets/batch_view/first_shutdown_summary/intro.md" %}
 
-## `client_count`
+## `client_count_daily`
 
-{% include "/datasets/batch_view/client_count/intro.md" %}
+{% include "/datasets/batch_view/client_count_daily/intro.md" %}
 
 ## `heavy_users`
 
