@@ -74,6 +74,7 @@ lookups
 Lua
 matcher
 matchers
+MAU
 metadata
 metastore
 Mocli
@@ -149,5 +150,7 @@ un-encoded
 un-publish
 uri
 UUID
+versioned
 whitelist
 whitelists
+WAU

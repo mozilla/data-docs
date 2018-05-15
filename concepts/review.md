@@ -32,17 +32,17 @@ and will help you find a reviewer.
 To get review for your analysis,
 contact one of the data reviewers listed for the dataset your analysis is based upon:
 
-| Dataset           | Reviewers   |
-| :---              | :---        |
-| Longitudinal      |             |
-| Cross Sectional   |             |
-| Main Summary      |             |
-| Crash Summary     |             |
-| Crash Aggregate   |             |
-| Events            |             |
-| Sync Summary      |             |
-| Addons            |             |
-| Client Count      |             |
+| Dataset            | Reviewers   |
+| :---               | :---        |
+| Longitudinal       |             |
+| Cross Sectional    |             |
+| Main Summary       |             |
+| Crash Summary      |             |
+| Crash Aggregate    |             |
+| Events             |             |
+| Sync Summary       |             |
+| Addons             |             |
+| Client Count Daily |             |
 
 # Jupyter Notebooks
 
