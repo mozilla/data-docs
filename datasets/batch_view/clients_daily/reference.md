@@ -13,10 +13,11 @@
 #### Compute Churn for a one-day cohort:
 
 ```sql
-SELECT activity_date,
+SELECT date_parse(submission_date_s3, '%Y%m%d') AS submission_date_s3,
        approx_distinct(client_id) AS cohort_dau
 FROM clients_daily
-WHERE activity_date > '2017-08-31'
+WHERE submission_date_s3 > '20170831'
+  AND submission_date_s3 < '20171001'
   AND profile_creation_date LIKE '2017-09-01%'
 GROUP BY 1
 ORDER BY 1
@@ -32,20 +33,13 @@ SELECT normalized_channel,
        END AS pings_per_day,
        approx_distinct(client_id) AS client_count
 FROM clients_daily
-WHERE activity_date_s3 = '2017-09-01'
+WHERE submission_date_s3 = '20170901'
   AND normalized_channel <> 'Other'
 GROUP BY 1,
          2
 ORDER BY 2,
          1
 ```
-
-## Caveats
-
-The `clients_daily` dataset is not sampled, however data that arrives after
-a certain cut-off period will not appear in the dataset. This is determined
-via the [`--lag-days` parameter](https://github.com/mozilla/python_mozetl/blob/master/mozetl/clientsdaily/rollup.py#L181),
-which, as of 2017-10-11, defaults to 10.
 
 ## Scheduling
 
@@ -55,12 +49,14 @@ The job runs as part of the [`main_summary` DAG](https://github.com/mozilla/tele
 
 ## Schema
 
-As of 2017-10-11, the current version of the `clients_daily` dataset is `v5`, and has a schema as follows:
+The data is partitioned by `submission_date_s3` which is formatted as `%Y%m%d`,
+like `20180130`.
+
+As of 2018-05-16, the current version of the `clients_daily` dataset is `v6`, and has a schema as follows:
 
 ```
 root
  |-- client_id: string (nullable = true)
- |-- activity_date: string (nullable = true)
  |-- aborts_content_sum: long (nullable = true)
  |-- aborts_gmplugin_sum: long (nullable = true)
  |-- aborts_plugin_sum: long (nullable = true)
@@ -76,7 +72,18 @@ root
  |-- blocklist_enabled: boolean (nullable = true)
  |-- channel: string (nullable = true)
  |-- city: string (nullable = true)
+ |-- client_clock_skew_mean: double (nullable = true)
+ |-- client_submission_latency_mean: double (nullable = true)
  |-- country: string (nullable = true)
+ |-- cpu_cores: integer (nullable = true)
+ |-- cpu_count: integer (nullable = true)
+ |-- cpu_family: integer (nullable = true)
+ |-- cpu_l2_cache_kb: integer (nullable = true)
+ |-- cpu_l3_cache_kb: integer (nullable = true)
+ |-- cpu_model: integer (nullable = true)
+ |-- cpu_speed_mhz: integer (nullable = true)
+ |-- cpu_stepping: integer (nullable = true)
+ |-- cpu_vendor: string (nullable = true)
  |-- crashes_detected_content_sum: long (nullable = true)
  |-- crashes_detected_gmplugin_sum: long (nullable = true)
  |-- crashes_detected_plugin_sum: long (nullable = true)
@@ -97,18 +104,28 @@ root
  |-- env_build_arch: string (nullable = true)
  |-- env_build_id: string (nullable = true)
  |-- env_build_version: string (nullable = true)
+ |-- experiments: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: string (valueContainsNull = true)
  |-- first_paint_mean: double (nullable = true)
  |-- flash_version: string (nullable = true)
+ |-- geo_subdivision1: string (nullable = true)
+ |-- geo_subdivision2: string (nullable = true)
+ |-- gfx_features_advanced_layers_status: string (nullable = true)
+ |-- gfx_features_d2d_status: string (nullable = true)
+ |-- gfx_features_d3d11_status: string (nullable = true)
+ |-- gfx_features_gpu_process_status: string (nullable = true)
  |-- install_year: long (nullable = true)
  |-- is_default_browser: boolean (nullable = true)
  |-- is_wow64: boolean (nullable = true)
  |-- locale: string (nullable = true)
  |-- memory_mb: integer (nullable = true)
+ |-- normalized_channel: string (nullable = true)
+ |-- normalized_os_version: string (nullable = true)
  |-- os: string (nullable = true)
  |-- os_service_pack_major: long (nullable = true)
  |-- os_service_pack_minor: long (nullable = true)
  |-- os_version: string (nullable = true)
- |-- normalized_channel: string (nullable = true)
  |-- pings_aggregated_by_this_row: long (nullable = true)
  |-- places_bookmarks_count_mean: double (nullable = true)
  |-- places_pages_count_mean: double (nullable = true)
@@ -117,10 +134,18 @@ root
  |-- plugins_infobar_block_sum: long (nullable = true)
  |-- plugins_infobar_shown_sum: long (nullable = true)
  |-- plugins_notification_shown_sum: long (nullable = true)
+ |-- previous_build_id: string (nullable = true)
  |-- profile_age_in_days: integer (nullable = true)
  |-- profile_creation_date: string (nullable = true)
  |-- push_api_notify_sum: long (nullable = true)
  |-- sample_id: string (nullable = true)
+ |-- sandbox_effective_content_process_level: integer (nullable = true)
+ |-- scalar_combined_webrtc_nicer_stun_retransmits_sum: long (nullable = true)
+ |-- scalar_combined_webrtc_nicer_turn_401s_sum: long (nullable = true)
+ |-- scalar_combined_webrtc_nicer_turn_403s_sum: long (nullable = true)
+ |-- scalar_combined_webrtc_nicer_turn_438s_sum: long (nullable = true)
+ |-- scalar_content_navigator_storage_estimate_count_sum: long (nullable = true)
+ |-- scalar_content_navigator_storage_persist_count_sum: long (nullable = true)
  |-- scalar_parent_aushelper_websense_reg_version: string (nullable = true)
  |-- scalar_parent_browser_engagement_max_concurrent_tab_count_max: integer (nullable = true)
  |-- scalar_parent_browser_engagement_max_concurrent_window_count_max: integer (nullable = true)
@@ -128,6 +153,7 @@ root
  |-- scalar_parent_browser_engagement_total_uri_count_sum: long (nullable = true)
  |-- scalar_parent_browser_engagement_unfiltered_uri_count_sum: long (nullable = true)
  |-- scalar_parent_browser_engagement_unique_domains_count_max: integer (nullable = true)
+ |-- scalar_parent_browser_engagement_unique_domains_count_mean: double (nullable = true)
  |-- scalar_parent_browser_engagement_window_open_event_count_sum: long (nullable = true)
  |-- scalar_parent_devtools_copy_full_css_selector_opened_sum: long (nullable = true)
  |-- scalar_parent_devtools_copy_unique_css_selector_opened_sum: long (nullable = true)
@@ -135,23 +161,18 @@ root
  |-- scalar_parent_dom_contentprocess_troubled_due_to_memory_sum: long (nullable = true)
  |-- scalar_parent_navigator_storage_estimate_count_sum: long (nullable = true)
  |-- scalar_parent_navigator_storage_persist_count_sum: long (nullable = true)
- |-- scalar_parent_services_sync_fxa_verification_method: string (nullable = true)
  |-- scalar_parent_storage_sync_api_usage_extensions_using_sum: long (nullable = true)
- |-- scalar_parent_telemetry_os_shutting_down: boolean (nullable = true)
- |-- scalar_parent_webrtc_nicer_stun_retransmits_sum: long (nullable = true)
- |-- scalar_parent_webrtc_nicer_turn_401s_sum: long (nullable = true)
- |-- scalar_parent_webrtc_nicer_turn_403s_sum: long (nullable = true)
- |-- scalar_parent_webrtc_nicer_turn_438s_sum: long (nullable = true)
  |-- search_cohort: string (nullable = true)
- |-- search_count_all_sum: long (nullable = true)
- |-- search_count_abouthome_sum: long (nullable = true)
- |-- search_count_contextmenu_sum: long (nullable = true)
- |-- search_count_newtab_sum: long (nullable = true)
- |-- search_count_searchbar_sum: long (nullable = true)
- |-- search_count_system_sum: long (nullable = true)
- |-- search_count_urlbar_sum: long (nullable = true)
+ |-- search_count_all: long (nullable = true)
+ |-- search_count_abouthome: long (nullable = true)
+ |-- search_count_contextmenu: long (nullable = true)
+ |-- search_count_newtab: long (nullable = true)
+ |-- search_count_searchbar: long (nullable = true)
+ |-- search_count_system: long (nullable = true)
+ |-- search_count_urlbar: long (nullable = true)
  |-- session_restored_mean: double (nullable = true)
  |-- sessions_started_on_this_day: long (nullable = true)
+ |-- shutdown_kill_sum: long (nullable = true)
  |-- subsession_hours_sum: decimal(37,6) (nullable = true)
  |-- ssl_handshake_result_failure_sum: long (nullable = true)
  |-- ssl_handshake_result_success_sum: long (nullable = true)
@@ -161,21 +182,17 @@ root
  |-- telemetry_enabled: boolean (nullable = true)
  |-- timezone_offset: integer (nullable = true)
  |-- total_hours_sum: decimal(27,6) (nullable = true)
+ |-- update_auto_download: boolean (nullable = true)
+ |-- update_channel: string (nullable = true)
+ |-- update_enabled: boolean (nullable = true)
  |-- vendor: string (nullable = true)
  |-- web_notification_shown_sum: long (nullable = true)
  |-- windows_build_number: long (nullable = true)
  |-- windows_ubr: long (nullable = true)
- |-- shutdown_kill_sum: long (nullable = true)
- |-- activity_date_s3: date (nullable = true)
 ```
-
-For more detail on the set of fields and their chosen aggregations,
-please look
-[in the aggregations doc](https://docs.google.com/spreadsheets/d/1jDqnhXrix8WtfBMrq1NzesYd7HrVn__VsA8RyckUrSo/edit#gid=868109559)
-or at the code (linked below).
 
 # Code Reference
 
 This dataset is generated by
-[`python_mozetl`](https://github.com/mozilla/python_mozetl/blob/master/mozetl/clientsdaily/rollup.py).
+[`telemetry-batch-view`](https://github.com/mozilla/telemetry-batch-view/tree/master/src/main/scala/com/mozilla/telemetry/views/ClientsDailyView.scala).
 Refer to this repository for information on how to run or augment the dataset.
