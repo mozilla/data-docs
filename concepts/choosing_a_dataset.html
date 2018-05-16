@@ -1097,7 +1097,7 @@ take a look at our <a href="../tools/experiments.html">tools for experimentation
 <li><a href="#%60longitudinal%60"><code>longitudinal</code></a></li>
 <li><a href="#%60main_summary%60"><code>main_summary</code></a></li>
 <li><a href="#%60first_shutdown_summary%60"><code>first_shutdown_summary</code></a></li>
-<li><a href="#%60client_count%60"><code>client_count</code></a></li>
+<li><a href="#%60client_count_daily%60"><code>client_count_daily</code></a></li>
 <li><a href="#%60heavy_users%60"><code>heavy_users</code></a></li>
 <li><a href="#%60churn%60"><code>churn</code></a></li>
 <li><a href="#%60retention%60"><code>retention</code></a></li>
@@ -1236,19 +1236,19 @@ separate first-shutdown ping was created to evaluate first-shutdown behavior whi
 <p>The data can be accessed as <code>first_shutdown_summary</code>. It is currently stored in the following path.</p>
 <pre><code>s3://telemetry-parquet/first_shutdown_summary/v4/
 </code></pre><p>The data is backfilled to 2017-09-22, the date of its first nightly appearance. This data should be available to all releases on and after Firefox 57.</p>
-<h2 id="clientcount"><a name="clientcount" class="plugin-anchor" href="#clientcount"><i class="fa fa-link" aria-hidden="true"></i></a><code>client_count</code></h2>
-<p>The <code>client_count</code> dataset is useful for estimating user counts over a few
-<a href="https://github.com/mozilla/telemetry-airflow/blob/master/jobs/client_count_view.sh" target="_blank">pre-defined dimensions</a>.</p>
-<p>The <code>client_count</code> dataset is deprecated in favor of
-<a href="../client_count_daily/reference.md"><code>client_count_daily</code></a>,
-which is aggregated by submission date instead of activity date.</p>
+<h2 id="clientcountdaily"><a name="clientcountdaily" class="plugin-anchor" href="#clientcountdaily"><i class="fa fa-link" aria-hidden="true"></i></a><code>client_count_daily</code></h2>
+<p>The <code>client_count_daily</code> dataset is useful for estimating user counts over a few
+<a href="https://github.com/mozilla/telemetry-airflow/blob/master/jobs/client_count_daily_view.sh" target="_blank">pre-defined dimensions</a>.</p>
+<p>The <code>client_count_daily</code> dataset is similar to the deprecated
+<a href="../client_count/reference.md"><code>client_count</code> dataset</a>
+except that is aggregated by submission date and not activity date.</p>
 <h4 id="content"><a name="content" class="plugin-anchor" href="#content"><i class="fa fa-link" aria-hidden="true"></i></a>Content</h4>
 <p>This dataset includes columns for a dozen factors and an HLL variable.
 The <code>hll</code> column contains a
 <a href="https://en.wikipedia.org/wiki/HyperLogLog" target="_blank">HyperLogLog</a>
 variable, which is an approximation to the exact count.
-The factor columns include <strong>activity</strong> date and the dimensions listed
-<a href="https://github.com/mozilla/telemetry-airflow/blob/master/jobs/client_count_view.sh" target="_blank">here</a>.
+The factor columns include <strong>submission</strong> date and the dimensions listed
+<a href="https://github.com/mozilla/telemetry-airflow/blob/master/jobs/client_count_daily_view.sh" target="_blank">here</a>.
 Each row represents one combinations of the factor columns.</p>
 <h4 id="background-and-caveats"><a name="background-and-caveats" class="plugin-anchor" href="#background-and-caveats"><i class="fa fa-link" aria-hidden="true"></i></a>Background and Caveats</h4>
 <p>It&apos;s important to understand that the <code>hll</code> column is <strong>not a standard count</strong>.
@@ -1523,7 +1523,7 @@ the set union between all objects in a column.</p>
 <p>The HyperLogLog library wrappers are available for use outside of the
 configured STMO environment, <a href="https://github.com/mozilla/spark-hyperloglog" target="_blank"><code>spark-hyperloglog</code></a> and
 <a href="https://github.com/vitillo/presto-hyperloglog" target="_blank"><code>presto-hyperloglog</code></a>.</p>
-<p>Also see the <a href="../client_count/reference.md"><code>client_count</code> dataset</a>.</p>
+<p>Also see the <a href="../client_count_daily/reference.md"><code>client_count_daily</code> dataset</a>.</p>
 <h2 id="clientsdaily"><a name="clientsdaily" class="plugin-anchor" href="#clientsdaily"><i class="fa fa-link" aria-hidden="true"></i></a><code>clients_daily</code></h2>
 <p>The <code>clients_daily</code> table is intended as the first stop for asking questions
 about how people use Firefox. It should be easy to answer simple questions.
@@ -1675,7 +1675,7 @@ Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/31267#table" t
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.2","depth":2,"next":{"title":"Intro to STMO","level":"1.2.3","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"previous":{"title":"Analysis Quick Start","level":"1.2.1","depth":2,"path":"concepts/analysis_intro.md","ref":"concepts/analysis_intro.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2018-05-16T14:37:12.178Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-05-16T14:39:05.257Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.2","depth":2,"next":{"title":"Intro to STMO","level":"1.2.3","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"previous":{"title":"Analysis Quick Start","level":"1.2.1","depth":2,"path":"concepts/analysis_intro.md","ref":"concepts/analysis_intro.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2018-05-16T16:25:51.911Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-05-16T16:27:35.794Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

@@ -69,7 +69,7 @@ The HyperLogLog library wrappers are available for use outside of the
 configured STMO environment, [`spark-hyperloglog`][s-hll] and
 [`presto-hyperloglog`][p-hll].
 
-Also see the [`client_count` dataset][client_count].
+Also see the [`client_count_daily` dataset][client_count_daily].
 
 
 [original_bug]: https://bugzilla.mozilla.org/show_bug.cgi?id=1381840
@@ -81,5 +81,5 @@ Also see the [`client_count` dataset][client_count].
 [stmo]: sql.telemetry.mozilla.org
 [s-hll]: https://github.com/mozilla/spark-hyperloglog
 [p-hll]: https://github.com/vitillo/presto-hyperloglog
-[client_count]: ../client_count/reference.md
+[client_count_daily]: ../client_count_daily/reference.md
 
