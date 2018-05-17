@@ -17,6 +17,7 @@
     * [Event Pipeline Detail](/concepts/pipeline/event_pipeline.md)
   * [Analysis Interfaces](tools/interfaces.md)
   * [Custom analysis with Spark](tools/spark.md)
+  * [SQL Style Guide](concepts/sql_style.md)
 * [Cookbooks](cookbooks/README.md)
   * [Alerts](tools/alerts.md)
   * [Working with Parquet Data on ATMO Clusters](cookbooks/parquet.md)

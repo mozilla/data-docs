@@ -24,6 +24,7 @@ blocklist
 boolean
 booleans
 bugzilla
+CamelCase
 CEP
 changesets
 chromehangs
@@ -94,6 +95,7 @@ NumPy
 ORM-like
 parquet2hive
 performant
+Pep8
 Pingsender
 Plotly
 Postgres
