@@ -687,9 +687,9 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.5" data-path="../datasets/mozetl/clients_daily/reference.html">
+        <li class="chapter " data-level="2.1.2.5" data-path="../datasets/batch_view/clients_daily/reference.html">
             
-                <a href="../datasets/mozetl/clients_daily/reference.html">
+                <a href="../datasets/batch_view/clients_daily/reference.html">
             
                     
                     Clients Daily
@@ -1527,28 +1527,19 @@ configured STMO environment, <a href="https://github.com/mozilla/spark-hyperlogl
 <h2 id="clientsdaily"><a name="clientsdaily" class="plugin-anchor" href="#clientsdaily"><i class="fa fa-link" aria-hidden="true"></i></a><code>clients_daily</code></h2>
 <p>The <code>clients_daily</code> table is intended as the first stop for asking questions
 about how people use Firefox. It should be easy to answer simple questions.
-Each row in the table is a (<code>client_id</code>, <code>activity_date</code>) and contains a
+Each row in the table is a (<code>client_id</code>, <code>submission_date</code>) and contains a
 number of aggregates about that day&apos;s activity.</p>
 <h4 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h4>
 <p>Many questions about Firefox take the form &quot;What did clients with
 characteristics X, Y, and Z do during the period S to E?&quot; The
 <code>clients_daily</code> table is aimed at answer those questions.</p>
-<h4 id="background-and-caveats"><a name="background-and-caveats" class="plugin-anchor" href="#background-and-caveats"><i class="fa fa-link" aria-hidden="true"></i></a>Background and Caveats</h4>
-<p>The rows in the table are based on <strong>activity date</strong> rather than
-<strong>submission date</strong>, so there is a somewhat higher
-<a href="concepts/analysis_gotchas.html#delays">processing delay</a> than for
-some other datasets. It is expected that the latest &quot;day&quot; available
-in this table is more than one day ago.</p>
 <h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
 <p>The data is stored as a parquet table in S3 at the following address.</p>
-<pre><code>s3://telemetry-parquet/clients_daily/v5/
+<pre><code>s3://telemetry-parquet/clients_daily/v6/
 </code></pre><p>The <code>clients_daily</code> table is accessible through re:dash using the <code>Athena</code>
 data source. It is also available via the <code>Presto</code> data source, though
 <code>Athena</code> should be preferred for performance and stability reasons.</p>
 <p>Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/23746#61771" target="_blank">example query</a>.</p>
-<h4 id="further-reading"><a name="further-reading" class="plugin-anchor" href="#further-reading"><i class="fa fa-link" aria-hidden="true"></i></a>Further Reading</h4>
-<p>The code responsible for generating this dataset is
-<a href="https://github.com/mozilla/python_mozetl/tree/master/mozetl/clientsdaily" target="_blank">here</a>.</p>
 <h1 id="crash-ping-derived-datasets"><a name="crash-ping-derived-datasets" class="plugin-anchor" href="#crash-ping-derived-datasets"><i class="fa fa-link" aria-hidden="true"></i></a>Crash Ping Derived Datasets</h1>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html" target="_blank">crash ping</a>
 is captured after the main Firefox process crashes or after a content process crashes,
@@ -1675,7 +1666,7 @@ Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/31267#table" t
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.2","depth":2,"next":{"title":"Intro to STMO","level":"1.2.3","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"previous":{"title":"Analysis Quick Start","level":"1.2.1","depth":2,"path":"concepts/analysis_intro.md","ref":"concepts/analysis_intro.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2018-05-16T16:25:51.911Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-05-16T16:27:35.794Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.2","depth":2,"next":{"title":"Intro to STMO","level":"1.2.3","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"previous":{"title":"Analysis Quick Start","level":"1.2.1","depth":2,"path":"concepts/analysis_intro.md","ref":"concepts/analysis_intro.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2018-05-17T16:02:35.445Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-05-17T16:04:12.228Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
