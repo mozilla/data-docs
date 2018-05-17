@@ -42,7 +42,7 @@ it's easier to read when explicit.
 **Good**
 ```sql
 SELECT
-  SUBSTR(submission_date, 1, 6) AS month
+  substr(submission_date, 1, 6) AS month
 FROM
   main_summary
 LIMIT
@@ -52,14 +52,14 @@ LIMIT
 **Bad**
 ```sql
 SELECT
-  SUBSTR(submission_date, 1, 6) month
+  substr(submission_date, 1, 6) month
 FROM
   main_summary
 LIMIT
   10
 ```
 
-## Left Align Root Keywords 
+## Left Align Root Keywords
 
 Root keywords should all start on the same character boundary.
 This is counter to the common "rivers" pattern
@@ -138,7 +138,7 @@ LIMIT 10
 
 **Bad**
 ```sql
-SELECT 
+SELECT
   client_id,
   submission_date
 FROM main_summary
