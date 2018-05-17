@@ -21,14 +21,16 @@ From [Pep8](https://www.python.org/dev/peps/pep-0008/#a-foolish-consistency-is-t
 
 ## Reserved Words
 
-1. Always use uppercase for reserved keywords like `SELECT`, `WHERE`, or `AS`.
-1. Always use uppercase for Presto functions, such as `COUNT`, `CARDINALITY`, or `SUBSTR`.
+Always use uppercase for reserved keywords like `SELECT`, `WHERE`, or `AS`.
 
 ## Variable Names
 
 1. Use consistent and descriptive identifiers and names.
 1. Use lower case names with underscores, such as `first_name`.
    Do not use CamelCase.
+1. Presto functions, such as `cardinality`, `approx_distinct`, or `substr`,
+   [are identifiers](https://www.postgresql.org/docs/10/static/sql-syntax-lexical.html#SQL-SYNTAX-IDENTIFIERS)
+   and should be treated like variable names.
 1. Names must begin with a letter and may not end in an underscore.
 1. Only use letters, numbers, and underscores in variable names.
 
@@ -151,7 +153,7 @@ If parentheses span multiple lines:
 
 1. The opening parenthesis should terminate the line.
 1. The closing parenthesis should be lined up under
-   the first character of the line that starts the multiline construct.
+   the first character of the line that starts the multi-line construct.
 1. The contents of the parentheses should be indented one level.
 
 For example:
