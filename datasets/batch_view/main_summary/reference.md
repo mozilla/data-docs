@@ -91,14 +91,22 @@ you can use the `UNNEST` feature to access items in the
 For example, to compare the search volume for different search source values,
 you could use:
 ```sql
-WITH search_data AS
-  (SELECT s.source AS search_source,
-          s.count AS search_count
-   FROM main_summary CROSS JOIN UNNEST(search_counts) AS t(s)
-   WHERE submission_date_s3 = '20160510'
-     AND sample_id = '42'
-     AND search_counts IS NOT NULL)
-SELECT search_source, sum(search_count) as total_searches
+WITH search_data AS (
+  SELECT
+    s.source AS search_source,
+    s.count AS search_count
+  FROM
+    main_summary
+    CROSS JOIN UNNEST(search_counts) AS t(s)
+  WHERE
+    submission_date_s3 = '20160510'
+    AND sample_id = '42'
+    AND search_counts IS NOT NULL
+)
+
+SELECT
+  search_source,
+  sum(search_count) as total_searches
 FROM search_data
 GROUP BY search_source
 ORDER BY sum(search_count) DESC
@@ -124,12 +132,15 @@ As of 2017-12-03, the current version of the `main_summary` dataset is `v4`, and
 
 ```
 root
- |-- document_id: string (nullable = true)
+ |-- document_id: string (nullable = false)
  |-- client_id: string (nullable = true)
  |-- channel: string (nullable = true)
  |-- normalized_channel: string (nullable = true)
+ |-- normalized_os_version: string (nullable = true)
  |-- country: string (nullable = true)
  |-- city: string (nullable = true)
+ |-- geo_subdivision1: string (nullable = true)
+ |-- geo_subdivision2: string (nullable = true)
  |-- os: string (nullable = true)
  |-- os_version: string (nullable = true)
  |-- os_service_pack_major: long (nullable = true)
@@ -139,15 +150,42 @@ root
  |-- install_year: long (nullable = true)
  |-- is_wow64: boolean (nullable = true)
  |-- memory_mb: integer (nullable = true)
+ |-- cpu_count: integer (nullable = true)
+ |-- cpu_cores: integer (nullable = true)
+ |-- cpu_vendor: string (nullable = true)
+ |-- cpu_family: integer (nullable = true)
+ |-- cpu_model: integer (nullable = true)
+ |-- cpu_stepping: integer (nullable = true)
+ |-- cpu_l2_cache_kb: integer (nullable = true)
+ |-- cpu_l3_cache_kb: integer (nullable = true)
+ |-- cpu_speed_mhz: integer (nullable = true)
+ |-- gfx_features_d3d11_status: string (nullable = true)
+ |-- gfx_features_d2d_status: string (nullable = true)
+ |-- gfx_features_gpu_process_status: string (nullable = true)
+ |-- gfx_features_advanced_layers_status: string (nullable = true)
  |-- apple_model_id: string (nullable = true)
+ |-- antivirus: array (nullable = true)
+ |    |-- element: string (containsNull = false)
+ |-- antispyware: array (nullable = true)
+ |    |-- element: string (containsNull = false)
+ |-- firewall: array (nullable = true)
+ |    |-- element: string (containsNull = false)
  |-- profile_creation_date: long (nullable = true)
+ |-- profile_reset_date: long (nullable = true)
+ |-- previous_build_id: string (nullable = true)
+ |-- session_id: string (nullable = true)
+ |-- subsession_id: string (nullable = true)
+ |-- previous_session_id: string (nullable = true)
+ |-- previous_subsession_id: string (nullable = true)
+ |-- session_start_date: string (nullable = true)
  |-- subsession_start_date: string (nullable = true)
+ |-- session_length: long (nullable = true)
  |-- subsession_length: long (nullable = true)
  |-- subsession_counter: integer (nullable = true)
  |-- profile_subsession_counter: integer (nullable = true)
  |-- creation_date: string (nullable = true)
  |-- distribution_id: string (nullable = true)
- |-- submission_date: string (nullable = true)
+ |-- submission_date: string (nullable = false)
  |-- sync_configured: boolean (nullable = true)
  |-- sync_count_desktop: integer (nullable = true)
  |-- sync_count_mobile: integer (nullable = true)
@@ -155,18 +193,22 @@ root
  |-- app_display_version: string (nullable = true)
  |-- app_name: string (nullable = true)
  |-- app_version: string (nullable = true)
- |-- timestamp: long (nullable = true)
+ |-- timestamp: long (nullable = false)
  |-- env_build_id: string (nullable = true)
  |-- env_build_version: string (nullable = true)
  |-- env_build_arch: string (nullable = true)
  |-- e10s_enabled: boolean (nullable = true)
  |-- e10s_multi_processes: long (nullable = true)
  |-- locale: string (nullable = true)
+ |-- update_channel: string (nullable = true)
+ |-- update_enabled: boolean (nullable = true)
+ |-- update_auto_download: boolean (nullable = true)
  |-- attribution: struct (nullable = true)
  |    |-- source: string (nullable = true)
  |    |-- medium: string (nullable = true)
  |    |-- campaign: string (nullable = true)
  |    |-- content: string (nullable = true)
+ |-- sandbox_effective_content_process_level: integer (nullable = true)
  |-- active_experiment_id: string (nullable = true)
  |-- active_experiment_branch: string (nullable = true)
  |-- reason: string (nullable = true)
@@ -196,6 +238,8 @@ root
  |-- default_search_engine: string (nullable = true)
  |-- devtools_toolbox_opened_count: integer (nullable = true)
  |-- client_submission_date: string (nullable = true)
+ |-- client_clock_skew: long (nullable = true)
+ |-- client_submission_latency: long (nullable = true)
  |-- places_bookmarks_count: integer (nullable = true)
  |-- places_pages_count: integer (nullable = true)
  |-- push_api_notify: integer (nullable = true)
@@ -226,13 +270,13 @@ root
  |    |    |-- reopen_open_submenu: integer (nullable = true)
  |    |    |-- reopen_learn_more: integer (nullable = true)
  |-- search_counts: array (nullable = true)
- |    |-- element: struct (containsNull = true)
+ |    |-- element: struct (containsNull = false)
  |    |    |-- engine: string (nullable = true)
  |    |    |-- source: string (nullable = true)
  |    |    |-- count: long (nullable = true)
  |-- active_addons: array (nullable = true)
- |    |-- element: struct (containsNull = true)
- |    |    |-- addon_id: string (nullable = true)
+ |    |-- element: struct (containsNull = false)
+ |    |    |-- addon_id: string (nullable = false)
  |    |    |-- blocklisted: boolean (nullable = true)
  |    |    |-- name: string (nullable = true)
  |    |    |-- user_disabled: boolean (nullable = true)
@@ -249,9 +293,9 @@ root
  |    |    |-- is_web_extension: boolean (nullable = true)
  |    |    |-- multiprocess_compatible: boolean (nullable = true)
  |-- disabled_addons_ids: array (nullable = true)
- |    |-- element: string (containsNull = true)
+ |    |-- element: string (containsNull = false)
  |-- active_theme: struct (nullable = true)
- |    |-- addon_id: string (nullable = true)
+ |    |-- addon_id: string (nullable = false)
  |    |-- blocklisted: boolean (nullable = true)
  |    |-- name: string (nullable = true)
  |    |-- user_disabled: boolean (nullable = true)
@@ -274,11 +318,11 @@ root
  |    |-- dom_ipc_process_count: integer (nullable = true)
  |    |-- extensions_allow_non_mpc_extensions: boolean (nullable = true)
  |-- events: array (nullable = true)
- |    |-- element: struct (containsNull = true)
- |    |    |-- timestamp: long (nullable = true)
- |    |    |-- category: string (nullable = true)
- |    |    |-- method: string (nullable = true)
- |    |    |-- object: string (nullable = true)
+ |    |-- element: struct (containsNull = false)
+ |    |    |-- timestamp: long (nullable = false)
+ |    |    |-- category: string (nullable = false)
+ |    |    |-- method: string (nullable = false)
+ |    |    |-- object: string (nullable = false)
  |    |    |-- string_value: string (nullable = true)
  |    |    |-- map_values: map (nullable = true)
  |    |    |    |-- key: string
@@ -328,11 +372,38 @@ root
  |-- input_event_response_coalesced_ms_content_above_2500: long (nullable = true)
  |-- ghost_windows_main_above_1: long (nullable = true)
  |-- ghost_windows_content_above_1: long (nullable = true)
+ |-- user_pref_dom_ipc_plugins_sandbox_level_flash: integer (nullable = true)
  |-- user_pref_dom_ipc_processcount: integer (nullable = true)
  |-- user_pref_extensions_allow_non_mpc_extensions: boolean (nullable = true)
  |-- user_pref_extensions_legacy_enabled: boolean (nullable = true)
+ |-- user_pref_browser_search_widget_innavbar: boolean (nullable = true)
+ |-- user_pref_general_config_filename: string (nullable = true)
  |-- ** dynamically included scalar fields, see source **
- |-- ** dynamically include whitelisted histograms, see source **
+ |-- ** dynamically included whitelisted histograms, see source **
+ |-- boolean_addon_scalars: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: boolean (valueContainsNull = true)
+ |-- keyed_boolean_addon_scalars: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: map (valueContainsNull = true)
+ |    |    |-- key: string
+ |    |    |-- value: boolean (valueContainsNull = true)
+ |-- string_addon_scalars: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: string (valueContainsNull = true)
+ |-- keyed_string_addon_scalars: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: map (valueContainsNull = true)
+ |    |    |-- key: string
+ |    |    |-- value: string (valueContainsNull = true)
+ |-- uint_addon_scalars: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: integer (valueContainsNull = true)
+ |-- keyed_uint_addon_scalars: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: map (valueContainsNull = true)
+ |    |    |-- key: string
+ |    |    |-- value: integer (valueContainsNull = true)
  |-- submission_date_s3: string (nullable = true)
  |-- sample_id: string (nullable = true)
 ```

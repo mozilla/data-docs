@@ -13,10 +13,12 @@
 #### Compute Churn for a one-day cohort:
 
 ```sql
-SELECT date_parse(submission_date_s3, '%Y%m%d') AS submission_date_s3,
-       approx_distinct(client_id) AS cohort_dau
+SELECT
+  date_parse(submission_date_s3, '%Y%m%d') AS submission_date_s3,
+  approx_distinct(client_id) AS cohort_dau
 FROM clients_daily
-WHERE submission_date_s3 > '20170831'
+WHERE
+  submission_date_s3 > '20170831'
   AND submission_date_s3 < '20171001'
   AND profile_creation_date LIKE '2017-09-01%'
 GROUP BY 1
@@ -26,19 +28,23 @@ ORDER BY 1
 #### Distribution of pings per client per day:
 
 ```sql
-SELECT normalized_channel,
-       CASE
-        WHEN pings_aggregated_by_this_row > 50 THEN 50
-        ELSE pings_aggregated_by_this_row
-       END AS pings_per_day,
-       approx_distinct(client_id) AS client_count
+SELECT
+  normalized_channel,
+  CASE
+    WHEN pings_aggregated_by_this_row > 50 THEN 50
+    ELSE pings_aggregated_by_this_row
+  END AS pings_per_day,
+  approx_distinct(client_id) AS client_count
 FROM clients_daily
-WHERE submission_date_s3 = '20170901'
+WHERE
+  submission_date_s3 = '20170901'
   AND normalized_channel <> 'Other'
-GROUP BY 1,
-         2
-ORDER BY 2,
-         1
+GROUP BY
+  1,
+  2
+ORDER BY
+  2,
+  1
 ```
 
 ## Scheduling
