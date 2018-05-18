@@ -1,6 +1,27 @@
 # Heavy Users
 
+***As of 2018-05-18, this dataset has been deprecated and is no longer maintained. See [Bug 1455314](https://bugzilla.mozilla.org/show_bug.cgi?id=1455314)***
+
 <!-- toc -->
+
+# Replacement
+
+We've moved to assigning user's an active tag based on `total_uri_count`, see
+the [Active DAU definition](/cookbooks/active_dau.md).
+
+The activity of a user based on `active_ticks` is available in `clients_daily`
+in the `active_hours_sum` field, which has the `sum(active_ticks / 720)`.
+
+To retrieve a client's 28-day `active_hours`, use the following query:
+```sql
+SELECT submission_date_s3,
+       client_id,
+       SUM(active_hours_sum) OVER (PARTITION BY client_id
+                                   ORDER BY submission_date_s3 ASC
+                                   ROWS 27 PRECEDING) AS monthly_active_hours
+FROM
+    clients_daily
+```
 
 # Introduction
 

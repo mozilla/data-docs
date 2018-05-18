@@ -50,7 +50,6 @@
     * [Error Aggregates](datasets/streaming/error_aggregates/reference.md)
     * [Events](datasets/batch_view/events/reference.md)
     * [First Shutdown Summary](datasets/batch_view/first_shutdown_summary/reference.md)
-    * [Heavy Users](datasets/batch_view/heavy_users/reference.md)
     * [Longitudinal](datasets/batch_view/longitudinal/reference.md)
     * [Main Summary](datasets/batch_view/main_summary/reference.md)
     * [New Profile](datasets/batch_view/new_profile/reference.md)
@@ -63,6 +62,8 @@
   * [Search Datasets](datasets/search.md)
     * [Search Aggregates](datasets/mozetl/search_aggregates/reference.md)
     * [Search Clients Daily](datasets/mozetl/search_clients_daily/reference.md)
+  * [Obsolete Datasets](datasets/obsolete.md)
+    * [Heavy Users](datasets/obsolete/heavy_users/reference.md)
 
 ---
 
