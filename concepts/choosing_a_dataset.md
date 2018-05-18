@@ -43,10 +43,6 @@ This section describes the derived datasets we provide to make analyzing this da
 
 {% include "/datasets/batch_view/client_count_daily/intro.md" %}
 
-## `heavy_users`
-
-{% include "/datasets/batch_view/heavy_users/intro.md" %}
-
 ## `churn`
 
 {% include "/datasets/mozetl/churn/intro.md" %}
@@ -89,6 +85,12 @@ This data is available in the `telemetry_new_profile_parquet` dataset.
 # Update Derived Dataset
 
 {% include "/datasets/batch_view/update/intro.md" %}
+
+# Obsolete Datasets
+
+## `heavy_users`
+
+{% include "/datasets/obsolete/heavy_users/intro.md" %}
 
 # Appendix
 
