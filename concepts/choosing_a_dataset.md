@@ -86,6 +86,10 @@ This data is available in the `telemetry_new_profile_parquet` dataset.
 
 {% include "/datasets/batch_view/update/intro.md" %}
 
+# Other Datasets
+
+{% include "/datasets/other/socorro_crash/intro.md" %}
+
 # Obsolete Datasets
 
 ## `heavy_users`
