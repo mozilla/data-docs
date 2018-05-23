@@ -7,8 +7,8 @@
    This would partition by `submission_date`, meaning each day this runs and is
    outputted to a new location in S3. Do NOT put the `submission_date` in the
    parquet file as well! A column name cannot also be the name of a partition.
-3. Using [this template](https://bugzilla.mozilla.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=1&comment=Location%20of%20the%20dataset%3A%20%0D%0ADesired%20dataset%20name%3A&component=Datasets%3A%20General&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=P1&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&short_desc=Add%20dataset%20to%20Presto&target_milestone=---&version=unspecified),
-   open a bug to load the dataset in Presto with the following attributes:
+3. Using [this template](https://bugzilla.mozilla.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=1&comment=Location%20of%20the%20dataset%3A%20%0D%0ADesired%20dataset%20name%3A&component=Datasets%3A%20General&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=P1&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&short_desc=Publish%20dataset&target_milestone=---&version=unspecified),
+   open a bug to publish the dataset (making it available in Spark and Re:dash) with the following attributes:
    * Add whiteboard tag `[DataOps]`
-   * Title: "Add Dataset to Presto"
-   * Content: Location of the dataset in S3 (from step 2 above) and the desired table name in Presto
+   * Title: "Publish dataset"
+   * Content: Location of the dataset in S3 (from step 2 above) and the desired table name
