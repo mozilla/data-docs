@@ -58,6 +58,8 @@ Some common ones might be:
 - `submissionDate`
 - `geoCountry`
 - `geoCity`
+- `geoSubdivision1`
+- `geoSubdivision2`
 - `normalizedChannel`
 - `appVersion`
 - `appBuildId`
