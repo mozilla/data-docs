@@ -44,7 +44,7 @@ The best documentation we have for the Parquet schema is by looking at the examp
 
 Parquet output also has a `metadata` section. These are fields added to the ping at ingestion time;
 they might come from the URL submitted to the edge server, or the IP Address used to make the request.
-[This document](https://hsadmin.trink.com/dashboard_output/analysis.trink.telemetry_schema.parquet.txt)
+[This document](https://pipeline-cep.prod.mozaws.net/dashboard_output/analysis.moz_telemetry_parquet_schema.parquet.txt)
 lists available metadata fields for all pings.
 
 The stream you're interested in is probably `telemetry`.
