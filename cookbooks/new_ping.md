@@ -31,7 +31,7 @@ as an example. Consider where the data falls in the
 [Data Collection Categories](https://wiki.mozilla.org/Firefox/Data_Collection).
 
 Submit Schema to `mozilla-services/mozilla-pipeline-schemas`
-----------------------------------------------------------
+------------------------------------------------------------
 The first schema added should be the JSON Schema made in step 2.
 Add at least one example ping which the data can be validated against.
 These test pings will be validated automatically during the build.
@@ -85,7 +85,7 @@ It should follow the format specified in
 [MozTelemetry `docType` monitor](https://mozilla-services.github.io/lua_sandbox_extensions/moz_telemetry/sandboxes/heka/analysis/moz_telemetry_doctype_monitor.html).
 This allows you to check validation errors, size changes, duplicates, and more. Once you have
 the numbers set, file a
-[bug to let ops deploy it](https://bugzilla.mozilla.org/show_bug.cgi?id=1356380)
+[bug to let ops deploy it](https://bugzilla.mozilla.org/show_bug.cgi?id=1356380).
 
 (Telemetry-Specific) Register `docType`
 -------------------------------------
