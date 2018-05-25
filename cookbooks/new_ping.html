@@ -1120,6 +1120,13 @@ answer. General questions about &quot;How do users use our product?&quot; won&ap
 specific, concrete asks that can be translated to data points. This will also make it easier down
 the line as you start data review.</p>
 <p>More detail on how to design and implement new pings for Firefox Desktop <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html" target="_blank">can be found here</a>.</p>
+<h2 id="choose-a-namespace-and-doctype"><a name="choose-a-namespace-and-doctype" class="plugin-anchor" href="#choose-a-namespace-and-doctype"><i class="fa fa-link" aria-hidden="true"></i></a>Choose a Namespace and DocType</h2>
+<p>For new telemetry pings, the namespace is simply <code>telemetry</code>. For non-Telemetry
+pings, choose a namespace that uniquely identifies the product that will be
+generating the data.</p>
+<p>The DocType is used to differentiate pings within a namespace. It can be as
+simple as <code>event</code>, but should generally be descriptive of the data being
+collected.</p>
 <h2 id="create-a-schema"><a name="create-a-schema" class="plugin-anchor" href="#create-a-schema"><i class="fa fa-link" aria-hidden="true"></i></a>Create a Schema</h2>
 <p>Use JSON Schema to start with. See the examples schemas in the
 <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/" target="_blank">Mozilla Pipeline Schemas repo</a>.
@@ -1144,60 +1151,107 @@ The best documentation we have for the Parquet schema is by looking at the examp
 <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas" target="_blank"><code>mozilla-pipeline-schemas</code></a>.</p>
 <p>Parquet output also has a <code>metadata</code> section. These are fields added to the ping at ingestion time;
 they might come from the URL submitted to the edge server, or the IP Address used to make the request.
-<a href="https://hsadmin.trink.com/dashboard_output/analysis.trink.telemetry_schema.parquet.txt" target="_blank">This document</a>
+<a href="https://pipeline-cep.prod.mozaws.net/dashboard_output/analysis.moz_telemetry_parquet_schema.parquet.txt" target="_blank">This document</a>
 lists available metadata fields for all pings.</p>
 <p>The stream you&apos;re interested in is probably <code>telemetry</code>.
 For example, look at <code>system-addon-deployment-diagnostics</code> immediately under the <code>telemetry</code> top-level
 field. The <code>schema</code> element has top-level fields (e.g. <code>Timestamp</code>, <code>Type</code>), as well as more fields
 under the <code>Fields</code> element. Any of these can be used in the <code>metadata</code> section of your parquet schema,
 except for <code>submission</code>.</p>
-<p>Some common ones might be:</p>
+<p>Some common ones for Telemetry data might be:</p>
 <ul>
 <li><code>Date</code></li>
 <li><code>submissionDate</code></li>
 <li><code>geoCountry</code></li>
 <li><code>geoCity</code></li>
+<li><code>geoSubdivision1</code></li>
+<li><code>geoSubdivision2</code></li>
 <li><code>normalizedChannel</code></li>
 <li><code>appVersion</code></li>
 <li><code>appBuildId</code></li>
 </ul>
+<p>And for non-Telemetry data:</p>
+<ul>
+<li><code>geoCountry</code></li>
+<li><code>geoCity</code></li>
+<li><code>geoSubdivision1</code></li>
+<li><code>geoSubdivision2</code></li>
+<li><code>documentId</code></li>
+</ul>
 <p><em>Important Note</em>: Schema evolution of nested structs is currently broken, so you will not be able to add
 any fields in the future to your <code>metadata</code> section. We recommend adding any that may seem useful.</p>
 <h3 id="testing-the-schema"><a name="testing-the-schema" class="plugin-anchor" href="#testing-the-schema"><i class="fa fa-link" aria-hidden="true"></i></a>Testing The Schema</h3>
-<p>Note that this only works if data is <em>already</em> being sent, and you want to test the schema you&apos;re
-writing on the data that is currently being ingested.</p>
-<p>Test your Parquet output in <a href="https://pipeline-cep.prod.mozaws.net/" target="_blank">Hindsight</a> by using
-an output plugin. See <a href="https://bugzilla.mozilla.org/attachment.cgi?id=8829626" target="_blank">Core ping output plugin</a>
-for an example, where the parquet schema is specified as <code>parquet_schema</code>. If no errors
-arise, that means it should be correct. The &quot;Deploy&quot; button should not be used to actually
-deploy, that will be done by operations in the next step.</p>
-<h2 id="deploy-the-plugin"><a name="deploy-the-plugin" class="plugin-anchor" href="#deploy-the-plugin"><i class="fa fa-link" aria-hidden="true"></i></a>Deploy the Plugin</h2>
+<p>For new data, use the <a href="https://github.com/mozilla-services/edge-validator" target="_blank">edge validator</a> to test
+your schema.</p>
+<p>If your data is <em>already</em> being sent, and you want to test the schema you&apos;re writing on the data 
+that is currently being ingested, you can test your Parquet output in
+<a href="https://pipeline-cep.prod.mozaws.net/" target="_blank">Hindsight</a> by using an output plugin.
+See <a href="https://bugzilla.mozilla.org/attachment.cgi?id=8829626" target="_blank">Core ping output plugin</a>
+for an example, where the parquet schema is specified as <code>parquet_schema</code>. If no errors arise, that
+means it should be correct. The &quot;Deploy&quot; button should not be used to actually deploy, that will be
+done by operations in the next step.</p>
+<h2 id="telemetry-specific-deploy-the-plugin"><a name="telemetry-specific-deploy-the-plugin" class="plugin-anchor" href="#telemetry-specific-deploy-the-plugin"><i class="fa fa-link" aria-hidden="true"></i></a>(Telemetry-specific) Deploy the Plugin</h2>
 <p>File <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1333203" target="_blank">a bug to deploy the new schema.</a></p>
 <p>Real-time analysis will be key to ensuring your data is being processed and parsed correctly.
 It should follow the format specified in
 <a href="https://mozilla-services.github.io/lua_sandbox_extensions/moz_telemetry/sandboxes/heka/analysis/moz_telemetry_doctype_monitor.html" target="_blank">MozTelemetry <code>docType</code> monitor</a>.
 This allows you to check validation errors, size changes, duplicates, and more. Once you have
 the numbers set, file a
-<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1356380" target="_blank">bug to let ops deploy it</a></p>
-<h2 id="telemetry-specific-register-doctype"><a name="telemetry-specific-register-doctype" class="plugin-anchor" href="#telemetry-specific-register-doctype"><i class="fa fa-link" aria-hidden="true"></i></a>(Telemetry-Specific) Register <code>docType</code></h2>
-<p>Data Platform Operations takes care of this. It will then be available to query more easily using
-the Dataset API. To do so, make a bug like
-<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1292493" target="_blank">Bug 1292493</a>.</p>
-<h2 id="non-telemetry-add-ping-name-to-sourcesjson"><a name="non-telemetry-add-ping-name-to-sourcesjson" class="plugin-anchor" href="#non-telemetry-add-ping-name-to-sourcesjson"><i class="fa fa-link" aria-hidden="true"></i></a>(Non-Telemetry) Add ping name to <code>sources.json</code></h2>
-<p>This will make it available with the <a href="http://python-moztelemetry.readthedocs.io/en/stable/api.html#dataset" target="_blank">Dataset API</a> (used with PySpark on ATMO machines).
-There also needs to be a schema for the layout of the Heka files in
-<code>net-mozaws-prod-us-west-2-pipeline-metadata/&lt;ping-name&gt;/schema.json</code>, where <ping-name> is located in <code>sources.json</code>. If you want to do this, talk to
-<code>:whd</code> or <code>:mreid</code>.</ping-name></p>
+<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1356380" target="_blank">bug to let ops deploy it</a>.</p>
 <h2 id="start-sending-data"><a name="start-sending-data" class="plugin-anchor" href="#start-sending-data"><i class="fa fa-link" aria-hidden="true"></i></a>Start Sending Data</h2>
 <p>If you&apos;re using the Telemetry APIs, use those built-in. These can be with the
 <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html" target="_blank">Gecko Telemetry APIs</a>,
 the <a href="https://github.com/mozilla-mobile/telemetry-android" target="_blank">Android Telemetry APIs</a>, or the
-<a href="https://github.com/mozilla-mobile/telemetry-ios" target="_blank">iOS Telemetry APIs</a>. Otherwise, see
-<a href="https://wiki.mozilla.org/CloudServices/DataPipeline/HTTPEdgeServerSpecification" target="_blank">here for the endpoint and expected format</a>.</p>
-<p>Work is happening to make a
-<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1363160" target="_blank">generic endpoint</a>.
-These pings can be easily registered and sent to our servers and will
-be automatically available in Re:dash. Please check back later for those docs.</p>
+<a href="https://github.com/mozilla-mobile/telemetry-ios" target="_blank">iOS Telemetry APIs</a>. </p>
+<p>For non-Telemetry data, see <a href="../concepts/pipeline/http_edge_spec.html">our HTTP edge server specification</a>
+and specifically the <a href="../concepts/pipeline/http_edge_spec.html#postput-request">non-Telemetry example</a> for the expected format. The edge
+server endpoint is <code>https://incoming.telemetry.mozilla.org</code>.</p>
+<h2 id="non-telemetry-access-your-data"><a name="non-telemetry-access-your-data" class="plugin-anchor" href="#non-telemetry-access-your-data"><i class="fa fa-link" aria-hidden="true"></i></a>(Non-Telemetry) Access Your Data</h2>
+<p>First confirm with the reviewers of
+<a href="#submit-schema-to-mozilla-servicesmozilla-pipeline-schemas">your schema pull request</a>
+that your schemas have been deployed.</p>
+<p>In the following links, replace <code>&lt;namespace&gt;</code>, <code>&lt;doctype&gt;</code> And <code>&lt;docversion&gt;</code> with
+appropriate values. Also replace <code>-</code> with <code>_</code> in <code>&lt;namespace&gt;</code> if your
+namespace contains <code>-</code> characters.</p>
+<h3 id="cep"><a name="cep" class="plugin-anchor" href="#cep"><i class="fa fa-link" aria-hidden="true"></i></a>CEP</h3>
+<p>Once you&apos;ve sent some pings, refer to the following real-time analysis plugins
+to verify that your data is being processed:</p>
+<ul>
+<li><code>https://pipeline-cep.prod.mozaws.net/dashboard_output/graphs/analysis.moz_generic_error_monitor.&lt;namespace&gt;.html</code></li>
+<li><code>https://pipeline-cep.prod.mozaws.net/dashboard_output/analysis.moz_generic_&lt;namespace&gt;_&lt;doctype&gt;_&lt;docversion&gt;.submissions.json</code></li>
+<li><code>https://pipeline-cep.prod.mozaws.net/dashboard_output/analysis.moz_generic_&lt;namespace&gt;_&lt;doctype&gt;_&lt;docversion&gt;.errors.txt</code></li>
+</ul>
+<p>If this first graph shows ingestion errors, you can view the corresponding
+error messages in the third link. Otherwise, you should be able to view the
+last ten processed submissions via the second link. You can also write your own
+custom real-time analysis plugins using this same infrastructure if you desire;
+use the above plugins as examples and see
+<a href="realtime_analysis_plugin.html">here</a> for a more detailed explanation.</p>
+<p>If you encounter schema validation errors, you can fix your data or
+<a href="#submit-schema-to-mozilla-servicesmozilla-pipeline-schemas">submit another pull request</a>
+to amend your schemas. Backwards-incompatible schema changes should generally
+be accompanied by an increment to <code>docversion</code>.</p>
+<p>Once you&apos;ve established that your pings are flowing through the real-time
+system, verify that you can access the data from the downstream systems.</p>
+<h3 id="stmo"><a name="stmo" class="plugin-anchor" href="#stmo"><i class="fa fa-link" aria-hidden="true"></i></a>STMO</h3>
+<p>In the Athena data source, a new table
+<code>&lt;namespace&gt;_&lt;doctype&gt;_parquet_&lt;docversion&gt;</code> will be created for your data. A
+convenience pointer <code>&lt;namespace&gt;_&lt;doctype&gt;_parquet</code> will also refer to the latest
+available <code>docversion</code> of the ping. The data is partitioned by
+<code>submission_date_s3</code> which is formatted as <code>%Y%m%d</code>, like <code>20180130</code>, and is
+generally updated hourly. Refer to the <a href="../tools/stmo.html">STMO documentation</a>
+for general information about using Re:dash.</p>
+<p>This table may take up to a day to appear in the Athena source; if you still
+don&apos;t see a table for your new ping after 24 hours,
+<a href="https://mana.mozilla.org/wiki/display/SVCOPS/Contacting+Data+Operations" target="_blank">contact Data Operations</a>
+so that they can investigate. Once the table is available, it should contain
+all the pings sent during that first day, regardless of how long it takes for
+the table to appear.</p>
+<h3 id="atmo"><a name="atmo" class="plugin-anchor" href="#atmo"><i class="fa fa-link" aria-hidden="true"></i></a>ATMO</h3>
+<p>The data should be available in S3 at:</p>
+<p><code>s3://net-mozaws-prod-us-west-2-pipeline-data/&lt;namespace&gt;-&lt;doctype&gt;-parquet/v&lt;docversion&gt;/</code></p>
+<p>Note: here <code>&lt;namespace&gt;</code> should not be escaped.</p>
+<p>Refer to the <a href="../tools/spark.html#faq">Spark FAQ</a> for details on accessing this table via ATMO.</p>
 <h2 id="write-etl-jobs"><a name="write-etl-jobs" class="plugin-anchor" href="#write-etl-jobs"><i class="fa fa-link" aria-hidden="true"></i></a>Write ETL Jobs</h2>
 <p>We have some basic generalized ETL jobs you can use to transform your data on a batch basis - for example,
 a <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/GenericLongitudinal.scala" target="_blank">Longitudinal</a>
@@ -1251,7 +1305,7 @@ available in re:dash. Check the docs on <a href="create_a_dataset.html">creating
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Sending a Custom Ping","level":"1.4.4","depth":2,"next":{"title":"Using HyperLogLog in Zeppelin","level":"1.4.5","depth":2,"path":"cookbooks/hll_zeppelin.md","ref":"cookbooks/hll_zeppelin.md","articles":[]},"previous":{"title":"Creating a custom Re:dash dataset","level":"1.4.3","depth":2,"path":"cookbooks/create_a_dataset.md","ref":"cookbooks/create_a_dataset.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"cookbooks/new_ping.md","mtime":"2018-05-24T12:03:41.910Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-05-24T12:05:09.436Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Sending a Custom Ping","level":"1.4.4","depth":2,"next":{"title":"Using HyperLogLog in Zeppelin","level":"1.4.5","depth":2,"path":"cookbooks/hll_zeppelin.md","ref":"cookbooks/hll_zeppelin.md","articles":[]},"previous":{"title":"Creating a custom Re:dash dataset","level":"1.4.3","depth":2,"path":"cookbooks/create_a_dataset.md","ref":"cookbooks/create_a_dataset.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"cookbooks/new_ping.md","mtime":"2018-05-25T19:49:31.852Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-05-25T19:50:49.387Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

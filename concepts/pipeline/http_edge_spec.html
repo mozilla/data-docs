@@ -1133,7 +1133,8 @@ is written, processed and accessible. Namespaces are
 in Nginx using a location directive, to request a new namespace file a bug
 against the <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&amp;component=Pipeline%20Ingestion" target="_blank">Data Platform Team</a>
 with a short description of what the namespace will be used for and the desired
-configuration options.</p>
+configuration options. Data sent to a namespace that is not specifically
+configured is assumed to be in the <a href="../../cookbooks/new_ping.html">non-Telemetry JSON format described here</a>.</p>
 <h3 id="forwarding-to-the-pipeline"><a name="forwarding-to-the-pipeline" class="plugin-anchor" href="#forwarding-to-the-pipeline"><i class="fa fa-link" aria-hidden="true"></i></a>Forwarding to the pipeline</h3>
 <p>The constructed Heka protobuf message to is written to disk and the pub/sub
 pipeline (currently Kafka). The messages written to disk serve as a fail-safe,
@@ -1179,9 +1180,14 @@ check the health of web servers.</p>
 <p><code>/submit/telemetry/docId/docType/appName/appVersion/appUpdateChannel/appBuildID</code></p>
 <p>Specific Telemetry example:</p>
 <p><code>/submit/telemetry/ce39b608-f595-4c69-b6a6-f7a436604648/main/Firefox/61.0a1/nightly/20180328030202</code></p>
+<p>Example non-Telemetry format:</p>
+<p><code>/submit/namespace/doctype/docversion/docid</code></p>
+<p>Specific non-Telemetry example:</p>
+<p><code>/submit/eng-workflow/hgpush/1/2c3a0767-d84a-4d02-8a92-fa54a3376049</code></p>
 <p>Note that <code>id</code> above is a unique document ID, which is used for de-duping
 submissions. This is <em>not</em> intended to be the <code>clientId</code> field from Telemetry.
-If <code>id</code> is omitted, we will not be able to de-dupe based on submission URLs.</p>
+If <code>id</code> is omitted, we will not be able to de-dupe based on submission URLs. It
+is recommended that <code>id</code> be a <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier" target="_blank">UUID</a>.</p>
 <h3 id="postput-response-codes"><a name="postput-response-codes" class="plugin-anchor" href="#postput-response-codes"><i class="fa fa-link" aria-hidden="true"></i></a>POST/PUT Response codes</h3>
 <ul>
 <li><em>200</em> - OK. Request accepted into the pipeline.</li>
@@ -1255,7 +1261,7 @@ the scope of this document.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"HTTP Edge Server Specification","level":"1.3.2.2","depth":3,"next":{"title":"Event Pipeline Detail","level":"1.3.2.3","depth":3,"path":"concepts/pipeline/event_pipeline.md","ref":"concepts/pipeline/event_pipeline.md","articles":[]},"previous":{"title":"In-depth Data Pipeline Detail","level":"1.3.2.1","depth":3,"path":"concepts/pipeline/data_pipeline_detail.md","ref":"concepts/pipeline/data_pipeline_detail.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/pipeline/http_edge_spec.md","mtime":"2018-05-24T12:03:41.910Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-05-24T12:05:09.436Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"HTTP Edge Server Specification","level":"1.3.2.2","depth":3,"next":{"title":"Event Pipeline Detail","level":"1.3.2.3","depth":3,"path":"concepts/pipeline/event_pipeline.md","ref":"concepts/pipeline/event_pipeline.md","articles":[]},"previous":{"title":"In-depth Data Pipeline Detail","level":"1.3.2.1","depth":3,"path":"concepts/pipeline/data_pipeline_detail.md","ref":"concepts/pipeline/data_pipeline_detail.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/pipeline/http_edge_spec.md","mtime":"2018-05-25T19:49:31.852Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-05-25T19:50:49.387Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
