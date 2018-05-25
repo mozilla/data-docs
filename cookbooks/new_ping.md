@@ -12,6 +12,16 @@ the line as you start data review.
 
 More detail on how to design and implement new pings for Firefox Desktop [can be found here](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html).
 
+Choose a Namespace and DocType
+------------------------------
+For new telemetry pings, the namespace is simply `telemetry`. For non-Telemetry
+pings, choose a namespace that uniquely identifies the product that will be
+generating the data.
+
+The DocType is used to differentiate pings within a namespace. It can be as
+simple as `event`, but should generally be descriptive of the data being
+collected.
+
 Create a Schema
 ---------------
 Use JSON Schema to start with. See the examples schemas in the
@@ -31,7 +41,7 @@ as an example. Consider where the data falls in the
 [Data Collection Categories](https://wiki.mozilla.org/Firefox/Data_Collection).
 
 Submit Schema to `mozilla-services/mozilla-pipeline-schemas`
-----------------------------------------------------------
+------------------------------------------------------------
 The first schema added should be the JSON Schema made in step 2.
 Add at least one example ping which the data can be validated against.
 These test pings will be validated automatically during the build.
@@ -44,7 +54,7 @@ The best documentation we have for the Parquet schema is by looking at the examp
 
 Parquet output also has a `metadata` section. These are fields added to the ping at ingestion time;
 they might come from the URL submitted to the edge server, or the IP Address used to make the request.
-[This document](https://hsadmin.trink.com/dashboard_output/analysis.trink.telemetry_schema.parquet.txt)
+[This document](https://pipeline-cep.prod.mozaws.net/dashboard_output/analysis.moz_telemetry_parquet_schema.parquet.txt)
 lists available metadata fields for all pings.
 
 The stream you're interested in is probably `telemetry`.
@@ -53,31 +63,41 @@ field. The `schema` element has top-level fields (e.g. `Timestamp`, `Type`), as 
 under the `Fields` element. Any of these can be used in the `metadata` section of your parquet schema,
 except for `submission`.
 
-Some common ones might be:
+Some common ones for Telemetry data might be:
 - `Date`
 - `submissionDate`
 - `geoCountry`
 - `geoCity`
+- `geoSubdivision1`
+- `geoSubdivision2`
 - `normalizedChannel`
 - `appVersion`
 - `appBuildId`
+
+And for non-Telemetry data:
+- `geoCountry`
+- `geoCity`
+- `geoSubdivision1`
+- `geoSubdivision2`
+- `documentId`
 
 *Important Note*: Schema evolution of nested structs is currently broken, so you will not be able to add
 any fields in the future to your `metadata` section. We recommend adding any that may seem useful.
 
 ### Testing The Schema
+For new data, use the [edge validator](https://github.com/mozilla-services/edge-validator) to test
+your schema.
 
-Note that this only works if data is _already_ being sent, and you want to test the schema you're
-writing on the data that is currently being ingested.
+If your data is _already_ being sent, and you want to test the schema you're writing on the data 
+that is currently being ingested, you can test your Parquet output in
+[Hindsight](https://pipeline-cep.prod.mozaws.net/) by using an output plugin.
+See [Core ping output plugin](https://bugzilla.mozilla.org/attachment.cgi?id=8829626)
+for an example, where the parquet schema is specified as `parquet_schema`. If no errors arise, that
+means it should be correct. The "Deploy" button should not be used to actually deploy, that will be
+done by operations in the next step.
 
-Test your Parquet output in [Hindsight](https://pipeline-cep.prod.mozaws.net/) by using
-an output plugin. See [Core ping output plugin](https://bugzilla.mozilla.org/attachment.cgi?id=8829626)
-for an example, where the parquet schema is specified as `parquet_schema`. If no errors
-arise, that means it should be correct. The "Deploy" button should not be used to actually
-deploy, that will be done by operations in the next step.
-
-Deploy the Plugin
------------------
+(Telemetry-specific) Deploy the Plugin
+--------------------------------------
 File [a bug to deploy the new schema.](https://bugzilla.mozilla.org/show_bug.cgi?id=1333203)
 
 Real-time analysis will be key to ensuring your data is being processed and parsed correctly.
@@ -85,33 +105,76 @@ It should follow the format specified in
 [MozTelemetry `docType` monitor](https://mozilla-services.github.io/lua_sandbox_extensions/moz_telemetry/sandboxes/heka/analysis/moz_telemetry_doctype_monitor.html).
 This allows you to check validation errors, size changes, duplicates, and more. Once you have
 the numbers set, file a
-[bug to let ops deploy it](https://bugzilla.mozilla.org/show_bug.cgi?id=1356380)
-
-(Telemetry-Specific) Register `docType`
--------------------------------------
-Data Platform Operations takes care of this. It will then be available to query more easily using
-the Dataset API. To do so, make a bug like
-[Bug 1292493](https://bugzilla.mozilla.org/show_bug.cgi?id=1292493).
-
-(Non-Telemetry) Add ping name to `sources.json`
--------------------------------------------
-This will make it available with the [Dataset API](http://python-moztelemetry.readthedocs.io/en/stable/api.html#dataset) (used with PySpark on ATMO machines).
-There also needs to be a schema for the layout of the Heka files in
-`net-mozaws-prod-us-west-2-pipeline-metadata/<ping-name>/schema.json`, where <ping-name> is located in `sources.json`. If you want to do this, talk to
-`:whd` or `:mreid`.
+[bug to let ops deploy it](https://bugzilla.mozilla.org/show_bug.cgi?id=1356380).
 
 Start Sending Data
 ------------------
 If you're using the Telemetry APIs, use those built-in. These can be with the
 [Gecko Telemetry APIs](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html),
 the [Android Telemetry APIs](https://github.com/mozilla-mobile/telemetry-android), or the
-[iOS Telemetry APIs](https://github.com/mozilla-mobile/telemetry-ios). Otherwise, see
-[here for the endpoint and expected format](https://wiki.mozilla.org/CloudServices/DataPipeline/HTTPEdgeServerSpecification).
+[iOS Telemetry APIs](https://github.com/mozilla-mobile/telemetry-ios). 
 
-Work is happening to make a
-[generic endpoint](https://bugzilla.mozilla.org/show_bug.cgi?id=1363160).
-These pings can be easily registered and sent to our servers and will
-be automatically available in Re:dash. Please check back later for those docs.
+For non-Telemetry data, see [our HTTP edge server specification](/concepts/pipeline/http_edge_spec.md)
+and specifically the [non-Telemetry example](/concepts/pipeline/http_edge_spec.md#postput-request) for the expected format. The edge
+server endpoint is `https://incoming.telemetry.mozilla.org`.
+
+(Non-Telemetry) Access Your Data
+--------------------------------
+First confirm with the reviewers of
+[your schema pull request](#submit-schema-to-mozilla-servicesmozilla-pipeline-schemas)
+that your schemas have been deployed.
+
+In the following links, replace `<namespace>`, `<doctype>` And `<docversion>` with
+appropriate values. Also replace `-` with `_` in `<namespace>` if your
+namespace contains `-` characters.
+
+### CEP
+Once you've sent some pings, refer to the following real-time analysis plugins
+to verify that your data is being processed:
+
+- `https://pipeline-cep.prod.mozaws.net/dashboard_output/graphs/analysis.moz_generic_error_monitor.<namespace>.html`
+- `https://pipeline-cep.prod.mozaws.net/dashboard_output/analysis.moz_generic_<namespace>_<doctype>_<docversion>.submissions.json`
+- `https://pipeline-cep.prod.mozaws.net/dashboard_output/analysis.moz_generic_<namespace>_<doctype>_<docversion>.errors.txt`
+
+If this first graph shows ingestion errors, you can view the corresponding
+error messages in the third link. Otherwise, you should be able to view the
+last ten processed submissions via the second link. You can also write your own
+custom real-time analysis plugins using this same infrastructure if you desire;
+use the above plugins as examples and see
+[here](/cookbooks/realtime_analysis_plugin.md) for a more detailed explanation.
+
+If you encounter schema validation errors, you can fix your data or
+[submit another pull request](#submit-schema-to-mozilla-servicesmozilla-pipeline-schemas)
+to amend your schemas. Backwards-incompatible schema changes should generally
+be accompanied by an increment to `docversion`.
+
+Once you've established that your pings are flowing through the real-time
+system, verify that you can access the data from the downstream systems.
+
+### STMO
+In the Athena data source, a new table
+`<namespace>_<doctype>_parquet_<docversion>` will be created for your data. A
+convenience pointer `<namespace>_<doctype>_parquet` will also refer to the latest
+available `docversion` of the ping. The data is partitioned by
+`submission_date_s3` which is formatted as `%Y%m%d`, like `20180130`, and is
+generally updated hourly. Refer to the [STMO documentation](/tools/stmo.md)
+for general information about using Re:dash.
+
+This table may take up to a day to appear in the Athena source; if you still
+don't see a table for your new ping after 24 hours,
+[contact Data Operations](https://mana.mozilla.org/wiki/display/SVCOPS/Contacting+Data+Operations)
+so that they can investigate. Once the table is available, it should contain
+all the pings sent during that first day, regardless of how long it takes for
+the table to appear.
+
+### ATMO
+The data should be available in S3 at:
+
+`s3://net-mozaws-prod-us-west-2-pipeline-data/<namespace>-<doctype>-parquet/v<docversion>/`
+
+Note: here `<namespace>` should not be escaped.
+
+Refer to the [Spark FAQ](/tools/spark.md#faq) for details on accessing this table via ATMO.
 
 Write ETL Jobs
 --------------

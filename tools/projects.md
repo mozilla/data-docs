@@ -37,12 +37,11 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 
 | Name and repo                         | Description                             |
 |---------------------------------------|-----------------------------------------|
-| [`mozilla-pipeline-schemas`][schemas] | JSON Schemas for Mozilla Telemetry data
+| [`mozilla-pipeline-schemas`][schemas] | JSON and Parquet Schemas for Mozilla Telemetry and other structured data
 | [`hindsight`][hs]                     | Real-time data processing
 | [`lua_sandbox`][lsb]                  | Generic sandbox for safe data analysis
 | [`lua_sandbox_extensions`][lsbx]      | Modules and packages that extend the Lua sandbox
 | [`nginx_moz_ingest`][nmi]             | Nginx module for Telemetry data ingestion
-| [`Generic Ingestion`][gi]             | Proposal for streamlined data ingestion of structured data
 | [`puppet-config`][puppet]             | Cloud services puppet config for deploying infrastructure
 | [`parquet2hive`][p2h]                 | Hive import statement generator for Parquet datasets
 
@@ -51,7 +50,6 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 [lsb]: https://github.com/mozilla-services/lua_sandbox
 [lsbx]: https://github.com/mozilla-services/lua_sandbox_extensions
 [nmi]: https://github.com/mozilla-services/nginx_moz_ingest
-[gi]: https://docs.google.com/document/d/1PqiF1rF2fCk_kQuGSwGwildDf4Crg9MJTY44E6N5DSk/edit?ts=5910c4cf#heading=h.74qlucdvwdg0
 [puppet]: https://github.com/mozilla-services/puppet-config/tree/master/pipeline
 [p2h]: https://github.com/mozilla/parquet2hive
 

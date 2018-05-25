@@ -38,7 +38,7 @@ Which would get us a sample of Focus Android core pings.
 The [Message Matcher documentation](https://hekad.readthedocs.io/en/v0.10.0/message_matcher.html) has
 more information on the syntax.
 
-To see the available fields that you can filter on for any `docType`, see [this document](https://hsadmin.trink.com/dashboard_output/analysis.trink.telemetry_schema.parquet.txt).
+To see the available fields that you can filter on for any `docType`, see [this document](https://pipeline-cep.prod.mozaws.net/dashboard_output/analysis.moz_telemetry_parquet_schema.parquet.txt).
 For example, look under the `telemetry` top-level field at `system-addon-deployment-diagnostics`. The available fields to filter on are:
 
 ```

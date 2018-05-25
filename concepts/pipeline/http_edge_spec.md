@@ -26,7 +26,8 @@ is written, processed and accessible. Namespaces are
 in Nginx using a location directive, to request a new namespace file a bug
 against the [Data Platform Team](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&component=Pipeline%20Ingestion)
 with a short description of what the namespace will be used for and the desired
-configuration options.
+configuration options. Data sent to a namespace that is not specifically
+configured is assumed to be in the [non-Telemetry JSON format described here](/cookbooks/new_ping.md).
 
 ### Forwarding to the pipeline
 
@@ -82,9 +83,18 @@ Specific Telemetry example:
 
 `/submit/telemetry/ce39b608-f595-4c69-b6a6-f7a436604648/main/Firefox/61.0a1/nightly/20180328030202`
 
+Example non-Telemetry format:
+
+`/submit/namespace/doctype/docversion/docid`
+
+Specific non-Telemetry example:
+
+`/submit/eng-workflow/hgpush/1/2c3a0767-d84a-4d02-8a92-fa54a3376049`
+
 Note that `id` above is a unique document ID, which is used for de-duping
 submissions. This is *not* intended to be the `clientId` field from Telemetry.
-If `id` is omitted, we will not be able to de-dupe based on submission URLs.
+If `id` is omitted, we will not be able to de-dupe based on submission URLs. It
+is recommended that `id` be a [UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier).
 
 ### POST/PUT Response codes
 
