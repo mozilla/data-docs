@@ -65,6 +65,7 @@ HLL
 hostname
 hostnames
 HyperLogLog
+ISO8601
 i.e.
 inlined
 int64
