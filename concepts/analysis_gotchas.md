@@ -56,6 +56,8 @@ Then there's `profile/creationDate` which is just a number of days since epoch. 
 
 In derived datasets ISO dates are sometimes converted to strings in one of two formats: `%Y-%m-%d` or `%Y%m%d`.
 
+The date formats for different rows in `main_summary` are described on the [`main_summary` reference page](/datasets/batch_view/main_summary/reference.html#time-formats).
+
 Build ids look like dates but aren't. If you take the first eight characters you can use that as a proxy for the day the build was released.
 
 `metadata/Date` is an HTTP Date header in a [RFC 7231](http://tools.ietf.org/html/rfc7231#section-7.1.1.1)-compatible format.
