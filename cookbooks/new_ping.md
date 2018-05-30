@@ -24,7 +24,7 @@ collected.
 
 Create a Schema
 ---------------
-Use JSON Schema to start with. See the examples schemas in the
+Use JSON Schema to start with. See the ["Adding a new schema" documentation](https://github.com/mozilla-services/mozilla-pipeline-schemas#adding-a-new-schema) and examples schemas in the
 [Mozilla Pipeline Schemas repo](https://github.com/mozilla-services/mozilla-pipeline-schemas/).
 This schema is just used to validate the incoming data; any ping that doesn't match the schema
 will be removed. Validate your JSON Schema using a
@@ -88,7 +88,7 @@ any fields in the future to your `metadata` section. We recommend adding any tha
 For new data, use the [edge validator](https://github.com/mozilla-services/edge-validator) to test
 your schema.
 
-If your data is _already_ being sent, and you want to test the schema you're writing on the data 
+If your data is _already_ being sent, and you want to test the schema you're writing on the data
 that is currently being ingested, you can test your Parquet output in
 [Hindsight](https://pipeline-cep.prod.mozaws.net/) by using an output plugin.
 See [Core ping output plugin](https://bugzilla.mozilla.org/attachment.cgi?id=8829626)
@@ -112,7 +112,7 @@ Start Sending Data
 If you're using the Telemetry APIs, use those built-in. These can be with the
 [Gecko Telemetry APIs](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html),
 the [Android Telemetry APIs](https://github.com/mozilla-mobile/telemetry-android), or the
-[iOS Telemetry APIs](https://github.com/mozilla-mobile/telemetry-ios). 
+[iOS Telemetry APIs](https://github.com/mozilla-mobile/telemetry-ios).
 
 For non-Telemetry data, see [our HTTP edge server specification](/concepts/pipeline/http_edge_spec.md)
 and specifically the [non-Telemetry example](/concepts/pipeline/http_edge_spec.md#postput-request) for the expected format. The edge
