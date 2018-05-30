@@ -843,7 +843,20 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.16" data-path="../datasets/other/ssl/reference.html">
+        <li class="chapter " data-level="2.1.2.16" data-path="../datasets/other/socorro_crash/reference.html">
+            
+                <a href="../datasets/other/socorro_crash/reference.html">
+            
+                    
+                    Socorro Crash Reports
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.2.17" data-path="../datasets/other/ssl/reference.html">
             
                 <a href="../datasets/other/ssl/reference.html">
             
@@ -856,7 +869,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.17" data-path="../datasets/batch_view/sync_summary/reference.html">
+        <li class="chapter " data-level="2.1.2.18" data-path="../datasets/batch_view/sync_summary/reference.html">
             
                 <a href="../datasets/batch_view/sync_summary/reference.html">
             
@@ -869,7 +882,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.18" data-path="../datasets/batch_view/update/reference.html">
+        <li class="chapter " data-level="2.1.2.19" data-path="../datasets/batch_view/update/reference.html">
             
                 <a href="../datasets/batch_view/update/reference.html">
             
@@ -1142,6 +1155,7 @@ take a look at our <a href="../tools/experiments.html">tools for experimentation
 </li>
 <li><a href="#new-profile-derived-datasets">New-Profile Derived Datasets</a></li>
 <li><a href="#update-derived-dataset">Update Derived Dataset</a></li>
+<li><a href="#other-datasets">Other Datasets</a></li>
 <li><a href="#obsolete-datasets">Obsolete Datasets</a><ul>
 <li><a href="#%60heavy_users%60"><code>heavy_users</code></a></li>
 </ul>
@@ -1607,6 +1621,14 @@ See <a href="../cookbooks/parquet.html">this cookbook</a> to get started working
 Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/31267#table" target="_blank">example query</a>.</p>
 <h4 id="further-reading"><a name="further-reading" class="plugin-anchor" href="#further-reading"><i class="fa fa-link" aria-hidden="true"></i></a>Further Reading</h4>
 <p>This dataset is generated automatically using direct to parquet. The configuration responsible for generating this dataset was introduced in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1384861" target="_blank">bug 1384861</a>.</p>
+<h1 id="other-datasets"><a name="other-datasets" class="plugin-anchor" href="#other-datasets"><i class="fa fa-link" aria-hidden="true"></i></a>Other Datasets</h1>
+<p>Public crash statistics for Firefox are available through the Data Platform in a <code>socorro_crash</code> dataset.
+The crash data in <a href="https://wiki.mozilla.org/Socorro" target="_blank">Socorro</a> is sanitized and made available to ATMO and STMO.
+A nightly import job converts batches of JSON documents into a columnar format using the associated JSON Schema. </p>
+<h3 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h3>
+<h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
+<p>The dataset is available in parquet at <code>s3://telemetry-parquet/socorro_crash/v2</code>.
+It is also indexed with Athena and Presto with the table name <code>socorro_crash</code>.</p>
 <h1 id="obsolete-datasets"><a name="obsolete-datasets" class="plugin-anchor" href="#obsolete-datasets"><i class="fa fa-link" aria-hidden="true"></i></a>Obsolete Datasets</h1>
 <h2 id="heavyusers"><a name="heavyusers" class="plugin-anchor" href="#heavyusers"><i class="fa fa-link" aria-hidden="true"></i></a><code>heavy_users</code></h2>
 <p>The <code>heavy_users</code> table provides information about whether a given <code>client_id</code> is
@@ -1702,7 +1724,7 @@ into account.</li>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.2","depth":2,"next":{"title":"Intro to STMO","level":"1.2.3","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"previous":{"title":"Analysis Quick Start","level":"1.2.1","depth":2,"path":"concepts/analysis_intro.md","ref":"concepts/analysis_intro.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2018-05-30T14:34:21.482Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-05-30T14:35:56.141Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.2","depth":2,"next":{"title":"Intro to STMO","level":"1.2.3","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"previous":{"title":"Analysis Quick Start","level":"1.2.1","depth":2,"path":"concepts/analysis_intro.md","ref":"concepts/analysis_intro.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2018-05-30T18:40:20.794Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-05-30T18:42:25.528Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
