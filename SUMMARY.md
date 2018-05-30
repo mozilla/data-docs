@@ -54,6 +54,7 @@
     * [Main Summary](datasets/batch_view/main_summary/reference.md)
     * [New Profile](datasets/batch_view/new_profile/reference.md)
     * [Retention](datasets/batch_view/retention/reference.md)
+    * [Socorro Crash Reports](datasets/other/socorro_crash/reference.md)
     * [SSL Ratios (public)](datasets/other/ssl/reference.md)
     * [Sync Summary](datasets/batch_view/sync_summary/reference.md)
     * [Update](datasets/batch_view/update/reference.md)
