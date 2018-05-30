@@ -33,8 +33,7 @@ The job is schedule on a nightly basis on airflow.
 The dag is available under [`mozilla/telemetry-airflow:/dags/socorro_import.py`](https://github.com/mozilla/telemetry-airflow/blob/930790116d8d5c924cd61a07311fc8a34340f3d6/dags/socorro_import.py).
 
 ### Schema 
-The source schema is available on the [`mozilla/socorro` GitHub repository](https://raw.githubusercontent.com/mozilla/socorro/master/socorro/schemas/crash_report.json
-).
+The source schema is available on the [`mozilla/socorro` GitHub repository](https://raw.githubusercontent.com/mozilla/socorro/master/socorro/schemas/crash_report.json).
 This schema is transformed into a Spark-SQL structure and serialized to parquet after transforming column names from `camelCase` to `snake_case`.
 
 
