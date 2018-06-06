@@ -60,6 +60,7 @@ SELECT
 FROM client_count_daily
 WHERE
     total_uri_count_threshold >= 5
+    -- Limit to 7 days of history
     AND submission_date >= date_format(CURRENT_DATE - INTERVAL '7' DAY, '%Y%m%d')
 GROUP BY 1
 ORDER BY 1
