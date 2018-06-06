@@ -51,7 +51,7 @@ ORDER BY
     1 ASC
 ```
 
-[`client_count_daily`](/datasets/batch_view/client_count_daily/reference.md) can be used to get approximate aDAU. For example:
+[`client_count_daily`](/datasets/batch_view/client_count_daily/reference.md) can be used to get **approximate** aDAU. This dataset uses HyperLogLog to estimate unique counts. For example:
 
 ```sql
 SELECT
