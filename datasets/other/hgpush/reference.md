@@ -7,8 +7,8 @@ code repository.
 # Data Reference
 
 The dataset is accessible via [`STMO`](https://sql.telemetry.mozilla.org).
-Use the `eng_workflow_hgpush_parquet_v1` table with the `Athena` datasource.
-(The `Presto` datasource is also available, but much slower.)
+Use the `eng_workflow_hgpush_parquet_v1` table with the `Athena` data source.
+(The `Presto` data source is also available, but much slower.)
 
 ## Field Types and Descriptions
 
@@ -16,8 +16,8 @@ See the [`hgpush` ping schema](https://github.com/mozilla-services/mozilla-pipel
 for a description of available fields.
 
 Be careful to:
- * Use the latest schema version.  e.g. 'v1'.  Browse the [`hgpush` schema directory](https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/dev/schemas/eng-workflow/hgpush) in the GitHub repo to be sure.
- * Change dataset field names from camelCaseNames to under_score_names in STMO. e.g. `reviewSystemUsed` in the ping schema becomes `review_system_used` in STMO.
+ * Use the latest schema version.  e.g. `v1`.  Browse the [`hgpush` schema directory](https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/dev/schemas/eng-workflow/hgpush) in the GitHub repo to be sure.
+ * Change dataset field names from `camelCaseNames` to `under_score_names` in STMO. e.g. `reviewSystemUsed` in the ping schema becomes `review_system_used` in STMO.
 
 ## Example Queries
 
