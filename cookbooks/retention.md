@@ -188,7 +188,7 @@ The above example calculates **New User Retention**, which is distinct from **Ex
 
 Note that is more common in industry to refer to Existing User Retention as "Churn" (Churn = 1 - Retention), however, we use retention across the board for the sake of consistency and interpretability.
 
-**Please be sure to specifiy whether or not your retention analysis is for new or existing users.**
+**Please be sure to specify whether or not your retention analysis is for new or existing users.**
 
 
 
