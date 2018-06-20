@@ -69,6 +69,7 @@ ISO8601
 i.e.
 inlined
 int64
+interpretability
 iOS
 JSON
 JSONSchema
@@ -80,6 +81,7 @@ matchers
 MAU
 metadata
 metastore
+Miroglio
 Mocli
 MozTelemetry
 MySQL

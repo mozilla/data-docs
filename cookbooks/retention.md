@@ -1,4 +1,4 @@
-*Authored by the Product Data Science Team. Please direct questions/concerns to Ben Miroglio (bmiroglio).*
+*Authored by the Product Data Science Team. Please direct questions/concerns to Ben Miroglio (`bmiroglio`).*
 
 # Retention
 
