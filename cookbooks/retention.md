@@ -98,7 +98,7 @@ def get_period(anchor, submission_date_s3):
 def from_unixtime_handler(ut):
     """
     Converts unix time (in days) to a string in %Y%m%d format.
-    This is spark UDF.
+    This is a spark UDF.
     
     Params:
     ut (int): unix time in days
@@ -164,7 +164,7 @@ retention_by_os = (
 )
 ```
 
-Peaking at 6-Week Retention
+Peeking at 6-Week Retention
 
 ```python
 retention_by_os.filter("period = 6").show()
