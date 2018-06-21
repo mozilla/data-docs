@@ -117,12 +117,14 @@ Now we can load in a subset of `main_summary` and construct the necessary fields
 
 ```python
 ms = spark.sql("""
-    SELECT client_id, 
-           submission_date_s3,
-           profile_creation_date,
-           os
+    SELECT 
+        client_id, 
+        submission_date_s3,
+        profile_creation_date,
+        os
     FROM main_summary 
-    WHERE submission_date_s3 >= '20180401'
+    WHERE 
+        submission_date_s3 >= '20180401'
         AND submission_date_s3 <= '20180603'
         AND sample_id = '42'
         AND app_name = 'Firefox'
