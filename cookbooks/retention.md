@@ -4,13 +4,13 @@
 
 Retention measures the rate at which users are *continuing* to use Firefox, making it one of the more important metrics we track. We commonly measure retention between releases, experiment cohorts, and various Firefox subpopulations to better understand how a change to the user experience or use of a specific feature affect behavior.
 
-### N Week Retention
+## N Week Retention
 
 Time is an embedded component of retention. Most retention analysis starts with some anchor, or action that is associated with a date (experiment enrollment date, profile creation date, button clicked on date *d*, etc.). We then look 1, 2, …, N weeks beyond the anchor to see what percent of users have submitted a ping (signaling their continued use of Firefox).
 
 For example, let’s say we are calculating retention for new Firefox users. Each user can then be anchored by their `profile_creation_date`, and we can count the number of users who submitted a ping between 7-13 days after profile creation (1 Week retention), 14-20 days after profile creation (2 Week Retention), etc.
 
-#### Example Methodology
+### Example Methodology
 
 
 
@@ -182,10 +182,10 @@ retention_by_os.filter("period = 6").show()
 
 ```
 
-we observe that 35.6% of Linux users whose profile was created in the first half of April submitted a ping 6 weeks later, and so forth. The example code snippets are consolidated in [this notebook](https://gist.github.com/benmiroglio/fc708e5905fad33b43adb9c90e38ebf4).
+we observe that 6.7% of Linux users whose profile was created in the first half of April submitted a ping 6 weeks later, and so forth. The example code snippets are consolidated in [this notebook](https://gist.github.com/benmiroglio/fc708e5905fad33b43adb9c90e38ebf4).
 
 
-# New vs. Existing User Retention
+### New vs. Existing User Retention
 
 The above example calculates **New User Retention**, which is distinct from **Existing User Retention**. This distinction is important when understanding retention baselines (i.e. does this number make sense?). Existing users typically have much higher retention numbers than new users. 
 
@@ -194,18 +194,30 @@ Note that is more common in industry to refer to Existing User Retention as "Chu
 **Please be sure to specify whether or not your retention analysis is for new or existing users.**
 
 
+### What If There's No Anchor Point?
+
+Sometimes there isn't a clear anchor point like `profile_creation_date` or `enrollment_date`. 
+
+For example, imagine you are tasked with reporting retention numbers for users that enabled sync (`sync_configured`) compared to users that haven't. Being a boolean pref, there is no straightforward way to determine *when* `sync_enabled` flipped from `false` to `true` aside from looking at a client's entire history (which is not recommended!). What now?
+
+We can construct an artificial anchor point using fixed weekly periods; the retention concepts then remain unchanged. The process can be summarized by the following steps:
+
+* Define a baseline week cohort
+    * For this example let's define the baseline as users that submitted pings between 2018-01-01 and 2018-01-07
+* Count all users with/without sync enabled in this period
+* Assign these users to an anchor point of 2018-01-01 (the **beginning** of the baseline week)
+* Count the number of users in the baseline week that submitted a ping between 7-13 days after 2018-01-01 (1 Week retention), 14-20 days after 2018-01-01 (2 Week Retention), etc.
+* Shift the baseline week up 7 days (and all other dates) and repeat as necessary
 
 
+This method is also valid in the presence of an anchor point, however, it is recommended the anchor point method is employed when possible.
 
 
-
-
-
-# Confounding Factors
+### Confounding Factors
 
 When performing retention analysis between two or more groups, it is important to look at other usage metrics to get an understanding of other influential factors.
 
-For example, imagine you are tasked with reporting retention numbers for users that enabled sync (`sync_configured = true`) compared to users that haven't. You find that users with and without sync have a 1 week retention of 0.80 and 0.40, respectively. Wow--we should really be be promoting sync as it could double retention numbers!
+For example (borrowing the sync example from the previous section) you find that users with and without sync have a 1 week retention of 0.80 and 0.40, respectively. Wow--we should really be be promoting sync as it could double retention numbers!
 
 *Not quite*. Turns out you next look at `active_ticks` and `total_uri_count` and find that sync users report much higher numbers for these measures as well. Now how can we explain this difference in retention?
 
