@@ -63,6 +63,8 @@
   * [Search Datasets](datasets/search.md)
     * [Search Aggregates](datasets/mozetl/search_aggregates/reference.md)
     * [Search Clients Daily](datasets/mozetl/search_clients_daily/reference.md)
+  * [Other Datasets](datasets/other.md)
+    * [hgpush](datasets/other/hgpush/reference.md)
   * [Obsolete Datasets](datasets/obsolete.md)
     * [Heavy Users](datasets/obsolete/heavy_users/reference.md)
 
