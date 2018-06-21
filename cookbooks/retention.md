@@ -117,17 +117,17 @@ Now we can load in a subset of `main_summary` and construct the necessary fields
 
 ```python
 ms = spark.sql("""
-    select client_id, 
+    SELECT client_id, 
            submission_date_s3,
            profile_creation_date,
            os
-    from main_summary 
-    where submission_date_s3 >= '20180401'
-    and submission_date_s3 <= '20180603'
-    and sample_id = '42'
-    and app_name = 'Firefox'
-    and normalized_channel = 'release'
-    and os in ('Darwin', 'Windows_NT', 'Linux')
+    FROM main_summary 
+    WHERE submission_date_s3 >= '20180401'
+        AND submission_date_s3 <= '20180603'
+        AND sample_id = '42'
+        AND app_name = 'Firefox'
+        AND normalized_channel = 'release'
+        AND os in ('Darwin', 'Windows_NT', 'Linux')
     """)
 
 PCD_CUTS = ('20180401', '20180415')
@@ -137,7 +137,6 @@ ms = (
       .filter("pcd >= '{}'".format(PCD_CUTS[0]))
       .filter("pcd <= '{}'".format(PCD_CUTS[1]))
       .withColumn("period", get_period("pcd", "submission_date_s3"))
-      .filter("period is not null")
 )
 ```
 
@@ -170,13 +169,15 @@ retention_by_os.filter("period = 6").show()
 ```
 
 ```
-+----------+------+--------------+-------------+------------------+
-|        os|period|n_week_clients|total_clients|         retention|
-+----------+------+--------------+-------------+------------------+
-|     Linux|     6|          1495|         4196|0.3562917063870353|
-|    Darwin|     6|          1288|         2497|0.5158189827793352|
-|Windows_NT|     6|         29024|        60564|0.4792285846377386|
-+----------+------+--------------+-------------+------------------+
++----------+------+--------------+-------------+-------------------+
+|        os|period|n_week_clients|total_clients|          retention|
++----------+------+--------------+-------------+-------------------+
+|     Linux|     6|          1495|        22422|0.06667558647756668|
+|    Darwin|     6|          1288|         4734|0.27207435572454586|
+|Windows_NT|     6|         29024|       124872|0.23243000832852842|
++----------+------+--------------+-------------+-------------------+
+
+
 ```
 
 we observe that 35.6% of Linux users whose profile was created in the first half of April submitted a ping 6 weeks later, and so forth. The example code snippets are consolidated in [this notebook](https://gist.github.com/benmiroglio/fc708e5905fad33b43adb9c90e38ebf4).
@@ -206,6 +207,6 @@ For example, imagine you are tasked with reporting retention numbers for users t
 
 *Not quite*. Turns out you next look at `active_ticks` and `total_uri_count` and find that sync users report much higher numbers for these measures as well. Now how can we explain this difference in retention?
 
-There could be an entirely separate cookbook devoted to answering this question, however this contrived example is meant to demonstrate that simply comparing retention numbers between two groups isn't capturing the full story. Sans an experiment or model-based approach, all we can say is "enabling sync is **associated** with higher retention numbers." There is still value in this assertion, however it should be stressed that association/correlation != causation!
+There could be an entirely separate cookbook devoted to answering this question, however this contrived example is meant to demonstrate that simply comparing retention numbers between two groups isn't capturing the full story. Sans an experiment or model-based approach, all we can say is "enabling sync is **associated** with higher retention numbers." There is still value in this assertion, however it should be stressed that **association/correlation != causation!**
 
 
