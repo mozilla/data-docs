@@ -33,6 +33,7 @@
     * [CEP Matcher](tools/cep_matcher.md)
   * Metrics
     * [Active DAU Definition](cookbooks/active_dau.md)
+    * [Retention Analysis](cookbooks/retention.md)
 
 ---
 
