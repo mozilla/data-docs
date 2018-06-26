@@ -9,7 +9,7 @@ The table contains one row for each ping. Each column represents one field from 
 The data is stored as a parquet table in S3 at the following address.
 See [this cookbook](/cookbooks/parquet.md) to get started working with the data in Spark.
 ```
-s3://net-mozaws-prod-us-west-2-pipeline-data/telemetry-new-profile-parquet/v1/
+s3://net-mozaws-prod-us-west-2-pipeline-data/telemetry-new-profile-parquet/v2/
 ```
 
 The `telemetry_new_profile_parquet` is accessible through re:dash.
