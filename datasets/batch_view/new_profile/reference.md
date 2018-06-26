@@ -10,7 +10,7 @@
 
 ## Schema
 
-As of 2017-07-24, the current version of the `telemetry_new_profile_parquet` dataset is `v1`, and has a schema as follows:
+As of 2018-06-26, the current version of the `telemetry_new_profile_parquet` dataset is `v2`, and has a schema as follows:
 
 ```
 root
@@ -22,6 +22,8 @@ root
  |    |-- normalized_channel: string (nullable = true)
  |    |-- geo_country: string (nullable = true)
  |    |-- geo_city: string (nullable = true)
+ |    |-- geo_subdivision1: string (nullable = true)
+ |    |-- geo_subdivision2: string (nullable = true)
  |    |-- creation_timestamp: long (nullable = true)
  |    |-- x_ping_sender_version: string (nullable = true)
  |-- environment: struct (nullable = true)
@@ -72,4 +74,4 @@ root
 ```
 
 For more detail on the raw ping these fields come from, see the
-[raw data](https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/new-profile-ping.html).
+[raw data](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/docs/telemetry/data/new-profile-ping.html).
