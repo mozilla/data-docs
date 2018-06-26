@@ -1186,14 +1186,14 @@
 <h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
 <p>The data is stored as a parquet table in S3 at the following address.
 See <a href="../../../cookbooks/parquet.html">this cookbook</a> to get started working with the data in Spark.</p>
-<pre><code>s3://net-mozaws-prod-us-west-2-pipeline-data/telemetry-new-profile-parquet/v1/
+<pre><code>s3://net-mozaws-prod-us-west-2-pipeline-data/telemetry-new-profile-parquet/v2/
 </code></pre><p>The <code>telemetry_new_profile_parquet</code> is accessible through re:dash.
 Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/5888#table" target="_blank">example query</a>.</p>
 <h4 id="further-reading"><a name="further-reading" class="plugin-anchor" href="#further-reading"><i class="fa fa-link" aria-hidden="true"></i></a>Further Reading</h4>
 <p>This dataset is generated automatically using direct to parquet. The configuration responsible for generating this dataset was introduced in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1360256" target="_blank">bug 1360256</a>.</p>
 <h1 id="data-reference"><a name="data-reference" class="plugin-anchor" href="#data-reference"><i class="fa fa-link" aria-hidden="true"></i></a>Data Reference</h1>
 <h2 id="schema"><a name="schema" class="plugin-anchor" href="#schema"><i class="fa fa-link" aria-hidden="true"></i></a>Schema</h2>
-<p>As of 2017-07-24, the current version of the <code>telemetry_new_profile_parquet</code> dataset is <code>v1</code>, and has a schema as follows:</p>
+<p>As of 2018-06-26, the current version of the <code>telemetry_new_profile_parquet</code> dataset is <code>v2</code>, and has a schema as follows:</p>
 <pre><code>root
  |-- id: string (nullable = true)
  |-- client_id: string (nullable = true)
@@ -1203,6 +1203,8 @@ Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/5888#table" ta
  |    |-- normalized_channel: string (nullable = true)
  |    |-- geo_country: string (nullable = true)
  |    |-- geo_city: string (nullable = true)
+ |    |-- geo_subdivision1: string (nullable = true)
+ |    |-- geo_subdivision2: string (nullable = true)
  |    |-- creation_timestamp: long (nullable = true)
  |    |-- x_ping_sender_version: string (nullable = true)
  |-- environment: struct (nullable = true)
@@ -1251,7 +1253,7 @@ Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/5888#table" ta
  |    |-- reason: string (nullable = true)
  |-- submission: string (nullable = true)
 </code></pre><p>For more detail on the raw ping these fields come from, see the
-<a href="https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/new-profile-ping.html" target="_blank">raw data</a>.</p>
+<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/docs/telemetry/data/new-profile-ping.html" target="_blank">raw data</a>.</p>
 
                                 
                                 </section>
@@ -1295,7 +1297,7 @@ Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/5888#table" ta
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"New Profile","level":"2.1.2.14","depth":3,"next":{"title":"Retention","level":"2.1.2.15","depth":3,"path":"datasets/batch_view/retention/reference.md","ref":"datasets/batch_view/retention/reference.md","articles":[]},"previous":{"title":"Main Summary","level":"2.1.2.13","depth":3,"path":"datasets/batch_view/main_summary/reference.md","ref":"datasets/batch_view/main_summary/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/new_profile/reference.md","mtime":"2018-06-22T00:13:02.384Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-06-22T00:14:32.905Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"New Profile","level":"2.1.2.14","depth":3,"next":{"title":"Retention","level":"2.1.2.15","depth":3,"path":"datasets/batch_view/retention/reference.md","ref":"datasets/batch_view/retention/reference.md","articles":[]},"previous":{"title":"Main Summary","level":"2.1.2.13","depth":3,"path":"datasets/batch_view/main_summary/reference.md","ref":"datasets/batch_view/main_summary/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/new_profile/reference.md","mtime":"2018-06-26T22:45:05.676Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-06-26T22:46:30.374Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
