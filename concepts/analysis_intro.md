@@ -27,7 +27,7 @@ From there, you will likely want either [the Measurement Dashboard][measurement_
 
 The [Measurement Dashboard][measurement_dash] is a snapshot, aggregating all the data from all chosen dimensions. The Y axis is % of samples, and the X axis is the bucket. You can compare between dimensions, but it does not give you the ability to see how data is changing over time. To investigate that you must use the [Evolution Dashboard][evo_dash].
 
-The [Evolution Dashboard][evo_dash] shows how the data changes over time. Choose which statistics you'd like to plot over time, e.g. Median or 95th percentile. The Y axis is time, and the X axis is the value for whichever statistic you've chosen. [This dashboard][evo_gc_ms], for example, shows how `GC_MS` is improving from nightly 53 to nightly 56! While the median is not changing much, the 95th percentile is trending down, indicating that long garbage collections are being shortened.
+The [Evolution Dashboard][evo_dash] shows how the data changes over time. Choose which statistics you'd like to plot over time, e.g. Median or 95th percentile. The X axis is time, and the Y axis is the value for whichever statistic you've chosen. [This dashboard][evo_gc_ms], for example, shows how `GC_MS` is improving from nightly 53 to nightly 56! While the median is not changing much, the 95th percentile is trending down, indicating that long garbage collections are being shortened.
 
 The X axis on the Evolution Dashboard shows either Build ID (a date), or Submission Date. The difference is that on any single date we might receive submissions from lots of builds, but aggregating by Build ID means we can be sure a change was because of a new build.
 
