@@ -255,7 +255,7 @@ There is a command-line interface to STMO called [St. Mocli], if you prefer writ
 
 ##### Databricks: Managed Spark Analysis
 
-[Databricks] offers another notebook interface for doing analysis in Scala, SQL, Python and R.
+Our [Databricks instance] (see [Databricks docs]) offers another notebook interface for doing analysis in Scala, SQL, Python and R.
 
 Databricks provides an always-on shared server which is nice for quick data investigations. ATMO clusters take some time to start up, usually on the order of tens of minutes. The shared server allows you to avoid this start-up cost. Prefer ATMO for heavy analyses since you will have dedicated resources.
 
@@ -275,7 +275,7 @@ The landing page at [`telemetry.mozilla.org`][tmo] is a good place to look for e
 
 Use of interactive notebooks has become a standard in the industry, and Mozilla makes heavy use of this approach. [ATMO] makes it easy to run, share, and schedule [Jupyter] and [Zeppelin] notebooks.
 
-[Databricks notebooks][Databricks] are also an option.
+[Databricks notebooks][Databricks docs] are also an option.
 
 ##### Others
 
@@ -407,7 +407,8 @@ graph LR
 [STMO]: /tools/stmo.md
 [Jupyter]: https://jupyter.org/
 [Zeppelin]: https://zeppelin.apache.org/
-[Databricks]: https://docs.databricks.com/user-guide/notebooks/index.html
+[Databricks instance]: https://dbc-caf9527b-e073.cloud.databricks.com
+[Databricks docs]: https://docs.databricks.com/user-guide/notebooks/index.html
 [tmo]: https://telemetry.mozilla.org
 [measurement dashboard]: https://telemetry.mozilla.org/new-pipeline/dist.html
 [cep]: http://pipeline-cep.prod.mozaws.net/
