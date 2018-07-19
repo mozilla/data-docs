@@ -22,6 +22,8 @@ The DocType is used to differentiate pings within a namespace. It can be as
 simple as `event`, but should generally be descriptive of the data being
 collected.
 
+Both namespace and DocType are limited to the pattern `[a-zA-Z-]`. In other words, hyphens and letters from the [ISO basic Latin alphabet](https://en.wikipedia.org/wiki/ISO_basic_Latin_alphabet).
+
 Create a Schema
 ---------------
 Use JSON Schema to start with. See the ["Adding a new schema" documentation](https://github.com/mozilla-services/mozilla-pipeline-schemas#adding-a-new-schema) and examples schemas in the
