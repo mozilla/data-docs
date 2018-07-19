@@ -8,23 +8,39 @@ can be found in [this repo](https://github.com/mozilla/firefox-data-docs).
 
 This documentation is divided into four main sections:
 
-### [Getting Started](concepts/getting_started.md)
+### [Getting Started with Telemetry Analysis](concepts/getting_started.md)
   This section provides a **quick introduction** to analyzing telemetry data.
   After reading these articles, you will be able to confidently perform analysis
   over telemetry data.
 
-### [Tools](tools/README.md)
+### [Data Tools](tools/README.md)
   Describes the tools we maintain to access and analyze product data.
 
-### [Cookbooks & Tutorials](cookbooks/README.md)
+### [Analysis Cookbooks & Tutorials](cookbooks/README.md)
   This section contains tutorials presented in a simple problem/solution format.
 
-### [Data Collection and Datasets](datasets/reference.md)
+### [Existing Datasets](datasets/reference.md)
   Describes all available data we have from our products.
   For each dataset, we include a description of the dataset's purpose,
   what data is included, how the data is collected,
   and how you can change or augment the dataset.
   You do not need to read this section end-to-end.
+
+### [New Telemetry](datasets/new_data.md)
+
+  * [Creating and Deploying New Telemetry Probes](datasets/new_data.md)
+
+
+### [Collecting Evidence to Make Decisions: **Shield**, **Delivery Console** and User Sentiment](./experiments/shield_intro.md)
+
+"Shield" conflates several overlapping concepts.
+
+  * Feature Experimentation using Shield
+  * Off-Train Deployment Using **Delivery Console**
+  * Shield Study Addons (`webExtensionExperiments`)
+  * `shield-studies` and `shield-studies-addons` Telemetry Pings / Data Set
+
+[Get started with Shield](./experiments/shield_intro.md)
 
 ## Missing Documentation
 

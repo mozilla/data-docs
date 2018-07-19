@@ -1,7 +1,8 @@
-* [Firefox Data Documentation](introduction.md)
+* [About Firefox Data Documentation](introduction.md)
   * [Reporting a problem](concepts/reporting_a_problem.md)
   * [Terminology](concepts/terminology.md)
-* [Getting Started](concepts/getting_started.md)
+
+* [Getting Started with Data Analysis](concepts/getting_started.md)
   * [Analysis Quick Start](concepts/analysis_intro.md)
   * [Choosing a Dataset](concepts/choosing_a_dataset.md)
   * [Intro to STMO](tools/stmo.md)
@@ -9,6 +10,7 @@
   * [Optimizing Queries](concepts/sql_optimization.md)
   * [Getting Review](concepts/review.md)
   * [Collecting New Data](datasets/new_data.md)
+
 * [Tools](tools/README.md)
   * [Project Glossary](tools/projects.md)
   * [Overview of Mozilla's Data Pipeline](/concepts/pipeline/data_pipeline.md)
@@ -34,6 +36,21 @@
   * Metrics
     * [Active DAU Definition](cookbooks/active_dau.md)
     * [Retention Analysis](cookbooks/retention.md)
+
+--- 
+
+* [Experimenting and Evidence (Shield Program)](experiments/shield_intro.md)
+
+  * [Get Started With Shield](experiments/shield_intro.md)
+  * [Contact and Help](experiments/shield_help.md)
+  * [Designs for Gathering Evidence](experiments/shield_design_process.md)
+  * [Attitudinal Research:  Heartbeat, Surveys, Panels Screenshots, and Tasks](experiments/shield_surveys.md)
+  * [Shield Deploy](experiments/shield_deploy.md)
+  * Technical Details
+      * [Mana: Detailed Shield Internal Processes](https://mana.mozilla.org/wiki/display/strategyandinsights/Shield)
+      * [Targeting](experiments/targeting.md)
+      * [Shield Study (Addon) Engineering][shield-study-engineering]
+      * [Telemetry: `shield-study`, `shield-study-addon`](datasets/shield.md)  
 
 ---
 
@@ -75,3 +92,5 @@
   * [Contributing](meta/contributing.md)
   * [Bug Template](https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&component=Documentation%20and%20Knowledge%20Repo%20%28RTMO%29&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=--&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&target_milestone=---&version=unspecified)
   * [Structure](meta/structure.md)
+
+[shield-study-engineering]: https://github.com/mozilla/shield-studies-addon-utils/tree/master/docs
