@@ -4,19 +4,23 @@
 
 ## What is a profile?
 
+TODO
+
 ## Profile Behaviors
 
 In order to understand the behaviour of users and base analysis on things like the profile creation date,
 it is essential to understand how a profile is created and identified by the browser.
 
-### First use
+### Profile Creation
+
+#### First use
 
 When Firefox is opened for the first time after a fresh install, without any prior installation of Firefox, it will create new profile.
 A random name will be picked, the profile directory will be created and the profile be marked as default for subsequent starts of Firefox.
 If a initial profile is created, Firefox will write the current timestamp to a file called `times.json` inside the profile directory.
 This timestamp is used as the profile creation date and reported by Telemetry.
 
-## Default or Profile Manager creation
+#### Default or Profile Manager creation
 
 On subsequent starts, Firefox tries to find the profile directory and load the profile data (bookmarks, addons, etc.).
 If not otherwise specified it uses the default (or last used) profile, finds the profile directory and starts loading files from there.
@@ -48,7 +52,7 @@ Q --> S[Return creation date]
 
 ---
 
-## Command-line start
+#### Command-line start
 
 Firefox can be started on the command line with a path to a profile directory: `firefox --profile path/to/directory`.
 In that case the passed profile directory is, if not already existing, created. No files inside that directory are written at launch, therefore no `times.json` is written[^2].
@@ -72,3 +76,19 @@ Q --> S[Return creation date]
 ```
 
 [^2]: Relevant part in the code: [`nsAppRunner::SelectProfile`](https://searchfox.org/mozilla-central/rev/292d295d6b084b43b70de26a42e68513bb7b36a3/toolkit/xre/nsAppRunner.cpp#2357-2363) creating the directory.
+
+### Profile Reset
+
+TODO
+
+### Profile Deletion
+
+TODO
+
+### Telemetry opt-out
+
+TODO
+
+## Profile Creation Date
+
+TODO
