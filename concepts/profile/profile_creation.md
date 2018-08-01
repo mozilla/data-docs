@@ -4,7 +4,13 @@
 
 ## What is a profile?
 
-TODO
+All of the changes a user makes in Firefox, like the home page, what toolbars you use, installed addons, saved passwords and your bookmarks, are all stored in a special folder, called a profile.
+Telemetry stores archived and pending pings in the profile directory as well as metadata like the client ID.
+
+Every run of Firefox needs a profile. However a single installation can use multiple profiles for different runs.
+The profile folder is stored in a separate place from the Firefox program so that, if something ever goes wrong with Firefox, the profil information will still be there.
+
+Firefox also comes with a profile manager, a different run mode to create, migrate and delete the profiles.
 
 ## Profile Behaviors
 
