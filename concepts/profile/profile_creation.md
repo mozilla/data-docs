@@ -1,4 +1,4 @@
-# Profile Creation
+# Profile Creation - The technical part
 
 <!-- toc -->
 
