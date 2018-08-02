@@ -68,8 +68,8 @@
 
 * High-level Behavior
     * Profile Behavior
-        * [Real World Usage](high_level/profile/section1-realworldusage.md)
-        * [Profile History](high_level/profile/section2-profilehistory.md)        
+        * [Real World Usage](high_level/profile/realworldusage.md)
+        * [Profile History](high_level/profile/profilehistory.md)        
 
 ---
 
