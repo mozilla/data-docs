@@ -92,7 +92,7 @@ As with the Multi-Profile User and Shared Computer case, even though there could
 
 #### Migrations
 
-* Type 1: Migrate Disk Image
+##### Type 1: Migrate Disk Image
 
 A user has a backup of their disk image and when they switch to a new computer or their current computer crashes, they simply reboot from the old disk image. 
 
@@ -104,7 +104,7 @@ Also, it should be noted that their Firefox profile will 'revert' back to the st
 
 Again, there will only be one download and install associated with this use case (assuming normal funnel and stub installer). 
 
-* Type 2: Migrate OS User Directory
+##### Type 2: Migrate OS User Directory
 
 A user has a backup of their OS user directory and copies it to a new machine. 
 
@@ -114,7 +114,7 @@ This is similar to Type 1 migration, but instead of copying the entire disk, the
 
 The only difference is since the Firefox Installation lives in system directories, the client might have to re-download and re-install the browser. However, if they also copy the Firefox binary / installer, there will not be a download event, only an install event. 
 
-* Type 3: Migrate Firefox Binary / Installer
+##### Type 3: Migrate Firefox Binary / Installer
 
 A user has the Firefox binary or installer saved on their old machine and copies it over to a new machine to install Firefox. 
 
@@ -122,7 +122,7 @@ A user has the Firefox binary or installer saved on their old machine and copies
 
 In this case, there will not be a second download event, but there will be an install event and the new and old machines will have separate client ID's. 
 
-* Type 4: Migrate Firefox Profile
+##### Type 4: Migrate Firefox Profile
 
 A user copies their old Firefox profile from their old machine to a new computer, and runs Firefox using the copied Firefox profile. 
 
