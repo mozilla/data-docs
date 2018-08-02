@@ -89,7 +89,8 @@ TODO
 
 ### Profile Deletion
 
-TODO
+A profile can be deleted by simply removing the profile directory.
+We will never know about a deletion. We simply won't see that profile turning up in Telemetry data anymore.
 
 ### Telemetry opt-out
 
