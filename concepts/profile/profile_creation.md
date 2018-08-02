@@ -17,6 +17,11 @@ Firefox also comes with a profile manager, a different run mode to create, migra
 In order to understand the behaviour of users and base analysis on things like the profile creation date,
 it is essential to understand how a profile is created and identified by the browser.
 
+A profile can also be reset or deleted by the user.
+The user can opt-out of or opt-in to sending Telemetry data.
+
+These different cases are described in more detail in the following sections.
+
 ### Profile Creation
 
 #### First use
