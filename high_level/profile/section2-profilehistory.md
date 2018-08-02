@@ -3,21 +3,19 @@
 A profile's history is simply the progression of that profile's subsessions over it's lifetime. We can see this in our main pings by checking: 
 
 * `profile_subsession_counter`
-	- A counter which starts at 1 on the very first run and increments for each subsession. This counter can be reset to 1 if a client restart / refreshes their profile. 
+	- A counter which starts at 1 on the very first run and increments for each subsession. This counter can be reset to 1 if a user resets / refreshes their profile. 
 * `subsession_start_date`
 	- The date the subsession occurs in. This field is not always reliable, either due to local clock skew or other less understood reasons. 
 * `previous_subsession_id`
-	- The ID of the previous subsession. Will be `null` for the very first subsession. 
+	- The ID of the previous subsession. Will be `null` for the very first subsession, or the first subsession after a user resets / refreshes their profile. 
 * `subsession_id`
 	- The ID of the current subsession. 
 * `submission_date_s3`
-	- The date we recieved the ping. 
+	- The date we received the ping. 
 
 ![](images/profile-history/basic-example.png)
 
-This is a nice clean example of profile history. It has a clear **starting ping** and it progresses linearly, with each subsession connecting to the next via `subsession_id`. However, due to the fact that profiles can be shared across machines, and restored manually, etc. [see here](section1-realworldusage.md) strange behaviors can arise. 
-
-Furthermore, due to the ways that profiles can be created [see here](link to janerik's documentation), a profile history can also start out of nowhere. 
+This is a nice clean example of profile history. It has a clear **starting ping** and it progresses linearly, with each subsession connecting to the next via `subsession_id`. However, due to the fact that profiles can be shared across machines, and restored manually, etc. ([see here](section1-realworldusage.md)) strange behaviors can arise. 
 
 ## Profile History Start Conditions
 
@@ -72,7 +70,7 @@ The history of a profile splits, and after a single subsession, there are two (o
 Diagram: 
 ![](images/profile-history/ping-diagram-splits.png)
 
-This is probably due to cloned machines or disk image restores. Note, after the profile splits, the two branches might continue concurrently or one branch might die while the other continues. It is very hard to distinugish between them. 
+This is probably due to cloned machines or disk image restores. Note, after the profile splits, the two branches might continue concurrently or one branch might die while the other continues. It is very hard to distinguish between them. 
 
 Example: 
 

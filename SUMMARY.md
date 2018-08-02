@@ -66,7 +66,7 @@
 
 ---
 
-* High-level behaviour
+* High-level Behavior
     * Profile Behavior
         * [Real World Usage](high_level/profile/section1-realworldusage.md)
         * [Profile History](high_level/profile/section2-profilehistory.md)        
