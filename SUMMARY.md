@@ -63,6 +63,14 @@
     * [Search Aggregates](datasets/mozetl/search_aggregates/reference.md)
     * [Search Clients Daily](datasets/mozetl/search_clients_daily/reference.md)
 
+
+---
+
+* High-level behaviour
+    * Profile Behavior
+        * [Real World Usage](high_level/profile/section1-realworldusage.md)
+        * [Profile History](high_level/profile/section2-profilehistory.md)        
+
 ---
 
 * About this Documentation
