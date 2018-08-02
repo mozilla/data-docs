@@ -97,4 +97,19 @@ TODO
 
 ## Profile Creation Date
 
-TODO
+The *profile creation date* is the assumed date of initial profile creation.
+However it proofed to be not reliable for all cases.
+There are multiple ways this date is determined.
+
+### During Profile Creation
+
+When a profile is created explicitely (default profile on first launch, new profile from Profile Manager or the `--createprofile` on the command line), the profile directory is created and a `times.json` containing a timestamp of the current time is stored inside that profile directory.
+It is read at later times when the profile creation date is used.
+
+### Empty profile directory
+
+When started with an empty profile directory or when `--profile path/to/directory` is passed on the command line, no `times.json` is written initially.
+On the first access of the profile creation date (through `ProfileAge.jsm`) the module will detect that the `times.json` is missing.
+It will then iterate through all files in the current profile's directory, reading file creation or modification timestamps.
+The oldest of these timestamps is then assumed to be the profile creation date and written to `times.json`.
+Subsequent runs of Firefox will then use this date.
