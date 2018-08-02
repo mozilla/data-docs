@@ -8,13 +8,13 @@ All of the changes a user makes in Firefox, like the home page, what toolbars yo
 Telemetry stores archived and pending pings in the profile directory as well as metadata like the client ID.
 
 Every run of Firefox needs a profile. However a single installation can use multiple profiles for different runs.
-The profile folder is stored in a separate place from the Firefox program so that, if something ever goes wrong with Firefox, the profil information will still be there.
+The profile folder is stored in a separate place from the Firefox program so that, if something ever goes wrong with Firefox, the profile information will still be there.
 
 Firefox also comes with a profile manager, a different run mode to create, migrate and delete the profiles.
 
 ## Profile Behaviors
 
-In order to understand the behaviour of users and base analysis on things like the profile creation date,
+In order to understand the behavior of users and base analysis on things like the profile creation date,
 it is essential to understand how a profile is created and identified by the browser.
 
 A profile can also be reset or deleted by the user.
@@ -67,7 +67,7 @@ There are multiple ways this date is determined.
 
 ### During Profile Creation
 
-When a profile is created explicitely (default profile on first launch, new profile from Profile Manager or the `--createprofile` on the command line), the profile directory is created and a `times.json` containing a timestamp of the current time is stored inside that profile directory[^1].
+When a profile is created explicitly (default profile on first launch, new profile from Profile Manager or the `--createprofile` on the command line), the profile directory is created and a `times.json` containing a timestamp of the current time is stored inside that profile directory[^1].
 It is read at later times when the profile creation date is used.
 
 ```mermaid
