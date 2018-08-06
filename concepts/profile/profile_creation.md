@@ -40,7 +40,11 @@ The profile manager allows the user to create a new profile from an existing dir
 #### Command-line start
 
 Firefox can be started on the command line with a path to a profile directory: `firefox --profile path/to/directory`.
-In that case the passed profile directory is, if not already existing, created. No files inside that directory are written at launch.
+If the directory does not exist it will be created.
+
+A profile created like this will not be picked up by the Profile Manager.
+Its data will persist after Firefox is closed, but the Profile Manager will not know about it.
+The profile will not turn up in `about:profiles`.
 
 ### Profile Reset
 
