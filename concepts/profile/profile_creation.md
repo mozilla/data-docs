@@ -53,8 +53,11 @@ TODO
 
 ### Profile Deletion
 
-A profile can be deleted by simply removing the profile directory.
+A profile can be deleted through the profile manager, which will delete all stored data from disk.
+The profile can also be deleted by simply removing the profile directory.
 We will never know about a deletion. We simply won't see that profile turning up in Telemetry data anymore.
+
+Uninstalling the Firefox installation will not remove any profile data.
 
 ### Telemetry opt-out
 
