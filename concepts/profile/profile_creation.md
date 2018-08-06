@@ -106,7 +106,7 @@ J --> S[Return creation date]
 
 ### Implicit: Empty profile directory
 
-when `--profile path/to/directory` is passed on the command line, the directory is created if it does not exist, but no `times.json` is written[^2].
+When `--profile path/to/directory` is passed on the command line, the directory is created if it does not exist, but no `times.json` is written[^2].
 On the first access of the profile creation date (through `ProfileAge.jsm`) the module will detect that the `times.json` is missing.
 It will then iterate through all files in the current profile's directory, reading file creation or modification timestamps.
 The oldest of these timestamps is then assumed to be the profile creation date and written to `times.json`.
