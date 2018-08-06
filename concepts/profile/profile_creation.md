@@ -30,13 +30,10 @@ When Firefox is opened for the first time after a fresh install, without any pri
 Firefox chooses a random name, create the profile directory and marks the new profile as default for subsequent starts of Firefox.
 Read [where Firefox stores your profile data](https://support.mozilla.org/en-US/kb/profiles-where-firefox-stores-user-data).
 
-#### Default or Profile Manager creation
-
-On subsequent starts, Firefox tries to find the profile directory and load the profile data (bookmarks, addons, etc.).
-If not otherwise specified it uses the default (or last used) profile, finds the profile directory and starts loading files from there.
+#### Profile Manager creation
 
 The user can create a new profile through the profile manager.
-This can either be done on `about:profiles` or by starting Firefox with the `--ProfileManager` flag.
+This can either be done on `about:profiles` in a running Firefox or by starting Firefox with the `--ProfileManager` flag.
 The profile manager will ask for a name for the profile and picks a new directory for it.
 The directory can be changed by the user to another new or even an existing directory.
 If that directory does not exist, it is created.
