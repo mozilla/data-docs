@@ -35,9 +35,7 @@ Read [where Firefox stores your profile data](https://support.mozilla.org/en-US/
 The user can create a new profile through the profile manager.
 This can either be done on `about:profiles` in a running Firefox or by starting Firefox with the `--ProfileManager` flag.
 The profile manager will ask for a name for the profile and picks a new directory for it.
-The directory can be changed by the user to another new or even an existing directory.
-If that directory does not exist, it is created.
-Additional files for bookmarks are placed inside this directory.
+The profile manager allows the user to create a new profile from an existing directory (in which case any files will be included) or from scratch (in which case the directory will be created).
 
 #### Command-line start
 
