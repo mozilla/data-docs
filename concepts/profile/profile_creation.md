@@ -26,8 +26,9 @@ These different cases are described in more detail in the following sections.
 
 #### First use
 
-When Firefox is opened for the first time after a fresh install, without any prior Firefox profile on disk, it will create a new profile.
+When Firefox is opened for the first time after a fresh install, without any prior Firefox profile on disk visible to Firefox, it will create a new profile.
 Firefox chooses a random name, create the profile directory and marks the new profile as default for subsequent starts of Firefox.
+Read [where Firefox stores your profile data](https://support.mozilla.org/en-US/kb/profiles-where-firefox-stores-user-data).
 
 #### Default or Profile Manager creation
 
