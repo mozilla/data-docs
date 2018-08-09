@@ -66,10 +66,10 @@
 
 ---
 
-* High-level Behavior
+* Telemetry Behavior Reference
     * Profile Behavior
-        * [Real World Usage](high_level/profile/realworldusage.md)
-        * [Profile History](high_level/profile/profilehistory.md)        
+        * [Real World Usage](concepts/profile/realworldusage.md)
+        * [Profile History](concepts/profile/profilehistory.md)
 
 ---
 
