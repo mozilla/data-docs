@@ -57,6 +57,9 @@ test_dataframe.write.mode('error') \
     .parquet('s3://telemetry-test-bucket/my_subdir/table_name')
 ```
 
+Note: data saved to `s3://telemetry-test-bucket` will automatically be deleted
+after 30 days.
+
 # Accessing Parquet Tables from Re:dash
 
 See [Creating a custom re:dash dataset](/cookbooks/create_a_dataset.md).
