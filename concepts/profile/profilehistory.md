@@ -15,7 +15,7 @@ A profile's history is simply the progression of that profile's subsessions over
 
 ![](images/profile-history/basic-example.png)
 
-This is a nice clean example of profile history. It has a clear **starting ping** and it progresses linearly, with each subsession connecting to the next via `subsession_id`. However, due to the fact that profiles can be shared across machines, and restored manually, etc. ([see here](realworldusage.md)) strange behaviors can arise.
+This is a nice clean example of profile history. It has a clear **starting ping** and it progresses linearly, with each subsession connecting to the next via `subsession_id`. However, due to the fact that profiles can be shared across machines, and restored manually, etc. (see [Real World Usage](realworldusage.md)) strange behaviors can arise.
 
 ## Profile History Start Conditions
 
