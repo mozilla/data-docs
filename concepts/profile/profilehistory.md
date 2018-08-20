@@ -47,7 +47,7 @@ After a profile appears, in 'normal' conditions, there should be a linear, strai
 
 There is a gap in the profile history.
 
-It's possible this behavior is due to dropped pings or pings that never reached us due to ping sending logic.
+It's possible this behavior is due to dropped pings.
 
 ![](images/profile-history/example-gap.png)
 
