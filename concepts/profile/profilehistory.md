@@ -89,8 +89,8 @@ Here, we see the profile start their history normally, but then they begin a new
 
 #### History Reruns
 
-(Work in Progress)
+[(Work in Progress)](https://github.com/mozilla/firefox-data-docs/issues/169)
 
 ## How to Order History
 
-(Work in Progress)
+[(Work in Progress)](https://github.com/mozilla/firefox-data-docs/issues/170)
