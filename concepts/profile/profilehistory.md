@@ -1,6 +1,6 @@
 # Profile History
 
-A profile's history is simply the progression of that profile's subsessions over it's lifetime. We can see this in our main pings by checking:
+A profile's history is simply the progression of that profile's subsessions over its lifetime. We can see this in our main pings by checking:
 
 * `profile_subsession_counter`
 	- A counter which starts at 1 on the very first run and increments for each subsession. This counter will be reset to 1 if a user resets / refreshes their profile.
