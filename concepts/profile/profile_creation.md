@@ -79,7 +79,12 @@ Uninstalling the Firefox installation will not remove any profile data.
 
 ### Telemetry opt-out
 
-TODO
+The user can opt out of sending Telemetry data.
+When the user opts out, Telemetry sends one ["optout" ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/optout-ping.html), containing an empty payload.
+The local `clientID` is reset to a fixed value.
+
+When a user opts into sending Telemetry data, a new `clientID` is generated and used in subsequent pings.
+The profile itself and the profile creation date are unaffected by this.
 
 ## Profile Creation Date
 
