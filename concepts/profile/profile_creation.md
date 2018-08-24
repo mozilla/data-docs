@@ -63,7 +63,7 @@ The profile will not turn up in `about:profiles`.
 
 ### Profile Reset
 
-A user can reset the profile (see [Refresh Firefox - reset add-ons and settings](https://support.mozilla.org/en-US/kb/refresh-firefox-reset-add-ons-and-settings)).
+A user can reset the profile (see [Refresh Firefox - reset addons and settings](https://support.mozilla.org/en-US/kb/refresh-firefox-reset-add-ons-and-settings)).
 This will copy over most user data to a new directory, keeping things like the history, bookmarks and cookies, but will remove extensions, modified preferences and added search engines.
 
 A profile reset will not change the Telemetry `clientID`.
