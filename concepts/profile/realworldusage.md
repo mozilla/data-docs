@@ -20,7 +20,7 @@ The above image illustrates all the layers that sit between a user acquiring and
 	- Most operating systems allow users to log into different user profiles with separate user directories (such as a "Guest" account).
 	- Usually, Firefox is installed into a system directory that all users profiles will share, but Firefox profiles are saved within the user directories, effectively segregating them.
 * 5: Firefox binary / installer
-	- The downloaded binary package or stub installer which installs Firefox into the hard drive. Users can get these from our website or one of our managed properties, but they can also acquire these from 3rd party sources as well.
+	- The downloaded binary package or stub installer which installs Firefox into the disk image. Users can get these from our website or one of our managed properties, but they can also acquire these from 3rd party sources as well.
 	- Our website is instrumented with Google Analytics to track download numbers, but other properties (FTP) and 3rd party sources are not. Google Analytics data is not directly connected to Telemetry data.
 	- A user can produce multiple installations from a single Firefox binary / installer. For example, if a user copies it to a USB stick or keeps it in cloud storage, they could install Firefox on multiple machines from a single binary / installer.
 * 6: Firefox installation
