@@ -60,6 +60,7 @@ We would have no way to know they came from the same computer and user without i
 Assuming they went through our normal funnel, they would show up once in Google Analytics as a download and once in stub installer pings as a new installation (if they used a stub installer).
 
 However, any subsequent new Firefox profile creations would not have any corresponding downloads or installations.
+Since Firefox 55 however, any newly created profile will send a "new-profile" ping.
 
 #### Shared Computer
 
