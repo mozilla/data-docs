@@ -27,13 +27,13 @@ These different cases are described in more detail in the following sections.
 There are multiple ways a Firefox profile can be created.
 Some of these behave slightly differently.
 
-Created explicitly and thus managed by the Firefox Profile Manager:
+Profiles can be created explicitly and be managed by the Firefox Profile Manager
 
 * New profile on first launch
 * New profile from Profile Manager
 * `--createprofile` command line argument
 
-Created implicitly and not managed by the Firefox Profile Manager:
+Profiles can be created implicitly and not be managed by the Firefox Profile Manager
 
 * `--profile` command line argument
 
