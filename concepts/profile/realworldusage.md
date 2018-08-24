@@ -54,7 +54,8 @@ A more advanced user, who uses multiple Firefox profiles in their normal, everyd
 
 ![](images/multi-profile-user.png)
 
-In Telemetry, this user would show up as 2 (or more) separate client ID. We would have no way to know they came from the same computer and user.
+In Telemetry, this user would show up as 2 (or more) separate client IDs.
+We would have no way to know they came from the same computer and user without identifying that the subsessions are never overlapping and that large portions of the environment (CPU, GPU, Displays) are identical and that would be no guaranteee.
 
 Assuming they went through our normal funnel, they would show up once in Google Analytics as a download and once in stub installer pings as a new installation (if they used a stub installer).
 
