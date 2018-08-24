@@ -17,7 +17,7 @@ The above image illustrates all the layers that sit between a user acquiring and
 	- Multiple machines could run copies of a single disk image
 	- Disk images are also used as backups to restore a machine.
 * 4: OS user profile
-	- Most operating systems allow users to log into different user profiles with separate user directories (such as a "Guest" accounts).
+	- Most operating systems allow users to log into different user profiles with separate user directories (such as a "Guest" account).
 	- Usually, Firefox is installed into a system directory that all users profiles will share, but Firefox profiles are saved within the user directories, effectively segregating them.
 * 5: Firefox binary / installer
 	- The downloaded binary package or stub installer which installs Firefox into the hard drive. Users can get these from our website or one of our managed properties, but they can also acquire these from 3rd party sources as well.
