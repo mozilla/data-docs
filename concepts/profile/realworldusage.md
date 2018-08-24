@@ -13,8 +13,8 @@ The above image illustrates all the layers that sit between a user acquiring and
 * 2: The machine
 	- The physical hardware running Firefox.
 * 3: The disk image / hard drive
-	- A single machine could have separate partitions running different OS.
-	- Or conversely, they could copy the disk image and run it on multiple machines.
+	- A single machine could have separate partitions running different OSes.
+	- Multiple machines could run copies of a single disk image
 	- Disk images are also used as backups to restore a machine.
 * 4: OS user profile
 	- Most operating systems allow users to log into different user profiles with separate user directories (such as a "Guest" accounts).
