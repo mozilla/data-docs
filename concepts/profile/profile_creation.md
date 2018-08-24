@@ -89,7 +89,7 @@ The profile itself and the profile creation date are unaffected by this.
 ## Profile Creation Date
 
 The *profile creation date* is the assumed date of initial profile creation.
-However it proofed to be not reliable for all cases.
+However it proved to be not reliable for all cases.
 There are multiple ways this date is determined.
 
 ### Explicit: During Profile Creation
