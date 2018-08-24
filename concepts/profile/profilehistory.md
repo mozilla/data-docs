@@ -31,7 +31,7 @@ However, not all profiles appear in our data with a starting ping and instead ap
 
 ![](images/profile-history/example-starting.png)
 
-As you can see, this profile starts with a ping where `profile_subsession_counter = 1` and `previous_subsession_id is none`.
+As you can see, this profile starts with a ping where `profile_subsession_counter = 1` and `previous_subsession_id is null`.
 
 #### History Has No Beginning
 
