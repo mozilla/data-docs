@@ -103,6 +103,7 @@ A user has a backup of their disk image and when they switch to a new computer o
 In this case, the old machine and the new machine will just share the same client ID (assuming that the disk was copied after a Firefox profile was created). In fact, it will look exactly like the Cloned Machines case, except that instead of sending pings concurrently, they'll be sending us pings first from the old machine and then from the new machine.
 
 Also, it should be noted that their Firefox profile will 'revert' back to the state that it was in when the disk image was copied, essentially starting over from the past, and any unsent pings on the image (if they exist) will be resent.
+For instance, we will see another ping with the `profile_subsession_count` (the count of how many subsessions a profile has seen in its history) we previously saw some time before.
 
 Again, there will only be one download and install associated with this use case (assuming normal funnel and stub installer).
 
