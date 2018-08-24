@@ -3,7 +3,7 @@
 A profile's history is simply the progression of that profile's subsessions over its lifetime. We can see this in our main pings by checking:
 
 * `profile_subsession_counter`
-	- A counter which starts at 1 on the very first run and increments for each subsession. This counter will be reset to 1 if a user resets / refreshes their profile.
+	- A counter which starts at 1 on the very first run of a profile and increments for each subsession. This counter will be reset to 1 if a user resets / refreshes their profile.
 * `subsession_start_date`
 	- The date and time the subsession occurs in, truncated to hours. This field is not always reliable  due to local clock skew.
 * `previous_subsession_id`
