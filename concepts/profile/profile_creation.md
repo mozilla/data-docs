@@ -67,7 +67,7 @@ A user can reset the profile (see [Refresh Firefox - reset addons and settings](
 This will copy over most user data to a new directory, keeping things like the history, bookmarks and cookies, but will remove extensions, modified preferences and added search engines.
 
 A profile reset will not change the Telemetry `clientID`.
-The date of the profile reset is saved and will be contained in Telemetry pings in the `profile.resetDate` field.
+The date of the most recent profile reset is saved and will be contained in Telemetry pings in the `profile.resetDate` field.
 
 ### Profile Deletion
 
