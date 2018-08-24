@@ -12,6 +12,8 @@ A profile's history is simply the progression of that profile's subsessions over
 	- The ID of the current subsession.
 * `submission_date_s3`
 	- The date we received the ping. This date is sourced from the server's time and reliable.
+* `profile_reset_date`
+	- The date the profile was reset. Will be `null` if the profile was not reset.
 
 ![](images/profile-history/basic-example.png)
 
@@ -19,7 +21,7 @@ This is a nice clean example of profile history. It has a clear **starting ping*
 
 ## Profile History Start Conditions
 
-Under normal assumptions, we expect to see the **starting ping** in a profile's history in our telemetry data. The starting ping in the profile's history is the ping from their very first subsession. We expect this ping to have `profile_subsession_counter = 1` and `previous_subsession_id is none` and `profile_reset_date is null`.
+Under normal assumptions, we expect to see the **starting ping** in a profile's history in our telemetry data. The starting ping in the profile's history is the ping from their very first subsession. We expect this ping to have `profile_subsession_counter = 1` and `previous_subsession_id is null` and `profile_reset_date is null`.
 
 However, not all profiles appear in our data with a starting ping and instead appear to us mid-history.
 
