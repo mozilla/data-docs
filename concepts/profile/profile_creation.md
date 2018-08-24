@@ -50,7 +50,7 @@ This can either be done on `about:profiles` in a running Firefox or by starting 
 The profile manager will ask for a name for the profile and picks a new directory for it.
 The profile manager allows the user to create a new profile from an existing directory (in which case any files will be included) or from scratch (in which case the directory will be created).
 
-The `--createprofile` flag can be used from the command line and works the same.
+The `--createprofile` flag can be used from the command line and works the same as creating a profile through the Profile Manager.
 
 #### Implicit: Command-line start
 
