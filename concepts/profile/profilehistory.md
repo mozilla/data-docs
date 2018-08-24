@@ -37,7 +37,7 @@ As you can see, this profile starts with a ping where `profile_subsession_counte
 
 ![](images/profile-history/example-midhistory.png)
 
-In this example, the profile simply appears in our data mid-history, with presumably the 25th subsession in it's history. It's previous history is a mystery.
+In this example, the profile simply appears in our data mid-history, with presumably the 25th subsession in it's history. Its previous history is a mystery.
 
 ## Profile History Progression Events
 
