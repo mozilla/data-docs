@@ -61,7 +61,8 @@ Here, we see a gap between the 30th ping and the 41st ping and the 44th ping.
 
 The history of a profile splits, and after a single subsession, there are two (or more) subsessions that link back to it.
 
-This is probably due to cloned machines or disk image restores. Note, after the profile splits, the two branches might continue concurrently or one branch might die while the other continues. It is very hard to distinguish between them.
+This is probably due to cloned machines or disk image restores. Note, after the profile splits, the two branches might continue concurrently or one branch might die while the other continues.
+It is very hard to distinguish between the different branches of the same profile.
 
 * Profile begins
 
