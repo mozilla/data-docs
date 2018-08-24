@@ -40,7 +40,7 @@ Profiles can be created implicitly and not be managed by the Firefox Profile Man
 #### Explicit: First use
 
 When Firefox is opened for the first time after a fresh install, without any prior Firefox profile on disk visible to Firefox, it will create a new profile.
-Firefox chooses a random name, create the profile directory and marks the new profile as default for subsequent starts of Firefox.
+Firefox uses "Default User" as the profile name, creates the profile's directory with a random suffix and marks the new profile as default for subsequent starts of Firefox.
 Read [where Firefox stores your profile data](https://support.mozilla.org/en-US/kb/profiles-where-firefox-stores-user-data).
 
 #### Explicit: Profile Manager creation
