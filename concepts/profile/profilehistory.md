@@ -41,9 +41,11 @@ In this example, the profile simply appears in our data mid-history, with presum
 
 ## Profile History Progression Events
 
-After a profile appears, in 'normal' conditions, there should be a linear, straightforward progression with each subsession linking to the next. However, the following abnormal events can occur.
+After a profile appears, in 'normal' conditions, there should be a linear, straightforward progression with each subsession linking to the next.
 
 ![](images/profile-history/ping-diagram-events.png)
+
+However, the following abnormal events can occur.
 
 #### History Gap
 
