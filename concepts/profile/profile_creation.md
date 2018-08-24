@@ -10,7 +10,7 @@ Telemetry stores archived and pending pings in the profile directory as well as 
 Every run of Firefox needs a profile. However a single installation can use multiple profiles for different runs.
 The profile folder is stored in a separate place from the Firefox program so that, if something ever goes wrong with Firefox, the profile information will still be there.
 
-Firefox also comes with a profile manager, a different run mode to create, migrate and delete the profiles.
+Firefox also comes with a Profile Manager, a different run mode to create, migrate and delete the profiles.
 
 ## Profile Behaviors
 
@@ -45,10 +45,10 @@ Read [where Firefox stores your profile data](https://support.mozilla.org/en-US/
 
 #### Explicit: Profile Manager creation
 
-The user can create a new profile through the profile manager.
+The user can create a new profile through the Profile Manager.
 This can either be done on `about:profiles` in a running Firefox or by starting Firefox with the `--ProfileManager` flag.
-The profile manager will ask for a name for the profile and picks a new directory for it.
-The profile manager allows the user to create a new profile from an existing directory (in which case any files will be included) or from scratch (in which case the directory will be created).
+The Profile Manager will ask for a name for the profile and picks a new directory for it.
+The Profile Manager allows the user to create a new profile from an existing directory (in which case any files will be included) or from scratch (in which case the directory will be created).
 
 The `--createprofile` flag can be used from the command line and works the same as creating a profile through the Profile Manager.
 
@@ -71,7 +71,7 @@ The date of the most recent profile reset is saved and will be contained in Tele
 
 ### Profile Deletion
 
-A profile can be deleted through the profile manager, which will delete all stored data from disk.
+A profile can be deleted through the Profile Manager, which will delete all stored data from disk.
 The profile can also be deleted by simply removing the profile's directory.
 We will never know about a deletion. We simply won't see that profile in new Telemetry data anymore.
 
