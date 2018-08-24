@@ -132,6 +132,7 @@ A user copies their old Firefox profile from their old machine to a new computer
 ![](images/migration-4.png)
 
 In this case, since the Firefox profile is being copied over, both the new and the old machine will have profiles with the same client ID. Again, the profile on the new computer will revert back to the point in its history where it was copied.
+And since the profile contains any unsent Telemetry pings, we may receive duplicated submissions of pings from the same client ID.
 
 If the Firefox binary / installer was downloaded, there will be a download and install event. If it was migrated via USB stick, it will only have an install event.
 
