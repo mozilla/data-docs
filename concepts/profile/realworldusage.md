@@ -30,7 +30,7 @@ The above image illustrates all the layers that sit between a user acquiring and
 * 7: Firefox profile
 	- The profile Firefox uses during a user's session.
 	- A user can create multiple Firefox profiles using the Firefox Profile Manager, or by specifying a custom directory to use at startup. More details [here](concepts/profile/profile_creation.md).
-	- This is the entity that we see in Telemetry. Profiles send pings to Telemetry with a client ID as it's identifier.  
+	- This is the entity that we see in Telemetry. Profiles send pings to Telemetry with a client ID as its identifier.
 
 ## Desktop Browser Use Cases
 
@@ -88,7 +88,7 @@ If the disk image was copied after a Firefox profile was created, then the old u
 
 If the disk image was copied after the Firefox installation but before an initial Firefox profile was created, then each user+machine will get their own Firefox profile and client ID when they run Firefox for the first time.
 
-As with the Multi-Profile User and Shared Computer case, even though there could be multiple Firefox profiles in this use case, there will only be one download and install event.  
+As with the Multi-Profile User and Shared Computer case, even though there could be multiple Firefox profiles in this use case, there will only be one download and install event.
 
 #### Migrations
 
@@ -128,7 +128,7 @@ A user copies their old Firefox profile from their old machine to a new computer
 
 ![](images/migration-4.png)
 
-In this case, since the Firefox profile is being copied over, both the new and the old machine will have profiles with the same client ID. Again, the profile on the new computer will revert back to the point in it's history where it was copied.
+In this case, since the Firefox profile is being copied over, both the new and the old machine will have profiles with the same client ID. Again, the profile on the new computer will revert back to the point in its history where it was copied.
 
 If the Firefox binary / installer was downloaded, there will be a download and install event. If it was migrated via USB stick, it will only have an install event.
 
