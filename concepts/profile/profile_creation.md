@@ -26,23 +26,23 @@ The different cases are described in more detail in the following sections.
 There are multiple ways a Firefox profile can be created.
 Some of these behave slightly differently.
 
-Profiles can be created explicitly and be managed by the Firefox Profile Manager
+Profiles can be created and managed by the Firefox Profile Manager:
 
 * New profile on first launch
 * New profile from Profile Manager
 * `--createprofile` command line argument
 
-Profiles can be created implicitly and not be managed by the Firefox Profile Manager
+Profiles can be created externally and not be managed by the Firefox Profile Manager:
 
 * `--profile` command line argument
 
-#### Explicit: First use
+#### Managed: First use
 
 When Firefox is opened for the first time after a fresh install, without any prior Firefox profile on disk visible to Firefox, it will create a new profile.
 Firefox uses "Default User" as the profile name, creates the profile's directory with a random suffix and marks the new profile as default for subsequent starts of Firefox.
 Read [where Firefox stores your profile data](https://support.mozilla.org/en-US/kb/profiles-where-firefox-stores-user-data).
 
-#### Explicit: Profile Manager creation
+#### Managed: Profile Manager creation
 
 The user can create a new profile through the Profile Manager.
 This can either be done on `about:profiles` in a running Firefox or by starting Firefox with the `--ProfileManager` flag.
@@ -51,7 +51,7 @@ The Profile Manager allows the user to create a new profile from an existing dir
 
 The `--createprofile` flag can be used from the command line and works the same as creating a profile through the Profile Manager.
 
-#### Implicit: Command-line start
+#### Unmanaged: Command-line start
 
 Firefox can be started on the command line with a path to a profile directory: `firefox --profile path/to/directory`.
 If the directory does not exist it will be created.
@@ -93,7 +93,7 @@ The *profile creation date* is the assumed date of initial profile creation.
 However it proved to be not reliable for all cases.
 There are multiple ways this date is determined.
 
-### Explicit: During Profile Creation
+### Managed: During Profile Creation
 
 When a profile is created explicitly the profile directory is created and a `times.json` containing a timestamp of the current time is stored inside that profile directory[^1].
 It is read at later times when the profile creation date is used.
@@ -114,7 +114,7 @@ J --> S[Return creation date]
 [^1]: Relevant parts in the code: [`nsAppRunner::SelectProfile`](https://searchfox.org/mozilla-central/rev/292d295d6b084b43b70de26a42e68513bb7b36a3/toolkit/xre/nsAppRunner.cpp#2394-2395,2397-2398,2527-2533) calling [`nsToolkitProfileService::CreateProfile`](https://searchfox.org/mozilla-central/rev/196560b95f191b48ff7cba7c2ba9237bba6b5b6a/toolkit/profile/nsToolkitProfileService.cpp#789-793).
 
 
-### Implicit: Empty profile directory
+### Unmanaged: Empty profile directory
 
 When `--profile path/to/directory` is passed on the command line, the directory is created if it does not exist, but no `times.json` is written[^2].
 On the first access of the profile creation date (through `ProfileAge.jsm`) the module will detect that the `times.json` is missing.
