@@ -69,6 +69,14 @@
   * [Obsolete Datasets](datasets/obsolete.md)
     * [Heavy Users](datasets/obsolete/heavy_users/reference.md)
 
+
+---
+
+* Telemetry Behavior Reference
+    * Profile Behavior
+        * [Real World Usage](concepts/profile/realworldusage.md)
+        * [Profile History](concepts/profile/profilehistory.md)
+
 ---
 
 * About this Documentation
