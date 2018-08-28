@@ -76,7 +76,7 @@ We will never know about a deletion. We simply won't see that profile in new Tel
 
 Uninstalling the Firefox installation will not remove any profile data.
 
-**Note:** Removing a profile's directory while it is in use is not recommened and will lead to a corrupt state.
+**Note:** Removing a profile's directory while it is in use is not recommended and will lead to a corrupt state.
 
 ### Telemetry opt-out
 
