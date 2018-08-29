@@ -99,6 +99,7 @@ NoSQL
 npm
 NumPy
 ORM-like
+optout
 parquet2hive
 performant
 Pep8
@@ -144,6 +145,8 @@ TCP
 timestamp
 timestamps
 TMO
+TODO
+toolbars
 toolchain
 trailheads
 triaged
@@ -156,6 +159,7 @@ UI
 un-check
 un-encoded
 un-publish
+unmanaged
 uri
 UUID
 versioned

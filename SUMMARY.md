@@ -74,6 +74,7 @@
 
 * Telemetry Behavior Reference
     * Profile Behavior
+        * [Profile Creation](concepts/profile/profile_creation.md)
         * [Real World Usage](concepts/profile/realworldusage.md)
         * [Profile History](concepts/profile/profilehistory.md)
 
