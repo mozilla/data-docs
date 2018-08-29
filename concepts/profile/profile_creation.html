@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Overview of Mozilla's Data Pipeline · GitBook</title>
+        <title>Profile Creation · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -65,10 +65,8 @@
     <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="data_pipeline_detail.html" />
+    <link rel="next" href="realworldusage.html" />
     
-    
-    <link rel="prev" href="../../tools/projects.html" />
     
 
     </head>
@@ -279,9 +277,9 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.3.2" data-path="data_pipeline.html">
+        <li class="chapter " data-level="1.3.2" data-path="../pipeline/data_pipeline.html">
             
-                <a href="data_pipeline.html">
+                <a href="../pipeline/data_pipeline.html">
             
                     
                     Overview of Mozilla's Data Pipeline
@@ -293,9 +291,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.3.2.1" data-path="data_pipeline_detail.html">
+        <li class="chapter " data-level="1.3.2.1" data-path="../pipeline/data_pipeline_detail.html">
             
-                <a href="data_pipeline_detail.html">
+                <a href="../pipeline/data_pipeline_detail.html">
             
                     
                     In-depth Data Pipeline Detail
@@ -306,9 +304,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.2.2" data-path="http_edge_spec.html">
+        <li class="chapter " data-level="1.3.2.2" data-path="../pipeline/http_edge_spec.html">
             
-                <a href="http_edge_spec.html">
+                <a href="../pipeline/http_edge_spec.html">
             
                     
                     HTTP Edge Server Specification
@@ -319,9 +317,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.2.3" data-path="event_pipeline.html">
+        <li class="chapter " data-level="1.3.2.3" data-path="../pipeline/event_pipeline.html">
             
-                <a href="event_pipeline.html">
+                <a href="../pipeline/event_pipeline.html">
             
                     
                     Event Pipeline Detail
@@ -1094,9 +1092,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="3.1.1.1" data-path="../profile/profile_creation.html">
+        <li class="chapter active" data-level="3.1.1.1" data-path="profile_creation.html">
             
-                <a href="../profile/profile_creation.html">
+                <a href="profile_creation.html">
             
                     
                     Profile Creation
@@ -1107,9 +1105,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.1.1.2" data-path="../profile/realworldusage.html">
+        <li class="chapter " data-level="3.1.1.2" data-path="realworldusage.html">
             
-                <a href="../profile/realworldusage.html">
+                <a href="realworldusage.html">
             
                     
                     Real World Usage
@@ -1120,9 +1118,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.1.1.3" data-path="../profile/profilehistory.html">
+        <li class="chapter " data-level="3.1.1.3" data-path="profilehistory.html">
             
-                <a href="../profile/profilehistory.html">
+                <a href="profilehistory.html">
             
                     
                     Profile History
@@ -1238,7 +1236,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../.." >Overview of Mozilla's Data Pipeline</a>
+        <a href="../.." >Profile Creation</a>
     </h1>
 </div>
 
@@ -1253,143 +1251,133 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="an-overview-of-mozillas-data-pipeline"><a name="an-overview-of-mozillas-data-pipeline" class="plugin-anchor" href="#an-overview-of-mozillas-data-pipeline"><i class="fa fa-link" aria-hidden="true"></i></a>An overview of Mozilla&#x2019;s Data Pipeline</h1>
-<p>This post describes the architecture of Mozilla&#x2019;s data pipeline, which is used to collect Telemetry data from our users and logs from various services. One of the cool perks of working at Mozilla is that most of what we do is out in the open and because of that I can do more than just show you some diagram with arrows of our architecture; I can point you to the code, script &amp; configuration that underlies it!</p>
-<p>To make the examples concrete, the following description is centered around the collection of Telemetry data. The same tool-chain is used to collect, store and analyze data coming from disparate sources though, such as service logs.</p>
+                                <h1 id="profile-creation---the-technical-part"><a name="profile-creation---the-technical-part" class="plugin-anchor" href="#profile-creation---the-technical-part"><i class="fa fa-link" aria-hidden="true"></i></a>Profile Creation - The technical part</h1>
+<!-- toc -->
+<ul>
+<li><a href="#what-is-a-profile?">What is a profile?</a></li>
+<li><a href="#profile-behaviors">Profile Behaviors</a><ul>
+<li><a href="#profile-creation">Profile Creation</a><ul>
+<li><a href="#managed:-first-use">Managed: First use</a></li>
+<li><a href="#managed:-profile-manager-creation">Managed: Profile Manager creation</a></li>
+<li><a href="#unmanaged:-command-line-start">Unmanaged: Command-line start</a></li>
+</ul>
+</li>
+<li><a href="#profile-reset">Profile Reset</a></li>
+<li><a href="#profile-deletion">Profile Deletion</a></li>
+<li><a href="#telemetry-opt-out">Telemetry opt-out</a></li>
+</ul>
+</li>
+<li><a href="#profile-creation-date">Profile Creation Date</a><ul>
+<li><a href="#managed:-during-profile-creation">Managed: During Profile Creation</a></li>
+<li><a href="#unmanaged:-empty-profile-directory">Unmanaged: Empty profile directory</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+<h2 id="what-is-a-profile"><a name="what-is-a-profile" class="plugin-anchor" href="#what-is-a-profile"><i class="fa fa-link" aria-hidden="true"></i></a>What is a profile?</h2>
+<p>All of the changes a user makes in Firefox, like the home page, what toolbars you use, installed addons, saved passwords and your bookmarks, are all stored in a special folder, called a profile.
+Telemetry stores archived and pending pings in the profile directory as well as metadata like the client ID.</p>
+<p>Every run of Firefox needs a profile. However a single installation can use multiple profiles for different runs.
+The profile folder is stored in a separate place from the Firefox program so that, if something ever goes wrong with Firefox, the profile information will still be there.</p>
+<p>Firefox also comes with a Profile Manager, a different run mode to create, migrate and delete the profiles.</p>
+<h2 id="profile-behaviors"><a name="profile-behaviors" class="plugin-anchor" href="#profile-behaviors"><i class="fa fa-link" aria-hidden="true"></i></a>Profile Behaviors</h2>
+<p>In order to understand the behavior of users and base analysis on things like the profile creation date,
+it is essential to understand how a profile is created and identified by the browser.
+Also, it is important to understand how user actions with and within profiles affect our ability to reason about profiles from a data perspective.
+This includes resetting or deleting profiles or opting into or out of sending Telemetry data.</p>
+<p>The different cases are described in more detail in the following sections.</p>
+<h3 id="profile-creation"><a name="profile-creation" class="plugin-anchor" href="#profile-creation"><i class="fa fa-link" aria-hidden="true"></i></a>Profile Creation</h3>
+<p>There are multiple ways a Firefox profile can be created.
+Some of these behave slightly differently.</p>
+<p>Profiles can be created and managed by the Firefox Profile Manager:</p>
+<ul>
+<li>New profile on first launch</li>
+<li>New profile from Profile Manager</li>
+<li><code>--createprofile</code> command line argument</li>
+</ul>
+<p>Profiles can be created externally and not be managed by the Firefox Profile Manager:</p>
+<ul>
+<li><code>--profile</code> command line argument</li>
+</ul>
+<h4 id="managed-first-use"><a name="managed-first-use" class="plugin-anchor" href="#managed-first-use"><i class="fa fa-link" aria-hidden="true"></i></a>Managed: First use</h4>
+<p>When Firefox is opened for the first time after a fresh install, without any prior Firefox profile on disk visible to Firefox, it will create a new profile.
+Firefox uses &quot;Default User&quot; as the profile name, creates the profile&apos;s directory with a random suffix and marks the new profile as default for subsequent starts of Firefox.
+Read <a href="https://support.mozilla.org/en-US/kb/profiles-where-firefox-stores-user-data" target="_blank">where Firefox stores your profile data</a>.</p>
+<h4 id="managed-profile-manager-creation"><a name="managed-profile-manager-creation" class="plugin-anchor" href="#managed-profile-manager-creation"><i class="fa fa-link" aria-hidden="true"></i></a>Managed: Profile Manager creation</h4>
+<p>The user can create a new profile through the Profile Manager.
+This can either be done on <code>about:profiles</code> in a running Firefox or by starting Firefox with the <code>--ProfileManager</code> flag.
+The Profile Manager will ask for a name for the profile and picks a new directory for it.
+The Profile Manager allows the user to create a new profile from an existing directory (in which case any files will be included) or from scratch (in which case the directory will be created).</p>
+<p>The <code>--createprofile</code> flag can be used from the command line and works the same as creating a profile through the Profile Manager.</p>
+<h4 id="unmanaged-command-line-start"><a name="unmanaged-command-line-start" class="plugin-anchor" href="#unmanaged-command-line-start"><i class="fa fa-link" aria-hidden="true"></i></a>Unmanaged: Command-line start</h4>
+<p>Firefox can be started on the command line with a path to a profile directory: <code>firefox --profile path/to/directory</code>.
+If the directory does not exist it will be created.</p>
+<p>A profile created like this will not be picked up by the Profile Manager.
+Its data will persist after Firefox is closed, but the Profile Manager will not know about it.
+The profile will not turn up in <code>about:profiles</code>.</p>
+<h3 id="profile-reset"><a name="profile-reset" class="plugin-anchor" href="#profile-reset"><i class="fa fa-link" aria-hidden="true"></i></a>Profile Reset</h3>
+<p>A user can reset the profile (see <a href="https://support.mozilla.org/en-US/kb/refresh-firefox-reset-add-ons-and-settings" target="_blank">Refresh Firefox - reset addons and settings</a>).
+This will copy over most user data to a new directory, keeping things like the history, bookmarks and cookies, but will remove extensions, modified preferences and added search engines.</p>
+<p>A profile reset will not change the Telemetry <code>clientID</code>.
+The date of the most recent profile reset is saved and will be contained in Telemetry pings in the <code>profile.resetDate</code> field.</p>
+<h3 id="profile-deletion"><a name="profile-deletion" class="plugin-anchor" href="#profile-deletion"><i class="fa fa-link" aria-hidden="true"></i></a>Profile Deletion</h3>
+<p>A profile can be deleted through the Profile Manager, which will delete all stored data from disk.
+The profile can also be deleted by simply removing the profile&apos;s directory.
+We will never know about a deletion. We simply won&apos;t see that profile in new Telemetry data anymore.</p>
+<p>Uninstalling the Firefox installation will not remove any profile data.</p>
+<p><strong>Note:</strong> Removing a profile&apos;s directory while it is in use is not recommended and will lead to a corrupt state.</p>
+<h3 id="telemetry-opt-out"><a name="telemetry-opt-out" class="plugin-anchor" href="#telemetry-opt-out"><i class="fa fa-link" aria-hidden="true"></i></a>Telemetry opt-out</h3>
+<p>The user can opt out of sending Telemetry data.
+When the user opts out, Telemetry sends one <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/optout-ping.html" target="_blank">&quot;optout&quot; ping</a>, containing an empty payload.
+The local <code>clientID</code> is reset to a fixed value.</p>
+<p>When a user opts into sending Telemetry data, a new <code>clientID</code> is generated and used in subsequent pings.
+The profile itself and the profile creation date are unaffected by this.</p>
+<h2 id="profile-creation-date"><a name="profile-creation-date" class="plugin-anchor" href="#profile-creation-date"><i class="fa fa-link" aria-hidden="true"></i></a>Profile Creation Date</h2>
+<p>The <em>profile creation date</em> is the assumed date of initial profile creation.
+However it proved to be not reliable for all cases.
+There are multiple ways this date is determined.</p>
+<h3 id="managed-during-profile-creation"><a name="managed-during-profile-creation" class="plugin-anchor" href="#managed-during-profile-creation"><i class="fa fa-link" aria-hidden="true"></i></a>Managed: During Profile Creation</h3>
+<p>When a profile is created explicitly the profile directory is created and a <code>times.json</code> containing a timestamp of the current time is stored inside that profile directory<sup><a href="#fn_1" id="reffn_1">1</a></sup>.
+It is read at later times when the profile creation date is used.</p>
 <div class="mermaid">
 graph TD
-  firefox((fa:fa-firefox Firefox))--&gt;|JSON| elb
-  elb[Load Balancer]--&gt;|JSON| nginx
-  nginx--&gt;|JSON| landfill(fa:fa-database S3 Landfill)
-  nginx--&gt;|protobuf| kafka[fa:fa-files-o Kafka]
-  kafka--&gt;|protobuf| cep(Hindsight CEP)
-  kafka--&gt;|protobuf| dwl(Hindsight DWL)
-  cep--&gt; hsui(Hindsight UI)
-  dwl--&gt;|protobuf| datalake(fa:fa-database S3 Data Lake)
-  dwl--&gt;|parquet| datalake
-  datalake--&gt;|parquet| prestodb
-  prestodb--&gt;redash[fa:fa-line-chart Re:dash]
-  datalake--&gt;spark
-  spark--&gt;datalake
-  airflow[fa:fa-clock-o Airflow]--&gt;|Scheduled tasks|spark{fa:fa-star Spark}
-  spark--&gt;|aggregations|rdbms(fa:fa-database PostgreSQL)
-  rdbms--&gt;tmo[fa:fa-bar-chart TMO]
-  rdbms--&gt;cerberus[fa:fa-search-plus Cerberus]
-
-
-style firefox fill:#f61
-style elb fill:#777
-style nginx fill:green
-style landfill fill:tomato
-style datalake fill:tomato
-style kafka fill:#aaa
-style cep fill:palegoldenrod
-style dwl fill:palegoldenrod
-style hsui fill:palegoldenrod
-style prestodb fill:cornflowerblue
-style redash fill:salmon
-style spark fill:darkorange
-style airflow fill:lawngreen
-style rdbms fill:cornflowerblue
-style tmo fill:lightgrey
-style cerberus fill:royalblue
+A[Start Firefox] --&gt;B[Select profile dir, default or defined]
+B --&gt; C{Selected dir exist?}
+C --&gt; |No| D[Create directory]
+C --&gt; |Yes| E[Write times.json]
+D --&gt; E
+E --&gt; F[Show Browser]
+F --&gt; G[ProfileAge.jsm is called]
+G --&gt; J[Read time from times.json]
+J --&gt; S[Return creation date]
 </div>
 
-<h1 id="firefox"><a name="firefox" class="plugin-anchor" href="#firefox"><i class="fa fa-link" aria-hidden="true"></i></a>Firefox</h1>
-<p>There are different APIs and formats to <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/index.html" target="_blank">collect data</a> in Firefox, all suiting different use cases:</p>
-<ul>
-<li><a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/histograms.html" target="_blank">histograms</a> &#x2013; for recording multiple data points;</li>
-<li><a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/scalars.html" target="_blank">scalars</a> &#x2013; for recording single values;</li>
-<li><a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/measuring-time.html" target="_blank">timings</a> &#x2013; for measuring how long operations take;</li>
-<li><a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html" target="_blank">events</a> &#x2013; for recording time-stamped events.</li>
-</ul>
-<p>These are commonly referred to as <em><a href="../datasets/new_data.md">probes</a></em>. Each probe must declare the <a href="https://wiki.mozilla.org/Firefox/Data_Collection" target="_blank">collection policy</a> it conforms to: either <em>release</em> or <em>prerelease</em>. When adding a new measurement data-reviewers carefully inspect the probe and eventually approve the requested collection policy:</p>
-<ul>
-<li>Release data is collected from all Firefox users.</li>
-<li>Prerelease data is collected from users on Firefox Nightly and Beta channels.</li>
-</ul>
-<p>Users may choose to turn the data collection off in preferences.</p>
-<p>A <em>session</em> begins when Firefox starts up and ends when it shuts down. As a session could be long-running and last weeks, it gets sliced into smaller logical units called <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/sessions.html#subsessions" target="_blank">subsessions</a>. Each subsession generates a batch of data containing the current state of all probes collected so far, i.e. a <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html" target="_blank">main ping</a>, which is sent to our servers. The main ping is just one of the many <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/pings.html#ping-types" target="_blank">ping types</a> we support. Developers can <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html" target="_blank">create their own ping types</a> if needed.</p>
-<p><em>Pings</em> are submitted via an <a href="https://dxr.mozilla.org/mozilla-central/rev/6a23526fe5168087d7e4132c0705aefcaed5f571/toolkit/components/telemetry/TelemetryController.jsm#202" target="_blank">API</a> that performs a HTTP POST request to our edge servers. If a ping fails to successfully <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/submission.html#submission" target="_blank">submit</a> (e.g. because of missing internet connection), Firefox will store the ping on disk and retry to send it until the maximum ping age is exceeded.</p>
-<h1 id="kafka"><a name="kafka" class="plugin-anchor" href="#kafka"><i class="fa fa-link" aria-hidden="true"></i></a>Kafka</h1>
-<p>HTTP submissions coming in from the wild hit a <a href="https://aws.amazon.com/elasticloadbalancing/" target="_blank">load balancer</a> and then an NGINX <a href="https://github.com/mozilla-services/nginx_moz_ingest" target="_blank">module</a>. The <a href="https://github.com/mozilla-services/nginx_moz_ingest" target="_blank">module</a> accepts data via a <a href="https://wiki.mozilla.org/CloudServices/DataPipeline/HTTPEdgeServerSpecification" target="_blank">HTTP request</a> which it wraps in a Hindsight protobuf message and forwards to two places: a Kafka cluster and a short-lived S3 bucket (landfill) which acts as a fail-safe in case there is a processing error and/or data loss within the rest of the pipeline. The deployment scripts and configuration files of NGINX and Kafka live in a <a href="https://github.com/mozilla-services/puppet-config/tree/02f716a3e0df1117fc2494b41e85a1416f8e2a64/pipeline" target="_blank">private repository</a>.</p>
-<p>The data from Kafka is read from the Complex Event Processors (CEP) and the Data Warehouse Loader (DWL), both of which use Hindsight.</p>
-<h1 id="hindsight"><a name="hindsight" class="plugin-anchor" href="#hindsight"><i class="fa fa-link" aria-hidden="true"></i></a>Hindsight</h1>
-<p><a href="https://github.com/mozilla-services/hindsight" target="_blank">Hindsight</a>, an open source stream processing software system developed by Mozilla as <a href="https://github.com/mozilla-services/heka" target="_blank">Heka</a>&#x2019;s successor, is useful for a wide variety of different tasks, such as:</p>
-<ul>
-<li>converting data from one format to another;</li>
-<li>shipping data from one location to another;</li>
-<li>performing real time analysis, graphing, and anomaly detection.</li>
-</ul>
-<p>Hindsight&#x2019;s core is a lightweight data processing kernel written in C that controls a set of Lua <a href="https://github.com/mozilla-services/hindsight/blob/9593668e84a642aff9dd95ccc648b6585948abfe/docs/index.md" target="_blank">plugins</a> executed inside a sandbox.</p>
-<p>The CEP are custom plugins that are created, configured and deployed from an <a href="https://github.com/mozilla-services/hindsight_admin" target="_blank">UI</a> which produce real-time plots like the number of pings matching a certain criteria.  Mozilla employees can <a href="https://pipeline-cep.prod.mozaws.net/" target="_blank">access the UI</a> and create/deploy their own custom plugin in real-time without interfering with other plugins running.</p>
-<p><img src="../assets/CEP_custom_plugin.jpeg" alt="CEP Custom Plugin" title="CEP &#x2013; a custom plugin in action"></p>
-<p>The DWL is composed of a set of plugins that transform, convert &amp; finally shovel pings into S3 for long term storage. In the specific case of Telemetry data, an input plugin <a href="https://github.com/mozilla-services/lua_sandbox_extensions/blob/0895238e32d25241ef46f561e43039beb201c7cd/kafka/sandboxes/heka/input/kafka.lua" target="_blank">reads pings from Kafka</a>, <a href="https://github.com/mozilla-services/lua_sandbox_extensions/blob/5d8907ee9f1a20e3a02bfe5b57d4312b173487a3/moz_telemetry/io_modules/decoders/moz_telemetry/ping.lua" target="_blank">pre-processes</a> them and <a href="https://github.com/mozilla-services/lua_sandbox_extensions/blob/5d8907ee9f1a20e3a02bfe5b57d4312b173487a3/moz_telemetry/sandboxes/heka/output/moz_telemetry_s3.lua" target="_blank">sends batches to S3</a>, our data lake, for long term storage. The data is compressed and partitioned by a set of dimensions, like date and application.</p>
-<p>The data has traditionally been serialized to <a href="https://hekad.readthedocs.io/en/latest/message/index.html#stream-framing" target="_blank">Protobuf</a> sequence files which contain some nasty &#x201C;free-form&#x201D; JSON fields. Hindsight gained recently the ability to <a href="https://github.com/mozilla-services/lua_sandbox_extensions/pull/48" target="_blank">dump data directly in Parquet form</a> though.</p>
-<p>The deployment scripts and configuration files of the CEP &amp; DWL live in a <a href="https://github.com/mozilla-services/puppet-config/tree/02f716a3e0df1117fc2494b41e85a1416f8e2a64/pipeline" target="_blank">private repository</a>.</p>
-<h1 id="spark"><a name="spark" class="plugin-anchor" href="#spark"><i class="fa fa-link" aria-hidden="true"></i></a>Spark</h1>
-<p>Once the data reaches our data lake on S3 it can be processed with Spark. We provide a portal (<a href="https://analysis.telemetry.mozilla.org/" target="_blank">ATMO</a>) that allows Mozilla employees to create their own Spark cluster pre-loaded with a set of libraries &amp; tools, like Jupyter, NumPy, SciPy, Pandas etc., and <a href="https://python-moztelemetry.readthedocs.io/en/stable/api.html#module-moztelemetry.dataset" target="_blank">an API</a> to conveniently read data stored in Protobuf form on S3 in a Spark RDD using a ORM-like interface. Behind the scenes we use <a href="https://github.com/mozilla/emr-bootstrap-spark/" target="_blank">EMR</a> to create Spark clusters, which are then monitored by ATMO.</p>
-<p><img src="../assets/ATMO_example.jpeg" alt="ATMO" title="ATMO &#x2013; monitoring clusters"></p>
-<p>ATMO is mainly used to write custom analyses; since our users aren&#x2019;t necessary data engineers/scientists we chose Python as the main supported language to interface with Spark. From ATMO it&#x2019;s also possible to schedule periodic notebook runs and inspect the results from a web UI.</p>
-<p>As mentioned earlier, most of our data lake contains data serialized to Protobuf with free-form JSON fields. Needless to say, parsing JSON is terribly slow when ingesting Terabytes of data per day. A set of <a href="https://github.com/mozilla/telemetry-batch-view" target="_blank">ETL jobs</a>, written in Scala by Data Engineers and scheduled with <a href="https://github.com/mozilla/telemetry-airflow/" target="_blank">Airflow</a>, create <a href="choosing_a_dataset.md">Parquet views</a> of our raw data. We have a Github repository <a href="https://github.com/mozilla/telemetry-batch-view/" target="_blank">telemetry-batch-view</a> that showcases this.</p>
-<h1 id="aggregates-dataset"><a name="aggregates-dataset" class="plugin-anchor" href="#aggregates-dataset"><i class="fa fa-link" aria-hidden="true"></i></a>Aggregates Dataset</h1>
+<blockquote id="fn_1">
+<sup>1</sup>. Relevant parts in the code: <a href="https://searchfox.org/mozilla-central/rev/292d295d6b084b43b70de26a42e68513bb7b36a3/toolkit/xre/nsAppRunner.cpp#2394-2395,2397-2398,2527-2533" target="_blank"><code>nsAppRunner::SelectProfile</code></a> calling <a href="https://searchfox.org/mozilla-central/rev/196560b95f191b48ff7cba7c2ba9237bba6b5b6a/toolkit/profile/nsToolkitProfileService.cpp#789-793" target="_blank"><code>nsToolkitProfileService::CreateProfile</code></a>.<a href="#reffn_1" title="Jump back to footnote [1] in the text."> &#x21A9;</a>
+</blockquote>
+<h3 id="unmanaged-empty-profile-directory"><a name="unmanaged-empty-profile-directory" class="plugin-anchor" href="#unmanaged-empty-profile-directory"><i class="fa fa-link" aria-hidden="true"></i></a>Unmanaged: Empty profile directory</h3>
+<p>When <code>--profile path/to/directory</code> is passed on the command line, the directory is created if it does not exist, but no <code>times.json</code> is written<sup><a href="#fn_2" id="reffn_2">2</a></sup>.
+On the first access of the profile creation date (through <code>ProfileAge.jsm</code>) the module will detect that the <code>times.json</code> is missing.
+It will then iterate through all files in the current profile&apos;s directory, reading file creation or modification timestamps.
+The oldest of these timestamps is then assumed to be the profile creation date and written to <code>times.json</code>.
+Subsequent runs of Firefox will then use this date.</p>
 <div class="mermaid">
 graph TD
-%% Data Flow Diagram for mozaggregator/TMO-adjacent services
-firefox((fa:fa-firefox Firefox)) --&gt; |main ping| pipeline
-fennec((fa:fa-firefox Fennec)) --&gt; |saved-session ping| pipeline
-pipeline((Telemetry Pipeline))
-
-subgraph mozaggregator
-  service(service)
-  aggregator
-  rdbms(fa:fa-database PostgreSQL)
-end
-
-pipeline --&gt; aggregator
-pipeline --&gt; spark{fa:fa-star Spark}
-pipeline --&gt; redash[fa:fa-line-chart Re:dash]
-
-subgraph telemetry.mozilla.org
-  telemetry.js(telemetry.js) --&gt; dist
-  telemetry.js --&gt; evo
-  orphan[Update Orphaning]
-  crashdash[tmo/crashes]
-end
-
-redash --&gt; crashdash
-service --&gt; telemetry.js
-spark --&gt; orphan
-
-telemetry.js --&gt; telemetry-next-node(telemetry-next-node)
-subgraph alerts.tmo
-  cerberus[fa:fa-search-plus Cerberus] --&gt;medusa
-  medusa --&gt; html
-  medusa --&gt; email
-end
-
-telemetry-next-node --&gt; cerberus
-
-style redash fill:salmon
-style spark fill:darkorange
-style rdbms fill:cornflowerblue
-style cerberus fill:royalblue
-style firefox fill:#f61
-style fennec fill:#f61
-style telemetry.js fill:lightgrey
-style dist fill:lightgrey
-style evo fill:lightgrey
+A[Start Firefox --profile path/to/dir] --&gt;H{path/to/dir exist?}
+H --&gt; |No| K[Create directory]
+K --&gt; F[Show Browser]
+H --&gt; |Yes| F
+F --&gt; O[ProfileAge.jsm is called]
+O --&gt; R{times.json exists?}
+R --&gt;|Yes| Q[Read time from times.json]
+R --&gt;|No| L[Scan profile dir for oldest file, write to times.json]
+L --&gt; S
+Q --&gt; S[Return creation date]
 </div>
 
-<p>A dedicated Spark job feeds daily aggregates to a PostgreSQL database which powers a <a href="https://github.com/mozilla/python_mozaggregator/#api" target="_blank">HTTP service</a> to easily retrieve faceted roll-ups. The service is mainly used by <a href="https://telemetry.mozilla.org/" target="_blank">TMO</a>, a dashboard that visualizes distributions and time-series, and <a href="https://github.com/mozilla/cerberus/" target="_blank">Cerberus</a>, an anomaly detection tool that detects and alerts developers of changes in the distributions. Originally the sole purpose of the Telemetry pipeline was to feed data into this dashboard but in time its scope and flexibility grew to support more general use-cases.</p>
-<p><img src="../assets/TMO_example.jpeg" alt="TMO" title="TMO &#x2013; timeseries"></p>
-<h1 id="presto--redash"><a name="presto--redash" class="plugin-anchor" href="#presto--redash"><i class="fa fa-link" aria-hidden="true"></i></a>Presto &amp; re:dash</h1>
-<p>We maintain a couple of <a href="https://github.com/mozilla/emr-bootstrap-presto" target="_blank">Presto clusters</a> and a centralized Hive metastore to query Parquet data with SQL. The Hive metastore provides an universal view of our Parquet dataset to both Spark and Presto clusters.</p>
-<p>Presto, and other databases, are behind a <a href="https://sql.telemetry.mozilla.org/" target="_blank">re:dash</a> service (<a href="https://sql.telemetry.mozilla.org/" target="_blank">STMO</a>) which provides a convenient &amp; powerful interface to query SQL engines and build dashboards that can be shared within the company. Mozilla maintains its own <a href="https://github.com/mozilla/redash" target="_blank">fork of re:dash</a> to iterate quickly on new features, but as good open source citizen we push our changes upstream.</p>
-<p><img src="../assets/STMO_example.jpeg" alt="STMO" title="STMO &#x2013; who doesn&#x2019;t love SQL?"></p>
-<h1 id="is-that-it"><a name="is-that-it" class="plugin-anchor" href="#is-that-it"><i class="fa fa-link" aria-hidden="true"></i></a>Is that it?</h1>
-<p>No, not really. If you want to read more, check out <a href="data_pipeline_detail.html">this article</a>. For example, the DWL pushes some of the Telemetry data to Redshift and other tools that satisfy more niche needs. The pipeline ingests logs from services as well and there are many specialized dashboards out there I haven&#x2019;t mentioned. We also use <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1369519" target="_blank">Zeppelin</a> as a means to create interactive data analysis notebooks that supports Spark, SQL, Scala and more.</p>
-<p>There is a vast ecosystem of tools for processing data at scale, each with their pros &amp; cons. The pipeline grew organically and we added new tools as new use-cases came up that we couldn&#x2019;t solve with our existing stack. There are still scars left from that growth though which require some effort to get rid of, like ingesting data from schema-less format.</p>
+<blockquote id="fn_2">
+<sup>2</sup>. Relevant part in the code: <a href="https://searchfox.org/mozilla-central/rev/292d295d6b084b43b70de26a42e68513bb7b36a3/toolkit/xre/nsAppRunner.cpp#2357-2363" target="_blank"><code>nsAppRunner::SelectProfile</code></a> creating the directory.<a href="#reffn_2" title="Jump back to footnote [2] in the text."> &#x21A9;</a>
+</blockquote>
 
                                 
                                 </section>
@@ -1417,12 +1405,8 @@ style evo fill:lightgrey
 
             
                 
-                <a href="../../tools/projects.html" class="navigation navigation-prev " aria-label="Previous page: Project Glossary">
-                    <i class="fa fa-angle-left"></i>
-                </a>
                 
-                
-                <a href="data_pipeline_detail.html" class="navigation navigation-next " aria-label="Next page: In-depth Data Pipeline Detail">
+                <a href="realworldusage.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Real World Usage">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1433,7 +1417,7 @@ style evo fill:lightgrey
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Overview of Mozilla's Data Pipeline","level":"1.3.2","depth":2,"next":{"title":"In-depth Data Pipeline Detail","level":"1.3.2.1","depth":3,"path":"concepts/pipeline/data_pipeline_detail.md","ref":"concepts/pipeline/data_pipeline_detail.md","articles":[]},"previous":{"title":"Project Glossary","level":"1.3.1","depth":2,"path":"tools/projects.md","ref":"tools/projects.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/pipeline/data_pipeline.md","mtime":"2018-08-29T07:53:36.380Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-08-29T07:56:56.245Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Profile Creation","level":"3.1.1.1","depth":3,"next":{"title":"Real World Usage","level":"3.1.1.2","depth":3,"path":"concepts/profile/realworldusage.md","ref":"concepts/profile/realworldusage.md","articles":[]},"previous":{"title":"Profile Behavior","level":"3.1.1","depth":2,"ref":"","articles":[{"title":"Profile Creation","level":"3.1.1.1","depth":3,"path":"concepts/profile/profile_creation.md","ref":"concepts/profile/profile_creation.md","articles":[]},{"title":"Real World Usage","level":"3.1.1.2","depth":3,"path":"concepts/profile/realworldusage.md","ref":"concepts/profile/realworldusage.md","articles":[]},{"title":"Profile History","level":"3.1.1.3","depth":3,"path":"concepts/profile/profilehistory.md","ref":"concepts/profile/profilehistory.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/profile/profile_creation.md","mtime":"2018-08-29T07:53:36.404Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-08-29T07:56:56.245Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
