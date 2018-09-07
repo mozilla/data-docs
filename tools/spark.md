@@ -216,7 +216,7 @@ one of the available example notebooks when you start a cluster.
 ### Available Data Sources for `SparkSQL`
 
 For information about data sources available for querying (e.g. Longitudinal dataset),
-see [Choosing a Dataset](/concepts/choosing_a_dataset.md).
+see [Choosing a Dataset](../concepts/choosing_a_dataset.md).
 
 These datasets are optimized for fast access, and will far out-perform
 analysis on the raw Telemetry ping data.
@@ -288,7 +288,7 @@ Use `spark.read.parquet`, e.g.:
 dataset = spark.read.parquet("s3://the_bucket/the_prefix/the_version")`
 ```
 
-For more information see [Working with Parquet](/cookbooks/parquet.md).
+For more information see [Working with Parquet](../cookbooks/parquet.md).
 
 ### I got a REMOTE HOST IDENTIFICATION HAS CHANGED! error
 

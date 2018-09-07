@@ -5,7 +5,7 @@ This guide will give you a quick introduction to working with
 You can also refer to Spark's documentation on the subject
 [here](http://spark.apache.org/docs/latest/sql-programming-guide.html#parquet-files).
 
-Most of our [derived datasets](/datasets/derived.md),
+Most of our [derived datasets](../datasets/derived.md),
 like the `longitudinal` or `main_summary` tables,
 are stored in Parquet files.
 You can access these datasets in [re:dash](https://sql.telemetry.mozilla.org/),
@@ -30,7 +30,7 @@ main_summary = spark.read.parquet('s3://telemetry-parquet/main_summary/v1/')
 ```
 
 You can find the S3 path for common datasets in
-[Choosing a Dataset](/concepts/choosing_a_dataset.md)
+[Choosing a Dataset](../concepts/choosing_a_dataset.md)
 or in the reference documentation.
 
 # Writing Parquet Tables
@@ -59,4 +59,4 @@ test_dataframe.write.mode('error') \
 
 # Accessing Parquet Tables from Re:dash
 
-See [Creating a custom re:dash dataset](/cookbooks/create_a_dataset.md).
+See [Creating a custom re:dash dataset](create_a_dataset.md).

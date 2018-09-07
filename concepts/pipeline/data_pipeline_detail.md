@@ -166,9 +166,9 @@ Once written to S3, the data is typically treated as immutable - data is not app
 
 There are a number of other types of storage used for more specialized applications, including relational databases (such as PostgreSQL for the [Telemetry Aggregates]) and NoSQL databases (DynamoDB is used for a backing store for the [TAAR project]). Reading data from a variety of RDBMS sources is also supported via Re:dash.
 
-The data stored in Heka format is [readable from Spark](/tools/spark.md) using libraries in [Scala][moztelemetry] or [Python][py_dataset].
+The data stored in Heka format is [readable from Spark](../../tools/spark.md) using libraries in [Scala][moztelemetry] or [Python][py_dataset].
 
-Parquet data can be read and written natively from Spark, and many datasets are indexed in a [Hive] Metastore, making them available through a SQL interface on Re:dash and in notebooks via Spark SQL. Many other SQL data sources are also made available via Re:dash, see [this article](/tools/stmo.md) for more information on accessing data using SQL.
+Parquet data can be read and written natively from Spark, and many datasets are indexed in a [Hive] Metastore, making them available through a SQL interface on Re:dash and in notebooks via Spark SQL. Many other SQL data sources are also made available via Re:dash, see [this article](../../tools/stmo.md) for more information on accessing data using SQL.
 
 There is a separate data store for self-serve **Analysis Outputs**, intended to keep ad-hoc, temporary data out of the Data Lake. This is implemented as a separate S3 location, with personal output locations prefixed with each person's user id, similar to the layout of the `/home` directory on a Unix system. See the [Working with Parquet data] cookbook for more details.
 
@@ -178,7 +178,7 @@ Analysis outputs can also be made public using the **Public Outputs** bucket. Th
 
 Stream processing is done using [Hindsight] and [Spark Streaming].
 
-Hindsight allows you to run [plugins written in Lua inside a sandbox][lua_sandbox]. This gives a safe, performant way to do self-serve streaming analysis. See [this article](cookbooks/realtime_analysis_plugin.md) for an introduction. Hindsight plugins do the initial data validation and decoding, as well as writing out to long-term storage in both [Heka-framed protobuf][heka_protobuf] and [parquet][direct2parquet] forms.
+Hindsight allows you to run [plugins written in Lua inside a sandbox][lua_sandbox]. This gives a safe, performant way to do self-serve streaming analysis. See [this article](../../cookbooks/realtime_analysis_plugin.md) for an introduction. Hindsight plugins do the initial data validation and decoding, as well as writing out to long-term storage in both [Heka-framed protobuf][heka_protobuf] and [parquet][direct2parquet] forms.
 
 Spark Streaming is used to read from Kafka and perform [low-latency ETL and aggregation tasks][telemetry-streaming]. These aggregates are currently used by [Mission Control] and are also available for querying via [Re:dash].
 
@@ -186,7 +186,7 @@ Spark Streaming is used to read from Kafka and perform [low-latency ETL and aggr
 
 Batch processing is done using [Spark]. Production ETL code is written in both [Python][python_mozetl] and [Scala][telemetry-batch-view].
 
-There are [Python][py_dataset] and [Scala][moztelemetry] libraries for reading data from the Data Lake in [Heka-framed protobuf][heka_protobuf] form, though it is much easier and more performant to make use of a [derived dataset](/concepts/choosing_a_dataset.md) whenever possible.
+There are [Python][py_dataset] and [Scala][moztelemetry] libraries for reading data from the Data Lake in [Heka-framed protobuf][heka_protobuf] form, though it is much easier and more performant to make use of a [derived dataset](../../concepts/choosing_a_dataset.md) whenever possible.
 
 Datasets in parquet format can be read natively by Spark, either using Spark SQL or by reading data directly from S3.
 
@@ -243,9 +243,9 @@ Clusters launched via ATMO are automatically killed after a user-defined period 
 
 ##### STMO: SQL Analysis
 
-[STMO] is a customized [Re:dash] installation that provides self-serve access to a a variety of different [datasets](/concepts/choosing_a_dataset.md). From here, you can query data in the Parquet Data Lake as well as various RDBMS data sources.
+[STMO] is a customized [Re:dash] installation that provides self-serve access to a a variety of different [datasets](../../concepts/choosing_a_dataset.md). From here, you can query data in the Parquet Data Lake as well as various RDBMS data sources.
 
-STMO interfaces with the data lake using both [Presto] and Amazon [Athena]. Each has its own data source in Re:dash. Since Athena does not support user-defined functions, datasets with HyperLogLog columns, such as [`client_count_daily`](/datasets/batch_view/client_count_daily/intro.md), are only available via Presto..
+STMO interfaces with the data lake using both [Presto] and Amazon [Athena]. Each has its own data source in Re:dash. Since Athena does not support user-defined functions, datasets with HyperLogLog columns, such as [`client_count_daily`](../../datasets/batch_view/client_count_daily/intro.md), are only available via Presto..
 
 Different **Data Sources** in STMO connect to different backends, and each backend might use a slightly different flavor of SQL. You should find a link to the documentation for the expected SQL variant next to the Data Sources list.
 
@@ -404,7 +404,7 @@ graph LR
 [Airflow]: https://github.com/mozilla/telemetry-airflow
 [Re:dash]: https://sql.telemetry.mozilla.org
 [ATMO]: https://analysis.telemetry.mozilla.org
-[STMO]: /tools/stmo.md
+[STMO]: ../../tools/stmo.md
 [Jupyter]: https://jupyter.org/
 [Zeppelin]: https://zeppelin.apache.org/
 [Databricks instance]: https://dbc-caf9527b-e073.cloud.databricks.com
@@ -426,7 +426,7 @@ graph LR
 [hslog]: https://mozilla-services.github.io/lua_sandbox_extensions/moz_logging/
 [python_mozetl]: https://github.com/mozilla/python_mozetl
 [telemetry-batch-view]: https://github.com/mozilla/telemetry-batch-view
-[Getting Started]: /concepts/analysis_intro.md
+[Getting Started]: ../../concepts/analysis_intro.md
 [St. Mocli]: https://github.com/mozilla/stmocli
 [Kafka]: https://kafka.apache.org/
 [Spark]: https://spark.apache.org/docs/latest/index.html

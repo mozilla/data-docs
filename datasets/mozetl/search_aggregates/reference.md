@@ -19,7 +19,7 @@ For more details see the [search data documentation].
 
 ## Scheduling
 
-This job is 
+This job is
 [scheduled on airflow](https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py#L135)
 to run daily.
 
@@ -31,25 +31,25 @@ and has a schema as follows.
 The dataset is backfilled through 2016-06-06
 
 ```
-root 
- |-- country: string (nullable = true) 
- |-- engine: string (nullable = true) 
- |-- source: string (nullable = true) 
- |-- submission_date: string (nullable = true) 
- |-- app_version: string (nullable = true) 
- |-- distribution_id: string (nullable = true) 
- |-- locale: string (nullable = true) 
- |-- search_cohort: string (nullable = true) 
- |-- addon_version: string (nullable = true) 
- |-- tagged-sap: long (nullable = true) 
- |-- tagged-follow-on: long (nullable = true) 
+root
+ |-- country: string (nullable = true)
+ |-- engine: string (nullable = true)
+ |-- source: string (nullable = true)
+ |-- submission_date: string (nullable = true)
+ |-- app_version: string (nullable = true)
+ |-- distribution_id: string (nullable = true)
+ |-- locale: string (nullable = true)
+ |-- search_cohort: string (nullable = true)
+ |-- addon_version: string (nullable = true)
+ |-- tagged-sap: long (nullable = true)
+ |-- tagged-follow-on: long (nullable = true)
  |-- sap: long (nullable = true)
 ```
 
 # Code Reference
 
-The `search_aggregates` job is 
+The `search_aggregates` job is
 [defined in `python_mozetl`](https://github.com/mozilla/python_mozetl/blob/master/mozetl/search/aggregates.py)
 
 
-[search data documentation]: /datasets/search.md
+[search data documentation]: ../../search.md

@@ -116,8 +116,8 @@ If you're using the Telemetry APIs, use those built-in. These can be with the
 the [Android Telemetry APIs](https://github.com/mozilla-mobile/telemetry-android), or the
 [iOS Telemetry APIs](https://github.com/mozilla-mobile/telemetry-ios).
 
-For non-Telemetry data, see [our HTTP edge server specification](/concepts/pipeline/http_edge_spec.md)
-and specifically the [non-Telemetry example](/concepts/pipeline/http_edge_spec.md#postput-request) for the expected format. The edge
+For non-Telemetry data, see [our HTTP edge server specification](../concepts/pipeline/http_edge_spec.md)
+and specifically the [non-Telemetry example](../concepts/pipeline/http_edge_spec.md#postput-request) for the expected format. The edge
 server endpoint is `https://incoming.telemetry.mozilla.org`.
 
 (Non-Telemetry) Access Your Data
@@ -143,7 +143,7 @@ error messages in the third link. Otherwise, you should be able to view the
 last ten processed submissions via the second link. You can also write your own
 custom real-time analysis plugins using this same infrastructure if you desire;
 use the above plugins as examples and see
-[here](/cookbooks/realtime_analysis_plugin.md) for a more detailed explanation.
+[here](realtime_analysis_plugin.md) for a more detailed explanation.
 
 If you encounter schema validation errors, you can fix your data or
 [submit another pull request](#submit-schema-to-mozilla-servicesmozilla-pipeline-schemas)
@@ -159,7 +159,7 @@ In the Athena data source, a new table
 convenience pointer `<namespace>_<doctype>_parquet` will also refer to the latest
 available `docversion` of the ping. The data is partitioned by
 `submission_date_s3` which is formatted as `%Y%m%d`, like `20180130`, and is
-generally updated hourly. Refer to the [STMO documentation](/tools/stmo.md)
+generally updated hourly. Refer to the [STMO documentation](../tools/stmo.md)
 for general information about using Re:dash.
 
 This table may take up to a day to appear in the Athena source; if you still
@@ -176,7 +176,7 @@ The data should be available in S3 at:
 
 Note: here `<namespace>` should not be escaped.
 
-Refer to the [Spark FAQ](/tools/spark.md#faq) for details on accessing this table via ATMO.
+Refer to the [Spark FAQ](../tools/spark.md#faq) for details on accessing this table via ATMO.
 
 Write ETL Jobs
 --------------

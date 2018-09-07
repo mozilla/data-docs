@@ -86,7 +86,7 @@ ids that we have coming from each country, for the top N countries. Clicking on
 the 'New Query' button near the top left of the site will bring you to the
 query editing page:
 
-![New Query Page](/../assets/STMO_screenshots/new_query.png "New Query page")
+![New Query Page](../assets/STMO_screenshots/new_query.png "New Query page")
 
 For this (and most queries where we're counting distinct client IDs) we'll want
 to use the [`client_count_daily` data
@@ -160,7 +160,7 @@ visualization. The table with results from the first query execution should be
 showing up underneath the query edit box. Next to the `TABLE` heading should be
 another heading entitled `+NEW VISUALIZATION`.
 
-![New Visualization](/../assets/STMO_screenshots/new_visualization.png "New Visualization")
+![New Visualization](../assets/STMO_screenshots/new_visualization.png "New Visualization")
 
 Clicking on the `+NEW VISUALIZATION` link should bring you to the
 "Visualization Editor" screen, where you can specify a visualization name ("Top

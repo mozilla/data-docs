@@ -18,7 +18,7 @@ reported in our [issue tracker](https://github.com/mozilla/redash/issues).
 #### [`analysis.telemetry.mozilla.org`](spark.md) (ATMO)
 
 The
-[`analysis.telemetry.mozilla.org`](https://https://analysis.telemetry.mozilla.org)
+[`analysis.telemetry.mozilla.org`](https://analysis.telemetry.mozilla.org)
 (ATMO) site can be used to launch and gain access to virtual machines running
 Apache Spark clusters which have been pre-configured with access to the raw data
 stored in our long term storage S3 buckets. Spark allows you to use
@@ -32,12 +32,12 @@ the [documentation](https://wiki.mozilla.org/Telemetry) or
 #### [Databricks](https://dbc-caf9527b-e073.cloud.databricks.com/)
 
 Offers notebook interface with shared, always-on, autoscaling cluster
-(attaching your notebooks to `shared_serverless` is the best way to start).  
+(attaching your notebooks to `shared_serverless` is the best way to start).
 Convenient for quick data investigations. Users can get help on `#databricks`
-channel on IRC and are advised to join the 
+channel on IRC and are advised to join the
 [`databricks-discuss@mozilla.com`](https://groups.google.com/a/mozilla.com/forum/#!forum/databricks-discuss) group.
 
-#### [`telemetry.mozilla.org`](analysis_intro.md) (TMO)
+#### [`telemetry.mozilla.org`](../concepts/analysis_intro.md) (TMO)
 
 Our [`telemetry.mozilla.org`](https://telemetry.mozilla.org) (TMO) site is the
 'venerable standby' of Firefox telemetry analysis tools. It uses aggregate
@@ -50,7 +50,7 @@ for novice users.
 
 #### [Distribution Viewer](distribution_viewer.md)
 
-[Distribution Viewer](https://gauss.telemetry.mozilla.org) is a simple tool
+Distribution Viewer (deprecated) was a simple tool
 that provides a set of [cumulative distribution
 graphs](http://math.stackexchange.com/questions/52400/what-is-cdf-cumulative-distribution-function)
 for a pre-specified selection of Firefox user metrics. These metrics are

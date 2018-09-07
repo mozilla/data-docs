@@ -23,7 +23,7 @@ group by gfx_compositor
 ## Sampling
 
 `CrashSummary` contains one record for every
-[crash ping](https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/crash-ping.html)
+[crash ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html)
 submitted by Firefox.
 It was built with the long term goal of providing a base for
 [`CrashAggregates`](../crash_aggregates/reference.md).
@@ -69,7 +69,7 @@ root
 ```
 
 For more detail on where these fields come from in the
-[raw data](https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/crash-ping.html),
+[raw data](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html),
 please look at the case classes
 [in the `CrashSummaryView` code](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/CrashSummaryView.scala).
 

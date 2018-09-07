@@ -1,0 +1,9 @@
+{
+    "ignorePatterns": [
+        { "pattern": "^http(s)?://localhost" },
+        { "pattern": "^BROKEN:" },
+        { "pattern": "^https://github.com/mozilla-services/puppet-config" },
+        { "pattern": "^https://github.com/mozilla/Fx-Data-Planning" },
+        { "pattern": "^https://sql.telemetry.mozilla.org/queries" }
+    ]
+}

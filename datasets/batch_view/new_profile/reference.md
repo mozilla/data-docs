@@ -74,4 +74,4 @@ root
 ```
 
 For more detail on the raw ping these fields come from, see the
-[raw data](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/docs/telemetry/data/new-profile-ping.html).
+[raw data](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/new-profile-ping.html).
