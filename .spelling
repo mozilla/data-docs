@@ -66,6 +66,7 @@ hgpush
 HLL
 hostname
 hostnames
+https
 HyperLogLog
 ISO8601
 i.e.
