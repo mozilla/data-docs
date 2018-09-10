@@ -31,6 +31,8 @@ FROM telemetry.error_aggregates_v2
   AND (channel = 'beta' or channel = 'release' or channel = 'nightly' or channel = 'esr')
   AND build_id > '201801'
   AND window_start > current_timestamp - (1 * interval '24' hour)
+  AND experiment_id IS NULL
+  AND branch_id IS NULL
 GROUP BY window_start, channel, build_id, version, os_name
 ```
 
@@ -47,6 +49,8 @@ FROM telemetry.error_aggregates_v2
   AND version = '58.0.2'
   AND window_start > timestamp '2018-02-21'
   AND window_end < timestamp '2018-02-22'
+  AND experiment_id IS NULL
+  AND branch_id IS NULL
 GROUP BY window_start
 ```
 
@@ -79,8 +83,8 @@ The `error_aggregates_v2` table has the following columns which define its dimen
 * `os_version`: version of the OS
 * `architecture`: build architecture, e.g. `x86`
 * `country`: country code for the user (determined using geoIP), like `US` or `UK`
-* `experiment_id`: identifier of the experiment being participated in, such as `e10s-beta46-noapz@experiments.mozilla.org`, or null if no experiment
-* `experiment_branch`: the branch of the experiment being participated in, such as `control` or `experiment`, or null if no experiment
+* `experiment_id`: identifier of the experiment being participated in, such as `e10s-beta46-noapz@experiments.mozilla.org`, null if no experiment or for unpacked rows (see [Experiment unpacking](#experiment-unpacking))
+* `experiment_branch`: the branch of the experiment being participated in, such as `control` or `experiment`, null if no experiment or for unpacked rows (see [Experiment unpacking](#experiment-unpacking))
 
 And these are the various measures we are counting:
 
