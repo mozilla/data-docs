@@ -1,0 +1,38 @@
+{
+  "name": "firefox-data-docs",
+  "version": "1.0.0",
+  "description": "This document will teach you how to answer questions about Firefox Users with data. You can find the [rendered documentation here](https://mozilla.github.io/firefox-data-docs/).",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "gitbook install || (echo 'npm install -g gitbook-cli' && exit 1)",
+    "test": "broken-link-checker -e -r http://localhost:4000",
+    "start": "gitbook serve",
+    "spellcheck":  "mdspell '**/*.md' '!**/node_modules/**/*.md' '!**/_book/**/*.md' --ignore-numbers --en-us --report"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mozilla/firefox-data-docs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mozilla/firefox-data-docs/issues"
+  },
+  "homepage": "https://github.com/mozilla/firefox-data-docs#readme",
+  "devDependencies": {
+    "broken-link-checker": "^0.7.8",
+    "markdown-spellcheck": "^1.3.1"
+  },
+  "dependencies": {
+    "gitbook-plugin-anchors": "^0.7.1",
+    "gitbook-plugin-ga": "^1.0.1",
+    "gitbook-plugin-highlight": "^2.0.3",
+    "gitbook-plugin-mermaid-gb3": "^2.1.0",
+    "gitbook-plugin-search": "^2.2.1",
+    "gitbook-plugin-sharing": "^1.0.2",
+    "gitbook-plugin-sitemap": "^1.2.0",
+    "gitbook-plugin-theme-default": "^1.0.7",
+    "gitbook-plugin-toc": "0.0.2"
+  }
+}
