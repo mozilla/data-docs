@@ -12,7 +12,7 @@ Using arrays give you access to the raw data from each ping,
 but can be difficult to work with from SQL.
 Here's a [query showing some sample data](https://sql.telemetry.mozilla.org/queries/4188#table)
 to help illustrate.
-Take a look at the [longitudinal examples](/cookbooks/longitudinal.md) if you get stuck.
+Take a look at the [longitudinal examples](../../../cookbooks/longitudinal.md) if you get stuck.
 
 #### Background and Caveats
 Think of the longitudinal table as wide and short.
@@ -33,7 +33,7 @@ though it can be difficult to work with the array values in SQL.
 Take a look at this [example query](https://sql.telemetry.mozilla.org/queries/4189/source).
 
 The data is stored as a parquet table in S3 at the following address.
-See [this cookbook](/cookbooks/parquet.md) to get started working with the data
+See [this cookbook](../../../cookbooks/parquet.md) to get started working with the data
 in [Spark](http://spark.apache.org/docs/latest/quick-start.html).
 ```
 s3://telemetry-parquet/longitudinal/

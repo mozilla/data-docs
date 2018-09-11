@@ -1293,7 +1293,7 @@ if we did not receive a ping for that <code>submission_date</code>.</p>
 <p>We impute a <code>NULL</code> <code>engine</code> and <code>source</code> for pings with no search counts.
 This ensures users who never search are included in this dataset.</p>
 <p>This dataset is large.
-Consider using an <a href="../tools/spark.md">ATMO Spark cluster</a> for heavy analyses.
+Consider using an <a href="../../../tools/spark.html">ATMO Spark cluster</a> for heavy analyses.
 If you&apos;re querying this dataset from re:dash,
 heavily limit the data you read using <code>submission_date_s3</code> or <code>sample_id</code>.</p>
 <h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
@@ -1317,39 +1317,39 @@ For more details see the <a href="../../search.html">search data documentation</
 <p>As of 2018-03-23, the current version of <code>search_clients_daily</code> is <code>v2</code>,
 and has a schema as follows.
 It&apos;s backfilled through 2016-06-07</p>
-<pre><code>root 
- |-- client_id: string (nullable = true) 
- |-- submission_date: string (nullable = true) 
- |-- engine: string (nullable = true) 
- |-- source: string (nullable = true) 
- |-- country: string (nullable = true) 
- |-- app_version: string (nullable = true) 
- |-- distribution_id: string (nullable = true) 
- |-- locale: string (nullable = true) 
- |-- search_cohort: string (nullable = true) 
- |-- addon_version: string (nullable = true) 
- |-- os: string (nullable = true) 
- |-- channel: string (nullable = true) 
- |-- profile_creation_date: long (nullable = true) 
- |-- default_search_engine: string (nullable = true) 
- |-- default_search_engine_data_load_path: string (nullable = true) 
- |-- default_search_engine_data_submission_url: string (nullable = true) 
- |-- sample_id: string (nullable = true) 
- |-- sessions_started_on_this_day: long (nullable = true) 
- |-- profile_age_in_days: integer (nullable = true) 
- |-- subsession_hours_sum: double (nullable = true) 
- |-- active_addons_count_mean: double (nullable = true) 
- |-- max_concurrent_tab_count_max: integer (nullable = true) 
- |-- tab_open_event_count_sum: long (nullable = true) 
- |-- active_hours_sum: double (nullable = true) 
- |-- tagged-sap: long (nullable = true) 
- |-- tagged-follow-on: long (nullable = true) 
- |-- sap: long (nullable = true) 
- |-- tagged_sap: long (nullable = true) 
- |-- tagged_follow_on: long (nullable = true) 
+<pre><code>root
+ |-- client_id: string (nullable = true)
+ |-- submission_date: string (nullable = true)
+ |-- engine: string (nullable = true)
+ |-- source: string (nullable = true)
+ |-- country: string (nullable = true)
+ |-- app_version: string (nullable = true)
+ |-- distribution_id: string (nullable = true)
+ |-- locale: string (nullable = true)
+ |-- search_cohort: string (nullable = true)
+ |-- addon_version: string (nullable = true)
+ |-- os: string (nullable = true)
+ |-- channel: string (nullable = true)
+ |-- profile_creation_date: long (nullable = true)
+ |-- default_search_engine: string (nullable = true)
+ |-- default_search_engine_data_load_path: string (nullable = true)
+ |-- default_search_engine_data_submission_url: string (nullable = true)
+ |-- sample_id: string (nullable = true)
+ |-- sessions_started_on_this_day: long (nullable = true)
+ |-- profile_age_in_days: integer (nullable = true)
+ |-- subsession_hours_sum: double (nullable = true)
+ |-- active_addons_count_mean: double (nullable = true)
+ |-- max_concurrent_tab_count_max: integer (nullable = true)
+ |-- tab_open_event_count_sum: long (nullable = true)
+ |-- active_hours_sum: double (nullable = true)
+ |-- tagged-sap: long (nullable = true)
+ |-- tagged-follow-on: long (nullable = true)
+ |-- sap: long (nullable = true)
+ |-- tagged_sap: long (nullable = true)
+ |-- tagged_follow_on: long (nullable = true)
  |-- submission_date_s3: string (nullable = true)
 </code></pre><h1 id="code-reference"><a name="code-reference" class="plugin-anchor" href="#code-reference"><i class="fa fa-link" aria-hidden="true"></i></a>Code Reference</h1>
-<p>The <code>search_clients_daily</code> job is 
+<p>The <code>search_clients_daily</code> job is
 <a href="https://github.com/mozilla/python_mozetl/blob/master/mozetl/search/aggregates.py" target="_blank">defined in <code>python_mozetl</code></a></p>
 
                                 
@@ -1394,7 +1394,7 @@ It&apos;s backfilled through 2016-06-07</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Search Clients Daily","level":"2.1.4.2","depth":3,"next":{"title":"Other Datasets","level":"2.1.5","depth":2,"path":"datasets/other.md","ref":"datasets/other.md","articles":[{"title":"hgpush","level":"2.1.5.1","depth":3,"path":"datasets/other/hgpush/reference.md","ref":"datasets/other/hgpush/reference.md","articles":[]}]},"previous":{"title":"Search Aggregates","level":"2.1.4.1","depth":3,"path":"datasets/mozetl/search_aggregates/reference.md","ref":"datasets/mozetl/search_aggregates/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/mozetl/search_clients_daily/reference.md","mtime":"2018-09-07T18:14:27.296Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-09-07T18:15:53.380Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Search Clients Daily","level":"2.1.4.2","depth":3,"next":{"title":"Other Datasets","level":"2.1.5","depth":2,"path":"datasets/other.md","ref":"datasets/other.md","articles":[{"title":"hgpush","level":"2.1.5.1","depth":3,"path":"datasets/other/hgpush/reference.md","ref":"datasets/other/hgpush/reference.md","articles":[]}]},"previous":{"title":"Search Aggregates","level":"2.1.4.1","depth":3,"path":"datasets/mozetl/search_aggregates/reference.md","ref":"datasets/mozetl/search_aggregates/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/mozetl/search_clients_daily/reference.md","mtime":"2018-09-11T13:21:38.274Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-09-11T13:23:10.155Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

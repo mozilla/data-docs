@@ -1277,7 +1277,7 @@
 <!-- tocstop -->
 <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
 <p>The <code>main_summary</code> table is the most direct representation of a main ping
-but can be difficult to work with due to its size. 
+but can be difficult to work with due to its size.
 Prefer the <code>longitudinal</code> dataset unless using the sampled data is prohibitive.</p>
 <h4 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h4>
 <p>The <code>main_summary</code> table contains one row for each ping.
@@ -1298,14 +1298,14 @@ make use of the <code>sample_id</code> field and limit to a short submission dat
 <p>The data is stored as a parquet table in S3 at the following address.
 See <a href="../../../cookbooks/parquet.html">this cookbook</a> to get started working with the data in Spark.</p>
 <pre><code>s3://telemetry-parquet/main_summary/v4/
-</code></pre><p>Though <strong>not recommended</strong> <code>main_summary</code> is accessible through re:dash. 
+</code></pre><p>Though <strong>not recommended</strong> <code>main_summary</code> is accessible through re:dash.
 Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/4201/source" target="_blank">example query</a>.
 Your queries will be slow to complete and can <strong>impact performance for other users</strong>,
 since re:dash is on a shared cluster.</p>
 <h4 id="further-reading"><a name="further-reading" class="plugin-anchor" href="#further-reading"><i class="fa fa-link" aria-hidden="true"></i></a>Further Reading</h4>
 <p>The technical documentation for <code>main_summary</code> is located in the
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/docs/MainSummary.md" target="_blank">telemetry-batch-view documentation</a>.</p>
-<p>The code responsible for generating this dataset is 
+<p>The code responsible for generating this dataset is
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/MainSummaryView.scala" target="_blank">here</a></p>
 <h1 id="adding-new-fields"><a name="adding-new-fields" class="plugin-anchor" href="#adding-new-fields"><i class="fa fa-link" aria-hidden="true"></i></a>Adding New Fields</h1>
 <p>We support a few basic types that can be easily added to <code>main_summary</code>.</p>
@@ -1848,7 +1848,7 @@ Refer to this repository for information on how to run or augment the dataset.</
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Main Summary","level":"2.1.2.13","depth":3,"next":{"title":"New Profile","level":"2.1.2.14","depth":3,"path":"datasets/batch_view/new_profile/reference.md","ref":"datasets/batch_view/new_profile/reference.md","articles":[]},"previous":{"title":"Longitudinal","level":"2.1.2.12","depth":3,"path":"datasets/batch_view/longitudinal/reference.md","ref":"datasets/batch_view/longitudinal/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/main_summary/reference.md","mtime":"2018-09-07T18:14:27.296Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-09-07T18:15:53.380Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Main Summary","level":"2.1.2.13","depth":3,"next":{"title":"New Profile","level":"2.1.2.14","depth":3,"path":"datasets/batch_view/new_profile/reference.md","ref":"datasets/batch_view/new_profile/reference.md","articles":[]},"previous":{"title":"Longitudinal","level":"2.1.2.12","depth":3,"path":"datasets/batch_view/longitudinal/reference.md","ref":"datasets/batch_view/longitudinal/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/batch_view/main_summary/reference.md","mtime":"2018-09-11T13:21:38.270Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-09-11T13:23:10.155Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

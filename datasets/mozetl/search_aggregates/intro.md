@@ -47,4 +47,4 @@ For more details see the [search data documentation].
 
 
 [followonsearch addon]: https://github.com/mozilla/followonsearch
-[search data documentation]: /datasets/search.md
+[search data documentation]: ../../search.md

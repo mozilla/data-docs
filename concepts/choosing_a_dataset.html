@@ -1320,7 +1320,7 @@ If you do need to work with raw ping data, be aware that loading the data can ta
 Try to limit the size of your data by controlling the date range, etc.</p>
 <h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
 <p>You can access raw ping data from an <a href="https://analysis.telemetry.mozilla.org/" target="_blank">ATMO cluster</a> using the <a href="https://python-moztelemetry.readthedocs.io/en/stable/api.html#module-moztelemetry.dataset" target="_blank">Dataset API</a>.
-Raw ping data are not available in <a href="sql.telemetry.mozilla.org">re:dash</a>.</p>
+Raw ping data are not available in <a href="https://sql.telemetry.mozilla.org" target="_blank">re:dash</a>.</p>
 <h4 id="further-reading"><a name="further-reading" class="plugin-anchor" href="#further-reading"><i class="fa fa-link" aria-hidden="true"></i></a>Further Reading</h4>
 <p>You can find <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/index.html" target="_blank">the complete ping documentation</a>.
 To augment our data collection, see <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Adding_a_new_Telemetry_probe" target="_blank">Collecting New Data</a> and the
@@ -1344,7 +1344,7 @@ Using arrays give you access to the raw data from each ping,
 but can be difficult to work with from SQL.
 Here&apos;s a <a href="https://sql.telemetry.mozilla.org/queries/4188#table" target="_blank">query showing some sample data</a>
 to help illustrate.
-Take a look at the <a href="../cookbooks/longitudinal.md">longitudinal examples</a> if you get stuck.</p>
+Take a look at the <a href="../../../cookbooks/longitudinal.md">longitudinal examples</a> if you get stuck.</p>
 <h4 id="background-and-caveats"><a name="background-and-caveats" class="plugin-anchor" href="#background-and-caveats"><i class="fa fa-link" aria-hidden="true"></i></a>Background and Caveats</h4>
 <p>Think of the longitudinal table as wide and short.
 The dataset contains more columns than <code>main_summary</code>
@@ -1360,12 +1360,12 @@ and down-samples to 1% of all clients to reduce query computation time and save 
 though it can be difficult to work with the array values in SQL.
 Take a look at this <a href="https://sql.telemetry.mozilla.org/queries/4189/source" target="_blank">example query</a>.</p>
 <p>The data is stored as a parquet table in S3 at the following address.
-See <a href="../cookbooks/parquet.html">this cookbook</a> to get started working with the data
+See <a href="../../../cookbooks/parquet.md">this cookbook</a> to get started working with the data
 in <a href="http://spark.apache.org/docs/latest/quick-start.html" target="_blank">Spark</a>.</p>
 <pre><code>s3://telemetry-parquet/longitudinal/
 </code></pre><h2 id="mainsummary"><a name="mainsummary" class="plugin-anchor" href="#mainsummary"><i class="fa fa-link" aria-hidden="true"></i></a><code>main_summary</code></h2>
 <p>The <code>main_summary</code> table is the most direct representation of a main ping
-but can be difficult to work with due to its size. 
+but can be difficult to work with due to its size.
 Prefer the <code>longitudinal</code> dataset unless using the sampled data is prohibitive.</p>
 <h4 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h4>
 <p>The <code>main_summary</code> table contains one row for each ping.
@@ -1384,26 +1384,26 @@ In the odd case where these queries are necessary,
 make use of the <code>sample_id</code> field and limit to a short submission date range.</p>
 <h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
 <p>The data is stored as a parquet table in S3 at the following address.
-See <a href="../cookbooks/parquet.html">this cookbook</a> to get started working with the data in Spark.</p>
+See <a href="../../../cookbooks/parquet.md">this cookbook</a> to get started working with the data in Spark.</p>
 <pre><code>s3://telemetry-parquet/main_summary/v4/
-</code></pre><p>Though <strong>not recommended</strong> <code>main_summary</code> is accessible through re:dash. 
+</code></pre><p>Though <strong>not recommended</strong> <code>main_summary</code> is accessible through re:dash.
 Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/4201/source" target="_blank">example query</a>.
 Your queries will be slow to complete and can <strong>impact performance for other users</strong>,
 since re:dash is on a shared cluster.</p>
 <h4 id="further-reading"><a name="further-reading" class="plugin-anchor" href="#further-reading"><i class="fa fa-link" aria-hidden="true"></i></a>Further Reading</h4>
 <p>The technical documentation for <code>main_summary</code> is located in the
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/docs/MainSummary.md" target="_blank">telemetry-batch-view documentation</a>.</p>
-<p>The code responsible for generating this dataset is 
+<p>The code responsible for generating this dataset is
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/MainSummaryView.scala" target="_blank">here</a></p>
 <h2 id="firstshutdownsummary"><a name="firstshutdownsummary" class="plugin-anchor" href="#firstshutdownsummary"><i class="fa fa-link" aria-hidden="true"></i></a><code>first_shutdown_summary</code></h2>
 <p>The <code>first_shutdown_summary</code> table is a summary of the <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/first-shutdown-ping.html" target="_blank"><code>first-shutdown</code>
-ping</a>. </p>
+ping</a>.</p>
 <h4 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h4>
 <p>The first shutdown ping contains first session usage data. The
 dataset has rows similar to the
-<a href="../datasets/batch_view/new_profile/reference.html"><code>telemetry_new_profile_parquet</code></a>,
+<a href="../new_profile/reference.md"><code>telemetry_new_profile_parquet</code></a>,
 but in the shape of
-<a href="../datasets/batch_view/main_summary/reference.html"><code>main_summary</code></a>. </p>
+<a href="../main_summary/reference.md"><code>main_summary</code></a>.</p>
 <h4 id="background-and-caveats"><a name="background-and-caveats" class="plugin-anchor" href="#background-and-caveats"><i class="fa fa-link" aria-hidden="true"></i></a>Background and Caveats</h4>
 <p>Ping latency was reduced through the
 shutdown ping-sender mechanism in Firefox 55. To maintain consistent historical
@@ -1639,7 +1639,7 @@ on average. See <a href="https://github.com/twitter/algebird/blob/develop/algebi
 more details.</li>
 </ol>
 <h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
-<p>The data is primarily available through <a href="sql.telemetry.mozilla.org">Re:dash on STMO</a> via
+<p>The data is primarily available through <a href="https://sql.telemetry.mozilla.org" target="_blank">Re:dash on STMO</a> via
 the Presto source. This service has been configured to use predefined HLL
 functions.</p>
 <p>The column should first be cast to the HLL type. The scalar
@@ -1696,7 +1696,7 @@ and statistics.</p>
 <h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
 <p>This dataset is accessible via re:dash.</p>
 <p>The data is stored as a parquet table in S3 at the following address.
-See <a href="../cookbooks/parquet.html">this cookbook</a> to get started working with the data in Spark.</p>
+See <a href="../../../cookbooks/parquet.md">this cookbook</a> to get started working with the data in Spark.</p>
 <pre><code>s3://telemetry-parquet/crash_aggregates/v1/
 </code></pre><h4 id="further-reading"><a name="further-reading" class="plugin-anchor" href="#further-reading"><i class="fa fa-link" aria-hidden="true"></i></a>Further Reading</h4>
 <p>The technical documentation for this dataset can be found in the
@@ -1709,7 +1709,7 @@ Each column represents one field from the crash ping payload,
 though only a subset of all crash ping fields are included.</p>
 <h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
 <p>The data is stored as a parquet table in S3 at the following address.
-See <a href="../cookbooks/parquet.html">this cookbook</a> to get started working with the data in Spark.</p>
+See <a href="../../../cookbooks/parquet.md">this cookbook</a> to get started working with the data in Spark.</p>
 <pre><code>s3://telemetry-parquet/crash_summary/v1/
 </code></pre><p><code>crash_summary</code> is accessible through re:dash.
 Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/4793/source" target="_blank">example query</a>.</p>
@@ -1728,7 +1728,7 @@ information about the user environment.</p>
 <p>The table contains one row for each ping. Each column represents one field from the new-profile ping payload, though only a subset of all fields are included.</p>
 <h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
 <p>The data is stored as a parquet table in S3 at the following address.
-See <a href="../cookbooks/parquet.html">this cookbook</a> to get started working with the data in Spark.</p>
+See <a href="../../../cookbooks/parquet.md">this cookbook</a> to get started working with the data in Spark.</p>
 <pre><code>s3://net-mozaws-prod-us-west-2-pipeline-data/telemetry-new-profile-parquet/v2/
 </code></pre><p>The <code>telemetry_new_profile_parquet</code> is accessible through re:dash.
 Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/5888#table" target="_blank">example query</a>.</p>
@@ -1744,7 +1744,7 @@ The <code>telemetry_update_parquet</code> table is the most direct representatio
 <p>The table contains one row for each ping. Each column represents one field from the update ping payload, though only a subset of all fields are included.</p>
 <h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
 <p>The data is stored as a parquet table in S3 at the following address.
-See <a href="../cookbooks/parquet.html">this cookbook</a> to get started working with the data in Spark.</p>
+See <a href="../../../cookbooks/parquet.md">this cookbook</a> to get started working with the data in Spark.</p>
 <pre><code>s3://net-mozaws-prod-us-west-2-pipeline-data/telemetry-update-parquet/v1/
 </code></pre><p>The <code>telemetry_update_parquet</code> is accessible through re:dash.
 Here&apos;s an <a href="https://sql.telemetry.mozilla.org/queries/31267#table" target="_blank">example query</a>.</p>
@@ -1799,7 +1799,7 @@ into account.</li>
 </code></pre>
 <h4 id="further-reading"><a name="further-reading" class="plugin-anchor" href="#further-reading"><i class="fa fa-link" aria-hidden="true"></i></a>Further Reading</h4>
 <p>The code responsible for generating this dataset is
-<a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/HeavyUsersView.scala" target="_blank">here</a></p>
+<a href="BROKEN:https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/HeavyUsersView.scala" target="_blank">here</a></p>
 <h1 id="appendix"><a name="appendix" class="plugin-anchor" href="#appendix"><i class="fa fa-link" aria-hidden="true"></i></a>Appendix</h1>
 <h2 id="mobile-metrics"><a name="mobile-metrics" class="plugin-anchor" href="#mobile-metrics"><i class="fa fa-link" aria-hidden="true"></i></a>Mobile Metrics</h2>
 <p>There are several tables owned by the mobile team documented
@@ -1853,7 +1853,7 @@ into account.</li>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.2","depth":2,"next":{"title":"Intro to STMO","level":"1.2.3","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"previous":{"title":"Analysis Quick Start","level":"1.2.1","depth":2,"path":"concepts/analysis_intro.md","ref":"concepts/analysis_intro.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2018-09-07T18:14:27.272Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-09-07T18:15:53.380Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Choosing a Dataset","level":"1.2.2","depth":2,"next":{"title":"Intro to STMO","level":"1.2.3","depth":2,"path":"tools/stmo.md","ref":"tools/stmo.md","articles":[]},"previous":{"title":"Analysis Quick Start","level":"1.2.1","depth":2,"path":"concepts/analysis_intro.md","ref":"concepts/analysis_intro.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/choosing_a_dataset.md","mtime":"2018-09-11T13:21:38.218Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-09-11T13:23:10.155Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

@@ -78,7 +78,7 @@ Also see the [`client_count_daily` dataset][client_count_daily].
 [telemetry-health]: https://sql.telemetry.mozilla.org/dashboard/telemetry-health
 [bug_1407410]: https://bugzilla.mozilla.org/show_bug.cgi?id=1407410
 [algebird]: https://github.com/twitter/algebird/blob/develop/algebird-core/src/main/scala/com/twitter/algebird/HyperLogLog.scala#L230-L255
-[stmo]: sql.telemetry.mozilla.org
+[stmo]: https://sql.telemetry.mozilla.org
 [s-hll]: https://github.com/mozilla/spark-hyperloglog
 [p-hll]: https://github.com/vitillo/presto-hyperloglog
 [client_count_daily]: ../client_count_daily/reference.md
