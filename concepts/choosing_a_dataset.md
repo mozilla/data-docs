@@ -9,7 +9,7 @@ For example, this guide will help if you need to answer questions like:
 - How many users have a given addon installed?
 
 If you're interested in figuring out whether there's a causal link between two events
-take a look at our [tools for experimentation](/tools/experiments.md).
+take a look at our [tools for experimentation](../tools/experiments.md).
 
 ## Table of Contents
 

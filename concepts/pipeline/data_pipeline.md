@@ -81,7 +81,7 @@ Hindsight’s core is a lightweight data processing kernel written in C that con
 
 The CEP are custom plugins that are created, configured and deployed from an [UI] which produce real-time plots like the number of pings matching a certain criteria.  Mozilla employees can [access the UI] and create/deploy their own custom plugin in real-time without interfering with other plugins running.
 
-![CEP Custom Plugin](../assets/CEP_custom_plugin.jpeg "CEP – a custom plugin in action")
+![CEP Custom Plugin](../../assets/CEP_custom_plugin.jpeg "CEP – a custom plugin in action")
 
 The DWL is composed of a set of plugins that transform, convert & finally shovel pings into S3 for long term storage. In the specific case of Telemetry data, an input plugin [reads pings from Kafka], [pre-processes] them and [sends batches to S3], our data lake, for long term storage. The data is compressed and partitioned by a set of dimensions, like date and application.
 
@@ -93,7 +93,7 @@ The deployment scripts and configuration files of the CEP & DWL live in a [priva
 
 Once the data reaches our data lake on S3 it can be processed with Spark. We provide a portal ([ATMO]) that allows Mozilla employees to create their own Spark cluster pre-loaded with a set of libraries & tools, like Jupyter, NumPy, SciPy, Pandas etc., and [an API] to conveniently read data stored in Protobuf form on S3 in a Spark RDD using a ORM-like interface. Behind the scenes we use [EMR] to create Spark clusters, which are then monitored by ATMO.
 
-![ATMO](../assets/ATMO_example.jpeg "ATMO – monitoring clusters")
+![ATMO](../../assets/ATMO_example.jpeg "ATMO – monitoring clusters")
 
 ATMO is mainly used to write custom analyses; since our users aren’t necessary data engineers/scientists we chose Python as the main supported language to interface with Spark. From ATMO it’s also possible to schedule periodic notebook runs and inspect the results from a web UI.
 
@@ -151,7 +151,7 @@ style evo fill:lightgrey
 
 A dedicated Spark job feeds daily aggregates to a PostgreSQL database which powers a [HTTP service] to easily retrieve faceted roll-ups. The service is mainly used by [TMO], a dashboard that visualizes distributions and time-series, and [Cerberus](https://github.com/mozilla/cerberus/), an anomaly detection tool that detects and alerts developers of changes in the distributions. Originally the sole purpose of the Telemetry pipeline was to feed data into this dashboard but in time its scope and flexibility grew to support more general use-cases.
 
-![TMO](../assets/TMO_example.jpeg "TMO – timeseries")
+![TMO](../../assets/TMO_example.jpeg "TMO – timeseries")
 
 # Presto & re:dash
 
@@ -159,7 +159,7 @@ We maintain a couple of [Presto clusters] and a centralized Hive metastore to qu
 
 Presto, and other databases, are behind a [re:dash] service ([STMO]) which provides a convenient & powerful interface to query SQL engines and build dashboards that can be shared within the company. Mozilla maintains its own [fork of re:dash] to iterate quickly on new features, but as good open source citizen we push our changes upstream.
 
-![STMO](../assets/STMO_example.jpeg "STMO – who doesn’t love SQL?")
+![STMO](../../assets/STMO_example.jpeg "STMO – who doesn’t love SQL?")
 
 # Is that it?
 
@@ -172,7 +172,7 @@ There is a vast ecosystem of tools for processing data at scale, each with their
 [scalars]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/scalars.html
 [timings]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/measuring-time.html
 [events]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html
-[probes]: ../datasets/new_data.md
+[probes]: ../../datasets/new_data.md
 [collection policy]: https://wiki.mozilla.org/Firefox/Data_Collection
 [subsessions]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/sessions.html#subsessions
 [main ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html
@@ -199,7 +199,7 @@ There is a vast ecosystem of tools for processing data at scale, each with their
 [EMR]: https://github.com/mozilla/emr-bootstrap-spark/
 [ETL jobs]: https://github.com/mozilla/telemetry-batch-view
 [Airflow]: https://github.com/mozilla/telemetry-airflow/
-[Parquet views]: choosing_a_dataset.md
+[Parquet views]: ../choosing_a_dataset.md
 [telemetry-batch-view]: https://github.com/mozilla/telemetry-batch-view/
 [HTTP service]: https://github.com/mozilla/python_mozaggregator/#api
 [TMO]: https://telemetry.mozilla.org/

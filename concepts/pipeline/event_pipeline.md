@@ -115,15 +115,15 @@ using the [`telemetry-ios`](https://github.com/mozilla-mobile/telemetry-ios) and
 # Datasets
 
 On the pipeline side, the event data is made available in different datasets:
-- [`main_summary`](/concepts/choosing_a_dataset.md#mainsummary) has a row for each main ping and includes
+- [`main_summary`](../choosing_a_dataset.md#mainsummary) has a row for each main ping and includes
   its event payload.
-- [`events`](/datasets/batch_view/events/reference.md) contains a row for each event received. See [this sample query](https://sql.telemetry.mozilla.org/queries/52582/source).
+- [`events`](../../datasets/batch_view/events/reference.md) contains a row for each event received. See [this sample query](https://sql.telemetry.mozilla.org/queries/52582/source).
 - `telemetry_mobile_event_parquet` contains a row for each mobile event ping. See [this sample query](https://sql.telemetry.mozilla.org/queries/52581/source).
 - `focus_events_longitudinal` currently contains events from Firefox Focus.
 
 # Data tooling
 
-The above datasets are all accessible through [Re:dash](/tools/stmo.md) and [Spark jobs](/tools/spark.md).
+The above datasets are all accessible through [Re:dash](../../tools/stmo.md) and [Spark jobs](../../tools/spark.md).
 
 For product analytics based on event data, we have [Amplitude](https://sso.mozilla.com/amplitude)
 (hosted by the IT data team). We can connect our event data sources data to Amplitude.

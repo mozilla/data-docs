@@ -13,7 +13,7 @@
 ## Sampling
 
 It contains one or more records for every
-[Main Summary](/datasets/batch_view/main_summary/reference.md)
+[Main Summary](../main_summary/reference.md)
 record that contains a non-null value for `client_id`.
 Each Addons record contains info for a single addon,
 or if the main ping did not contain any active addons,
@@ -57,7 +57,7 @@ root
  |-- sample_id: string (nullable = true)
 ```
 For more detail on where these fields come from in the
-[raw data](https://gecko.readthedocs.io/en/latest/toolkit/components/telemetry/telemetry/data/environment.html#addons),
+[raw data](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/environment.html#addons),
 please look
 [in the `AddonsView` code](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/AddonsView.scala).
 

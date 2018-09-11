@@ -40,7 +40,7 @@ file an issue in the [Datasets: General component](https://bugzilla.mozilla.org/
 
 ### Problems with tools
 
-There are bugzilla components for several of the [tools](tools/interfaces.md) that
+There are bugzilla components for several of the [tools](../tools/interfaces.md) that
 comprise the [Data Platform](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools),
 so please file a bug in the specific component that most closely matches the
 tool in question.

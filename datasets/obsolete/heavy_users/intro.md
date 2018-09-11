@@ -50,4 +50,4 @@ SELECT * FROM heavy_users LIMIT 3
 #### Further Reading
 
 The code responsible for generating this dataset is
-[here](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/HeavyUsersView.scala)
+[here](BROKEN:https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/HeavyUsersView.scala)

@@ -59,7 +59,7 @@ The steps that would happen are this:
    The coordinator is responsible for returning the result of the query to the client,
    which in our example is STMO.
 
-A similar process happens on data joins, where different machines are told to join on 
+A similar process happens on data joins, where different machines are told to join on
 different keys. In that case, data from both tables needs to be shuffled to every machine.
 
 #### Why do we have multiple databases? Why not use Athena for everything?
@@ -67,7 +67,7 @@ different keys. In that case, data from both tables needs to be shuffled to ever
 Great question! Presto is something we control, and can upgrade it at-will. Athena is currently
 a serverless version of Presto, and as such doesn't have all of the bells and whistles. For example,
 it doesn't support [lambda expressions](https://prestodb.io/docs/current/functions/lambda.html) or
-UDFs, the latter of which we use in the [Client Count Daily dataset](datasets/batch_view/client_count_daily/intro.md).
+UDFs, the latter of which we use in the [Client Count Daily dataset](../datasets/batch_view/client_count_daily/intro.md).
 
 #### Key Takeaways
 

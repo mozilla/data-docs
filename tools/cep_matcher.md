@@ -1,8 +1,8 @@
 CEP Matcher
 ===========
 
-The CEP Matcher tab lets you easily view some current pings of any ping type. To access it, follow 
-[these first few directions](cookbooks/realtime_analysis_plugin.md) for accessing the CEP. Once there,
+The CEP Matcher tab lets you easily view some current pings of any ping type. To access it, follow
+[these first few directions](../cookbooks/realtime_analysis_plugin.md) for accessing the CEP. Once there,
 click on the "Matcher" tab. The message-matcher is set by default to `TRUE`, meaning all pings will
 be matched. Click "Run Matcher" and a few pings will show up.
 

@@ -27,7 +27,7 @@ in Nginx using a location directive, to request a new namespace file a bug
 against the [Data Platform Team](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&component=Pipeline%20Ingestion)
 with a short description of what the namespace will be used for and the desired
 configuration options. Data sent to a namespace that is not specifically
-configured is assumed to be in the [non-Telemetry JSON format described here](/cookbooks/new_ping.md).
+configured is assumed to be in the [non-Telemetry JSON format described here](../../cookbooks/new_ping.md).
 
 ### Forwarding to the pipeline
 

@@ -29,7 +29,7 @@ Where `<product>` is whatever product you're testing, and `<doctype>` is whateve
 
 NOTE: If you are looking at `main`, `saved-session`, or `crash` pings, the submitted data is split out into several pieces. Reading just `Fields[submission]`
 will not give you the entire submitted ping contents. You can change that to e.g. `Fields[environment.system]`, `Fields[payload.histograms]`, `Fields[payload.keyedHistograms]`.
-To see all of the available fields, [look at a ping in the Matcher tab](tools/cep_matcher.md).
+To see all of the available fields, [look at a ping in the Matcher tab](../tools/cep_matcher.md).
 
 ```
 require "string"

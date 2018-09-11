@@ -92,6 +92,13 @@ You may also remove the `--report` parameter to begin an interactive fixing sess
 case, it is highly recommended to also add the `--no-suggestions` parameter, which greatly
 speeds things up.
 
+## Link checking
+
+Any web links should be valid. A dead link might not be your fault, but you will earn a lot
+of good karma by fixing a dead link!
+
+To run the link checker locally, [install the `markdown-link-check` library](https://github.com/tcort/markdown-link-check#installation), then run the `scripts/link_check.sh` script from the root of the repository.
+
 ## Supported Plugins
 
 ### Mermaid

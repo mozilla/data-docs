@@ -2,11 +2,12 @@ language: node_js
 node_js:
   - "4.1"
 install:
-  - npm install gitbook-cli markdown-spellcheck -g
+  - npm install gitbook-cli markdown-spellcheck markdown-link-check -g
 script:
   - gitbook install
   - gitbook build
   - mdspell '**/*.md' '!**/node_modules/**/*.md' '!**/_book/**/*.md' --ignore-numbers --en-us --report
+  - bash scripts/link_check.sh
 deploy:
   provider: pages
   skip-cleanup: true

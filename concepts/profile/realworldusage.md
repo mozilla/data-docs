@@ -29,7 +29,7 @@ The above image illustrates all the layers that sit between a user acquiring and
 	- Stub installers are instrumented with pings to report new install counts, however, full binaries are not.
 * 7: Firefox profile
 	- The profile Firefox uses during a user's session.
-	- A user can create multiple Firefox profiles using the Firefox Profile Manager, or by specifying a custom directory to use at startup. More details [here](concepts/profile/profile_creation.md).
+	- A user can create multiple Firefox profiles using the Firefox Profile Manager, or by specifying a custom directory to use at startup. More details [here](profile_creation.md).
 	- This is the entity that we see in Telemetry. Profiles send pings to Telemetry with a client ID as its identifier.
 
 ## Desktop Browser Use Cases
