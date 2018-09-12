@@ -35,9 +35,9 @@ These tables should be accessible from ATMO, Databricks, Presto, and Athena.
 
 ### `experiments` column
 
-[`main_summary`](../datasets/batch_view/main_summary/reference.html),
-[`clients_daily`](../datasets/batch_view/clients_daily/reference.html),
-[`crash_summary`](../datasets/batch_view/crash_summary/reference.html),
+[`main_summary`](batch_view/main_summary/reference.md),
+[`clients_daily`](batch_view/clients_daily/reference.md),
+[`crash_summary`](batch_view/crash_summary/reference.md),
 and some other tables
 include a `experiments` column
 which is a mapping from experiment stub to branch.
@@ -72,7 +72,7 @@ subsequent pings will not be captured by the `experiments` table.
 
 ### `events`
 
-The [`events` table](../datasets/batch_view/events/reference.html) includes
+The [`events` table](batch_view/events/reference.md) includes
 Normandy enrollment and unenrollment events.
 
 Normandy events have event category `normandy`.
