@@ -15,17 +15,25 @@ and locate telemetry from add-on studies.
 
 [Firefox Test Tube](https://firefox-test-tube.herokuapp.com/)
 shows live enrollment activity and a selection of browser activity metrics
-for active pref-flip (but not add-on) experiments.
+for active pref-flip (and some add-on)[^1] experiments.
+
+The
+[Shield Studies Viewer](https://strategy-and-insights.mozilla.com/shield-studies/index.html)
+and
+[Experimenter](https://experimenter.services.mozilla.com/)
+are other places to find lists of live experiments.
 
 ## Experiment slugs
 
 Each experiment is associated with a slug,
 which is the label used to identify the experiment to Normandy clients.
-The slug is also used to identify the experiment in telemetry.
+The slug is also used to identify the experiment in most telemetry.
+The slug for pref-flip experiments is defined in the recipe by a field named `slug`;
+the slug for add-on experiments is defined in the recipe by a field named `name`.
 
 You can determine the slug for a particular experiment by consulting
-[Test Tube](https://firefox-test-tube.herokuapp.com/) (only for pref-flip experiments),
 [this summary table](https://metrics.mozilla.com/~sguha/report/normandy_recipes.html),
+[Test Tube](https://firefox-test-tube.herokuapp.com/) (which may be missing add-on studies)[^1],
 or the list of active recipes at
 https://normandy.cdn.mozilla.net/api/v1/recipe/signed/.
 
@@ -79,7 +87,7 @@ Normandy events have event category `normandy`.
 The event value will contain the experiment slug.
 
 The event schema is described
-[in the Firefox source tree](https://hg.mozilla.org/mozilla-central/file/c4c125ee2556/toolkit/components/normandy/lib/TelemetryEvents.jsm#l12).
+[in the Firefox source tree](https://hg.mozilla.org/mozilla-central/file/tip/toolkit/components/normandy/lib/TelemetryEvents.jsm).
 
 The `events` table is updated daily.
 
@@ -107,7 +115,7 @@ These events also appear in the `events` table.
 The `telemetry_shield_study_parquet` table is produced by direct-to-parquet;
 data latency should be less than 1 hour.
 
-## Ping datasets
+## Raw ping sources
 
 ### `telemetry-cohorts`
 
@@ -117,5 +125,14 @@ accessible as a
 [Dataset](https://python-moztelemetry.readthedocs.io/en/stable/api.html#dataset),
 and partitioned by `experimentId` and `docType`.
 
+Experiments deployed to large fractions of the release channel
+may have the `isHighVolume` flag set in the Normandy recipe;
+those experiments will not be aggregated into the `telemetry-cohorts` source.
+
 To learn which branch clients are enrolled in,
 reference the `environment.experiments` field.
+
+[^1] Add-on experiments are displayed in Test Tube
+when the `name` given in the Normandy recipe matches the `applications.gecko.id`
+listed in the add-on's `manifest.json`.
+This is often not the case.
