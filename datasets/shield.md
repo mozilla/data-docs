@@ -48,16 +48,16 @@ These tables should be accessible from ATMO, Databricks, Presto, and Athena.
 [`crash_summary`](batch_view/crash_summary/reference.md),
 and some other tables
 include a `experiments` column
-which is a mapping from experiment stub to branch.
+which is a mapping from experiment slug to branch.
 
 You can collect rows from enrolled clients using query syntax like:
 
 ```sql
 SELECT
   *,
-  experiments['some-experiment-stub-12345'] AS branch
+  experiments['some-experiment-slug-12345'] AS branch
 FROM clients_daily
-WHERE experiments['some-experiment-stub-12345'] IS NOT NULL
+WHERE experiments['some-experiment-slug-12345'] IS NOT NULL
 ```
 
 ### `experiments`
@@ -81,7 +81,8 @@ subsequent pings will not be captured by the `experiments` table.
 ### `events`
 
 The [`events` table](batch_view/events/reference.md) includes
-Normandy enrollment and unenrollment events.
+Normandy enrollment and unenrollment events
+for both pref-flip and add-on studies.
 
 Normandy events have event category `normandy`.
 The event value will contain the experiment slug.
@@ -99,6 +100,11 @@ i.e. key-value pairs sent with the
 [SHIELD study add-on utilities](https://github.com/mozilla/shield-studies-addon-utils/)
 library.
 
+The `study_name` attribute of the `payload` column will contain the add-on identifier.
+This is set by the add-on; sometimes it takes the value of
+`applications.gecko.id` from the add-on's `manifest.json`.
+This is often not the same as the Normandy slug.
+
 The schema for shield-study-addon pings is described in the
 [`mozilla-pipeline-schemas` repository](https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/dev/schemas/telemetry/shield-study-addon).
 
@@ -109,8 +115,17 @@ data latency should be less than 1 hour.
 
 ### `telemetry_shield_study_parquet`
 
-Telemetry from Normandy itself, containing enrollment and unenrollment events.
-These events also appear in the `events` table.
+The `telemetry_shield_study_parquet` dataset includes
+enrollment and unenrollment events for add-on experiments only,
+sent by the [SHIELD study add-on utilities](https://github.com/mozilla/shield-studies-addon-utils/).
+
+The `study_name` attribute of the `payload` column will contain the add-on identifier.
+This is set by the add-on; sometimes it takes the value of
+`applications.gecko.id` from the add-on's `manifest.json`.
+This is often not the same as the Normandy slug.
+
+Normandy also emits its own enrollment and unenrollment events for these studies,
+which are available in the `events` table.
 
 The `telemetry_shield_study_parquet` table is produced by direct-to-parquet;
 data latency should be less than 1 hour.
@@ -130,7 +145,7 @@ may have the `isHighVolume` flag set in the Normandy recipe;
 those experiments will not be aggregated into the `telemetry-cohorts` source.
 
 To learn which branch clients are enrolled in,
-reference the `environment.experiments` field.
+reference the `environment.experiments` map.
 
 [^1] Add-on experiments are displayed in Test Tube
 when the `name` given in the Normandy recipe matches the `applications.gecko.id`
