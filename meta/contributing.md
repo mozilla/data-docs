@@ -60,7 +60,8 @@ Articles should be written in
 Markdown is usually powerful enough and is a more common technology than AsciiDoc.
 
 Limit lines to **100 characters** where possible.
-Try to split lines at the end of sentences.
+Try to split lines at the end of sentences,
+or use [Semantic Line Breaks](http://rhodesmill.org/brandon/2012/one-sentence-per-line/).
 This makes it easier to reorganize your thoughts later.
 
 This documentation is meant to be read digitally.
