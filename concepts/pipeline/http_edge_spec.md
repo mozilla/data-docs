@@ -93,8 +93,8 @@ Specific non-Telemetry example:
 
 Note that `id` above is a unique document ID, which is used for de-duping
 submissions. This is *not* intended to be the `clientId` field from Telemetry.
-If `id` is omitted, we will not be able to de-dupe based on submission URLs. It
-is recommended that `id` be a [UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier).
+`id` is required, and it is recommended that `id` be a
+[UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier).
 
 ### POST/PUT Response codes
 
