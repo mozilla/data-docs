@@ -100,7 +100,8 @@ i.e. key-value pairs sent with the
 [SHIELD study add-on utilities](https://github.com/mozilla/shield-studies-addon-utils/)
 library.
 
-The `study_name` attribute of the `payload` column will contain the add-on identifier.
+The `study_name` attribute of the `payload` column will contain the identifier
+registered with the SHIELD add-on utilities.
 This is set by the add-on; sometimes it takes the value of
 `applications.gecko.id` from the add-on's `manifest.json`.
 This is often not the same as the Normandy slug.
@@ -119,7 +120,8 @@ The `telemetry_shield_study_parquet` dataset includes
 enrollment and unenrollment events for add-on experiments only,
 sent by the [SHIELD study add-on utilities](https://github.com/mozilla/shield-studies-addon-utils/).
 
-The `study_name` attribute of the `payload` column will contain the add-on identifier.
+The `study_name` attribute of the `payload` column will contain the identifier
+registered with the SHIELD add-on utilities.
 This is set by the add-on; sometimes it takes the value of
 `applications.gecko.id` from the add-on's `manifest.json`.
 This is often not the same as the Normandy slug.
@@ -148,6 +150,7 @@ To learn which branch clients are enrolled in,
 reference the `environment.experiments` map.
 
 [^1] Add-on experiments are displayed in Test Tube
-when the `name` given in the Normandy recipe matches the `applications.gecko.id`
-listed in the add-on's `manifest.json`.
-This is often not the case.
+when the `name` given in the Normandy recipe matches the
+the identifier registered with the SHIELD add-on utilities
+(which is sometimes the `applications.gecko.id` listed in the add-on's `manifest.json`).
+These often do not match.
