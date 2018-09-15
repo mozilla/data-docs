@@ -6,8 +6,6 @@ else
   RUNNER="xargs -n1"
 fi
 
-find . -name "*.md" |\
-  grep -v "_book" |\
-  grep -v "node_modules" |\
+find src -name "*.md" |\
   sort |\
   $RUNNER -P 8 markdown-link-check --quiet --verbose --config .linkcheck.json
