@@ -1,23 +1,22 @@
-language: node_js
-node_js:
-  - "4.1"
+language: rust
 addons:
   apt:
     packages:
       - parallel
 install:
-  - npm install gitbook-cli markdown-spellcheck markdown-link-check -g
-  - gitbook install
+  - npm install markdown-spellcheck markdown-link-check -g
+  - curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-dtmo
 script:
-  - gitbook build
-  - mdspell '**/*.md' '!**/node_modules/**/*.md' '!**/_book/**/*.md' --ignore-numbers --en-us --report
+  - mdbook-dtmo --version
+  - mdbook-dtmo build .
+  - mdspell 'src/**/*.md' --ignore-numbers --en-us --report
   - bash scripts/link_check.sh
 deploy:
   provider: pages
   skip-cleanup: true
   github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard, marked secure
   keep-history: true
-  local-dir: _book
+  local-dir: book
   fqdn: docs-origin.telemetry.mozilla.org
   on:
     branch: master

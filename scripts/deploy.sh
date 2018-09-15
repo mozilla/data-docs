@@ -1,9 +1,9 @@
 #!/bin/sh
 
-build_dir='_book'
+builddir='book'
 
 # Depends on https://github.com/davisp/ghp-import
-gitbook build . $build_dir && \
+mdbook-dtmo build . --dest-dir $build_dir && \
 touch $build_dir/.nojekyll && \
 ghp-import \
     -b gh-pages \
