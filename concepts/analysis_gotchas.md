@@ -46,6 +46,12 @@ Examples of client times: `crashDate`, `crashTime`, `meta/Date`, `sessionStartDa
 
 Examples of server times you can trust: `Timestamp`, `submission_date`
 
+*Note that `submissionDate` does not appear in the
+[ping documentation](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/common-ping.html)
+because it is added in post-processing.
+It can be found in the `meta` field of the ping as in the
+[Databricks Example](https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/30598/).*
+
 ### Date Formats
 
 Not all dates and times are created equal. Most of the dates and times in Telemetry pings are [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601). Most are full timestamps, though their resolution may differ from being per-second to being per-day.

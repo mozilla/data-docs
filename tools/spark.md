@@ -12,6 +12,10 @@ and, when combined with Spark, enable richer analysis than SQL alone.
 The Spark clusters can be launched from [ATMO](https://analysis.telemetry.mozilla.org).
 The Spark Python API is called PySpark.
 
+Note that this documentation focuses on ATMO, but analysis with Spark is also possible using Databricks.
+For more information please see this
+[example notebook](https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/30598/command/30599).
+
 Setting Up a Spark Cluster On ATMO
 ----------------------------------
 
