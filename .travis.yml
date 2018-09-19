@@ -1,6 +1,10 @@
 language: node_js
 node_js:
   - "4.1"
+addons:
+  apt:
+    packages:
+      - parallel
 install:
   - npm install gitbook-cli markdown-spellcheck markdown-link-check -g
 script:
