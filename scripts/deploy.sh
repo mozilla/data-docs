@@ -1,6 +1,6 @@
 #!/bin/sh
 
-builddir='book'
+build_dir='book'
 
 # Depends on https://github.com/davisp/ghp-import
 mdbook-dtmo build . --dest-dir $build_dir && \
