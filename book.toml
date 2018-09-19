@@ -5,5 +5,5 @@ title = "Firefox Data Documentation"
 create-missing = false
 
 [output.html]
-additional-css = ["mermaid.css"]
+additional-css = ["dtmo.css", "mermaid.css"]
 additional-js = ["mermaid.min.js", "mermaid-init.js"]
