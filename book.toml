@@ -3,3 +3,7 @@ title = "Firefox Data Documentation"
 
 [build]
 create-missing = false
+
+[output.html]
+additional-css = ["mermaid.css"]
+additional-js = ["mermaid.min.js", "mermaid-init.js"]
