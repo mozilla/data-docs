@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# If there are any failures along the way, exit nonzero.
-EXIT_CODE=0
-for f in $(find . -name "*.md" | grep -v "_book" | grep -v "node_modules" | sort); do
-    markdown-link-check --quiet --config .linkcheck.json $f
-    RC=$?
-    if [ "$RC" -ne "0" ]; then
-        EXIT_CODE=$RC
-    fi
-done
+if command -v parallel > /dev/null; then
+  RUNNER="parallel --will-cite"
+else
+  RUNNER=xargs
+fi
 
-exit $EXIT_CODE
+find . -name "*.md" |\
+  grep -v "_book" |\
+  grep -v "node_modules" |\
+  sort |\
+  $RUNNER -P 8 markdown-link-check --quiet --verbose --config .linkcheck.json
