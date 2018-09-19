@@ -1253,10 +1253,137 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="work-in-progress"><a name="work-in-progress" class="plugin-anchor" href="#work-in-progress"><i class="fa fa-link" aria-hidden="true"></i></a>Work in Progress</h1>
-<p>This document is a work in progress.
-The work is being tracked in
-<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1358286" target="_blank">this bug</a></p>
+                                <h1 id="analyzing-data-from-shield-studies"><a name="analyzing-data-from-shield-studies" class="plugin-anchor" href="#analyzing-data-from-shield-studies"><i class="fa fa-link" aria-hidden="true"></i></a>Analyzing data from SHIELD studies</h1>
+<p>This article introduces the datasets that are useful for analyzing SHIELD studies.
+After reading this article,
+you should understand how to answer questions about
+study enrollment,
+identify telemetry from clients enrolled in an experiment,
+and locate telemetry from add-on studies.</p>
+<h2 id="table-of-contents"><a name="table-of-contents" class="plugin-anchor" href="#table-of-contents"><i class="fa fa-link" aria-hidden="true"></i></a>Table of contents</h2>
+<!-- toc -->
+<ul>
+<li><a href="#dashboards">Dashboards</a></li>
+<li><a href="#experiment-slugs">Experiment slugs</a></li>
+<li><a href="#tables">Tables</a><ul>
+<li><a href="#%60experiments%60-column"><code>experiments</code> column</a></li>
+<li><a href="#%60experiments%60"><code>experiments</code></a></li>
+<li><a href="#%60events%60"><code>events</code></a></li>
+<li><a href="#%60telemetry_shield_study_addon_parquet%60"><code>telemetry_shield_study_addon_parquet</code></a></li>
+<li><a href="#%60telemetry_shield_study_parquet%60"><code>telemetry_shield_study_parquet</code></a></li>
+</ul>
+</li>
+<li><a href="#raw-ping-sources">Raw ping sources</a><ul>
+<li><a href="#%60telemetry-cohorts%60"><code>telemetry-cohorts</code></a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+<h2 id="dashboards"><a name="dashboards" class="plugin-anchor" href="#dashboards"><i class="fa fa-link" aria-hidden="true"></i></a>Dashboards</h2>
+<p><a href="https://firefox-test-tube.herokuapp.com/" target="_blank">Firefox Test Tube</a>
+shows live enrollment activity and a selection of browser activity metrics
+for active pref-flip (and some add-on)<sup><a href="#fn_1" id="reffn_1">1</a></sup> experiments.</p>
+<p>The
+<a href="https://strategy-and-insights.mozilla.com/shield-studies/index.html" target="_blank">Shield Studies Viewer</a>
+and
+<a href="https://experimenter.services.mozilla.com/" target="_blank">Experimenter</a>
+are other places to find lists of live experiments.</p>
+<h2 id="experiment-slugs"><a name="experiment-slugs" class="plugin-anchor" href="#experiment-slugs"><i class="fa fa-link" aria-hidden="true"></i></a>Experiment slugs</h2>
+<p>Each experiment is associated with a slug,
+which is the label used to identify the experiment to Normandy clients.
+The slug is also used to identify the experiment in most telemetry.
+The slug for pref-flip experiments is defined in the recipe by a field named <code>slug</code>;
+the slug for add-on experiments is defined in the recipe by a field named <code>name</code>.</p>
+<p>You can determine the slug for a particular experiment by consulting
+<a href="https://metrics.mozilla.com/~sguha/report/normandy_recipes.html" target="_blank">this summary table</a>,
+<a href="https://firefox-test-tube.herokuapp.com/" target="_blank">Test Tube</a> (which may be missing add-on studies)<sup><a href="#fn_1" id="reffn_1">1</a></sup>,
+or the list of active recipes at
+<a href="https://normandy.cdn.mozilla.net/api/v1/recipe/signed/" target="_blank">https://normandy.cdn.mozilla.net/api/v1/recipe/signed/</a>.</p>
+<h2 id="tables"><a name="tables" class="plugin-anchor" href="#tables"><i class="fa fa-link" aria-hidden="true"></i></a>Tables</h2>
+<p>These tables should be accessible from ATMO, Databricks, Presto, and Athena.</p>
+<h3 id="experiments-column"><a name="experiments-column" class="plugin-anchor" href="#experiments-column"><i class="fa fa-link" aria-hidden="true"></i></a><code>experiments</code> column</h3>
+<p><a href="batch_view/main_summary/reference.html"><code>main_summary</code></a>,
+<a href="batch_view/clients_daily/reference.html"><code>clients_daily</code></a>,
+<a href="batch_view/crash_summary/reference.html"><code>crash_summary</code></a>,
+and some other tables
+include a <code>experiments</code> column
+which is a mapping from experiment slug to branch.</p>
+<p>You can collect rows from enrolled clients using query syntax like:</p>
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span>
+  *,
+  experiments[<span class="hljs-string">&apos;some-experiment-slug-12345&apos;</span>] <span class="hljs-keyword">AS</span> branch
+<span class="hljs-keyword">FROM</span> clients_daily
+<span class="hljs-keyword">WHERE</span> experiments[<span class="hljs-string">&apos;some-experiment-slug-12345&apos;</span>] <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>
+</code></pre>
+<h3 id="experiments"><a name="experiments" class="plugin-anchor" href="#experiments"><i class="fa fa-link" aria-hidden="true"></i></a><code>experiments</code></h3>
+<p>The <code>experiments</code> table is a subset of rows from <code>main_summary</code>
+reflecting pings from clients that are currently enrolled in an experiment.
+The <code>experiments</code> table has additional string-type
+<code>experiment_id</code> and <code>experiment_branch</code> columns,
+and is partitioned by <code>experiment_id</code>, which makes it efficient to query.</p>
+<p>Experiments deployed to large fractions of the release channel
+may have the <code>isHighVolume</code> flag set in the Normandy recipe;
+those experiments will not be aggregated into the <code>experiments</code> table.</p>
+<p>Please note that the <code>experiments</code> table cannot be used
+for calculating retention for periods extending beyond
+the end of the experiment.
+Once a client is unenrolled from an experiment,
+subsequent pings will not be captured by the <code>experiments</code> table.</p>
+<h3 id="events"><a name="events" class="plugin-anchor" href="#events"><i class="fa fa-link" aria-hidden="true"></i></a><code>events</code></h3>
+<p>The <a href="batch_view/events/reference.html"><code>events</code> table</a> includes
+Normandy enrollment and unenrollment events
+for both pref-flip and add-on studies.</p>
+<p>Normandy events have event category <code>normandy</code>.
+The event value will contain the experiment slug.</p>
+<p>The event schema is described
+<a href="https://hg.mozilla.org/mozilla-central/file/tip/toolkit/components/normandy/lib/TelemetryEvents.jsm" target="_blank">in the Firefox source tree</a>.</p>
+<p>The <code>events</code> table is updated daily.</p>
+<h3 id="telemetryshieldstudyaddonparquet"><a name="telemetryshieldstudyaddonparquet" class="plugin-anchor" href="#telemetryshieldstudyaddonparquet"><i class="fa fa-link" aria-hidden="true"></i></a><code>telemetry_shield_study_addon_parquet</code></h3>
+<p>The <code>telemetry_shield_study_addon_parquet</code> table contains SHIELD telemetry from add-on experiments,
+i.e. key-value pairs sent with the
+<code>browser.study.sendTelemetry()</code> method from the
+<a href="https://github.com/mozilla/shield-studies-addon-utils/" target="_blank">SHIELD study add-on utilities</a>
+library.</p>
+<p>The <code>study_name</code> attribute of the <code>payload</code> column will contain the identifier
+registered with the SHIELD add-on utilities.
+This is set by the add-on; sometimes it takes the value of
+<code>applications.gecko.id</code> from the add-on&apos;s <code>manifest.json</code>.
+This is often not the same as the Normandy slug.</p>
+<p>The schema for shield-study-addon pings is described in the
+<a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/dev/schemas/telemetry/shield-study-addon" target="_blank"><code>mozilla-pipeline-schemas</code> repository</a>.</p>
+<p>The key-value pairs are present in <code>data</code> attribute of the <code>payload</code> column.</p>
+<p>The <code>telemetry_shield_study_addon_parquet</code> table is produced by direct-to-parquet;
+data latency should be less than 1 hour.</p>
+<h3 id="telemetryshieldstudyparquet"><a name="telemetryshieldstudyparquet" class="plugin-anchor" href="#telemetryshieldstudyparquet"><i class="fa fa-link" aria-hidden="true"></i></a><code>telemetry_shield_study_parquet</code></h3>
+<p>The <code>telemetry_shield_study_parquet</code> dataset includes
+enrollment and unenrollment events for add-on experiments only,
+sent by the <a href="https://github.com/mozilla/shield-studies-addon-utils/" target="_blank">SHIELD study add-on utilities</a>.</p>
+<p>The <code>study_name</code> attribute of the <code>payload</code> column will contain the identifier
+registered with the SHIELD add-on utilities.
+This is set by the add-on; sometimes it takes the value of
+<code>applications.gecko.id</code> from the add-on&apos;s <code>manifest.json</code>.
+This is often not the same as the Normandy slug.</p>
+<p>Normandy also emits its own enrollment and unenrollment events for these studies,
+which are available in the <code>events</code> table.</p>
+<p>The <code>telemetry_shield_study_parquet</code> table is produced by direct-to-parquet;
+data latency should be less than 1 hour.</p>
+<h2 id="raw-ping-sources"><a name="raw-ping-sources" class="plugin-anchor" href="#raw-ping-sources"><i class="fa fa-link" aria-hidden="true"></i></a>Raw ping sources</h2>
+<h3 id="telemetry-cohorts"><a name="telemetry-cohorts" class="plugin-anchor" href="#telemetry-cohorts"><i class="fa fa-link" aria-hidden="true"></i></a><code>telemetry-cohorts</code></h3>
+<p>The <code>telemetry-cohorts</code> dataset contains a subset of pings
+from clients enrolled in experiments,
+accessible as a
+<a href="https://python-moztelemetry.readthedocs.io/en/stable/api.html#dataset" target="_blank">Dataset</a>,
+and partitioned by <code>experimentId</code> and <code>docType</code>.</p>
+<p>Experiments deployed to large fractions of the release channel
+may have the <code>isHighVolume</code> flag set in the Normandy recipe;
+those experiments will not be aggregated into the <code>telemetry-cohorts</code> source.</p>
+<p>To learn which branch clients are enrolled in,
+reference the <code>environment.experiments</code> map.</p>
+<p><sup><a href="#fn_1" id="reffn_1">1</a></sup> Add-on experiments are displayed in Test Tube
+when the <code>name</code> given in the Normandy recipe matches the
+the identifier registered with the SHIELD add-on utilities
+(which is sometimes the <code>applications.gecko.id</code> listed in the add-on&apos;s <code>manifest.json</code>).
+These often do not match.</p>
 
                                 
                                 </section>
@@ -1300,7 +1427,7 @@ The work is being tracked in
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Accessing Shield Study data","level":"2.1.3.1","depth":3,"next":{"title":"Search Datasets","level":"2.1.4","depth":2,"path":"datasets/search.md","ref":"datasets/search.md","articles":[{"title":"Search Aggregates","level":"2.1.4.1","depth":3,"path":"datasets/mozetl/search_aggregates/reference.md","ref":"datasets/mozetl/search_aggregates/reference.md","articles":[]},{"title":"Search Clients Daily","level":"2.1.4.2","depth":3,"path":"datasets/mozetl/search_clients_daily/reference.md","ref":"datasets/mozetl/search_clients_daily/reference.md","articles":[]}]},"previous":{"title":"Experimental Datasets","level":"2.1.3","depth":2,"path":"tools/experiments.md","ref":"tools/experiments.md","articles":[{"title":"Accessing Shield Study data","level":"2.1.3.1","depth":3,"path":"datasets/shield.md","ref":"datasets/shield.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/shield.md","mtime":"2018-09-17T15:01:44.968Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-09-17T15:03:11.759Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Accessing Shield Study data","level":"2.1.3.1","depth":3,"next":{"title":"Search Datasets","level":"2.1.4","depth":2,"path":"datasets/search.md","ref":"datasets/search.md","articles":[{"title":"Search Aggregates","level":"2.1.4.1","depth":3,"path":"datasets/mozetl/search_aggregates/reference.md","ref":"datasets/mozetl/search_aggregates/reference.md","articles":[]},{"title":"Search Clients Daily","level":"2.1.4.2","depth":3,"path":"datasets/mozetl/search_clients_daily/reference.md","ref":"datasets/mozetl/search_clients_daily/reference.md","articles":[]}]},"previous":{"title":"Experimental Datasets","level":"2.1.3","depth":2,"path":"tools/experiments.md","ref":"tools/experiments.md","articles":[{"title":"Accessing Shield Study data","level":"2.1.3.1","depth":3,"path":"datasets/shield.md","ref":"datasets/shield.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/shield.md","mtime":"2018-09-19T17:02:57.514Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-09-19T17:04:45.174Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

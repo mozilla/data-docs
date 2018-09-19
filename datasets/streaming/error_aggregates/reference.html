@@ -1270,19 +1270,26 @@
 </ul>
 <!-- tocstop -->
 <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
-<p>The <code>error_aggregates</code> table represents counts of errors counted from main and crash
+<p>The <code>error_aggregates_v2</code> table represents counts of errors counted from main and crash
 pings, aggregated every 5 minutes. It is the dataset backing the main <a href="https://data-missioncontrol.dev.mozaws.net/" target="_blank">mission
 control</a> view, but may also be queried
 independently.</p>
 <h4 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h4>
-<p>The <code>error_aggregates</code> table contains counts of various error measures (for
+<p>The <code>error_aggregates_v2</code> table contains counts of various error measures (for
 example: crashes, &quot;the slow script dialog showing&quot;), aggregated across each
 unique set of dimensions (for example: channel, operating system) every 5
 minutes. You can get an aggregated count for any particular set of dimensions
 by summing using SQL.</p>
+<h5 id="experiment-unpacking"><a name="experiment-unpacking" class="plugin-anchor" href="#experiment-unpacking"><i class="fa fa-link" aria-hidden="true"></i></a>Experiment unpacking</h5>
+<p>It&apos;s important to note that when this dataset is written, pings from clients participating in an experiment 
+are aggregated on the <code>experiment_id</code> and <code>branch_id</code> dimensions corresponding to what experiment and branch 
+they are participating in. However, they are also aggregated with the rest of the population where the values of 
+these dimensions are null.
+Therefore care must be taken when writing aggregating queries over the whole population - in these cases one needs to
+filter for <code>experiment_id is null</code> and <code>branch_id is null</code> in order to not double-count pings from experiments.</p>
 <h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the data</h4>
 <p>You can access the data via re:dash. Choose <code>Athena</code> and then select the
-<code>telemetry.error_aggregates</code> table.</p>
+<code>telemetry.error_aggregates_v2</code> table.</p>
 <h4 id="further-reading"><a name="further-reading" class="plugin-anchor" href="#further-reading"><i class="fa fa-link" aria-hidden="true"></i></a>Further Reading</h4>
 <p>The code responsible for generating this dataset is <a href="https://github.com/mozilla/telemetry-streaming/blob/master/src/main/scala/com/mozilla/telemetry/streaming/ErrorAggregator.scala" target="_blank">here</a>.</p>
 <h1 id="data-reference"><a name="data-reference" class="plugin-anchor" href="#data-reference"><i class="fa fa-link" aria-hidden="true"></i></a>Data Reference</h1>
@@ -1306,6 +1313,8 @@ by summing using SQL.</p>
   <span class="hljs-keyword">AND</span> (channel = <span class="hljs-string">&apos;beta&apos;</span> <span class="hljs-keyword">or</span> channel = <span class="hljs-string">&apos;release&apos;</span> <span class="hljs-keyword">or</span> channel = <span class="hljs-string">&apos;nightly&apos;</span> <span class="hljs-keyword">or</span> channel = <span class="hljs-string">&apos;esr&apos;</span>)
   <span class="hljs-keyword">AND</span> build_id &gt; <span class="hljs-string">&apos;201801&apos;</span>
   <span class="hljs-keyword">AND</span> window_start &gt; <span class="hljs-keyword">current_timestamp</span> - (<span class="hljs-number">1</span> * <span class="hljs-built_in">interval</span> <span class="hljs-string">&apos;24&apos;</span> <span class="hljs-keyword">hour</span>)
+  <span class="hljs-keyword">AND</span> experiment_id <span class="hljs-keyword">IS</span> <span class="hljs-literal">NULL</span>
+  <span class="hljs-keyword">AND</span> branch_id <span class="hljs-keyword">IS</span> <span class="hljs-literal">NULL</span>
 <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> window_start, channel, build_id, <span class="hljs-keyword">version</span>, os_name
 </code></pre>
 <p>Get the number of <code>main_crashes</code> on Windows over a small interval
@@ -1318,6 +1327,8 @@ by summing using SQL.</p>
   <span class="hljs-keyword">AND</span> <span class="hljs-keyword">version</span> = <span class="hljs-string">&apos;58.0.2&apos;</span>
   <span class="hljs-keyword">AND</span> window_start &gt; <span class="hljs-keyword">timestamp</span> <span class="hljs-string">&apos;2018-02-21&apos;</span>
   <span class="hljs-keyword">AND</span> window_end &lt; <span class="hljs-keyword">timestamp</span> <span class="hljs-string">&apos;2018-02-22&apos;</span>
+  <span class="hljs-keyword">AND</span> experiment_id <span class="hljs-keyword">IS</span> <span class="hljs-literal">NULL</span>
+  <span class="hljs-keyword">AND</span> branch_id <span class="hljs-keyword">IS</span> <span class="hljs-literal">NULL</span>
 <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> window_start
 </code></pre>
 <h2 id="sampling"><a name="sampling" class="plugin-anchor" href="#sampling"><i class="fa fa-link" aria-hidden="true"></i></a>Sampling</h2>
@@ -1345,8 +1356,8 @@ than <code>window_start</code> for any given row)</li>
 <li><code>os_version</code>: version of the OS</li>
 <li><code>architecture</code>: build architecture, e.g. <code>x86</code></li>
 <li><code>country</code>: country code for the user (determined using geoIP), like <code>US</code> or <code>UK</code></li>
-<li><code>experiment_id</code>: identifier of the experiment being participated in, such as <code>e10s-beta46-noapz@experiments.mozilla.org</code>, or null if no experiment</li>
-<li><code>experiment_branch</code>: the branch of the experiment being participated in, such as <code>control</code> or <code>experiment</code>, or null if no experiment</li>
+<li><code>experiment_id</code>: identifier of the experiment being participated in, such as <code>e10s-beta46-noapz@experiments.mozilla.org</code>, null if no experiment or for unpacked rows (see <a href="#experiment-unpacking">Experiment unpacking</a>)</li>
+<li><code>experiment_branch</code>: the branch of the experiment being participated in, such as <code>control</code> or <code>experiment</code>, null if no experiment or for unpacked rows (see <a href="#experiment-unpacking">Experiment unpacking</a>)</li>
 </ul>
 <p>And these are the various measures we are counting:</p>
 <ul>
@@ -1409,7 +1420,7 @@ people are not actively using the browser or their computer is asleep)</li>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Error Aggregates","level":"2.1.2.9","depth":3,"next":{"title":"Events","level":"2.1.2.10","depth":3,"path":"datasets/batch_view/events/reference.md","ref":"datasets/batch_view/events/reference.md","articles":[]},"previous":{"title":"Cross Sectional","level":"2.1.2.8","depth":3,"path":"datasets/batch_view/cross_sectional/reference.md","ref":"datasets/batch_view/cross_sectional/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/streaming/error_aggregates/reference.md","mtime":"2018-09-17T15:01:44.968Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-09-17T15:03:11.759Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Error Aggregates","level":"2.1.2.9","depth":3,"next":{"title":"Events","level":"2.1.2.10","depth":3,"path":"datasets/batch_view/events/reference.md","ref":"datasets/batch_view/events/reference.md","articles":[]},"previous":{"title":"Cross Sectional","level":"2.1.2.8","depth":3,"path":"datasets/batch_view/cross_sectional/reference.md","ref":"datasets/batch_view/cross_sectional/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/streaming/error_aggregates/reference.md","mtime":"2018-09-19T17:02:57.514Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-09-19T17:04:45.174Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
