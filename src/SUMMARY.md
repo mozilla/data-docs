@@ -24,14 +24,14 @@
   * [Creating a custom Re:dash dataset](cookbooks/create_a_dataset.md)
   * [Sending a Custom Ping](cookbooks/new_ping.md)
   * [Using HyperLogLog in Zeppelin](cookbooks/hll_zeppelin.md)
-  * Dataset Specific
+  * [Dataset Specific](cookbooks/dataset_specific.md)
     * [Longitudinal Examples](cookbooks/longitudinal_examples.md)
     * [Working with Crash Pings](cookbooks/crash_pings.md)
-  * Real-time
+  * [Real-time](cookbooks/realtime.md)
     * [Creating a Real-time Analysis Plugin](cookbooks/realtime_analysis_plugin.md)
     * [Seeing Your Own Pings](cookbooks/view_pings_cep.md)
     * [CEP Matcher](tools/cep_matcher.md)
-  * Metrics
+  * [Metrics](cookbooks/metrics.md)
     * [Active DAU Definition](cookbooks/active_dau.md)
     * [Retention Analysis](cookbooks/retention.md)
 
@@ -72,8 +72,8 @@
 
 ---
 
-* Telemetry Behavior Reference
-    * Profile Behavior
+* [Telemetry Behavior Reference](concepts/index.md)
+    * [Profile Behavior](concepts/profile/index.md)
         * [Profile Creation](concepts/profile/profile_creation.md)
         * [Real World Usage](concepts/profile/realworldusage.md)
         * [Profile History](concepts/profile/profilehistory.md)
@@ -82,7 +82,6 @@
 
 ---
 
-* About this Documentation
+* [About this Documentation](meta/index.md)
   * [Contributing](meta/contributing.md)
-  * [Bug Template](https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&component=Documentation%20and%20Knowledge%20Repo%20%28RTMO%29&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=--&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&target_milestone=---&version=unspecified)
   * [Structure](meta/structure.md)
