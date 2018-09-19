@@ -4,7 +4,7 @@
 
 # Introduction
 
-{% include "./intro.md" %}
+{{#include ./intro.md}}
 
 # Code Reference
 
