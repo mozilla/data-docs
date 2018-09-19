@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if command -v parallel > /dev/null; then
-  RUNNER="parallel --will-cite"
+  RUNNER="parallel"
 else
   RUNNER="xargs -n1"
 fi
