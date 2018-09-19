@@ -3,7 +3,7 @@
 if command -v parallel > /dev/null; then
   RUNNER="parallel --will-cite"
 else
-  RUNNER=xargs
+  RUNNER="xargs -n1"
 fi
 
 find . -name "*.md" |\
