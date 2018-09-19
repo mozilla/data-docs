@@ -5,6 +5,11 @@ When surveying our users,
 their most common complaint has been our lack of documentation.
 It's important that we improve our documentation as often as possible.
 
+## Bug reports
+
+If you see an error in the documentation or want to extend a chapter, please
+[file a bug](https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&component=Documentation%20and%20Knowledge%20Repo%20%28RTMO%29&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=--&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&target_milestone=---&version=unspecified).
+
 ## Getting the Raw Documentation
 
 The documentation is intended to be read as HTML at
@@ -15,34 +20,36 @@ To begin contributing to the docs, fork the `firefox-data-docs` repo.
 
 ## Building the Documentation
 
-The documentation is rendered with [GitBook](https://www.gitbook.com/)
+The documentation is rendered with [mdBook](https://github.com/rust-lang-nursery/mdBook)
 To build the documentation locally,
-you'll need to install the `gitbook-cli` app with
-[npm](https://www.npmjs.com/get-npm):
+you'll need to install the `mdbook-dtmo` wrapper.
+Binary builds are provided at <https://github.com/badboy/mdbook-dtmo/releases>.
+
+You can install a binary build directly:
 
 ```bash
-npm install gitbook-cli -g
+curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-dtmo
 ```
 
-and install the GitBook plugins with:
+If you have [Rust](https://www.rust-lang.org/) installed, you can build and install `mdbook-dtmo`:
 
 ```bash
-gitbook install
+cargo install --git https://github.com/badboy/mdbook-dtmo
 ```
 
 You can then serve the documentation locally with:
 
 ```
-gitbook serve
+mdbook-dtmo serve
 ```
 
-The complete documentation for the GitBook toolchain is at: https://toolchain.gitbook.com/.
+The complete documentation for the mdBook toolchain is at: <https://rust-lang-nursery.github.io/mdBook/>.
 If you run into any technical limitations, let me (`@harterrt`) know.
 I'm happy to change the tooling to make it as much fun as possible to write.
 
 ## Adding a new article
 
-Be sure to link to your new article from `SUMMARY.md`, or GitBook will not render the file.
+Be sure to link to your new article from `SUMMARY.md`, or mdBook will not render the file.
 
 The structure of the repository is outlined in [this article](./structure.md).
 
