@@ -4,7 +4,7 @@
 
 # Introduction
 
-{% include "./ping_intro.md" %}
+{{#include ./ping_intro.md}}
 
 # Data Reference
 

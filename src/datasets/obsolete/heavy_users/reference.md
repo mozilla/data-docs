@@ -25,7 +25,7 @@ FROM
 
 # Introduction
 
-{% include "./intro.md" %}
+{{#include ./intro.md}}
 
 # Data Reference
 

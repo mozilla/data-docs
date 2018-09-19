@@ -17,7 +17,7 @@ take a look at our [tools for experimentation](../tools/experiments.md).
 
 # Raw Pings
 
-{% include "/datasets/ping_intro.md" %}
+{{#include ../datasets/ping_intro.md}}
 
 # Main Ping Derived Datasets
 
@@ -29,31 +29,31 @@ This section describes the derived datasets we provide to make analyzing this da
 
 ## `longitudinal`
 
-{% include "/datasets/batch_view/longitudinal/intro.md" %}
+{{#include ../datasets/batch_view/longitudinal/intro.md}}
 
 ## `main_summary`
 
-{% include "/datasets/batch_view/main_summary/intro.md" %}
+{{#include ../datasets/batch_view/main_summary/intro.md}}
 
 ## `first_shutdown_summary`
 
-{% include "/datasets/batch_view/first_shutdown_summary/intro.md" %}
+{{#include ../datasets/batch_view/first_shutdown_summary/intro.md}}
 
 ## `client_count_daily`
 
-{% include "/datasets/batch_view/client_count_daily/intro.md" %}
+{{#include ../datasets/batch_view/client_count_daily/intro.md}}
 
 ## `churn`
 
-{% include "/datasets/mozetl/churn/intro.md" %}
+{{#include ../datasets/mozetl/churn/intro.md}}
 
 ## `retention`
 
-{% include "/datasets/batch_view/retention/intro.md" %}
+{{#include ../datasets/batch_view/retention/intro.md}}
 
 ## `clients_daily`
 
-{% include "/datasets/batch_view/clients_daily/intro.md" %}
+{{#include ../datasets/batch_view/clients_daily/intro.md}}
 
 # Crash Ping Derived Datasets
 
@@ -66,11 +66,11 @@ This section describes the derived datasets we provide to make analyzing this da
 
 ## `crash_aggregates`
 
-{% include "/datasets/batch_view/crash_aggregates/intro.md" %}
+{{#include ../datasets/batch_view/crash_aggregates/intro.md}}
 
 ## `crash_summary`
 
-{% include "/datasets/batch_view/crash_summary/intro.md" %}
+{{#include ../datasets/batch_view/crash_summary/intro.md}}
 
 # New-Profile Derived Datasets
 
@@ -80,21 +80,21 @@ information about the user environment.
 
 This data is available in the `telemetry_new_profile_parquet` dataset.
 
-{% include "/datasets/batch_view/new_profile/intro.md" %}
+{{#include ../datasets/batch_view/new_profile/intro.md}}
 
 # Update Derived Dataset
 
-{% include "/datasets/batch_view/update/intro.md" %}
+{{#include ../datasets/batch_view/update/intro.md}}
 
 # Other Datasets
 
-{% include "/datasets/other/socorro_crash/intro.md" %}
+{{#include ../datasets/other/socorro_crash/intro.md}}
 
 # Obsolete Datasets
 
 ## `heavy_users`
 
-{% include "/datasets/obsolete/heavy_users/intro.md" %}
+{{#include ../datasets/obsolete/heavy_users/intro.md}}
 
 # Appendix
 

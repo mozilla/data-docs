@@ -8,7 +8,7 @@ The work is being tracked
 
 # Introduction
 
-{% include "./intro.md" %}
+{{#include ./intro.md}}
 
 # Data Reference
 
