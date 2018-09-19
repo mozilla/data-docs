@@ -7,8 +7,8 @@ addons:
       - parallel
 install:
   - npm install gitbook-cli markdown-spellcheck markdown-link-check -g
-script:
   - gitbook install
+script:
   - gitbook build
   - mdspell '**/*.md' '!**/node_modules/**/*.md' '!**/_book/**/*.md' --ignore-numbers --en-us --report
   - bash scripts/link_check.sh
