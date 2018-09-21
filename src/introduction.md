@@ -1,8 +1,9 @@
 # Firefox Data Documentation
 
-This document will teach you how to use Firefox data
-to answer questions about how users interact with our products. The source for this documentation
-can be found in [this repo](https://github.com/mozilla/firefox-data-docs).
+This document is intended to help Mozilla developers learn how to analyze and interpret the data produced
+by the Firefox Telemetry System, in order to answer questions about how users interact with our products.
+
+The source for this documentation can be found in [this repo](https://github.com/mozilla/firefox-data-docs).
 
 ## Using this document
 
