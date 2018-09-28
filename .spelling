@@ -111,6 +111,7 @@ Plotly
 Postgres
 PostgreSQL
 pre-computed
+pre-compiled
 pre-configured
 pre-defined
 pre-loaded
@@ -123,6 +124,7 @@ pushlog
 PySpark
 RDBMS
 RDD
+rustc
 recommender
 release_calendar
 repo
