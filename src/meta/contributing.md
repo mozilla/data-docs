@@ -20,18 +20,21 @@ To begin contributing to the docs, fork the `firefox-data-docs` repo.
 
 ## Building the Documentation
 
-The documentation is rendered with [mdBook](https://github.com/rust-lang-nursery/mdBook)
-To build the documentation locally,
-you'll need to install the `mdbook-dtmo` wrapper.
-Binary builds are provided at <https://github.com/badboy/mdbook-dtmo/releases>.
+The documentation is rendered with [mdBook](https://github.com/rust-lang-nursery/mdBook).
 
-You can install a binary build directly:
+To build the documentation locally, you'll need to install the `mdbook-dtmo` wrapper.
+Binary builds are provided at <https://github.com/badboy/mdbook-dtmo/releases>.
+Download a release for your system, unpack it and place the binary in a directory of your `$PATH`.
+
+If you have [rustc](https://www.rust-lang.org/en-US/) already installed, you can install a pre-compiled binary directly:
 
 ```bash
 curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-dtmo
 ```
 
-If you have [Rust](https://www.rust-lang.org/) installed, you can build and install `mdbook-dtmo`:
+This will place `mdbook-dtmo` into `~/.cargo/bin`. Make sure this directory is in your `$PATH` or copy it to a directory of your `$PATH`.
+
+You can also build and install `mdbook-dtmo`:
 
 ```bash
 cargo install --git https://github.com/badboy/mdbook-dtmo
@@ -43,9 +46,9 @@ You can then serve the documentation locally with:
 mdbook-dtmo serve
 ```
 
-The complete documentation for the mdBook toolchain is at: <https://rust-lang-nursery.github.io/mdBook/>.
-If you run into any technical limitations, let me (`@harterrt`) know.
-I'm happy to change the tooling to make it as much fun as possible to write.
+The complete documentation for the mdBook toolchain is available online at <https://rust-lang-nursery.github.io/mdBook/>.
+If you run into any technical limitations, let `@harterrt` or `@badboy` know.
+We are happy to change the tooling to make it as much fun as possible to write.
 
 ## Adding a new article
 
