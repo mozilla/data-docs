@@ -15,7 +15,7 @@ You can find the reference documentation for all ping types
 
 The telemetry data pipeline appends a `meta` key to the ping body containing
 information about the ingestion environment, including timestamps;
-geo-IP data about the client;
+Geo-IP data about the client;
 and fields extracted from the ping or client headers that are useful for downstream processing.
 
 Since the `meta` key is not present in the ping as it is sent by the client,
