@@ -8,13 +8,13 @@ In every ping there are two channels:
 The traditional channels we expect are:
 - `release`
 - `beta`
-- `aurora` (this is dev-edition, and is just a beta-repack)
+- `aurora` (this is `dev-edition`, and is just a beta repack)
 - `nightly`
 - `esr`
 
 ## App Update Channel
 This is the channel reported by the application directly. This could really be anything, but is usually one of the
-traditional release channels, including esr.
+expected release channels listed above.
 
 ### Accessing App Update Channel
 
@@ -37,7 +37,7 @@ WHERE submission_date_s3 = '20180823'
 ```
 
 #### In Raw Pings (Using the Dataset API)
-NOTE: The querying dimension of the dataset API calledd `appUpdateChannel` is actually the `normalizedChannel`.
+NOTE: The querying dimension of the dataset API called `appUpdateChannel` is actually the `normalizedChannel`.
 For example, the following is actually filtering on `normalizedChannel`, and will return nothing:
 ```
 Dataset.from_source("telemetry").where(appUpdateChannel = "non-normalized-channel-name")
