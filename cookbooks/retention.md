@@ -160,7 +160,7 @@ weekly_counts = (
 retention_by_os = (
     weekly_counts
     .join(os_counts, on='os')
-    .withColumn("retention", F.col("n_clients") / F.col("total_count"))
+    .withColumn("retention", F.col("n_week_clients") / F.col("total_clients"))
 )
 ```
 
