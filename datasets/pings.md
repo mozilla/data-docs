@@ -59,4 +59,4 @@ Key | Description
 `telemetryEnabled` | Extracted value of `environment.settings.telemetryEnabled`, describing whether opt-in telemetry is enabled
 `Timestamp` | Server timestamp when the ping is received, expressed as nanoseconds since epoch
 `Type` | e.g. "telemetry"
-`X-PingSender-Version` | Present when a ping is sent with [`PingSender`](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/pingsender.html).
+`X-PingSender-Version` | Present when a ping is sent with [`PingSender`](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/pingsender.html)
