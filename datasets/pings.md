@@ -33,7 +33,7 @@ Key | Description
 --- | -----------
 `appBuildId` |
 `appName` | e.g. "Firefox"
-`appUpdateChannel` |
+`appUpdateChannel` | Raw incoming [update channel](../concepts/channels/channel_normalization.md). E.g. `nightly-cck-example`
 `appVendor` | e.g. "Mozilla"
 `appVersion` |
 `clientId` |
@@ -48,7 +48,7 @@ Key | Description
 `geoSubdivision2` | from Geo-IP lookup of client IP; not present in all pings
 `Host` | Public hostname of the ingestion endpoint
 `Hostname` | Private hostname of the ingestion endpoint
-`normalizedChannel` |
+`normalizedChannel` | Normalized [update channel](../concepts/channels/channel_normalization.md). E.g. "release"
 `normalizedOSVersion` |
 `os` |
 `reason` | Documented [in the source tree](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html)
