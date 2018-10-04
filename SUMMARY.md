@@ -77,6 +77,8 @@
         * [Profile Creation](concepts/profile/profile_creation.md)
         * [Real World Usage](concepts/profile/realworldusage.md)
         * [Profile History](concepts/profile/profilehistory.md)
+    * Channel Behavior
+        * [Channel Normalization and Querying](concepts/channels/channel_normalization.md)
 
 ---
 
