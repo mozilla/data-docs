@@ -33,7 +33,7 @@ Key | Description
 --- | -----------
 `appBuildId` |
 `appName` | e.g. "Firefox"
-`appUpdateChannel` | Raw incoming [update channel](../concepts/channels/channel_normalization.md). E.g. "nightly-cck-example"
+`appUpdateChannel` | Raw incoming [update channel](../concepts/channels/channel_normalization.md). E.g. `nightly-cck-example`
 `appVendor` | e.g. "Mozilla"
 `appVersion` |
 `clientId` |
