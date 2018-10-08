@@ -74,12 +74,12 @@ Also see the [`client_count_daily` dataset][client_count_daily].
 
 [original_bug]: https://bugzilla.mozilla.org/show_bug.cgi?id=1381840
 [release_calendar]: https://wiki.mozilla.org/RapidRelease/Calendar
-[new_profile]: ../new_profile/reference.md
+[new_profile]: /datasets/batch_view/new_profile/reference.md
 [telemetry-health]: https://sql.telemetry.mozilla.org/dashboard/telemetry-health
 [bug_1407410]: https://bugzilla.mozilla.org/show_bug.cgi?id=1407410
 [algebird]: https://github.com/twitter/algebird/blob/develop/algebird-core/src/main/scala/com/twitter/algebird/HyperLogLog.scala#L230-L255
 [stmo]: https://sql.telemetry.mozilla.org
 [s-hll]: https://github.com/mozilla/spark-hyperloglog
 [p-hll]: https://github.com/vitillo/presto-hyperloglog
-[client_count_daily]: ../client_count_daily/reference.md
+[client_count_daily]: /datasets/batch_view/client_count_daily/reference.md
 

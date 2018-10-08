@@ -2,7 +2,7 @@ The `client_count_daily` dataset is useful for estimating user counts over a few
 [pre-defined dimensions](https://github.com/mozilla/telemetry-airflow/blob/master/jobs/client_count_daily_view.sh).
 
 The `client_count_daily` dataset is similar to the deprecated
-[`client_count` dataset](../client_count/reference.md)
+[`client_count` dataset](/datasets/batch_view/client_count/reference.md)
 except that is aggregated by submission date and not activity date.
 
 #### Content
