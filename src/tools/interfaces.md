@@ -48,7 +48,7 @@ for sophisticated ad-hoc analysis without the need for any specialized
 programming skills, but with so many options the UI can be a bit intimidating
 for novice users.
 
-#### [Distribution Viewer](distribution_viewer.md)
+#### Distribution Viewer
 
 Distribution Viewer (deprecated) was a simple tool
 that provides a set of [cumulative distribution

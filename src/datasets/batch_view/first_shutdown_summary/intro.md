@@ -5,9 +5,9 @@ ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telem
 
 The first shutdown ping contains first session usage data. The
 dataset has rows similar to the
-[`telemetry_new_profile_parquet`](../new_profile/reference.md),
+[`telemetry_new_profile_parquet`](/datasets/batch_view/new_profile/reference.md),
 but in the shape of
-[`main_summary`](../main_summary/reference.md).
+[`main_summary`](/datasets/batch_view/main_summary/reference.md).
 
 #### Background and Caveats
 

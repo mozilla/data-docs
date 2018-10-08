@@ -12,7 +12,7 @@ Using arrays give you access to the raw data from each ping,
 but can be difficult to work with from SQL.
 Here's a [query showing some sample data](https://sql.telemetry.mozilla.org/queries/4188#table)
 to help illustrate.
-Take a look at the [longitudinal examples](../../../cookbooks/longitudinal.md) if you get stuck.
+Take a look at the [longitudinal examples](../../../cookbooks/longitudinal_examples.md) if you get stuck.
 
 #### Background and Caveats
 Think of the longitudinal table as wide and short.
