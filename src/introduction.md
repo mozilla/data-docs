@@ -13,10 +13,10 @@ This documentation is divided into four main sections:
   After reading these articles, you will be able to confidently perform analysis
   over telemetry data.
 
-### [Tools](tools/README.md)
+### [Tools](tools/index.md)
   Describes the tools we maintain to access and analyze product data.
 
-### [Cookbooks & Tutorials](cookbooks/README.md)
+### [Cookbooks & Tutorials](cookbooks/index.md)
   This section contains tutorials presented in a simple problem/solution format.
 
 ### [Data Collection and Datasets](datasets/reference.md)
