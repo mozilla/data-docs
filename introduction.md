@@ -5,9 +5,8 @@ by the Firefox Telemetry system.
 
 At [Mozilla](https://www.mozilla.org), our data-gathering and data-handling practices are anchored in our
 [Data Privacy Principles](https://www.mozilla.org/en-US/privacy/principles/) and elaborated in the
-[Mozilla Privacy Policy](https://www.mozilla.org/en-US/privacy/).
-
-To learn more about what data Firefox collects and the choices you can make as a Firefox user, please see the
+[Mozilla Privacy Policy](https://www.mozilla.org/en-US/privacy/). You can learn more about what data Firefox
+collects and the choices you can make as a Firefox user in the 
 [Firefox Privacy Notice](https://www.mozilla.org/en-US/privacy/firefox/). 
 
 If there's information missing from these docs, or if you'd like to contribute, see [this article on contributing](meta/contributing.md), 
