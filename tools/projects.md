@@ -76,7 +76,6 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 | [Cerberus][cer] & [Medusa][med]   | Automatic alert system for telemetry aggregates
 | [`analysis.t.m.o`][atmo_gh]       | [Self serve data analysis platform][atmo]
 | [Mission Control][mc]             | Low latency dashboard for stability and health metrics
-| [Experiments Viewer][ev]          | Visualization for [Shield][shield] experiment results
 | [Re:dash][redash]                 | Mozilla's fork of the [data query / visualization system][stmo]
 | [TAAR][taar]                      | Telemetry-aware addon recommender
 | [Ensemble][ensemble]              | A minimalist platform for publishing data
@@ -93,7 +92,6 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 [med]: https://github.com/mozilla/medusa
 [atmo_gh]: https://github.com/mozilla/telemetry-analysis-service
 [mc]: https://github.com/mozilla/missioncontrol
-[ev]: https://github.com/mozilla/experiments-viewer
 [redash]: https://github.com/mozilla/redash
 [taar]: https://github.com/mozilla/taar
 [ensemble]: https://github.com/mozilla/ensemble
