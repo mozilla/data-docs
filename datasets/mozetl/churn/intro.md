@@ -44,6 +44,16 @@ overall usage at a given time instance.
 
 #### Background and Caveats
 
+The original concept for churn is captured in [this Mana
+page](https://mana.mozilla.org/wiki/display/FIREFOX/Project%3A+Firefox+Churn+v1.0).
+The original derived data-set was created in [bug
+1198537](https://bugzilla.mozilla.org/show_bug.cgi?id=1198537).  The first
+[major revision (`v2`)](https://bugzilla.mozilla.org/show_bug.cgi?id=1389230) of
+this data-set added attribution, search, and uri counts.  The second [major
+revision (`v3`)](https://bugzilla.mozilla.org/show_bug.cgi?id=1389231) included
+additional clients through the `new-profile` ping and adjusted the collection
+window from 10 to 5 days.
+
 * Each row in this dataset describes a unique segment of users
   - The number of rows is exponential with the number of dimensions
   - New fields should be added sparing to account for data-set size
