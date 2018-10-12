@@ -9,10 +9,13 @@ Below are a number of trailheads that lead into the projects and code that compr
 | [`python_moztelemetry`][pymt]      | Python APIs for Mozilla Telemetry
 | [`moztelemetry`][mt]               | Scala APIs for Mozilla Telemetry
 | [`spark-hyperloglog`][spark_hll]   | Algebird's HyperLogLog support for Apache Spark
+| [`mozanalysis`][ma]                | A library for Mozilla experiments analysis
+
 
 [pymt]: https://github.com/mozilla/python_moztelemetry
 [mt]: https://github.com/mozilla/moztelemetry
 [spark_hll]: https://github.com/mozilla/spark-hyperloglog
+[ma]: https://github.com/mozilla/mozanalysis
 
 ## ETL code and Datasets
 
@@ -44,6 +47,7 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 | [`nginx_moz_ingest`][nmi]             | Nginx module for Telemetry data ingestion
 | [`puppet-config`][puppet]             | Cloud services puppet config for deploying infrastructure
 | [`parquet2hive`][p2h]                 | Hive import statement generator for Parquet datasets
+| [`edge-validator`][edge-validator]    | A service endpoint for validating incoming data
 
 [schemas]: https://github.com/mozilla-services/mozilla-pipeline-schemas
 [hs]: https://github.com/mozilla-services/hindsight
@@ -52,6 +56,7 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 [nmi]: https://github.com/mozilla-services/nginx_moz_ingest
 [puppet]: https://github.com/mozilla-services/puppet-config/tree/master/pipeline
 [p2h]: https://github.com/mozilla/parquet2hive
+[edge-validator]: https://github.com/mozilla-services/edge-validator
 
 ### EMR Bootstrap scripts
 
@@ -71,7 +76,6 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 | [Cerberus][cer] & [Medusa][med]   | Automatic alert system for telemetry aggregates
 | [`analysis.t.m.o`][atmo_gh]       | [Self serve data analysis platform][atmo]
 | [Mission Control][mc]             | Low latency dashboard for stability and health metrics
-| [Experiments Viewer][ev]          | Visualization for [Shield][shield] experiment results
 | [Re:dash][redash]                 | Mozilla's fork of the [data query / visualization system][stmo]
 | [TAAR][taar]                      | Telemetry-aware addon recommender
 | [Ensemble][ensemble]              | A minimalist platform for publishing data
@@ -88,7 +92,6 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 [med]: https://github.com/mozilla/medusa
 [atmo_gh]: https://github.com/mozilla/telemetry-analysis-service
 [mc]: https://github.com/mozilla/missioncontrol
-[ev]: https://github.com/mozilla/experiments-viewer
 [redash]: https://github.com/mozilla/redash
 [taar]: https://github.com/mozilla/taar
 [ensemble]: https://github.com/mozilla/ensemble
