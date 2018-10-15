@@ -1,3 +1,6 @@
 .content table {
   width: 100%;
 }
+.content code mark {
+    display: inline-block;
+}
