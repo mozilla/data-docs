@@ -1,1305 +1,160 @@
-
 <!DOCTYPE HTML>
-<html lang="" >
+<html lang="en" class="sidebar-visible no-js">
     <head>
+        <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
+        <title>Analysis Interfaces - Firefox Data Documentation</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Analysis Interfaces · GitBook</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.3">
-        
-        
-        
-    
-    
-    <link rel="stylesheet" href="../gitbook/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
 
-    
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-mermaid-gb3/mermaid/mermaid.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
-                
-            
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../dtmo.css">
+        
+        <link rel="stylesheet" href="../mermaid.css">
         
 
-    
-
-    
         
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-
-    
-
-        
-    
-    
-    <meta name="HandheldFriendly" content="true"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
-    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
-
-    
-    <link rel="next" href="spark.html" />
-    
-    
-    <link rel="prev" href="../concepts/pipeline/event_pipeline.html" />
-    
-
     </head>
-    <body>
-        
-<div class="book">
-    <div class="book-summary">
-        
-            
-<div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search" />
-</div>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">var path_to_root = "../";</script>
 
-            
-                <nav role="navigation">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="../introduction.html">Firefox Data Documentation</a></li><li><a href="../concepts/reporting_a_problem.html"><strong aria-hidden="true">1.</strong> Reporting a problem</a></li><li><a href="../concepts/terminology.html"><strong aria-hidden="true">2.</strong> Terminology</a></li><li><a href="../concepts/getting_started.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li><ol class="section"><li><a href="../concepts/analysis_intro.html"><strong aria-hidden="true">3.1.</strong> Analysis Quick Start</a></li><li><a href="../concepts/choosing_a_dataset.html"><strong aria-hidden="true">3.2.</strong> Choosing a Dataset</a></li><li><a href="../tools/stmo.html"><strong aria-hidden="true">3.3.</strong> Intro to STMO</a></li><li><a href="../concepts/analysis_gotchas.html"><strong aria-hidden="true">3.4.</strong> Common Analysis Gotchas</a></li><li><a href="../concepts/sql_optimization.html"><strong aria-hidden="true">3.5.</strong> Optimizing Queries</a></li><li><a href="../concepts/review.html"><strong aria-hidden="true">3.6.</strong> Getting Review</a></li><li><a href="../datasets/new_data.html"><strong aria-hidden="true">3.7.</strong> Collecting New Data</a></li></ol></li><li><a href="../tools/index.html"><strong aria-hidden="true">4.</strong> Tools</a></li><li><ol class="section"><li><a href="../tools/projects.html"><strong aria-hidden="true">4.1.</strong> Project Glossary</a></li><li><a href="../concepts/pipeline/data_pipeline.html"><strong aria-hidden="true">4.2.</strong> Overview of Mozilla's Data Pipeline</a></li><li><ol class="section"><li><a href="../concepts/pipeline/data_pipeline_detail.html"><strong aria-hidden="true">4.2.1.</strong> In-depth Data Pipeline Detail</a></li><li><a href="../concepts/pipeline/http_edge_spec.html"><strong aria-hidden="true">4.2.2.</strong> HTTP Edge Server Specification</a></li><li><a href="../concepts/pipeline/event_pipeline.html"><strong aria-hidden="true">4.2.3.</strong> Event Pipeline Detail</a></li></ol></li><li><a href="../tools/interfaces.html" class="active"><strong aria-hidden="true">4.3.</strong> Analysis Interfaces</a></li><li><a href="../tools/spark.html"><strong aria-hidden="true">4.4.</strong> Custom analysis with Spark</a></li><li><a href="../concepts/sql_style.html"><strong aria-hidden="true">4.5.</strong> SQL Style Guide</a></li></ol></li><li><a href="../cookbooks/index.html"><strong aria-hidden="true">5.</strong> Cookbooks</a></li><li><ol class="section"><li><a href="../tools/alerts.html"><strong aria-hidden="true">5.1.</strong> Alerts</a></li><li><a href="../cookbooks/parquet.html"><strong aria-hidden="true">5.2.</strong> Working with Parquet Data on ATMO Clusters</a></li><li><a href="../cookbooks/create_a_dataset.html"><strong aria-hidden="true">5.3.</strong> Creating a custom Re:dash dataset</a></li><li><a href="../cookbooks/new_ping.html"><strong aria-hidden="true">5.4.</strong> Sending a Custom Ping</a></li><li><a href="../cookbooks/hll_zeppelin.html"><strong aria-hidden="true">5.5.</strong> Using HyperLogLog in Zeppelin</a></li><li><a href="../cookbooks/dataset_specific.html"><strong aria-hidden="true">5.6.</strong> Dataset Specific</a></li><li><ol class="section"><li><a href="../cookbooks/longitudinal_examples.html"><strong aria-hidden="true">5.6.1.</strong> Longitudinal Examples</a></li><li><a href="../cookbooks/crash_pings.html"><strong aria-hidden="true">5.6.2.</strong> Working with Crash Pings</a></li></ol></li><li><a href="../cookbooks/realtime.html"><strong aria-hidden="true">5.7.</strong> Real-time</a></li><li><ol class="section"><li><a href="../cookbooks/realtime_analysis_plugin.html"><strong aria-hidden="true">5.7.1.</strong> Creating a Real-time Analysis Plugin</a></li><li><a href="../cookbooks/view_pings_cep.html"><strong aria-hidden="true">5.7.2.</strong> Seeing Your Own Pings</a></li><li><a href="../tools/cep_matcher.html"><strong aria-hidden="true">5.7.3.</strong> CEP Matcher</a></li></ol></li><li><a href="../cookbooks/metrics.html"><strong aria-hidden="true">5.8.</strong> Metrics</a></li><li><ol class="section"><li><a href="../cookbooks/active_dau.html"><strong aria-hidden="true">5.8.1.</strong> Active DAU Definition</a></li><li><a href="../cookbooks/retention.html"><strong aria-hidden="true">5.8.2.</strong> Retention Analysis</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../datasets/reference.html"><strong aria-hidden="true">6.</strong> Dataset Reference</a></li><li><ol class="section"><li><a href="../datasets/pings.html"><strong aria-hidden="true">6.1.</strong> Pings</a></li><li><a href="../datasets/derived.html"><strong aria-hidden="true">6.2.</strong> Derived Datasets</a></li><li><ol class="section"><li><a href="../datasets/batch_view/addons/reference.html"><strong aria-hidden="true">6.2.1.</strong> Addons</a></li><li><a href="../datasets/mozetl/churn/reference.html"><strong aria-hidden="true">6.2.2.</strong> Churn</a></li><li><a href="../datasets/batch_view/client_count_daily/reference.html"><strong aria-hidden="true">6.2.3.</strong> Client Count Daily</a></li><li><a href="../datasets/batch_view/client_count/reference.html"><strong aria-hidden="true">6.2.4.</strong> Client Count</a></li><li><a href="../datasets/batch_view/clients_daily/reference.html"><strong aria-hidden="true">6.2.5.</strong> Clients Daily</a></li><li><a href="../datasets/batch_view/crash_aggregates/reference.html"><strong aria-hidden="true">6.2.6.</strong> Crash Aggregate</a></li><li><a href="../datasets/batch_view/crash_summary/reference.html"><strong aria-hidden="true">6.2.7.</strong> Crash Summary</a></li><li><a href="../datasets/batch_view/cross_sectional/reference.html"><strong aria-hidden="true">6.2.8.</strong> Cross Sectional</a></li><li><a href="../datasets/streaming/error_aggregates/reference.html"><strong aria-hidden="true">6.2.9.</strong> Error Aggregates</a></li><li><a href="../datasets/batch_view/events/reference.html"><strong aria-hidden="true">6.2.10.</strong> Events</a></li><li><a href="../datasets/batch_view/first_shutdown_summary/reference.html"><strong aria-hidden="true">6.2.11.</strong> First Shutdown Summary</a></li><li><a href="../datasets/batch_view/longitudinal/reference.html"><strong aria-hidden="true">6.2.12.</strong> Longitudinal</a></li><li><a href="../datasets/batch_view/main_summary/reference.html"><strong aria-hidden="true">6.2.13.</strong> Main Summary</a></li><li><a href="../datasets/batch_view/new_profile/reference.html"><strong aria-hidden="true">6.2.14.</strong> New Profile</a></li><li><a href="../datasets/batch_view/retention/reference.html"><strong aria-hidden="true">6.2.15.</strong> Retention</a></li><li><a href="../datasets/other/socorro_crash/reference.html"><strong aria-hidden="true">6.2.16.</strong> Socorro Crash Reports</a></li><li><a href="../datasets/other/ssl/reference.html"><strong aria-hidden="true">6.2.17.</strong> SSL Ratios (public)</a></li><li><a href="../datasets/batch_view/sync_summary/reference.html"><strong aria-hidden="true">6.2.18.</strong> Sync Summary</a></li><li><a href="../datasets/batch_view/update/reference.html"><strong aria-hidden="true">6.2.19.</strong> Update</a></li></ol></li><li><a href="../tools/experiments.html"><strong aria-hidden="true">6.3.</strong> Experimental Datasets</a></li><li><ol class="section"><li><a href="../datasets/shield.html"><strong aria-hidden="true">6.3.1.</strong> Accessing Shield Study data</a></li></ol></li><li><a href="../datasets/search.html"><strong aria-hidden="true">6.4.</strong> Search Datasets</a></li><li><ol class="section"><li><a href="../datasets/mozetl/search_aggregates/reference.html"><strong aria-hidden="true">6.4.1.</strong> Search Aggregates</a></li><li><a href="../datasets/mozetl/search_clients_daily/reference.html"><strong aria-hidden="true">6.4.2.</strong> Search Clients Daily</a></li></ol></li><li><a href="../datasets/other.html"><strong aria-hidden="true">6.5.</strong> Other Datasets</a></li><li><ol class="section"><li><a href="../datasets/other/hgpush/reference.html"><strong aria-hidden="true">6.5.1.</strong> hgpush</a></li></ol></li><li><a href="../datasets/obsolete.html"><strong aria-hidden="true">6.6.</strong> Obsolete Datasets</a></li><li><ol class="section"><li><a href="../datasets/obsolete/heavy_users/reference.html"><strong aria-hidden="true">6.6.1.</strong> Heavy Users</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../concepts/index.html"><strong aria-hidden="true">7.</strong> Telemetry Behavior Reference</a></li><li><ol class="section"><li><a href="../concepts/profile/index.html"><strong aria-hidden="true">7.1.</strong> Profile Behavior</a></li><li><ol class="section"><li><a href="../concepts/profile/profile_creation.html"><strong aria-hidden="true">7.1.1.</strong> Profile Creation</a></li><li><a href="../concepts/profile/realworldusage.html"><strong aria-hidden="true">7.1.2.</strong> Real World Usage</a></li><li><a href="../concepts/profile/profilehistory.html"><strong aria-hidden="true">7.1.3.</strong> Profile History</a></li></ol></li><li><a href="../concepts/channels/index.html"><strong aria-hidden="true">7.2.</strong> Channel Behavior</a></li><li><ol class="section"><li><a href="../concepts/channels/channel_normalization.html"><strong aria-hidden="true">7.2.1.</strong> Channel Normalization and Querying</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../meta/index.html"><strong aria-hidden="true">8.</strong> About this Documentation</a></li><li><ol class="section"><li><a href="../meta/contributing.html"><strong aria-hidden="true">8.1.</strong> Contributing</a></li><li><a href="../meta/structure.html"><strong aria-hidden="true">8.2.</strong> Structure</a></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
                 
-
-
-<ul class="summary">
-    
-    
-
-    
-
-    
-        
-        
-    
-        <li class="chapter " data-level="1.1" data-path="../">
-            
-                <a href="../">
-            
-                    
-                    Firefox Data Documentation
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.1.1" data-path="../concepts/reporting_a_problem.html">
-            
-                <a href="../concepts/reporting_a_problem.html">
-            
-                    
-                    Reporting a problem
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.1.2" data-path="../concepts/terminology.html">
-            
-                <a href="../concepts/terminology.html">
-            
-                    
-                    Terminology
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2" data-path="../concepts/getting_started.html">
-            
-                <a href="../concepts/getting_started.html">
-            
-                    
-                    Getting Started
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.2.1" data-path="../concepts/analysis_intro.html">
-            
-                <a href="../concepts/analysis_intro.html">
-            
-                    
-                    Analysis Quick Start
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.2" data-path="../concepts/choosing_a_dataset.html">
-            
-                <a href="../concepts/choosing_a_dataset.html">
-            
-                    
-                    Choosing a Dataset
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.3" data-path="stmo.html">
-            
-                <a href="stmo.html">
-            
-                    
-                    Intro to STMO
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.4" data-path="../concepts/analysis_gotchas.html">
-            
-                <a href="../concepts/analysis_gotchas.html">
-            
-                    
-                    Common Analysis Gotchas
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.5" data-path="../concepts/sql_optimization.html">
-            
-                <a href="../concepts/sql_optimization.html">
-            
-                    
-                    Optimizing Queries
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.6" data-path="../concepts/review.html">
-            
-                <a href="../concepts/review.html">
-            
-                    
-                    Getting Review
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.7" data-path="../datasets/new_data.html">
-            
-                <a href="../datasets/new_data.html">
-            
-                    
-                    Collecting New Data
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3" data-path="./">
-            
-                <a href="./">
-            
-                    
-                    Tools
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.3.1" data-path="projects.html">
-            
-                <a href="projects.html">
-            
-                    
-                    Project Glossary
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.2" data-path="../concepts/pipeline/data_pipeline.html">
-            
-                <a href="../concepts/pipeline/data_pipeline.html">
-            
-                    
-                    Overview of Mozilla's Data Pipeline
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.3.2.1" data-path="../concepts/pipeline/data_pipeline_detail.html">
-            
-                <a href="../concepts/pipeline/data_pipeline_detail.html">
-            
-                    
-                    In-depth Data Pipeline Detail
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.2.2" data-path="../concepts/pipeline/http_edge_spec.html">
-            
-                <a href="../concepts/pipeline/http_edge_spec.html">
-            
-                    
-                    HTTP Edge Server Specification
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.2.3" data-path="../concepts/pipeline/event_pipeline.html">
-            
-                <a href="../concepts/pipeline/event_pipeline.html">
-            
-                    
-                    Event Pipeline Detail
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter active" data-level="1.3.3" data-path="interfaces.html">
-            
-                <a href="interfaces.html">
-            
-                    
-                    Analysis Interfaces
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4" data-path="spark.html">
-            
-                <a href="spark.html">
-            
-                    
-                    Custom analysis with Spark
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.5" data-path="../concepts/sql_style.html">
-            
-                <a href="../concepts/sql_style.html">
-            
-                    
-                    SQL Style Guide
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4" data-path="../cookbooks/">
-            
-                <a href="../cookbooks/">
-            
-                    
-                    Cookbooks
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.4.1" data-path="alerts.html">
-            
-                <a href="alerts.html">
-            
-                    
-                    Alerts
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.2" data-path="../cookbooks/parquet.html">
-            
-                <a href="../cookbooks/parquet.html">
-            
-                    
-                    Working with Parquet Data on ATMO Clusters
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.3" data-path="../cookbooks/create_a_dataset.html">
-            
-                <a href="../cookbooks/create_a_dataset.html">
-            
-                    
-                    Creating a custom Re:dash dataset
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.4" data-path="../cookbooks/new_ping.html">
-            
-                <a href="../cookbooks/new_ping.html">
-            
-                    
-                    Sending a Custom Ping
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.5" data-path="../cookbooks/hll_zeppelin.html">
-            
-                <a href="../cookbooks/hll_zeppelin.html">
-            
-                    
-                    Using HyperLogLog in Zeppelin
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.6" >
-            
-                <span>
-            
-                    
-                    Dataset Specific
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.4.6.1" data-path="../cookbooks/longitudinal_examples.html">
-            
-                <a href="../cookbooks/longitudinal_examples.html">
-            
-                    
-                    Longitudinal Examples
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.6.2" data-path="../cookbooks/crash_pings.html">
-            
-                <a href="../cookbooks/crash_pings.html">
-            
-                    
-                    Working with Crash Pings
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.7" >
-            
-                <span>
-            
-                    
-                    Real-time
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.4.7.1" data-path="../cookbooks/realtime_analysis_plugin.html">
-            
-                <a href="../cookbooks/realtime_analysis_plugin.html">
-            
-                    
-                    Creating a Real-time Analysis Plugin
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.7.2" data-path="../cookbooks/view_pings_cep.html">
-            
-                <a href="../cookbooks/view_pings_cep.html">
-            
-                    
-                    Seeing Your Own Pings
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.7.3" data-path="cep_matcher.html">
-            
-                <a href="cep_matcher.html">
-            
-                    
-                    CEP Matcher
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.8" >
-            
-                <span>
-            
-                    
-                    Metrics
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.4.8.1" data-path="../cookbooks/active_dau.html">
-            
-                <a href="../cookbooks/active_dau.html">
-            
-                    
-                    Active DAU Definition
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.8.2" data-path="../cookbooks/retention.html">
-            
-                <a href="../cookbooks/retention.html">
-            
-                    
-                    Retention Analysis
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-    
-        
-        <li class="divider"></li>
-        
-        
-    
-        <li class="chapter " data-level="2.1" data-path="../datasets/reference.html">
-            
-                <a href="../datasets/reference.html">
-            
-                    
-                    Dataset Reference
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="2.1.1" data-path="../datasets/pings.html">
-            
-                <a href="../datasets/pings.html">
-            
-                    
-                    Pings
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2" data-path="../datasets/derived.html">
-            
-                <a href="../datasets/derived.html">
-            
-                    
-                    Derived Datasets
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="2.1.2.1" data-path="../datasets/batch_view/addons/reference.html">
-            
-                <a href="../datasets/batch_view/addons/reference.html">
-            
-                    
-                    Addons
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.2" data-path="../datasets/mozetl/churn/reference.html">
-            
-                <a href="../datasets/mozetl/churn/reference.html">
-            
-                    
-                    Churn
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.3" data-path="../datasets/batch_view/client_count_daily/reference.html">
-            
-                <a href="../datasets/batch_view/client_count_daily/reference.html">
-            
-                    
-                    Client Count Daily
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.4" data-path="../datasets/batch_view/client_count/reference.html">
-            
-                <a href="../datasets/batch_view/client_count/reference.html">
-            
-                    
-                    Client Count
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.5" data-path="../datasets/batch_view/clients_daily/reference.html">
-            
-                <a href="../datasets/batch_view/clients_daily/reference.html">
-            
-                    
-                    Clients Daily
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.6" data-path="../datasets/batch_view/crash_aggregates/reference.html">
-            
-                <a href="../datasets/batch_view/crash_aggregates/reference.html">
-            
-                    
-                    Crash Aggregate
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.7" data-path="../datasets/batch_view/crash_summary/reference.html">
-            
-                <a href="../datasets/batch_view/crash_summary/reference.html">
-            
-                    
-                    Crash Summary
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.8" data-path="../datasets/batch_view/cross_sectional/reference.html">
-            
-                <a href="../datasets/batch_view/cross_sectional/reference.html">
-            
-                    
-                    Cross Sectional
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.9" data-path="../datasets/streaming/error_aggregates/reference.html">
-            
-                <a href="../datasets/streaming/error_aggregates/reference.html">
-            
-                    
-                    Error Aggregates
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.10" data-path="../datasets/batch_view/events/reference.html">
-            
-                <a href="../datasets/batch_view/events/reference.html">
-            
-                    
-                    Events
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.11" data-path="../datasets/batch_view/first_shutdown_summary/reference.html">
-            
-                <a href="../datasets/batch_view/first_shutdown_summary/reference.html">
-            
-                    
-                    First Shutdown Summary
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.12" data-path="../datasets/batch_view/longitudinal/reference.html">
-            
-                <a href="../datasets/batch_view/longitudinal/reference.html">
-            
-                    
-                    Longitudinal
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.13" data-path="../datasets/batch_view/main_summary/reference.html">
-            
-                <a href="../datasets/batch_view/main_summary/reference.html">
-            
-                    
-                    Main Summary
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.14" data-path="../datasets/batch_view/new_profile/reference.html">
-            
-                <a href="../datasets/batch_view/new_profile/reference.html">
-            
-                    
-                    New Profile
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.15" data-path="../datasets/batch_view/retention/reference.html">
-            
-                <a href="../datasets/batch_view/retention/reference.html">
-            
-                    
-                    Retention
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.16" data-path="../datasets/other/socorro_crash/reference.html">
-            
-                <a href="../datasets/other/socorro_crash/reference.html">
-            
-                    
-                    Socorro Crash Reports
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.17" data-path="../datasets/other/ssl/reference.html">
-            
-                <a href="../datasets/other/ssl/reference.html">
-            
-                    
-                    SSL Ratios (public)
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.18" data-path="../datasets/batch_view/sync_summary/reference.html">
-            
-                <a href="../datasets/batch_view/sync_summary/reference.html">
-            
-                    
-                    Sync Summary
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.19" data-path="../datasets/batch_view/update/reference.html">
-            
-                <a href="../datasets/batch_view/update/reference.html">
-            
-                    
-                    Update
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.3" data-path="experiments.html">
-            
-                <a href="experiments.html">
-            
-                    
-                    Experimental Datasets
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="2.1.3.1" data-path="../datasets/shield.html">
-            
-                <a href="../datasets/shield.html">
-            
-                    
-                    Accessing Shield Study data
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.4" data-path="../datasets/search.html">
-            
-                <a href="../datasets/search.html">
-            
-                    
-                    Search Datasets
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="2.1.4.1" data-path="../datasets/mozetl/search_aggregates/reference.html">
-            
-                <a href="../datasets/mozetl/search_aggregates/reference.html">
-            
-                    
-                    Search Aggregates
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.4.2" data-path="../datasets/mozetl/search_clients_daily/reference.html">
-            
-                <a href="../datasets/mozetl/search_clients_daily/reference.html">
-            
-                    
-                    Search Clients Daily
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.5" data-path="../datasets/other.html">
-            
-                <a href="../datasets/other.html">
-            
-                    
-                    Other Datasets
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="2.1.5.1" data-path="../datasets/other/hgpush/reference.html">
-            
-                <a href="../datasets/other/hgpush/reference.html">
-            
-                    
-                    hgpush
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.6" data-path="../datasets/obsolete.html">
-            
-                <a href="../datasets/obsolete.html">
-            
-                    
-                    Obsolete Datasets
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="2.1.6.1" data-path="../datasets/obsolete/heavy_users/reference.html">
-            
-                <a href="../datasets/obsolete/heavy_users/reference.html">
-            
-                    
-                    Heavy Users
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-    
-        
-        <li class="divider"></li>
-        
-        
-    
-        <li class="chapter " data-level="3.1" >
-            
-                <span>
-            
-                    
-                    Telemetry Behavior Reference
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="3.1.1" >
-            
-                <span>
-            
-                    
-                    Profile Behavior
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="3.1.1.1" data-path="../concepts/profile/profile_creation.html">
-            
-                <a href="../concepts/profile/profile_creation.html">
-            
-                    
-                    Profile Creation
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="3.1.1.2" data-path="../concepts/profile/realworldusage.html">
-            
-                <a href="../concepts/profile/realworldusage.html">
-            
-                    
-                    Real World Usage
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="3.1.1.3" data-path="../concepts/profile/profilehistory.html">
-            
-                <a href="../concepts/profile/profilehistory.html">
-            
-                    
-                    Profile History
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="3.1.2" >
-            
-                <span>
-            
-                    
-                    Channel Behavior
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="3.1.2.1" data-path="../concepts/channels/channel_normalization.html">
-            
-                <a href="../concepts/channels/channel_normalization.html">
-            
-                    
-                    Channel Normalization and Querying
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-    
-        
-        <li class="divider"></li>
-        
-        
-    
-        <li class="chapter " data-level="4.1" >
-            
-                <span>
-            
-                    
-                    About this Documentation
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="4.1.1" data-path="../meta/contributing.html">
-            
-                <a href="../meta/contributing.html">
-            
-                    
-                    Contributing
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="4.1.2" >
-            
-                <a target="_blank" href="https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&component=Documentation%20and%20Knowledge%20Repo%20%28RTMO%29&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=--&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&target_milestone=---&version=unspecified">
-            
-                    
-                    Bug Template
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="4.1.3" data-path="../meta/structure.html">
-            
-                <a href="../meta/structure.html">
-            
-                    
-                    Structure
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-    
-
-    <li class="divider"></li>
-
-    <li>
-        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            Published with GitBook
-        </a>
-    </li>
-</ul>
-
-
-                </nav>
-            
-        
-    </div>
-
-    <div class="book-body">
-        
-            <div class="body-inner">
-                
-                    
-
-<div class="book-header" role="navigation">
-    
-
-    <!-- Title -->
-    <h1>
-        <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Analysis Interfaces</a>
-    </h1>
-</div>
-
-
-
-
-                    <div class="page-wrapper" tabindex="-1" role="main">
-                        <div class="page-inner">
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
                             
-<div id="book-search-results">
-    <div class="search-noresults">
-    
-                                <section class="normal markdown-section">
-                                
-                                <h2 id="mozilla-firefox-data-analysis-tools"><a name="mozilla-firefox-data-analysis-tools" class="plugin-anchor" href="#mozilla-firefox-data-analysis-tools"><i class="fa fa-link" aria-hidden="true"></i></a>Mozilla Firefox Data Analysis Tools</h2>
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Firefox Data Documentation</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#mozilla-firefox-data-analysis-tools" id="mozilla-firefox-data-analysis-tools"><h2>Mozilla Firefox Data Analysis Tools</h2></a>
 <p>This is a starting point for making sense of (and gaining access to) all of the
 Firefox-related data analysis tools. There are a number of different tools
 available, all with their own strengths, tailored to a variety of use cases and
 skill sets.</p>
-<h4 id="sqltelemetrymozillaorg-stmo"><a name="sqltelemetrymozillaorg-stmo" class="plugin-anchor" href="#sqltelemetrymozillaorg-stmo"><i class="fa fa-link" aria-hidden="true"></i></a><a href="stmo.html"><code>sql.telemetry.mozilla.org</code></a> (STMO)</h4>
-<p>The <a href="https://sql.telemetry.mozilla.org" target="_blank"><code>sql.telemetry.mozilla.org</code></a> (STMO) site
-is an instance of the very fine <a href="https://redash.io/" target="_blank">Re:dash</a> software, allowing
+<a class="header" href="#a-hrefstmohtmlsqltelemetrymozillaorga-stmo" id="a-hrefstmohtmlsqltelemetrymozillaorga-stmo"><h4><a href="stmo.html"><code>sql.telemetry.mozilla.org</code></a> (STMO)</h4></a>
+<p>The <a href="https://sql.telemetry.mozilla.org"><code>sql.telemetry.mozilla.org</code></a> (STMO) site
+is an instance of the very fine <a href="https://redash.io/">Re:dash</a> software, allowing
 for SQL-based exploratory analysis and visualization / dashboard
 construction. Requires (surprise!) familiarity with SQL, and for your data to
 be explicitly exposed as an STMO data source. Bugs or feature requests can be
-reported in our <a href="https://github.com/mozilla/redash/issues" target="_blank">issue tracker</a>.</p>
-<h4 id="analysistelemetrymozillaorg-atmo"><a name="analysistelemetrymozillaorg-atmo" class="plugin-anchor" href="#analysistelemetrymozillaorg-atmo"><i class="fa fa-link" aria-hidden="true"></i></a><a href="spark.html"><code>analysis.telemetry.mozilla.org</code></a> (ATMO)</h4>
+reported in our <a href="https://github.com/mozilla/redash/issues">issue tracker</a>.</p>
+<a class="header" href="#a-hrefsparkhtmlanalysistelemetrymozillaorga-atmo" id="a-hrefsparkhtmlanalysistelemetrymozillaorga-atmo"><h4><a href="spark.html"><code>analysis.telemetry.mozilla.org</code></a> (ATMO)</h4></a>
 <p>The
-<a href="https://analysis.telemetry.mozilla.org" target="_blank"><code>analysis.telemetry.mozilla.org</code></a>
+<a href="https://analysis.telemetry.mozilla.org"><code>analysis.telemetry.mozilla.org</code></a>
 (ATMO) site can be used to launch and gain access to virtual machines running
 Apache Spark clusters which have been pre-configured with access to the raw data
 stored in our long term storage S3 buckets. Spark allows you to use
@@ -1307,26 +162,26 @@ Python or Scala to perform arbitrary analysis and generate arbitrary
 output. Once developed, ATMO can also be used to run recurring Spark jobs
 for data transformation, processing, or reporting. Requires Python or Scala
 programming skills and knowledge of various data APIs. Learn more by visiting
-the <a href="https://wiki.mozilla.org/Telemetry" target="_blank">documentation</a> or
+the <a href="https://wiki.mozilla.org/Telemetry">documentation</a> or
 <a href="spark.html">tutorials</a>.</p>
-<h4 id="databricks"><a name="databricks" class="plugin-anchor" href="#databricks"><i class="fa fa-link" aria-hidden="true"></i></a><a href="https://dbc-caf9527b-e073.cloud.databricks.com/" target="_blank">Databricks</a></h4>
+<a class="header" href="#a-hrefhttpsdbc-caf9527b-e073clouddatabrickscomdatabricksa" id="a-hrefhttpsdbc-caf9527b-e073clouddatabrickscomdatabricksa"><h4><a href="https://dbc-caf9527b-e073.cloud.databricks.com/">Databricks</a></h4></a>
 <p>Offers notebook interface with shared, always-on, autoscaling cluster
 (attaching your notebooks to <code>shared_serverless</code> is the best way to start).
 Convenient for quick data investigations. Users can get help on <code>#databricks</code>
 channel on IRC and are advised to join the
-<a href="https://groups.google.com/a/mozilla.com/forum/#!forum/databricks-discuss" target="_blank"><code>databricks-discuss@mozilla.com</code></a> group.</p>
-<h4 id="telemetrymozillaorg-tmo"><a name="telemetrymozillaorg-tmo" class="plugin-anchor" href="#telemetrymozillaorg-tmo"><i class="fa fa-link" aria-hidden="true"></i></a><a href="../concepts/analysis_intro.html"><code>telemetry.mozilla.org</code></a> (TMO)</h4>
-<p>Our <a href="https://telemetry.mozilla.org" target="_blank"><code>telemetry.mozilla.org</code></a> (TMO) site is the
-&apos;venerable standby&apos; of Firefox telemetry analysis tools. It uses aggregate
+<a href="https://groups.google.com/a/mozilla.com/forum/#!forum/databricks-discuss"><code>databricks-discuss@mozilla.com</code></a> group.</p>
+<a class="header" href="#a-hrefconceptsanalysis_introhtmltelemetrymozillaorga-tmo" id="a-hrefconceptsanalysis_introhtmltelemetrymozillaorga-tmo"><h4><a href="../concepts/analysis_intro.html"><code>telemetry.mozilla.org</code></a> (TMO)</h4></a>
+<p>Our <a href="https://telemetry.mozilla.org"><code>telemetry.mozilla.org</code></a> (TMO) site is the
+'venerable standby' of Firefox telemetry analysis tools. It uses aggregate
 telemetry data (as opposed to the collated data sets that are exposed to most
 of the other tools) so it provides less latency than most but is unsuitable for
 examining at the individual client level. It provides a powerful UI that allows
 for sophisticated ad-hoc analysis without the need for any specialized
 programming skills, but with so many options the UI can be a bit intimidating
 for novice users.</p>
-<h4 id="distribution-viewer"><a name="distribution-viewer" class="plugin-anchor" href="#distribution-viewer"><i class="fa fa-link" aria-hidden="true"></i></a><a href="distribution_viewer.md">Distribution Viewer</a></h4>
+<a class="header" href="#distribution-viewer" id="distribution-viewer"><h4>Distribution Viewer</h4></a>
 <p>Distribution Viewer (deprecated) was a simple tool
-that provides a set of <a href="http://math.stackexchange.com/questions/52400/what-is-cdf-cumulative-distribution-function" target="_blank">cumulative distribution
+that provides a set of <a href="http://math.stackexchange.com/questions/52400/what-is-cdf-cumulative-distribution-function">cumulative distribution
 graphs</a>
 for a pre-specified selection of Firefox user metrics. These metrics are
 extracted from a 1% sample of the <code>clientId</code>s from Firefox Telemetry. These plots
@@ -1337,11 +192,11 @@ of the importance of behavior at the extremes as well as anomalies within the
 population that might indicate interesting behavior. Very simple to use (no
 programming required) and able to provide interesting insights, but not usually
 suitable for ad-hoc analysis.</p>
-<h4 id="real-time--cep"><a name="real-time--cep" class="plugin-anchor" href="#real-time--cep"><i class="fa fa-link" aria-hidden="true"></i></a><a href="../cookbooks/realtime_analysis_plugin.html">Real Time / CEP</a></h4>
+<a class="header" href="#a-hrefcookbooksrealtime_analysis_pluginhtmlreal-time--cepa" id="a-hrefcookbooksrealtime_analysis_pluginhtmlreal-time--cepa"><h4><a href="../cookbooks/realtime_analysis_plugin.html">Real Time / CEP</a></h4></a>
 <p>The &quot;real time&quot; or &quot;complex event processing&quot; (CEP)
-<a href="https://pipeline-cep.prod.mozaws.net/" target="_blank">system</a> is part of the ingestion
+<a href="https://pipeline-cep.prod.mozaws.net/">system</a> is part of the ingestion
 infrastructure that processes all of our Firefox telemetry data. It provides
-extremely low latency access to the data as it&apos;s flowing through our ingestion
+extremely low latency access to the data as it's flowing through our ingestion
 system on its way to long term storage. As a CEP system, it is unlike the rest
 of our analysis tools in that it is up to the analyst to specify and maintain
 state from the data that is flowing; it is non-trivial to revisit older data
@@ -1352,89 +207,67 @@ relevant APIs, and a custom filter configuration syntax. Learn more about how
 to do this in our <a href="../cookbooks/realtime_analysis_plugin.html">Creating a Real-time Analysis
 Plugin</a> article.</p>
 
-                                
-                                </section>
-                            
-    </div>
-    <div class="search-results">
-        <div class="has-results">
-            
-            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
-            <ul class="search-results-list"></ul>
-            
-        </div>
-        <div class="no-results">
-            
-            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
-            
-        </div>
-    </div>
-</div>
+                    </main>
 
-                        </div>
-                    </div>
-                
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../concepts/pipeline/event_pipeline.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../tools/spark.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
             </div>
 
-            
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                <a href="../concepts/pipeline/event_pipeline.html" class="navigation navigation-prev " aria-label="Previous page: Event Pipeline Detail">
-                    <i class="fa fa-angle-left"></i>
-                </a>
+                    <a href="../concepts/pipeline/event_pipeline.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
                 
-                
-                <a href="spark.html" class="navigation navigation-next " aria-label="Next page: Custom analysis with Spark">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-                
-            
-        
-    </div>
 
-    <script>
-        var gitbook = gitbook || [];
-        gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Analysis Interfaces","level":"1.3.3","depth":2,"next":{"title":"Custom analysis with Spark","level":"1.3.4","depth":2,"path":"tools/spark.md","ref":"tools/spark.md","articles":[]},"previous":{"title":"Event Pipeline Detail","level":"1.3.2.3","depth":3,"path":"concepts/pipeline/event_pipeline.md","ref":"concepts/pipeline/event_pipeline.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"tools/interfaces.md","mtime":"2018-10-12T18:10:35.410Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-10-12T18:12:00.362Z"},"basePath":"..","book":{"language":""}});
-        });
-    </script>
-</div>
+                
+                    <a href="../tools/spark.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
 
         
-    
-    <script src="../gitbook/gitbook.js"></script>
-    <script src="../gitbook/theme.js"></script>
-    
-        
-        <script src="../gitbook/gitbook-plugin-ga/plugin.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-mermaid-gb3/book/plugin.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
-        
-    
 
-    <script src="../gitbook/gitbook-plugin-mermaid-gb3/mermaid/mermaid.min.js"></script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="../mermaid-init.js"></script>
+        
+
+        
 
     </body>
 </html>
-

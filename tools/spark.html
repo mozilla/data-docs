@@ -1,1334 +1,190 @@
-
 <!DOCTYPE HTML>
-<html lang="" >
+<html lang="en" class="sidebar-visible no-js">
     <head>
+        <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
+        <title>Custom analysis with Spark - Firefox Data Documentation</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Custom analysis with Spark · GitBook</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.3">
-        
-        
-        
-    
-    
-    <link rel="stylesheet" href="../gitbook/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
 
-    
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-mermaid-gb3/mermaid/mermaid.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
-                
-            
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../dtmo.css">
+        
+        <link rel="stylesheet" href="../mermaid.css">
         
 
-    
-
-    
         
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-
-    
-
-        
-    
-    
-    <meta name="HandheldFriendly" content="true"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
-    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
-
-    
-    <link rel="next" href="../concepts/sql_style.html" />
-    
-    
-    <link rel="prev" href="interfaces.html" />
-    
-
     </head>
-    <body>
-        
-<div class="book">
-    <div class="book-summary">
-        
-            
-<div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search" />
-</div>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">var path_to_root = "../";</script>
 
-            
-                <nav role="navigation">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="../introduction.html">Firefox Data Documentation</a></li><li><a href="../concepts/reporting_a_problem.html"><strong aria-hidden="true">1.</strong> Reporting a problem</a></li><li><a href="../concepts/terminology.html"><strong aria-hidden="true">2.</strong> Terminology</a></li><li><a href="../concepts/getting_started.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li><ol class="section"><li><a href="../concepts/analysis_intro.html"><strong aria-hidden="true">3.1.</strong> Analysis Quick Start</a></li><li><a href="../concepts/choosing_a_dataset.html"><strong aria-hidden="true">3.2.</strong> Choosing a Dataset</a></li><li><a href="../tools/stmo.html"><strong aria-hidden="true">3.3.</strong> Intro to STMO</a></li><li><a href="../concepts/analysis_gotchas.html"><strong aria-hidden="true">3.4.</strong> Common Analysis Gotchas</a></li><li><a href="../concepts/sql_optimization.html"><strong aria-hidden="true">3.5.</strong> Optimizing Queries</a></li><li><a href="../concepts/review.html"><strong aria-hidden="true">3.6.</strong> Getting Review</a></li><li><a href="../datasets/new_data.html"><strong aria-hidden="true">3.7.</strong> Collecting New Data</a></li></ol></li><li><a href="../tools/index.html"><strong aria-hidden="true">4.</strong> Tools</a></li><li><ol class="section"><li><a href="../tools/projects.html"><strong aria-hidden="true">4.1.</strong> Project Glossary</a></li><li><a href="../concepts/pipeline/data_pipeline.html"><strong aria-hidden="true">4.2.</strong> Overview of Mozilla's Data Pipeline</a></li><li><ol class="section"><li><a href="../concepts/pipeline/data_pipeline_detail.html"><strong aria-hidden="true">4.2.1.</strong> In-depth Data Pipeline Detail</a></li><li><a href="../concepts/pipeline/http_edge_spec.html"><strong aria-hidden="true">4.2.2.</strong> HTTP Edge Server Specification</a></li><li><a href="../concepts/pipeline/event_pipeline.html"><strong aria-hidden="true">4.2.3.</strong> Event Pipeline Detail</a></li></ol></li><li><a href="../tools/interfaces.html"><strong aria-hidden="true">4.3.</strong> Analysis Interfaces</a></li><li><a href="../tools/spark.html" class="active"><strong aria-hidden="true">4.4.</strong> Custom analysis with Spark</a></li><li><a href="../concepts/sql_style.html"><strong aria-hidden="true">4.5.</strong> SQL Style Guide</a></li></ol></li><li><a href="../cookbooks/index.html"><strong aria-hidden="true">5.</strong> Cookbooks</a></li><li><ol class="section"><li><a href="../tools/alerts.html"><strong aria-hidden="true">5.1.</strong> Alerts</a></li><li><a href="../cookbooks/parquet.html"><strong aria-hidden="true">5.2.</strong> Working with Parquet Data on ATMO Clusters</a></li><li><a href="../cookbooks/create_a_dataset.html"><strong aria-hidden="true">5.3.</strong> Creating a custom Re:dash dataset</a></li><li><a href="../cookbooks/new_ping.html"><strong aria-hidden="true">5.4.</strong> Sending a Custom Ping</a></li><li><a href="../cookbooks/hll_zeppelin.html"><strong aria-hidden="true">5.5.</strong> Using HyperLogLog in Zeppelin</a></li><li><a href="../cookbooks/dataset_specific.html"><strong aria-hidden="true">5.6.</strong> Dataset Specific</a></li><li><ol class="section"><li><a href="../cookbooks/longitudinal_examples.html"><strong aria-hidden="true">5.6.1.</strong> Longitudinal Examples</a></li><li><a href="../cookbooks/crash_pings.html"><strong aria-hidden="true">5.6.2.</strong> Working with Crash Pings</a></li></ol></li><li><a href="../cookbooks/realtime.html"><strong aria-hidden="true">5.7.</strong> Real-time</a></li><li><ol class="section"><li><a href="../cookbooks/realtime_analysis_plugin.html"><strong aria-hidden="true">5.7.1.</strong> Creating a Real-time Analysis Plugin</a></li><li><a href="../cookbooks/view_pings_cep.html"><strong aria-hidden="true">5.7.2.</strong> Seeing Your Own Pings</a></li><li><a href="../tools/cep_matcher.html"><strong aria-hidden="true">5.7.3.</strong> CEP Matcher</a></li></ol></li><li><a href="../cookbooks/metrics.html"><strong aria-hidden="true">5.8.</strong> Metrics</a></li><li><ol class="section"><li><a href="../cookbooks/active_dau.html"><strong aria-hidden="true">5.8.1.</strong> Active DAU Definition</a></li><li><a href="../cookbooks/retention.html"><strong aria-hidden="true">5.8.2.</strong> Retention Analysis</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../datasets/reference.html"><strong aria-hidden="true">6.</strong> Dataset Reference</a></li><li><ol class="section"><li><a href="../datasets/pings.html"><strong aria-hidden="true">6.1.</strong> Pings</a></li><li><a href="../datasets/derived.html"><strong aria-hidden="true">6.2.</strong> Derived Datasets</a></li><li><ol class="section"><li><a href="../datasets/batch_view/addons/reference.html"><strong aria-hidden="true">6.2.1.</strong> Addons</a></li><li><a href="../datasets/mozetl/churn/reference.html"><strong aria-hidden="true">6.2.2.</strong> Churn</a></li><li><a href="../datasets/batch_view/client_count_daily/reference.html"><strong aria-hidden="true">6.2.3.</strong> Client Count Daily</a></li><li><a href="../datasets/batch_view/client_count/reference.html"><strong aria-hidden="true">6.2.4.</strong> Client Count</a></li><li><a href="../datasets/batch_view/clients_daily/reference.html"><strong aria-hidden="true">6.2.5.</strong> Clients Daily</a></li><li><a href="../datasets/batch_view/crash_aggregates/reference.html"><strong aria-hidden="true">6.2.6.</strong> Crash Aggregate</a></li><li><a href="../datasets/batch_view/crash_summary/reference.html"><strong aria-hidden="true">6.2.7.</strong> Crash Summary</a></li><li><a href="../datasets/batch_view/cross_sectional/reference.html"><strong aria-hidden="true">6.2.8.</strong> Cross Sectional</a></li><li><a href="../datasets/streaming/error_aggregates/reference.html"><strong aria-hidden="true">6.2.9.</strong> Error Aggregates</a></li><li><a href="../datasets/batch_view/events/reference.html"><strong aria-hidden="true">6.2.10.</strong> Events</a></li><li><a href="../datasets/batch_view/first_shutdown_summary/reference.html"><strong aria-hidden="true">6.2.11.</strong> First Shutdown Summary</a></li><li><a href="../datasets/batch_view/longitudinal/reference.html"><strong aria-hidden="true">6.2.12.</strong> Longitudinal</a></li><li><a href="../datasets/batch_view/main_summary/reference.html"><strong aria-hidden="true">6.2.13.</strong> Main Summary</a></li><li><a href="../datasets/batch_view/new_profile/reference.html"><strong aria-hidden="true">6.2.14.</strong> New Profile</a></li><li><a href="../datasets/batch_view/retention/reference.html"><strong aria-hidden="true">6.2.15.</strong> Retention</a></li><li><a href="../datasets/other/socorro_crash/reference.html"><strong aria-hidden="true">6.2.16.</strong> Socorro Crash Reports</a></li><li><a href="../datasets/other/ssl/reference.html"><strong aria-hidden="true">6.2.17.</strong> SSL Ratios (public)</a></li><li><a href="../datasets/batch_view/sync_summary/reference.html"><strong aria-hidden="true">6.2.18.</strong> Sync Summary</a></li><li><a href="../datasets/batch_view/update/reference.html"><strong aria-hidden="true">6.2.19.</strong> Update</a></li></ol></li><li><a href="../tools/experiments.html"><strong aria-hidden="true">6.3.</strong> Experimental Datasets</a></li><li><ol class="section"><li><a href="../datasets/shield.html"><strong aria-hidden="true">6.3.1.</strong> Accessing Shield Study data</a></li></ol></li><li><a href="../datasets/search.html"><strong aria-hidden="true">6.4.</strong> Search Datasets</a></li><li><ol class="section"><li><a href="../datasets/mozetl/search_aggregates/reference.html"><strong aria-hidden="true">6.4.1.</strong> Search Aggregates</a></li><li><a href="../datasets/mozetl/search_clients_daily/reference.html"><strong aria-hidden="true">6.4.2.</strong> Search Clients Daily</a></li></ol></li><li><a href="../datasets/other.html"><strong aria-hidden="true">6.5.</strong> Other Datasets</a></li><li><ol class="section"><li><a href="../datasets/other/hgpush/reference.html"><strong aria-hidden="true">6.5.1.</strong> hgpush</a></li></ol></li><li><a href="../datasets/obsolete.html"><strong aria-hidden="true">6.6.</strong> Obsolete Datasets</a></li><li><ol class="section"><li><a href="../datasets/obsolete/heavy_users/reference.html"><strong aria-hidden="true">6.6.1.</strong> Heavy Users</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../concepts/index.html"><strong aria-hidden="true">7.</strong> Telemetry Behavior Reference</a></li><li><ol class="section"><li><a href="../concepts/profile/index.html"><strong aria-hidden="true">7.1.</strong> Profile Behavior</a></li><li><ol class="section"><li><a href="../concepts/profile/profile_creation.html"><strong aria-hidden="true">7.1.1.</strong> Profile Creation</a></li><li><a href="../concepts/profile/realworldusage.html"><strong aria-hidden="true">7.1.2.</strong> Real World Usage</a></li><li><a href="../concepts/profile/profilehistory.html"><strong aria-hidden="true">7.1.3.</strong> Profile History</a></li></ol></li><li><a href="../concepts/channels/index.html"><strong aria-hidden="true">7.2.</strong> Channel Behavior</a></li><li><ol class="section"><li><a href="../concepts/channels/channel_normalization.html"><strong aria-hidden="true">7.2.1.</strong> Channel Normalization and Querying</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../meta/index.html"><strong aria-hidden="true">8.</strong> About this Documentation</a></li><li><ol class="section"><li><a href="../meta/contributing.html"><strong aria-hidden="true">8.1.</strong> Contributing</a></li><li><a href="../meta/structure.html"><strong aria-hidden="true">8.2.</strong> Structure</a></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
                 
-
-
-<ul class="summary">
-    
-    
-
-    
-
-    
-        
-        
-    
-        <li class="chapter " data-level="1.1" data-path="../">
-            
-                <a href="../">
-            
-                    
-                    Firefox Data Documentation
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.1.1" data-path="../concepts/reporting_a_problem.html">
-            
-                <a href="../concepts/reporting_a_problem.html">
-            
-                    
-                    Reporting a problem
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.1.2" data-path="../concepts/terminology.html">
-            
-                <a href="../concepts/terminology.html">
-            
-                    
-                    Terminology
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2" data-path="../concepts/getting_started.html">
-            
-                <a href="../concepts/getting_started.html">
-            
-                    
-                    Getting Started
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.2.1" data-path="../concepts/analysis_intro.html">
-            
-                <a href="../concepts/analysis_intro.html">
-            
-                    
-                    Analysis Quick Start
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.2" data-path="../concepts/choosing_a_dataset.html">
-            
-                <a href="../concepts/choosing_a_dataset.html">
-            
-                    
-                    Choosing a Dataset
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.3" data-path="stmo.html">
-            
-                <a href="stmo.html">
-            
-                    
-                    Intro to STMO
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.4" data-path="../concepts/analysis_gotchas.html">
-            
-                <a href="../concepts/analysis_gotchas.html">
-            
-                    
-                    Common Analysis Gotchas
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.5" data-path="../concepts/sql_optimization.html">
-            
-                <a href="../concepts/sql_optimization.html">
-            
-                    
-                    Optimizing Queries
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.6" data-path="../concepts/review.html">
-            
-                <a href="../concepts/review.html">
-            
-                    
-                    Getting Review
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.7" data-path="../datasets/new_data.html">
-            
-                <a href="../datasets/new_data.html">
-            
-                    
-                    Collecting New Data
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3" data-path="./">
-            
-                <a href="./">
-            
-                    
-                    Tools
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.3.1" data-path="projects.html">
-            
-                <a href="projects.html">
-            
-                    
-                    Project Glossary
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.2" data-path="../concepts/pipeline/data_pipeline.html">
-            
-                <a href="../concepts/pipeline/data_pipeline.html">
-            
-                    
-                    Overview of Mozilla's Data Pipeline
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.3.2.1" data-path="../concepts/pipeline/data_pipeline_detail.html">
-            
-                <a href="../concepts/pipeline/data_pipeline_detail.html">
-            
-                    
-                    In-depth Data Pipeline Detail
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.2.2" data-path="../concepts/pipeline/http_edge_spec.html">
-            
-                <a href="../concepts/pipeline/http_edge_spec.html">
-            
-                    
-                    HTTP Edge Server Specification
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.2.3" data-path="../concepts/pipeline/event_pipeline.html">
-            
-                <a href="../concepts/pipeline/event_pipeline.html">
-            
-                    
-                    Event Pipeline Detail
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.3" data-path="interfaces.html">
-            
-                <a href="interfaces.html">
-            
-                    
-                    Analysis Interfaces
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter active" data-level="1.3.4" data-path="spark.html">
-            
-                <a href="spark.html">
-            
-                    
-                    Custom analysis with Spark
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.5" data-path="../concepts/sql_style.html">
-            
-                <a href="../concepts/sql_style.html">
-            
-                    
-                    SQL Style Guide
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4" data-path="../cookbooks/">
-            
-                <a href="../cookbooks/">
-            
-                    
-                    Cookbooks
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.4.1" data-path="alerts.html">
-            
-                <a href="alerts.html">
-            
-                    
-                    Alerts
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.2" data-path="../cookbooks/parquet.html">
-            
-                <a href="../cookbooks/parquet.html">
-            
-                    
-                    Working with Parquet Data on ATMO Clusters
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.3" data-path="../cookbooks/create_a_dataset.html">
-            
-                <a href="../cookbooks/create_a_dataset.html">
-            
-                    
-                    Creating a custom Re:dash dataset
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.4" data-path="../cookbooks/new_ping.html">
-            
-                <a href="../cookbooks/new_ping.html">
-            
-                    
-                    Sending a Custom Ping
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.5" data-path="../cookbooks/hll_zeppelin.html">
-            
-                <a href="../cookbooks/hll_zeppelin.html">
-            
-                    
-                    Using HyperLogLog in Zeppelin
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.6" >
-            
-                <span>
-            
-                    
-                    Dataset Specific
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.4.6.1" data-path="../cookbooks/longitudinal_examples.html">
-            
-                <a href="../cookbooks/longitudinal_examples.html">
-            
-                    
-                    Longitudinal Examples
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.6.2" data-path="../cookbooks/crash_pings.html">
-            
-                <a href="../cookbooks/crash_pings.html">
-            
-                    
-                    Working with Crash Pings
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.7" >
-            
-                <span>
-            
-                    
-                    Real-time
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.4.7.1" data-path="../cookbooks/realtime_analysis_plugin.html">
-            
-                <a href="../cookbooks/realtime_analysis_plugin.html">
-            
-                    
-                    Creating a Real-time Analysis Plugin
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.7.2" data-path="../cookbooks/view_pings_cep.html">
-            
-                <a href="../cookbooks/view_pings_cep.html">
-            
-                    
-                    Seeing Your Own Pings
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.7.3" data-path="cep_matcher.html">
-            
-                <a href="cep_matcher.html">
-            
-                    
-                    CEP Matcher
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.8" >
-            
-                <span>
-            
-                    
-                    Metrics
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.4.8.1" data-path="../cookbooks/active_dau.html">
-            
-                <a href="../cookbooks/active_dau.html">
-            
-                    
-                    Active DAU Definition
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.8.2" data-path="../cookbooks/retention.html">
-            
-                <a href="../cookbooks/retention.html">
-            
-                    
-                    Retention Analysis
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-    
-        
-        <li class="divider"></li>
-        
-        
-    
-        <li class="chapter " data-level="2.1" data-path="../datasets/reference.html">
-            
-                <a href="../datasets/reference.html">
-            
-                    
-                    Dataset Reference
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="2.1.1" data-path="../datasets/pings.html">
-            
-                <a href="../datasets/pings.html">
-            
-                    
-                    Pings
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2" data-path="../datasets/derived.html">
-            
-                <a href="../datasets/derived.html">
-            
-                    
-                    Derived Datasets
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="2.1.2.1" data-path="../datasets/batch_view/addons/reference.html">
-            
-                <a href="../datasets/batch_view/addons/reference.html">
-            
-                    
-                    Addons
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.2" data-path="../datasets/mozetl/churn/reference.html">
-            
-                <a href="../datasets/mozetl/churn/reference.html">
-            
-                    
-                    Churn
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.3" data-path="../datasets/batch_view/client_count_daily/reference.html">
-            
-                <a href="../datasets/batch_view/client_count_daily/reference.html">
-            
-                    
-                    Client Count Daily
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.4" data-path="../datasets/batch_view/client_count/reference.html">
-            
-                <a href="../datasets/batch_view/client_count/reference.html">
-            
-                    
-                    Client Count
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.5" data-path="../datasets/batch_view/clients_daily/reference.html">
-            
-                <a href="../datasets/batch_view/clients_daily/reference.html">
-            
-                    
-                    Clients Daily
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.6" data-path="../datasets/batch_view/crash_aggregates/reference.html">
-            
-                <a href="../datasets/batch_view/crash_aggregates/reference.html">
-            
-                    
-                    Crash Aggregate
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.7" data-path="../datasets/batch_view/crash_summary/reference.html">
-            
-                <a href="../datasets/batch_view/crash_summary/reference.html">
-            
-                    
-                    Crash Summary
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.8" data-path="../datasets/batch_view/cross_sectional/reference.html">
-            
-                <a href="../datasets/batch_view/cross_sectional/reference.html">
-            
-                    
-                    Cross Sectional
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.9" data-path="../datasets/streaming/error_aggregates/reference.html">
-            
-                <a href="../datasets/streaming/error_aggregates/reference.html">
-            
-                    
-                    Error Aggregates
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.10" data-path="../datasets/batch_view/events/reference.html">
-            
-                <a href="../datasets/batch_view/events/reference.html">
-            
-                    
-                    Events
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.11" data-path="../datasets/batch_view/first_shutdown_summary/reference.html">
-            
-                <a href="../datasets/batch_view/first_shutdown_summary/reference.html">
-            
-                    
-                    First Shutdown Summary
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.12" data-path="../datasets/batch_view/longitudinal/reference.html">
-            
-                <a href="../datasets/batch_view/longitudinal/reference.html">
-            
-                    
-                    Longitudinal
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.13" data-path="../datasets/batch_view/main_summary/reference.html">
-            
-                <a href="../datasets/batch_view/main_summary/reference.html">
-            
-                    
-                    Main Summary
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.14" data-path="../datasets/batch_view/new_profile/reference.html">
-            
-                <a href="../datasets/batch_view/new_profile/reference.html">
-            
-                    
-                    New Profile
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.15" data-path="../datasets/batch_view/retention/reference.html">
-            
-                <a href="../datasets/batch_view/retention/reference.html">
-            
-                    
-                    Retention
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.16" data-path="../datasets/other/socorro_crash/reference.html">
-            
-                <a href="../datasets/other/socorro_crash/reference.html">
-            
-                    
-                    Socorro Crash Reports
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.17" data-path="../datasets/other/ssl/reference.html">
-            
-                <a href="../datasets/other/ssl/reference.html">
-            
-                    
-                    SSL Ratios (public)
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.18" data-path="../datasets/batch_view/sync_summary/reference.html">
-            
-                <a href="../datasets/batch_view/sync_summary/reference.html">
-            
-                    
-                    Sync Summary
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.19" data-path="../datasets/batch_view/update/reference.html">
-            
-                <a href="../datasets/batch_view/update/reference.html">
-            
-                    
-                    Update
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.3" data-path="experiments.html">
-            
-                <a href="experiments.html">
-            
-                    
-                    Experimental Datasets
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="2.1.3.1" data-path="../datasets/shield.html">
-            
-                <a href="../datasets/shield.html">
-            
-                    
-                    Accessing Shield Study data
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.4" data-path="../datasets/search.html">
-            
-                <a href="../datasets/search.html">
-            
-                    
-                    Search Datasets
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="2.1.4.1" data-path="../datasets/mozetl/search_aggregates/reference.html">
-            
-                <a href="../datasets/mozetl/search_aggregates/reference.html">
-            
-                    
-                    Search Aggregates
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.4.2" data-path="../datasets/mozetl/search_clients_daily/reference.html">
-            
-                <a href="../datasets/mozetl/search_clients_daily/reference.html">
-            
-                    
-                    Search Clients Daily
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.5" data-path="../datasets/other.html">
-            
-                <a href="../datasets/other.html">
-            
-                    
-                    Other Datasets
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="2.1.5.1" data-path="../datasets/other/hgpush/reference.html">
-            
-                <a href="../datasets/other/hgpush/reference.html">
-            
-                    
-                    hgpush
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.6" data-path="../datasets/obsolete.html">
-            
-                <a href="../datasets/obsolete.html">
-            
-                    
-                    Obsolete Datasets
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="2.1.6.1" data-path="../datasets/obsolete/heavy_users/reference.html">
-            
-                <a href="../datasets/obsolete/heavy_users/reference.html">
-            
-                    
-                    Heavy Users
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-    
-        
-        <li class="divider"></li>
-        
-        
-    
-        <li class="chapter " data-level="3.1" >
-            
-                <span>
-            
-                    
-                    Telemetry Behavior Reference
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="3.1.1" >
-            
-                <span>
-            
-                    
-                    Profile Behavior
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="3.1.1.1" data-path="../concepts/profile/profile_creation.html">
-            
-                <a href="../concepts/profile/profile_creation.html">
-            
-                    
-                    Profile Creation
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="3.1.1.2" data-path="../concepts/profile/realworldusage.html">
-            
-                <a href="../concepts/profile/realworldusage.html">
-            
-                    
-                    Real World Usage
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="3.1.1.3" data-path="../concepts/profile/profilehistory.html">
-            
-                <a href="../concepts/profile/profilehistory.html">
-            
-                    
-                    Profile History
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="3.1.2" >
-            
-                <span>
-            
-                    
-                    Channel Behavior
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="3.1.2.1" data-path="../concepts/channels/channel_normalization.html">
-            
-                <a href="../concepts/channels/channel_normalization.html">
-            
-                    
-                    Channel Normalization and Querying
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-    
-        
-        <li class="divider"></li>
-        
-        
-    
-        <li class="chapter " data-level="4.1" >
-            
-                <span>
-            
-                    
-                    About this Documentation
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="4.1.1" data-path="../meta/contributing.html">
-            
-                <a href="../meta/contributing.html">
-            
-                    
-                    Contributing
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="4.1.2" >
-            
-                <a target="_blank" href="https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&component=Documentation%20and%20Knowledge%20Repo%20%28RTMO%29&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=--&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&target_milestone=---&version=unspecified">
-            
-                    
-                    Bug Template
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="4.1.3" data-path="../meta/structure.html">
-            
-                <a href="../meta/structure.html">
-            
-                    
-                    Structure
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-    
-
-    <li class="divider"></li>
-
-    <li>
-        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            Published with GitBook
-        </a>
-    </li>
-</ul>
-
-
-                </nav>
-            
-        
-    </div>
-
-    <div class="book-body">
-        
-            <div class="body-inner">
-                
-                    
-
-<div class="book-header" role="navigation">
-    
-
-    <!-- Title -->
-    <h1>
-        <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Custom analysis with Spark</a>
-    </h1>
-</div>
-
-
-
-
-                    <div class="page-wrapper" tabindex="-1" role="main">
-                        <div class="page-inner">
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
                             
-<div id="book-search-results">
-    <div class="search-noresults">
-    
-                                <section class="normal markdown-section">
-                                
-                                <h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
-<p><a href="https://spark.apache.org/" target="_blank">Apache Spark</a>
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Firefox Data Documentation</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#introduction" id="introduction"><h2>Introduction</h2></a>
+<p><a href="https://spark.apache.org/">Apache Spark</a>
 is a data processing engine designed to be fast and easy to use.
 We have setup
-<a href="https://jupyter.org/" target="_blank">Jupyter notebooks</a>
+<a href="https://jupyter.org/">Jupyter notebooks</a>
 that use Spark to analyze our Telemetry data.
 Jupyter notebooks can be easily shared and updated among colleagues,
 and, when combined with Spark, enable richer analysis than SQL alone.</p>
-<p>The Spark clusters can be launched from <a href="https://analysis.telemetry.mozilla.org" target="_blank">ATMO</a>.
+<p>The Spark clusters can be launched from <a href="https://analysis.telemetry.mozilla.org">ATMO</a>.
 The Spark Python API is called PySpark.</p>
 <p>Note that this documentation focuses on ATMO, but analysis with Spark is also possible using Databricks.
 For more information please see this
-<a href="https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/30598/command/30599" target="_blank">example notebook</a>.</p>
-<h2 id="setting-up-a-spark-cluster-on-atmo"><a name="setting-up-a-spark-cluster-on-atmo" class="plugin-anchor" href="#setting-up-a-spark-cluster-on-atmo"><i class="fa fa-link" aria-hidden="true"></i></a>Setting Up a Spark Cluster On ATMO</h2>
+<a href="https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/30598/command/30599">example notebook</a>.</p>
+<a class="header" href="#setting-up-a-spark-cluster-on-atmo" id="setting-up-a-spark-cluster-on-atmo"><h2>Setting Up a Spark Cluster On ATMO</h2></a>
 <ol>
-<li>Go to <a href="https://analysis.telemetry.mozilla.org" target="_blank">https://analysis.telemetry.mozilla.org</a></li>
-<li>Click &#x201C;Launch an ad-hoc Spark cluster&#x201D;.</li>
-<li>Enter some details:<ol>
-<li>The &#x201C;Cluster Name&#x201D; field should be a short descriptive name,
-like &#x201C;chromehangs analysis&#x201D;.</li>
+<li>Go to <a href="https://analysis.telemetry.mozilla.org">https://analysis.telemetry.mozilla.org</a></li>
+<li>Click “Launch an ad-hoc Spark cluster”.</li>
+<li>Enter some details:
+<ol>
+<li>The “Cluster Name” field should be a short descriptive name,
+like “chromehangs analysis”.</li>
 <li>Set the number of workers for the cluster. Please keep in mind
 to use resources sparingly; use a single worker to write and
 debug your job.</li>
 <li>Upload your SSH public key.</li>
 </ol>
 </li>
-<li>Click &#x201C;Submit&#x201D;.</li>
+<li>Click “Submit”.</li>
 <li>A cluster will be launched on AWS pre-configured with Spark, Jupyter
 and some handy data analysis libraries like <code>pandas</code> and <code>matplotlib</code>.</li>
 </ol>
 <p>Once the cluster is ready, you can tunnel Jupyter through SSH by
 following the instructions on the dashboard.
 For example:</p>
-<pre><code class="lang-bash">ssh -i ~/.ssh/id_rsa -L 8888:localhost:8888 hadoop@ec2-54-70-129-221.us-west-2.compute.amazonaws.com
+<pre><code class="language-bash">ssh -i ~/.ssh/id_rsa -L 8888:localhost:8888 hadoop@ec2-54-70-129-221.us-west-2.compute.amazonaws.com
 </code></pre>
-<p>Finally, you can launch Jupyter in Firefox by visiting <a href="http://localhost:8888" target="_blank">http://localhost:8888</a>.</p>
-<h2 id="the-python-jupyter-notebook"><a name="the-python-jupyter-notebook" class="plugin-anchor" href="#the-python-jupyter-notebook"><i class="fa fa-link" aria-hidden="true"></i></a>The Python Jupyter Notebook</h2>
-<p>When you access <a href="http://localhost:8888" target="_blank">http://localhost:8888</a>, two example Jupyter notebooks
+<p>Finally, you can launch Jupyter in Firefox by visiting http://localhost:8888.</p>
+<a class="header" href="#the-python-jupyter-notebook" id="the-python-jupyter-notebook"><h2>The Python Jupyter Notebook</h2></a>
+<p>When you access http://localhost:8888, two example Jupyter notebooks
 are available to peruse.</p>
 <p>Starting out, we recommend looking through the
-<a href="https://github.com/mozilla/mozilla-reports/blob/master/tutorials/telemetry_hello_world.kp/orig_src/Telemetry%20Hello%20World.ipynb" target="_blank">Telemetry Hello World</a>
+<a href="https://github.com/mozilla/mozilla-reports/blob/master/tutorials/telemetry_hello_world.kp/orig_src/Telemetry%20Hello%20World.ipynb">Telemetry Hello World</a>
 notebook.
 It gives a nice overview of Jupyter and analyzing telemetry data using PySpark and the RDD API.</p>
-<h3 id="using-jupyter"><a name="using-jupyter" class="plugin-anchor" href="#using-jupyter"><i class="fa fa-link" aria-hidden="true"></i></a>Using Jupyter</h3>
+<a class="header" href="#using-jupyter" id="using-jupyter"><h3>Using Jupyter</h3></a>
 <p>Jupyter Notebooks contain a series of cells.
 Each cell contains code or markdown.
 To switch between the two, use the drop-down at the top.
@@ -1337,82 +193,84 @@ this either compiles the markdown or runs the code.
 To create new cell, select Insert -&gt; Insert Cell Below.</p>
 <p>A cell can output text or plots.
 To output plots inlined with the cell,
-run <code>%pylab inline</code>, usually below your import statements:</p>
+run <code>%pylab inline</code>, usually below your import statements:</p>
 <p>The notebook is setup to work with Spark. See the &quot;Using Spark&quot; section
 for more information.</p>
-<h3 id="schedule-a-periodic-job"><a name="schedule-a-periodic-job" class="plugin-anchor" href="#schedule-a-periodic-job"><i class="fa fa-link" aria-hidden="true"></i></a>Schedule a periodic job</h3>
+<a class="header" href="#schedule-a-periodic-job" id="schedule-a-periodic-job"><h3>Schedule a periodic job</h3></a>
 <p>Scheduled Spark jobs allow a Jupyter notebook to be updated consistently,
 making a nice and easy-to-use dashboard.</p>
 <p>To schedule a Spark job:</p>
 <ol>
 <li>Visit the analysis provisioning dashboard at
-<a href="https://analysis.telemetry.mozilla.org" target="_blank">https://analysis.telemetry.mozilla.org</a> and sign in</li>
-<li>Click &#x201C;Schedule a Spark Job&#x201D;</li>
-<li>Enter some details:<ol>
-<li>The &#x201C;Job Name&#x201D; field should be a short descriptive name, like
-&#x201C;chromehangs analysis&#x201D;.</li>
+<a href="https://analysis.telemetry.mozilla.org">https://analysis.telemetry.mozilla.org</a> and sign in</li>
+<li>Click “Schedule a Spark Job”</li>
+<li>Enter some details:
+<ol>
+<li>The “Job Name” field should be a short descriptive name, like
+“chromehangs analysis”.</li>
 <li>Upload your Jupyter notebook containing the analysis.</li>
-<li>Set the number of workers of the cluster in the &#x201C;Cluster Size&#x201D;
+<li>Set the number of workers of the cluster in the “Cluster Size”
 field.</li>
 <li>Set a schedule frequency using the remaining fields.</li>
 </ol>
 </li>
 </ol>
 <p>Now, the notebook will be updated automatically and the results can be
-easily shared. Furthermore, all files stored in the notebook&apos;s local
+easily shared. Furthermore, all files stored in the notebook's local
 working directory at the end of the job will be automatically uploaded
 to S3, which comes in handy for simple ETL workloads for example.</p>
 <p>For reference, see
-<a href="https://robertovitillo.com/2015/03/13/simple-dashboards-with-scheduled-spark-jobs-and-plotly" target="_blank">Simple Dashboard with Scheduled Spark Jobs and Plotly</a>.</p>
-<h3 id="sharing-a-notebook"><a name="sharing-a-notebook" class="plugin-anchor" href="#sharing-a-notebook"><i class="fa fa-link" aria-hidden="true"></i></a>Sharing a Notebook</h3>
+<a href="https://robertovitillo.com/2015/03/13/simple-dashboards-with-scheduled-spark-jobs-and-plotly">Simple Dashboard with Scheduled Spark Jobs and Plotly</a>.</p>
+<a class="header" href="#sharing-a-notebook" id="sharing-a-notebook"><h3>Sharing a Notebook</h3></a>
 <p>Jupyter notebooks can be shared in a few different ways.</p>
-<h4 id="sharing-a-static-notebook"><a name="sharing-a-static-notebook" class="plugin-anchor" href="#sharing-a-static-notebook"><i class="fa fa-link" aria-hidden="true"></i></a>Sharing a Static Notebook</h4>
+<a class="header" href="#sharing-a-static-notebook" id="sharing-a-static-notebook"><h4>Sharing a Static Notebook</h4></a>
 <p>An easy way to share is using a gist on Github.</p>
 <ol>
 <li>Download file as <code>.ipynb</code></li>
-<li>Upload to a gist on <a href="https://gist.github.com" target="_blank"><code>gist.github.com</code></a></li>
-<li>Enter the gist URL at <a href="https://nbviewer.jupyter.org/" target="_blank">Jupyter nbviewer</a></li>
+<li>Upload to a gist on <a href="https://gist.github.com"><code>gist.github.com</code></a></li>
+<li>Enter the gist URL at <a href="https://nbviewer.jupyter.org/">Jupyter nbviewer</a></li>
 <li>Share with your colleagues!</li>
 </ol>
-<h4 id="sharing-a-scheduled-notebook"><a name="sharing-a-scheduled-notebook" class="plugin-anchor" href="#sharing-a-scheduled-notebook"><i class="fa fa-link" aria-hidden="true"></i></a>Sharing a Scheduled Notebook</h4>
-<p>Setup your scheduled notebook. After it&apos;s run, do the following:</p>
+<a class="header" href="#sharing-a-scheduled-notebook" id="sharing-a-scheduled-notebook"><h4>Sharing a Scheduled Notebook</h4></a>
+<p>Setup your scheduled notebook. After it's run, do the following:</p>
 <ol>
 <li>Go to the &quot;Schedule a Spark job&quot; tab in ATMO</li>
-<li>Get the URL for the notebook (under &apos;Currently Scheduled Jobs&apos;)</li>
-<li>Paste that URL into <a href="https://nbviewer.jupyter.org/" target="_blank">Jupyter nbviewer</a></li>
+<li>Get the URL for the notebook (under 'Currently Scheduled Jobs')</li>
+<li>Paste that URL into <a href="https://nbviewer.jupyter.org/">Jupyter nbviewer</a></li>
 </ol>
-<h2 id="zeppelin-notebooks"><a name="zeppelin-notebooks" class="plugin-anchor" href="#zeppelin-notebooks"><i class="fa fa-link" aria-hidden="true"></i></a>Zeppelin Notebooks</h2>
-<p>We also have support for <a href="https://zeppelin.apache.org/" target="_blank">Apache Zeppelin</a>
+<a class="header" href="#zeppelin-notebooks" id="zeppelin-notebooks"><h2>Zeppelin Notebooks</h2></a>
+<p>We also have support for <a href="https://zeppelin.apache.org/">Apache Zeppelin</a>
 notebooks. The notebook server for that is running on port 8890, so you
 can connect to it just by tunnelling the port (instead of port 8888 for
 Jupyter). For example:</p>
 <pre><code>ssh -i \~/.ssh/id\_rsa -L 8890:localhost:8890
 hadoop@ec2-54-70-129-221.us-west-2.compute.amazonaws.com
-</code></pre><h2 id="using-spark"><a name="using-spark" class="plugin-anchor" href="#using-spark"><i class="fa fa-link" aria-hidden="true"></i></a>Using Spark</h2>
+</code></pre>
+<a class="header" href="#using-spark" id="using-spark"><h2>Using Spark</h2></a>
 <p>Spark is a general-purpose cluster computing system - it allows users to
 run general execution graphs. APIs are available in Python, Scala, and
 Java. The Jupyter notebook utilizes the Python API. In a nutshell, it
 provides a way to run functional code (e.g. map, reduce, etc.) on large,
 distributed data.</p>
 <p>Check out
-<a href="https://robertovitillo.com/2015/06/30/spark-best-practices/" target="_blank">Spark Best Practices</a>
+<a href="https://robertovitillo.com/2015/06/30/spark-best-practices/">Spark Best Practices</a>
 for tips on using Spark to its full capabilities.</p>
-<h3 id="sparkcontext-sc"><a name="sparkcontext-sc" class="plugin-anchor" href="#sparkcontext-sc"><i class="fa fa-link" aria-hidden="true"></i></a><code>SparkContext</code> (<code>sc</code>)</h3>
+<a class="header" href="#sparkcontext-sc" id="sparkcontext-sc"><h3><code>SparkContext</code> (<code>sc</code>)</h3></a>
 <p>Access to the Spark API is provided through <code>SparkContext</code>. In the Jupyter
 notebook, this is the <code>sc</code> object. For example, to create a
 distributed RDD of monotonically increasing numbers 1-1000:</p>
-<pre><code class="lang-python">numbers = range(<span class="hljs-number">1000</span>)
-<span class="hljs-comment"># no need to initialize sc in the Jupyter notebook</span>
-numsRdd = sc.parallelize(numbers)
-nums.take(<span class="hljs-number">10</span>) <span class="hljs-comment">#no guaranteed order</span>
+<pre><code class="language-python">numbers = range(1000)
+# no need to initialize sc in the Jupyter notebook
+numsRdd = sc.parallelize(numbers)
+nums.take(10) #no guaranteed order
 </code></pre>
-<h3 id="spark-rdd"><a name="spark-rdd" class="plugin-anchor" href="#spark-rdd"><i class="fa fa-link" aria-hidden="true"></i></a>Spark RDD</h3>
-<p>The Resilient Distributed Dataset (RDD) is Spark&apos;s basic data structure.
+<a class="header" href="#spark-rdd" id="spark-rdd"><h3>Spark RDD</h3></a>
+<p>The Resilient Distributed Dataset (RDD) is Spark's basic data structure.
 The operations that are performed on these structures are distributed to
 the cluster. Only certain actions (such as collect() or take(N)) pull an
 RDD in locally.</p>
-<p>RDD&apos;s are nice because there is no imposed schema - whatever they
-contain, they distribute around the cluster. Additionally, RDD&apos;s can be
+<p>RDD's are nice because there is no imposed schema - whatever they
+contain, they distribute around the cluster. Additionally, RDD's can be
 cached in memory, which can greatly improve performance of some
 algorithms that need access to data over and over again.</p>
 <p>Additionally, RDD operations are all part of a directed, acyclic graph.
@@ -1422,91 +280,91 @@ lazy evaluation. No computation is performed while an RDD is just being
 transformed (a la map), but when an action is taken (e.g. reduce, take)
 the entire computation graph is evaluated. Continuing from our previous
 example, the following gives some of the peaks of a sin wave:</p>
-<pre><code class="lang-python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
-<span class="hljs-comment">#no computation is performed on the following line!</span>
-sin_values = numsRdd.map(<span class="hljs-keyword">lambda</span> x : np.float(x) / <span class="hljs-number">10</span>).map(<span class="hljs-keyword">lambda</span> x : (x, np.sin(x)))
-<span class="hljs-comment">#now the entire computation graph is evaluated</span>
-sin_values.takeOrdered(<span class="hljs-number">5</span>, <span class="hljs-keyword">lambda</span> x : -x[<span class="hljs-number">1</span>])
+<pre><code class="language-python">import numpy as np
+#no computation is performed on the following line!
+sin_values = numsRdd.map(lambda x : np.float(x) / 10).map(lambda x : (x, np.sin(x)))
+#now the entire computation graph is evaluated
+sin_values.takeOrdered(5, lambda x : -x[1])
 </code></pre>
-<p>For jumping into working with Spark RDD&apos;s, we recommend reading the
-<a href="https://spark.apache.org/docs/latest/programming-guide.html" target="_blank">Spark Programming Guide</a>.</p>
-<h3 id="spark-sql-and-spark-dataframesdatasets"><a name="spark-sql-and-spark-dataframesdatasets" class="plugin-anchor" href="#spark-sql-and-spark-dataframesdatasets"><i class="fa fa-link" aria-hidden="true"></i></a>Spark SQL and Spark DataFrames/Datasets</h3>
+<p>For jumping into working with Spark RDD's, we recommend reading the
+<a href="https://spark.apache.org/docs/latest/programming-guide.html">Spark Programming Guide</a>.</p>
+<a class="header" href="#spark-sql-and-spark-dataframesdatasets" id="spark-sql-and-spark-dataframesdatasets"><h3>Spark SQL and Spark DataFrames/Datasets</h3></a>
 <p>Spark also supports traditional SQL, along with special data structures
 that require schemas. The Spark SQL API can be accessed with the
 <code>spark</code> object. For example:</p>
-<p><code>longitudinal = spark.sql(&apos;SELECT * FROM longitudinal&apos;)</code></p>
+<p><code>   longitudinal = spark.sql('SELECT * FROM longitudinal')</code></p>
 <p>creates a DataFrame that contains all the longitudinal data. A Spark
 DataFrame is essentially a distributed table, a la Pandas or R
 DataFrames. Under the covers they are an RDD of Row objects, and thus
 the entirety of the RDD API is available for DataFrames, as well as a
 DataFrame specific API. For example, a SQL-like way to get the count of
 a specific OS:</p>
-<p><code>longitudinal.select(&quot;os&quot;).where(&quot;os = &apos;Darwin&apos;&quot;).count()</code></p>
+<p><code>   longitudinal.select(&quot;os&quot;).where(&quot;os = 'Darwin'&quot;).count()</code></p>
 <p>To Transform the DataFrame object to an RDD, simply do:</p>
-<p><code>longitudinal_rdd = longitudinal.rdd</code></p>
-<p>In general, however, the DataFrames are performance optimized, so it&apos;s
+<p><code>  longitudinal_rdd = longitudinal.rdd</code></p>
+<p>In general, however, the DataFrames are performance optimized, so it's
 worth the effort to learn the DataFrame API.</p>
 <p>For more overview, see the
-<a href="https://spark.apache.org/docs/latest/sql-programming-guide.html" target="_blank">SQL Programming Guide</a>.
+<a href="https://spark.apache.org/docs/latest/sql-programming-guide.html">SQL Programming Guide</a>.
 See also the
-<a href="https://reports.telemetry.mozilla.org/post/tutorials/longitudinal_dataset.kp" target="_blank">Longitudinal Tutorial</a>,
+<a href="https://reports.telemetry.mozilla.org/post/tutorials/longitudinal_dataset.kp">Longitudinal Tutorial</a>,
 one of the available example notebooks when you start a cluster.</p>
-<h3 id="available-data-sources-for-sparksql"><a name="available-data-sources-for-sparksql" class="plugin-anchor" href="#available-data-sources-for-sparksql"><i class="fa fa-link" aria-hidden="true"></i></a>Available Data Sources for <code>SparkSQL</code></h3>
+<a class="header" href="#available-data-sources-for-sparksql" id="available-data-sources-for-sparksql"><h3>Available Data Sources for <code>SparkSQL</code></h3></a>
 <p>For information about data sources available for querying (e.g. Longitudinal dataset),
 see <a href="../concepts/choosing_a_dataset.html">Choosing a Dataset</a>.</p>
 <p>These datasets are optimized for fast access, and will far out-perform
 analysis on the raw Telemetry ping data.</p>
-<h3 id="accessing-the-spark-ui"><a name="accessing-the-spark-ui" class="plugin-anchor" href="#accessing-the-spark-ui"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Spark UI</h3>
-<p>After establishing an SSH connection to the Spark cluster, go to <a href="https://localhost:8888/spark" target="_blank">https://localhost:8888/spark</a>
+<a class="header" href="#accessing-the-spark-ui" id="accessing-the-spark-ui"><h3>Accessing the Spark UI</h3></a>
+<p>After establishing an SSH connection to the Spark cluster, go to https://localhost:8888/spark
 to see the Spark UI.
 It has information about job statuses and task completion,
 and may help you debug your job.</p>
-<h2 id="the-moztelemetry-library"><a name="the-moztelemetry-library" class="plugin-anchor" href="#the-moztelemetry-library"><i class="fa fa-link" aria-hidden="true"></i></a>The <code>MozTelemetry</code> Library</h2>
+<a class="header" href="#the-moztelemetry-library" id="the-moztelemetry-library"><h2>The <code>MozTelemetry</code> Library</h2></a>
 <p>We have provided a library that gives easy access to the raw telemetry ping data.
 For example usage, see the
-<a href="https://reports.telemetry.mozilla.org/post/tutorials/telemetry_hello_world.kp" target="_blank">Telemetry Hello World</a>
+<a href="https://reports.telemetry.mozilla.org/post/tutorials/telemetry_hello_world.kp">Telemetry Hello World</a>
 example notebook.
 Detailed documentation for the library can be found at the
-<a href="https://python-moztelemetry.readthedocs.io" target="_blank">Python MozTelemetry Documentation</a>.</p>
-<h3 id="using-the-raw-ping-data"><a name="using-the-raw-ping-data" class="plugin-anchor" href="#using-the-raw-ping-data"><i class="fa fa-link" aria-hidden="true"></i></a>Using the Raw Ping Data</h3>
+<a href="https://python-moztelemetry.readthedocs.io">Python MozTelemetry Documentation</a>.</p>
+<a class="header" href="#using-the-raw-ping-data" id="using-the-raw-ping-data"><h3>Using the Raw Ping Data</h3></a>
 <p>First off, import the <code>moztelemetry</code> library using the following:</p>
 <p><code>from moztelemetry.dataset import Dataset</code></p>
 <p>The ping data is an RDD of JSON elements. For example, using the
 following:</p>
-<pre><code class="lang-python">pings = Dataset.from_source(<span class="hljs-string">&quot;telemetry&quot;</span>) \
-    .where(docType=<span class="hljs-string">&apos;main&apos;</span>) \
-    .where(submissionDate=<span class="hljs-string">&quot;20180101&quot;</span>) \
-    .where(appUpdateChannel=<span class="hljs-string">&quot;nightly&quot;</span>) \
-    .records(sc, sample=<span class="hljs-number">0.01</span>)
+<pre><code class="language-python">pings = Dataset.from_source(&quot;telemetry&quot;) \
+    .where(docType='main') \
+    .where(submissionDate=&quot;20180101&quot;) \
+    .where(appUpdateChannel=&quot;nightly&quot;) \
+    .records(sc, sample=0.01)
 </code></pre>
 <p>returns an RDD of 1/100th of Firefox Nightly JSON pings submitted on
-from January 1 2018. Now, because it&apos;s JSON, pings are easy to access.
+from January 1 2018. Now, because it's JSON, pings are easy to access.
 For example, to get the count of each OS type:</p>
-<pre><code class="lang-python">os_names = pings.map(<span class="hljs-keyword">lambda</span> x: (x[<span class="hljs-string">&apos;environment&apos;</span>][<span class="hljs-string">&apos;system&apos;</span>][<span class="hljs-string">&apos;os&apos;</span>][<span class="hljs-string">&apos;name&apos;</span>], <span class="hljs-number">1</span>))
-os_counts = os_names.reduceByKey(<span class="hljs-keyword">lambda</span> x, y: x + y)
+<pre><code class="language-python">os_names = pings.map(lambda x: (x['environment']['system']['os']['name'], 1))
+os_counts = os_names.reduceByKey(lambda x, y: x + y)
 os_counts.collect()
 </code></pre>
 <p>Alternatively, <code>moztelemetry</code> provides the <code>get_pings_properties</code>
 function, which will gather the data for you:</p>
-<pre><code class="lang-python"><span class="hljs-keyword">from</span> moztelemetry <span class="hljs-keyword">import</span> get_pings_properties
-subset = get_pings_properties(pings, [<span class="hljs-string">&quot;environment/system/os/name&quot;</span>])
-subset.map(<span class="hljs-keyword">lambda</span> x: (x[<span class="hljs-string">&quot;environment/system/os/name&quot;</span>], <span class="hljs-number">1</span>)).reduceByKey(<span class="hljs-keyword">lambda</span> x, y: x + y).collect()
+<pre><code class="language-python">from moztelemetry import get_pings_properties
+subset = get_pings_properties(pings, [&quot;environment/system/os/name&quot;])
+subset.map(lambda x: (x[&quot;environment/system/os/name&quot;], 1)).reduceByKey(lambda x, y: x + y).collect()
 </code></pre>
-<h2 id="faq"><a name="faq" class="plugin-anchor" href="#faq"><i class="fa fa-link" aria-hidden="true"></i></a>FAQ</h2>
+<a class="header" href="#faq" id="faq"><h2>FAQ</h2></a>
 <p>Please add more FAQ as questions are answered by you or for you.</p>
-<h3 id="how-can-i-load-parquet-datasets-in-a-jupyter-notebook"><a name="how-can-i-load-parquet-datasets-in-a-jupyter-notebook" class="plugin-anchor" href="#how-can-i-load-parquet-datasets-in-a-jupyter-notebook"><i class="fa fa-link" aria-hidden="true"></i></a>How can I load parquet datasets in a Jupyter notebook?</h3>
+<a class="header" href="#how-can-i-load-parquet-datasets-in-a-jupyter-notebook" id="how-can-i-load-parquet-datasets-in-a-jupyter-notebook"><h3>How can I load parquet datasets in a Jupyter notebook?</h3></a>
 <p>Use <code>spark.read.parquet</code>, e.g.:</p>
-<pre><code class="lang-python">dataset = spark.read.parquet(<span class="hljs-string">&quot;s3://the_bucket/the_prefix/the_version&quot;</span>)`
+<pre><code class="language-python">dataset = spark.read.parquet(&quot;s3://the_bucket/the_prefix/the_version&quot;)`
 </code></pre>
 <p>For more information see <a href="../cookbooks/parquet.html">Working with Parquet</a>.</p>
-<h3 id="i-got-a-remote-host-identification-has-changed-error"><a name="i-got-a-remote-host-identification-has-changed-error" class="plugin-anchor" href="#i-got-a-remote-host-identification-has-changed-error"><i class="fa fa-link" aria-hidden="true"></i></a>I got a REMOTE HOST IDENTIFICATION HAS CHANGED! error</h3>
+<a class="header" href="#i-got-a-remote-host-identification-has-changed-error" id="i-got-a-remote-host-identification-has-changed-error"><h3>I got a REMOTE HOST IDENTIFICATION HAS CHANGED! error</h3></a>
 <p>AWS recycles hostnames, so this warning is expected.
 Removing the offending key from <code>$HOME/.ssh/known_hosts</code> will remove the warning.
 You can find the line to remove by finding the line in the output that says</p>
-<p><code>Offending key in /path/to/hosts/known_hosts:2</code></p>
+<p><code>Offending key in /path/to/hosts/known_hosts:2</code></p>
 <p>Where 2 is the line number of the key that can be deleted.
 Just remove that line, save the file, and try again.</p>
-<h3 id="why-is-my-notebook-hanging"><a name="why-is-my-notebook-hanging" class="plugin-anchor" href="#why-is-my-notebook-hanging"><i class="fa fa-link" aria-hidden="true"></i></a>Why is my notebook hanging?</h3>
+<a class="header" href="#why-is-my-notebook-hanging" id="why-is-my-notebook-hanging"><h3>Why is my notebook hanging?</h3></a>
 <p>There are a few common causes for this:</p>
 <ol>
 <li>Currently, our Spark notebooks can only run a single Python kernel at
@@ -1516,11 +374,11 @@ using &quot;Close and Halt&quot; under the &quot;File&quot; drop-down.</li>
 <li>The connection from PySpark to the Spark driver might be lost.
 Unfortunately the best way to recover from this for the moment seems to
 be spinning up a new cluster.</li>
-<li>Cancelling execution of a notebook cell doesn&apos;t cancel any spark jobs
+<li>Cancelling execution of a notebook cell doesn't cancel any spark jobs
 that might be running in the background. If your spark commands seem to
-be hanging, try running `sc.cancelAllJobs()`.</li>
+be hanging, try running <code>sc.cancelAllJobs()</code>.</li>
 </ol>
-<h3 id="how-can-i-keep-running-after-closing-the-notebook"><a name="how-can-i-keep-running-after-closing-the-notebook" class="plugin-anchor" href="#how-can-i-keep-running-after-closing-the-notebook"><i class="fa fa-link" aria-hidden="true"></i></a>How can I keep running after closing the notebook?</h3>
+<a class="header" href="#how-can-i-keep-running-after-closing-the-notebook" id="how-can-i-keep-running-after-closing-the-notebook"><h3>How can I keep running after closing the notebook?</h3></a>
 <p>For long-running computation, it might be nice to close the notebook
 (and the SSH session) and look at the results later.
 Unfortunately, <strong>all cell output will be lost when a notebook is closed</strong>
@@ -1530,108 +388,86 @@ To alleviate this, there are a few options:</p>
 <li>Have everything output to a variable. These values should still be
 available when you reconnect.</li>
 <li>Put %%capture at the beginning of the cell to store all output.
-<a href="https://ipython.org/ipython-doc/3/interactive/magics.html#cellmagic-capture" target="_blank">See the documentation</a>.</li>
+<a href="https://ipython.org/ipython-doc/3/interactive/magics.html#cellmagic-capture">See the documentation</a>.</li>
 </ol>
-<h3 id="how-do-i-load-an-external-library-into-the-cluster"><a name="how-do-i-load-an-external-library-into-the-cluster" class="plugin-anchor" href="#how-do-i-load-an-external-library-into-the-cluster"><i class="fa fa-link" aria-hidden="true"></i></a>How do I load an external library into the cluster?</h3>
-<p>Assuming you&apos;ve got a URL for the repo, you can create an egg for it
+<a class="header" href="#how-do-i-load-an-external-library-into-the-cluster" id="how-do-i-load-an-external-library-into-the-cluster"><h3>How do I load an external library into the cluster?</h3></a>
+<p>Assuming you've got a URL for the repo, you can create an egg for it
 this way:</p>
-<pre><code class="lang-python">!git clone `&lt;repo url&gt;` &amp;&amp; cd `&lt;repo-name&gt;` &amp;&amp; python setup.py bdist_egg`\
-sc.addPyFile(<span class="hljs-string">&apos;`&lt;repo-name&gt;`/dist/my-egg-file.egg&apos;</span>)`
+<pre><code class="language-python">!git clone `&lt;repo url&gt;` &amp;&amp; cd `&lt;repo-name&gt;` &amp;&amp; python setup.py bdist_egg`\
+sc.addPyFile('`&lt;repo-name&gt;`/dist/my-egg-file.egg')`
 </code></pre>
 <p>Alternately, you could just create that egg locally, upload it to a web
 server, then download and install it:</p>
-<pre><code class="lang-python"><span class="hljs-keyword">import</span> requests`\
-r = requests.get(<span class="hljs-string">&apos;`&lt;url-to-my-egg-file&gt;`&apos;</span>)`\
-<span class="hljs-keyword">with</span> open(<span class="hljs-string">&apos;mylibrary.egg&apos;</span>, <span class="hljs-string">&apos;wb&apos;</span>) <span class="hljs-keyword">as</span> f:`\
-  f.write(r.content)`\
-sc.addPyFile(<span class="hljs-string">&apos;mylibrary.egg&apos;</span>)`
+<pre><code class="language-python">import requests`\
+r = requests.get('`&lt;url-to-my-egg-file&gt;`')`\
+with open('mylibrary.egg', 'wb') as f:`\
+  f.write(r.content)`\
+sc.addPyFile('mylibrary.egg')`
 </code></pre>
 <p>You will want to do this <strong>before</strong> you load the library. If the library
 is already loaded, restart the kernel in the Jupyter notebook.</p>
 
-                                
-                                </section>
-                            
-    </div>
-    <div class="search-results">
-        <div class="has-results">
-            
-            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
-            <ul class="search-results-list"></ul>
-            
-        </div>
-        <div class="no-results">
-            
-            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
-            
-        </div>
-    </div>
-</div>
+                    </main>
 
-                        </div>
-                    </div>
-                
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../tools/interfaces.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../concepts/sql_style.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
             </div>
 
-            
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                <a href="interfaces.html" class="navigation navigation-prev " aria-label="Previous page: Analysis Interfaces">
-                    <i class="fa fa-angle-left"></i>
-                </a>
+                    <a href="../tools/interfaces.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
                 
-                
-                <a href="../concepts/sql_style.html" class="navigation navigation-next " aria-label="Next page: SQL Style Guide">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-                
-            
-        
-    </div>
 
-    <script>
-        var gitbook = gitbook || [];
-        gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Custom analysis with Spark","level":"1.3.4","depth":2,"next":{"title":"SQL Style Guide","level":"1.3.5","depth":2,"path":"concepts/sql_style.md","ref":"concepts/sql_style.md","articles":[]},"previous":{"title":"Analysis Interfaces","level":"1.3.3","depth":2,"path":"tools/interfaces.md","ref":"tools/interfaces.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"tools/spark.md","mtime":"2018-10-12T18:10:35.410Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-10-12T18:12:00.362Z"},"basePath":"..","book":{"language":""}});
-        });
-    </script>
-</div>
+                
+                    <a href="../concepts/sql_style.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
 
         
-    
-    <script src="../gitbook/gitbook.js"></script>
-    <script src="../gitbook/theme.js"></script>
-    
-        
-        <script src="../gitbook/gitbook-plugin-ga/plugin.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-mermaid-gb3/book/plugin.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
-        
-    
 
-    <script src="../gitbook/gitbook-plugin-mermaid-gb3/mermaid/mermaid.min.js"></script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="../mermaid-init.js"></script>
+        
+
+        
 
     </body>
 </html>
-

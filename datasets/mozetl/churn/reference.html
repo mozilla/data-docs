@@ -1,1295 +1,156 @@
-
 <!DOCTYPE HTML>
-<html lang="" >
+<html lang="en" class="sidebar-visible no-js">
     <head>
+        <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
+        <title>Churn - Firefox Data Documentation</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Churn · GitBook</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.3">
-        
-        
-        
-    
-    
-    <link rel="stylesheet" href="../../../gitbook/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
 
-    
-            
-                
-                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-anchors/plugin.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-mermaid-gb3/mermaid/mermaid.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-highlight/website.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-search/search.css">
-                
-            
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../../../dtmo.css">
+        
+        <link rel="stylesheet" href="../../../mermaid.css">
         
 
-    
-
-    
         
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-
-    
-
-        
-    
-    
-    <meta name="HandheldFriendly" content="true"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../gitbook/images/apple-touch-icon-precomposed-152.png">
-    <link rel="shortcut icon" href="../../../gitbook/images/favicon.ico" type="image/x-icon">
-
-    
-    <link rel="next" href="../../batch_view/client_count_daily/reference.html" />
-    
-    
-    <link rel="prev" href="../../batch_view/addons/reference.html" />
-    
-
     </head>
-    <body>
-        
-<div class="book">
-    <div class="book-summary">
-        
-            
-<div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search" />
-</div>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">var path_to_root = "../../../";</script>
 
-            
-                <nav role="navigation">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="../../../introduction.html">Firefox Data Documentation</a></li><li><a href="../../../concepts/reporting_a_problem.html"><strong aria-hidden="true">1.</strong> Reporting a problem</a></li><li><a href="../../../concepts/terminology.html"><strong aria-hidden="true">2.</strong> Terminology</a></li><li><a href="../../../concepts/getting_started.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li><ol class="section"><li><a href="../../../concepts/analysis_intro.html"><strong aria-hidden="true">3.1.</strong> Analysis Quick Start</a></li><li><a href="../../../concepts/choosing_a_dataset.html"><strong aria-hidden="true">3.2.</strong> Choosing a Dataset</a></li><li><a href="../../../tools/stmo.html"><strong aria-hidden="true">3.3.</strong> Intro to STMO</a></li><li><a href="../../../concepts/analysis_gotchas.html"><strong aria-hidden="true">3.4.</strong> Common Analysis Gotchas</a></li><li><a href="../../../concepts/sql_optimization.html"><strong aria-hidden="true">3.5.</strong> Optimizing Queries</a></li><li><a href="../../../concepts/review.html"><strong aria-hidden="true">3.6.</strong> Getting Review</a></li><li><a href="../../../datasets/new_data.html"><strong aria-hidden="true">3.7.</strong> Collecting New Data</a></li></ol></li><li><a href="../../../tools/index.html"><strong aria-hidden="true">4.</strong> Tools</a></li><li><ol class="section"><li><a href="../../../tools/projects.html"><strong aria-hidden="true">4.1.</strong> Project Glossary</a></li><li><a href="../../../concepts/pipeline/data_pipeline.html"><strong aria-hidden="true">4.2.</strong> Overview of Mozilla's Data Pipeline</a></li><li><ol class="section"><li><a href="../../../concepts/pipeline/data_pipeline_detail.html"><strong aria-hidden="true">4.2.1.</strong> In-depth Data Pipeline Detail</a></li><li><a href="../../../concepts/pipeline/http_edge_spec.html"><strong aria-hidden="true">4.2.2.</strong> HTTP Edge Server Specification</a></li><li><a href="../../../concepts/pipeline/event_pipeline.html"><strong aria-hidden="true">4.2.3.</strong> Event Pipeline Detail</a></li></ol></li><li><a href="../../../tools/interfaces.html"><strong aria-hidden="true">4.3.</strong> Analysis Interfaces</a></li><li><a href="../../../tools/spark.html"><strong aria-hidden="true">4.4.</strong> Custom analysis with Spark</a></li><li><a href="../../../concepts/sql_style.html"><strong aria-hidden="true">4.5.</strong> SQL Style Guide</a></li></ol></li><li><a href="../../../cookbooks/index.html"><strong aria-hidden="true">5.</strong> Cookbooks</a></li><li><ol class="section"><li><a href="../../../tools/alerts.html"><strong aria-hidden="true">5.1.</strong> Alerts</a></li><li><a href="../../../cookbooks/parquet.html"><strong aria-hidden="true">5.2.</strong> Working with Parquet Data on ATMO Clusters</a></li><li><a href="../../../cookbooks/create_a_dataset.html"><strong aria-hidden="true">5.3.</strong> Creating a custom Re:dash dataset</a></li><li><a href="../../../cookbooks/new_ping.html"><strong aria-hidden="true">5.4.</strong> Sending a Custom Ping</a></li><li><a href="../../../cookbooks/hll_zeppelin.html"><strong aria-hidden="true">5.5.</strong> Using HyperLogLog in Zeppelin</a></li><li><a href="../../../cookbooks/dataset_specific.html"><strong aria-hidden="true">5.6.</strong> Dataset Specific</a></li><li><ol class="section"><li><a href="../../../cookbooks/longitudinal_examples.html"><strong aria-hidden="true">5.6.1.</strong> Longitudinal Examples</a></li><li><a href="../../../cookbooks/crash_pings.html"><strong aria-hidden="true">5.6.2.</strong> Working with Crash Pings</a></li></ol></li><li><a href="../../../cookbooks/realtime.html"><strong aria-hidden="true">5.7.</strong> Real-time</a></li><li><ol class="section"><li><a href="../../../cookbooks/realtime_analysis_plugin.html"><strong aria-hidden="true">5.7.1.</strong> Creating a Real-time Analysis Plugin</a></li><li><a href="../../../cookbooks/view_pings_cep.html"><strong aria-hidden="true">5.7.2.</strong> Seeing Your Own Pings</a></li><li><a href="../../../tools/cep_matcher.html"><strong aria-hidden="true">5.7.3.</strong> CEP Matcher</a></li></ol></li><li><a href="../../../cookbooks/metrics.html"><strong aria-hidden="true">5.8.</strong> Metrics</a></li><li><ol class="section"><li><a href="../../../cookbooks/active_dau.html"><strong aria-hidden="true">5.8.1.</strong> Active DAU Definition</a></li><li><a href="../../../cookbooks/retention.html"><strong aria-hidden="true">5.8.2.</strong> Retention Analysis</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../../datasets/reference.html"><strong aria-hidden="true">6.</strong> Dataset Reference</a></li><li><ol class="section"><li><a href="../../../datasets/pings.html"><strong aria-hidden="true">6.1.</strong> Pings</a></li><li><a href="../../../datasets/derived.html"><strong aria-hidden="true">6.2.</strong> Derived Datasets</a></li><li><ol class="section"><li><a href="../../../datasets/batch_view/addons/reference.html"><strong aria-hidden="true">6.2.1.</strong> Addons</a></li><li><a href="../../../datasets/mozetl/churn/reference.html" class="active"><strong aria-hidden="true">6.2.2.</strong> Churn</a></li><li><a href="../../../datasets/batch_view/client_count_daily/reference.html"><strong aria-hidden="true">6.2.3.</strong> Client Count Daily</a></li><li><a href="../../../datasets/batch_view/client_count/reference.html"><strong aria-hidden="true">6.2.4.</strong> Client Count</a></li><li><a href="../../../datasets/batch_view/clients_daily/reference.html"><strong aria-hidden="true">6.2.5.</strong> Clients Daily</a></li><li><a href="../../../datasets/batch_view/crash_aggregates/reference.html"><strong aria-hidden="true">6.2.6.</strong> Crash Aggregate</a></li><li><a href="../../../datasets/batch_view/crash_summary/reference.html"><strong aria-hidden="true">6.2.7.</strong> Crash Summary</a></li><li><a href="../../../datasets/batch_view/cross_sectional/reference.html"><strong aria-hidden="true">6.2.8.</strong> Cross Sectional</a></li><li><a href="../../../datasets/streaming/error_aggregates/reference.html"><strong aria-hidden="true">6.2.9.</strong> Error Aggregates</a></li><li><a href="../../../datasets/batch_view/events/reference.html"><strong aria-hidden="true">6.2.10.</strong> Events</a></li><li><a href="../../../datasets/batch_view/first_shutdown_summary/reference.html"><strong aria-hidden="true">6.2.11.</strong> First Shutdown Summary</a></li><li><a href="../../../datasets/batch_view/longitudinal/reference.html"><strong aria-hidden="true">6.2.12.</strong> Longitudinal</a></li><li><a href="../../../datasets/batch_view/main_summary/reference.html"><strong aria-hidden="true">6.2.13.</strong> Main Summary</a></li><li><a href="../../../datasets/batch_view/new_profile/reference.html"><strong aria-hidden="true">6.2.14.</strong> New Profile</a></li><li><a href="../../../datasets/batch_view/retention/reference.html"><strong aria-hidden="true">6.2.15.</strong> Retention</a></li><li><a href="../../../datasets/other/socorro_crash/reference.html"><strong aria-hidden="true">6.2.16.</strong> Socorro Crash Reports</a></li><li><a href="../../../datasets/other/ssl/reference.html"><strong aria-hidden="true">6.2.17.</strong> SSL Ratios (public)</a></li><li><a href="../../../datasets/batch_view/sync_summary/reference.html"><strong aria-hidden="true">6.2.18.</strong> Sync Summary</a></li><li><a href="../../../datasets/batch_view/update/reference.html"><strong aria-hidden="true">6.2.19.</strong> Update</a></li></ol></li><li><a href="../../../tools/experiments.html"><strong aria-hidden="true">6.3.</strong> Experimental Datasets</a></li><li><ol class="section"><li><a href="../../../datasets/shield.html"><strong aria-hidden="true">6.3.1.</strong> Accessing Shield Study data</a></li></ol></li><li><a href="../../../datasets/search.html"><strong aria-hidden="true">6.4.</strong> Search Datasets</a></li><li><ol class="section"><li><a href="../../../datasets/mozetl/search_aggregates/reference.html"><strong aria-hidden="true">6.4.1.</strong> Search Aggregates</a></li><li><a href="../../../datasets/mozetl/search_clients_daily/reference.html"><strong aria-hidden="true">6.4.2.</strong> Search Clients Daily</a></li></ol></li><li><a href="../../../datasets/other.html"><strong aria-hidden="true">6.5.</strong> Other Datasets</a></li><li><ol class="section"><li><a href="../../../datasets/other/hgpush/reference.html"><strong aria-hidden="true">6.5.1.</strong> hgpush</a></li></ol></li><li><a href="../../../datasets/obsolete.html"><strong aria-hidden="true">6.6.</strong> Obsolete Datasets</a></li><li><ol class="section"><li><a href="../../../datasets/obsolete/heavy_users/reference.html"><strong aria-hidden="true">6.6.1.</strong> Heavy Users</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../../concepts/index.html"><strong aria-hidden="true">7.</strong> Telemetry Behavior Reference</a></li><li><ol class="section"><li><a href="../../../concepts/profile/index.html"><strong aria-hidden="true">7.1.</strong> Profile Behavior</a></li><li><ol class="section"><li><a href="../../../concepts/profile/profile_creation.html"><strong aria-hidden="true">7.1.1.</strong> Profile Creation</a></li><li><a href="../../../concepts/profile/realworldusage.html"><strong aria-hidden="true">7.1.2.</strong> Real World Usage</a></li><li><a href="../../../concepts/profile/profilehistory.html"><strong aria-hidden="true">7.1.3.</strong> Profile History</a></li></ol></li><li><a href="../../../concepts/channels/index.html"><strong aria-hidden="true">7.2.</strong> Channel Behavior</a></li><li><ol class="section"><li><a href="../../../concepts/channels/channel_normalization.html"><strong aria-hidden="true">7.2.1.</strong> Channel Normalization and Querying</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../../meta/index.html"><strong aria-hidden="true">8.</strong> About this Documentation</a></li><li><ol class="section"><li><a href="../../../meta/contributing.html"><strong aria-hidden="true">8.1.</strong> Contributing</a></li><li><a href="../../../meta/structure.html"><strong aria-hidden="true">8.2.</strong> Structure</a></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
                 
-
-
-<ul class="summary">
-    
-    
-
-    
-
-    
-        
-        
-    
-        <li class="chapter " data-level="1.1" data-path="../../../">
-            
-                <a href="../../../">
-            
-                    
-                    Firefox Data Documentation
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.1.1" data-path="../../../concepts/reporting_a_problem.html">
-            
-                <a href="../../../concepts/reporting_a_problem.html">
-            
-                    
-                    Reporting a problem
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.1.2" data-path="../../../concepts/terminology.html">
-            
-                <a href="../../../concepts/terminology.html">
-            
-                    
-                    Terminology
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2" data-path="../../../concepts/getting_started.html">
-            
-                <a href="../../../concepts/getting_started.html">
-            
-                    
-                    Getting Started
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.2.1" data-path="../../../concepts/analysis_intro.html">
-            
-                <a href="../../../concepts/analysis_intro.html">
-            
-                    
-                    Analysis Quick Start
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.2" data-path="../../../concepts/choosing_a_dataset.html">
-            
-                <a href="../../../concepts/choosing_a_dataset.html">
-            
-                    
-                    Choosing a Dataset
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.3" data-path="../../../tools/stmo.html">
-            
-                <a href="../../../tools/stmo.html">
-            
-                    
-                    Intro to STMO
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.4" data-path="../../../concepts/analysis_gotchas.html">
-            
-                <a href="../../../concepts/analysis_gotchas.html">
-            
-                    
-                    Common Analysis Gotchas
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.5" data-path="../../../concepts/sql_optimization.html">
-            
-                <a href="../../../concepts/sql_optimization.html">
-            
-                    
-                    Optimizing Queries
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.6" data-path="../../../concepts/review.html">
-            
-                <a href="../../../concepts/review.html">
-            
-                    
-                    Getting Review
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.7" data-path="../../new_data.html">
-            
-                <a href="../../new_data.html">
-            
-                    
-                    Collecting New Data
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3" data-path="../../../tools/">
-            
-                <a href="../../../tools/">
-            
-                    
-                    Tools
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.3.1" data-path="../../../tools/projects.html">
-            
-                <a href="../../../tools/projects.html">
-            
-                    
-                    Project Glossary
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.2" data-path="../../../concepts/pipeline/data_pipeline.html">
-            
-                <a href="../../../concepts/pipeline/data_pipeline.html">
-            
-                    
-                    Overview of Mozilla's Data Pipeline
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.3.2.1" data-path="../../../concepts/pipeline/data_pipeline_detail.html">
-            
-                <a href="../../../concepts/pipeline/data_pipeline_detail.html">
-            
-                    
-                    In-depth Data Pipeline Detail
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.2.2" data-path="../../../concepts/pipeline/http_edge_spec.html">
-            
-                <a href="../../../concepts/pipeline/http_edge_spec.html">
-            
-                    
-                    HTTP Edge Server Specification
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.2.3" data-path="../../../concepts/pipeline/event_pipeline.html">
-            
-                <a href="../../../concepts/pipeline/event_pipeline.html">
-            
-                    
-                    Event Pipeline Detail
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.3" data-path="../../../tools/interfaces.html">
-            
-                <a href="../../../tools/interfaces.html">
-            
-                    
-                    Analysis Interfaces
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4" data-path="../../../tools/spark.html">
-            
-                <a href="../../../tools/spark.html">
-            
-                    
-                    Custom analysis with Spark
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.5" data-path="../../../concepts/sql_style.html">
-            
-                <a href="../../../concepts/sql_style.html">
-            
-                    
-                    SQL Style Guide
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4" data-path="../../../cookbooks/">
-            
-                <a href="../../../cookbooks/">
-            
-                    
-                    Cookbooks
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.4.1" data-path="../../../tools/alerts.html">
-            
-                <a href="../../../tools/alerts.html">
-            
-                    
-                    Alerts
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.2" data-path="../../../cookbooks/parquet.html">
-            
-                <a href="../../../cookbooks/parquet.html">
-            
-                    
-                    Working with Parquet Data on ATMO Clusters
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.3" data-path="../../../cookbooks/create_a_dataset.html">
-            
-                <a href="../../../cookbooks/create_a_dataset.html">
-            
-                    
-                    Creating a custom Re:dash dataset
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.4" data-path="../../../cookbooks/new_ping.html">
-            
-                <a href="../../../cookbooks/new_ping.html">
-            
-                    
-                    Sending a Custom Ping
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.5" data-path="../../../cookbooks/hll_zeppelin.html">
-            
-                <a href="../../../cookbooks/hll_zeppelin.html">
-            
-                    
-                    Using HyperLogLog in Zeppelin
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.6" >
-            
-                <span>
-            
-                    
-                    Dataset Specific
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.4.6.1" data-path="../../../cookbooks/longitudinal_examples.html">
-            
-                <a href="../../../cookbooks/longitudinal_examples.html">
-            
-                    
-                    Longitudinal Examples
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.6.2" data-path="../../../cookbooks/crash_pings.html">
-            
-                <a href="../../../cookbooks/crash_pings.html">
-            
-                    
-                    Working with Crash Pings
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.7" >
-            
-                <span>
-            
-                    
-                    Real-time
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.4.7.1" data-path="../../../cookbooks/realtime_analysis_plugin.html">
-            
-                <a href="../../../cookbooks/realtime_analysis_plugin.html">
-            
-                    
-                    Creating a Real-time Analysis Plugin
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.7.2" data-path="../../../cookbooks/view_pings_cep.html">
-            
-                <a href="../../../cookbooks/view_pings_cep.html">
-            
-                    
-                    Seeing Your Own Pings
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.7.3" data-path="../../../tools/cep_matcher.html">
-            
-                <a href="../../../tools/cep_matcher.html">
-            
-                    
-                    CEP Matcher
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.8" >
-            
-                <span>
-            
-                    
-                    Metrics
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.4.8.1" data-path="../../../cookbooks/active_dau.html">
-            
-                <a href="../../../cookbooks/active_dau.html">
-            
-                    
-                    Active DAU Definition
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.8.2" data-path="../../../cookbooks/retention.html">
-            
-                <a href="../../../cookbooks/retention.html">
-            
-                    
-                    Retention Analysis
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-    
-        
-        <li class="divider"></li>
-        
-        
-    
-        <li class="chapter " data-level="2.1" data-path="../../reference.html">
-            
-                <a href="../../reference.html">
-            
-                    
-                    Dataset Reference
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="2.1.1" data-path="../../pings.html">
-            
-                <a href="../../pings.html">
-            
-                    
-                    Pings
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2" data-path="../../derived.html">
-            
-                <a href="../../derived.html">
-            
-                    
-                    Derived Datasets
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="2.1.2.1" data-path="../../batch_view/addons/reference.html">
-            
-                <a href="../../batch_view/addons/reference.html">
-            
-                    
-                    Addons
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter active" data-level="2.1.2.2" data-path="reference.html">
-            
-                <a href="reference.html">
-            
-                    
-                    Churn
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.3" data-path="../../batch_view/client_count_daily/reference.html">
-            
-                <a href="../../batch_view/client_count_daily/reference.html">
-            
-                    
-                    Client Count Daily
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.4" data-path="../../batch_view/client_count/reference.html">
-            
-                <a href="../../batch_view/client_count/reference.html">
-            
-                    
-                    Client Count
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.5" data-path="../../batch_view/clients_daily/reference.html">
-            
-                <a href="../../batch_view/clients_daily/reference.html">
-            
-                    
-                    Clients Daily
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.6" data-path="../../batch_view/crash_aggregates/reference.html">
-            
-                <a href="../../batch_view/crash_aggregates/reference.html">
-            
-                    
-                    Crash Aggregate
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.7" data-path="../../batch_view/crash_summary/reference.html">
-            
-                <a href="../../batch_view/crash_summary/reference.html">
-            
-                    
-                    Crash Summary
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.8" data-path="../../batch_view/cross_sectional/reference.html">
-            
-                <a href="../../batch_view/cross_sectional/reference.html">
-            
-                    
-                    Cross Sectional
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.9" data-path="../../streaming/error_aggregates/reference.html">
-            
-                <a href="../../streaming/error_aggregates/reference.html">
-            
-                    
-                    Error Aggregates
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.10" data-path="../../batch_view/events/reference.html">
-            
-                <a href="../../batch_view/events/reference.html">
-            
-                    
-                    Events
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.11" data-path="../../batch_view/first_shutdown_summary/reference.html">
-            
-                <a href="../../batch_view/first_shutdown_summary/reference.html">
-            
-                    
-                    First Shutdown Summary
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.12" data-path="../../batch_view/longitudinal/reference.html">
-            
-                <a href="../../batch_view/longitudinal/reference.html">
-            
-                    
-                    Longitudinal
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.13" data-path="../../batch_view/main_summary/reference.html">
-            
-                <a href="../../batch_view/main_summary/reference.html">
-            
-                    
-                    Main Summary
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.14" data-path="../../batch_view/new_profile/reference.html">
-            
-                <a href="../../batch_view/new_profile/reference.html">
-            
-                    
-                    New Profile
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.15" data-path="../../batch_view/retention/reference.html">
-            
-                <a href="../../batch_view/retention/reference.html">
-            
-                    
-                    Retention
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.16" data-path="../../other/socorro_crash/reference.html">
-            
-                <a href="../../other/socorro_crash/reference.html">
-            
-                    
-                    Socorro Crash Reports
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.17" data-path="../../other/ssl/reference.html">
-            
-                <a href="../../other/ssl/reference.html">
-            
-                    
-                    SSL Ratios (public)
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.18" data-path="../../batch_view/sync_summary/reference.html">
-            
-                <a href="../../batch_view/sync_summary/reference.html">
-            
-                    
-                    Sync Summary
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.19" data-path="../../batch_view/update/reference.html">
-            
-                <a href="../../batch_view/update/reference.html">
-            
-                    
-                    Update
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.3" data-path="../../../tools/experiments.html">
-            
-                <a href="../../../tools/experiments.html">
-            
-                    
-                    Experimental Datasets
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="2.1.3.1" data-path="../../shield.html">
-            
-                <a href="../../shield.html">
-            
-                    
-                    Accessing Shield Study data
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.4" data-path="../../search.html">
-            
-                <a href="../../search.html">
-            
-                    
-                    Search Datasets
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="2.1.4.1" data-path="../search_aggregates/reference.html">
-            
-                <a href="../search_aggregates/reference.html">
-            
-                    
-                    Search Aggregates
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.4.2" data-path="../search_clients_daily/reference.html">
-            
-                <a href="../search_clients_daily/reference.html">
-            
-                    
-                    Search Clients Daily
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.5" data-path="../../other.html">
-            
-                <a href="../../other.html">
-            
-                    
-                    Other Datasets
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="2.1.5.1" data-path="../../other/hgpush/reference.html">
-            
-                <a href="../../other/hgpush/reference.html">
-            
-                    
-                    hgpush
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.6" data-path="../../obsolete.html">
-            
-                <a href="../../obsolete.html">
-            
-                    
-                    Obsolete Datasets
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="2.1.6.1" data-path="../../obsolete/heavy_users/reference.html">
-            
-                <a href="../../obsolete/heavy_users/reference.html">
-            
-                    
-                    Heavy Users
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-    
-        
-        <li class="divider"></li>
-        
-        
-    
-        <li class="chapter " data-level="3.1" >
-            
-                <span>
-            
-                    
-                    Telemetry Behavior Reference
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="3.1.1" >
-            
-                <span>
-            
-                    
-                    Profile Behavior
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="3.1.1.1" data-path="../../../concepts/profile/profile_creation.html">
-            
-                <a href="../../../concepts/profile/profile_creation.html">
-            
-                    
-                    Profile Creation
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="3.1.1.2" data-path="../../../concepts/profile/realworldusage.html">
-            
-                <a href="../../../concepts/profile/realworldusage.html">
-            
-                    
-                    Real World Usage
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="3.1.1.3" data-path="../../../concepts/profile/profilehistory.html">
-            
-                <a href="../../../concepts/profile/profilehistory.html">
-            
-                    
-                    Profile History
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="3.1.2" >
-            
-                <span>
-            
-                    
-                    Channel Behavior
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="3.1.2.1" data-path="../../../concepts/channels/channel_normalization.html">
-            
-                <a href="../../../concepts/channels/channel_normalization.html">
-            
-                    
-                    Channel Normalization and Querying
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-    
-        
-        <li class="divider"></li>
-        
-        
-    
-        <li class="chapter " data-level="4.1" >
-            
-                <span>
-            
-                    
-                    About this Documentation
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="4.1.1" data-path="../../../meta/contributing.html">
-            
-                <a href="../../../meta/contributing.html">
-            
-                    
-                    Contributing
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="4.1.2" >
-            
-                <a target="_blank" href="https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&component=Documentation%20and%20Knowledge%20Repo%20%28RTMO%29&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=--&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&target_milestone=---&version=unspecified">
-            
-                    
-                    Bug Template
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="4.1.3" data-path="../../../meta/structure.html">
-            
-                <a href="../../../meta/structure.html">
-            
-                    
-                    Structure
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-    
-
-    <li class="divider"></li>
-
-    <li>
-        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            Published with GitBook
-        </a>
-    </li>
-</ul>
-
-
-                </nav>
-            
-        
-    </div>
-
-    <div class="book-body">
-        
-            <div class="body-inner">
-                
-                    
-
-<div class="book-header" role="navigation">
-    
-
-    <!-- Title -->
-    <h1>
-        <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../../.." >Churn</a>
-    </h1>
-</div>
-
-
-
-
-                    <div class="page-wrapper" tabindex="-1" role="main">
-                        <div class="page-inner">
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
                             
-<div id="book-search-results">
-    <div class="search-noresults">
-    
-                                <section class="normal markdown-section">
-                                
-                                <h1 id="churn"><a name="churn" class="plugin-anchor" href="#churn"><i class="fa fa-link" aria-hidden="true"></i></a>Churn</h1>
-<!-- toc -->
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Firefox Data Documentation</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#churn" id="churn"><h1>Churn</h1></a>
 <ul>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#data-reference">Data Reference</a><ul>
+<li><a href="#introduction">Introduction</a>
+<ul>
+<li><a href="#content">Content</a></li>
+<li><a href="#background-and-caveats">Background and Caveats</a></li>
+<li><a href="#accessing-the-data">Accessing the Data</a></li>
+</ul>
+</li>
+<li><a href="#data-reference">Data Reference</a>
+<ul>
 <li><a href="#example-queries">Example Queries</a></li>
 <li><a href="#scheduling">Scheduling</a></li>
 <li><a href="#schema">Schema</a></li>
@@ -1297,11 +158,10 @@
 </ul>
 </li>
 </ul>
-<!-- tocstop -->
-<h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+<a class="header" href="#introduction" id="introduction"><h1>Introduction</h1></a>
 <p>The churn dataset tracks the 7-day churn rate of telemetry profiles. This
 dataset is generally used for analyzing cohort churn across segments and time.</p>
-<h4 id="content"><a name="content" class="plugin-anchor" href="#content"><i class="fa fa-link" aria-hidden="true"></i></a>Content</h4>
+<a class="header" href="#content" id="content"><h4>Content</h4></a>
 <p>Churn is the rate of attrition defined by <code>(clients seen in week N)/(clients seen in week 0)</code>
 for groups of clients with some shared attributes. A group of clients with
 shared attributes is called a <em>cohort</em>. The cohorts in this dataset are created
@@ -1309,84 +169,11 @@ every week and can be tracked over time using the <code>acquisition_date</code> 
 weeks since acquisition or <code>current_week</code>.</p>
 <p>The following example demonstrates the current logic for generating this
 dataset. Each column represents the days since some arbitrary starting date.</p>
-<table>
-<thead>
-<tr>
-<th>client</th>
-<th>00</th>
-<th>01</th>
-<th>02</th>
-<th>03</th>
-<th>04</th>
-<th>05</th>
-<th>06</th>
-<th>07</th>
-<th>08</th>
-<th>09</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-<th>13</th>
-<th>14</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>A</td>
-<td>X</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>X</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>B</td>
-<td></td>
-<td>X</td>
-<td>X</td>
-<td>X</td>
-<td>X</td>
-<td>X</td>
-<td>X</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>C</td>
-<td>X</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>X</td>
-</tr>
-</tbody>
-</table>
+<table><thead><tr><th>   client </th><th> 00 </th><th> 01 </th><th> 02 </th><th> 03 </th><th> 04 </th><th> 05 </th><th> 06 </th><th> 07 </th><th> 08 </th><th> 09 </th><th> 10 </th><th> 11 </th><th> 12 </th><th> 13 </th><th> 14 </th></tr></thead><tbody>
+<tr><td> A        </td><td> X  </td><td>    </td><td>    </td><td>    </td><td>    </td><td>    </td><td>    </td><td> X  </td><td>    </td><td>    </td><td>    </td><td>    </td><td>    </td><td>    </td><td>    </td></tr>
+<tr><td> B        </td><td>    </td><td> X  </td><td> X  </td><td> X  </td><td> X  </td><td> X  </td><td> X  </td><td>    </td><td>    </td><td>    </td><td>    </td><td>    </td><td>    </td><td>    </td><td>    </td></tr>
+<tr><td> C        </td><td> X  </td><td>    </td><td>    </td><td>    </td><td>    </td><td>    </td><td>    </td><td>    </td><td>    </td><td>    </td><td>    </td><td>    </td><td>    </td><td>    </td><td> X  </td></tr>
+</tbody></table>
 <p>All three clients are part of the same cohort. Client A is retained for weeks 0
 and 1 since there is activity in both periods. A client only needs to show up
 once in the period to be counted as retained. Client B is acquired in week 0 and
@@ -1395,65 +182,43 @@ considered churned on week 1. However, a client that is churned can become
 retained again. Client C is considered churned on week 1 but retained on week 3.</p>
 <p>The following table summarizes the above daily activity into the following view
 where every column represents the current week since acquisition date..</p>
-<table>
-<thead>
-<tr>
-<th>client</th>
-<th>0</th>
-<th>1</th>
-<th>2</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>A</td>
-<td>X</td>
-<td>X</td>
-<td></td>
-</tr>
-<tr>
-<td>B</td>
-<td>X</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>C</td>
-<td>X</td>
-<td></td>
-<td>X</td>
-</tr>
-</tbody>
-</table>
+<table><thead><tr><th>   client </th><th> 0 </th><th> 1 </th><th>  2 </th></tr></thead><tbody>
+<tr><td> A        </td><td> X </td><td> X </td><td>    </td></tr>
+<tr><td> B        </td><td> X </td><td>   </td><td>    </td></tr>
+<tr><td> C        </td><td> X </td><td>   </td><td> X  </td></tr>
+</tbody></table>
 <p>The clients are then grouped into cohorts by attributes. An attribute describes
 a property about the cohort such as the country of origin or the binary
 distribution channel. Each group also contains descriptive aggregates of
 engagement. Each metric describes the activity of a cohort such as size and
 overall usage at a given time instance.</p>
-<h4 id="background-and-caveats"><a name="background-and-caveats" class="plugin-anchor" href="#background-and-caveats"><i class="fa fa-link" aria-hidden="true"></i></a>Background and Caveats</h4>
-<p>The original concept for churn is captured in <a href="https://mana.mozilla.org/wiki/display/FIREFOX/Project%3A+Firefox+Churn+v1.0" target="_blank">this Mana
+<a class="header" href="#background-and-caveats" id="background-and-caveats"><h4>Background and Caveats</h4></a>
+<p>The original concept for churn is captured in <a href="https://mana.mozilla.org/wiki/display/FIREFOX/Project%3A+Firefox+Churn+v1.0">this Mana
 page</a>.
-The original derived data-set was created in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1198537" target="_blank">bug
+The original derived data-set was created in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1198537">bug
 1198537</a>.  The first
-<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1389230" target="_blank">major revision (<code>v2</code>)</a> of
-this data-set added attribution, search, and uri counts.  The second <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1389231" target="_blank">major
+<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1389230">major revision (<code>v2</code>)</a> of
+this data-set added attribution, search, and uri counts.  The second <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1389231">major
 revision (<code>v3</code>)</a> included
 additional clients through the <code>new-profile</code> ping and adjusted the collection
 window from 10 to 5 days.</p>
 <ul>
-<li>Each row in this dataset describes a unique segment of users<ul>
+<li>Each row in this dataset describes a unique segment of users
+<ul>
 <li>The number of rows is exponential with the number of dimensions</li>
 <li>New fields should be added sparing to account for data-set size</li>
 </ul>
 </li>
-<li>The dataset lags by 10 days in order account for submission latency<ul>
+<li>The dataset lags by 10 days in order account for submission latency
+<ul>
 <li>This value was determined to be time for 99% of main pings to arrive at the
 server. With the shutdown-ping sender, this has been reduced to 4 days.
 However, <code>churn_v3</code> still tracks releases older than Firefox 55.</li>
 </ul>
 </li>
 <li>The start of the period is fixed to Sundays. Once it has been aggregated, the
-period cannot be shifted due to the way clients are counted.<ul>
+period cannot be shifted due to the way clients are counted.
+<ul>
 <li>A supplementary 1-day <code>retention</code> dataset using HyperLogLog for client
 counts is available for counting over arbitrary retention periods and date
 offsets. Additionally, calculating churn or retention over specific cohorts
@@ -1461,60 +226,31 @@ is tractable in STMO with <code>main_summary</code> or <code>clients_daily</code
 </ul>
 </li>
 </ul>
-<h4 id="accessing-the-data"><a name="accessing-the-data" class="plugin-anchor" href="#accessing-the-data"><i class="fa fa-link" aria-hidden="true"></i></a>Accessing the Data</h4>
+<a class="header" href="#accessing-the-data" id="accessing-the-data"><h4>Accessing the Data</h4></a>
 <p><code>churn</code> is available in Re:dash under Athena and Presto. The data is also
 available in parquet for consumption by columnar data engines at
 <code>s3://telemetry-parquet/churn/v3</code>.</p>
-<h1 id="data-reference"><a name="data-reference" class="plugin-anchor" href="#data-reference"><i class="fa fa-link" aria-hidden="true"></i></a>Data Reference</h1>
-<h2 id="example-queries"><a name="example-queries" class="plugin-anchor" href="#example-queries"><i class="fa fa-link" aria-hidden="true"></i></a>Example Queries</h2>
+<a class="header" href="#data-reference" id="data-reference"><h1>Data Reference</h1></a>
+<a class="header" href="#example-queries" id="example-queries"><h2>Example Queries</h2></a>
 <p>This section walks through a typical query to generate data suitable for
 visualization.</p>
-<table>
-<thead>
-<tr>
-<th>field</th>
-<th>type</th>
-<th>description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>cohort_date</code></td>
-<td>common, attribute</td>
-<td>The start date bucket of the cohort. This is week the client was acquired.</td>
-</tr>
-<tr>
-<td><code>elapsed_periods</code></td>
-<td>common, attribute</td>
-<td>The number of periods that have elapsed since the cohort date. In this dataset, the retention period is 7 days.</td>
-</tr>
-<tr>
-<td><code>channel</code></td>
-<td>attribute</td>
-<td>Part of the release train model. An attribute that distinguishes cohorts.</td>
-</tr>
-<tr>
-<td><code>geo</code></td>
-<td>filter attribute</td>
-<td>Country code. Used to filter out all countries other than the &apos;US&apos;</td>
-</tr>
-<tr>
-<td><code>n_profiles</code></td>
-<td>metric</td>
-<td>Count of users in a cohort. Use sum to aggregate.</td>
-</tr>
-</tbody>
-</table>
+<table><thead><tr><th> field </th><th> type </th><th> description </th></tr></thead><tbody>
+<tr><td> <code>cohort_date</code> </td><td> common, attribute </td><td>  The start date bucket of the cohort. This is week the client was acquired.</td></tr>
+<tr><td> <code>elapsed_periods</code> </td><td> common, attribute </td><td> The number of periods that have elapsed since the cohort date. In this dataset, the retention period is 7 days.</td></tr>
+<tr><td> <code>channel</code> </td><td> attribute </td><td> Part of the release train model. An attribute that distinguishes cohorts.</td></tr>
+<tr><td> <code>geo</code> </td><td> filter attribute </td><td> Country code. Used to filter out all countries other than the 'US'</td></tr>
+<tr><td> <code>n_profiles</code> </td><td> metric </td><td> Count of users in a cohort. Use sum to aggregate.</td></tr>
+</tbody></table>
 <p>First the fields are extracted and aliased for consistency. <code>cohort_date</code> and
 <code>elapsed_periods</code> are common to most retention queries and are useful concepts
 for building on other datasets.</p>
-<pre><code class="lang-sql">WITH extracted AS (
-    <span class="hljs-keyword">SELECT</span> acquisition_period <span class="hljs-keyword">AS</span> cohort_date,
-           current_week <span class="hljs-keyword">AS</span> elapsed_periods,
+<pre><code class="language-sql">WITH extracted AS (
+    SELECT acquisition_period AS cohort_date,
+           current_week AS elapsed_periods,
            n_profiles,
            channel,
            geo
-    <span class="hljs-keyword">FROM</span> churn
+    FROM churn
 ),
 </code></pre>
 <p>The extracted table is filtered down to the attributes of interest. The cohorts
@@ -1522,157 +258,75 @@ of interest originate in the US and are in the release or beta channels. Note
 that <code>channel</code> here is the concatenation of the normalized channel and the
 funnelcake id. Only cohorts appearing after August 6, 2017 are chosen to be in
 this population.</p>
-<pre><code class="lang-sql"> population AS (
-    <span class="hljs-keyword">SELECT</span> channel,
+<pre><code class="language-sql"> population AS (
+    SELECT channel,
            cohort_date,
            elapsed_periods,
            n_profiles
-    <span class="hljs-keyword">FROM</span> extracted
-    <span class="hljs-keyword">WHERE</span> geo = <span class="hljs-string">&apos;US&apos;</span>
-      <span class="hljs-keyword">AND</span> channel <span class="hljs-keyword">IN</span> (<span class="hljs-string">&apos;release&apos;</span>, <span class="hljs-string">&apos;beta&apos;</span>)
-      <span class="hljs-keyword">AND</span> cohort_date &gt; <span class="hljs-string">&apos;20170806&apos;</span>
-      <span class="hljs-comment">-- filter out noise from clients with incorrect dates</span>
-      <span class="hljs-keyword">AND</span> elapsed_periods &gt;= <span class="hljs-number">0</span>
-      <span class="hljs-keyword">AND</span> elapsed_periods &lt; <span class="hljs-number">12</span>
+    FROM extracted
+    WHERE geo = 'US'
+      AND channel IN ('release', 'beta')
+      AND cohort_date &gt; '20170806'
+      -- filter out noise from clients with incorrect dates
+      AND elapsed_periods &gt;= 0
+      AND elapsed_periods &lt; 12
 ),
 </code></pre>
 <p>The number of profiles is aggregated by the cohort dimensions. The cohort
 acquisition date and elapsed periods since acquisition are fundamental to cohort
 analysis.</p>
-<pre><code class="lang-sql"> cohorts AS (
-     <span class="hljs-keyword">SELECT</span> channel,
+<pre><code class="language-sql"> cohorts AS (
+     SELECT channel,
             cohort_date,
             elapsed_periods,
-            <span class="hljs-keyword">sum</span>(n_profiles) <span class="hljs-keyword">AS</span> n_profiles
-     <span class="hljs-keyword">FROM</span> population
-     <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>
+            sum(n_profiles) AS n_profiles
+     FROM population
+     GROUP BY 1, 2, 3
 ),
 </code></pre>
 <p>The table will have the following structure. The table is sorted by the first three columns for demonstration.</p>
-<table>
-<thead>
-<tr>
-<th><code>channel</code></th>
-<th><code>cohort_date</code></th>
-<th><code>elapsed_periods</code></th>
-<th><code>n_profiles</code></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>release</td>
-<td>20170101</td>
-<td>0</td>
-<td>100</td>
-</tr>
-<tr>
-<td>release</td>
-<td>20170101</td>
-<td>1</td>
-<td>90</td>
-</tr>
-<tr>
-<td>release</td>
-<td>20170101</td>
-<td>2</td>
-<td>80</td>
-</tr>
-<tr>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-</tr>
-<tr>
-<td>beta</td>
-<td>20170128</td>
-<td>10</td>
-<td>25</td>
-</tr>
-</tbody>
-</table>
+<table><thead><tr><th> <code>channel</code> </th><th> <code>cohort_date</code> </th><th> <code>elapsed_periods</code> </th><th> <code>n_profiles</code> </th></tr></thead><tbody>
+<tr><td> release </td><td> 20170101 </td><td> 0 </td><td> 100 </td></tr>
+<tr><td> release </td><td> 20170101 </td><td> 1 </td><td> 90 </td></tr>
+<tr><td> release </td><td> 20170101 </td><td> 2 </td><td> 80 </td></tr>
+<tr><td> ... </td><td> ... </td><td> ... </td><td> ... </td></tr>
+<tr><td> beta </td><td> 20170128 </td><td> 10 </td><td> 25 </td></tr>
+</tbody></table>
 <p>Finally, retention is calculated through the number of profiles at the time of
 the <code>elapsed_period</code> relative to the initial period. This data can be imported
 into a pivot table for further analysis.</p>
-<pre><code class="lang-sql">results AS (
-    <span class="hljs-keyword">SELECT</span> c.*,
-           iv.n_profiles <span class="hljs-keyword">AS</span> total_n_profiles,
-           (<span class="hljs-number">0.0</span>+c.n_profiles)*<span class="hljs-number">100</span>/iv.n_profiles <span class="hljs-keyword">AS</span> percentage_n_profiles
-    <span class="hljs-keyword">FROM</span> cohorts c
-    <span class="hljs-keyword">JOIN</span> (
-        <span class="hljs-keyword">SELECT</span> *
-        <span class="hljs-keyword">FROM</span> cohorts
-        <span class="hljs-keyword">WHERE</span> elapsed_periods = <span class="hljs-number">0</span>
-    ) iv <span class="hljs-keyword">ON</span> (
+<pre><code class="language-sql">results AS (
+    SELECT c.*,
+           iv.n_profiles AS total_n_profiles,
+           (0.0+c.n_profiles)*100/iv.n_profiles AS percentage_n_profiles
+    FROM cohorts c
+    JOIN (
+        SELECT *
+        FROM cohorts
+        WHERE elapsed_periods = 0
+    ) iv ON (
         c.cohort_date = iv.cohort_date
-        <span class="hljs-keyword">AND</span> c.channel = iv.channel
+        AND c.channel = iv.channel
     )
 )
 </code></pre>
-<table>
-<thead>
-<tr>
-<th><code>channel</code></th>
-<th><code>cohort_date</code></th>
-<th><code>elapsed_periods</code></th>
-<th><code>n_profiles</code></th>
-<th><code>total_n_profiles</code></th>
-<th><code>percentage_n_profiles</code></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>release</td>
-<td>20170101</td>
-<td>0</td>
-<td>100</td>
-<td>100</td>
-<td>1.0</td>
-</tr>
-<tr>
-<td>release</td>
-<td>20170101</td>
-<td>1</td>
-<td>90</td>
-<td>100</td>
-<td>0.9</td>
-</tr>
-<tr>
-<td>release</td>
-<td>20170101</td>
-<td>2</td>
-<td>80</td>
-<td>100</td>
-<td>0.8</td>
-</tr>
-<tr>
-<td>...</td>
-<td>....</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-</tr>
-<tr>
-<td>beta</td>
-<td>20170128</td>
-<td>10</td>
-<td>25</td>
-<td>50</td>
-<td>0.5</td>
-</tr>
-</tbody>
-</table>
+<table><thead><tr><th> <code>channel</code> </th><th> <code>cohort_date</code> </th><th> <code>elapsed_periods</code> </th><th> <code>n_profiles</code> </th><th> <code>total_n_profiles</code> </th><th> <code>percentage_n_profiles</code> </th></tr></thead><tbody>
+<tr><td> release   </td><td> 20170101      </td><td> 0                 </td><td> 100          </td><td> 100                </td><td> 1.0                     </td></tr>
+<tr><td> release   </td><td> 20170101      </td><td> 1                 </td><td> 90           </td><td> 100                </td><td> 0.9                     </td></tr>
+<tr><td> release   </td><td> 20170101      </td><td> 2                 </td><td> 80           </td><td> 100                </td><td> 0.8                     </td></tr>
+<tr><td> ...       </td><td> ....          </td><td> ...               </td><td> ...          </td><td> ...                </td><td> ...                     </td></tr>
+<tr><td> beta      </td><td> 20170128      </td><td> 10                </td><td> 25           </td><td> 50                 </td><td> 0.5                     </td></tr>
+</tbody></table>
 <p>Obtain the results.</p>
-<pre><code class="lang-SQL"><span class="hljs-keyword">SELECT</span> *
-<span class="hljs-keyword">FROM</span> results
+<pre><code class="language-SQL">SELECT *
+FROM results
 </code></pre>
 <p>You may consider visualizing using cohort graphs, line charts, or a pivot
-tables. See <a href="https://sql.telemetry.mozilla.org/dashboard/firefox-telemetry-retention-dataset-example-usage" target="_blank">Firefox Telemetry Retention: Dataset Example Usage</a>
+tables. See <a href="https://sql.telemetry.mozilla.org/dashboard/firefox-telemetry-retention-dataset-example-usage">Firefox Telemetry Retention: Dataset Example Usage</a>
 for more examples.</p>
-<h2 id="scheduling"><a name="scheduling" class="plugin-anchor" href="#scheduling"><i class="fa fa-link" aria-hidden="true"></i></a>Scheduling</h2>
+<a class="header" href="#scheduling" id="scheduling"><h2>Scheduling</h2></a>
 <p>The aggregated churn data is updated weekly on Wednesday.</p>
-<h2 id="schema"><a name="schema" class="plugin-anchor" href="#schema"><i class="fa fa-link" aria-hidden="true"></i></a>Schema</h2>
+<a class="header" href="#schema" id="schema"><h2>Schema</h2></a>
 <p>As of 2017-10-15, the current version of <code>churn</code> is <code>v3</code> and has a schema as follows:</p>
 <pre><code>root
  |-- channel: string (nullable = true)
@@ -1696,95 +350,74 @@ for more examples.</p>
  |-- sum_squared_usage_hours: double (nullable = true)
  |-- total_uri_count: long (nullable = true)
  |-- unique_domains_count_per_profile: double (nullable = true)
-</code></pre><h2 id="code-reference"><a name="code-reference" class="plugin-anchor" href="#code-reference"><i class="fa fa-link" aria-hidden="true"></i></a>Code Reference</h2>
+</code></pre>
+<a class="header" href="#code-reference" id="code-reference"><h2>Code Reference</h2></a>
 <p>The script for generating <code>churn</code> currently lives in
-<a href="https://github.com/mozilla/python_mozetl" target="_blank"><code>mozilla/python_mozetl</code></a>. The job can
+<a href="https://github.com/mozilla/python_mozetl"><code>mozilla/python_mozetl</code></a>. The job can
 be found in
-<a href="https://github.com/mozilla/python_mozetl/blob/master/mozetl/engagement/churn/job.py" target="_blank"><code>mozetl/engagement/churn</code></a>.</p>
+<a href="https://github.com/mozilla/python_mozetl/blob/master/mozetl/engagement/churn/job.py"><code>mozetl/engagement/churn</code></a>.</p>
 
-                                
-                                </section>
-                            
-    </div>
-    <div class="search-results">
-        <div class="has-results">
-            
-            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
-            <ul class="search-results-list"></ul>
-            
-        </div>
-        <div class="no-results">
-            
-            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
-            
-        </div>
-    </div>
-</div>
+                    </main>
 
-                        </div>
-                    </div>
-                
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../../datasets/batch_view/addons/reference.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../../datasets/batch_view/client_count_daily/reference.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
             </div>
 
-            
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                <a href="../../batch_view/addons/reference.html" class="navigation navigation-prev " aria-label="Previous page: Addons">
-                    <i class="fa fa-angle-left"></i>
-                </a>
+                    <a href="../../../datasets/batch_view/addons/reference.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
                 
-                
-                <a href="../../batch_view/client_count_daily/reference.html" class="navigation navigation-next " aria-label="Next page: Client Count Daily">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-                
-            
-        
-    </div>
 
-    <script>
-        var gitbook = gitbook || [];
-        gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Churn","level":"2.1.2.2","depth":3,"next":{"title":"Client Count Daily","level":"2.1.2.3","depth":3,"path":"datasets/batch_view/client_count_daily/reference.md","ref":"datasets/batch_view/client_count_daily/reference.md","articles":[]},"previous":{"title":"Addons","level":"2.1.2.1","depth":3,"path":"datasets/batch_view/addons/reference.md","ref":"datasets/batch_view/addons/reference.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"datasets/mozetl/churn/reference.md","mtime":"2018-10-12T18:10:35.406Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-10-12T18:12:00.362Z"},"basePath":"../../..","book":{"language":""}});
-        });
-    </script>
-</div>
+                
+                    <a href="../../../datasets/batch_view/client_count_daily/reference.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
 
         
-    
-    <script src="../../../gitbook/gitbook.js"></script>
-    <script src="../../../gitbook/theme.js"></script>
-    
-        
-        <script src="../../../gitbook/gitbook-plugin-ga/plugin.js"></script>
-        
-    
-        
-        <script src="../../../gitbook/gitbook-plugin-mermaid-gb3/book/plugin.js"></script>
-        
-    
-        
-        <script src="../../../gitbook/gitbook-plugin-search/search-engine.js"></script>
-        
-    
-        
-        <script src="../../../gitbook/gitbook-plugin-search/search.js"></script>
-        
-    
-        
-        <script src="../../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
-        
-    
-        
-        <script src="../../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
-        <script src="../../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
-        
-    
 
-    <script src="../../../gitbook/gitbook-plugin-mermaid-gb3/mermaid/mermaid.min.js"></script>
+        
+
+        
+
+        
+        <script src="../../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../../../mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="../../../mermaid-init.js"></script>
+        
+
+        
 
     </body>
 </html>
-

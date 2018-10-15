@@ -1,1319 +1,172 @@
-
 <!DOCTYPE HTML>
-<html lang="" >
+<html lang="en" class="sidebar-visible no-js">
     <head>
+        <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
+        <title>In-depth Data Pipeline Detail - Firefox Data Documentation</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>In-depth Data Pipeline Detail · GitBook</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.3">
-        
-        
-        
-    
-    
-    <link rel="stylesheet" href="../../gitbook/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
 
-    
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-anchors/plugin.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-mermaid-gb3/mermaid/mermaid.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
-                
-            
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../../dtmo.css">
+        
+        <link rel="stylesheet" href="../../mermaid.css">
         
 
-    
-
-    
         
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-
-    
-
-        
-    
-    
-    <meta name="HandheldFriendly" content="true"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
-    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
-
-    
-    <link rel="next" href="http_edge_spec.html" />
-    
-    
-    <link rel="prev" href="data_pipeline.html" />
-    
-
     </head>
-    <body>
-        
-<div class="book">
-    <div class="book-summary">
-        
-            
-<div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search" />
-</div>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">var path_to_root = "../../";</script>
 
-            
-                <nav role="navigation">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="../../introduction.html">Firefox Data Documentation</a></li><li><a href="../../concepts/reporting_a_problem.html"><strong aria-hidden="true">1.</strong> Reporting a problem</a></li><li><a href="../../concepts/terminology.html"><strong aria-hidden="true">2.</strong> Terminology</a></li><li><a href="../../concepts/getting_started.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li><ol class="section"><li><a href="../../concepts/analysis_intro.html"><strong aria-hidden="true">3.1.</strong> Analysis Quick Start</a></li><li><a href="../../concepts/choosing_a_dataset.html"><strong aria-hidden="true">3.2.</strong> Choosing a Dataset</a></li><li><a href="../../tools/stmo.html"><strong aria-hidden="true">3.3.</strong> Intro to STMO</a></li><li><a href="../../concepts/analysis_gotchas.html"><strong aria-hidden="true">3.4.</strong> Common Analysis Gotchas</a></li><li><a href="../../concepts/sql_optimization.html"><strong aria-hidden="true">3.5.</strong> Optimizing Queries</a></li><li><a href="../../concepts/review.html"><strong aria-hidden="true">3.6.</strong> Getting Review</a></li><li><a href="../../datasets/new_data.html"><strong aria-hidden="true">3.7.</strong> Collecting New Data</a></li></ol></li><li><a href="../../tools/index.html"><strong aria-hidden="true">4.</strong> Tools</a></li><li><ol class="section"><li><a href="../../tools/projects.html"><strong aria-hidden="true">4.1.</strong> Project Glossary</a></li><li><a href="../../concepts/pipeline/data_pipeline.html"><strong aria-hidden="true">4.2.</strong> Overview of Mozilla's Data Pipeline</a></li><li><ol class="section"><li><a href="../../concepts/pipeline/data_pipeline_detail.html" class="active"><strong aria-hidden="true">4.2.1.</strong> In-depth Data Pipeline Detail</a></li><li><a href="../../concepts/pipeline/http_edge_spec.html"><strong aria-hidden="true">4.2.2.</strong> HTTP Edge Server Specification</a></li><li><a href="../../concepts/pipeline/event_pipeline.html"><strong aria-hidden="true">4.2.3.</strong> Event Pipeline Detail</a></li></ol></li><li><a href="../../tools/interfaces.html"><strong aria-hidden="true">4.3.</strong> Analysis Interfaces</a></li><li><a href="../../tools/spark.html"><strong aria-hidden="true">4.4.</strong> Custom analysis with Spark</a></li><li><a href="../../concepts/sql_style.html"><strong aria-hidden="true">4.5.</strong> SQL Style Guide</a></li></ol></li><li><a href="../../cookbooks/index.html"><strong aria-hidden="true">5.</strong> Cookbooks</a></li><li><ol class="section"><li><a href="../../tools/alerts.html"><strong aria-hidden="true">5.1.</strong> Alerts</a></li><li><a href="../../cookbooks/parquet.html"><strong aria-hidden="true">5.2.</strong> Working with Parquet Data on ATMO Clusters</a></li><li><a href="../../cookbooks/create_a_dataset.html"><strong aria-hidden="true">5.3.</strong> Creating a custom Re:dash dataset</a></li><li><a href="../../cookbooks/new_ping.html"><strong aria-hidden="true">5.4.</strong> Sending a Custom Ping</a></li><li><a href="../../cookbooks/hll_zeppelin.html"><strong aria-hidden="true">5.5.</strong> Using HyperLogLog in Zeppelin</a></li><li><a href="../../cookbooks/dataset_specific.html"><strong aria-hidden="true">5.6.</strong> Dataset Specific</a></li><li><ol class="section"><li><a href="../../cookbooks/longitudinal_examples.html"><strong aria-hidden="true">5.6.1.</strong> Longitudinal Examples</a></li><li><a href="../../cookbooks/crash_pings.html"><strong aria-hidden="true">5.6.2.</strong> Working with Crash Pings</a></li></ol></li><li><a href="../../cookbooks/realtime.html"><strong aria-hidden="true">5.7.</strong> Real-time</a></li><li><ol class="section"><li><a href="../../cookbooks/realtime_analysis_plugin.html"><strong aria-hidden="true">5.7.1.</strong> Creating a Real-time Analysis Plugin</a></li><li><a href="../../cookbooks/view_pings_cep.html"><strong aria-hidden="true">5.7.2.</strong> Seeing Your Own Pings</a></li><li><a href="../../tools/cep_matcher.html"><strong aria-hidden="true">5.7.3.</strong> CEP Matcher</a></li></ol></li><li><a href="../../cookbooks/metrics.html"><strong aria-hidden="true">5.8.</strong> Metrics</a></li><li><ol class="section"><li><a href="../../cookbooks/active_dau.html"><strong aria-hidden="true">5.8.1.</strong> Active DAU Definition</a></li><li><a href="../../cookbooks/retention.html"><strong aria-hidden="true">5.8.2.</strong> Retention Analysis</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../datasets/reference.html"><strong aria-hidden="true">6.</strong> Dataset Reference</a></li><li><ol class="section"><li><a href="../../datasets/pings.html"><strong aria-hidden="true">6.1.</strong> Pings</a></li><li><a href="../../datasets/derived.html"><strong aria-hidden="true">6.2.</strong> Derived Datasets</a></li><li><ol class="section"><li><a href="../../datasets/batch_view/addons/reference.html"><strong aria-hidden="true">6.2.1.</strong> Addons</a></li><li><a href="../../datasets/mozetl/churn/reference.html"><strong aria-hidden="true">6.2.2.</strong> Churn</a></li><li><a href="../../datasets/batch_view/client_count_daily/reference.html"><strong aria-hidden="true">6.2.3.</strong> Client Count Daily</a></li><li><a href="../../datasets/batch_view/client_count/reference.html"><strong aria-hidden="true">6.2.4.</strong> Client Count</a></li><li><a href="../../datasets/batch_view/clients_daily/reference.html"><strong aria-hidden="true">6.2.5.</strong> Clients Daily</a></li><li><a href="../../datasets/batch_view/crash_aggregates/reference.html"><strong aria-hidden="true">6.2.6.</strong> Crash Aggregate</a></li><li><a href="../../datasets/batch_view/crash_summary/reference.html"><strong aria-hidden="true">6.2.7.</strong> Crash Summary</a></li><li><a href="../../datasets/batch_view/cross_sectional/reference.html"><strong aria-hidden="true">6.2.8.</strong> Cross Sectional</a></li><li><a href="../../datasets/streaming/error_aggregates/reference.html"><strong aria-hidden="true">6.2.9.</strong> Error Aggregates</a></li><li><a href="../../datasets/batch_view/events/reference.html"><strong aria-hidden="true">6.2.10.</strong> Events</a></li><li><a href="../../datasets/batch_view/first_shutdown_summary/reference.html"><strong aria-hidden="true">6.2.11.</strong> First Shutdown Summary</a></li><li><a href="../../datasets/batch_view/longitudinal/reference.html"><strong aria-hidden="true">6.2.12.</strong> Longitudinal</a></li><li><a href="../../datasets/batch_view/main_summary/reference.html"><strong aria-hidden="true">6.2.13.</strong> Main Summary</a></li><li><a href="../../datasets/batch_view/new_profile/reference.html"><strong aria-hidden="true">6.2.14.</strong> New Profile</a></li><li><a href="../../datasets/batch_view/retention/reference.html"><strong aria-hidden="true">6.2.15.</strong> Retention</a></li><li><a href="../../datasets/other/socorro_crash/reference.html"><strong aria-hidden="true">6.2.16.</strong> Socorro Crash Reports</a></li><li><a href="../../datasets/other/ssl/reference.html"><strong aria-hidden="true">6.2.17.</strong> SSL Ratios (public)</a></li><li><a href="../../datasets/batch_view/sync_summary/reference.html"><strong aria-hidden="true">6.2.18.</strong> Sync Summary</a></li><li><a href="../../datasets/batch_view/update/reference.html"><strong aria-hidden="true">6.2.19.</strong> Update</a></li></ol></li><li><a href="../../tools/experiments.html"><strong aria-hidden="true">6.3.</strong> Experimental Datasets</a></li><li><ol class="section"><li><a href="../../datasets/shield.html"><strong aria-hidden="true">6.3.1.</strong> Accessing Shield Study data</a></li></ol></li><li><a href="../../datasets/search.html"><strong aria-hidden="true">6.4.</strong> Search Datasets</a></li><li><ol class="section"><li><a href="../../datasets/mozetl/search_aggregates/reference.html"><strong aria-hidden="true">6.4.1.</strong> Search Aggregates</a></li><li><a href="../../datasets/mozetl/search_clients_daily/reference.html"><strong aria-hidden="true">6.4.2.</strong> Search Clients Daily</a></li></ol></li><li><a href="../../datasets/other.html"><strong aria-hidden="true">6.5.</strong> Other Datasets</a></li><li><ol class="section"><li><a href="../../datasets/other/hgpush/reference.html"><strong aria-hidden="true">6.5.1.</strong> hgpush</a></li></ol></li><li><a href="../../datasets/obsolete.html"><strong aria-hidden="true">6.6.</strong> Obsolete Datasets</a></li><li><ol class="section"><li><a href="../../datasets/obsolete/heavy_users/reference.html"><strong aria-hidden="true">6.6.1.</strong> Heavy Users</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../concepts/index.html"><strong aria-hidden="true">7.</strong> Telemetry Behavior Reference</a></li><li><ol class="section"><li><a href="../../concepts/profile/index.html"><strong aria-hidden="true">7.1.</strong> Profile Behavior</a></li><li><ol class="section"><li><a href="../../concepts/profile/profile_creation.html"><strong aria-hidden="true">7.1.1.</strong> Profile Creation</a></li><li><a href="../../concepts/profile/realworldusage.html"><strong aria-hidden="true">7.1.2.</strong> Real World Usage</a></li><li><a href="../../concepts/profile/profilehistory.html"><strong aria-hidden="true">7.1.3.</strong> Profile History</a></li></ol></li><li><a href="../../concepts/channels/index.html"><strong aria-hidden="true">7.2.</strong> Channel Behavior</a></li><li><ol class="section"><li><a href="../../concepts/channels/channel_normalization.html"><strong aria-hidden="true">7.2.1.</strong> Channel Normalization and Querying</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../meta/index.html"><strong aria-hidden="true">8.</strong> About this Documentation</a></li><li><ol class="section"><li><a href="../../meta/contributing.html"><strong aria-hidden="true">8.1.</strong> Contributing</a></li><li><a href="../../meta/structure.html"><strong aria-hidden="true">8.2.</strong> Structure</a></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
                 
-
-
-<ul class="summary">
-    
-    
-
-    
-
-    
-        
-        
-    
-        <li class="chapter " data-level="1.1" data-path="../../">
-            
-                <a href="../../">
-            
-                    
-                    Firefox Data Documentation
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.1.1" data-path="../reporting_a_problem.html">
-            
-                <a href="../reporting_a_problem.html">
-            
-                    
-                    Reporting a problem
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.1.2" data-path="../terminology.html">
-            
-                <a href="../terminology.html">
-            
-                    
-                    Terminology
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2" data-path="../getting_started.html">
-            
-                <a href="../getting_started.html">
-            
-                    
-                    Getting Started
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.2.1" data-path="../analysis_intro.html">
-            
-                <a href="../analysis_intro.html">
-            
-                    
-                    Analysis Quick Start
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.2" data-path="../choosing_a_dataset.html">
-            
-                <a href="../choosing_a_dataset.html">
-            
-                    
-                    Choosing a Dataset
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.3" data-path="../../tools/stmo.html">
-            
-                <a href="../../tools/stmo.html">
-            
-                    
-                    Intro to STMO
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.4" data-path="../analysis_gotchas.html">
-            
-                <a href="../analysis_gotchas.html">
-            
-                    
-                    Common Analysis Gotchas
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.5" data-path="../sql_optimization.html">
-            
-                <a href="../sql_optimization.html">
-            
-                    
-                    Optimizing Queries
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.6" data-path="../review.html">
-            
-                <a href="../review.html">
-            
-                    
-                    Getting Review
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.7" data-path="../../datasets/new_data.html">
-            
-                <a href="../../datasets/new_data.html">
-            
-                    
-                    Collecting New Data
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3" data-path="../../tools/">
-            
-                <a href="../../tools/">
-            
-                    
-                    Tools
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.3.1" data-path="../../tools/projects.html">
-            
-                <a href="../../tools/projects.html">
-            
-                    
-                    Project Glossary
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.2" data-path="data_pipeline.html">
-            
-                <a href="data_pipeline.html">
-            
-                    
-                    Overview of Mozilla's Data Pipeline
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter active" data-level="1.3.2.1" data-path="data_pipeline_detail.html">
-            
-                <a href="data_pipeline_detail.html">
-            
-                    
-                    In-depth Data Pipeline Detail
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.2.2" data-path="http_edge_spec.html">
-            
-                <a href="http_edge_spec.html">
-            
-                    
-                    HTTP Edge Server Specification
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.2.3" data-path="event_pipeline.html">
-            
-                <a href="event_pipeline.html">
-            
-                    
-                    Event Pipeline Detail
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.3" data-path="../../tools/interfaces.html">
-            
-                <a href="../../tools/interfaces.html">
-            
-                    
-                    Analysis Interfaces
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4" data-path="../../tools/spark.html">
-            
-                <a href="../../tools/spark.html">
-            
-                    
-                    Custom analysis with Spark
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.5" data-path="../sql_style.html">
-            
-                <a href="../sql_style.html">
-            
-                    
-                    SQL Style Guide
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4" data-path="../../cookbooks/">
-            
-                <a href="../../cookbooks/">
-            
-                    
-                    Cookbooks
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.4.1" data-path="../../tools/alerts.html">
-            
-                <a href="../../tools/alerts.html">
-            
-                    
-                    Alerts
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.2" data-path="../../cookbooks/parquet.html">
-            
-                <a href="../../cookbooks/parquet.html">
-            
-                    
-                    Working with Parquet Data on ATMO Clusters
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.3" data-path="../../cookbooks/create_a_dataset.html">
-            
-                <a href="../../cookbooks/create_a_dataset.html">
-            
-                    
-                    Creating a custom Re:dash dataset
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.4" data-path="../../cookbooks/new_ping.html">
-            
-                <a href="../../cookbooks/new_ping.html">
-            
-                    
-                    Sending a Custom Ping
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.5" data-path="../../cookbooks/hll_zeppelin.html">
-            
-                <a href="../../cookbooks/hll_zeppelin.html">
-            
-                    
-                    Using HyperLogLog in Zeppelin
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.6" >
-            
-                <span>
-            
-                    
-                    Dataset Specific
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.4.6.1" data-path="../../cookbooks/longitudinal_examples.html">
-            
-                <a href="../../cookbooks/longitudinal_examples.html">
-            
-                    
-                    Longitudinal Examples
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.6.2" data-path="../../cookbooks/crash_pings.html">
-            
-                <a href="../../cookbooks/crash_pings.html">
-            
-                    
-                    Working with Crash Pings
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.7" >
-            
-                <span>
-            
-                    
-                    Real-time
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.4.7.1" data-path="../../cookbooks/realtime_analysis_plugin.html">
-            
-                <a href="../../cookbooks/realtime_analysis_plugin.html">
-            
-                    
-                    Creating a Real-time Analysis Plugin
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.7.2" data-path="../../cookbooks/view_pings_cep.html">
-            
-                <a href="../../cookbooks/view_pings_cep.html">
-            
-                    
-                    Seeing Your Own Pings
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.7.3" data-path="../../tools/cep_matcher.html">
-            
-                <a href="../../tools/cep_matcher.html">
-            
-                    
-                    CEP Matcher
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.8" >
-            
-                <span>
-            
-                    
-                    Metrics
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.4.8.1" data-path="../../cookbooks/active_dau.html">
-            
-                <a href="../../cookbooks/active_dau.html">
-            
-                    
-                    Active DAU Definition
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.8.2" data-path="../../cookbooks/retention.html">
-            
-                <a href="../../cookbooks/retention.html">
-            
-                    
-                    Retention Analysis
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-    
-        
-        <li class="divider"></li>
-        
-        
-    
-        <li class="chapter " data-level="2.1" data-path="../../datasets/reference.html">
-            
-                <a href="../../datasets/reference.html">
-            
-                    
-                    Dataset Reference
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="2.1.1" data-path="../../datasets/pings.html">
-            
-                <a href="../../datasets/pings.html">
-            
-                    
-                    Pings
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2" data-path="../../datasets/derived.html">
-            
-                <a href="../../datasets/derived.html">
-            
-                    
-                    Derived Datasets
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="2.1.2.1" data-path="../../datasets/batch_view/addons/reference.html">
-            
-                <a href="../../datasets/batch_view/addons/reference.html">
-            
-                    
-                    Addons
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.2" data-path="../../datasets/mozetl/churn/reference.html">
-            
-                <a href="../../datasets/mozetl/churn/reference.html">
-            
-                    
-                    Churn
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.3" data-path="../../datasets/batch_view/client_count_daily/reference.html">
-            
-                <a href="../../datasets/batch_view/client_count_daily/reference.html">
-            
-                    
-                    Client Count Daily
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.4" data-path="../../datasets/batch_view/client_count/reference.html">
-            
-                <a href="../../datasets/batch_view/client_count/reference.html">
-            
-                    
-                    Client Count
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.5" data-path="../../datasets/batch_view/clients_daily/reference.html">
-            
-                <a href="../../datasets/batch_view/clients_daily/reference.html">
-            
-                    
-                    Clients Daily
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.6" data-path="../../datasets/batch_view/crash_aggregates/reference.html">
-            
-                <a href="../../datasets/batch_view/crash_aggregates/reference.html">
-            
-                    
-                    Crash Aggregate
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.7" data-path="../../datasets/batch_view/crash_summary/reference.html">
-            
-                <a href="../../datasets/batch_view/crash_summary/reference.html">
-            
-                    
-                    Crash Summary
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.8" data-path="../../datasets/batch_view/cross_sectional/reference.html">
-            
-                <a href="../../datasets/batch_view/cross_sectional/reference.html">
-            
-                    
-                    Cross Sectional
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.9" data-path="../../datasets/streaming/error_aggregates/reference.html">
-            
-                <a href="../../datasets/streaming/error_aggregates/reference.html">
-            
-                    
-                    Error Aggregates
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.10" data-path="../../datasets/batch_view/events/reference.html">
-            
-                <a href="../../datasets/batch_view/events/reference.html">
-            
-                    
-                    Events
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.11" data-path="../../datasets/batch_view/first_shutdown_summary/reference.html">
-            
-                <a href="../../datasets/batch_view/first_shutdown_summary/reference.html">
-            
-                    
-                    First Shutdown Summary
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.12" data-path="../../datasets/batch_view/longitudinal/reference.html">
-            
-                <a href="../../datasets/batch_view/longitudinal/reference.html">
-            
-                    
-                    Longitudinal
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.13" data-path="../../datasets/batch_view/main_summary/reference.html">
-            
-                <a href="../../datasets/batch_view/main_summary/reference.html">
-            
-                    
-                    Main Summary
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.14" data-path="../../datasets/batch_view/new_profile/reference.html">
-            
-                <a href="../../datasets/batch_view/new_profile/reference.html">
-            
-                    
-                    New Profile
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.15" data-path="../../datasets/batch_view/retention/reference.html">
-            
-                <a href="../../datasets/batch_view/retention/reference.html">
-            
-                    
-                    Retention
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.16" data-path="../../datasets/other/socorro_crash/reference.html">
-            
-                <a href="../../datasets/other/socorro_crash/reference.html">
-            
-                    
-                    Socorro Crash Reports
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.17" data-path="../../datasets/other/ssl/reference.html">
-            
-                <a href="../../datasets/other/ssl/reference.html">
-            
-                    
-                    SSL Ratios (public)
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.18" data-path="../../datasets/batch_view/sync_summary/reference.html">
-            
-                <a href="../../datasets/batch_view/sync_summary/reference.html">
-            
-                    
-                    Sync Summary
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.2.19" data-path="../../datasets/batch_view/update/reference.html">
-            
-                <a href="../../datasets/batch_view/update/reference.html">
-            
-                    
-                    Update
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.3" data-path="../../tools/experiments.html">
-            
-                <a href="../../tools/experiments.html">
-            
-                    
-                    Experimental Datasets
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="2.1.3.1" data-path="../../datasets/shield.html">
-            
-                <a href="../../datasets/shield.html">
-            
-                    
-                    Accessing Shield Study data
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.4" data-path="../../datasets/search.html">
-            
-                <a href="../../datasets/search.html">
-            
-                    
-                    Search Datasets
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="2.1.4.1" data-path="../../datasets/mozetl/search_aggregates/reference.html">
-            
-                <a href="../../datasets/mozetl/search_aggregates/reference.html">
-            
-                    
-                    Search Aggregates
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.4.2" data-path="../../datasets/mozetl/search_clients_daily/reference.html">
-            
-                <a href="../../datasets/mozetl/search_clients_daily/reference.html">
-            
-                    
-                    Search Clients Daily
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.5" data-path="../../datasets/other.html">
-            
-                <a href="../../datasets/other.html">
-            
-                    
-                    Other Datasets
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="2.1.5.1" data-path="../../datasets/other/hgpush/reference.html">
-            
-                <a href="../../datasets/other/hgpush/reference.html">
-            
-                    
-                    hgpush
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="2.1.6" data-path="../../datasets/obsolete.html">
-            
-                <a href="../../datasets/obsolete.html">
-            
-                    
-                    Obsolete Datasets
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="2.1.6.1" data-path="../../datasets/obsolete/heavy_users/reference.html">
-            
-                <a href="../../datasets/obsolete/heavy_users/reference.html">
-            
-                    
-                    Heavy Users
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-    
-        
-        <li class="divider"></li>
-        
-        
-    
-        <li class="chapter " data-level="3.1" >
-            
-                <span>
-            
-                    
-                    Telemetry Behavior Reference
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="3.1.1" >
-            
-                <span>
-            
-                    
-                    Profile Behavior
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="3.1.1.1" data-path="../profile/profile_creation.html">
-            
-                <a href="../profile/profile_creation.html">
-            
-                    
-                    Profile Creation
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="3.1.1.2" data-path="../profile/realworldusage.html">
-            
-                <a href="../profile/realworldusage.html">
-            
-                    
-                    Real World Usage
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="3.1.1.3" data-path="../profile/profilehistory.html">
-            
-                <a href="../profile/profilehistory.html">
-            
-                    
-                    Profile History
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="3.1.2" >
-            
-                <span>
-            
-                    
-                    Channel Behavior
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="3.1.2.1" data-path="../channels/channel_normalization.html">
-            
-                <a href="../channels/channel_normalization.html">
-            
-                    
-                    Channel Normalization and Querying
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-    
-        
-        <li class="divider"></li>
-        
-        
-    
-        <li class="chapter " data-level="4.1" >
-            
-                <span>
-            
-                    
-                    About this Documentation
-            
-                </span>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="4.1.1" data-path="../../meta/contributing.html">
-            
-                <a href="../../meta/contributing.html">
-            
-                    
-                    Contributing
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="4.1.2" >
-            
-                <a target="_blank" href="https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&component=Documentation%20and%20Knowledge%20Repo%20%28RTMO%29&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=--&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&target_milestone=---&version=unspecified">
-            
-                    
-                    Bug Template
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="4.1.3" data-path="../../meta/structure.html">
-            
-                <a href="../../meta/structure.html">
-            
-                    
-                    Structure
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-    
-
-    <li class="divider"></li>
-
-    <li>
-        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            Published with GitBook
-        </a>
-    </li>
-</ul>
-
-
-                </nav>
-            
-        
-    </div>
-
-    <div class="book-body">
-        
-            <div class="body-inner">
-                
-                    
-
-<div class="book-header" role="navigation">
-    
-
-    <!-- Title -->
-    <h1>
-        <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../.." >In-depth Data Pipeline Detail</a>
-    </h1>
-</div>
-
-
-
-
-                    <div class="page-wrapper" tabindex="-1" role="main">
-                        <div class="page-inner">
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
                             
-<div id="book-search-results">
-    <div class="search-noresults">
-    
-                                <section class="normal markdown-section">
-                                
-                                <h1 id="a-detailed-look-at-the-data-platform"><a name="a-detailed-look-at-the-data-platform" class="plugin-anchor" href="#a-detailed-look-at-the-data-platform"><i class="fa fa-link" aria-hidden="true"></i></a>A Detailed Look at the Data Platform</h1>
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Firefox Data Documentation</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#a-detailed-look-at-the-data-platform" id="a-detailed-look-at-the-data-platform"><h1>A Detailed Look at the Data Platform</h1></a>
 <p>For a more gentle introduction to the data platform, please read the <a href="data_pipeline.html">Pipeline Overview</a> article.</p>
 <p>This article goes into more depth about the architecture and flow of data in the platform.</p>
-<h2 id="the-entire-platform"><a name="the-entire-platform" class="plugin-anchor" href="#the-entire-platform"><i class="fa fa-link" aria-hidden="true"></i></a>The Entire Platform</h2>
+<a class="header" href="#the-entire-platform" id="the-entire-platform"><h2>The Entire Platform</h2></a>
 <p>The full detail of the platform can get quite complex, but at a high level the structure is fairly simple.</p>
-<div class="mermaid">
-graph LR
-  Producers[Data Producers] --&gt; Ingestion
-  Ingestion --&gt; Storage[Long-term Storage]
-  Ingestion --&gt; Stream[Stream Processing]
-  Stream --&gt; Storage
-  Batch[Batch Processing] --&gt; Storage
-  Storage --&gt; Batch
+<pre class="mermaid">graph LR
+  Producers[Data Producers] --> Ingestion
+  Ingestion --> Storage[Long-term Storage]
+  Ingestion --> Stream[Stream Processing]
+  Stream --> Storage
+  Batch[Batch Processing] --> Storage
+  Storage --> Batch
   Self[Self Serve] -.- Stream
   Self -.- Batch
-  Stream -.-&gt; Visualization
-  Batch -.-&gt; Visualization
-  Stream --&gt; Export
-  Batch --&gt; Export
-</div>
+  Stream -.-> Visualization
+  Batch -.-> Visualization
+  Stream --> Export
+  Batch --> Export
 
+</pre>
 <p>Each of these high-level parts of the platform are described in more detail below.</p>
-<h2 id="data-producers"><a name="data-producers" class="plugin-anchor" href="#data-producers"><i class="fa fa-link" aria-hidden="true"></i></a>Data Producers</h2>
-<p>By far most data handled by the Data Platform is <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html" target="_blank">produced by Firefox</a>. There are other producers, though, and the eventual aim is to generalize data production using a client SDK or set of standard tools.</p>
+<a class="header" href="#data-producers" id="data-producers"><h2>Data Producers</h2></a>
+<p>By far most data handled by the Data Platform is <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html">produced by Firefox</a>. There are other producers, though, and the eventual aim is to generalize data production using a client SDK or set of standard tools.</p>
 <p>Most data is submitted via HTTP POST, but data is also produced in the form of service logs and <code>statsd</code> messages.</p>
-<p>If you would like to locally test a new data producer, the <a href="https://github.com/mozilla/gzipServer" target="_blank"><code>gzipServer</code></a> project provides a simplified server that makes it easy to inspect submitted messages.</p>
-<h2 id="ingestion"><a name="ingestion" class="plugin-anchor" href="#ingestion"><i class="fa fa-link" aria-hidden="true"></i></a>Ingestion</h2>
-<div class="mermaid">
-graph LR
+<p>If you would like to locally test a new data producer, the <a href="https://github.com/mozilla/gzipServer"><code>gzipServer</code></a> project provides a simplified server that makes it easy to inspect submitted messages.</p>
+<a class="header" href="#ingestion" id="ingestion"><h2>Ingestion</h2></a>
+<pre class="mermaid">graph LR
   subgraph HTTP
     tee
     lb[Load Balancer]
@@ -1330,36 +183,35 @@ graph LR
     s3_parquet[S3 Parquet Storage]
   end
   subgraph Data Producers
-    Firefox --&gt; lb
-    more_producers[Other Producers] --&gt; lb
+    Firefox --> lb
+    more_producers[Other Producers] --> lb
   end
 
-  lb --&gt; tee
-  tee --&gt; mozingest
-  mozingest --&gt; kafka_unvalidated
-  mozingest --&gt; Landfill
-  kafka_unvalidated --&gt; dwl[Data Store Loader]
-  kafka_validated --&gt; cep[Hindsight CEP]
-  kafka_validated --&gt; sparkstreaming[Spark Streaming]
-  Schemas -.-&gt;|validation| dwl
-  dwl --&gt; kafka_validated
-  dwl --&gt; s3_heka
-  dwl --&gt; s3_parquet
-  sparkstreaming --&gt; s3_parquet
-</div>
+  lb --> tee
+  tee --> mozingest
+  mozingest --> kafka_unvalidated
+  mozingest --> Landfill
+  kafka_unvalidated --> dwl[Data Store Loader]
+  kafka_validated --> cep[Hindsight CEP]
+  kafka_validated --> sparkstreaming[Spark Streaming]
+  Schemas -.->|validation| dwl
+  dwl --> kafka_validated
+  dwl --> s3_heka
+  dwl --> s3_parquet
+  sparkstreaming --> s3_parquet
 
+</pre>
 <p>Data arrives as an HTTP POST of an optionally gzipped payload of JSON. See the common <a href="http_edge_spec.html">Edge Server</a> specification for details.</p>
-<p>Submissions hit a load balancer which handles the SSL connection, then forwards to a &quot;tee&quot; server, which may direct some or all submissions to alternate backends. In the past, the tee was used to manage the <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1302265" target="_blank">cutover between different versions of the backend</a> infrastructure. It is implemented as an <a href="http://openresty.org/en/" target="_blank"><code>OpenResty</code></a> plugin.</p>
-<p>From there, the <a href="https://github.com/mozilla-services/nginx_moz_ingest" target="_blank"><code>mozingest</code></a> HTTP Server receives submissions from the tee and batches and stores data durably on Amazon S3 as a fail-safe (we call this &quot;Landfill&quot;). Data is then passed along via <a href="https://kafka.apache.org/" target="_blank">Kafka</a> for validation and further processing. If there is a problem with decoding, validation, or any of the code described in the rest of this section, data can be re-processed from this fail-safe store. The <code>mozingest</code> server is implemented as an <code>nginx</code> module.</p>
-<p>Validation, at a minimum, ensures that a payload is valid JSON (possibly compressed). Many document types also have a <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas" target="_blank">JSONSchema specification</a>, and are further validated against that.</p>
+<p>Submissions hit a load balancer which handles the SSL connection, then forwards to a &quot;tee&quot; server, which may direct some or all submissions to alternate backends. In the past, the tee was used to manage the <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1302265">cutover between different versions of the backend</a> infrastructure. It is implemented as an <a href="http://openresty.org/en/"><code>OpenResty</code></a> plugin.</p>
+<p>From there, the <a href="https://github.com/mozilla-services/nginx_moz_ingest"><code>mozingest</code></a> HTTP Server receives submissions from the tee and batches and stores data durably on Amazon S3 as a fail-safe (we call this &quot;Landfill&quot;). Data is then passed along via <a href="https://kafka.apache.org/">Kafka</a> for validation and further processing. If there is a problem with decoding, validation, or any of the code described in the rest of this section, data can be re-processed from this fail-safe store. The <code>mozingest</code> server is implemented as an <code>nginx</code> module.</p>
+<p>Validation, at a minimum, ensures that a payload is valid JSON (possibly compressed). Many document types also have a <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas">JSONSchema specification</a>, and are further validated against that.</p>
 <p>Invalid messages are redirected to a separate &quot;errors&quot; stream for debugging and inspection.</p>
 <p>Valid messages proceed for further decoding and processing. This involves things like doing GeoIP lookup and discarding the IP address, and attaching some HTTP header info as annotated metadata.</p>
 <p>Validated and annotated messages become available for stream processing.</p>
 <p>They are also batched and stored durably for later batch processing and ad-hoc querying.</p>
-<p>See also the &quot;<a href="https://docs.google.com/document/d/1PqiF1rF2fCk_kQuGSwGwildDf4Crg9MJTY44E6N5DSk/edit" target="_blank">generic ingestion</a>&quot; proposal which aims to make ingestion, validation, storage, and querying available as self-serve for platform users.</p>
-<h5 id="data-flow-for-valid-submissions"><a name="data-flow-for-valid-submissions" class="plugin-anchor" href="#data-flow-for-valid-submissions"><i class="fa fa-link" aria-hidden="true"></i></a>Data flow for valid submissions</h5>
-<div class="mermaid">
-sequenceDiagram
+<p>See also the &quot;<a href="https://docs.google.com/document/d/1PqiF1rF2fCk_kQuGSwGwildDf4Crg9MJTY44E6N5DSk/edit">generic ingestion</a>&quot; proposal which aims to make ingestion, validation, storage, and querying available as self-serve for platform users.</p>
+<a class="header" href="#data-flow-for-valid-submissions" id="data-flow-for-valid-submissions"><h5>Data flow for valid submissions</h5></a>
+<pre class="mermaid">sequenceDiagram
     participant Fx as Firefox
     participant lb as Load Balancer
     participant mi as mozingest
@@ -1368,21 +220,20 @@ sequenceDiagram
     participant dwl as Data Store Loader
     participant dl as Data Lake
 
-    Fx-&gt;&gt;lb: HTTPS POST
-    lb-&gt;&gt;mi: forward
-    mi--&gt;&gt;lf: failsafe store
-    mi-&gt;&gt;k: enqueue
-    k-&gt;&gt;dwl: validate, decode
-    dwl-&gt;&gt;k: enqueue validated
-    dwl-&gt;&gt;dl: store durably
-</div>
+    Fx->>lb: HTTPS POST
+    lb->>mi: forward
+    mi-->>lf: failsafe store
+    mi->>k: enqueue
+    k->>dwl: validate, decode
+    dwl->>k: enqueue validated
+    dwl->>dl: store durably
 
-<h5 id="other-ingestion-methods"><a name="other-ingestion-methods" class="plugin-anchor" href="#other-ingestion-methods"><i class="fa fa-link" aria-hidden="true"></i></a>Other ingestion methods</h5>
-<p>Hindsight is used for <a href="https://mozilla-services.github.io/lua_sandbox_extensions/moz_logging/" target="_blank">ingestion of logs</a> from applications and services, it supports parsing of log lines and appending similar metadata as the HTTP ingestion above (timestamp, source, and so on).</p>
-<p><a href="https://github.com/etsy/statsd" target="_blank"><code>Statsd</code></a> messages are ingested in the usual way.</p>
-<h2 id="storage"><a name="storage" class="plugin-anchor" href="#storage"><i class="fa fa-link" aria-hidden="true"></i></a>Storage</h2>
-<div class="mermaid">
-graph TD
+</pre>
+<a class="header" href="#other-ingestion-methods" id="other-ingestion-methods"><h5>Other ingestion methods</h5></a>
+<p>Hindsight is used for <a href="https://mozilla-services.github.io/lua_sandbox_extensions/moz_logging/">ingestion of logs</a> from applications and services, it supports parsing of log lines and appending similar metadata as the HTTP ingestion above (timestamp, source, and so on).</p>
+<p><a href="https://github.com/etsy/statsd"><code>Statsd</code></a> messages are ingested in the usual way.</p>
+<a class="header" href="#storage" id="storage"><h2>Storage</h2></a>
+<pre class="mermaid">graph TD
   subgraph RDBMS
     PostgreSQL
     Redshift
@@ -1400,64 +251,63 @@ graph TD
     s3_public[Public Outputs]
   end
 
-  Ingestion --&gt; s3_heka
-  Ingestion --&gt; s3_parquet
-  Ingestion --&gt; landfill
-  Ingestion -.-&gt; stream[Stream Processing]
-  stream --&gt; s3_parquet
-  batch[Batch Processing] --&gt; s3_parquet
-  batch --&gt; PostgreSQL
-  batch --&gt; DynamoDB
-  batch --&gt; s3_public
-  selfserve[Self Serve] --&gt; s3_analysis
-  s3_analysis --&gt; selfserve
-  Hive --&gt;|Presto| redash[Re:dash]
-  PostgreSQL --&gt; redash
-  Redshift --&gt; redash
-  MySQL --&gt; redash
-  BigQuery --&gt; redash
+  Ingestion --> s3_heka
+  Ingestion --> s3_parquet
+  Ingestion --> landfill
+  Ingestion -.-> stream[Stream Processing]
+  stream --> s3_parquet
+  batch[Batch Processing] --> s3_parquet
+  batch --> PostgreSQL
+  batch --> DynamoDB
+  batch --> s3_public
+  selfserve[Self Serve] --> s3_analysis
+  s3_analysis --> selfserve
+  Hive -->|Presto| redash[Re:dash]
+  PostgreSQL --> redash
+  Redshift --> redash
+  MySQL --> redash
+  BigQuery --> redash
 
   s3_parquet -.- Hive
-</div>
 
-<p><a href="https://aws.amazon.com/s3/" target="_blank">Amazon S3</a> forms the backbone of the platform storage layer. The primary format used in the Data Lake is <a href="http://parquet.apache.org/" target="_blank">parquet</a>, which is a strongly typed columnar storage format that can easily be read and written by <a href="https://spark.apache.org/docs/latest/index.html" target="_blank">Spark</a>, as well as being compatible with SQL interfaces such as <a href="https://cwiki.apache.org/confluence/display/Hive/Home" target="_blank">Hive</a> and <a href="http://prestodb.io/" target="_blank">Presto</a>. Some data is also stored in <a href="https://hekad.readthedocs.io/en/dev/message/index.html#stream-framing" target="_blank">Heka-framed protobuf</a> format. This custom format is usually reserved for data where we do not have a complete <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas" target="_blank">JSONSchema specification</a>.</p>
+</pre>
+<p><a href="https://aws.amazon.com/s3/">Amazon S3</a> forms the backbone of the platform storage layer. The primary format used in the Data Lake is <a href="http://parquet.apache.org/">parquet</a>, which is a strongly typed columnar storage format that can easily be read and written by <a href="https://spark.apache.org/docs/latest/index.html">Spark</a>, as well as being compatible with SQL interfaces such as <a href="https://cwiki.apache.org/confluence/display/Hive/Home">Hive</a> and <a href="http://prestodb.io/">Presto</a>. Some data is also stored in <a href="https://hekad.readthedocs.io/en/dev/message/index.html#stream-framing">Heka-framed protobuf</a> format. This custom format is usually reserved for data where we do not have a complete <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas">JSONSchema specification</a>.</p>
 <p>Using S3 for storage avoids the need for an always-on cluster, which means that data at rest is inexpensive. S3 also makes it very easy to automatically expire (delete) objects after a certain period of time, which is helpful for implementing data retention policies.</p>
 <p>Once written to S3, the data is typically treated as immutable - data is not appended to existing files, nor is data normally updated in place. The exception here is when data is back-filled, in which case previous data may be overwritten.</p>
-<p>There are a number of other types of storage used for more specialized applications, including relational databases (such as PostgreSQL for the <a href="https://github.com/mozilla/python_mozaggregator/#api" target="_blank">Telemetry Aggregates</a>) and NoSQL databases (DynamoDB is used for a backing store for the <a href="https://github.com/mozilla/python_mozetl/blob/master/mozetl/taar/taar_dynamo.py" target="_blank">TAAR project</a>). Reading data from a variety of RDBMS sources is also supported via Re:dash.</p>
-<p>The data stored in Heka format is <a href="../../tools/spark.html">readable from Spark</a> using libraries in <a href="https://github.com/mozilla/moztelemetry/blob/master/src/main/scala/com/mozilla/telemetry/heka/Dataset.scala" target="_blank">Scala</a> or <a href="https://python-moztelemetry.readthedocs.io/en/latest/api.html#dataset" target="_blank">Python</a>.</p>
-<p>Parquet data can be read and written natively from Spark, and many datasets are indexed in a <a href="https://cwiki.apache.org/confluence/display/Hive/Home" target="_blank">Hive</a> Metastore, making them available through a SQL interface on Re:dash and in notebooks via Spark SQL. Many other SQL data sources are also made available via Re:dash, see <a href="../../tools/stmo.html">this article</a> for more information on accessing data using SQL.</p>
-<p>There is a separate data store for self-serve <strong>Analysis Outputs</strong>, intended to keep ad-hoc, temporary data out of the Data Lake. This is implemented as a separate S3 location, with personal output locations prefixed with each person&apos;s user id, similar to the layout of the <code>/home</code> directory on a Unix system. See the <a href="https://docs.telemetry.mozilla.org/cookbooks/parquet.html#where-to-save-data" target="_blank">Working with Parquet data</a> cookbook for more details.</p>
+<p>There are a number of other types of storage used for more specialized applications, including relational databases (such as PostgreSQL for the <a href="https://github.com/mozilla/python_mozaggregator/#api">Telemetry Aggregates</a>) and NoSQL databases (DynamoDB is used for a backing store for the <a href="https://github.com/mozilla/python_mozetl/blob/master/mozetl/taar/taar_dynamo.py">TAAR project</a>). Reading data from a variety of RDBMS sources is also supported via Re:dash.</p>
+<p>The data stored in Heka format is <a href="../../tools/spark.html">readable from Spark</a> using libraries in <a href="https://github.com/mozilla/moztelemetry/blob/master/src/main/scala/com/mozilla/telemetry/heka/Dataset.scala">Scala</a> or <a href="https://python-moztelemetry.readthedocs.io/en/latest/api.html#dataset">Python</a>.</p>
+<p>Parquet data can be read and written natively from Spark, and many datasets are indexed in a <a href="https://cwiki.apache.org/confluence/display/Hive/Home">Hive</a> Metastore, making them available through a SQL interface on Re:dash and in notebooks via Spark SQL. Many other SQL data sources are also made available via Re:dash, see <a href="../../tools/stmo.html">this article</a> for more information on accessing data using SQL.</p>
+<p>There is a separate data store for self-serve <strong>Analysis Outputs</strong>, intended to keep ad-hoc, temporary data out of the Data Lake. This is implemented as a separate S3 location, with personal output locations prefixed with each person's user id, similar to the layout of the <code>/home</code> directory on a Unix system. See the <a href="https://docs.telemetry.mozilla.org/cookbooks/parquet.html#where-to-save-data">Working with Parquet data</a> cookbook for more details.</p>
 <p>Analysis outputs can also be made public using the <strong>Public Outputs</strong> bucket. This is a web-accessible S3 location for powering public dashboards. This public data is available at <code>https://analysis-output.telemetry.mozilla.org/&lt;job name&gt;/data/&lt;files&gt;</code>.</p>
-<h2 id="stream-processing"><a name="stream-processing" class="plugin-anchor" href="#stream-processing"><i class="fa fa-link" aria-hidden="true"></i></a>Stream Processing</h2>
-<p>Stream processing is done using <a href="https://github.com/mozilla-services/hindsight" target="_blank">Hindsight</a> and <a href="https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html" target="_blank">Spark Streaming</a>.</p>
-<p>Hindsight allows you to run <a href="http://mozilla-services.github.io/lua_sandbox/" target="_blank">plugins written in Lua inside a sandbox</a>. This gives a safe, performant way to do self-serve streaming analysis. See <a href="../../cookbooks/realtime_analysis_plugin.html">this article</a> for an introduction. Hindsight plugins do the initial data validation and decoding, as well as writing out to long-term storage in both <a href="https://hekad.readthedocs.io/en/dev/message/index.html#stream-framing" target="_blank">Heka-framed protobuf</a> and <a href="https://mozilla-services.github.io/lua_sandbox_extensions/parquet/" target="_blank">parquet</a> forms.</p>
-<p>Spark Streaming is used to read from Kafka and perform <a href="https://github.com/mozilla/telemetry-streaming" target="_blank">low-latency ETL and aggregation tasks</a>. These aggregates are currently used by <a href="https://data-missioncontrol.dev.mozaws.net" target="_blank">Mission Control</a> and are also available for querying via <a href="https://sql.telemetry.mozilla.org" target="_blank">Re:dash</a>.</p>
-<h2 id="batch-processing"><a name="batch-processing" class="plugin-anchor" href="#batch-processing"><i class="fa fa-link" aria-hidden="true"></i></a>Batch Processing</h2>
-<p>Batch processing is done using <a href="https://spark.apache.org/docs/latest/index.html" target="_blank">Spark</a>. Production ETL code is written in both <a href="https://github.com/mozilla/python_mozetl" target="_blank">Python</a> and <a href="https://github.com/mozilla/telemetry-batch-view" target="_blank">Scala</a>.</p>
-<p>There are <a href="https://python-moztelemetry.readthedocs.io/en/latest/api.html#dataset" target="_blank">Python</a> and <a href="https://github.com/mozilla/moztelemetry/blob/master/src/main/scala/com/mozilla/telemetry/heka/Dataset.scala" target="_blank">Scala</a> libraries for reading data from the Data Lake in <a href="https://hekad.readthedocs.io/en/dev/message/index.html#stream-framing" target="_blank">Heka-framed protobuf</a> form, though it is much easier and more performant to make use of a <a href="../choosing_a_dataset.html">derived dataset</a> whenever possible.</p>
+<a class="header" href="#stream-processing" id="stream-processing"><h2>Stream Processing</h2></a>
+<p>Stream processing is done using <a href="https://github.com/mozilla-services/hindsight">Hindsight</a> and <a href="https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html">Spark Streaming</a>.</p>
+<p>Hindsight allows you to run <a href="http://mozilla-services.github.io/lua_sandbox/">plugins written in Lua inside a sandbox</a>. This gives a safe, performant way to do self-serve streaming analysis. See <a href="../../cookbooks/realtime_analysis_plugin.html">this article</a> for an introduction. Hindsight plugins do the initial data validation and decoding, as well as writing out to long-term storage in both <a href="https://hekad.readthedocs.io/en/dev/message/index.html#stream-framing">Heka-framed protobuf</a> and <a href="https://mozilla-services.github.io/lua_sandbox_extensions/parquet/">parquet</a> forms.</p>
+<p>Spark Streaming is used to read from Kafka and perform <a href="https://github.com/mozilla/telemetry-streaming">low-latency ETL and aggregation tasks</a>. These aggregates are currently used by <a href="https://data-missioncontrol.dev.mozaws.net">Mission Control</a> and are also available for querying via <a href="https://sql.telemetry.mozilla.org">Re:dash</a>.</p>
+<a class="header" href="#batch-processing" id="batch-processing"><h2>Batch Processing</h2></a>
+<p>Batch processing is done using <a href="https://spark.apache.org/docs/latest/index.html">Spark</a>. Production ETL code is written in both <a href="https://github.com/mozilla/python_mozetl">Python</a> and <a href="https://github.com/mozilla/telemetry-batch-view">Scala</a>.</p>
+<p>There are <a href="https://python-moztelemetry.readthedocs.io/en/latest/api.html#dataset">Python</a> and <a href="https://github.com/mozilla/moztelemetry/blob/master/src/main/scala/com/mozilla/telemetry/heka/Dataset.scala">Scala</a> libraries for reading data from the Data Lake in <a href="https://hekad.readthedocs.io/en/dev/message/index.html#stream-framing">Heka-framed protobuf</a> form, though it is much easier and more performant to make use of a <a href="../../concepts/choosing_a_dataset.html">derived dataset</a> whenever possible.</p>
 <p>Datasets in parquet format can be read natively by Spark, either using Spark SQL or by reading data directly from S3.</p>
 <p>Data produced by production jobs go into the Data Lake, while output from ad-hoc jobs go into Analysis Outputs.</p>
-<p>Job scheduling and dependency management is done using <a href="https://github.com/mozilla/telemetry-airflow" target="_blank">Airflow</a>. Most jobs run once a day, processing data from &quot;yesterday&quot; on each run. A typical job launches a cluster, which fetches the specified ETL code as part of its bootstrap on startup, runs the ETL code, then shuts down upon completion. If something goes wrong, a job may time out or fail, and in this case it is retried automatically.</p>
-<h2 id="self-serve-data-analysis"><a name="self-serve-data-analysis" class="plugin-anchor" href="#self-serve-data-analysis"><i class="fa fa-link" aria-hidden="true"></i></a>Self Serve Data Analysis</h2>
-<div class="mermaid">
-graph TD
+<p>Job scheduling and dependency management is done using <a href="https://github.com/mozilla/telemetry-airflow">Airflow</a>. Most jobs run once a day, processing data from &quot;yesterday&quot; on each run. A typical job launches a cluster, which fetches the specified ETL code as part of its bootstrap on startup, runs the ETL code, then shuts down upon completion. If something goes wrong, a job may time out or fail, and in this case it is retried automatically.</p>
+<a class="header" href="#self-serve-data-analysis" id="self-serve-data-analysis"><h2>Self Serve Data Analysis</h2></a>
+<pre class="mermaid">graph TD
   subgraph Storage
     lake[Data Lake]
     s3_output_public[Public Outputs]
     s3_output_private[Analysis Outputs]
   end
   subgraph ATMO
-    Jupyter --&gt;|runs on| emr_cluster[Ad hoc EMR Cluster]
-    Zeppelin --&gt;|runs on| emr_cluster
-    atmo_service[ATMO Service] --&gt;|launch| emr_cluster
-    atmo_service --&gt;|schedule| emr_job[fa:fa-clock-o Scheduled EMR Job]
-    emr_cluster --&gt;|mount| EFS
-    emr_cluster --&gt;|read + write| lake
-    emr_job --&gt;|read + write| s3_output_public
-    emr_job --&gt;|read + write| s3_output_private
+    Jupyter -->|runs on| emr_cluster[Ad hoc EMR Cluster]
+    Zeppelin -->|runs on| emr_cluster
+    atmo_service[ATMO Service] -->|launch| emr_cluster
+    atmo_service -->|schedule| emr_job[fa:fa-clock-o Scheduled EMR Job]
+    emr_cluster -->|mount| EFS
+    emr_cluster -->|read + write| lake
+    emr_job -->|read + write| s3_output_public
+    emr_job -->|read + write| s3_output_private
   end
   subgraph STMO
-    redash[Re:dash] --&gt;|read| lake
+    redash[Re:dash] -->|read| lake
   end
   subgraph TMO
     evo[Evolution Dashboard]
@@ -1468,53 +318,52 @@ graph TD
   end
   subgraph Databricks
     db_notebook[Notebook]
-    db_notebook --&gt;|read + write| lake
+    db_notebook -->|read + write| lake
   end
-</div>
 
+</pre>
 <p>Most of the data analysis tooling has been developed with the goal of being &quot;self-serve&quot;. This means that people should be able to access and analyze data on their own, without involving data engineers or operations. Thus can data access scale beyond a small set of people with specialized knowledge of the entire pipeline.</p>
-<p>The use of these self-serve tools is described in the <a href="../analysis_intro.html">Getting Started</a> article. This section focuses on how these tools integrate with the platform infrastructure.</p>
-<h5 id="atmo-spark-analysis"><a name="atmo-spark-analysis" class="plugin-anchor" href="#atmo-spark-analysis"><i class="fa fa-link" aria-hidden="true"></i></a>ATMO: Spark Analysis</h5>
-<p><a href="https://analysis.telemetry.mozilla.org" target="_blank">ATMO</a> is a service for managing Spark clusters for data analysis. Clusters can be launched on demand, or can be scheduled to run a job on an ongoing basis. These clusters can read from the Data Lake described in the <strong>Storage</strong> section above, and can write results to either public (web-accessible) or private output locations.</p>
+<p>The use of these self-serve tools is described in the <a href="../../concepts/analysis_intro.html">Getting Started</a> article. This section focuses on how these tools integrate with the platform infrastructure.</p>
+<a class="header" href="#atmo-spark-analysis" id="atmo-spark-analysis"><h5>ATMO: Spark Analysis</h5></a>
+<p><a href="https://analysis.telemetry.mozilla.org">ATMO</a> is a service for managing Spark clusters for data analysis. Clusters can be launched on demand, or can be scheduled to run a job on an ongoing basis. These clusters can read from the Data Lake described in the <strong>Storage</strong> section above, and can write results to either public (web-accessible) or private output locations.</p>
 <p>Jupyter or Zeppelin notebooks are the usual interface to getting work done using a cluster, though you get full SSH access to the cluster.</p>
 <p>Clusters launched via ATMO are automatically killed after a user-defined period of time (by default, 8 hours), though their lifetime can be extended as needed. Each cluster has a user-specific <strong><code>EFS</code></strong> volume mounted on the <code>/home/hadoop</code> directory, which means that data stored locally on the cluster persists from one cluster to the next. This volume is shared by all clusters launched by a given ATMO user.</p>
-<h5 id="stmo-sql-analysis"><a name="stmo-sql-analysis" class="plugin-anchor" href="#stmo-sql-analysis"><i class="fa fa-link" aria-hidden="true"></i></a>STMO: SQL Analysis</h5>
-<p><a href="../../tools/stmo.html">STMO</a> is a customized <a href="https://sql.telemetry.mozilla.org" target="_blank">Re:dash</a> installation that provides self-serve access to a a variety of different <a href="../choosing_a_dataset.html">datasets</a>. From here, you can query data in the Parquet Data Lake as well as various RDBMS data sources.</p>
-<p>STMO interfaces with the data lake using both <a href="http://prestodb.io/" target="_blank">Presto</a> and Amazon <a href="https://aws.amazon.com/athena/" target="_blank">Athena</a>. Each has its own data source in Re:dash. Since Athena does not support user-defined functions, datasets with HyperLogLog columns, such as <a href="../../datasets/batch_view/client_count_daily/intro.md"><code>client_count_daily</code></a>, are only available via Presto..</p>
+<a class="header" href="#stmo-sql-analysis" id="stmo-sql-analysis"><h5>STMO: SQL Analysis</h5></a>
+<p><a href="../../tools/stmo.html">STMO</a> is a customized <a href="https://sql.telemetry.mozilla.org">Re:dash</a> installation that provides self-serve access to a a variety of different <a href="../../concepts/choosing_a_dataset.html">datasets</a>. From here, you can query data in the Parquet Data Lake as well as various RDBMS data sources.</p>
+<p>STMO interfaces with the data lake using both <a href="http://prestodb.io/">Presto</a> and Amazon <a href="https://aws.amazon.com/athena/">Athena</a>. Each has its own data source in Re:dash. Since Athena does not support user-defined functions, datasets with HyperLogLog columns, such as <a href="../../datasets/batch_view/client_count_daily/reference.html"><code>client_count_daily</code></a>, are only available via Presto..</p>
 <p>Different <strong>Data Sources</strong> in STMO connect to different backends, and each backend might use a slightly different flavor of SQL. You should find a link to the documentation for the expected SQL variant next to the Data Sources list.</p>
 <p>Queries can be run just once, or scheduled to run periodically to keep data up-to-date.</p>
-<p>There is a command-line interface to STMO called <a href="https://github.com/mozilla/stmocli" target="_blank">St. Mocli</a>, if you prefer writing SQL using your own editor and tools.</p>
-<h5 id="databricks-managed-spark-analysis"><a name="databricks-managed-spark-analysis" class="plugin-anchor" href="#databricks-managed-spark-analysis"><i class="fa fa-link" aria-hidden="true"></i></a>Databricks: Managed Spark Analysis</h5>
-<p>Our <a href="https://dbc-caf9527b-e073.cloud.databricks.com" target="_blank">Databricks instance</a> (see <a href="https://docs.databricks.com/user-guide/notebooks/index.html" target="_blank">Databricks docs</a>) offers another notebook interface for doing analysis in Scala, SQL, Python and R.</p>
+<p>There is a command-line interface to STMO called <a href="https://github.com/mozilla/stmocli">St. Mocli</a>, if you prefer writing SQL using your own editor and tools.</p>
+<a class="header" href="#databricks-managed-spark-analysis" id="databricks-managed-spark-analysis"><h5>Databricks: Managed Spark Analysis</h5></a>
+<p>Our <a href="https://dbc-caf9527b-e073.cloud.databricks.com">Databricks instance</a> (see <a href="https://docs.databricks.com/user-guide/notebooks/index.html">Databricks docs</a>) offers another notebook interface for doing analysis in Scala, SQL, Python and R.</p>
 <p>Databricks provides an always-on shared server which is nice for quick data investigations. ATMO clusters take some time to start up, usually on the order of tens of minutes. The shared server allows you to avoid this start-up cost. Prefer ATMO for heavy analyses since you will have dedicated resources.</p>
-<h5 id="tmo-aggregate-graphs"><a name="tmo-aggregate-graphs" class="plugin-anchor" href="#tmo-aggregate-graphs"><i class="fa fa-link" aria-hidden="true"></i></a>TMO: Aggregate Graphs</h5>
-<p><a href="https://telemetry.mozilla.org" target="_blank">TMO</a> provides easy visualizations of histogram and scalar measures over time. Time can be in terms of either builds or submission dates. This is the most convenient interface to the Telemetry data, as it does not require any custom code.</p>
-<h2 id="visualization"><a name="visualization" class="plugin-anchor" href="#visualization"><i class="fa fa-link" aria-hidden="true"></i></a>Visualization</h2>
+<a class="header" href="#tmo-aggregate-graphs" id="tmo-aggregate-graphs"><h5>TMO: Aggregate Graphs</h5></a>
+<p><a href="https://telemetry.mozilla.org">TMO</a> provides easy visualizations of histogram and scalar measures over time. Time can be in terms of either builds or submission dates. This is the most convenient interface to the Telemetry data, as it does not require any custom code.</p>
+<a class="header" href="#visualization" id="visualization"><h2>Visualization</h2></a>
 <p>There are a number of visualization libraries and tools being used to display data.</p>
-<h5 id="tmo-dashboards"><a name="tmo-dashboards" class="plugin-anchor" href="#tmo-dashboards"><i class="fa fa-link" aria-hidden="true"></i></a>TMO Dashboards</h5>
-<p>The landing page at <a href="https://telemetry.mozilla.org" target="_blank"><code>telemetry.mozilla.org</code></a> is a good place to look for existing graphs, notably the <a href="https://telemetry.mozilla.org/new-pipeline/dist.html" target="_blank">measurement dashboard</a> which gives a lot of information about histogram and scalar measures collected on pre-release channels.</p>
-<h5 id="notebooks"><a name="notebooks" class="plugin-anchor" href="#notebooks"><i class="fa fa-link" aria-hidden="true"></i></a>Notebooks</h5>
-<p>Use of interactive notebooks has become a standard in the industry, and Mozilla makes heavy use of this approach. <a href="https://analysis.telemetry.mozilla.org" target="_blank">ATMO</a> makes it easy to run, share, and schedule <a href="https://jupyter.org/" target="_blank">Jupyter</a> and <a href="https://zeppelin.apache.org/" target="_blank">Zeppelin</a> notebooks.</p>
-<p><a href="https://docs.databricks.com/user-guide/notebooks/index.html" target="_blank">Databricks notebooks</a> are also an option.</p>
-<h5 id="others"><a name="others" class="plugin-anchor" href="#others"><i class="fa fa-link" aria-hidden="true"></i></a>Others</h5>
-<p><a href="https://sql.telemetry.mozilla.org" target="_blank">Re:dash</a> lets you query the data using SQL, but it also supports a number of useful visualizations.</p>
-<p><a href="http://pipeline-cep.prod.mozaws.net/" target="_blank">Hindsight&apos;s web interface</a> has the ability to visualize time-series data.</p>
-<p><a href="https://data-missioncontrol.dev.mozaws.net" target="_blank">Mission Control</a> gives a low-latency view into release health.</p>
-<p>Many bespoke visualizations are built using the <a href="http://metricsgraphicsjs.org/" target="_blank">Metrics Graphics</a> library as a display layer.</p>
-<h2 id="monitoring-and-alerting"><a name="monitoring-and-alerting" class="plugin-anchor" href="#monitoring-and-alerting"><i class="fa fa-link" aria-hidden="true"></i></a>Monitoring and Alerting</h2>
+<a class="header" href="#tmo-dashboards" id="tmo-dashboards"><h5>TMO Dashboards</h5></a>
+<p>The landing page at <a href="https://telemetry.mozilla.org"><code>telemetry.mozilla.org</code></a> is a good place to look for existing graphs, notably the <a href="https://telemetry.mozilla.org/new-pipeline/dist.html">measurement dashboard</a> which gives a lot of information about histogram and scalar measures collected on pre-release channels.</p>
+<a class="header" href="#notebooks" id="notebooks"><h5>Notebooks</h5></a>
+<p>Use of interactive notebooks has become a standard in the industry, and Mozilla makes heavy use of this approach. <a href="https://analysis.telemetry.mozilla.org">ATMO</a> makes it easy to run, share, and schedule <a href="https://jupyter.org/">Jupyter</a> and <a href="https://zeppelin.apache.org/">Zeppelin</a> notebooks.</p>
+<p><a href="https://docs.databricks.com/user-guide/notebooks/index.html">Databricks notebooks</a> are also an option.</p>
+<a class="header" href="#others" id="others"><h5>Others</h5></a>
+<p><a href="https://sql.telemetry.mozilla.org">Re:dash</a> lets you query the data using SQL, but it also supports a number of useful visualizations.</p>
+<p><a href="http://pipeline-cep.prod.mozaws.net/">Hindsight's web interface</a> has the ability to visualize time-series data.</p>
+<p><a href="https://data-missioncontrol.dev.mozaws.net">Mission Control</a> gives a low-latency view into release health.</p>
+<p>Many bespoke visualizations are built using the <a href="http://metricsgraphicsjs.org/">Metrics Graphics</a> library as a display layer.</p>
+<a class="header" href="#monitoring-and-alerting" id="monitoring-and-alerting"><h2>Monitoring and Alerting</h2></a>
 <p>There are multiple layers of monitoring and alerting.</p>
-<p>At a low level, the system is monitored to ensure that it is functioning as expected. This includes things like machine-level resources (network capacity, disk space, available RAM, CPU load) which are typically monitored using <a href="http://datadoghq.com/" target="_blank">DataDog</a>.</p>
-<p>Next, we monitor the &quot;transport&quot; functionality of the system. This includes monitoring incoming submission rates, payload sizes, traffic patterns, schema validation failure rates, and alerting if anomalies are detected. This type of anomaly detection and alerting is handled by <a href="https://github.com/mozilla-services/hindsight" target="_blank">Hindsight</a>.</p>
-<p>Once data has been safely ingested and stored, we run some automatic regression detection on all Telemetry <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/histograms.html" target="_blank">histogram measures</a> using <a href="https://github.com/mozilla/cerberus" target="_blank">Cerberus</a>. This code looks for changes in the distribution of a measure, and emails probe owners if a significant change is observed.</p>
-<p>Production ETL jobs are run via <a href="https://github.com/mozilla/telemetry-airflow" target="_blank">Airflow</a>, which monitors batch job progress and alerts if there are failures in any job. Self-serve batch jobs run via ATMO also generate alerts upon failure.</p>
-<p>Scheduled <a href="https://sql.telemetry.mozilla.org" target="_blank">Re:dash</a> queries may also be configured to generate alerts, which is used to monitor the last-mile user facing status of derived datasets. Re:dash may also be used to monitor and alert on high-level characteristics of the data, or really anything you can think of.</p>
-<h2 id="data-exports"><a name="data-exports" class="plugin-anchor" href="#data-exports"><i class="fa fa-link" aria-hidden="true"></i></a>Data Exports</h2>
-<p>Data is exported from the pipeline to a few other tools and systems. Examples include integration with <a href="https://amplitude.com/" target="_blank">Amplitude</a> for mobile and product analytics, publishing reports and visualizations to the <a href="https://www.mozdatacollective.com/home" target="_blank">Mozilla Data Collective</a>, and shipping data to other parts of the Mozilla organization.</p>
-<p>There are also a few data sets which are made publicly available, such as the <a href="https://hardware.metrics.mozilla.com/" target="_blank">Firefox Hardware Report</a>.</p>
-<h2 id="bringing-it-all-together"><a name="bringing-it-all-together" class="plugin-anchor" href="#bringing-it-all-together"><i class="fa fa-link" aria-hidden="true"></i></a>Bringing it all together</h2>
+<p>At a low level, the system is monitored to ensure that it is functioning as expected. This includes things like machine-level resources (network capacity, disk space, available RAM, CPU load) which are typically monitored using <a href="http://datadoghq.com/">DataDog</a>.</p>
+<p>Next, we monitor the &quot;transport&quot; functionality of the system. This includes monitoring incoming submission rates, payload sizes, traffic patterns, schema validation failure rates, and alerting if anomalies are detected. This type of anomaly detection and alerting is handled by <a href="https://github.com/mozilla-services/hindsight">Hindsight</a>.</p>
+<p>Once data has been safely ingested and stored, we run some automatic regression detection on all Telemetry <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/histograms.html">histogram measures</a> using <a href="https://github.com/mozilla/cerberus">Cerberus</a>. This code looks for changes in the distribution of a measure, and emails probe owners if a significant change is observed.</p>
+<p>Production ETL jobs are run via <a href="https://github.com/mozilla/telemetry-airflow">Airflow</a>, which monitors batch job progress and alerts if there are failures in any job. Self-serve batch jobs run via ATMO also generate alerts upon failure.</p>
+<p>Scheduled <a href="https://sql.telemetry.mozilla.org">Re:dash</a> queries may also be configured to generate alerts, which is used to monitor the last-mile user facing status of derived datasets. Re:dash may also be used to monitor and alert on high-level characteristics of the data, or really anything you can think of.</p>
+<a class="header" href="#data-exports" id="data-exports"><h2>Data Exports</h2></a>
+<p>Data is exported from the pipeline to a few other tools and systems. Examples include integration with <a href="https://amplitude.com/">Amplitude</a> for mobile and product analytics, publishing reports and visualizations to the <a href="https://www.mozdatacollective.com/home">Mozilla Data Collective</a>, and shipping data to other parts of the Mozilla organization.</p>
+<p>There are also a few data sets which are made publicly available, such as the <a href="https://hardware.metrics.mozilla.com/">Firefox Hardware Report</a>.</p>
+<a class="header" href="#bringing-it-all-together" id="bringing-it-all-together"><h2>Bringing it all together</h2></a>
 <p>Finally, here is a more detailed view of the entire platform. Some connections are omitted for clarity.</p>
-<div class="mermaid">
-graph LR
+<pre class="mermaid">graph LR
  subgraph Data Producers
   Firefox
   more_producers[...]
@@ -1531,29 +380,29 @@ graph LR
  end
  subgraph Stream Processing
   cep[Hindsight Streaming]
-  dwl[Data Store Loader] --&gt; warehouse_heka
-  dwl --&gt; warehouse_parquet
-  sparkstreaming[Spark Streaming] --&gt; warehouse_parquet
+  dwl[Data Store Loader] --> warehouse_heka
+  dwl --> warehouse_parquet
+  sparkstreaming[Spark Streaming] --> warehouse_parquet
  end
  subgraph Ingestion
-  Firefox --&gt; lb[Load Balancer]
-  more_producers --&gt; lb
-  lb --&gt; tee
-  tee --&gt; mozingest
-  mozingest --&gt; kafka
-  mozingest --&gt; Landfill
+  Firefox --> lb[Load Balancer]
+  more_producers --> lb
+  lb --> tee
+  tee --> mozingest
+  mozingest --> kafka
+  mozingest --> Landfill
   ZooKeeper -.- kafka[Kafka]
-  kafka --&gt; dwl
-  kafka --&gt; cep
-  kafka --&gt; sparkstreaming
+  kafka --> dwl
+  kafka --> cep
+  kafka --> sparkstreaming
  end
  subgraph Batch Processing
-  Airflow -.-&gt;|spark|tbv[telemetry-batch-view]
-  Airflow -.-&gt;|spark|python_mozetl
-  warehouse_heka --&gt; tbv
-  warehouse_parquet --&gt; tbv
-  warehouse_heka --&gt; python_mozetl
-  warehouse_parquet --&gt; python_mozetl
+  Airflow -.->|spark|tbv[telemetry-batch-view]
+  Airflow -.->|spark|python_mozetl
+  warehouse_heka --> tbv
+  warehouse_parquet --> tbv
+  warehouse_heka --> python_mozetl
+  warehouse_parquet --> python_mozetl
   tmo_agg[Telemetry Aggregates]
  end
  subgraph Visualization
@@ -1566,107 +415,84 @@ graph LR
   bespoke_viz[Bespoke Viz]
  end
  subgraph Export
-  tbv --&gt; Amplitude
-  sparkstreaming --&gt; Amplitude
+  tbv --> Amplitude
+  sparkstreaming --> Amplitude
  end
  subgraph Self Serve
-  redash[Re:dash] -.-&gt; Presto
-  Presto --&gt; hive
-  redash -.-&gt; Athena
-  Athena --&gt; hive
-  ATMO -.-&gt; spcluster[Spark Cluster]
-  warehouse_heka --&gt; spcluster
-  warehouse_parquet --&gt; spcluster
-  spcluster --&gt; warehouse_analysis
+  redash[Re:dash] -.-> Presto
+  Presto --> hive
+  redash -.-> Athena
+  Athena --> hive
+  ATMO -.-> spcluster[Spark Cluster]
+  warehouse_heka --> spcluster
+  warehouse_parquet --> spcluster
+  spcluster --> warehouse_analysis
  end
- Schemas -.-&gt;|validation| dwl
-</div>
+ Schemas -.->|validation| dwl
 
+</pre>
 
+                    </main>
 
-                                
-                                </section>
-                            
-    </div>
-    <div class="search-results">
-        <div class="has-results">
-            
-            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
-            <ul class="search-results-list"></ul>
-            
-        </div>
-        <div class="no-results">
-            
-            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
-            
-        </div>
-    </div>
-</div>
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../concepts/pipeline/data_pipeline.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
 
-                        </div>
-                    </div>
-                
+                        
+                            <a rel="next" href="../../concepts/pipeline/http_edge_spec.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
             </div>
 
-            
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                <a href="data_pipeline.html" class="navigation navigation-prev " aria-label="Previous page: Overview of Mozilla's Data Pipeline">
-                    <i class="fa fa-angle-left"></i>
-                </a>
+                    <a href="../../concepts/pipeline/data_pipeline.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
                 
-                
-                <a href="http_edge_spec.html" class="navigation navigation-next " aria-label="Next page: HTTP Edge Server Specification">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-                
-            
-        
-    </div>
 
-    <script>
-        var gitbook = gitbook || [];
-        gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"In-depth Data Pipeline Detail","level":"1.3.2.1","depth":3,"next":{"title":"HTTP Edge Server Specification","level":"1.3.2.2","depth":3,"path":"concepts/pipeline/http_edge_spec.md","ref":"concepts/pipeline/http_edge_spec.md","articles":[]},"previous":{"title":"Overview of Mozilla's Data Pipeline","level":"1.3.2","depth":2,"path":"concepts/pipeline/data_pipeline.md","ref":"concepts/pipeline/data_pipeline.md","articles":[{"title":"In-depth Data Pipeline Detail","level":"1.3.2.1","depth":3,"path":"concepts/pipeline/data_pipeline_detail.md","ref":"concepts/pipeline/data_pipeline_detail.md","articles":[]},{"title":"HTTP Edge Server Specification","level":"1.3.2.2","depth":3,"path":"concepts/pipeline/http_edge_spec.md","ref":"concepts/pipeline/http_edge_spec.md","articles":[]},{"title":"Event Pipeline Detail","level":"1.3.2.3","depth":3,"path":"concepts/pipeline/event_pipeline.md","ref":"concepts/pipeline/event_pipeline.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toc","anchors","ga","mermaid-gb3","-fontsettings"],"pluginsConfig":{"toc":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"highlight":{},"mermaid-gb3":{},"ga":{"configuration":"auto","token":"UA-104326577-1"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"introduction.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concepts/pipeline/data_pipeline_detail.md","mtime":"2018-10-12T18:10:35.386Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-10-12T18:12:00.362Z"},"basePath":"../..","book":{"language":""}});
-        });
-    </script>
-</div>
+                
+                    <a href="../../concepts/pipeline/http_edge_spec.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
 
         
-    
-    <script src="../../gitbook/gitbook.js"></script>
-    <script src="../../gitbook/theme.js"></script>
-    
-        
-        <script src="../../gitbook/gitbook-plugin-ga/plugin.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-mermaid-gb3/book/plugin.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
-        
-    
 
-    <script src="../../gitbook/gitbook-plugin-mermaid-gb3/mermaid/mermaid.min.js"></script>
+        
+
+        
+
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../../mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="../../mermaid-init.js"></script>
+        
+
+        
 
     </body>
 </html>
-
