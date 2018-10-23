@@ -28,6 +28,8 @@ specific delivery characteristics:
 | environment-change | Telemetry Environment changes | Is sent immediately when triggered by Firefox (Installing or removing an addon or changing a monitored user preference are common ways for the Telemetry Environment to change)|
 | aborted-session    | Firefox session doesn't end cleanly | Sent by Firefox at the beginning of the next Firefox session.|
 
+It was introduced in Firefox 38.
+
 ### "first-shutdown" ping
 
 The ["first-shutdown" ping][first_shutdown_ping] is identical to the "main"
@@ -37,6 +39,8 @@ using Pingsender to send shutdown pings as there would be a lot of
 first-session "shutdown" pings that we'd start receiving all of a sudden.
 
 It is sent using Pingsender.
+
+It was introduced in Firefox 57.
 
 ### "event" ping
 
@@ -48,6 +52,8 @@ minutes (governed by a [preference][preferences]) if the maximum event limit
 for the ping (default to 1000 per process, governed by a
 [preference][preferences]) is reached before the hour is up.
 
+It was introduced in Firefox 62.
+
 ### "update" ping
 
 Firefox Update is the most important means we have of reaching our users with
@@ -55,6 +61,8 @@ the latest fixes and features. The ["update" ping][update_ping] notifies us
 when an update is downloaded and ready to be applied (reason: "ready") and when
 the update has been successfully applied (reason: "success"). It contains the
 Telemetry Environment and information about the update.
+
+It was introduced in Firefox 56.
 
 ### "new-profile" ping
 
@@ -67,6 +75,8 @@ end of the profile's first session (reason: "shutdown"), whichever comes first.
 "startup" are sent by Firefox. Those with reason "shutdown" are sent by
 Pingsender.
 
+It was introduced in Firefox 55.
+
 ### "crash" ping
 
 The ["crash" ping][crash_ping] provides diagnostic information whenever a
@@ -75,6 +85,7 @@ Firefox process exits abnormally. Unlike the "main" ping with reason
 contains a Telemetry Environment, [Crash Annotations][crash_annotations], and
 [Stack Traces][stack_traces].
 
+It was introduced in Firefox 40.
 
 ### "optout" ping
 
@@ -82,6 +93,19 @@ In the event a user opts out of Telemetry, we send one final
 ["optout" ping][optout_ping] to let us know. We try exactly once to send it,
 discarding the ping if sending fails. It contains only the
 [common ping data][common_ping_data] and an empty payload.
+
+It was introduced in Firefox 63.
+
+### Pingsender
+
+[Pingsender][pingsender] is a small application shipped with Firefox which
+attempts to send pings even if Firefox is not running. If Firefox has crashed or has already shut
+down we would otherwise have to wait for the next Firefox session to begin to
+send pings.
+
+Pingsender was introduced in Firefox 54 to send "crash" pings. It was expanded
+to send "main" pings of reason "shutdown" in Firefox 55 (excepting the first
+session). It sends the "first-shutdown" ping since its introduction in Firefox 57.
 
 ### Analysis
 
@@ -131,3 +155,4 @@ To augment our data collection, see [Collecting New Data][addprobe] and the
 [dataset]: https://python-moztelemetry.readthedocs.io/en/stable/api.html#module-moztelemetry.dataset
 [addprobe]: https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Adding_a_new_Telemetry_probe
 [datacollection]: https://wiki.mozilla.org/Firefox/Data_Collection
+[pingsender]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/pingsender.html
