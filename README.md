@@ -5,4 +5,4 @@ You can find the [rendered documentation here](https://mozilla.github.io/firefox
 
 This documentation is rendered with [GitBook](https://www.gitbook.com), and hosted on Github pages.
 
-To contribute to the docs, see [this article](meta/contributing.md).
+To contribute to the docs, see [this article](src/meta/contributing.md).
