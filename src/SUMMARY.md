@@ -9,6 +9,7 @@
   * [Optimizing Queries](concepts/sql_optimization.md)
   * [Getting Review](concepts/review.md)
   * [Collecting New Data](datasets/new_data.md)
+  * [Mailing Lists and Channels](concepts/mailing_lists_channels.md)
 * [Tools](tools/index.md)
   * [Project Glossary](tools/projects.md)
   * [Overview of Mozilla's Data Pipeline](concepts/pipeline/data_pipeline.md)
