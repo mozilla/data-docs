@@ -151,6 +151,7 @@
 <li><a href="#new-profile-ping">&quot;new-profile&quot; ping</a></li>
 <li><a href="#crash-ping">&quot;crash&quot; ping</a></li>
 <li><a href="#optout-ping">&quot;optout&quot; ping</a></li>
+<li><a href="#pingsender">Pingsender</a></li>
 <li><a href="#analysis">Analysis</a>
 <ul>
 <li><a href="#accessing-the-data">Accessing the Data</a></li>
@@ -185,6 +186,7 @@ specific delivery characteristics:</p>
 <tr><td> environment-change </td><td> Telemetry Environment changes </td><td> Is sent immediately when triggered by Firefox (Installing or removing an addon or changing a monitored user preference are common ways for the Telemetry Environment to change)</td></tr>
 <tr><td> aborted-session    </td><td> Firefox session doesn't end cleanly </td><td> Sent by Firefox at the beginning of the next Firefox session.</td></tr>
 </tbody></table>
+<p>It was introduced in Firefox 38.</p>
 <a class="header" href="#first-shutdown-ping" id="first-shutdown-ping"><h3>&quot;first-shutdown&quot; ping</h3></a>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/first-shutdown-ping.html">&quot;first-shutdown&quot; ping</a> is identical to the &quot;main&quot;
 ping with reason &quot;shutdown&quot; created at the end of the user's first session,
@@ -192,6 +194,7 @@ but sent with a different ping type. This was introduced when we started
 using Pingsender to send shutdown pings as there would be a lot of
 first-session &quot;shutdown&quot; pings that we'd start receiving all of a sudden.</p>
 <p>It is sent using Pingsender.</p>
+<p>It was introduced in Firefox 57.</p>
 <a class="header" href="#event-ping" id="event-ping"><h3>&quot;event&quot; ping</h3></a>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/event-ping.html">&quot;event&quot; ping</a> provides low-latency eventing support to Firefox
 Telemetry. It delivers the Telemetry Environment, Telemetry Events from all
@@ -200,12 +203,14 @@ sent every hour if there have been events recorded, and up to once every 10
 minutes (governed by a <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/preferences.html">preference</a>) if the maximum event limit
 for the ping (default to 1000 per process, governed by a
 <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/preferences.html">preference</a>) is reached before the hour is up.</p>
+<p>It was introduced in Firefox 62.</p>
 <a class="header" href="#update-ping" id="update-ping"><h3>&quot;update&quot; ping</h3></a>
 <p>Firefox Update is the most important means we have of reaching our users with
 the latest fixes and features. The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/update-ping.html">&quot;update&quot; ping</a> notifies us
 when an update is downloaded and ready to be applied (reason: &quot;ready&quot;) and when
 the update has been successfully applied (reason: &quot;success&quot;). It contains the
 Telemetry Environment and information about the update.</p>
+<p>It was introduced in Firefox 56.</p>
 <a class="header" href="#new-profile-ping" id="new-profile-ping"><h3>&quot;new-profile&quot; ping</h3></a>
 <p>When a user starts up Firefox for the first time, a profile is created.
 Telemetry marks the occasion with the <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/new-profile-ping.html">&quot;new-profile&quot; ping</a>
@@ -215,17 +220,28 @@ end of the profile's first session (reason: &quot;shutdown&quot;), whichever com
 &quot;new-profile&quot; pings are sent immediately when triggered. Those with reason
 &quot;startup&quot; are sent by Firefox. Those with reason &quot;shutdown&quot; are sent by
 Pingsender.</p>
+<p>It was introduced in Firefox 55.</p>
 <a class="header" href="#crash-ping" id="crash-ping"><h3>&quot;crash&quot; ping</h3></a>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html">&quot;crash&quot; ping</a> provides diagnostic information whenever a
 Firefox process exits abnormally. Unlike the &quot;main&quot; ping with reason
 &quot;aborted-session&quot;, this ping does not contain Histograms or Scalars. It
 contains a Telemetry Environment, <a href="https://searchfox.org/mozilla-central/source/toolkit/crashreporter/CrashAnnotations.yaml">Crash Annotations</a>, and
 <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html#stack-traces">Stack Traces</a>.</p>
+<p>It was introduced in Firefox 40.</p>
 <a class="header" href="#optout-ping" id="optout-ping"><h3>&quot;optout&quot; ping</h3></a>
 <p>In the event a user opts out of Telemetry, we send one final
 <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/optout-ping.html">&quot;optout&quot; ping</a> to let us know. We try exactly once to send it,
 discarding the ping if sending fails. It contains only the
 <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/common-ping.html">common ping data</a> and an empty payload.</p>
+<p>It was introduced in Firefox 63.</p>
+<a class="header" href="#pingsender" id="pingsender"><h3>Pingsender</h3></a>
+<p><a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/pingsender.html">Pingsender</a> is a small application shipped with Firefox which
+attempts to send pings even if Firefox is not running. If Firefox has crashed or has already shut
+down we would otherwise have to wait for the next Firefox session to begin to
+send pings.</p>
+<p>Pingsender was introduced in Firefox 54 to send &quot;crash&quot; pings. It was expanded
+to send &quot;main&quot; pings of reason &quot;shutdown&quot; in Firefox 55 (excepting the first
+session). It sends the &quot;first-shutdown&quot; ping since its introduction in Firefox 57.</p>
 <a class="header" href="#analysis" id="analysis"><h3>Analysis</h3></a>
 <p>The large majority of analyses can be completed using only the
 <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html">main ping</a>.
