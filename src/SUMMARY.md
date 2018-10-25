@@ -34,7 +34,7 @@
   * [Metrics](cookbooks/metrics.md)
     * [Active DAU Definition](cookbooks/active_dau.md)
     * [Retention Analysis](cookbooks/retention.md)
-  * [Designing Telemetry Events Best Practices](cookbooks/designing_events_best_practices.md)
+  * [Telemetry Events Best Practices](cookbooks/events_best_practices.md)
 
 ---
 
