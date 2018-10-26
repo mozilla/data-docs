@@ -6,9 +6,6 @@ There's one column for each of the stratifying dimensions and the crash statisti
 Each row is a distinct set of dimensions, along with their associated crash stats.
 Example stratifying dimensions include channel and country,
 example statistics include usage hours and plugin crashes.
-See the [complete documentation](https://github.com/mozilla/telemetry-batch-view/blob/master/docs/CrashAggregateView.md)
-for all available dimensions
-and statistics.
 
 #### Accessing the Data
 
