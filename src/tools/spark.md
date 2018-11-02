@@ -237,10 +237,9 @@ The `MozTelemetry` Library
 
 We have provided a library that gives easy access to the raw telemetry ping data.
 For example usage, see the
-[Telemetry Hello World](https://reports.telemetry.mozilla.org/post/tutorials/telemetry_hello_world.kp)
-example notebook.
-Detailed documentation for the library can be found at the
-[Python MozTelemetry Documentation](https://python-moztelemetry.readthedocs.io).
+[Telemetry Hello World example notebook](https://github.com/mozilla/mozilla-reports/blob/master/tutorials/telemetry_hello_world.kp/orig_src/Telemetry%20Hello%20World.ipynb).
+Detailed API documentation for the library can be found at the
+[Python MozTelemetry Documentation](https://mozilla.github.io/python_moztelemetry/).
 
 ### Using the Raw Ping Data
 
