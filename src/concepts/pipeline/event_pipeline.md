@@ -18,9 +18,9 @@ main_summary --> events_table
 pipeline -->|Mobile events| mobile_events_table[fa:fa-bars mobile events table]
 main_summary --> redash(fa:fa-bar-chart Redash)
 events_table --> redash
-events_table -->|on request| amplitude(fa:fa-bar-chart Amplitude)
 mobile_events_table --> redash
 mobile_events_table -->|on request| amplitude
+pipeline -->|on request| amplitude(fa:fa-bar-chart Amplitude)
 
 style fx_code fill:#f94,stroke-width:0px
 style fx_extensions fill:#f94,stroke-width:0px
