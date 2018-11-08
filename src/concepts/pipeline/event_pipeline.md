@@ -100,7 +100,7 @@ use cases:
   allows code from Mozilla addons to record new events into Telemetry without shipping Firefox
   code.
 - The *[Telemetry WebExtension API](https://searchfox.org/mozilla-central/rev/55da592d85c2baf8d8818010c41d9738c97013d2/toolkit/components/extensions/schemas/telemetry.json#87)* ([introduced here](https://bugzilla.mozilla.org/show_bug.cgi?id=1280234))
-  which allows Mozilla WebExtensions to record new events into Telemetry.
+  which allows Mozilla extensions to record new events into Telemetry.
 - The [*Hybrid-content API*](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/hybrid-content.html)
   allows specific white-listed Mozilla content code to record new events into Telemetry.
 
