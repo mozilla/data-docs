@@ -5,10 +5,15 @@ specific path through our data pipeline, which we will detail here.
 
 ```mermaid
 graph TD
+
+subgraph Products
 fx_code(fa:fa-cog Firefox code) --> firefox(fa:fa-firefox Firefox Telemetry)
 fx_extensions(fa:fa-cog Mozilla extensions) --> firefox
 fx_hybrid(fa:fa-cog Hybrid Content) --> firefox
 mobile(fa:fa-cog Mobile products) --> mobile_telemetry(fa:fa-firefox Mobile Telemetry)
+end
+
+subgraph Data Platform
 firefox -.->|main ping, Firefox <62| pipeline((fa:fa-database Firefox Data Pipeline))
 firefox -->|event ping, Firefox 62+| pipeline
 mobile_telemetry --> |mobile events ping| pipeline
@@ -16,11 +21,14 @@ pipeline -->|Firefox <62 events| main_summary[fa:fa-bars main summary table]
 pipeline -->|Firefox 62+ events| events_table[fa:fa-bars events table]
 main_summary --> events_table
 pipeline -->|Mobile events| mobile_events_table[fa:fa-bars mobile events table]
-main_summary --> redash(fa:fa-bar-chart Redash)
+end
+
+subgraph Data Tools
 events_table --> redash
 mobile_events_table --> redash
-mobile_events_table -->|on request| amplitude
+main_summary --> redash(fa:fa-bar-chart Redash)
 pipeline -->|on request| amplitude(fa:fa-bar-chart Amplitude)
+end
 
 style fx_code fill:#f94,stroke-width:0px
 style fx_extensions fill:#f94,stroke-width:0px
