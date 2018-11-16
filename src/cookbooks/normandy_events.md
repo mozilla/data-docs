@@ -32,8 +32,10 @@ To fetch a count of events by branch in PySpark:
 ```python
 import pyspark.sql.functions as f
 events = spark.table("events")
-EXPERIMENT_SLUG = ""
-EXPERIMENT_START = ""
+
+# For example...
+EXPERIMENT_SLUG = "prefflip-webrender-v1-2-1492568"
+EXPERIMENT_START = "20180920"
 
 enrollments_by_day = (
   events
@@ -42,7 +44,6 @@ enrollments_by_day = (
   .filter(events.event_string_value == EXPERIMENT_SLUG)
   .filter(events.submission_date_s3 >= EXPERIMENT_START)
   .withColumn("branch", events.event_map_values.getItem("branch"))
-  .filter(f.col("branch").isNotNull())
   .groupBy(events.submission_date_s3, "branch")
   .agg(f.count("*").alias("n"))
   .toPandas()
@@ -80,7 +81,7 @@ unenrollments_by_reason = (
   .filter(events.event_category == "normandy")
   .filter(events.event_method == "unenroll")
   .filter(events.event_string_value == EXPERIMENT_SLUG)
-  .filter(events.submission_date_s3 > "20181000")
+  .filter(events.submission_date_s3 >= EXPERIMENT_START)
   .withColumn("branch", events.event_map_values.getItem("branch"))
   .withColumn("reason", events.event_map_values.getItem("reason"))
   .groupBy(events.submission_date_s3, "branch", "reason")
