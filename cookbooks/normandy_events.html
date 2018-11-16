@@ -1,0 +1,280 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Working with Normandy events - Firefox Data Documentation</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../dtmo.css">
+        
+        <link rel="stylesheet" href="../mermaid.css">
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">var path_to_root = "../";</script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="../introduction.html">Firefox Data Documentation</a></li><li><a href="../concepts/reporting_a_problem.html"><strong aria-hidden="true">1.</strong> Reporting a problem</a></li><li><a href="../concepts/terminology.html"><strong aria-hidden="true">2.</strong> Terminology</a></li><li><a href="../concepts/getting_started.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li><ol class="section"><li><a href="../concepts/analysis_intro.html"><strong aria-hidden="true">3.1.</strong> Analysis Quick Start</a></li><li><a href="../concepts/choosing_a_dataset.html"><strong aria-hidden="true">3.2.</strong> Choosing a Dataset</a></li><li><a href="../tools/stmo.html"><strong aria-hidden="true">3.3.</strong> Intro to STMO</a></li><li><a href="../concepts/analysis_gotchas.html"><strong aria-hidden="true">3.4.</strong> Common Analysis Gotchas</a></li><li><a href="../concepts/sql_optimization.html"><strong aria-hidden="true">3.5.</strong> Optimizing Queries</a></li><li><a href="../concepts/review.html"><strong aria-hidden="true">3.6.</strong> Getting Review</a></li><li><a href="../datasets/new_data.html"><strong aria-hidden="true">3.7.</strong> Collecting New Data</a></li></ol></li><li><a href="../tools/index.html"><strong aria-hidden="true">4.</strong> Tools</a></li><li><ol class="section"><li><a href="../tools/projects.html"><strong aria-hidden="true">4.1.</strong> Project Glossary</a></li><li><a href="../concepts/pipeline/data_pipeline.html"><strong aria-hidden="true">4.2.</strong> Overview of Mozilla's Data Pipeline</a></li><li><ol class="section"><li><a href="../concepts/pipeline/data_pipeline_detail.html"><strong aria-hidden="true">4.2.1.</strong> In-depth Data Pipeline Detail</a></li><li><a href="../concepts/pipeline/http_edge_spec.html"><strong aria-hidden="true">4.2.2.</strong> HTTP Edge Server Specification</a></li><li><a href="../concepts/pipeline/event_pipeline.html"><strong aria-hidden="true">4.2.3.</strong> Event Pipeline Detail</a></li></ol></li><li><a href="../tools/interfaces.html"><strong aria-hidden="true">4.3.</strong> Analysis Interfaces</a></li><li><a href="../tools/spark.html"><strong aria-hidden="true">4.4.</strong> Custom analysis with Spark</a></li><li><a href="../concepts/sql_style.html"><strong aria-hidden="true">4.5.</strong> SQL Style Guide</a></li></ol></li><li><a href="../cookbooks/index.html"><strong aria-hidden="true">5.</strong> Cookbooks</a></li><li><ol class="section"><li><a href="../tools/alerts.html"><strong aria-hidden="true">5.1.</strong> Alerts</a></li><li><a href="../cookbooks/parquet.html"><strong aria-hidden="true">5.2.</strong> Working with Parquet Data on ATMO Clusters</a></li><li><a href="../cookbooks/create_a_dataset.html"><strong aria-hidden="true">5.3.</strong> Creating a custom Re:dash dataset</a></li><li><a href="../cookbooks/new_ping.html"><strong aria-hidden="true">5.4.</strong> Sending a Custom Ping</a></li><li><a href="../cookbooks/hll_zeppelin.html"><strong aria-hidden="true">5.5.</strong> Using HyperLogLog in Zeppelin</a></li><li><a href="../cookbooks/dataset_specific.html"><strong aria-hidden="true">5.6.</strong> Dataset Specific</a></li><li><ol class="section"><li><a href="../cookbooks/longitudinal_examples.html"><strong aria-hidden="true">5.6.1.</strong> Longitudinal Examples</a></li><li><a href="../cookbooks/crash_pings.html"><strong aria-hidden="true">5.6.2.</strong> Working with Crash Pings</a></li><li><a href="../cookbooks/normandy_events.html" class="active"><strong aria-hidden="true">5.6.3.</strong> Working with Normandy events</a></li></ol></li><li><a href="../cookbooks/realtime.html"><strong aria-hidden="true">5.7.</strong> Real-time</a></li><li><ol class="section"><li><a href="../cookbooks/realtime_analysis_plugin.html"><strong aria-hidden="true">5.7.1.</strong> Creating a Real-time Analysis Plugin</a></li><li><a href="../cookbooks/view_pings_cep.html"><strong aria-hidden="true">5.7.2.</strong> Seeing Your Own Pings</a></li><li><a href="../tools/cep_matcher.html"><strong aria-hidden="true">5.7.3.</strong> CEP Matcher</a></li></ol></li><li><a href="../cookbooks/metrics.html"><strong aria-hidden="true">5.8.</strong> Metrics</a></li><li><ol class="section"><li><a href="../cookbooks/active_dau.html"><strong aria-hidden="true">5.8.1.</strong> Active DAU Definition</a></li><li><a href="../cookbooks/retention.html"><strong aria-hidden="true">5.8.2.</strong> Retention Analysis</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../datasets/reference.html"><strong aria-hidden="true">6.</strong> Dataset Reference</a></li><li><ol class="section"><li><a href="../datasets/pings.html"><strong aria-hidden="true">6.1.</strong> Pings</a></li><li><a href="../datasets/derived.html"><strong aria-hidden="true">6.2.</strong> Derived Datasets</a></li><li><ol class="section"><li><a href="../datasets/batch_view/addons/reference.html"><strong aria-hidden="true">6.2.1.</strong> Addons</a></li><li><a href="../datasets/mozetl/churn/reference.html"><strong aria-hidden="true">6.2.2.</strong> Churn</a></li><li><a href="../datasets/batch_view/client_count_daily/reference.html"><strong aria-hidden="true">6.2.3.</strong> Client Count Daily</a></li><li><a href="../datasets/batch_view/client_count/reference.html"><strong aria-hidden="true">6.2.4.</strong> Client Count</a></li><li><a href="../datasets/batch_view/clients_daily/reference.html"><strong aria-hidden="true">6.2.5.</strong> Clients Daily</a></li><li><a href="../datasets/batch_view/crash_aggregates/reference.html"><strong aria-hidden="true">6.2.6.</strong> Crash Aggregate</a></li><li><a href="../datasets/batch_view/crash_summary/reference.html"><strong aria-hidden="true">6.2.7.</strong> Crash Summary</a></li><li><a href="../datasets/batch_view/cross_sectional/reference.html"><strong aria-hidden="true">6.2.8.</strong> Cross Sectional</a></li><li><a href="../datasets/streaming/error_aggregates/reference.html"><strong aria-hidden="true">6.2.9.</strong> Error Aggregates</a></li><li><a href="../datasets/batch_view/events/reference.html"><strong aria-hidden="true">6.2.10.</strong> Events</a></li><li><a href="../datasets/batch_view/first_shutdown_summary/reference.html"><strong aria-hidden="true">6.2.11.</strong> First Shutdown Summary</a></li><li><a href="../datasets/batch_view/longitudinal/reference.html"><strong aria-hidden="true">6.2.12.</strong> Longitudinal</a></li><li><a href="../datasets/batch_view/main_summary/reference.html"><strong aria-hidden="true">6.2.13.</strong> Main Summary</a></li><li><a href="../datasets/batch_view/new_profile/reference.html"><strong aria-hidden="true">6.2.14.</strong> New Profile</a></li><li><a href="../datasets/batch_view/retention/reference.html"><strong aria-hidden="true">6.2.15.</strong> Retention</a></li><li><a href="../datasets/other/socorro_crash/reference.html"><strong aria-hidden="true">6.2.16.</strong> Socorro Crash Reports</a></li><li><a href="../datasets/other/ssl/reference.html"><strong aria-hidden="true">6.2.17.</strong> SSL Ratios (public)</a></li><li><a href="../datasets/batch_view/sync_summary/reference.html"><strong aria-hidden="true">6.2.18.</strong> Sync Summary</a></li><li><a href="../datasets/batch_view/update/reference.html"><strong aria-hidden="true">6.2.19.</strong> Update</a></li></ol></li><li><a href="../tools/experiments.html"><strong aria-hidden="true">6.3.</strong> Experimental Datasets</a></li><li><ol class="section"><li><a href="../datasets/shield.html"><strong aria-hidden="true">6.3.1.</strong> Accessing Shield Study data</a></li></ol></li><li><a href="../datasets/search.html"><strong aria-hidden="true">6.4.</strong> Search Datasets</a></li><li><ol class="section"><li><a href="../datasets/mozetl/search_aggregates/reference.html"><strong aria-hidden="true">6.4.1.</strong> Search Aggregates</a></li><li><a href="../datasets/mozetl/search_clients_daily/reference.html"><strong aria-hidden="true">6.4.2.</strong> Search Clients Daily</a></li></ol></li><li><a href="../datasets/other.html"><strong aria-hidden="true">6.5.</strong> Other Datasets</a></li><li><ol class="section"><li><a href="../datasets/other/hgpush/reference.html"><strong aria-hidden="true">6.5.1.</strong> hgpush</a></li></ol></li><li><a href="../datasets/obsolete.html"><strong aria-hidden="true">6.6.</strong> Obsolete Datasets</a></li><li><ol class="section"><li><a href="../datasets/obsolete/heavy_users/reference.html"><strong aria-hidden="true">6.6.1.</strong> Heavy Users</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../concepts/index.html"><strong aria-hidden="true">7.</strong> Telemetry Behavior Reference</a></li><li><ol class="section"><li><a href="../concepts/profile/index.html"><strong aria-hidden="true">7.1.</strong> Profile Behavior</a></li><li><ol class="section"><li><a href="../concepts/profile/profile_creation.html"><strong aria-hidden="true">7.1.1.</strong> Profile Creation</a></li><li><a href="../concepts/profile/realworldusage.html"><strong aria-hidden="true">7.1.2.</strong> Real World Usage</a></li><li><a href="../concepts/profile/profilehistory.html"><strong aria-hidden="true">7.1.3.</strong> Profile History</a></li></ol></li><li><a href="../concepts/channels/index.html"><strong aria-hidden="true">7.2.</strong> Channel Behavior</a></li><li><ol class="section"><li><a href="../concepts/channels/channel_normalization.html"><strong aria-hidden="true">7.2.1.</strong> Channel Normalization and Querying</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../meta/index.html"><strong aria-hidden="true">8.</strong> About this Documentation</a></li><li><ol class="section"><li><a href="../meta/contributing.html"><strong aria-hidden="true">8.1.</strong> Contributing</a></li><li><a href="../meta/structure.html"><strong aria-hidden="true">8.2.</strong> Structure</a></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Firefox Data Documentation</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#working-with-normandy-events" id="working-with-normandy-events"><h1>Working with Normandy events</h1></a>
+<p>A common request is to count the number of users who have
+enrolled or unenrolled from a SHIELD experiment.</p>
+<p>The <a href="../datasets/batch_view/events/intro.html"><code>events</code> table</a>
+includes Normandy enrollment and unenrollment events
+for both pref-flip and add-on studies.
+Note that the events table is updated nightly.</p>
+<p>Normandy events have <code>event_category</code> <code>normandy</code>.
+The <code>event_string_value</code> will contain the experiment slug (for pref-flip experiments)
+or name (for add-on experiments).</p>
+<p>Normandy events are described in detail in the
+<a href="https://firefox-source-docs.mozilla.org/toolkit/components/normandy/normandy/data-collection.html#enrollment">Firefox source tree docs</a>.</p>
+<p>Note that addon studies do not have branch information in the events table,
+since addons, not Normandy, are responsible for branch assignment.
+For studies built with the <a href="https://github.com/mozilla/shield-studies-addon-utils">add-on utilities</a>,
+branch assignments are published to the
+<a href="https://docs.telemetry.mozilla.org/datasets/shield.html#telemetry_shield_study_parquet"><code>telemetry_shield_study_parquet</code></a> dataset.</p>
+<a class="header" href="#counting-pref-flip-enrollment-events-by-branch" id="counting-pref-flip-enrollment-events-by-branch"><h2>Counting pref-flip enrollment events by branch</h2></a>
+<p>The <code>event_map_values</code> column of enroll events contains a <code>branch</code> key,
+describing which branch the user enrolled in.</p>
+<p>To fetch a count of events by branch in PySpark:</p>
+<pre><code class="language-python">import pyspark.sql.functions as f
+events = spark.table(&quot;events&quot;)
+
+# For example...
+EXPERIMENT_SLUG = &quot;prefflip-webrender-v1-2-1492568&quot;
+EXPERIMENT_START = &quot;20180920&quot;
+
+enrollments_by_day = (
+  events
+  .filter(events.event_category == &quot;normandy&quot;)
+  .filter(events.event_method == &quot;enroll&quot;)
+  .filter(events.event_string_value == EXPERIMENT_SLUG)
+  .filter(events.submission_date_s3 &gt;= EXPERIMENT_START)
+  .withColumn(&quot;branch&quot;, events.event_map_values.getItem(&quot;branch&quot;))
+  .groupBy(events.submission_date_s3, &quot;branch&quot;)
+  .agg(f.count(&quot;*&quot;).alias(&quot;n&quot;))
+  .toPandas()
+)
+</code></pre>
+<p>Equivalently, in Presto SQL:</p>
+<pre><code class="language-sql">SELECT
+  submission_date_s3,
+  event_map_values['branch'] AS branch,
+  COUNT(*) AS n
+FROM events
+WHERE
+  event_category = 'normandy'
+  AND event_method = 'enroll'
+  AND event_string_value = '{{experiment_slug}}'
+  AND submission_date_s3 &gt;= '{{experiment_start}}'
+GROUP BY 1, 2
+ORDER BY 1, 2
+</code></pre>
+<a class="header" href="#counting-pref-flip-unenrollment-events-by-branch" id="counting-pref-flip-unenrollment-events-by-branch"><h2>Counting pref-flip unenrollment events by branch</h2></a>
+<p>The <code>event_map_values</code> column of unenroll events includes a <code>reason</code> key.
+Reasons are described in the <a href="https://firefox-source-docs.mozilla.org/toolkit/components/normandy/normandy/data-collection.html#enrollment">Normandy docs</a>.
+Normal unenroll events at the termination of a study will occur for the reason <code>recipe-not-seen</code>.</p>
+<p>To fetch a count of events by reason and branch in PySpark:</p>
+<pre><code class="language-python">unenrollments_by_reason = (
+  events
+  .filter(events.event_category == &quot;normandy&quot;)
+  .filter(events.event_method == &quot;unenroll&quot;)
+  .filter(events.event_string_value == EXPERIMENT_SLUG)
+  .filter(events.submission_date_s3 &gt;= EXPERIMENT_START)
+  .withColumn(&quot;branch&quot;, events.event_map_values.getItem(&quot;branch&quot;))
+  .withColumn(&quot;reason&quot;, events.event_map_values.getItem(&quot;reason&quot;))
+  .groupBy(events.submission_date_s3, &quot;branch&quot;, &quot;reason&quot;)
+  .agg(f.count(&quot;*&quot;).alias(&quot;n&quot;))
+  .toPandas()
+)
+
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../cookbooks/crash_pings.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../cookbooks/realtime.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../cookbooks/crash_pings.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../cookbooks/realtime.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="../mermaid-init.js"></script>
+        
+
+        
+
+    </body>
+</html>
