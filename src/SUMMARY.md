@@ -27,6 +27,7 @@
   * [Dataset Specific](cookbooks/dataset_specific.md)
     * [Longitudinal Examples](cookbooks/longitudinal_examples.md)
     * [Working with Crash Pings](cookbooks/crash_pings.md)
+    * [Working with Normandy events](cookbooks/normandy_events.md)
   * [Real-time](cookbooks/realtime.md)
     * [Creating a Real-time Analysis Plugin](cookbooks/realtime_analysis_plugin.md)
     * [Seeing Your Own Pings](cookbooks/view_pings_cep.md)
