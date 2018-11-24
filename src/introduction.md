@@ -37,6 +37,6 @@ This documentation is divided into four main sections:
   You do not need to read this section end-to-end.
 
 You can find the [fully-rendered documentation here](https://mozilla.github.io/firefox-data-docs/),
-rendered with [GitBook](https://www.gitbook.com), and hosted on Github pages.
+rendered with [mdBook](https://github.com/rust-lang-nursery/mdBook), and hosted on Github pages.
 
 
