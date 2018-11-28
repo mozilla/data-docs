@@ -14,8 +14,8 @@ In the event that a client sends multiple pings on a given `submission_date`
 we choose an arbitrary value from the pings for that (`client_id`, `submission_date`),
 unless otherwise noted.
 
-There are three standard search count aggregation columns:
-`sap`, `tagged-sap`, and `tagged-follow-on`.
+There are five standard search count aggregation columns:
+`sap`, `tagged-sap`, and `tagged-follow-on`, `organic` and `unknown`.
 Note that, if there were no such searches in a row's segment
 (i.e. the count would be 0),
 the column value is `null`.
