@@ -91,7 +91,7 @@ The **`sap` column counts all SAP (or direct) searches**.
 within the Firefox UI
 These counts are **very reliable, but do not count follow-on queries**.
 
-In 2017-06 we deployed the [followonsearch addon], which adds probes for `tagged-sap` and `tagged-follow-on` searches.
+In 2017-06 we deployed the [`followonsearch` addon], which adds probes for `tagged-sap` and `tagged-follow-on` searches.
 These columns **attempt to count all tagged searches**
 by looking for Mozilla partner codes in the URL of requests to partner search engines.
 These search counts are critical to understanding revenue
@@ -147,8 +147,8 @@ for a notable example.
 
 ## Limited historical data
 
-The [followonsearch addon] was first deployed in 2017-06.
+The [`followonsearch` addon] was first deployed in 2017-06.
 There is no `tagged-*` search data available before this.
 
-[followonsearch addon]: https://github.com/mozilla/followonsearch
+[`followonsearch` addon]: https://github.com/mozilla/followonsearch
 [search permissions template]: https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=rharter%40mozilla.com&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&comment=Please%20add%20the%20following%20user%20to%20the%20Search%20group%3A%0D%0A%0D%0AMozilla%20email%20address%3A%0D%0AGithub%20handle%3A&component=Datasets%3A%20Search&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=--&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&short_desc=Add%20user%20to%20search%20user%20groups&target_milestone=---&version=unspecified
