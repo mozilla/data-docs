@@ -72,7 +72,7 @@ we include our partner code in the URL of the resulting search.
 **Untagged queries** are queries that **do not include one of our partner codes**.
 If a query is untagged,
 it's usually because we do not have a partner deal for that search engine and region
-(or it is an organic search that did not go through us).
+(or it is an organic search that did not start from an SAP).
 
 If an SAP query is tagged, any follow-on query should also be tagged.
 
