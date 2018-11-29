@@ -216,8 +216,8 @@ check the health of web servers.</p>
 <p><code>/submit/eng-workflow/hgpush/1/2c3a0767-d84a-4d02-8a92-fa54a3376049</code></p>
 <p>Note that <code>id</code> above is a unique document ID, which is used for de-duping
 submissions. This is <em>not</em> intended to be the <code>clientId</code> field from Telemetry.
-If <code>id</code> is omitted, we will not be able to de-dupe based on submission URLs. It
-is recommended that <code>id</code> be a <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier">UUID</a>.</p>
+<code>id</code> is required, and it is recommended that <code>id</code> be a
+<a href="https://en.wikipedia.org/wiki/Universally_unique_identifier">UUID</a>.</p>
 <a class="header" href="#postput-response-codes" id="postput-response-codes"><h3>POST/PUT Response codes</h3></a>
 <ul>
 <li><em>200</em> - OK. Request accepted into the pipeline.</li>
