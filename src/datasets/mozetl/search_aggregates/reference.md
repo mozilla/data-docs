@@ -25,8 +25,8 @@ to run daily.
 
 ## Schema
 
-As of 2018-02-13,
-the current version of `search_aggregates` is `v3`,
+As of 2018-11-28,
+the current version of `search_aggregates` is `v4`,
 and has a schema as follows.
 The dataset is backfilled through 2016-06-06
 
@@ -44,6 +44,8 @@ root
  |-- tagged-sap: long (nullable = true)
  |-- tagged-follow-on: long (nullable = true)
  |-- sap: long (nullable = true)
+ |-- organic: long (nullable = true)
+ |-- unknown: long (nullable = true)
 ```
 
 # Code Reference
