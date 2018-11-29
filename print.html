@@ -6842,9 +6842,10 @@ the identifier registered with the SHIELD add-on utilities
 These often do not match.</p>
 <a class="header" href="#search-data" id="search-data"><h1>Search Data</h1></a>
 <a class="header" href="#introduction-21" id="introduction-21"><h2>Introduction</h2></a>
-<p>This article introduces the datasets we maintain for search analyses.
-After reading this article,
-you should understand the search datasets well enough to produce moderately complex analyses.</p>
+<p>This article introduces the datasets we maintain for search analyses:
+<code>search_aggregates</code> and <code>search_clients_daily</code>. After reading this article,
+you should understand the search datasets well enough to produce moderately
+complex analyses.</p>
 <a class="header" href="#table-of-contents-5" id="table-of-contents-5"><h2>Table of Contents</h2></a>
 <ul>
 <li><a href="#permissions">Permissions</a></li>
@@ -6862,7 +6863,6 @@ you should understand the search datasets well enough to produce moderately comp
 <li><a href="#in-content-telemetry-issues">In Content Telemetry Issues</a>
 <ul>
 <li><a href="#relies-on-whitelists">Relies on whitelists</a></li>
-<li><a href="#addon-uptake">Addon uptake</a></li>
 <li><a href="#limited-historical-data">Limited historical data</a></li>
 </ul>
 </li>
@@ -6880,11 +6880,11 @@ you'll have access to a new source in re:dash called <code>Presto Search</code>.
 via the standard <code>Presto</code> data source</strong>, even with proper permissions.</p>
 <a class="header" href="#terminology-1" id="terminology-1"><h1>Terminology</h1></a>
 <a class="header" href="#direct-vs-follow-on-search" id="direct-vs-follow-on-search"><h2>Direct vs Follow-on Search</h2></a>
-<p>Searches can be split into two major classes: <em>direct</em> and <em>follow-on</em>.</p>
-<p>Direct searches result from a direct interaction with a <code>search access point</code> (SAP),
+<p>Searches can be split into three major classes: <em>sap</em>, <em>follow-on</em>, and <em>organic</em>.</p>
+<p>SAP searches result from a direct interaction with a <code>search access point</code> (SAP),
 which is part of the Firefox UI.
 These searches are often called SAP searches.
-There are currently 6 SAPs:</p>
+There are currently 7 SAPs:</p>
 <ul>
 <li><code>urlbar</code> - entering a search query in the Awesomebar</li>
 <li><code>searchbar</code> - the main search bar; not present by default for new profiles on Firefox 57+</li>
@@ -6892,6 +6892,7 @@ There are currently 6 SAPs:</p>
 <li><code>abouthome</code> - the search bar on the <code>about:home</code> page</li>
 <li><code>contextmenu</code> - selecting text and clicking &quot;Search&quot; from the context menu</li>
 <li><code>system</code> - starting Firefox from the command line with an option that immediately makes a search</li>
+<li><code>webextension</code> - initiated from a web extension (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1492233">added</a> as of Firefox 63)</li>
 </ul>
 <p>Users will often interact with the Search Engine Results Page (SERP)
 to create &quot;downstream&quot; queries.
@@ -6905,6 +6906,8 @@ and not from the Firefox UI.</p>
 <li>Clicking on the &quot;next&quot; button</li>
 <li>Accepting spelling suggestions</li>
 </ul>
+<p>Finally, we track the number of <em>organic</em> searches. These would be searches initiated directly
+from a search engine provider, not through a search access point.</p>
 <a class="header" href="#tagged-vs-untagged-searches" id="tagged-vs-untagged-searches"><h2>Tagged vs Untagged Searches</h2></a>
 <p>Our partners (search engines) attribute queries to Mozilla using <strong>partner codes</strong>.
 When a user issues a query through one of our SAPs,
@@ -6912,59 +6915,65 @@ we include our partner code in the URL of the resulting search.</p>
 <p><strong>Tagged queries</strong> are queries that <strong>include one of our partner codes</strong>.</p>
 <p><strong>Untagged queries</strong> are queries that <strong>do not include one of our partner codes</strong>.
 If a query is untagged,
-it's usually because we do not have a partner deal for that search engine and region.</p>
+it's usually because we do not have a partner deal for that search engine and region
+(or it is an organic search that did not start from an SAP).</p>
 <p>If an SAP query is tagged, any follow-on query should also be tagged.</p>
 <a class="header" href="#standard-search-aggregates" id="standard-search-aggregates"><h1>Standard Search Aggregates</h1></a>
-<p>We report three types of searches in our search datasets:
-<code>SAP</code>, <code>tagged-sap</code>, and <code>tagged-follow-on</code>.
+<p>We report five types of searches in our search datasets:
+<code>sap</code>, <code>tagged-sap</code>, <code>tagged-follow-on</code>, <code>organic</code>, and <code>unknown</code>.
 These aggregates show up as columns in the
 <code>search_aggregates</code> and <code>search_clients_daily</code> datasets.
 Our search datasets are all derived from <code>main_summary</code>.
 The aggregate columns are derived from the <code>SEARCH_COUNTS</code> histogram.</p>
-<p>The <strong><code>SAP</code> column counts all SAP (or direct) searches</strong>.
-<code>SAP</code> search counts are collected via
+<p>The <strong><code>sap</code> column counts all SAP (or direct) searches</strong>.
+<code>sap</code> search counts are collected via
 <a href="https://firefox-source-docs.mozilla.org/browser/browser/BrowserUsageTelemetry.html#search-telemetry">probes</a>
 within the Firefox UI
 These counts are <strong>very reliable, but do not count follow-on queries</strong>.</p>
-<p>In 2017-06 we deployed the [<code>followonsearch</code> addon],
-which adds probes for <code>tagged-sap</code> and <code>tagged-follow-on</code> searches.
+<p>In 2017-06 we deployed the <a href="https://github.com/mozilla/followonsearch"><code>followonsearch</code> addon</a>, which adds probes for <code>tagged-sap</code> and <code>tagged-follow-on</code> searches.
 These columns <strong>attempt to count all tagged searches</strong>
 by looking for Mozilla partner codes in the URL of requests to partner search engines.
 These search counts are critical to understanding revenue
 since they exclude untagged searches and include follow-on searches.
 However, these search counts have <strong>important caveats affecting their reliability</strong>.
 See <a href="#in-content-telemetry-issues">In Content Telemetry Issues</a> for more information.</p>
+<p>In 2018, we
+<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1475571">incorporated</a> this code
+into the product (as of version 61) and also started tracking so-called
+&quot;organic&quot; searches that weren't initiated through a search access point (sap).
+This data has the same caveats as those for follow on searches, above.</p>
+<p>We also started tracking &quot;unknown&quot; searches, which generally correspond
+to clients submitting random/unknown search data to our servers as part
+of their telemetry payload. This category can generally safely be ignored, unless its value
+is extremely high (which indicates a bug in either Firefox or the aggregation code
+which creates our datasets).</p>
 <p>In <code>main_summary</code>, all of these searches are stored in <code>search_counts.count</code>,
 <strong>which makes it easy to over count searches</strong>.
-Avoid using <code>main_summary</code> for search analyses.</p>
+However, in general, please avoid using <code>main_summary</code> for search analyses --
+it's slow and you will need to duplicate much of the work done to make
+analyses of our search datasets tractable.</p>
 <a class="header" href="#outlier-filtering" id="outlier-filtering"><h2>Outlier Filtering</h2></a>
 <p>We remove search count observations representing more than
 10,000 searches for a single search engine in a single ping.</p>
 <a class="header" href="#in-content-telemetry-issues" id="in-content-telemetry-issues"><h1>In Content Telemetry Issues</h1></a>
-<p>The [<code>followonsearch</code> addon] implements the probe
-used to measure <code>tagged-sap</code> and <code>tagged-follow-on</code> searches.
-This probe is critical to understanding our revenue.
-It's the only tool that gives us a view of follow-on searches
+<p>The search code module inside Firefox (formerly implemented
+as an addon until version 60) implements the probe used to measure <code>tagged-sap</code> and
+<code>tagged-follow-on</code> searches and also tracks organic searches. This probe is critical
+to understanding our revenue. It's the only tool that gives us a view of follow-on searches
 and differentiates between tagged and untagged queries.
 However, it comes with some notable caveats.</p>
 <a class="header" href="#relies-on-whitelists" id="relies-on-whitelists"><h2>Relies on whitelists</h2></a>
-<p>The [<code>followonsearch</code> addon] attempts to count all tagged searches
+<p>Firefox's search module attempts to count all tagged searches
 by looking for Mozilla partner codes in the URL of requests to partner search engines.
-To do this, the addon relies on a whitelist of partner codes and URL formats.
+To do this, it relies on a whitelist of partner codes and URL formats.
 The list of partner codes is incomplete and only covers a few top partners.
 These codes also occasionally change so there will be gaps in the data.</p>
 <p>Additionally, changes to search engine URL formats can cause problems with our data collection.
 See
 <a href="https://sql.telemetry.mozilla.org/queries/47631/source#128887">this query</a>
 for a notable example.</p>
-<a class="header" href="#addon-uptake" id="addon-uptake"><h2>Addon uptake</h2></a>
-<p>This probe is shipped as an addon.
-Versions 55 and greater have the addon installed by default
-(<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1369028">Bug</a>).
-The addon was deployed to older versions of Firefox via GoFaster,
-but uptake is not 100%.</p>
 <a class="header" href="#limited-historical-data" id="limited-historical-data"><h2>Limited historical data</h2></a>
-<p>The addon was first deployed in 2017-06.
+<p>The <a href="https://github.com/mozilla/followonsearch"><code>followonsearch</code> addon</a> was first deployed in 2017-06.
 There is no <code>tagged-*</code> search data available before this.</p>
 <a class="header" href="#search-aggregates" id="search-aggregates"><h1>Search Aggregates</h1></a>
 <ul>
@@ -7002,13 +7011,13 @@ Unless otherwise noted, these columns are taken directly from <code>main_summary
 <li><code>source</code> - The UI component used to issue a search - e.g. <code>urlbar</code>, <code>abouthome</code></li>
 <li><code>country</code></li>
 <li><code>locale</code></li>
-<li><code>addon_version</code> - The installed version of the [<code>followonsearch</code> addon]</li>
+<li><code>addon_version</code> - The installed version of the [<code>followonsearch</code> addon] (before version 61)</li>
 <li><code>app_version</code></li>
 <li><code>distribution_id</code> - <code>NULL</code> means the standard Firefox build</li>
 <li><code>search_cohort</code> - <code>NULL</code> except for small segments relating to search experimentation</li>
 </ul>
-<p>There are three aggregation columns:
-<code>sap</code>, <code>tagged-sap</code>, and <code>tagged-follow-on</code>.
+<p>There are five aggregation columns:
+<code>sap</code>, <code>tagged-sap</code>, and <code>tagged-follow-on</code>, <code>organic</code> and <code>unknown</code>.
 Each of these columns represent different types of searches.
 For more details, see the <a href="../../search.html">search data documentation</a>
 Note that, if there were no such searches in a row's segment
@@ -7036,8 +7045,8 @@ For more details see the <a href="../../search.html">search data documentation</
 <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py#L135">scheduled on airflow</a>
 to run daily.</p>
 <a class="header" href="#schema-16" id="schema-16"><h2>Schema</h2></a>
-<p>As of 2018-02-13,
-the current version of <code>search_aggregates</code> is <code>v3</code>,
+<p>As of 2018-11-28,
+the current version of <code>search_aggregates</code> is <code>v4</code>,
 and has a schema as follows.
 The dataset is backfilled through 2016-06-06</p>
 <pre><code>root
@@ -7053,6 +7062,8 @@ The dataset is backfilled through 2016-06-06</p>
  |-- tagged-sap: long (nullable = true)
  |-- tagged-follow-on: long (nullable = true)
  |-- sap: long (nullable = true)
+ |-- organic: long (nullable = true)
+ |-- unknown: long (nullable = true)
 </code></pre>
 <a class="header" href="#code-reference-8" id="code-reference-8"><h1>Code Reference</h1></a>
 <p>The <code>search_aggregates</code> job is
@@ -7088,8 +7099,8 @@ For example, we include <code>country</code> and <code>channel</code> for each r
 In the event that a client sends multiple pings on a given <code>submission_date</code>
 we choose an arbitrary value from the pings for that (<code>client_id</code>, <code>submission_date</code>),
 unless otherwise noted.</p>
-<p>There are three standard search count aggregation columns:
-<code>sap</code>, <code>tagged-sap</code>, and <code>tagged-follow-on</code>.
+<p>There are five standard search count aggregation columns:
+<code>sap</code>, <code>tagged-sap</code>, and <code>tagged-follow-on</code>, <code>organic</code> and <code>unknown</code>.
 Note that, if there were no such searches in a row's segment
 (i.e. the count would be 0),
 the column value is <code>null</code>.
@@ -7123,7 +7134,7 @@ For more details see the <a href="../../search.html">search data documentation</
 <p>This dataset is scheduled on Airflow
 (<a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py#L164">source</a>).</p>
 <a class="header" href="#schema-17" id="schema-17"><h2>Schema</h2></a>
-<p>As of 2018-03-23, the current version of <code>search_clients_daily</code> is <code>v2</code>,
+<p>As of 2018-11-28, the current version of <code>search_clients_daily</code> is <code>v4</code>,
 and has a schema as follows.
 It's backfilled through 2016-06-07</p>
 <pre><code>root
@@ -7156,6 +7167,8 @@ It's backfilled through 2016-06-07</p>
  |-- sap: long (nullable = true)
  |-- tagged_sap: long (nullable = true)
  |-- tagged_follow_on: long (nullable = true)
+ |-- organic: long (nullable = true)
+ |-- unknown: long (nullable = true)
  |-- submission_date_s3: string (nullable = true)
 </code></pre>
 <a class="header" href="#code-reference-9" id="code-reference-9"><h1>Code Reference</h1></a>

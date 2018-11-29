@@ -171,8 +171,8 @@ For example, we include <code>country</code> and <code>channel</code> for each r
 In the event that a client sends multiple pings on a given <code>submission_date</code>
 we choose an arbitrary value from the pings for that (<code>client_id</code>, <code>submission_date</code>),
 unless otherwise noted.</p>
-<p>There are three standard search count aggregation columns:
-<code>sap</code>, <code>tagged-sap</code>, and <code>tagged-follow-on</code>.
+<p>There are five standard search count aggregation columns:
+<code>sap</code>, <code>tagged-sap</code>, and <code>tagged-follow-on</code>, <code>organic</code> and <code>unknown</code>.
 Note that, if there were no such searches in a row's segment
 (i.e. the count would be 0),
 the column value is <code>null</code>.
@@ -206,7 +206,7 @@ For more details see the <a href="../../search.html">search data documentation</
 <p>This dataset is scheduled on Airflow
 (<a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py#L164">source</a>).</p>
 <a class="header" href="#schema" id="schema"><h2>Schema</h2></a>
-<p>As of 2018-03-23, the current version of <code>search_clients_daily</code> is <code>v2</code>,
+<p>As of 2018-11-28, the current version of <code>search_clients_daily</code> is <code>v4</code>,
 and has a schema as follows.
 It's backfilled through 2016-06-07</p>
 <pre><code>root
@@ -239,6 +239,8 @@ It's backfilled through 2016-06-07</p>
  |-- sap: long (nullable = true)
  |-- tagged_sap: long (nullable = true)
  |-- tagged_follow_on: long (nullable = true)
+ |-- organic: long (nullable = true)
+ |-- unknown: long (nullable = true)
  |-- submission_date_s3: string (nullable = true)
 </code></pre>
 <a class="header" href="#code-reference" id="code-reference"><h1>Code Reference</h1></a>

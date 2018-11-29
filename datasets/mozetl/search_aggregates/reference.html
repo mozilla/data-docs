@@ -176,13 +176,13 @@ Unless otherwise noted, these columns are taken directly from <code>main_summary
 <li><code>source</code> - The UI component used to issue a search - e.g. <code>urlbar</code>, <code>abouthome</code></li>
 <li><code>country</code></li>
 <li><code>locale</code></li>
-<li><code>addon_version</code> - The installed version of the [<code>followonsearch</code> addon]</li>
+<li><code>addon_version</code> - The installed version of the [<code>followonsearch</code> addon] (before version 61)</li>
 <li><code>app_version</code></li>
 <li><code>distribution_id</code> - <code>NULL</code> means the standard Firefox build</li>
 <li><code>search_cohort</code> - <code>NULL</code> except for small segments relating to search experimentation</li>
 </ul>
-<p>There are three aggregation columns:
-<code>sap</code>, <code>tagged-sap</code>, and <code>tagged-follow-on</code>.
+<p>There are five aggregation columns:
+<code>sap</code>, <code>tagged-sap</code>, and <code>tagged-follow-on</code>, <code>organic</code> and <code>unknown</code>.
 Each of these columns represent different types of searches.
 For more details, see the <a href="../../search.html">search data documentation</a>
 Note that, if there were no such searches in a row's segment
@@ -210,8 +210,8 @@ For more details see the <a href="../../search.html">search data documentation</
 <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py#L135">scheduled on airflow</a>
 to run daily.</p>
 <a class="header" href="#schema" id="schema"><h2>Schema</h2></a>
-<p>As of 2018-02-13,
-the current version of <code>search_aggregates</code> is <code>v3</code>,
+<p>As of 2018-11-28,
+the current version of <code>search_aggregates</code> is <code>v4</code>,
 and has a schema as follows.
 The dataset is backfilled through 2016-06-06</p>
 <pre><code>root
@@ -227,6 +227,8 @@ The dataset is backfilled through 2016-06-06</p>
  |-- tagged-sap: long (nullable = true)
  |-- tagged-follow-on: long (nullable = true)
  |-- sap: long (nullable = true)
+ |-- organic: long (nullable = true)
+ |-- unknown: long (nullable = true)
 </code></pre>
 <a class="header" href="#code-reference" id="code-reference"><h1>Code Reference</h1></a>
 <p>The <code>search_aggregates</code> job is
