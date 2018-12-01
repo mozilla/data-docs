@@ -15,7 +15,7 @@ or name (for add-on experiments).
 Normandy events are described in detail in the
 [Firefox source tree docs][normandy-doc].
 
-Note that addon studies do not have branch information in the events table,
+Addon studies do not have branch information in the events table,
 since addons, not Normandy, are responsible for branch assignment.
 For studies built with the [add-on utilities][`addon-utils`],
 branch assignments are published to the
@@ -88,8 +88,38 @@ unenrollments_by_reason = (
   .agg(f.count("*").alias("n"))
   .toPandas()
 )
-
 ```
+
+## Counting add-on enrollment and unenrollment events
+
+```python
+shield = spark.table("telemetry_shield_study_parquet")
+
+# This is the name that the add-on uses to identify with the add-on utilities.
+# It does not necessarily match anything else in telemetry or normandy.
+STUDY_NAME = "webcompat-blipz-experiment@shield.mozilla.org"
+
+events_by_branch = (
+  shield
+  .filter(shield.submission >= EXPERIMENT_START)
+  .filter(shield.payload.getItem("study_name") == STUDY_NAME)
+  .filter(shield.payload.getItem("testing") == False)
+  .withColumn("event", shield.payload.getItem("data").getItem("study_state"))
+  .withColumn("branch", shield.payload.getItem("branch"))
+  # Take the first event for each client
+  .orderBy(shield.client_id, "event", shield.submission)
+  .groupBy(shield.client_id, "event")
+  .agg(
+    f.first(shield.submission).alias("submission"),
+    f.first("branch").alias("branch"),
+  )
+  .groupBy("submission", "event", "branch")
+  .agg(f.count("*").alias("n"))
+)
+```
+
+Other members of the `payload` struct column include `addon_version.`
+
 
 [normandy-doc]: https://firefox-source-docs.mozilla.org/toolkit/components/normandy/normandy/data-collection.html#enrollment
 [`telemetry_shield_study_parquet`]: https://docs.telemetry.mozilla.org/datasets/shield.html#telemetry_shield_study_parquet
