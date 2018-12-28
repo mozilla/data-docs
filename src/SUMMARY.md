@@ -33,8 +33,9 @@
     * [Seeing Your Own Pings](cookbooks/view_pings_cep.md)
     * [CEP Matcher](tools/cep_matcher.md)
   * [Metrics](cookbooks/metrics.md)
-    * [Active DAU Definition](cookbooks/active_dau.md)
-    * [Retention Analysis](cookbooks/retention.md)
+    * [Daily Active Users (DAU)](cookbooks/dau.md)
+    * [Active DAU (aDAU)](cookbooks/active_dau.md)
+    * [Retention](cookbooks/retention.md)
 
 ---
 
