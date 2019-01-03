@@ -26,7 +26,7 @@ To build the documentation locally, you'll need to install the `mdbook-dtmo` wra
 Binary builds are provided at <https://github.com/badboy/mdbook-dtmo/releases>.
 Download a release for your system, unpack it and place the binary in a directory of your `$PATH`.
 
-If you have [rustc](https://www.rust-lang.org/en-US/) already installed, you can install a pre-compiled binary directly:
+If you have [rustc](https://www.rust-lang.org/) already installed, you can install a pre-compiled binary directly:
 
 ```bash
 curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-dtmo
