@@ -178,18 +178,18 @@ retention_by_os.filter("period = 6").show()
 ```
 
 ```
-+----------+------+--------------+-------------+-------------------+
-|        os|period|n_week_clients|total_clients|          retention|
-+----------+------+--------------+-------------+-------------------+
-|     Linux|     6|          1495|        22422|0.06667558647756668|
-|    Darwin|     6|          1288|         4734|0.27207435572454586|
-|Windows_NT|     6|         29024|       124872|0.23243000832852842|
-+----------+------+--------------+-------------+-------------------+
++----------+------+--------------+-------------+-------------------+--------------------+
+|        os|period|n_week_clients|total_clients| retention         | ci_95_semi_interval|
++----------+------+--------------+-------------+-------------------+--------------------+
+|     Linux|     6|          1495|        22422|0.06667558647756668|0.003265266498407...|
+|    Darwin|     6|          1288|         4734|0.27207435572454586|0.012677372722376635|
+|Windows_NT|     6|         29024|       124872|0.23243000832852842|0.002342764476746...|
++----------+------+--------------+-------------+-------------------+--------------------+
 
 
 ```
 
-we observe that 6.7% of Linux users whose profile was created in the first half of April submitted a ping 6 weeks later, and so forth. The example code snippets are consolidated in [this notebook](https://gist.github.com/benmiroglio/fc708e5905fad33b43adb9c90e38ebf4).
+we observe that 6.7% ± 0.3% of Linux users whose profile was created in the first half of April submitted a ping 6 weeks later, and so forth. The example code snippets are consolidated in [this notebook](https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/61351/command/61352).
 
 
 ### New vs. Existing User Retention
