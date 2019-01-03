@@ -14,7 +14,7 @@ For example, let’s say we are calculating retention for new Firefox users. Eac
 
 
 
-Given a dataset in Spark, we can construct a field `retention_period` that uses `submission_date_s3` to determine the period to which a ping belongs (i.e. if a user created their profile on April 1st, all pings submitted between April 8th and April 14th are assigned to week 1). 1-week retention can then be simplified to the percent of users with a 1 value for `retention_period`, 2-week retention simplifies to the percent of users with a 2 value for `retention_period`, ..., etc. Note that each retention period is independent of the others, so it is possible to have higher 2-week retention than 1-week retention (especially during holidays). 
+Given a dataset in Spark, we can construct a field `retention_period` that uses `submission_date_s3` to determine the period to which a ping belongs (i.e. if a user created their profile on April 1st, all pings submitted between April 8th and April 14th are assigned to week 1). 1-week retention can then be simplified to the percent of users with a 1 value for `retention_period`, 2-week retention simplifies to the percent of users with a 2 value for `retention_period`, ..., etc. Note that each retention period is independent of the others, so it is possible to have higher 2-week retention than 1-week retention (especially during holidays).
 
 First let's map 1, 2, ..., N week retention the the amount of days elapsed after the anchor point:
 
@@ -39,7 +39,7 @@ Which gives us
 
 ```
 
-Next, let's define some helper functions: 
+Next, let's define some helper functions:
 
 ```python
 import datetime as dt
@@ -52,39 +52,39 @@ udf = F.udf
 def date_diff(d1, d2, fmt='%Y%m%d'):
     """
     Returns days elapsed from d2 to d1 as an integer
-    
+
     Params:
     d1 (str)
     d2 (str)
     fmt (str): format of d1 and d2 (must be the same)
-    
+
     >>> date_diff('20170205', '20170201')
     4
-    
+
     >>> date_diff('20170201', '20170205)
     -4
     """
     try:
-        return (pd.to_datetime(d1, format=fmt) - 
+        return (pd.to_datetime(d1, format=fmt) -
                 pd.to_datetime(d2, format=fmt)).days
     except:
         return None
-    
+
 
 @udf(returnType=st.IntegerType())
 def get_period(anchor, submission_date_s3):
     """
     Given an anchor and a submission_date_s3,
-    returns what period a ping belongs to. This 
+    returns what period a ping belongs to. This
     is a spark UDF.
-    
+
     Params:
     anchor (col): anchor date
     submission_date_s3 (col): a ping's submission_date to s3
-    
+
     Global:
     PERIODS (dict): defined globally based on n-week method
-    
+
     Returns an integer indicating the retention period
     """
     if anchor is not None:
@@ -99,10 +99,10 @@ def from_unixtime_handler(ut):
     """
     Converts unix time (in days) to a string in %Y%m%d format.
     This is a spark UDF.
-    
+
     Params:
     ut (int): unix time in days
-    
+
     Returns a date as a string if it is parsable by datetime, otherwise None
     """
     if ut is not None:
@@ -110,20 +110,20 @@ def from_unixtime_handler(ut):
             return (dt.datetime.fromtimestamp(ut * 24 * 60 * 60).strftime("%Y%m%d"))
         except:
             return None
-        
+
 ```
 
 Now we can load in a subset of `main_summary` and construct the necessary fields for retention calculations:
 
 ```python
 ms = spark.sql("""
-    SELECT 
-        client_id, 
+    SELECT
+        client_id,
         submission_date_s3,
         profile_creation_date,
         os
-    FROM main_summary 
-    WHERE 
+    FROM main_summary
+    WHERE
         submission_date_s3 >= '20180401'
         AND submission_date_s3 <= '20180603'
         AND sample_id = '42'
@@ -187,7 +187,7 @@ we observe that 6.7% of Linux users whose profile was created in the first half 
 
 ### New vs. Existing User Retention
 
-The above example calculates **New User Retention**, which is distinct from **Existing User Retention**. This distinction is important when understanding retention baselines (i.e. does this number make sense?). Existing users typically have much higher retention numbers than new users. 
+The above example calculates **New User Retention**, which is distinct from **Existing User Retention**. This distinction is important when understanding retention baselines (i.e. does this number make sense?). Existing users typically have much higher retention numbers than new users.
 
 Note that is more common in industry to refer to Existing User Retention as "Churn" (Churn = 1 - Retention), however, we use retention across the board for the sake of consistency and interpretability.
 
@@ -196,7 +196,7 @@ Note that is more common in industry to refer to Existing User Retention as "Chu
 
 ### What If There's No Anchor Point?
 
-Sometimes there isn't a clear anchor point like `profile_creation_date` or `enrollment_date`. 
+Sometimes there isn't a clear anchor point like `profile_creation_date` or `enrollment_date`.
 
 For example, imagine you are tasked with reporting retention numbers for users that enabled sync (`sync_configured`) compared to users that haven't. Being a boolean pref, there is no straightforward way to determine *when* `sync_enabled` flipped from `false` to `true` aside from looking at a client's entire history (which is not recommended!). What now?
 
@@ -222,5 +222,3 @@ For example (borrowing the sync example from the previous section) you find that
 *Not quite*. Turns out you next look at `active_ticks` and `total_uri_count` and find that sync users report much higher numbers for these measures as well. Now how can we explain this difference in retention?
 
 There could be an entirely separate cookbook devoted to answering this question, however this contrived example is meant to demonstrate that simply comparing retention numbers between two groups isn't capturing the full story. Sans an experiment or model-based approach, all we can say is "enabling sync is **associated** with higher retention numbers." There is still value in this assertion, however it should be stressed that **association/correlation != causation!**
-
-
