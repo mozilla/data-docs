@@ -161,6 +161,13 @@ retention_by_os = (
     weekly_counts
     .join(os_counts, on='os')
     .withColumn("retention", F.col("n_week_clients") / F.col("total_clients"))
+    # Add a 95% confidence interval based on the normal approximation for a binomial distribution,
+    # p ± z * sqrt(p*(1-p)/n).
+    # The 95% CI spans the range `retention ± ci_95_semi_interval`.
+    .withColumn(
+      "ci_95_semi_interval",
+      F.lit(1.96) * F.sqrt(F.col("retention") * (F.lit(1) - F.col("retention")) / F.col("total_clients"))
+    )
 )
 ```
 
