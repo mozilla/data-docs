@@ -45,7 +45,8 @@ ORDER BY
 SELECT
     submission_date AS day,
     cardinality(merge(cast(hll AS HLL))) AS dau
-FROM client_count_daily
+FROM
+    client_count_daily
 WHERE
     -- Limit to 7 days of history
     submission_date >= date_format(CURRENT_DATE - INTERVAL '7' DAY, '%Y%m%d')
