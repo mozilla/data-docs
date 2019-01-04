@@ -53,3 +53,31 @@ WHERE
 GROUP BY 1
 ORDER BY 1
 ```
+
+Calculating MAU for a single date is simple.  For example, the following query calculates MAU for 2018-12-16:
+
+```sql
+SELECT
+  COUNT(DISTINCT client_id)
+FROM
+  clients_daily_v6
+WHERE
+  submission_date_s3 <= '20181216'
+  AND submission_date_s3 >= '20181119'
+```
+Generating a table of MAU over time is more complex.  Here's one possible way, which is conceptually simple, but not very computationally efficient:
+
+```sql
+SELECT
+  dates_table.submission_date_s3,
+  COUNT(DISTINCT clients_table.client_id) AS mau
+FROM
+  (SELECT TO_DATE(submission_date_s3, 'yyyyMMdd') AS submission_date_s3 FROM clients_daily_v6 WHERE submission_date_s3 >= '20181216' GROUP BY submission_date_s3) dates_table
+JOIN
+  (SELECT client_id, TO_DATE(submission_date_s3, 'yyyyMMdd') AS submission_date_s3 FROM clients_daily_v6 WHERE submission_date_s3 >= '20181119') clients_table
+ON
+  clients_table.submission_date_s3 between dates_table.submission_date_s3 - interval 27 day and dates_table.submission_date_s3
+GROUP BY dates_table.submission_date_s3
+```
+
+Note that the query above will not run in STMO, but will in Databricks.  In the near future, we execpt to offer a better option and will thoroughly update this documentation.
