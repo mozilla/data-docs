@@ -82,7 +82,15 @@ FROM
     GROUP BY submission_date_s3
   ) AS dates_table
 JOIN
-  (SELECT client_id, TO_DATE(submission_date_s3, 'yyyyMMdd') AS submission_date_s3 FROM clients_daily_v6 WHERE submission_date_s3 >= '20181119') clients_table
+  (
+    SELECT
+      client_id,
+      TO_DATE(submission_date_s3, 'yyyyMMdd') AS submission_date_s3
+    FROM
+      clients_daily_v6
+    WHERE
+      submission_date_s3 >= '20181119'
+  ) AS clients_table
 ON
   clients_table.submission_date_s3 between dates_table.submission_date_s3 - interval 27 day and dates_table.submission_date_s3
 GROUP BY dates_table.submission_date_s3
