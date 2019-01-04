@@ -4001,6 +4001,44 @@ WHERE
 GROUP BY 1
 ORDER BY 1
 </code></pre>
+<p>Calculating MAU for a single date is simple.  For example, the following query calculates MAU for 2018-12-16:</p>
+<pre><code class="language-sql">SELECT
+  COUNT(DISTINCT client_id)
+FROM
+  clients_daily_v6
+WHERE
+  submission_date_s3 &lt;= '20181216'
+  AND submission_date_s3 &gt;= '20181119'
+</code></pre>
+<p>Generating a table of MAU over time is more complex.  Here's one possible way, which is conceptually simple, but not very computationally efficient:</p>
+<pre><code class="language-sql">SELECT
+  dates_table.submission_date_s3,
+  COUNT(DISTINCT clients_table.client_id) AS mau
+FROM
+  (
+    SELECT
+      TO_DATE(submission_date_s3, 'yyyyMMdd') AS submission_date_s3
+    FROM
+      clients_daily_v6
+    WHERE
+      submission_date_s3 &gt;= '20181216'
+    GROUP BY submission_date_s3
+  ) AS dates_table
+JOIN
+  (
+    SELECT
+      client_id,
+      TO_DATE(submission_date_s3, 'yyyyMMdd') AS submission_date_s3
+    FROM
+      clients_daily_v6
+    WHERE
+      submission_date_s3 &gt;= '20181119'
+  ) AS clients_table
+ON
+  clients_table.submission_date_s3 between dates_table.submission_date_s3 - interval 27 day and dates_table.submission_date_s3
+GROUP BY dates_table.submission_date_s3
+</code></pre>
+<p>Note that the query above will not run in STMO, but will in Databricks.  <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1499645">In the near future</a>, we expect to offer a better option and will thoroughly update this documentation.</p>
 <a class="header" href="#active-dau-and-active-mau" id="active-dau-and-active-mau"><h1>Active DAU and Active MAU</h1></a>
 <p>An <strong>Active User</strong> is defined as a client who has <code>total_daily_uri</code> &gt;= 5 URI for a given date.</p>
 <ul>
