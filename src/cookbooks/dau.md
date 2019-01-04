@@ -96,4 +96,4 @@ ON
 GROUP BY dates_table.submission_date_s3
 ```
 
-Note that the query above will not run in STMO, but will in Databricks.  In the near future, we execpt to offer a better option and will thoroughly update this documentation.
+Note that the query above will not run in STMO, but will in Databricks.  In the near future, we expect to offer a better option and will thoroughly update this documentation.
