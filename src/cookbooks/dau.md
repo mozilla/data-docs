@@ -72,7 +72,15 @@ SELECT
   dates_table.submission_date_s3,
   COUNT(DISTINCT clients_table.client_id) AS mau
 FROM
-  (SELECT TO_DATE(submission_date_s3, 'yyyyMMdd') AS submission_date_s3 FROM clients_daily_v6 WHERE submission_date_s3 >= '20181216' GROUP BY submission_date_s3) dates_table
+  (
+    SELECT
+      TO_DATE(submission_date_s3, 'yyyyMMdd') AS submission_date_s3
+    FROM
+      clients_daily_v6
+    WHERE
+      submission_date_s3 >= '20181216'
+    GROUP BY submission_date_s3
+  ) AS dates_table
 JOIN
   (SELECT client_id, TO_DATE(submission_date_s3, 'yyyyMMdd') AS submission_date_s3 FROM clients_daily_v6 WHERE submission_date_s3 >= '20181119') clients_table
 ON
