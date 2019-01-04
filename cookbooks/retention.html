@@ -177,39 +177,39 @@ udf = F.udf
 def date_diff(d1, d2, fmt='%Y%m%d'):
     &quot;&quot;&quot;
     Returns days elapsed from d2 to d1 as an integer
-    
+
     Params:
     d1 (str)
     d2 (str)
     fmt (str): format of d1 and d2 (must be the same)
-    
+
     &gt;&gt;&gt; date_diff('20170205', '20170201')
     4
-    
+
     &gt;&gt;&gt; date_diff('20170201', '20170205)
     -4
     &quot;&quot;&quot;
     try:
-        return (pd.to_datetime(d1, format=fmt) - 
+        return (pd.to_datetime(d1, format=fmt) -
                 pd.to_datetime(d2, format=fmt)).days
     except:
         return None
-    
+
 
 @udf(returnType=st.IntegerType())
 def get_period(anchor, submission_date_s3):
     &quot;&quot;&quot;
     Given an anchor and a submission_date_s3,
-    returns what period a ping belongs to. This 
+    returns what period a ping belongs to. This
     is a spark UDF.
-    
+
     Params:
     anchor (col): anchor date
     submission_date_s3 (col): a ping's submission_date to s3
-    
+
     Global:
     PERIODS (dict): defined globally based on n-week method
-    
+
     Returns an integer indicating the retention period
     &quot;&quot;&quot;
     if anchor is not None:
@@ -224,10 +224,10 @@ def from_unixtime_handler(ut):
     &quot;&quot;&quot;
     Converts unix time (in days) to a string in %Y%m%d format.
     This is a spark UDF.
-    
+
     Params:
     ut (int): unix time in days
-    
+
     Returns a date as a string if it is parsable by datetime, otherwise None
     &quot;&quot;&quot;
     if ut is not None:
@@ -235,17 +235,17 @@ def from_unixtime_handler(ut):
             return (dt.datetime.fromtimestamp(ut * 24 * 60 * 60).strftime(&quot;%Y%m%d&quot;))
         except:
             return None
-        
+
 </code></pre>
 <p>Now we can load in a subset of <code>main_summary</code> and construct the necessary fields for retention calculations:</p>
 <pre><code class="language-python">ms = spark.sql(&quot;&quot;&quot;
-    SELECT 
-        client_id, 
+    SELECT
+        client_id,
         submission_date_s3,
         profile_creation_date,
         os
-    FROM main_summary 
-    WHERE 
+    FROM main_summary
+    WHERE
         submission_date_s3 &gt;= '20180401'
         AND submission_date_s3 &lt;= '20180603'
         AND sample_id = '42'
@@ -280,22 +280,29 @@ retention_by_os = (
     weekly_counts
     .join(os_counts, on='os')
     .withColumn(&quot;retention&quot;, F.col(&quot;n_week_clients&quot;) / F.col(&quot;total_clients&quot;))
+    # Add a 95% confidence interval based on the normal approximation for a binomial distribution,
+    # p ± z * sqrt(p*(1-p)/n).
+    # The 95% CI spans the range `retention ± ci_95_semi_interval`.
+    .withColumn(
+      &quot;ci_95_semi_interval&quot;,
+      F.lit(1.96) * F.sqrt(F.col(&quot;retention&quot;) * (F.lit(1) - F.col(&quot;retention&quot;)) / F.col(&quot;total_clients&quot;))
+    )
 )
 </code></pre>
 <p>Peeking at 6-Week Retention</p>
 <pre><code class="language-python">retention_by_os.filter(&quot;period = 6&quot;).show()
 </code></pre>
-<pre><code>+----------+------+--------------+-------------+-------------------+
-|        os|period|n_week_clients|total_clients|          retention|
-+----------+------+--------------+-------------+-------------------+
-|     Linux|     6|          1495|        22422|0.06667558647756668|
-|    Darwin|     6|          1288|         4734|0.27207435572454586|
-|Windows_NT|     6|         29024|       124872|0.23243000832852842|
-+----------+------+--------------+-------------+-------------------+
+<pre><code>+----------+------+--------------+-------------+-------------------+--------------------+
+|        os|period|n_week_clients|total_clients| retention         | ci_95_semi_interval|
++----------+------+--------------+-------------+-------------------+--------------------+
+|     Linux|     6|          1495|        22422|0.06667558647756668|0.003265266498407...|
+|    Darwin|     6|          1288|         4734|0.27207435572454586|0.012677372722376635|
+|Windows_NT|     6|         29024|       124872|0.23243000832852842|0.002342764476746...|
++----------+------+--------------+-------------+-------------------+--------------------+
 
 
 </code></pre>
-<p>we observe that 6.7% of Linux users whose profile was created in the first half of April submitted a ping 6 weeks later, and so forth. The example code snippets are consolidated in <a href="https://gist.github.com/benmiroglio/fc708e5905fad33b43adb9c90e38ebf4">this notebook</a>.</p>
+<p>we observe that 6.7% ± 0.3% of Linux users whose profile was created in the first half of April submitted a ping 6 weeks later, and so forth. The example code snippets are consolidated in <a href="https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/61351/command/61352">this notebook</a>.</p>
 <a class="header" href="#new-vs-existing-user-retention" id="new-vs-existing-user-retention"><h3>New vs. Existing User Retention</h3></a>
 <p>The above example calculates <strong>New User Retention</strong>, which is distinct from <strong>Existing User Retention</strong>. This distinction is important when understanding retention baselines (i.e. does this number make sense?). Existing users typically have much higher retention numbers than new users.</p>
 <p>Note that is more common in industry to refer to Existing User Retention as &quot;Churn&quot; (Churn = 1 - Retention), however, we use retention across the board for the sake of consistency and interpretability.</p>
