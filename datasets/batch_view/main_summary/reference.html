@@ -172,12 +172,12 @@
 <a class="header" href="#introduction" id="introduction"><h1>Introduction</h1></a>
 <p>The <code>main_summary</code> table is the most direct representation of a main ping
 but can be difficult to work with due to its size.
-Prefer the <code>longitudinal</code> dataset unless using the sampled data is prohibitive.</p>
+Prefer the <code>clients_daily</code> dataset unless it doesn't aggregate the measurements you're interested in.</p>
 <a class="header" href="#contents" id="contents"><h4>Contents</h4></a>
 <p>The <code>main_summary</code> table contains one row for each ping.
 Each column represents one field from the main ping payload,
 though only a subset of all main ping fields are included.
-This dataset <strong>does not include histograms</strong>.</p>
+This dataset <strong>does not include most histograms</strong>.</p>
 <a class="header" href="#background-and-caveats" id="background-and-caveats"><h4>Background and Caveats</h4></a>
 <p>This table is massive, and due to its size, it can be difficult to work with.
 You should <strong>avoid querying <code>main_summary</code></strong> from <a href="https://sql.telemetry.mozilla.org">re:dash</a>.
