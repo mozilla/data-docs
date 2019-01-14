@@ -1,4 +1,4 @@
-# Mailing lists and channels
+# Getting Help
 
 ### Mailing lists
 

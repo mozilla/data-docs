@@ -41,6 +41,7 @@ Databricks
 DataDog
 DataFrame
 DataFrames
+datapipeline
 DAU
 dataset
 datasets
@@ -57,6 +58,7 @@ EMR
 ETL
 filename
 funnelcake
+fx-metrics
 geoip
 GitBook
 Github
@@ -75,6 +77,7 @@ i.e.
 inlined
 int64
 interpretability
+irc.mozilla.org.
 iOS
 JSON
 JSONSchema
@@ -89,6 +92,8 @@ metadata
 metastore
 Miroglio
 Mocli
+mozilla.org
+mozilla.com
 MozTelemetry
 MySQL
 namespace
