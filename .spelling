@@ -144,6 +144,7 @@ struct
 structs
 subsession
 subsessions
+SurveyGizmo
 TAAR
 TBD
 TCP
