@@ -44,6 +44,7 @@ There are currently 7 SAPs:
 * `contextmenu` - selecting text and clicking "Search" from the context menu
 * `system` - starting Firefox from the command line with an option that immediately makes a search
 * `webextension` - initiated from a web extension ([added](https://bugzilla.mozilla.org/show_bug.cgi?id=1492233) as of Firefox 63)
+* `alias` - initiated from a search keyword (like @google) ([added](https://bugzilla.mozilla.org/show_bug.cgi?id=1499193) as of Firefox 64)
 
 Users will often interact with the Search Engine Results Page (SERP)
 to create "downstream" queries.
