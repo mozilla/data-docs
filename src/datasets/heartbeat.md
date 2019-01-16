@@ -1,6 +1,9 @@
 # Accessing Heartbeat data
 
 [Heartbeat][heartbeat] survey studies return telemetry on user engagement with the survey prompt.
+The heartbeat pings do not contain the survey responses themselves,
+which are stored by SurveyGizmo.
+
 The telemetry is received using the `heartbeat` document type,
 which is [described in the Firefox source tree docs][hbping].
 
@@ -15,10 +18,10 @@ of the [`show-heartbeat` recipe][show-heartbeat].
 
 Heartbeat never reports telemetry `client_id`s to SurveyGizmo, but,
 when `includeTelemetryUUID` is true,
-a new, unique user ID is generated and reported to SurveyGizmo
+a new, random UUID is generated and reported to SurveyGizmo
 as the `userid` URL variable.
 Simultaneously, a `heartbeat` ping is sent to Mozilla,
-containing both the `client_id` and the new `userid`.
+containing both the telemetry `client_id` and the new `userid` that was reported to SurveyGizmo.
 
 The `userid` is reported by appending it to the `surveyId` field of the ping, like:
 
@@ -29,7 +32,7 @@ hb-example-slug::e87bcae5-bb63-4829-822a-85ba41ee5d53
 These can be extracted from the Parquet table for analysis using expressions like:
 
 ```
-SPLIT(payload.survey_id,'::')[1] AS Shield_ID
+SPLIT(payload.survey_id,'::')[1] AS surveygizmo_userid
 ```
 
 ## Data reference
