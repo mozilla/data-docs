@@ -62,6 +62,7 @@
     * [Sync Summary](datasets/batch_view/sync_summary/reference.md)
     * [Update](datasets/batch_view/update/reference.md)
   * [Experimental Datasets](tools/experiments.md)
+    * [Accessing Heartbeat data](datasets/heartbeat.md)
     * [Accessing Shield Study data](datasets/shield.md)
   * [Search Datasets](datasets/search.md)
     * [Search Aggregates](datasets/mozetl/search_aggregates/reference.md)
