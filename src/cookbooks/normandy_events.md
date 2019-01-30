@@ -106,13 +106,10 @@ events_by_branch = (
   .filter(shield.payload.getItem("testing") == False)
   .withColumn("event", shield.payload.getItem("data").getItem("study_state"))
   .withColumn("branch", shield.payload.getItem("branch"))
-  # Take the first event for each client
-  .orderBy(shield.client_id, "event", shield.submission)
-  .groupBy(shield.client_id, "event")
-  .agg(
-    f.first(shield.submission).alias("submission"),
-    f.first("branch").alias("branch"),
-  )
+  # Find the earliest (un)enrollment date for any (client_id, branch) combination,
+  # since enrollment events may be sent more than once
+  .groupBy(shield.client_id, "event", "branch")
+  .agg(f.min(shield.submission).alias("submission"))
   .groupBy("submission", "event", "branch")
   .agg(f.count("*").alias("n"))
 )
