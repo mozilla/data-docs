@@ -50,6 +50,7 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 | [`puppet-config`][puppet]             | Cloud services puppet config for deploying infrastructure
 | [`parquet2hive`][p2h]                 | Hive import statement generator for Parquet datasets
 | [`edge-validator`][edge-validator]    | A service endpoint for validating incoming data
+| [`gcp-ingestion`][gcp-ingestion]      | Documentation and implementation of the Mozilla telemetry ingestion system on Google Cloud Platform
 
 [schemas]: https://github.com/mozilla-services/mozilla-pipeline-schemas
 [hs]: https://github.com/mozilla-services/hindsight
@@ -59,6 +60,7 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 [puppet]: https://github.com/mozilla-services/puppet-config/tree/master/pipeline
 [p2h]: https://github.com/mozilla/parquet2hive
 [edge-validator]: https://github.com/mozilla-services/edge-validator
+[gcp-ingestion]: https://github.com/mozilla/gcp-ingestion
 
 ### EMR Bootstrap scripts
 
