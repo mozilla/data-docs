@@ -60,7 +60,7 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 [puppet]: https://github.com/mozilla-services/puppet-config/tree/master/pipeline
 [p2h]: https://github.com/mozilla/parquet2hive
 [edge-validator]: https://github.com/mozilla-services/edge-validator
-[gcp-ingestion](https://github.com/mozilla/gcp-ingestion)
+[gcp-ingestion]: https://github.com/mozilla/gcp-ingestion
 
 ### EMR Bootstrap scripts
 
