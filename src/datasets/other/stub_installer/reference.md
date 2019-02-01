@@ -10,7 +10,7 @@ They are processed into Redshift by [`dsmo_load`](https://github.com/whd/dsmo_lo
 
 ## How to access the data
 
-The Redshift tables are accessible from the DSMO-RS data source in [STMO](https://sql.telemetry.mozilla.org/). 
+The Redshift tables are accessible from the `DSMO-RS` data source in [STMO](https://sql.telemetry.mozilla.org/). 
 
 The canonical documentation is in [this tree](https://searchfox.org/mozilla-central/source/browser/installer/windows/docs/StubPing.rst).
 
