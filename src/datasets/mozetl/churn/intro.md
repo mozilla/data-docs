@@ -23,7 +23,7 @@ and 1 since there is activity in both periods. A client only needs to show up
 once in the period to be counted as retained. Client B is acquired in week 0 and
 is active frequently but does not appear in following weeks. Client B is
 considered churned on week 1. However, a client that is churned can become
-retained again. Client C is considered churned on week 1 but retained on week 3.
+retained again. Client C is considered churned on week 1 but retained on week 2.
 
 The following table summarizes the above daily activity into the following view
 where every column represents the current week since acquisition date..
