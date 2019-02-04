@@ -48,21 +48,6 @@ for sophisticated ad-hoc analysis without the need for any specialized
 programming skills, but with so many options the UI can be a bit intimidating
 for novice users.
 
-#### Distribution Viewer
-
-Distribution Viewer (deprecated) was a simple tool
-that provides a set of [cumulative distribution
-graphs](http://math.stackexchange.com/questions/52400/what-is-cdf-cumulative-distribution-function)
-for a pre-specified selection of Firefox user metrics. These metrics are
-extracted from a 1% sample of the `clientId`s from Firefox Telemetry. These plots
-will allow you to understand how values of different metrics are spread out
-among our population of users rather than just using a one number summary (such
-as a mean or median). By viewing the entire distribution, you can get a sense
-of the importance of behavior at the extremes as well as anomalies within the
-population that might indicate interesting behavior. Very simple to use (no
-programming required) and able to provide interesting insights, but not usually
-suitable for ad-hoc analysis.
-
 #### [Real Time / CEP](../cookbooks/realtime_analysis_plugin.md)
 
 The "real time" or "complex event processing" (CEP)
