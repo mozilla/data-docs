@@ -10,6 +10,7 @@ ad-hoc
 add-on
 addon
 addons
+Add-ons
 aDAU
 Algebird's
 analytics
@@ -32,6 +33,7 @@ CamelCase
 CEP
 changesets
 chromehangs
+CircleCI
 config
 CPOW
 CSV
@@ -75,9 +77,11 @@ inlined
 int64
 interpretability
 iOS
+JS
 JSON
 JSONSchema
 Jupyter
+lifecycle
 lookups
 Lua
 matcher
@@ -90,6 +94,7 @@ Miroglio
 Mocli
 MozTelemetry
 MySQL
+multipreffer
 namespace
 namespaces
 natively
@@ -119,6 +124,8 @@ pre-loaded
 pre-processes
 pre-release
 pre-specified
+Prefs
+prefs
 prepended
 protobuf
 pushlog
@@ -148,10 +155,12 @@ subsession
 subsessions
 SurveyGizmo
 TAAR
+Taskcluster
 TBD
 TCP
 timestamp
 timestamps
+tryserver
 TMO
 TODO
 toolbars
@@ -177,5 +186,7 @@ whitelist
 whitelists
 WAU
 WebExtension
+WebExtensions
+XPI
 doctype
 validator
