@@ -10,12 +10,14 @@ Below are a number of trailheads that lead into the projects and code that compr
 | [`moztelemetry`][mt]               | Scala APIs for Mozilla Telemetry
 | [`spark-hyperloglog`][spark_hll]   | Algebird's HyperLogLog support for Apache Spark
 | [`mozanalysis`][ma]                | A library for Mozilla experiments analysis
+| [`glean`][glean]                   | A client-side mobile Telemetry SDK for collecting metrics and sending them to Mozilla's Telemetry service.
 
 
 [pymt]: https://github.com/mozilla/python_moztelemetry
 [mt]: https://github.com/mozilla/moztelemetry
 [spark_hll]: https://github.com/mozilla/spark-hyperloglog
 [ma]: https://github.com/mozilla/mozanalysis
+[glean]: https://github.com/mozilla-mobile/android-components/tree/master/components/service/glean
 
 ## ETL code and Datasets
 
@@ -48,6 +50,7 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 | [`puppet-config`][puppet]             | Cloud services puppet config for deploying infrastructure
 | [`parquet2hive`][p2h]                 | Hive import statement generator for Parquet datasets
 | [`edge-validator`][edge-validator]    | A service endpoint for validating incoming data
+| [`gcp-ingestion`][gcp-ingestion]      | Documentation and implementation of the Mozilla telemetry ingestion system on Google Cloud Platform
 
 [schemas]: https://github.com/mozilla-services/mozilla-pipeline-schemas
 [hs]: https://github.com/mozilla-services/hindsight
@@ -57,6 +60,7 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 [puppet]: https://github.com/mozilla-services/puppet-config/tree/master/pipeline
 [p2h]: https://github.com/mozilla/parquet2hive
 [edge-validator]: https://github.com/mozilla-services/edge-validator
+[gcp-ingestion]: https://github.com/mozilla/gcp-ingestion
 
 ### EMR Bootstrap scripts
 

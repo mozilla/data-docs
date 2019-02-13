@@ -24,7 +24,7 @@ This dataset is scheduled on Airflow
 
 ## Schema
 
-As of 2018-03-23, the current version of `search_clients_daily` is `v2`,
+As of 2018-11-28, the current version of `search_clients_daily` is `v4`,
 and has a schema as follows.
 It's backfilled through 2016-06-07
 
@@ -59,6 +59,8 @@ root
  |-- sap: long (nullable = true)
  |-- tagged_sap: long (nullable = true)
  |-- tagged_follow_on: long (nullable = true)
+ |-- organic: long (nullable = true)
+ |-- unknown: long (nullable = true)
  |-- submission_date_s3: string (nullable = true)
 ```
 

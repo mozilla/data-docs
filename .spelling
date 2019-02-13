@@ -58,7 +58,6 @@ ETL
 filename
 funnelcake
 geoip
-GitBook
 Github
 GoFaster
 gzip
@@ -101,6 +100,7 @@ ni
 non-e10s
 NoSQL
 npm
+NSIS
 NumPy
 ORM-like
 optout
@@ -136,6 +136,7 @@ schemas
 SciPy
 SDK
 searchfox
+SendPing
 SERP
 serverless
 Sonatype
@@ -145,6 +146,7 @@ struct
 structs
 subsession
 subsessions
+SurveyGizmo
 TAAR
 TBD
 TCP
@@ -165,6 +167,7 @@ UI
 un-check
 un-encoded
 un-publish
+unenroll
 unenrollment
 unmanaged
 uri
@@ -173,5 +176,6 @@ versioned
 whitelist
 whitelists
 WAU
+WebExtension
 doctype
 validator

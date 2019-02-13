@@ -42,7 +42,7 @@ Saving a table to parquet is a great way to share an intermediate dataset.
 You can save data to a subdirectory of the following bucket:
 `s3://net-mozaws-prod-us-west-2-pipeline-analysis/<username>/`
 Use your username for the subdirectory name.
-This bucket is available to all ATMO clusters and Airflow.
+This bucket is available to all ATMO and Databricks clusters, including those created from Airflow.
 
 When your analysis is production ready,
 open a PR against [`python_mozetl`](https://github.com/mozilla/python_mozetl).

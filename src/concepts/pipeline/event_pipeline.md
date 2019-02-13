@@ -5,21 +5,30 @@ specific path through our data pipeline, which we will detail here.
 
 ```mermaid
 graph TD
+
+subgraph Products
 fx_code(fa:fa-cog Firefox code) --> firefox(fa:fa-firefox Firefox Telemetry)
 fx_extensions(fa:fa-cog Mozilla extensions) --> firefox
 fx_hybrid(fa:fa-cog Hybrid Content) --> firefox
 mobile(fa:fa-cog Mobile products) --> mobile_telemetry(fa:fa-firefox Mobile Telemetry)
-firefox -->|main ping| pipeline((fa:fa-database Firefox Data Pipeline))
-firefox -.->|events ping, planned| pipeline
+end
+
+subgraph Data Platform
+firefox -.->|main ping, Firefox <62| pipeline((fa:fa-database Firefox Data Pipeline))
+firefox -->|event ping, Firefox 62+| pipeline
 mobile_telemetry --> |mobile events ping| pipeline
-pipeline -->|Firefox events| main_summary[fa:fa-bars main summary table]
-main_summary --> events_table[fa:fa-bars events table]
+pipeline -->|Firefox <62 events| main_summary[fa:fa-bars main summary table]
+pipeline -->|Firefox 62+ events| events_table[fa:fa-bars events table]
+main_summary --> events_table
 pipeline -->|Mobile events| mobile_events_table[fa:fa-bars mobile events table]
-main_summary --> redash(fa:fa-bar-chart Redash)
+end
+
+subgraph Data Tools
 events_table --> redash
-events_table -.->|planned| amplitude(fa:fa-bar-chart Amplitude)
 mobile_events_table --> redash
-mobile_events_table --> amplitude
+main_summary --> redash(fa:fa-bar-chart Redash)
+pipeline -->|on request| amplitude(fa:fa-bar-chart Amplitude)
+end
 
 style fx_code fill:#f94,stroke-width:0px
 style fx_extensions fill:#f94,stroke-width:0px
@@ -90,16 +99,15 @@ use cases:
 - The [*dynamic event API*](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html#registerevents)
   allows code from Mozilla addons to record new events into Telemetry without shipping Firefox
   code.
-- The *Telemetry extension API* ([work in progress](https://bugzilla.mozilla.org/show_bug.cgi?id=1280234))
-  will allow Mozilla extensions to record new events into Telemetry.
+- The *[Telemetry WebExtension API](https://searchfox.org/mozilla-central/rev/55da592d85c2baf8d8818010c41d9738c97013d2/toolkit/components/extensions/schemas/telemetry.json#87)* ([introduced here](https://bugzilla.mozilla.org/show_bug.cgi?id=1280234))
+  which allows Mozilla extensions to record new events into Telemetry.
 - The [*Hybrid-content API*](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/hybrid-content.html)
   allows specific white-listed Mozilla content code to record new events into Telemetry.
 
 For all these APIs, events will get sent to the pipeline through the
-[main ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html),
-with a hard limit of 500 events per ping.
-In the future, Firefox events will be sent through a separate *events ping*, removing the hard limit.
-As of Firefox 61, all events recorded through these APIs are [automatically counted in scalars](https://bugzilla.mozilla.org/show_bug.cgi?id=1440673).
+[event ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/event-ping.html), which gets sent hourly, if any pings were recorded, or up to every 10 minutes whenever 1000 events were recorded.
+Before Firefox 62, events were sent through the [main ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html) instead, with a hard limit of 500 events per ping.
+From Firefox 61, all events recorded through these APIs are [automatically counted in scalars](https://bugzilla.mozilla.org/show_bug.cgi?id=1440673).
 
 Finally, [*custom pings*](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html)
 can follow the event data format and potentially connect to the existing tooling with some integration work.
@@ -116,8 +124,8 @@ using the [`telemetry-ios`](https://github.com/mozilla-mobile/telemetry-ios) and
 
 On the pipeline side, the event data is made available in different datasets:
 - [`main_summary`](../choosing_a_dataset.md#mainsummary) has a row for each main ping and includes
-  its event payload.
-- [`events`](../../datasets/batch_view/events/reference.md) contains a row for each event received. See [this sample query](https://sql.telemetry.mozilla.org/queries/52582/source).
+  its event payload for Firefox versions before 62.
+- [`events`](../../datasets/batch_view/events/reference.md) contains a row for each event received from main pings and event pings. See [this sample query](https://sql.telemetry.mozilla.org/queries/52582/source).
 - `telemetry_mobile_event_parquet` contains a row for each mobile event ping. See [this sample query](https://sql.telemetry.mozilla.org/queries/52581/source).
 - `focus_events_longitudinal` currently contains events from Firefox Focus.
 

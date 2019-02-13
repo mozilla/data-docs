@@ -1,13 +1,13 @@
 The `main_summary` table is the most direct representation of a main ping
 but can be difficult to work with due to its size.
-Prefer the `longitudinal` dataset unless using the sampled data is prohibitive.
+Prefer the `clients_daily` dataset unless it doesn't aggregate the measurements you're interested in.
 
 #### Contents
 
 The `main_summary` table contains one row for each ping.
 Each column represents one field from the main ping payload,
 though only a subset of all main ping fields are included.
-This dataset **does not include histograms**.
+This dataset **does not include most histograms**.
 
 #### Background and Caveats
 This table is massive, and due to its size, it can be difficult to work with.
