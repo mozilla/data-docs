@@ -36,6 +36,7 @@
     * [Daily Active Users (DAU)](cookbooks/dau.md)
     * [Active DAU (aDAU)](cookbooks/active_dau.md)
     * [Retention](cookbooks/retention.md)
+  * [Telemetry Events Best Practices](cookbooks/events_best_practices.md)
 
 ---
 
