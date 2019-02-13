@@ -1,0 +1,287 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Telemetry Events Best Practices - Firefox Data Documentation</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../dtmo.css">
+        
+        <link rel="stylesheet" href="../mermaid.css">
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">var path_to_root = "../";</script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="../introduction.html">Firefox Data Documentation</a></li><li><a href="../concepts/reporting_a_problem.html"><strong aria-hidden="true">1.</strong> Reporting a problem</a></li><li><a href="../concepts/terminology.html"><strong aria-hidden="true">2.</strong> Terminology</a></li><li><a href="../concepts/getting_started.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li><ol class="section"><li><a href="../concepts/analysis_intro.html"><strong aria-hidden="true">3.1.</strong> Analysis Quick Start</a></li><li><a href="../concepts/choosing_a_dataset.html"><strong aria-hidden="true">3.2.</strong> Choosing a Dataset</a></li><li><a href="../tools/stmo.html"><strong aria-hidden="true">3.3.</strong> Intro to STMO</a></li><li><a href="../concepts/analysis_gotchas.html"><strong aria-hidden="true">3.4.</strong> Common Analysis Gotchas</a></li><li><a href="../concepts/sql_optimization.html"><strong aria-hidden="true">3.5.</strong> Optimizing Queries</a></li><li><a href="../datasets/new_data.html"><strong aria-hidden="true">3.6.</strong> Collecting New Data</a></li><li><a href="../concepts/getting_help.html"><strong aria-hidden="true">3.7.</strong> Getting Help</a></li></ol></li><li><a href="../tools/index.html"><strong aria-hidden="true">4.</strong> Tools</a></li><li><ol class="section"><li><a href="../tools/projects.html"><strong aria-hidden="true">4.1.</strong> Project Glossary</a></li><li><a href="../concepts/pipeline/data_pipeline.html"><strong aria-hidden="true">4.2.</strong> Overview of Mozilla's Data Pipeline</a></li><li><ol class="section"><li><a href="../concepts/pipeline/data_pipeline_detail.html"><strong aria-hidden="true">4.2.1.</strong> In-depth Data Pipeline Detail</a></li><li><a href="../concepts/pipeline/http_edge_spec.html"><strong aria-hidden="true">4.2.2.</strong> HTTP Edge Server Specification</a></li><li><a href="../concepts/pipeline/event_pipeline.html"><strong aria-hidden="true">4.2.3.</strong> Event Pipeline Detail</a></li></ol></li><li><a href="../tools/interfaces.html"><strong aria-hidden="true">4.3.</strong> Analysis Interfaces</a></li><li><a href="../tools/spark.html"><strong aria-hidden="true">4.4.</strong> Custom analysis with Spark</a></li><li><a href="../concepts/sql_style.html"><strong aria-hidden="true">4.5.</strong> SQL Style Guide</a></li></ol></li><li><a href="../cookbooks/index.html"><strong aria-hidden="true">5.</strong> Cookbooks</a></li><li><ol class="section"><li><a href="../tools/alerts.html"><strong aria-hidden="true">5.1.</strong> Alerts</a></li><li><a href="../cookbooks/parquet.html"><strong aria-hidden="true">5.2.</strong> Working with Parquet Data on ATMO Clusters</a></li><li><a href="../cookbooks/create_a_dataset.html"><strong aria-hidden="true">5.3.</strong> Creating a custom Re:dash dataset</a></li><li><a href="../cookbooks/new_ping.html"><strong aria-hidden="true">5.4.</strong> Sending a Custom Ping</a></li><li><a href="../cookbooks/hll_zeppelin.html"><strong aria-hidden="true">5.5.</strong> Using HyperLogLog in Zeppelin</a></li><li><a href="../cookbooks/dataset_specific.html"><strong aria-hidden="true">5.6.</strong> Dataset Specific</a></li><li><ol class="section"><li><a href="../cookbooks/longitudinal_examples.html"><strong aria-hidden="true">5.6.1.</strong> Longitudinal Examples</a></li><li><a href="../cookbooks/crash_pings.html"><strong aria-hidden="true">5.6.2.</strong> Working with Crash Pings</a></li><li><a href="../cookbooks/normandy_events.html"><strong aria-hidden="true">5.6.3.</strong> Working with Normandy events</a></li></ol></li><li><a href="../cookbooks/realtime.html"><strong aria-hidden="true">5.7.</strong> Real-time</a></li><li><ol class="section"><li><a href="../cookbooks/realtime_analysis_plugin.html"><strong aria-hidden="true">5.7.1.</strong> Creating a Real-time Analysis Plugin</a></li><li><a href="../cookbooks/view_pings_cep.html"><strong aria-hidden="true">5.7.2.</strong> Seeing Your Own Pings</a></li><li><a href="../tools/cep_matcher.html"><strong aria-hidden="true">5.7.3.</strong> CEP Matcher</a></li></ol></li><li><a href="../cookbooks/metrics.html"><strong aria-hidden="true">5.8.</strong> Metrics</a></li><li><ol class="section"><li><a href="../cookbooks/dau.html"><strong aria-hidden="true">5.8.1.</strong> Daily Active Users (DAU)</a></li><li><a href="../cookbooks/active_dau.html"><strong aria-hidden="true">5.8.2.</strong> Active DAU (aDAU)</a></li><li><a href="../cookbooks/retention.html"><strong aria-hidden="true">5.8.3.</strong> Retention</a></li></ol></li><li><a href="../cookbooks/events_best_practices.html" class="active"><strong aria-hidden="true">5.9.</strong> Telemetry Events Best Practices</a></li><li class="spacer"></li></ol></li><li><a href="../datasets/reference.html"><strong aria-hidden="true">6.</strong> Dataset Reference</a></li><li><ol class="section"><li><a href="../datasets/pings.html"><strong aria-hidden="true">6.1.</strong> Pings</a></li><li><a href="../datasets/derived.html"><strong aria-hidden="true">6.2.</strong> Derived Datasets</a></li><li><ol class="section"><li><a href="../datasets/batch_view/addons/reference.html"><strong aria-hidden="true">6.2.1.</strong> Addons</a></li><li><a href="../datasets/mozetl/churn/reference.html"><strong aria-hidden="true">6.2.2.</strong> Churn</a></li><li><a href="../datasets/batch_view/client_count_daily/reference.html"><strong aria-hidden="true">6.2.3.</strong> Client Count Daily</a></li><li><a href="../datasets/batch_view/client_count/reference.html"><strong aria-hidden="true">6.2.4.</strong> Client Count</a></li><li><a href="../datasets/batch_view/clients_daily/reference.html"><strong aria-hidden="true">6.2.5.</strong> Clients Daily</a></li><li><a href="../datasets/batch_view/crash_aggregates/reference.html"><strong aria-hidden="true">6.2.6.</strong> Crash Aggregate</a></li><li><a href="../datasets/batch_view/crash_summary/reference.html"><strong aria-hidden="true">6.2.7.</strong> Crash Summary</a></li><li><a href="../datasets/batch_view/cross_sectional/reference.html"><strong aria-hidden="true">6.2.8.</strong> Cross Sectional</a></li><li><a href="../datasets/streaming/error_aggregates/reference.html"><strong aria-hidden="true">6.2.9.</strong> Error Aggregates</a></li><li><a href="../datasets/batch_view/events/reference.html"><strong aria-hidden="true">6.2.10.</strong> Events</a></li><li><a href="../datasets/batch_view/first_shutdown_summary/reference.html"><strong aria-hidden="true">6.2.11.</strong> First Shutdown Summary</a></li><li><a href="../datasets/batch_view/longitudinal/reference.html"><strong aria-hidden="true">6.2.12.</strong> Longitudinal</a></li><li><a href="../datasets/batch_view/main_summary/reference.html"><strong aria-hidden="true">6.2.13.</strong> Main Summary</a></li><li><a href="../datasets/batch_view/new_profile/reference.html"><strong aria-hidden="true">6.2.14.</strong> New Profile</a></li><li><a href="../datasets/batch_view/retention/reference.html"><strong aria-hidden="true">6.2.15.</strong> Retention</a></li><li><a href="../datasets/other/socorro_crash/reference.html"><strong aria-hidden="true">6.2.16.</strong> Socorro Crash Reports</a></li><li><a href="../datasets/other/ssl/reference.html"><strong aria-hidden="true">6.2.17.</strong> SSL Ratios (public)</a></li><li><a href="../datasets/batch_view/sync_summary/reference.html"><strong aria-hidden="true">6.2.18.</strong> Sync Summary</a></li><li><a href="../datasets/batch_view/update/reference.html"><strong aria-hidden="true">6.2.19.</strong> Update</a></li></ol></li><li><a href="../tools/experiments.html"><strong aria-hidden="true">6.3.</strong> Experimental Datasets</a></li><li><ol class="section"><li><a href="../datasets/heartbeat.html"><strong aria-hidden="true">6.3.1.</strong> Accessing Heartbeat data</a></li><li><a href="../datasets/shield.html"><strong aria-hidden="true">6.3.2.</strong> Accessing Shield Study data</a></li></ol></li><li><a href="../datasets/search.html"><strong aria-hidden="true">6.4.</strong> Search Datasets</a></li><li><ol class="section"><li><a href="../datasets/mozetl/search_aggregates/reference.html"><strong aria-hidden="true">6.4.1.</strong> Search Aggregates</a></li><li><a href="../datasets/mozetl/search_clients_daily/reference.html"><strong aria-hidden="true">6.4.2.</strong> Search Clients Daily</a></li></ol></li><li><a href="../datasets/other.html"><strong aria-hidden="true">6.5.</strong> Other Datasets</a></li><li><ol class="section"><li><a href="../datasets/other/hgpush/reference.html"><strong aria-hidden="true">6.5.1.</strong> hgpush</a></li><li><a href="../datasets/other/stub_installer/reference.html"><strong aria-hidden="true">6.5.2.</strong> Stub installer ping</a></li></ol></li><li><a href="../datasets/obsolete.html"><strong aria-hidden="true">6.6.</strong> Obsolete Datasets</a></li><li><ol class="section"><li><a href="../datasets/obsolete/heavy_users/reference.html"><strong aria-hidden="true">6.6.1.</strong> Heavy Users</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../concepts/index.html"><strong aria-hidden="true">7.</strong> Telemetry Behavior Reference</a></li><li><ol class="section"><li><a href="../concepts/profile/index.html"><strong aria-hidden="true">7.1.</strong> Profile Behavior</a></li><li><ol class="section"><li><a href="../concepts/profile/profile_creation.html"><strong aria-hidden="true">7.1.1.</strong> Profile Creation</a></li><li><a href="../concepts/profile/realworldusage.html"><strong aria-hidden="true">7.1.2.</strong> Real World Usage</a></li><li><a href="../concepts/profile/profilehistory.html"><strong aria-hidden="true">7.1.3.</strong> Profile History</a></li></ol></li><li><a href="../concepts/channels/index.html"><strong aria-hidden="true">7.2.</strong> Channel Behavior</a></li><li><ol class="section"><li><a href="../concepts/channels/channel_normalization.html"><strong aria-hidden="true">7.2.1.</strong> Channel Normalization and Querying</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../meta/index.html"><strong aria-hidden="true">8.</strong> About this Documentation</a></li><li><ol class="section"><li><a href="../meta/contributing.html"><strong aria-hidden="true">8.1.</strong> Contributing</a></li><li><a href="../meta/structure.html"><strong aria-hidden="true">8.2.</strong> Structure</a></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Firefox Data Documentation</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#telemetry-events-best-practices" id="telemetry-events-best-practices"><h1>Telemetry Events Best Practices</h1></a>
+<a class="header" href="#overview" id="overview"><h2>Overview:</h2></a>
+<p><a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html">The Telemetry Events API</a> allows users to define and record events in the browser.</p>
+<p>Events are defined in <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html#the-yaml-definition-file"><code>Events.yaml</code></a> and each events creates records with the following properties:</p>
+<ul>
+<li>timestamp</li>
+<li>category</li>
+<li>method</li>
+<li>object</li>
+<li>value</li>
+<li>extra</li>
+</ul>
+<p>With the following restrictions and features:</p>
+<ul>
+<li>The category, method, and object properties of any record produced by an event must have a value.</li>
+<li>All combinations of values from the category, method, and object properties must be unique to that particular event (no other event can produce events with the same combination).</li>
+<li>Events can be 'turned on' or 'turned off' by it's category value. i.e. we can instruct the browser to &quot;stop sending us events from the <code>devtools</code> category.&quot;</li>
+</ul>
+<p>These records are then stored in <a href="http://gecko-docs.mozilla.org.s3.amazonaws.com/toolkit/components/telemetry/telemetry/data/event-ping.html">event pings</a> and available in the <a href="https://docs.telemetry.mozilla.org/datasets/batch_view/events/reference.html">events dataset</a>.</p>
+<a class="header" href="#identifying-events" id="identifying-events"><h2>Identifying Events</h2></a>
+<p>One challenge with this data is it can be difficult to identify all the records from a particular event. Unlike Scalars and Histograms, which keep data in individual locations (like <code>scalar_parent_browser_engagement_total_uri_count</code> for <a href="https://dxr.mozilla.org/mozilla-central/source/toolkit/components/telemetry/Scalars.yaml#99"><code>total_uri_count</code></a>), all event records are stored together, regardless of which event generated them. The records themselves don't have a field identifying which event produced it[1].</p>
+<p>Take, for example, the <a href="https://dxr.mozilla.org/mozilla-central/source/toolkit/components/telemetry/Events.yaml#105"><code>manage</code></a>
+event in the <code>addonsManager</code> category.</p>
+<pre><code>addonsManager: # category
+  manage: # event name
+    description: &gt;
+      ...
+    objects: [&quot;extension&quot;, &quot;theme&quot;, &quot;locale&quot;, &quot;dictionary&quot;, &quot;other&quot;] # object values
+    methods: [&quot;disable&quot;, &quot;enable&quot;, &quot;sideload_prompt&quot;, &quot;uninstall&quot;] # method values
+    extra_keys: # extra values
+      ...
+    notification_emails: ...
+    expiry_version: ...
+    record_in_processes: ...
+    bug_numbers: ...
+    release_channel_collection: ...
+</code></pre>
+<p>This event will produce records that look like:</p>
+<table><thead><tr><th>timestamp</th><th> category </th><th> method  </th><th> object  </th><th> value </th><th> extra </th></tr></thead><tbody>
+<tr><td>...</td><td><code>addonsManager</code></td><td><code>install</code></td><td><code>extension</code></td><td>        </td><td>...</td></tr>
+<tr><td>...</td><td><code>addonsManager</code></td><td><code>update</code></td><td><code>locale</code></td><td>        </td><td>...</td></tr>
+<tr><td>...</td><td><code>addonsManager</code></td><td><code>sideload_prompt</code></td><td><code>other</code></td><td>       </td><td>...</td></tr>
+</tbody></table>
+<p>But none of these records will indicate that it was produced by the <code>manage</code> event. To find all records produced by <code>manage</code>, one would have to query all records where</p>
+<pre><code>category = ...
+AND method in [...,]
+AND object in [...,]
+</code></pre>
+<p>which is not ideal.</p>
+<p>Furthermore, if one encounters this data without knowledge of how the <code>manage</code> event works, they need to look up the event based on the category, method, and object values in order to find the event, and then query the data again to find all the related events. It's not immediately clear from the data if this record:</p>
+<table><thead><tr><th>timestamp</th><th> category </th><th> method  </th><th> object  </th><th> value </th><th> extra </th></tr></thead><tbody>
+<tr><td>...</td><td><code>addonsManager</code></td><td><code>update</code></td><td><code>locale</code></td><td>        </td><td>...</td></tr>
+</tbody></table>
+<p>and and this record:</p>
+<table><thead><tr><th>timestamp</th><th> category </th><th> method  </th><th> object  </th><th> value </th><th> extra </th></tr></thead><tbody>
+<tr><td>...</td><td><code>addonsManager</code></td><td><code>install</code></td><td><code>extension</code></td><td>        </td><td>...</td></tr>
+</tbody></table>
+<p>are related or not.</p>
+<p>Another factor that can add to confusion is the fact that other events can share similar values for methods or objects (or even the combination of method and object). For example:</p>
+<table><thead><tr><th>timestamp</th><th> category </th><th> method  </th><th> object  </th><th> value </th><th> extra </th></tr></thead><tbody>
+<tr><td>...</td><td><code>normandy</code></td><td><code>update</code></td><td><code>preference_rollout</code></td><td>        </td><td>...</td></tr>
+</tbody></table>
+<p>which can further confuser users.</p>
+<p>[1]: Events do have name fields, but they aren't included in the event records and thus are not present in the resulting dataset. Also, If a user defines an event in <code>Events.yaml</code> without specifying a list of acceptable methods, the method will default to the name of the event for records created by that event.</p>
+<a class="header" href="#suggested-convention" id="suggested-convention"><h4>Suggested Convention:</h4></a>
+<p>To simplify things in the future, we suggest adding the event name to the category field using dot notation when designing new events:</p>
+<pre><code>&quot;category.event_name&quot;
+</code></pre>
+<p>For example:</p>
+<ul>
+<li><code>&quot;navigation.search&quot;</code></li>
+<li><code>&quot;addonsManager.manage&quot;</code></li>
+<li><code>&quot;frame.tab&quot;</code></li>
+</ul>
+<p>This provides 3 advantages:</p>
+<ol>
+<li>Records produced by this event will be easily identifiable. Also, the event which produced the record will be easier to locate in the code.</li>
+<li>Events can be controlled more easily. The category field is what we use to &quot;turn on&quot; and &quot;turn off&quot; events. By creating a 1 to 1 mapping between categories and events, we can control events on an individual level.</li>
+<li>By having the category field act as the event identifier, it makes it easier to pass on events to Amplitude and other platforms.</li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../cookbooks/retention.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../datasets/reference.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../cookbooks/retention.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../datasets/reference.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="../mermaid-init.js"></script>
+        
+
+        
+
+    </body>
+</html>
