@@ -14,10 +14,10 @@ Events are defined in [Events.yaml](https://firefox-source-docs.mozilla.org/tool
 
 With the following restrictions and features: 
 * The category, method, and object properties of any record produced by an event must have a value. 
-* All combinations values from the category, method, and object properties must be unique to that particular event (no other event can produce events with the same combination). 
+* All combinations of values from the category, method, and object properties must be unique to that particular event (no other event can produce events with the same combination). 
 * Events can be 'turned on' or 'turned off' by it's category value. i.e. we can instruct the browser to "stop sending us events from 'devtools' category."
 
-These records are then stored in event pings and available in the events dataset. 
+These records are then stored in [event pings](http://gecko-docs.mozilla.org.s3.amazonaws.com/toolkit/components/telemetry/telemetry/data/event-ping.html) and available in the [events dataset](https://docs.telemetry.mozilla.org/datasets/batch_view/events/reference.html). 
 
 ## Identifying Events
 
@@ -79,11 +79,11 @@ Another factor that can add to confusion is the fact that other events can share
 
 which can further confuser users. 
 
-[1]: If a user defines an event in Events.yaml without specifying a list of acceptable methods, the method will default to the name of the event for records created by that event. 
+[1]: Events do have `name` fields, but they aren't included in the event records and thus are not present in the resulting dataset. Also, If a user defines an event in Events.yaml without specifying a list of acceptable methods, the method will default to the name of the event for records created by that event. 
 
 #### Suggested Convention: 
 
-To simplify things in the future, we suggest recording the event name in the category field in this format when designing new events: 
+To simplify things in the future, we suggest adding the event name to the category field using dot notation when designing new events: 
 
 ```
 "category.event_name"
@@ -96,6 +96,6 @@ For example:
 
 
 This provides 3 advantages: 
-1. Records produced by this event will be easily identifiable. Conversely, the event which produced the record will be easier to locate in the code. 
-2. Events can be controlled easier. The category field is what we use to "turn on" and "turn off" events. By creating a 1 to 1 mapping between categories and events, we can control events on an individual level. 
+1. Records produced by this event will be easily identifiable. Also, the event which produced the record will be easier to locate in the code. 
+2. Events can be controlled more easily. The category field is what we use to "turn on" and "turn off" events. By creating a 1 to 1 mapping between categories and events, we can control events on an individual level. 
 3. By having the category field act as the event identifier, it makes it easier to pass on events to Amplitude and other platforms. 
