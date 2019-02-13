@@ -57,7 +57,7 @@ AND object in [...,]
 ```
 which is not ideal. 
 
-Furthermore, if one encounters this data without knowledge of how the `manage` event works, they need to look up the event based on the category, method, and object values in order to find the event, and then requery the data to find all the related events. It's not immediately clear from the data if this record: 
+Furthermore, if one encounters this data without knowledge of how the `manage` event works, they need to look up the event based on the category, method, and object values in order to find the event, and then query the data again to find all the related events. It's not immediately clear from the data if this record: 
 
 |timestamp| category | method  | object  | value | extra | 
 |-| -------- |---------| --------|-------|-------|
