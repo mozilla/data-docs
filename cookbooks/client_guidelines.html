@@ -1,0 +1,330 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Client Implementation Guidelines - Firefox Data Documentation</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../dtmo.css">
+        
+        <link rel="stylesheet" href="../mermaid.css">
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">var path_to_root = "../";</script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="../introduction.html">Firefox Data Documentation</a></li><li><a href="../concepts/reporting_a_problem.html"><strong aria-hidden="true">1.</strong> Reporting a problem</a></li><li><a href="../concepts/terminology.html"><strong aria-hidden="true">2.</strong> Terminology</a></li><li><a href="../concepts/getting_started.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li><ol class="section"><li><a href="../concepts/analysis_intro.html"><strong aria-hidden="true">3.1.</strong> Analysis Quick Start</a></li><li><a href="../concepts/choosing_a_dataset.html"><strong aria-hidden="true">3.2.</strong> Choosing a Dataset</a></li><li><a href="../tools/stmo.html"><strong aria-hidden="true">3.3.</strong> Intro to STMO</a></li><li><a href="../concepts/analysis_gotchas.html"><strong aria-hidden="true">3.4.</strong> Common Analysis Gotchas</a></li><li><a href="../concepts/sql_optimization.html"><strong aria-hidden="true">3.5.</strong> Optimizing Queries</a></li><li><a href="../datasets/new_data.html"><strong aria-hidden="true">3.6.</strong> Collecting New Data</a></li><li><a href="../concepts/getting_help.html"><strong aria-hidden="true">3.7.</strong> Getting Help</a></li></ol></li><li><a href="../tools/index.html"><strong aria-hidden="true">4.</strong> Tools</a></li><li><ol class="section"><li><a href="../tools/projects.html"><strong aria-hidden="true">4.1.</strong> Project Glossary</a></li><li><a href="../concepts/pipeline/data_pipeline.html"><strong aria-hidden="true">4.2.</strong> Overview of Mozilla's Data Pipeline</a></li><li><ol class="section"><li><a href="../concepts/pipeline/data_pipeline_detail.html"><strong aria-hidden="true">4.2.1.</strong> In-depth Data Pipeline Detail</a></li><li><a href="../concepts/pipeline/http_edge_spec.html"><strong aria-hidden="true">4.2.2.</strong> HTTP Edge Server Specification</a></li><li><a href="../concepts/pipeline/event_pipeline.html"><strong aria-hidden="true">4.2.3.</strong> Event Pipeline Detail</a></li></ol></li><li><a href="../tools/interfaces.html"><strong aria-hidden="true">4.3.</strong> Analysis Interfaces</a></li><li><a href="../tools/spark.html"><strong aria-hidden="true">4.4.</strong> Custom analysis with Spark</a></li><li><a href="../concepts/sql_style.html"><strong aria-hidden="true">4.5.</strong> SQL Style Guide</a></li></ol></li><li><a href="../cookbooks/index.html"><strong aria-hidden="true">5.</strong> Cookbooks</a></li><li><ol class="section"><li><a href="../tools/alerts.html"><strong aria-hidden="true">5.1.</strong> Alerts</a></li><li><a href="../cookbooks/parquet.html"><strong aria-hidden="true">5.2.</strong> Working with Parquet Data on ATMO Clusters</a></li><li><a href="../cookbooks/create_a_dataset.html"><strong aria-hidden="true">5.3.</strong> Creating a custom Re:dash dataset</a></li><li><a href="../cookbooks/new_ping.html"><strong aria-hidden="true">5.4.</strong> Sending a Custom Ping</a></li><li><a href="../cookbooks/hll_zeppelin.html"><strong aria-hidden="true">5.5.</strong> Using HyperLogLog in Zeppelin</a></li><li><a href="../cookbooks/client_guidelines.html" class="active"><strong aria-hidden="true">5.6.</strong> Client Implementation Guidelines</a></li><li><a href="../cookbooks/dataset_specific.html"><strong aria-hidden="true">5.7.</strong> Dataset Specific</a></li><li><ol class="section"><li><a href="../cookbooks/longitudinal_examples.html"><strong aria-hidden="true">5.7.1.</strong> Longitudinal Examples</a></li><li><a href="../cookbooks/crash_pings.html"><strong aria-hidden="true">5.7.2.</strong> Working with Crash Pings</a></li><li><a href="../cookbooks/normandy_events.html"><strong aria-hidden="true">5.7.3.</strong> Working with Normandy events</a></li></ol></li><li><a href="../cookbooks/realtime.html"><strong aria-hidden="true">5.8.</strong> Real-time</a></li><li><ol class="section"><li><a href="../cookbooks/realtime_analysis_plugin.html"><strong aria-hidden="true">5.8.1.</strong> Creating a Real-time Analysis Plugin</a></li><li><a href="../cookbooks/view_pings_cep.html"><strong aria-hidden="true">5.8.2.</strong> Seeing Your Own Pings</a></li><li><a href="../tools/cep_matcher.html"><strong aria-hidden="true">5.8.3.</strong> CEP Matcher</a></li></ol></li><li><a href="../cookbooks/metrics.html"><strong aria-hidden="true">5.9.</strong> Metrics</a></li><li><ol class="section"><li><a href="../cookbooks/dau.html"><strong aria-hidden="true">5.9.1.</strong> Daily Active Users (DAU)</a></li><li><a href="../cookbooks/active_dau.html"><strong aria-hidden="true">5.9.2.</strong> Active DAU (aDAU)</a></li><li><a href="../cookbooks/retention.html"><strong aria-hidden="true">5.9.3.</strong> Retention</a></li></ol></li><li><a href="../cookbooks/events_best_practices.html"><strong aria-hidden="true">5.10.</strong> Telemetry Events Best Practices</a></li><li class="spacer"></li></ol></li><li><a href="../datasets/reference.html"><strong aria-hidden="true">6.</strong> Dataset Reference</a></li><li><ol class="section"><li><a href="../datasets/pings.html"><strong aria-hidden="true">6.1.</strong> Pings</a></li><li><a href="../datasets/derived.html"><strong aria-hidden="true">6.2.</strong> Derived Datasets</a></li><li><ol class="section"><li><a href="../datasets/batch_view/addons/reference.html"><strong aria-hidden="true">6.2.1.</strong> Addons</a></li><li><a href="../datasets/mozetl/churn/reference.html"><strong aria-hidden="true">6.2.2.</strong> Churn</a></li><li><a href="../datasets/batch_view/client_count_daily/reference.html"><strong aria-hidden="true">6.2.3.</strong> Client Count Daily</a></li><li><a href="../datasets/batch_view/client_count/reference.html"><strong aria-hidden="true">6.2.4.</strong> Client Count</a></li><li><a href="../datasets/batch_view/clients_daily/reference.html"><strong aria-hidden="true">6.2.5.</strong> Clients Daily</a></li><li><a href="../datasets/batch_view/crash_aggregates/reference.html"><strong aria-hidden="true">6.2.6.</strong> Crash Aggregate</a></li><li><a href="../datasets/batch_view/crash_summary/reference.html"><strong aria-hidden="true">6.2.7.</strong> Crash Summary</a></li><li><a href="../datasets/batch_view/cross_sectional/reference.html"><strong aria-hidden="true">6.2.8.</strong> Cross Sectional</a></li><li><a href="../datasets/streaming/error_aggregates/reference.html"><strong aria-hidden="true">6.2.9.</strong> Error Aggregates</a></li><li><a href="../datasets/batch_view/events/reference.html"><strong aria-hidden="true">6.2.10.</strong> Events</a></li><li><a href="../datasets/batch_view/first_shutdown_summary/reference.html"><strong aria-hidden="true">6.2.11.</strong> First Shutdown Summary</a></li><li><a href="../datasets/batch_view/longitudinal/reference.html"><strong aria-hidden="true">6.2.12.</strong> Longitudinal</a></li><li><a href="../datasets/batch_view/main_summary/reference.html"><strong aria-hidden="true">6.2.13.</strong> Main Summary</a></li><li><a href="../datasets/batch_view/new_profile/reference.html"><strong aria-hidden="true">6.2.14.</strong> New Profile</a></li><li><a href="../datasets/batch_view/retention/reference.html"><strong aria-hidden="true">6.2.15.</strong> Retention</a></li><li><a href="../datasets/other/socorro_crash/reference.html"><strong aria-hidden="true">6.2.16.</strong> Socorro Crash Reports</a></li><li><a href="../datasets/other/ssl/reference.html"><strong aria-hidden="true">6.2.17.</strong> SSL Ratios (public)</a></li><li><a href="../datasets/batch_view/sync_summary/reference.html"><strong aria-hidden="true">6.2.18.</strong> Sync Summary</a></li><li><a href="../datasets/batch_view/update/reference.html"><strong aria-hidden="true">6.2.19.</strong> Update</a></li></ol></li><li><a href="../tools/experiments.html"><strong aria-hidden="true">6.3.</strong> Experimental Datasets</a></li><li><ol class="section"><li><a href="../datasets/heartbeat.html"><strong aria-hidden="true">6.3.1.</strong> Accessing Heartbeat data</a></li><li><a href="../datasets/shield.html"><strong aria-hidden="true">6.3.2.</strong> Accessing Shield Study data</a></li></ol></li><li><a href="../datasets/search.html"><strong aria-hidden="true">6.4.</strong> Search Datasets</a></li><li><ol class="section"><li><a href="../datasets/mozetl/search_aggregates/reference.html"><strong aria-hidden="true">6.4.1.</strong> Search Aggregates</a></li><li><a href="../datasets/mozetl/search_clients_daily/reference.html"><strong aria-hidden="true">6.4.2.</strong> Search Clients Daily</a></li></ol></li><li><a href="../datasets/other.html"><strong aria-hidden="true">6.5.</strong> Other Datasets</a></li><li><ol class="section"><li><a href="../datasets/other/hgpush/reference.html"><strong aria-hidden="true">6.5.1.</strong> hgpush</a></li><li><a href="../datasets/other/stub_installer/reference.html"><strong aria-hidden="true">6.5.2.</strong> Stub installer ping</a></li></ol></li><li><a href="../datasets/obsolete.html"><strong aria-hidden="true">6.6.</strong> Obsolete Datasets</a></li><li><ol class="section"><li><a href="../datasets/obsolete/heavy_users/reference.html"><strong aria-hidden="true">6.6.1.</strong> Heavy Users</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../concepts/index.html"><strong aria-hidden="true">7.</strong> Telemetry Behavior Reference</a></li><li><ol class="section"><li><a href="../concepts/profile/index.html"><strong aria-hidden="true">7.1.</strong> Profile Behavior</a></li><li><ol class="section"><li><a href="../concepts/profile/profile_creation.html"><strong aria-hidden="true">7.1.1.</strong> Profile Creation</a></li><li><a href="../concepts/profile/realworldusage.html"><strong aria-hidden="true">7.1.2.</strong> Real World Usage</a></li><li><a href="../concepts/profile/profilehistory.html"><strong aria-hidden="true">7.1.3.</strong> Profile History</a></li></ol></li><li><a href="../concepts/channels/index.html"><strong aria-hidden="true">7.2.</strong> Channel Behavior</a></li><li><ol class="section"><li><a href="../concepts/channels/channel_normalization.html"><strong aria-hidden="true">7.2.1.</strong> Channel Normalization and Querying</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../meta/index.html"><strong aria-hidden="true">8.</strong> About this Documentation</a></li><li><ol class="section"><li><a href="../meta/contributing.html"><strong aria-hidden="true">8.1.</strong> Contributing</a></li><li><a href="../meta/structure.html"><strong aria-hidden="true">8.2.</strong> Structure</a></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Firefox Data Documentation</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#client-implementation-guidelines-for-experiments" id="client-implementation-guidelines-for-experiments"><h1>Client Implementation Guidelines for Experiments</h1></a>
+<p>There are three supported approaches to developing experimental features for Firefox:</p>
+<ul>
+<li><a href="#feature-gates">Feature Gates</a>
+<ul>
+<li>The preferred method for testing experimental features is to <strong>land in-tree</strong> and ship behind a <strong>feature gate</strong>.</li>
+</ul>
+</li>
+<li><a href="#prefs">Firefox Prefs</a>
+<ul>
+<li>If feature gates are <a href="#feature-gate-caveats">not appropriate</a> for your project, Firefox Preferences (AKA &quot;<strong>Prefs</strong>&quot;) should be used.</li>
+</ul>
+</li>
+<li><a href="#extensions">Firefox Extensions</a> AKA &quot;<strong>Add-ons</strong>&quot;.
+<ul>
+<li>If the feature being tested should not land in the tree, or if it will ultimately ship as an extension, then an extension should be used.</li>
+</ul>
+</li>
+</ul>
+<p>New features go through the standard Firefox review, testing, and deployment processes, and are then enabled experimentally in the field using <a href="https://github.com/mozilla/normandy">Normandy</a>.</p>
+<a class="header" href="#feature-gates" id="feature-gates"><h2>Feature Gates</h2></a>
+<p>A new Feature Gate library for Firefox Desktop is now available.</p>
+<p><strong>Each feature gate should represent a different experimental treatment</strong>. If your experimental feature requires multiple flags, then Normandy will not be able to support this directly and an <a href="#extensions">extension</a> may be used.</p>
+<a class="header" href="#feature-gate-caveats" id="feature-gate-caveats"><h3>Feature Gate caveats</h3></a>
+<p>The current Feature Gate library comes with a few caveats, and may not be appropriate for your situation:</p>
+<ul>
+<li>Only JS is supported.</li>
+<li>Always asynchronous.</li>
+</ul>
+<p>Future versions of the Feature Gate API will include C++/Rust support and a synchronous API.</p>
+<a class="header" href="#using-the-feature-gate-library" id="using-the-feature-gate-library"><h3>Using the Feature Gate library</h3></a>
+<p>Read <a href="https://firefox-source-docs.mozilla.org/toolkit/components/featuregates/featuregates/index.html">the documentation</a> to get started.</p>
+<a class="header" href="#prefs" id="prefs"><h2>Prefs</h2></a>
+<p>Firefox Preferences (AKA &quot;prefs&quot;) are commonly used to enable and disable features. However, prefs are more complex to implement correctly than <a href="#feature-gates">feature gates</a>.</p>
+<p><strong>Each pref should represent a different experimental treatment</strong>. If your experimental feature requires multiple prefs, then Normandy does not currently support this but will soon. In the meantime, an <a href="#extensions">extension</a> such as <a href="https://github.com/nhnt11/multipreffer">multipreffer</a> may be used.</p>
+<p>There are three types of Prefs:</p>
+<ol>
+<li>Built-in prefs - shipped with Firefox, in <code>firefox.js</code>.</li>
+<li><code>user branch</code> - set by the user, overriding built-in prefs.</li>
+<li><code>default branch</code> - Overrides both built-in and <code>user branch</code> prefs. Only persists until the browser session ends, next restart will revert to either built-in or <code>user branch</code> (if set).</li>
+</ol>
+<p><a href="https://github.com/mozilla/normandy">Normandy</a> supports overriding both the <code>user</code> and <code>default</code> branches, although the latter is preferred as it does not permanently override user settings. <code>default</code> branch prefs are simple to reset since they do not persist past a restart.</p>
+<p><strong>In order for features to be activated experimentally using <code>default branch</code> prefs</strong>:</p>
+<ul>
+<li>The feature must not start up before <code>final-ui-startup</code> is observed.</li>
+</ul>
+<p>For instance, to set an observer:</p>
+<pre><code>Services.obs.addObserver(this, &quot;final-ui-startup&quot;, true);
+</code></pre>
+<p>In this example, <code>this</code> would implement an <code>observe(subject, topic, data)</code> function which will be called when <code>final-ui-startup</code> is observed. See the <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIObserverService#addObserver()">Observer documentation</a> for more information.</p>
+<ul>
+<li>It must be possible to enable/disable the feature at runtime, via a pref change.</li>
+</ul>
+<p>This is similar to the observer pattern above:</p>
+<pre><code>Services.prefs.addObserver(&quot;pref_name&quot;, this);
+</code></pre>
+<p>More information is available in the <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIPrefService">Preference service documentation</a>.</p>
+<ul>
+<li>
+<p>Never use <code>Services.prefs.prefHasUserValue()</code>, or any other function specific to <code>user branch</code> prefs.</p>
+</li>
+<li>
+<p>Prefs should be set by default in <code>firefox.js</code></p>
+</li>
+</ul>
+<p>If your feature cannot abide by one or more of these rules (for instance, it needs to run at startup and/or cannot be toggled at runtime) then experimental preferences can be set on the <code>user branch</code>. This is more complex than using the methods described above; user branch prefs override the users choice, which is a really complex thing to try to support when flipping prefs experimentally. We also need to be careful to back up and reset the pref, and then figure out how to resolve conflicts if the user has changed the pref in the meantime.</p>
+<a class="header" href="#extensions" id="extensions"><h2>Extensions</h2></a>
+<p>Firefox currently supports the <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions">Web Extensions API</a>.</p>
+<p><strong>If new WebExtension APIs are needed, they should land in-tree</strong>. Extensions which are signed by Mozilla can load privileged code using the <a href="https://firefox-source-docs.mozilla.org/toolkit/components/extensions/webextensions/index.html">WebExtension Experiments</a>, but this is not preferred.</p>
+<p>WebExtensions go through the same correctness and performance tests as other features. This is possible using the Mozilla tryserver by dropping your XPI into <code>testing/profiles/common/extensions</code> in <code>mozilla-central</code> and pushing to Tryserver - see the <a href="#testing-extensions">Testing Extensions</a> section below.</p>
+<p>NOTE - it is ideal to test against the version of Firefox which the extension will release against, but there is a <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1435403">bug related to artifact builds on release channels</a> which must be worked around. The workaround is pretty simple (modify an <code>artifacts.py</code> file), but this bug being resolved will make it much simpler.</p>
+<p><strong>Each extension can represent a different experimental treatment (preferred), or the extension can choose the branch internally</strong>.</p>
+<a class="header" href="#shield-studies" id="shield-studies"><h3>SHIELD studies</h3></a>
+<p>The previous version of the experiments program, SHIELD, always bundled privileged code with extensions and would do things such as mock UI features in Firefox.</p>
+<p>This sort of approach is discouraged for new features - land these (or the necessary WebExtension APIs) in-tree instead.</p>
+<p>For the moment, the <a href="https://github.com/mozilla/shield-studies-addon-utils/">SHIELD Study Add-on Utilities</a> may be used if the extension needs to control the lifecycle of the study, but using one extension per experimental treatment makes this unnecessary and is preferred. The APIs provided by the SHIELD Study Add-on Utilities will be available as privileged APIs shipped with Firefox soon.</p>
+<a class="header" href="#development-and-testing" id="development-and-testing"><h1>Development and Testing</h1></a>
+<a class="header" href="#testing-built-in-features" id="testing-built-in-features"><h2>Testing Built-in Features</h2></a>
+<p>Firefox features go through standard development and testing processes. See the <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide">Firefox developer guide</a> for more information.</p>
+<a class="header" href="#testing-extensions" id="testing-extensions"><h2>Testing Extensions</h2></a>
+<p>Extensions do not need to go through the same process, but should take advantage of Mozilla CI and bug tracking systems:</p>
+<ol>
+<li>
+<p>Use the Mozilla CI to test changes (tryserver).</p>
+</li>
+<li>
+<p>Performance tests (<strong>this step is required</strong>) - extension XPI files should be placed in <code>testing/profiles/common/extensions/</code>, which will cause test harnesses to load the XPI.</p>
+</li>
+<li>
+<p>Custom unit/functional tests (AKA <code>xpcshell</code>/<code>mochitest</code>) may be placed in <code>testing/extensions</code>, although running these tests outside Mozilla CI is acceptable so these are <strong>optional</strong>.</p>
+</li>
+<li>
+<p>Receive reviewer approval. A Firefox peer <strong>must sign off</strong> if this extension contains privileged code, aka WebExtension Experiments.</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>Any <a href="https://wiki.mozilla.org/Modules/All#Firefox">Firefox Peer</a> should be able to do the review, or point you to someone who can.</p>
+</li>
+</ul>
+<ol start="5">
+<li>Extension is signed.</li>
+<li>Email to <code>pi-request@mozilla.com</code> is sent to request QA</li>
+<li>QA approval signed off in Bugzilla.</li>
+<li>Extension is shipped via <a href="https://github.com/mozilla/normandy">Normandy</a>.</li>
+</ol>
+<a class="header" href="#example-extensions-testing-workflow" id="example-extensions-testing-workflow"><h2>Example Extensions Testing Workflow</h2></a>
+<p>Note that for the below to work you only need <a href="https://www.mercurial-scm.org/">Mercurial</a> installed, but if you want to do local testing you must be set up to <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide/Build_Instructions">build Firefox</a>. You don't need to build Firefox from source; <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide/Build_Instructions/Artifact_builds">artifact builds</a> are sufficient.</p>
+<p>In order to use Mozilla CI (AKA &quot;<a href="https://firefox-source-docs.mozilla.org/tools/try/">Tryserver</a>&quot;), you must have a full clone of the <code>mozilla-central</code> repository:</p>
+<pre><code>hg clone https://hg.mozilla.org/mozilla-central
+cd mozilla-central
+</code></pre>
+<p>Copy in unsigned XPI, and commit it to your local Mercurial repo:</p>
+<pre><code>cp ~/src/my-extension.xpi testing/profiles/common/extensions/
+hg add testing/profiles/common/extensions/my-extension.xpi
+hg commit -m &quot;Bug nnn - Testing my extension&quot; testing/profiles/common/extensions/my-extension.xpi
+</code></pre>
+<p>Push to Try:</p>
+<pre><code>./mach try -p linux64,macosx64,win64 -b do -u none -t all --artifact
+</code></pre>
+<p>This will run Mozilla CI tests on all platforms</p>
+<p>Note that you must have Level 1 commit access to use tryserver. If you are interested in interacting with Mozilla CI from Github (which only requires users to be in the Mozilla GitHub org), check out the <a href="https://github.com/biancadanforth/taskcluster-integration-poc/">Taskcluster Integration proof-of-concept</a>.</p>
+<p>Also note that this requires an investment time to set up just as CircleCI or Travis-CI would, so it's not really appropriate for short-term projects. Use tryserver directly instead.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../cookbooks/hll_zeppelin.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../cookbooks/dataset_specific.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../cookbooks/hll_zeppelin.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../cookbooks/dataset_specific.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="../mermaid-init.js"></script>
+        
+
+        
+
+    </body>
+</html>
