@@ -25,6 +25,7 @@
   * [Creating a custom Re:dash dataset](cookbooks/create_a_dataset.md)
   * [Sending a Custom Ping](cookbooks/new_ping.md)
   * [Using HyperLogLog in Zeppelin](cookbooks/hll_zeppelin.md)
+  * [Client Implementation Guidelines](cookbooks/client_guidelines.md)
   * [Dataset Specific](cookbooks/dataset_specific.md)
     * [Longitudinal Examples](cookbooks/longitudinal_examples.md)
     * [Working with Crash Pings](cookbooks/crash_pings.md)
@@ -37,6 +38,7 @@
     * [Daily Active Users (DAU)](cookbooks/dau.md)
     * [Active DAU (aDAU)](cookbooks/active_dau.md)
     * [Retention](cookbooks/retention.md)
+  * [Telemetry Events Best Practices](cookbooks/events_best_practices.md)
 
 ---
 
