@@ -10,7 +10,8 @@ Below are a number of trailheads that lead into the projects and code that compr
 | [`moztelemetry`][mt]               | Scala APIs for Mozilla Telemetry
 | [`spark-hyperloglog`][spark_hll]   | Algebird's HyperLogLog support for Apache Spark
 | [`mozanalysis`][ma]                | A library for Mozilla experiments analysis
-| [`glean`][glean]                   | A client-side mobile Telemetry SDK for collecting metrics and sending them to Mozilla's Telemetry service.
+| [`glean`][glean]                   | A client-side mobile Telemetry SDK for collecting metrics and sending them to Mozilla's Telemetry service
+| [`telemetry-next-node`][tnn]       | A `node.js` package for accessing Telemetry Aggregates data
 
 
 [pymt]: https://github.com/mozilla/python_moztelemetry
@@ -18,6 +19,7 @@ Below are a number of trailheads that lead into the projects and code that compr
 [spark_hll]: https://github.com/mozilla/spark-hyperloglog
 [ma]: https://github.com/mozilla/mozanalysis
 [glean]: https://github.com/mozilla-mobile/android-components/tree/master/components/service/glean
+[tnn]: https://github.com/mozilla/telemetry-next-node
 
 ## ETL code and Datasets
 
