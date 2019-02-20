@@ -17,6 +17,7 @@
     * [Event Pipeline Detail](concepts/pipeline/event_pipeline.md)
   * [Analysis Interfaces](tools/interfaces.md)
   * [Custom analysis with Spark](tools/spark.md)
+      * [Telemetry schema reference](tools/handy_schema.md)
   * [SQL Style Guide](concepts/sql_style.md)
 * [Cookbooks](cookbooks/index.md)
   * [Alerts](tools/alerts.md)
