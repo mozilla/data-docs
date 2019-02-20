@@ -104,7 +104,7 @@ Partitioned by `experimentId`
 
 ## Pull all table schemas from the metadata S3 bucket
 
-Load the metadata bucket (name from (here)[https://github.com/mozilla/python_moztelemetry/blob/09ddf1ec7d953a4308dfdcb0ed968f27bd5921bb/moztelemetry/dataset.py#L402])
+Load the metadata bucket (name from [here](https://github.com/mozilla/python_moztelemetry/blob/09ddf1ec7d953a4308dfdcb0ed968f27bd5921bb/moztelemetry/dataset.py#L402))
 
 ```
 from io import BytesIO
