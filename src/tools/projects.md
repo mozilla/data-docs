@@ -10,7 +10,7 @@ Below are a number of trailheads that lead into the projects and code that compr
 | [`moztelemetry`][mt]               | Scala APIs for Mozilla Telemetry
 | [`spark-hyperloglog`][spark_hll]   | Algebird's HyperLogLog support for Apache Spark
 | [`mozanalysis`][ma]                | A library for Mozilla experiments analysis
-| [`glean`][glean]                   | A client-side mobile Telemetry SDK for collecting metrics and sending them to Mozilla's Telemetry service.
+| [`glean`][glean]                   | A client-side mobile Telemetry SDK for collecting metrics and sending them to Mozilla's Telemetry service
 
 
 [pymt]: https://github.com/mozilla/python_moztelemetry
@@ -111,6 +111,18 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 [test-tube]: https://github.com/mozilla/firefox-test-tube
 [experimenter]: https://github.com/mozilla/experimenter
 [stmoab]: https://github.com/mozilla/stmoab
+
+## Legacy projects
+
+Projects in this section are less active, but may not be officially
+deprecated. Please check with the `fx-data-dev` mailing list before
+starting a new project using anything in this section.
+
+| Name and repo                      | Description |
+|------------------------------------|-------------|
+| [`telemetry-next-node`][tnn]       | A `node.js` package for accessing Telemetry Aggregates data
+
+[tnn]: https://github.com/mozilla/telemetry-next-node
 
 ## Reference materials
 
