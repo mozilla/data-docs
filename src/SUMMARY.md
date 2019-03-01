@@ -62,6 +62,7 @@
     * [Socorro Crash Reports](datasets/other/socorro_crash/reference.md)
     * [SSL Ratios (public)](datasets/other/ssl/reference.md)
     * [Sync Summary](datasets/batch_view/sync_summary/reference.md)
+    * [Telemetry Aggregates](datasets/batch_view/telemetry_aggregates/reference.md)
     * [Update](datasets/batch_view/update/reference.md)
   * [Experimental Datasets](tools/experiments.md)
     * [Accessing Heartbeat data](datasets/heartbeat.md)
