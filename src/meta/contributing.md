@@ -64,8 +64,8 @@ to check.
 
 ## Style Guide
 
-Articles should be written in Markdown—
-specifically, the [CommonMark dialect][commonmark].
+Articles should be written in Markdown.
+mdBook uses the [CommonMark dialect][commonmark].
 
 Limit lines to **100 characters** where possible.
 Try to split lines at the end of sentences,
