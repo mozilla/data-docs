@@ -24,6 +24,22 @@ ORDER BY
     1 ASC
 ```
 
+[`clients_last_seen`](../datasets/bigquery/clients_last_seen/reference.md) can also be used within BigQuery. Below is an example query for getting aDAU using `clients_last_seen`.
+
+```sql
+SELECT
+    submission_date,
+    COUNTIF(submission_date = last_seen_date) AS aDAU
+FROM
+    telemetry.clients_last_seen
+WHERE
+    scalar_parent_browser_engagement_total_uri_count_sum >= 5
+GROUP BY
+    1
+ORDER BY
+    1 ASC
+```
+
 `main_summary` can also be used for getting aDAU. Below is an example query using a 1% sample over March 2018 using `main_summary`:
 
 ```sql

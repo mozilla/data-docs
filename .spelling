@@ -25,6 +25,7 @@ backends
 backfilled
 behaviour
 Bhattacharyya
+BigQuery
 blocklist
 boolean
 booleans
