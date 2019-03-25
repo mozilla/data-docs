@@ -138,7 +138,7 @@ starting a new project using anything in this section.
 [docs]: https://docs.telemetry.mozilla.org
 [fxsrcdocs]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/
 [rtmo_gh]: https://github.com/mozilla/mozilla-reports
-[rtmo]: https://reports.telemetry.mozilla.org
+[rtmo]: https://mozilla.report
 
 ### Non-public
 
