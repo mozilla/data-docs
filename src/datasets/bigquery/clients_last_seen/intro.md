@@ -1,41 +1,52 @@
-The `clients_last_seen` dataset is useful for determining exact user counts
-such as MAU, WAU, and DAU.
+The `clients_last_seen` dataset is useful for efficiently determining exact
+user counts such as [DAU and MAU](../../../cookbooks/dau.md).
 
-The `clients_last_seen` dataset is similar to the
-[`client_count_daily` dataset](/datasets/batch_view/client_count/reference.md)
-except it is used to efficiently generate exact counts, and it includes the most
-recent values in a 28 day window for all columns from the
-[`clients_daily` dataset](/datasets/batch_view/clients_daily/reference.md).
+It does *not* use approximates, unlike the HyperLogLog algorithm used in the
+[`client_count_daily` dataset](/datasets/batch_view/client_count/reference.md),
+and it includes the most recent values in a 28 day window for all columns in
+the [`clients_daily` dataset](/datasets/batch_view/clients_daily/reference.md).
 
 #### Content
 
 For each `submission_date` this dataset contains one row per `client_id`
-that appeared in the [`clients_daily`
-dataset](/datasets/batch_view/clients_daily/reference.md)
-in a 28 day window including `submission_date`. The `last_seen_date` column
-indicates the date the client last appeared in `clients_daily`. Other columns
-are the value from `clients_daily` for each `client_id` on `last_seen_date`.
+that appeared in `clients_daily` in a 28 day window including
+`submission_date` and preceding days.
+
+The `days_since_seen` column indicates the difference between `submission_date`
+and the most recent `submission_date` in `clients_daily` where the `client_id`
+appeared.
+
+Other `days_since_` columns use the most recent date in `clients_daily` where
+a certain condition was met. If the condition was not met for a `client_id` in
+a 28 day window `NULL` is used. For example `days_since_visited_5_uri` uses the
+condition `scalar_parent_browser_engagement_total_uri_count_sum >= 5`. These
+columns can be used for user counts where a condition must be met on any day
+in a window instead of using the most recent values for each `client_id`.
+
+The rest of the columns use the most recent value in `clients_daily` where
+the `client_id` appeared.
 
 #### Background and Caveats
 
-User counts from this table only check the most recent column values for a
-client. This means [Active MAU](../../../cookbooks/active_dau.md) as defined
-cannot be calculated from `last_seen_date` because if a given `client_id`
-appeared every day in February and only on February 1st had
+User counts generated using `days_since_seen` only reflect the most recent
+values from `clients_daily` for each `client_id` in a 28 day window. This means
+[Active MAU](../../../cookbooks/active_dau.md)
+as defined cannot be efficiently calculated using `days_since_seen` because if
+a given `client_id` appeared every day in February and only on February 1st had
 `scalar_parent_browser_engagement_total_uri_count_sum >= 5` then it would only
-be counted on the 1st, and not the 2nd-28th.
+be counted on the 1st, and not the 2nd-28th. Active MAU can be efficiently and
+correctly calculated using `days_since_visited_5_uri`.
 
 MAU can be calculated over a `GROUP BY submission_date[, ...]` clause using
 `COUNT(*)`, because there is exactly one row in the dataset for each
 `client_id` in the 28 day MAU window for each `submission_date`.
 
-User counts generated using `last_seen_date` can use `SUM` to reduce groups,
+User counts generated using `days_since_seen` can use `SUM` to reduce groups,
 because a given `client_id` will only be in one group per `submission_date`. So
 if MAU were calculated by `country` and `channel`, then the sum of the MAU for
 each `country` would be the same as if MAU were calculated only by `channel`.
 
 #### Accessing the Data
 
-The data is available in Re:dash and BigQuery.
-Take a look at this
-[full running example query in Re:dash](https://sql.telemetry.mozilla.org/queries/62029/source#159510).
+The data is available in Re:dash and BigQuery. Take a look at this full running
+[example query in Re:dash](https://sql.telemetry.mozilla.org/queries/62029/source#159510).

@@ -1,7 +1,7 @@
 # DAU and MAU
 
 For the purposes of DAU, a profile is considered active if it sends any main ping.
-* Dates are defined by `submission_date_s3`.
+* Dates are defined by `submission_date_s3` or `submission_date`.
 
 **DAU** is the number of clients sending a main ping on a given day.
 
@@ -21,13 +21,13 @@ ORDER BY
     1 ASC
 ```
 
-[`clients_last_seen`](../datasets/bigquery/clients_last_seen/reference.md) can also be used within BigQuery. Below is an example query for getting DAU and MAU using `clients_last_seen`.
+[`clients_last_seen`](../datasets/bigquery/clients_last_seen/reference.md) can also be used, but is only available in BigQuery. Below is an example query for getting DAU and MAU using `clients_last_seen`.
 
 ```sql
 SELECT
     submission_date,
-    COUNT(*) AS mau,
-    COUNTIF(submission_date = last_seen_date) AS dau
+    COUNTIF(days_since_seen < 1) AS dau,
+    COUNTIF(days_since_seen < 28) AS mau
 FROM
     telemetry.clients_last_seen
 GROUP BY
