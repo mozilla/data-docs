@@ -12,9 +12,9 @@ recent values in a 28 day window for all columns from the
 For each `submission_date` this dataset contains one row per `client_id`
 that appeared in the [`clients_daily`
 dataset](/datasets/batch_view/clients_daily/reference.md)
-in a 28 day window including `submission_date`. The `generated_timestamp`
-column indicates when the row was generated. The `last_seen_date` column
-indicates the date the client last appeared in `clients_daily`.
+in a 28 day window including `submission_date`. The `last_seen_date` column
+indicates the date the client last appeared in `clients_daily`. Other columns
+are the value from `clients_daily` for each `client_id` on `last_seen_date`.
 
 #### Background and Caveats
 

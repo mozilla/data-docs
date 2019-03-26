@@ -15,7 +15,6 @@
 ```sql
 SELECT
     submission_date,
-    CURRENT_TIMESTAMP() AS generate_time,
     os,
     COUNT(*) AS count
 FROM
@@ -39,7 +38,6 @@ ORDER BY
 ```sql
 SELECT
     submission_date,
-    CURRENT_TIMESTAMP() AS generate_time,
     normalized_channel,
     COUNT(*) AS count
 FROM
