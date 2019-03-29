@@ -6,6 +6,9 @@ It does *not* use approximates, unlike the HyperLogLog algorithm used in the
 and it includes the most recent values in a 28 day window for all columns in
 the [`clients_daily` dataset](/datasets/batch_view/clients_daily/reference.md).
 
+This dataset should be used instead of `client_count_daily` in BigQuery,
+and is not currently available outside of BigQuery.
+
 #### Content
 
 For each `submission_date` this dataset contains one row per `client_id`
