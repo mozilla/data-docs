@@ -1,0 +1,215 @@
+# Exact MAU Data
+
+## Introduction
+
+This article introduces the usage of and methodology behing the "exact MAU"
+tables in BigQuery:
+
+- `firefox_desktop_exact_mau28_by_dimensions`,
+- `firefox_nondesktop_exact_mau28_by_dimensions`, and
+- `firefox_accounts_exact_mau28_by_dimensions`.
+
+The calculation of MAU (monthly active users) has historically been frought
+with troubling details around exact definitions and computational limitations,
+leading to disagreements between analyses.
+These tables contain precalculated MAU, WAU, and DAU aggregates for 
+various usage criteria and dimensions, allowing efficient calculation of
+aggregates across arbitrary slices of those dimensions.
+The tables follow a consistent methodology which is intended as a standard
+across Mozilla for MAU analysis going forward.
+
+## Table of Contents
+
+<!-- toc -->
+
+# Conceptual Model
+
+## Metric
+
+A metric is anything want to (and can) measure.  In order for a metric to be 
+calculated, a _usage criterion_ and a _slice_ must be specified. The metric 
+will produce a single value per day, summarizing data:
+
+- for one day or more days (i.e. the metric value for a particular day may depend on data from other days as well)
+- for all users (whatever notion of user makes sense for the data, generally profiles) in a particular sub-population
+- where the sub-population will include users that meet the specified usage criteria and are in the specified slice.
+
+A simple _usage criterion_ is "All Desktop Activity", which includes all Firefox Desktop users that we have any data (telemetry ping) for on the day in question.  The simplest slice is "All" which places no restrictions on the sub-population.
+
+For example, the metric "Daily Active Users (DAU)" with usage criteria "All Desktop Activity" and slice "All" involves summarizing data on all users of Firefox Desktop over a single day.
+
+## Usage Criteria
+
+A _usage criterion_ is any product or feature for which we wish to calculate
+metrics.  It may be something simple like "All Desktop Activity" (as above) or, 
+similarly, "All Mobile Activity".  It may also be something more specific like
+"Desktop 5 URI Active" corresponding to calculation of 
+[aDAU](/cookbooks/active_dau.html).
+
+## Slice
+
+A slice defines the sub-population on which we can calculate a metric and
+is specified by setting restrictions in different dimensions.
+Examples of dimensions include: "Country", "Attribution Source",
+and "Firefox Version".
+Thus an example slice may be "Country = US; Firefox Version = 60|61", which
+restricts to profiles that report usage in the US on Firefox versions 60 or 61.
+There is implicitly no restriction on any other dimensions.
+Thus, the empty slice - "All" - is also a valid slice and simply places no 
+restrictions on any dimension.
+Note there are some complexities here:
+
+- Firstly, a dimension may be scalar and need to be suitably bucketed (instead of every possible profile age being a unique slice element, maybe we prefer to group users between 12 and 16 months old into a single slice element); likewise we may need to use normalized versions of string fields
+- Secondly, we require that dimensions be non-overlapping, especially for metrics calculated over multiple days of user activity.  In a given day, a profile may be active in multiple countries, but we aggregate that to a single value by taking the most frequent value seen in that day, breaking ties by taking the value that occurs last. In a given month, the assigned country may change from day to day; we use the value from the most recent active day up to the day we're calculating usage for.
+
+# Using the Tables
+
+The various Exact MAU datasets are computed daily from the `*_last_seen`
+tables (see [`clients_last_seen`](/datasets/bigquery/clients_last_seen/reference.html))
+and contain pre-aggregated DAU, WAU, and MAU counts per usage criterion
+per each unique combination of dimensions values.
+Because of our restriction that dimension values be non-overlapping, we
+can recover MAU for a particular slice of the data by summing over all rows
+matching the slice definition.
+
+The simple case of retrieving DAU/WAU/MAU for usage criterion
+"All Desktop Activity" and slice "All" looks like:
+
+```sql
+SELECT
+    submission_date,
+    SUM(mau) AS mau
+FROM
+    `moz-fx-data-derived-datasets.telemetry.firefox_desktop_exact_mau28_by_dimensions_v1`
+GROUP BY
+    submission_date
+ORDER BY
+    submission_date
+```
+
+Now, let's refine our slice to "Country = US; Campaign = whatsnew"
+via a `WHERE` clause:
+
+```sql
+SELECT
+    submission_date,
+    SUM(mau) AS mau
+FROM
+    `moz-fx-data-derived-datasets.telemetry.firefox_desktop_exact_mau28_by_dimensions_v1`
+WHERE
+    country = 'US'
+    AND campaign = 'whatsnew'
+GROUP BY
+    submission_date
+ORDER BY
+    submission_date
+```
+
+Perhaps we want to compare MAU as above to  [aDAU](/cookbooks/active_dau.html)
+over the same slice. The column `visited_5_uri_dau` gives DAU as calculated
+with the "Desktop 5 URI Active" usage criterion, corresponding to aDAU:
+
+```
+SELECT
+    submission_date,
+    SUM(mau) AS mau,
+    SUM(visited_5_uri_dau) AS adau
+FROM
+    `moz-fx-data-derived-datasets.telemetry.firefox_desktop_exact_mau28_by_dimensions_v1`
+WHERE
+    country = 'US'
+    AND campaign = 'whatsnew'
+GROUP BY
+    submission_date
+ORDER BY
+    submission_date
+```
+
+Additional usage criteria may be added in the future as new columns named
+`mau_*`, etc. where the suffix describes the usage criterion.
+
+
+# Additional Details
+
+## Inclusive Tier 1 Calculation for FxA
+
+The 2019 KPI definition for Relationships relies on a MAU calculation restricted
+to a specific set of "Tier 1" countries. 
+In the Exact MAU datasets, country is a dimension that woud normally be specified 
+in a slice definition.
+Indeed, for desktop and nondesktop clients, the definition of "Tier 1 MAU" looks like:
+
+```
+SELECT
+    submission_date,
+    SUM(mau) AS mau
+FROM
+    `moz-fx-data-derived-datasets.telemetry.firefox_desktop_exact_mau28_by_dimensions_v1`
+WHERE
+    country IN ('US', 'UK', 'DE', 'FR', 'CA')
+GROUP BY
+    submission_date
+ORDER BY
+    submission_date
+```
+
+Remember that our non-overlapping dimensions methodology means that the filter
+in the query above considers only the country value from the most recent daily
+aggregation, so a user that appeared in one of the specified countries early
+in the month but then changed location to a non-tier 1 country would not count
+toward MAU.
+
+Due to the methodology used when forecasting goal values for the year, however, we need to
+follow a more inclusive definition for "Tier 1 FxA MAU" where a user counts if they register
+even a single FxA event originating from a tier 1 country in the 28 day MAU window.
+That calculation requires a separate "FxA Activity in Tier 1 Country" criterion
+and is represented in the exact MAU table as `mau_tier1_inclusive`
+(naming conventions have been developing and this name may change in the future):
+
+```
+SELECT
+    submission_date,
+    SUM(mau_tier1_inclusive) AS mau_tier1_inclusive
+FROM
+    `moz-fx-data-derived-datasets.telemetry.firefox_accounts_exact_mau28_by_dimensions_v1`
+GROUP BY
+    submission_date
+ORDER BY
+    submission_date
+```
+
+## Confidence Intervals
+
+The Exact MAU tables enable tracking of MAU for potentially very small
+subpopulations of users where statistical variation can often overwhelm
+real trends in the data. 
+In order to support statistical inference (confidence intervals and hypothesis tests), 
+these tables include a "pseudo-dimension" we call `id_bucket`. We assign
+each client (or user, in the case of FxA data) to one of 20 buckets based on a
+hash of their `client_id` (or `user_id`), with the effect that each user is
+randomly assigned to one and only one bucket. If we sum MAU numbers for each
+bucket individually, we can use resampling techniques to determine the magnitude
+of variation and assign a confidence interval to our sums.
+
+As an example of calculating confidence intervals, see the
+[Desktop MAU KPI query in Redash](https://sql.telemetry.mozilla.org/queries/61957/source)
+which uses a jackknife resampling technique implemented as a BigQuery UDF.
+
+# Data Reference
+
+## Scheduling
+
+These tables are updated daily via the
+[parquet to BigQuery](https://github.com/mozilla-services/spark-parquet-to-bigquery)
+infrastructure in the following DAGs:
+
+- [`reprocess_clients_daily_v6` DAG](https://github.com/mozilla-services/spark-parquet-to-bigquery/blob/master/dags/reprocess_clients_daily_v6.py),
+- [`incremental_telemetry_core_parquet_v3` DAG](https://github.com/mozilla-services/spark-parquet-to-bigquery/blob/master/dags/incremental_telemetry_core_parquet_v3.py), and
+- [`incremental_fxa_events_v1` DAG](https://github.com/mozilla-services/spark-parquet-to-bigquery/blob/master/dags/incremental_fxa_events_v1.py).
+
+## Schema
+
+The data is partitioned by `submission_date`.
+
+As of 2019-03-29, the current version for all exact mau tables is `v1`, 
+and the schemas are visible via the `telemetry` dataset in [the BigQuery console](https://console.cloud.google.com/bigquery?project=moz-fx-data-derived-datasets&folder&organizationId=442341870013&p=moz-fx-data-derived-datasets&d=telemetry&page=dataset).

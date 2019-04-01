@@ -55,6 +55,7 @@
     * [Cross Sectional](datasets/batch_view/cross_sectional/reference.md)
     * [Error Aggregates](datasets/streaming/error_aggregates/reference.md)
     * [Events](datasets/batch_view/events/reference.md)
+    * [Exact MAU](datasets/bigquery/exact_mau/reference.md)
     * [First Shutdown Summary](datasets/batch_view/first_shutdown_summary/reference.md)
     * [Longitudinal](datasets/batch_view/longitudinal/reference.md)
     * [Main Summary](datasets/batch_view/main_summary/reference.md)
