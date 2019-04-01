@@ -1,0 +1,323 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Clients Last Seen - Firefox Data Documentation</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../../../dtmo.css">
+        
+        <link rel="stylesheet" href="../../../mermaid.css">
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">var path_to_root = "../../../";</script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="../../../introduction.html">Firefox Data Documentation</a></li><li><a href="../../../concepts/reporting_a_problem.html"><strong aria-hidden="true">1.</strong> Reporting a problem</a></li><li><a href="../../../concepts/terminology.html"><strong aria-hidden="true">2.</strong> Terminology</a></li><li><a href="../../../concepts/getting_started.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li><ol class="section"><li><a href="../../../concepts/analysis_intro.html"><strong aria-hidden="true">3.1.</strong> Analysis Quick Start</a></li><li><a href="../../../concepts/choosing_a_dataset.html"><strong aria-hidden="true">3.2.</strong> Choosing a Dataset</a></li><li><a href="../../../tools/stmo.html"><strong aria-hidden="true">3.3.</strong> Intro to STMO</a></li><li><a href="../../../concepts/analysis_gotchas.html"><strong aria-hidden="true">3.4.</strong> Common Analysis Gotchas</a></li><li><a href="../../../concepts/sql_optimization.html"><strong aria-hidden="true">3.5.</strong> Optimizing Queries</a></li><li><a href="../../../datasets/new_data.html"><strong aria-hidden="true">3.6.</strong> Collecting New Data</a></li><li><a href="../../../concepts/getting_help.html"><strong aria-hidden="true">3.7.</strong> Getting Help</a></li></ol></li><li><a href="../../../tools/index.html"><strong aria-hidden="true">4.</strong> Tools</a></li><li><ol class="section"><li><a href="../../../tools/projects.html"><strong aria-hidden="true">4.1.</strong> Project Glossary</a></li><li><a href="../../../concepts/pipeline/data_pipeline.html"><strong aria-hidden="true">4.2.</strong> Overview of Mozilla's Data Pipeline</a></li><li><ol class="section"><li><a href="../../../concepts/pipeline/data_pipeline_detail.html"><strong aria-hidden="true">4.2.1.</strong> In-depth Data Pipeline Detail</a></li><li><a href="../../../concepts/pipeline/http_edge_spec.html"><strong aria-hidden="true">4.2.2.</strong> HTTP Edge Server Specification</a></li><li><a href="../../../concepts/pipeline/event_pipeline.html"><strong aria-hidden="true">4.2.3.</strong> Event Pipeline Detail</a></li></ol></li><li><a href="../../../tools/interfaces.html"><strong aria-hidden="true">4.3.</strong> Analysis Interfaces</a></li><li><a href="../../../tools/spark.html"><strong aria-hidden="true">4.4.</strong> Custom analysis with Spark</a></li><li><a href="../../../concepts/sql_style.html"><strong aria-hidden="true">4.5.</strong> SQL Style Guide</a></li></ol></li><li><a href="../../../cookbooks/index.html"><strong aria-hidden="true">5.</strong> Cookbooks</a></li><li><ol class="section"><li><a href="../../../tools/alerts.html"><strong aria-hidden="true">5.1.</strong> Alerts</a></li><li><a href="../../../cookbooks/parquet.html"><strong aria-hidden="true">5.2.</strong> Working with Parquet Data on ATMO Clusters</a></li><li><a href="../../../cookbooks/create_a_dataset.html"><strong aria-hidden="true">5.3.</strong> Creating a custom Re:dash dataset</a></li><li><a href="../../../cookbooks/new_ping.html"><strong aria-hidden="true">5.4.</strong> Sending a Custom Ping</a></li><li><a href="../../../cookbooks/hll_zeppelin.html"><strong aria-hidden="true">5.5.</strong> Using HyperLogLog in Zeppelin</a></li><li><a href="../../../cookbooks/client_guidelines.html"><strong aria-hidden="true">5.6.</strong> Client Implementation Guidelines</a></li><li><a href="../../../cookbooks/dataset_specific.html"><strong aria-hidden="true">5.7.</strong> Dataset Specific</a></li><li><ol class="section"><li><a href="../../../cookbooks/longitudinal_examples.html"><strong aria-hidden="true">5.7.1.</strong> Longitudinal Examples</a></li><li><a href="../../../cookbooks/crash_pings.html"><strong aria-hidden="true">5.7.2.</strong> Working with Crash Pings</a></li><li><a href="../../../cookbooks/normandy_events.html"><strong aria-hidden="true">5.7.3.</strong> Working with Normandy events</a></li></ol></li><li><a href="../../../cookbooks/realtime.html"><strong aria-hidden="true">5.8.</strong> Real-time</a></li><li><ol class="section"><li><a href="../../../cookbooks/realtime_analysis_plugin.html"><strong aria-hidden="true">5.8.1.</strong> Creating a Real-time Analysis Plugin</a></li><li><a href="../../../cookbooks/view_pings_cep.html"><strong aria-hidden="true">5.8.2.</strong> Seeing Your Own Pings</a></li><li><a href="../../../tools/cep_matcher.html"><strong aria-hidden="true">5.8.3.</strong> CEP Matcher</a></li></ol></li><li><a href="../../../cookbooks/metrics.html"><strong aria-hidden="true">5.9.</strong> Metrics</a></li><li><ol class="section"><li><a href="../../../cookbooks/dau.html"><strong aria-hidden="true">5.9.1.</strong> Daily Active Users (DAU)</a></li><li><a href="../../../cookbooks/active_dau.html"><strong aria-hidden="true">5.9.2.</strong> Active DAU (aDAU)</a></li><li><a href="../../../cookbooks/retention.html"><strong aria-hidden="true">5.9.3.</strong> Retention</a></li></ol></li><li><a href="../../../cookbooks/events_best_practices.html"><strong aria-hidden="true">5.10.</strong> Telemetry Events Best Practices</a></li><li class="spacer"></li></ol></li><li><a href="../../../datasets/reference.html"><strong aria-hidden="true">6.</strong> Dataset Reference</a></li><li><ol class="section"><li><a href="../../../datasets/pings.html"><strong aria-hidden="true">6.1.</strong> Pings</a></li><li><a href="../../../datasets/derived.html"><strong aria-hidden="true">6.2.</strong> Derived Datasets</a></li><li><ol class="section"><li><a href="../../../datasets/batch_view/addons/reference.html"><strong aria-hidden="true">6.2.1.</strong> Addons</a></li><li><a href="../../../datasets/mozetl/churn/reference.html"><strong aria-hidden="true">6.2.2.</strong> Churn</a></li><li><a href="../../../datasets/batch_view/client_count_daily/reference.html"><strong aria-hidden="true">6.2.3.</strong> Client Count Daily</a></li><li><a href="../../../datasets/batch_view/client_count/reference.html"><strong aria-hidden="true">6.2.4.</strong> Client Count</a></li><li><a href="../../../datasets/batch_view/clients_daily/reference.html"><strong aria-hidden="true">6.2.5.</strong> Clients Daily</a></li><li><a href="../../../datasets/bigquery/clients_last_seen/reference.html" class="active"><strong aria-hidden="true">6.2.6.</strong> Clients Last Seen</a></li><li><a href="../../../datasets/batch_view/crash_aggregates/reference.html"><strong aria-hidden="true">6.2.7.</strong> Crash Aggregate</a></li><li><a href="../../../datasets/batch_view/crash_summary/reference.html"><strong aria-hidden="true">6.2.8.</strong> Crash Summary</a></li><li><a href="../../../datasets/batch_view/cross_sectional/reference.html"><strong aria-hidden="true">6.2.9.</strong> Cross Sectional</a></li><li><a href="../../../datasets/streaming/error_aggregates/reference.html"><strong aria-hidden="true">6.2.10.</strong> Error Aggregates</a></li><li><a href="../../../datasets/batch_view/events/reference.html"><strong aria-hidden="true">6.2.11.</strong> Events</a></li><li><a href="../../../datasets/batch_view/first_shutdown_summary/reference.html"><strong aria-hidden="true">6.2.12.</strong> First Shutdown Summary</a></li><li><a href="../../../datasets/batch_view/longitudinal/reference.html"><strong aria-hidden="true">6.2.13.</strong> Longitudinal</a></li><li><a href="../../../datasets/batch_view/main_summary/reference.html"><strong aria-hidden="true">6.2.14.</strong> Main Summary</a></li><li><a href="../../../datasets/batch_view/new_profile/reference.html"><strong aria-hidden="true">6.2.15.</strong> New Profile</a></li><li><a href="../../../datasets/batch_view/retention/reference.html"><strong aria-hidden="true">6.2.16.</strong> Retention</a></li><li><a href="../../../datasets/other/socorro_crash/reference.html"><strong aria-hidden="true">6.2.17.</strong> Socorro Crash Reports</a></li><li><a href="../../../datasets/other/ssl/reference.html"><strong aria-hidden="true">6.2.18.</strong> SSL Ratios (public)</a></li><li><a href="../../../datasets/batch_view/sync_summary/reference.html"><strong aria-hidden="true">6.2.19.</strong> Sync Summary</a></li><li><a href="../../../datasets/batch_view/update/reference.html"><strong aria-hidden="true">6.2.20.</strong> Update</a></li></ol></li><li><a href="../../../tools/experiments.html"><strong aria-hidden="true">6.3.</strong> Experimental Datasets</a></li><li><ol class="section"><li><a href="../../../datasets/heartbeat.html"><strong aria-hidden="true">6.3.1.</strong> Accessing Heartbeat data</a></li><li><a href="../../../datasets/shield.html"><strong aria-hidden="true">6.3.2.</strong> Accessing Shield Study data</a></li></ol></li><li><a href="../../../datasets/search.html"><strong aria-hidden="true">6.4.</strong> Search Datasets</a></li><li><ol class="section"><li><a href="../../../datasets/mozetl/search_aggregates/reference.html"><strong aria-hidden="true">6.4.1.</strong> Search Aggregates</a></li><li><a href="../../../datasets/mozetl/search_clients_daily/reference.html"><strong aria-hidden="true">6.4.2.</strong> Search Clients Daily</a></li></ol></li><li><a href="../../../datasets/other.html"><strong aria-hidden="true">6.5.</strong> Other Datasets</a></li><li><ol class="section"><li><a href="../../../datasets/other/hgpush/reference.html"><strong aria-hidden="true">6.5.1.</strong> hgpush</a></li><li><a href="../../../datasets/other/stub_installer/reference.html"><strong aria-hidden="true">6.5.2.</strong> Stub installer ping</a></li></ol></li><li><a href="../../../datasets/obsolete.html"><strong aria-hidden="true">6.6.</strong> Obsolete Datasets</a></li><li><ol class="section"><li><a href="../../../datasets/obsolete/heavy_users/reference.html"><strong aria-hidden="true">6.6.1.</strong> Heavy Users</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../../concepts/index.html"><strong aria-hidden="true">7.</strong> Telemetry Behavior Reference</a></li><li><ol class="section"><li><a href="../../../concepts/profile/index.html"><strong aria-hidden="true">7.1.</strong> Profile Behavior</a></li><li><ol class="section"><li><a href="../../../concepts/profile/profile_creation.html"><strong aria-hidden="true">7.1.1.</strong> Profile Creation</a></li><li><a href="../../../concepts/profile/realworldusage.html"><strong aria-hidden="true">7.1.2.</strong> Real World Usage</a></li><li><a href="../../../concepts/profile/profilehistory.html"><strong aria-hidden="true">7.1.3.</strong> Profile History</a></li></ol></li><li><a href="../../../concepts/channels/index.html"><strong aria-hidden="true">7.2.</strong> Channel Behavior</a></li><li><ol class="section"><li><a href="../../../concepts/channels/channel_normalization.html"><strong aria-hidden="true">7.2.1.</strong> Channel Normalization and Querying</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../../../meta/index.html"><strong aria-hidden="true">8.</strong> About this Documentation</a></li><li><ol class="section"><li><a href="../../../meta/contributing.html"><strong aria-hidden="true">8.1.</strong> Contributing</a></li><li><a href="../../../meta/structure.html"><strong aria-hidden="true">8.2.</strong> Structure</a></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Firefox Data Documentation</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#clients-last-seen-reference" id="clients-last-seen-reference"><h1>Clients Last Seen Reference</h1></a>
+<ul>
+<li><a href="#introduction">Introduction</a>
+<ul>
+<li><a href="#content">Content</a></li>
+<li><a href="#background-and-caveats">Background and Caveats</a></li>
+<li><a href="#accessing-the-data">Accessing the Data</a></li>
+</ul>
+</li>
+<li><a href="#data-reference">Data Reference</a>
+<ul>
+<li><a href="#example-queries">Example Queries</a>
+<ul>
+<li><a href="#compute-dau-for-non-windows-clients-for-the-last-week">Compute DAU for non-windows clients for the last week</a></li>
+<li><a href="#compute-wau-by-channel-for-the-last-week">Compute WAU by Channel for the last week</a></li>
+</ul>
+</li>
+<li><a href="#scheduling">Scheduling</a></li>
+<li><a href="#schema">Schema</a></li>
+</ul>
+</li>
+</ul>
+<a class="header" href="#introduction" id="introduction"><h1>Introduction</h1></a>
+<p>The <code>clients_last_seen</code> dataset is useful for efficiently determining exact
+user counts such as <a href="../../../cookbooks/dau.html">DAU and MAU</a>.</p>
+<p>It does <em>not</em> use approximates, unlike the HyperLogLog algorithm used in the
+<a href="/datasets/batch_view/client_count/reference.html"><code>client_count_daily</code> dataset</a>,
+and it includes the most recent values in a 28 day window for all columns in
+the <a href="/datasets/batch_view/clients_daily/reference.html"><code>clients_daily</code> dataset</a>.</p>
+<p>This dataset should be used instead of <code>client_count_daily</code> in BigQuery,
+and is not currently available outside of BigQuery.</p>
+<a class="header" href="#content" id="content"><h4>Content</h4></a>
+<p>For each <code>submission_date</code> this dataset contains one row per <code>client_id</code>
+that appeared in <code>clients_daily</code> in a 28 day window including
+<code>submission_date</code> and preceding days.</p>
+<p>The <code>days_since_seen</code> column indicates the difference between <code>submission_date</code>
+and the most recent <code>submission_date</code> in <code>clients_daily</code> where the <code>client_id</code>
+appeared. A client observed on the given <code>submission_date</code> will have <code>days_since_seen = 0</code>.</p>
+<p>Other <code>days_since_</code> columns use the most recent date in <code>clients_daily</code> where
+a certain condition was met. If the condition was not met for a <code>client_id</code> in
+a 28 day window <code>NULL</code> is used. For example <code>days_since_visited_5_uri</code> uses the
+condition <code>scalar_parent_browser_engagement_total_uri_count_sum &gt;= 5</code>. These
+columns can be used for user counts where a condition must be met on any day
+in a window instead of using the most recent values for each <code>client_id</code>.</p>
+<p>The rest of the columns use the most recent value in <code>clients_daily</code> where
+the <code>client_id</code> appeared.</p>
+<a class="header" href="#background-and-caveats" id="background-and-caveats"><h4>Background and Caveats</h4></a>
+<p>User counts generated using <code>days_since_seen</code> only reflect the most recent
+values from <code>clients_daily</code> for each <code>client_id</code> in a 28 day window. This means
+<a href="../../../cookbooks/active_dau.html">Active MAU</a>
+as defined cannot be efficiently calculated using <code>days_since_seen</code> because if
+a given <code>client_id</code> appeared every day in February and only on February 1st had
+<code>scalar_parent_browser_engagement_total_uri_count_sum &gt;= 5</code> then it would only
+be counted on the 1st, and not the 2nd-28th. Active MAU can be efficiently and
+correctly calculated using <code>days_since_visited_5_uri</code>.</p>
+<p>MAU can be calculated over a <code>GROUP BY submission_date[, ...]</code> clause using
+<code>COUNT(*)</code>, because there is exactly one row in the dataset for each
+<code>client_id</code> in the 28 day MAU window for each <code>submission_date</code>.</p>
+<p>User counts generated using <code>days_since_seen</code> can use <code>SUM</code> to reduce groups,
+because a given <code>client_id</code> will only be in one group per <code>submission_date</code>. So
+if MAU were calculated by <code>country</code> and <code>channel</code>, then the sum of the MAU for
+each <code>country</code> would be the same as if MAU were calculated only by <code>channel</code>.</p>
+<a class="header" href="#accessing-the-data" id="accessing-the-data"><h4>Accessing the Data</h4></a>
+<p>The data is available in Re:dash and BigQuery. Take a look at this full running
+<a href="https://sql.telemetry.mozilla.org/queries/62029/source#159510">example query in Re:dash</a>.</p>
+<a class="header" href="#data-reference" id="data-reference"><h1>Data Reference</h1></a>
+<a class="header" href="#example-queries" id="example-queries"><h2>Example Queries</h2></a>
+<a class="header" href="#compute-dau-for-non-windows-clients-for-the-last-week" id="compute-dau-for-non-windows-clients-for-the-last-week"><h4>Compute DAU for non-windows clients for the last week</h4></a>
+<pre><code class="language-sql">SELECT
+    submission_date,
+    os,
+    COUNT(*) AS count
+FROM
+    clients_last_seen
+WHERE
+    submission_date &gt;= DATE_SUB(CURRENT_DATE, INTERVAL 1 WEEK)
+    AND last_seen_date = submission_date
+GROUP BY
+    submission_date,
+    os
+HAVING
+    count &gt; 10 -- remove outliers
+    AND lower(os) NOT LIKE '%windows%'
+ORDER BY
+    os,
+    submission_date DESC
+</code></pre>
+<a class="header" href="#compute-wau-by-channel-for-the-last-week" id="compute-wau-by-channel-for-the-last-week"><h4>Compute WAU by Channel for the last week</h4></a>
+<pre><code class="language-sql">SELECT
+    submission_date,
+    normalized_channel,
+    COUNT(*) AS count
+FROM
+    clients_last_seen
+WHERE
+    submission_date &gt;= DATE_SUB(CURRENT_DATE, INTERVAL 1 WEEK)
+    AND last_seen_date &gt; DATE_SUB(submission_date, INTERVAL 1 WEEK)
+GROUP BY
+    submission_date,
+    normalized_channel
+HAVING
+    count &gt; 10 -- remove outliers
+ORDER BY
+    normalized_channel,
+    submission_date DESC
+</code></pre>
+<a class="header" href="#scheduling" id="scheduling"><h2>Scheduling</h2></a>
+<p>This dataset is updated daily via the
+<a href="https://github.com/mozilla-services/spark-parquet-to-bigquery">parquet to BigQuery</a>
+infrastructure. The job runs as part of the
+<a href="https://github.com/mozilla-services/spark-parquet-to-bigquery/blob/master/dags/reprocess_clients_daily_v6.py"><code>reprocess_clients_daily_v6</code> DAG</a>.</p>
+<a class="header" href="#schema" id="schema"><h2>Schema</h2></a>
+<p>The data is partitioned by <code>submission_date</code>.</p>
+<p>As of 2019-03-25, the current version of the <code>clients_last_seen</code> dataset is
+<code>v1</code>, and the schema is visible in the BigQuery console
+<a href="https://console.cloud.google.com/bigquery?p=moz-fx-data-derived-datasets&amp;d=telemetry&amp;t=clients_last_seen_v1&amp;page=table">here</a>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../../datasets/batch_view/clients_daily/reference.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../../datasets/batch_view/crash_aggregates/reference.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../../../datasets/batch_view/clients_daily/reference.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../../../datasets/batch_view/crash_aggregates/reference.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="../../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../../../mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="../../../mermaid-init.js"></script>
+        
+
+        
+
+    </body>
+</html>
