@@ -8,77 +8,73 @@ An **Active User** is defined as a client who has `total_daily_uri` >= 5 URI for
 
 **Active MAU** (aMAU) is the number of unique clients who have been an Active User on any day in the last **28 days**. In other words, any client that contributes to aDAU in the last 28 days would also contribute to aMAU for that day. Note that this is not simply the sum of aDAU over 28 days, since any particular client could be active on many days.
 
-For quick analysis, using `clients_daily_v6` is recommended. Below is an example query for getting aDAU using `clients_daily_v6`.
+**Active WAU** (aWAU) is the number of unique clients who have been an Active User on any day in the last **7 days**. Caveats above for aMAU also apply to aWAU.
+
+For quick analysis, using [`clients_last_seen`](../datasets/bigquery/clients_last_seen/reference.md) is recommended, but it is only available in BigQuery. Below is an example query for getting aMAU, aWAU, and aDAU using `clients_last_seen`.
 
 ```sql
 SELECT
+  submission_date,
+  -- days_since_* values are always < 28 or null, so aMAU could also be
+  -- calculated with COUNT(days_since_visited_5_uri)
+  COUNTIF(days_since_visited_5_uri < 28) AS visited_5_uri_mau,
+  COUNTIF(days_since_visited_5_uri < 7) AS visited_5_uri_wau,
+  -- days_since_* values are always >= 0 or null, so aDAU could also be
+  -- calculated with COUNTIF(days_since_visited_5_uri = 0)
+  COUNTIF(days_since_visited_5_uri < 1) AS visited_5_uri_dau
+FROM
+  telemetry.clients_last_seen
+GROUP BY
+  submission_date
+ORDER BY
+  submission_date ASC
+```
+
+For analysis of only aDAU, using [`clients_daily`](../datasets/batch_view/clients_daily/reference.md) is more efficient than `clients_last_seen`. Getting aMAU and aWAU from `clients_daily` is not recommended. Below is an example query for getting aDAU using `clients_daily`.
+
+```sql
+SELECT
+  submission_date_s3,
+  COUNT(*) AS visited_5_uri_dau
+FROM
+  telemetry.clients_daily
+WHERE
+  scalar_parent_browser_engagement_total_uri_count_sum >= 5
+GROUP BY
+  submission_date_s3
+ORDER BY
+  submission_date_s3 ASC
+```
+
+[`main_summary`](../datasets/batch_view/main_summary/reference.md) can also be used for getting aDAU. Below is an example query using a 1% sample over March 2018 using `main_summary`:
+
+```sql
+SELECT
+  submission_date_s3,
+  COUNT(*) * 100 AS visited_5_uri_dau
+FROM (
+  SELECT
     submission_date_s3,
-    count(*) AS total_clients_cdv6
-FROM
-    clients_daily_v6
-WHERE
-    scalar_parent_browser_engagement_total_uri_count_sum >= 5
-GROUP BY
-    1
-ORDER BY
-    1 ASC
-```
-
-[`clients_last_seen`](../datasets/bigquery/clients_last_seen/reference.md) can also be used, but is only available in BigQuery. Below is an example query for getting aDAU and aMAU using `clients_last_seen`.
-
-```sql
-SELECT
-    submission_date,
-    COUNTIF(days_since_visited_5_uri < 1) AS visited_5_uri_dau,
-    COUNTIF(days_since_visited_5_uri < 28) AS visited_5_uri_mau
-FROM
-    telemetry.clients_last_seen
-GROUP BY
-    1
-ORDER BY
-    1 ASC
-```
-
-`main_summary` can also be used for getting aDAU. Below is an example query using a 1% sample over March 2018 using `main_summary`:
-
-```sql
-SELECT
+    client_id,
+    SUM(scalar_parent_browser_engagement_total_uri_count) >= 5 AS visited_5_uri
+  FROM
+    telemetry.main_summary
+  WHERE
+    sample_id = '51'
+    -- In BigQuery use yyyy-MM-DD, e.g. '2018-03-01'
+    AND submission_date_s3 >= '20180301'
+    AND submission_date_s3 < '20180401'
+  GROUP BY
     submission_date_s3,
-    count(DISTINCT client_id) * 100 as aDAU
-FROM
-    (SELECT
-            submission_date_s3,
-            client_id,
-            sum(coalesce(scalar_parent_browser_engagement_total_uri_count, 0)) as total_daily_uri
-        FROM
-            main_summary
-        WHERE
-            sample_id = '51'
-            AND submission_date_s3 >= '20180301'
-            AND submission_date_s3 < '20180401'
-        GROUP BY
-            1, 2) as daily_clients_table
+    client_id)
 WHERE
-    total_daily_uri >= 5
+  visited_5_uri
 GROUP BY
-    1
+  submission_date_s3
 ORDER BY
-    1 ASC
+  submission_date_s3 ASC
 ```
 
-[`client_count_daily`](../datasets/batch_view/client_count_daily/reference.md) can be used to get **approximate** aDAU. This dataset uses HyperLogLog to estimate unique counts. For example:
-
-```sql
-SELECT
-    submission_date AS day,
-    cardinality(merge(cast(hll AS HLL))) AS active_dau
-FROM client_count_daily
-WHERE
-    total_uri_count_threshold >= 5
-    -- Limit to 7 days of history
-    AND submission_date >= date_format(CURRENT_DATE - INTERVAL '7' DAY, '%Y%m%d')
-GROUP BY 1
-ORDER BY 1
-```
+[`client_count_daily`](../datasets/batch_view/client_count_daily/reference.md) **can not be used** to get aDAU. `total_uri_count_threshold` is based on the value in each ping, and it does not have a threshold that can be used for `>= 5` because it measures values less than or equal to the threshold.
 
 <span id="total_uri_count">**1**</span>: Note, the probe measuring `scalar_parent_browser_engagement_total_uri_count` only exists in clients with Firefox 50 and up. Clients on earlier versions of Firefox won't be counted as an Active User (regardless of their use). Similarly, `scalar_parent_browser_engagement_total_uri_count` doesn't increment when a client is in Private Browsing mode, so that won't be included as well.
