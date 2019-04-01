@@ -17,7 +17,7 @@ that appeared in `clients_daily` in a 28 day window including
 
 The `days_since_seen` column indicates the difference between `submission_date`
 and the most recent `submission_date` in `clients_daily` where the `client_id`
-appeared.
+appeared. A client observed on the given `submission_date` will have `days_since_seen = 0`.
 
 Other `days_since_` columns use the most recent date in `clients_daily` where
 a certain condition was met. If the condition was not met for a `client_id` in
