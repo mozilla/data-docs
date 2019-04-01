@@ -214,7 +214,7 @@ worth the effort to learn the DataFrame API.
 For more overview, see the
 [SQL Programming Guide](https://spark.apache.org/docs/latest/sql-programming-guide.html).
 See also the
-[Longitudinal Tutorial](https://reports.telemetry.mozilla.org/post/tutorials/longitudinal_dataset.kp),
+[Longitudinal Tutorial](https://mozilla.report/post/tutorials/longitudinal_dataset.kp),
 one of the available example notebooks when you start a cluster.
 
 ### Available Data Sources for `SparkSQL`

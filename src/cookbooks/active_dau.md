@@ -1,14 +1,14 @@
 # Active DAU and Active MAU
 
 An **Active User** is defined as a client who has `total_daily_uri` >= 5 URI for a given date.
-* Dates are defined by `submission_date_s3`.
+* Dates are defined by `submission_date_s3` or `submission_date`.
 * A client's `total_daily_uri` is defined as their sum of `scalar_parent_browser_engagement_total_uri_count` for a given date<sup>[1](#total_uri_count)</sup>.
 
-**Active DAU** is the number of Active Users on a given day.
+**Active DAU** (aDAU) is the number of Active Users on a given day.
 
-**Active MAU** is the number of unique clients who have been an Active User on any day in the last **28 days**. In other words, any client that contributes to Active DAU in the last 28 days would also contribute to Active MAU for that day. Note that this is not simply the sum of Active DAU over 28 days, since any particular client could be active on many days.
+**Active MAU** (aMAU) is the number of unique clients who have been an Active User on any day in the last **28 days**. In other words, any client that contributes to aDAU in the last 28 days would also contribute to aMAU for that day. Note that this is not simply the sum of aDAU over 28 days, since any particular client could be active on many days.
 
-For quick analysis, using `clients_daily_v6` is recommended. Below is an example query for getting Active DAU (aDAU) using `clients_daily_v6`.
+For quick analysis, using `clients_daily_v6` is recommended. Below is an example query for getting aDAU using `clients_daily_v6`.
 
 ```sql
 SELECT
@@ -18,6 +18,21 @@ FROM
     clients_daily_v6
 WHERE
     scalar_parent_browser_engagement_total_uri_count_sum >= 5
+GROUP BY
+    1
+ORDER BY
+    1 ASC
+```
+
+[`clients_last_seen`](../datasets/bigquery/clients_last_seen/reference.md) can also be used, but is only available in BigQuery. Below is an example query for getting aDAU and aMAU using `clients_last_seen`.
+
+```sql
+SELECT
+    submission_date,
+    COUNTIF(days_since_visited_5_uri < 1) AS visited_5_uri_dau,
+    COUNTIF(days_since_visited_5_uri < 28) AS visited_5_uri_mau
+FROM
+    telemetry.clients_last_seen
 GROUP BY
     1
 ORDER BY

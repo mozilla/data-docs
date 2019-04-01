@@ -12,6 +12,7 @@ addon
 addons
 Add-ons
 aDAU
+aMAU
 Algebird's
 analytics
 APIs
@@ -25,6 +26,7 @@ backends
 backfilled
 behaviour
 Bhattacharyya
+BigQuery
 blocklist
 boolean
 booleans
