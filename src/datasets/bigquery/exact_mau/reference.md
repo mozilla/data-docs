@@ -46,7 +46,7 @@ user should be considered "active" in a given product or feature.
 It may be something simple like "All Desktop Activity" (as above) or,
 similarly, "All Mobile Activity".  It may also be something more specific like
 "Desktop Visited 5 URI" corresponding to calculation of
-[aDAU](/cookbooks/active_dau.html).
+[aDAU](../../../cookbooks/active_dau.md).
 
 Distinct usage criteria correspond to distinct `*_mau` columns in the Exact MAU tables.
 
@@ -72,7 +72,7 @@ when querying Exact MAU tables.
 # Using the Tables
 
 The various Exact MAU datasets are computed daily from the `*_last_seen`
-tables (see [`clients_last_seen`](/datasets/bigquery/clients_last_seen/reference.html))
+tables (see [`clients_last_seen`](/datasets/bigquery/clients_last_seen/reference.md))
 and contain pre-computed DAU, WAU, and MAU counts per usage criterion
 per each unique combination of dimensions values.
 Because of our restriction that dimension values be non-overlapping, we
@@ -112,7 +112,7 @@ ORDER BY
     submission_date
 ```
 
-Perhaps we want to compare MAU as above to  [aDAU](/cookbooks/active_dau.html)
+Perhaps we want to compare MAU as above to  [aDAU](../../../cookbooks/active_dau.md)
 over the same slice. The column `visited_5_uri_dau` gives DAU as calculated
 with the "Desktop Visited 5 URI" usage criterion, corresponding to aDAU:
 
