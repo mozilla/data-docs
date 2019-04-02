@@ -5,14 +5,14 @@
 This article introduces the usage of and methodology behind the "exact MAU"
 tables in BigQuery:
 
-- `firefox_desktop_exact_mau28_by_dimensions`,
-- `firefox_nondesktop_exact_mau28_by_dimensions`, and
-- `firefox_accounts_exact_mau28_by_dimensions`.
+- `firefox_desktop_exact_mau28_by_dimensions_v1`,
+- `firefox_nondesktop_exact_mau28_by_dimensions_v1`, and
+- `firefox_accounts_exact_mau28_by_dimensions_v1`.
 
-The calculation of MAU (monthly active users) has historically been frought
+The calculation of MAU (monthly active users) has historically been fraught
 with troubling details around exact definitions and computational limitations,
 leading to disagreements between analyses.
-These tables contain precalculated MAU, WAU, and DAU aggregates for 
+These tables contain pre-computed MAU, WAU, and DAU aggregates for
 various usage criteria and dimensions, allowing efficient calculation of
 aggregates across arbitrary slices of those dimensions.
 The tables follow a consistent methodology which is intended as a standard
@@ -73,7 +73,7 @@ when querying Exact MAU tables.
 
 The various Exact MAU datasets are computed daily from the `*_last_seen`
 tables (see [`clients_last_seen`](/datasets/bigquery/clients_last_seen/reference.html))
-and contain pre-aggregated DAU, WAU, and MAU counts per usage criterion
+and contain pre-computed DAU, WAU, and MAU counts per usage criterion
 per each unique combination of dimensions values.
 Because of our restriction that dimension values be non-overlapping, we
 can recover MAU for a particular slice of the data by summing over all rows
@@ -94,7 +94,7 @@ ORDER BY
     submission_date
 ```
 
-Now, let's refine our slice to "Country = US; Campaign = whatsnew"
+Now, let's refine our slice to "Country = US; Campaign = `whatsnew`"
 via a `WHERE` clause:
 
 ```sql
@@ -135,16 +135,38 @@ ORDER BY
 Additional usage criteria may be added in the future as new columns named
 `*_*mau`, etc. where the prefix describes the usage criterion.
 
+For convenience and clarity, we make the exact data presented in the
+[2019 Key Performance Indicator Dashboard](https://dbc-caf9527b-e073.cloud.databricks.com/#job/1160/run/latestSuccess/dashboard/42765b23-7b69-4d59-b08b-ea9cf45b63df)
+available as views that do not require any aggregation:
+
+- `firefox_desktop_exact_mau28_v1`,
+- `firefox_nondesktop_exact_mau28_v1`, and
+- `firefox_accounts_exact_mau28_v1`.
+
+An example query for desktop:
+
+```
+SELECT
+    submission_date,
+    mau,
+    tier1_mau
+FROM
+    `moz-fx-data-derived-datasets.telemetry.firefox_desktop_exact_mau28_v1`
+```
+
+These views contain no dimensions and abstract away the detail that FxA
+data uses the "Last Seen in Tier 1 Country" usage criterion while desktop
+and non-desktop data use the "Country" dimension to determine tier 1 membership.
 
 # Additional Details
 
 ## Inclusive Tier 1 Calculation for FxA
 
-The 2019 KPI definition for Relationships relies on a MAU calculation restricted
+The 2019 Key Performance Indicator definition for Relationships relies on a MAU calculation restricted
 to a specific set of "Tier 1" countries. 
-In the Exact MAU datasets, country is a dimension that woud normally be specified 
+In the Exact MAU datasets, country is a dimension that would normally be specified
 in a slice definition.
-Indeed, for desktop and nondesktop clients, the definition of "Tier 1 MAU" looks like:
+Indeed, for desktop and non-desktop clients, the definition of "Tier 1 MAU" looks like:
 
 ```
 SELECT
@@ -169,14 +191,13 @@ toward MAU.
 Due to the methodology used when forecasting goal values for the year, however, we need to
 follow a more inclusive definition for "Tier 1 FxA MAU" where a user counts if they register
 even a single FxA event originating from a tier 1 country in the 28 day MAU window.
-That calculation requires a separate "FxA Activity in Tier 1 Country" criterion
-and is represented in the exact MAU table as `mau_tier1_inclusive`
-(naming conventions have been developing and this name may change in the future):
+That calculation requires a separate "FxA Seen in Tier 1 Country" criterion
+and is represented in the exact MAU table as `seen_in_tier1_country_mau`:
 
 ```
 SELECT
     submission_date,
-    SUM(mau_tier1_inclusive) AS mau_tier1_inclusive
+    SUM(seen_in_tier1_country_mau) AS tier1_mau
 FROM
     `moz-fx-data-derived-datasets.telemetry.firefox_accounts_exact_mau28_by_dimensions_v1`
 GROUP BY
@@ -199,7 +220,7 @@ bucket individually, we can use resampling techniques to determine the magnitude
 of variation and assign a confidence interval to our sums.
 
 As an example of calculating confidence intervals, see the
-[Desktop MAU KPI query in Redash](https://sql.telemetry.mozilla.org/queries/61957/source)
+[Desktop MAU KPI query in STMO](https://sql.telemetry.mozilla.org/queries/61957/source)
 which uses a jackknife resampling technique implemented as a BigQuery UDF.
 
 # Data Reference
@@ -218,5 +239,5 @@ infrastructure in the following DAGs:
 
 The data is partitioned by `submission_date`.
 
-As of 2019-03-29, the current version for all exact mau tables is `v1`, 
+As of 2019-03-29, the current version for all Exact MAU tables is `v1`,
 and the schemas are visible via the `telemetry` dataset in [the BigQuery console](https://console.cloud.google.com/bigquery?project=moz-fx-data-derived-datasets&folder&organizationId=442341870013&p=moz-fx-data-derived-datasets&d=telemetry&page=dataset).

@@ -62,6 +62,7 @@ EMR
 ETL
 filename
 funnelcake
+FxA
 geoip
 Github
 GoFaster
@@ -84,6 +85,7 @@ JS
 JSON
 JSONSchema
 Jupyter
+KPI
 lifecycle
 lookups
 Lua
@@ -135,6 +137,7 @@ pushlog
 PySpark
 RDBMS
 RDD
+resampling
 rustc
 recommender
 release_calendar
