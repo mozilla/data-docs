@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This article introduces the usage of and methodology behing the "exact MAU"
+This article introduces the usage of and methodology behind the "exact MAU"
 tables in BigQuery:
 
 - `firefox_desktop_exact_mau28_by_dimensions`,
