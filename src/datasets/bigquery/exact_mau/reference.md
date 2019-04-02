@@ -40,11 +40,15 @@ For example, the metric "Daily Active Users (DAU)" with usage criteria "All Desk
 
 ## Usage Criteria
 
-A _usage criterion_ is any product or feature for which we wish to calculate
-metrics.  It may be something simple like "All Desktop Activity" (as above) or, 
+Active user counts must always be calculated in reference to some specific
+_usage criterion_, a binary condition we use to determine whether a given
+user should be considered "active" in a given product or feature.
+It may be something simple like "All Desktop Activity" (as above) or,
 similarly, "All Mobile Activity".  It may also be something more specific like
-"Desktop 5 URI Active" corresponding to calculation of 
+"Desktop Visited 5 URI" corresponding to calculation of
 [aDAU](/cookbooks/active_dau.html).
+
+Distinct usage criteria correspond to distinct `*_mau` columns in the Exact MAU tables.
 
 ## Slice
 
@@ -62,6 +66,9 @@ Note there are some complexities here:
 - Firstly, a dimension may be scalar and need to be suitably bucketed (instead of every possible profile age being a unique slice element, maybe we prefer to group users between 12 and 16 months old into a single slice element); likewise we may need to use normalized versions of string fields
 - Secondly, we require that dimensions be non-overlapping, especially for metrics calculated over multiple days of user activity.  In a given day, a profile may be active in multiple countries, but we aggregate that to a single value by taking the most frequent value seen in that day, breaking ties by taking the value that occurs last. In a given month, the assigned country may change from day to day; we use the value from the most recent active day up to the day we're calculating usage for.
 
+A slice is expressed as a set of conditions in `WHERE` or `GROUP BY` clauses
+when querying Exact MAU tables.
+
 # Using the Tables
 
 The various Exact MAU datasets are computed daily from the `*_last_seen`
@@ -72,7 +79,7 @@ Because of our restriction that dimension values be non-overlapping, we
 can recover MAU for a particular slice of the data by summing over all rows
 matching the slice definition.
 
-The simple case of retrieving DAU/WAU/MAU for usage criterion
+The simple case of retrieving MAU for usage criterion
 "All Desktop Activity" and slice "All" looks like:
 
 ```sql
@@ -107,7 +114,7 @@ ORDER BY
 
 Perhaps we want to compare MAU as above to  [aDAU](/cookbooks/active_dau.html)
 over the same slice. The column `visited_5_uri_dau` gives DAU as calculated
-with the "Desktop 5 URI Active" usage criterion, corresponding to aDAU:
+with the "Desktop Visited 5 URI" usage criterion, corresponding to aDAU:
 
 ```
 SELECT
@@ -126,7 +133,7 @@ ORDER BY
 ```
 
 Additional usage criteria may be added in the future as new columns named
-`mau_*`, etc. where the suffix describes the usage criterion.
+`*_*mau`, etc. where the prefix describes the usage criterion.
 
 
 # Additional Details
