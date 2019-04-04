@@ -10,6 +10,8 @@ An **Active User** is defined as a client who has `total_daily_uri` >= 5 URI for
 
 **Active WAU** (aWAU) is the number of unique clients who have been an Active User on any day in the last **7 days**. Caveats above for aMAU also apply to aWAU.
 
+To make the time boundaries more clear, let's consider a particular date 2019-01-28. The aDAU number assigned to 2019-01-28 should consider all main pings received during 2019-01-28 UTC. We cannot observe the full data until 2019-01-28 closes (and in practice we need to wait a bit longer since we are usually referencing derived datasets like `clients_daily` that are updated once per day over several hours following midnight UTC), so the earliest we can calculate this value is on 2019-01-29. If plotted as a time series, this value should always be plotted at the point labeled 2019-01-28. Likewise, aMAU for 2019-01-28 should consider a 28 day range that includes main pings received on 2019-01-28 and back to beginning of day UTC 2019-01-01. Again, the earliest we can calculate the value is on 2019-01-29.
+
 For quick analysis, using [`clients_last_seen`](../datasets/bigquery/clients_last_seen/reference.md) is recommended, but it is only available in BigQuery. Below is an example query for getting aMAU, aWAU, and aDAU using `clients_last_seen`.
 
 ```sql
