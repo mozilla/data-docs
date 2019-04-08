@@ -6,6 +6,6 @@
         { "pattern": "^https://github.com/mozilla-services/puppet-config" },
         { "pattern": "^https://github.com/mozilla-services/spark-parquet-to-bigquery" },
         { "pattern": "^https://github.com/mozilla/Fx-Data-Planning" },
-        { "pattern": "^https://sql.telemetry.mozilla.org/queries" }
+        { "pattern": "^https://sql.telemetry.mozilla.org" }
     ]
 }
