@@ -185,7 +185,7 @@ a [Longitudinal](https://github.com/mozilla/telemetry-batch-view/blob/master/src
 or [client-count-daily](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/GenericCountView.scala)
 like dataset. Otherwise, you'll have to write your own.
 
-You can schedule it on [Airflow], or you can
+You can schedule it on [Airflow](https://workflow.telemetry.mozilla.org/), or you can
 run it as a job in ATMO. If the output is parquet, you can add it to the Hive metastore to have it
 available in re:dash. Check the docs on [creating your own datasets](create_a_dataset.md).
 
@@ -193,5 +193,3 @@ Build Dashboards Using ATMO or STMO
 -----------------------------------
 Last steps! What are you using this data for anyway?
 
-
-[Airflow]: https://r3e51de5feeeb5619-tp.appspot.com/
