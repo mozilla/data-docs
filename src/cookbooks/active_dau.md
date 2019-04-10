@@ -77,6 +77,4 @@ ORDER BY
   submission_date_s3 ASC
 ```
 
-[`client_count_daily`](../datasets/batch_view/client_count_daily/reference.md) **can not be used** to get aDAU. `total_uri_count_threshold` is based on the value in each ping, and it does not have a threshold that can be used for `>= 5` because it measures values less than or equal to the threshold.
-
 <span id="total_uri_count">**1**</span>: Note, the probe measuring `scalar_parent_browser_engagement_total_uri_count` only exists in clients with Firefox 50 and up. Clients on earlier versions of Firefox won't be counted as an Active User (regardless of their use). Similarly, `scalar_parent_browser_engagement_total_uri_count` doesn't increment when a client is in Private Browsing mode, so that won't be included as well.

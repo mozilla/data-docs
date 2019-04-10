@@ -46,8 +46,6 @@
   * [Derived Datasets](datasets/derived.md)
     * [Addons](datasets/batch_view/addons/reference.md)
     * [Churn](datasets/mozetl/churn/reference.md)
-    * [Client Count Daily](datasets/batch_view/client_count_daily/reference.md)
-    * [Client Count](datasets/batch_view/client_count/reference.md)
     * [Clients Daily](datasets/batch_view/clients_daily/reference.md)
     * [Clients Last Seen](datasets/bigquery/clients_last_seen/reference.md)
     * [Crash Summary](datasets/batch_view/crash_summary/reference.md)
@@ -76,6 +74,8 @@
   * [Obsolete Datasets](datasets/obsolete.md)
     * [Heavy Users](datasets/obsolete/heavy_users/reference.md)
     * [Crash Aggregates](datasets/obsolete/crash_aggregates/reference.md)
+    * [Client Count](datasets/obsolete/client_count/reference.md)
+    * [Client Count Daily](datasets/obsolete/client_count_daily/reference.md)
 
 
 ---

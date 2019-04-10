@@ -41,7 +41,7 @@ This section describes the derived datasets we provide to make analyzing this da
 
 ## `client_count_daily`
 
-{{#include ../datasets/batch_view/client_count_daily/intro.md}}
+{{#include ../datasets/obsolete/client_count_daily/intro.md}}
 
 ## `clients_last_seen`
 

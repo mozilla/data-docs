@@ -67,7 +67,7 @@ different keys. In that case, data from both tables needs to be shuffled to ever
 Great question! Presto is something we control, and can upgrade it at-will. Athena is currently
 a serverless version of Presto, and as such doesn't have all of the bells and whistles. For example,
 it doesn't support [lambda expressions](https://prestodb.io/docs/current/functions/lambda.html) or
-UDFs, the latter of which we use in the [Client Count Daily dataset](../datasets/batch_view/client_count_daily/reference.md).
+UDFs, the latter of which we use in the [Client Count Daily dataset](../datasets/obsolete/client_count_daily/reference.md).
 
 #### Key Takeaways
 
