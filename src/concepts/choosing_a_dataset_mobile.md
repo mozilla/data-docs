@@ -5,19 +5,21 @@
 Before doing an analysis, it is important to know which products you want to include. Here is a quick overview of Mozilla's mobile products. 
 
 
-| Product Name           | App Name           | OS      | Notes                | 
-| ---------------------- | ------------------ | ------- | -------------------- |
-| Firefox Android        | `Fennec`           | Android |                      |
-| Firefox iOS            | `Fennec`           | iOS     |                      |
-| Focus Android          | `Focus`            | Android |                      |
-| Focus iOS              | `Focus`            | iOS     |         			   |
-| Klar                   | `Klar`             | Android | German Focus release | 
-| Firefox for Fire TV    | `FirefoxForFireTV` | Android |                      |
-| Firefox for Echo Show  | `FirefoxConnect`   | Android |                      |
-| Firefox Lite           | `Zerda`            | Android | Formerly Rocket      | 
+| Product Name           | App Name           | OS      | Notes                            | 
+| ---------------------- | ------------------ | ------- | -------------------------------- |
+| Firefox Android        | `Fennec`           | Android |                                  |
+| Firefox iOS            | `Fennec`           | iOS     |                                  |
+| Focus Android          | `Focus`            | Android | Privacy browser                  |
+| Focus iOS              | `Focus`            | iOS     | Privacy browser                  |
+| Klar                   | `Klar`             | Android | German Focus release              | 
+| Firefox for Fire TV    | `FirefoxForFireTV` | Android |                                  |
+| Firefox for Echo Show  | `FirefoxConnect`   | Android |                                  |
+| Firefox Lite           | `Zerda`            | Android | Formerly Rocket (See below)      | 
 
 
 Firefox Lite was formerly known as Rocket. It is only available in certain countries in Asia Pacific - for more information on Firefox Lite data please see the [telemetry documentation](https://github.com/mozilla-tw/FirefoxLite/blob/master/docs/telemetry.md). 
+
+Focus is our privacy focused mobile browser which blocks trackers by default and does not store a browsing history. 
 
 Klar is the release name for Focus in Germany. 
 
@@ -85,11 +87,11 @@ Some other applications send data to this table but it is preferred to use this 
 
 Each app has it's own set of release channels and each app implements them in it's own way.  Most have a `nightly`, `beta`, `release` and an `other` channel, used at various stages of development.  Users sign up to test pre-released versions of the app.  In Focus Android, the `beta` channel uses the same APK in the Google Play Store as the `release` channel, but beta users get access to this version earlier than the release population. Once the `release` version is published, Beta users will be on the same version of the app as Release users and will be indistinguishable (without a query going back and flagging them by clientid). Beta releases have their `normalized_channel` tagged `release` and the only way to filter to beta users is to check that they were on a higher version number before the official release date. 
 
-There was an incident on Oct 25, 2018 where a chunk of `client_id`s on Firefox Android were reset to the same `client_id`.  For more information see the blameless post mortem document [here](https://docs.google.com/document/d/1r1PDQnqhsrPkft0pB46v9uhXGxR_FzK4laKJLGttXdA) or [bug](https://bugzilla.mozilla.org/show_bug.cgi?id=1501329).  Because of this, some retention analyses spanning this time frame may be impacted.   
+There was an incident on Oct 25, 2018 where a chunk of `client_id`s on Firefox Android were reset to the same `client_id`.  For more information see the blameless post-mortem document [here](https://docs.google.com/document/d/1r1PDQnqhsrPkft0pB46v9uhXGxR_FzK4laKJLGttXdA) or [bug](https://bugzilla.mozilla.org/show_bug.cgi?id=1501329).  Because of this, some retention analyses spanning this time frame may be impacted.   
 
 ### Upcoming Changes
 
-In future, Android apps will use Glean - the new mobile telemetry SDK. Plans are to integrate this new SDK starting with Project Fenix, then update the other existing apps to Glean starting H22019. Instead of `core` and `event` pings, Glean will send `baseline`, `metrics` and `events` pings. For more information on Glean visit their [GitHub page](https://github.com/mozilla-mobile/android-components/tree/master/components/service/glean/#contact) or #Glean on Slack.  
+In future, Android apps will use Glean - the new mobile telemetry SDK. Plans are to integrate this new SDK starting with Project Fenix, then update the other existing apps to Glean starting the second half of 2019. Instead of `core` and `event` pings, Glean will send `baseline`, `metrics` and `events` pings. For more information on Glean visit their [GitHub page](https://github.com/mozilla-mobile/android-components/tree/master/components/service/glean/#contact) or #Glean on Slack.  
 
 
 
