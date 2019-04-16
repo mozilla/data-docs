@@ -15,6 +15,8 @@ aDAU
 Algebird's
 analytics
 APIs
+app
+apps
 AsciiDoc
 ATMO
 autoscaling
@@ -34,6 +36,7 @@ CEP
 changesets
 chromehangs
 CircleCI
+clientid
 config
 CPOW
 CSV
@@ -57,8 +60,12 @@ E10s
 ElasticSearch
 EMR
 ETL
+Fenix
+Fennec
 filename
 funnelcake
+geo-city
+geo-country
 geoip
 Github
 GoFaster
@@ -81,7 +88,9 @@ JS
 JSON
 JSONSchema
 Jupyter
+Klar
 lifecycle
+Lockbox
 lookups
 Lua
 matcher
@@ -116,6 +125,7 @@ Pingsender
 Plotly
 Postgres
 PostgreSQL
+post-mortem
 pre-computed
 pre-compiled
 pre-configured
@@ -123,6 +133,7 @@ pre-defined
 pre-loaded
 pre-processes
 pre-release
+Pre-released
 pre-specified
 Prefs
 prefs
