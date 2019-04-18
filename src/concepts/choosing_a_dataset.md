@@ -43,6 +43,10 @@ This section describes the derived datasets we provide to make analyzing this da
 
 {{#include ../datasets/batch_view/client_count_daily/intro.md}}
 
+## `clients_last_seen`
+
+{{#include ../datasets/bigquery/clients_last_seen/intro.md}}
+
 ## `churn`
 
 {{#include ../datasets/mozetl/churn/intro.md}}

@@ -12,6 +12,8 @@ addon
 addons
 Add-ons
 aDAU
+aMAU
+aWAU
 Algebird's
 analytics
 APIs
@@ -28,6 +30,7 @@ backends
 backfilled
 behaviour
 Bhattacharyya
+BigQuery
 blocklist
 boolean
 booleans
@@ -68,6 +71,7 @@ FireTV
 funnelcake
 geo-city
 geo-country
+FxA
 geoip
 Github
 GoFaster
@@ -91,6 +95,7 @@ JSON
 JSONSchema
 Jupyter
 Klar
+KPI
 lifecycle
 Lockbox
 lookups
@@ -145,6 +150,7 @@ pushlog
 PySpark
 RDBMS
 RDD
+resampling
 rustc
 recommender
 release_calendar

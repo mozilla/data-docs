@@ -50,11 +50,12 @@
     * [Client Count Daily](datasets/batch_view/client_count_daily/reference.md)
     * [Client Count](datasets/batch_view/client_count/reference.md)
     * [Clients Daily](datasets/batch_view/clients_daily/reference.md)
-    * [Crash Aggregate](datasets/batch_view/crash_aggregates/reference.md)
+    * [Clients Last Seen](datasets/bigquery/clients_last_seen/reference.md)
     * [Crash Summary](datasets/batch_view/crash_summary/reference.md)
     * [Cross Sectional](datasets/batch_view/cross_sectional/reference.md)
     * [Error Aggregates](datasets/streaming/error_aggregates/reference.md)
     * [Events](datasets/batch_view/events/reference.md)
+    * [Exact MAU](datasets/bigquery/exact_mau/reference.md)
     * [First Shutdown Summary](datasets/batch_view/first_shutdown_summary/reference.md)
     * [Longitudinal](datasets/batch_view/longitudinal/reference.md)
     * [Main Summary](datasets/batch_view/main_summary/reference.md)
@@ -75,6 +76,7 @@
     * [Stub installer ping](datasets/other/stub_installer/reference.md)
   * [Obsolete Datasets](datasets/obsolete.md)
     * [Heavy Users](datasets/obsolete/heavy_users/reference.md)
+    * [Crash Aggregates](datasets/obsolete/crash_aggregates/reference.md)
 
 
 ---
