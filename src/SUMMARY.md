@@ -4,6 +4,7 @@
 * [Getting Started](concepts/getting_started.md)
   * [Analysis Quick Start](concepts/analysis_intro.md)
   * [Choosing a Dataset](concepts/choosing_a_dataset.md)
+   * [Choosing a Dataset - Mobile Edition](concepts/choosing_a_dataset_mobile.md)
   * [Intro to STMO](tools/stmo.md)
   * [Common Analysis Gotchas](concepts/analysis_gotchas.md)
   * [Optimizing Queries](concepts/sql_optimization.md)

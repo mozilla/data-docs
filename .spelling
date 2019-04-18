@@ -17,6 +17,9 @@ aWAU
 Algebird's
 analytics
 APIs
+APK
+app
+apps
 AsciiDoc
 ATMO
 autoscaling
@@ -60,8 +63,14 @@ E10s
 ElasticSearch
 EMR
 ETL
+Fenix
+Fennec
 filename
+FirefoxReality
+FireTV
 funnelcake
+geo-city
+geo-country
 FxA
 geoip
 Github
@@ -85,8 +94,10 @@ JS
 JSON
 JSONSchema
 Jupyter
+Klar
 KPI
 lifecycle
+Lockbox
 lookups
 Lua
 matcher
@@ -121,6 +132,7 @@ Pingsender
 Plotly
 Postgres
 PostgreSQL
+post-mortem
 pre-computed
 pre-compiled
 pre-configured
@@ -128,6 +140,7 @@ pre-defined
 pre-loaded
 pre-processes
 pre-release
+pre-released
 pre-specified
 Prefs
 prefs
