@@ -245,7 +245,7 @@ Clusters launched via ATMO are automatically killed after a user-defined period 
 
 [STMO] is a customized [Re:dash] installation that provides self-serve access to a a variety of different [datasets](../../concepts/choosing_a_dataset.md). From here, you can query data in the Parquet Data Lake as well as various RDBMS data sources.
 
-STMO interfaces with the data lake using both [Presto] and Amazon [Athena]. Each has its own data source in Re:dash. Since Athena does not support user-defined functions, datasets with HyperLogLog columns, such as [`client_count_daily`](../../datasets/batch_view/client_count_daily/reference.md), are only available via Presto..
+STMO interfaces with the data lake using both [Presto] and Amazon [Athena]. Each has its own data source in Re:dash. Since Athena does not support user-defined functions, datasets with HyperLogLog columns, such as [`client_count_daily`](../../datasets/obsolete/client_count_daily/reference.md), are only available via Presto..
 
 Different **Data Sources** in STMO connect to different backends, and each backend might use a slightly different flavor of SQL. You should find a link to the documentation for the expected SQL variant next to the Data Sources list.
 

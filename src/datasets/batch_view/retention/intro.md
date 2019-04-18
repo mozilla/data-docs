@@ -81,5 +81,5 @@ Also see the [`client_count_daily` dataset][client_count_daily].
 [stmo]: https://sql.telemetry.mozilla.org
 [s-hll]: https://github.com/mozilla/spark-hyperloglog
 [p-hll]: https://github.com/vitillo/presto-hyperloglog
-[client_count_daily]: /datasets/batch_view/client_count_daily/reference.md
+[client_count_daily]: /datasets/obsolete/client_count_daily/reference.md
 

@@ -63,22 +63,3 @@ GROUP BY
 ORDER BY
   submission_date_s3 ASC
 ```
-
-[`client_count_daily`](../datasets/batch_view/client_count_daily/reference.md) can be used to get **approximate** DAU, but it is only available in Presto. This dataset uses HyperLogLog to estimate unique counts. For example:
-
-```sql
-SELECT
-  submission_date,
-  cardinality(merge(cast(hll AS HLL))) AS dau
-FROM
-  telemetry.client_count_daily
-WHERE
-  -- Limit to 7 days of history
-  submission_date >= date_format(CURRENT_DATE - INTERVAL '7' DAY, '%Y%m%d')
-GROUP BY
-  submission_date
-ORDER BY
-  submission_date
-```
-
-Note that the query above will not run in STMO, but will in Databricks.  [In the near future](https://bugzilla.mozilla.org/show_bug.cgi?id=1499645), we expect to offer a better option and will thoroughly update this documentation.

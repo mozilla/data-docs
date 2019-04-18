@@ -59,10 +59,12 @@ one data source, and you have to know ahead of time which data source contains
 the information that you need. One of the most commonly used data sources is
 called *Athena* (referring to Amazon's [Athena](https://aws.amazon.com/athena/)
 query service, on which it is built), which contains most of the data that is
-obtained from telemetry pings received from Firefox clients. The *Athena*
-source is slowly replacing the *Presto* data source. *Presto* contains all of
-the data that's exposed via *Athena* and more, but returns query results much
-more slowly.
+obtained from telemetry pings received from Firefox clients. The *BigQuery*
+(referring to Google's [BigQuery](https://cloud.google.com/bigquery/) service)
+source is slowly replacing the *Athena* and *Presto* data sources. *BigQuery*
+contains some of the data that's exposed via *Athena*, as well as new data
+that is calculated there. *Presto* contains all of the data that's exposed via
+*Athena* and more, but returns query results much more slowly.
 
 Other available data sources include *Crash DB*, *Tiles*, *Sync Stats*, *Push*,
 *Test Pilot*, *ATMO*, and even a *Re:dash metadata* which connects to STMO's
@@ -89,62 +91,68 @@ query editing page:
 ![New Query Page](../assets/STMO_screenshots/new_query.png "New Query page")
 
 For this (and most queries where we're counting distinct client IDs) we'll want
-to use the [`client_count_daily` data
-set](../datasets/batch_view/client_count_daily/reference.md) that is generated from
+to use the [`clients_last_seen` data
+set](../datasets/bigquery/clients_last_seen/reference.md) that is generated from
 Firefox telemetry pings.
+
+* Check if the data set is in BigQuery
+
+  As mentioned above, BigQuery is replacing Athena and Presto, but not all data
+  sets are yet available in BigQuery. Click on the 'Data Source' drop-down and
+  select BigQuery, then check to see if the one we want is available by typing
+  `clients_last_seen` into the "Search schema..." search box above the schema
+  browser interface to the left of the main query edit box. You should see that
+  there is, in fact, a `clients_last_seen` data set (showing up as
+  `telemetry.clients_last_seen`), as well as versioned `clients_last_seen` data
+  sets (showing up as `telemetry.clients_last_seen_v<VERSION>`).
 
 * Check if the data set is in Athena
 
-  As mentioned above, Athena is faster than Presto, but not all data sets are
-  yet available in Athena. We can check to see if the one we want is available
-  in the by typing `client_count_daily` into the "Search schema..."  search box above
-  the schema browser interface to the left of the main query edit box. As of
-  this writing, alas, there are no matches for `client_count_daily`, which means this
-  data set is not available in *Athena*.
+  If it's not in BigQuery, now we should check to see if it's in Athena. If you
+  click on the 'Data Source' drop-down and change the selection from 'BigQuery'
+  to 'Athena' (with `clients_last_seen` still populating the filter input), you
+  should see that there are no matches for `clients_last_seen`, which means
+  this data set is not available in *Athena*.
 
-* Verify the data set exists in Presto
+* Check if the data set is in Presto
 
-  It's not in Athena, so now we should check to see if it's in Presto. If you
-  click on the 'Data Source' drop-down and change the selection from 'Athena' to
-  'Presto' (with `client_count_daily` still populating the filter input), you should
-  see that there is, in fact, a `client_count_daily` data set (showing up as
-  `default.client_count_daily`), as well as versioned `client_count_daily` data
-  sets (showing up as `default.client_count_daily_v<VERSION>`).
+  If it's also not in Athena, now we should check to see if it's in Presto. If
+  you click on the 'Data Source' drop-down and change the selection from
+  'Athena' to 'Presto' (with `clients_last_seen` still populating the filter
+  input), you should see that there are no matches for `clients_last_seen`,
+  which means this data set is not available in *Presto* either.
 
 * Introspect the available columns
 
-  Clicking on the `default.client_count_daily` in the schema browser exposes the
-  columns that are available in the data set. Two of the columns are of
-  interest to us for this query: `country` (for obvious reasons) and `hll`.
+  Click on the 'Data Source' drop-down and change the selection to 'BigQuery',
+  and click on `telemetry.clients_last_seen` in the schema browser to expose
+  the columns that are available in the data set. Three of the columns are of
+  interest to us for this query: `country`, `days_since_seen`, and
+  `submission_date`.
 
-The `hll` column bears some explanation. `hll` stands for
-[HyperLogLog](https://en.wikipedia.org/wiki/HyperLogLog), a sophisticated
-algorithm that allows for the counting of extremely high numbers of items,
-sacrificing a small amount of accuracy in exchange for using much less memory
-than a simple counting structure. The `client_count_daily` data set uses the `hll`
-column for all of its counting functionality. Converting the `hll` value back
-to a regular numeric value requires the use of the following magic SQL
-incantation:
+So a query that extracts all of the unique country values and the most recent
+MAU for each one, sorted from highest MAU to lowest MAU looks like this:
 
-  ```cardinality(merge(cast(hll as HLL)))```
-
-So a query that extracts all of the unique country values and the count for
-each one, sorted from highest count to lowest count looks like this:
-
-  ```sql
-  SELECT country,
-         cardinality(merge(cast(hll AS HLL))) AS client_count
-  FROM client_count_daily
-  GROUP BY 1
-  ORDER BY 2 DESC
-  ```
+```sql
+SELECT
+  country,
+  COUNTIF(days_since_seen < 28) AS mau
+FROM
+  telemetry.clients_last_seen
+WHERE
+  submission_date = DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
+GROUP BY
+  country
+ORDER BY
+  mau DESC
+```
 
 If you type that into the main query edit box and then click on the "Execute"
 button, you should see a blue bar appear below the edit box containing the text
 "Executing query..." followed by a timer indicating how long the query has been
-running. After a reasonable (for some definition of "reasonable", usually about
-one to two minutes) amount of time the query should complete, resulting in a
-table showing a client count value for each country. Congratulations, you've
+running. After a reasonable (for some definition of "reasonable", usually less
+than a minute) amount of time the query should complete, resulting in a
+table showing a MAU value for each country. Congratulations, you've
 just created and run your first STMO query!
 
 Now would be a good time to click on the large "New Query" text near the top of
@@ -165,7 +173,7 @@ another heading entitled `+NEW VISUALIZATION`.
 Clicking on the `+NEW VISUALIZATION` link should bring you to the
 "Visualization Editor" screen, where you can specify a visualization name ("Top
 Countries bar chart"), a chart type ("Bar"), an x-axis column (`country`), and
-a y-axis column (`client_count`).:
+a y-axis column (`mau`).:
 
 ![Visualization Editor](../assets/STMO_screenshots/vis_editor.png "Visualization Editor")
 
@@ -184,7 +192,21 @@ however, that the graph has quite a long tail. Rather than seeing *all* of
 the countries, it might be nicer to only see the top 20. We can do this by adding
 a `LIMIT` clause to the end of our query:
 
-  ```SELECT country, cardinality(merge(cast(hll AS HLL))) AS client_count FROM client_count_daily GROUP BY 1 ORDER BY 2 DESC LIMIT 20```
+```sql
+SELECT
+  country,
+  COUNTIF(days_since_seen < 28) AS mau
+FROM
+  telemetry.clients_last_seen
+WHERE
+  submission_date = DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
+GROUP BY
+  country
+ORDER BY
+  mau DESC
+LIMIT
+  20
+```
 
 If you edit the query to add a limit clause and again hit the 'Execute' button,
 you should get a new bar graph that only shows the 20 countries with the
@@ -215,7 +237,21 @@ As you've probably guessed, I wouldn't be asking that question if the answer
 wasn't "yes". STMO allows queries to accept user arguments by the use of double
 curly-braces around a variable name. So our query now becomes the following:
 
-  ```SELECT country, cardinality(merge(cast(hll AS HLL))) AS client_count FROM client_count_daily GROUP BY 1 ORDER BY 2 DESC LIMIT {{country_count}}```
+```sql
+SELECT
+  country,
+  COUNTIF(days_since_seen < 28) AS mau
+FROM
+  telemetry.clients_last_seen
+WHERE
+  submission_date = DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
+GROUP BY
+  country
+ORDER BY
+  mau DESC
+LIMIT
+  {{country_count}}
+```
 
 Once you replace the hard coded limit value with `{{country_count}}` you should
 see an input field show up directly above the bar chart. If you enter a numeric
@@ -261,15 +297,57 @@ dashboard will be left as an exercise to the user. The queries are as follows:
 
 * Top OSes (recommended `os_count` value == 6)
 
-  ```SELECT os, cardinality(merge(cast(hll AS HLL))) AS client_count FROM client_count_daily GROUP BY 1 ORDER BY 2 DESC LIMIT {{os_count}}```
+```sql
+SELECT
+  os,
+  COUNTIF(days_since_seen < 28) AS mau
+FROM
+  telemetry.clients_last_seen
+WHERE
+  submission_date = DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
+GROUP BY
+  os
+ORDER BY
+  mau DESC
+LIMIT
+  {{os_count}}
+```
 
 * Channel Counts
 
-  ```SELECT normalized_channel AS channel, cardinality(merge(cast(hll AS HLL))) AS client_count FROM client_count_daily GROUP BY 1 ORDER BY 2 DESC```
+```sql
+SELECT
+  normalized_channel AS channel,
+  COUNTIF(days_since_seen < 28) AS mau
+FROM
+  telemetry.clients_last_seen
+WHERE
+  submission_date = DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
+GROUP BY
+  channel
+ORDER BY
+  mau DESC
+```
 
 * App Version Counts (recommended `app_version_count value` == 20)
 
-  ```SELECT app_name, app_version, cardinality(merge(cast(hll AS HLL))) AS client_count FROM client_count_daily GROUP BY 1, 2 ORDER BY 3 DESC LIMIT {{app_version_count}}```
+```sql
+SELECT
+  app_name,
+  app_version,
+  COUNTIF(days_since_seen < 28) AS mau
+FROM
+  telemetry.clients_last_seen
+WHERE
+  submission_date = DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
+GROUP BY
+  app_name,
+  app_version
+ORDER BY
+  mau DESC
+LIMIT
+  {{app_version_count}}
+```
 
 Creating bar charts for these queries and adding them to the original dashboard
 can result in a dashboard resembling this:

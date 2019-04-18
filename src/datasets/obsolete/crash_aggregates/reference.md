@@ -67,7 +67,7 @@ We ignore invalid pings in our processing. Invalid pings are defined as those th
 
 The `crash_aggregates` job is run daily, at midnight UTC.
 The job is scheduled on [Airflow](https://github.com/mozilla/telemetry-airflow).
-The DAG is [here](https://github.com/mozilla/telemetry-airflow/blob/master/dags/crash_aggregates.py)
+The DAG is [here](https://github.com/mozilla/telemetry-airflow/blob/d50b938/dags/crash_aggregates.py)
 
 ## Schema
 
