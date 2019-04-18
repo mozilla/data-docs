@@ -79,7 +79,7 @@ Some other applications also send event data to this table, including Lockbox an
 
 This table contains event data for Focus Android, Focus iOS and Klar.
 
-Like when querying `telemetry_core_parquet` there are multiple apps contained in each table, so it is best practice to filter on at lease`app_name` and `os`.  One thing to note is that there is no `app_version` field in these tables, so in order to filter or join on a specific version you must know the corresponding `app_build_id`(s) for that app_version.  This can be found by reaching out to the engineering team building the app. 
+Like when querying `telemetry_core_parquet` there are multiple apps contained in each table, so it is best practice to filter on at lease`app_name` and `os`.  One thing to note is that there is no `app_version` field in these tables, so in order to filter or join on a specific version you must know the corresponding `app_build_id`(s) for that `app_version`.  This can be found by reaching out to the engineering team building the app. 
 
 Some other applications send data to this table but it is preferred to use this only for analysis of event data from Focus and it's related apps. 
 
