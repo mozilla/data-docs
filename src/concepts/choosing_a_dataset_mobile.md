@@ -49,7 +49,7 @@ Unlike main summary, you can query `telemetry_core_parquet directly`. Remember t
 
 There are versioned tables for `telemtry_core_parquet` but the table without a `_v#` suffix is the most up to date table and it is best to use this in your analysis. 
 
-The metadata field contains a list of useful metrics. To access you can query `metadata.metric_name` for the `metric_name` of your choice.  Metrics included in metadata are: [document_id, timestamp, date, geo_country, geo_city, app_build_id, normalized_channel] as described [here](https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/dev/schemas/telemetry/core/core.9.parquetmr.txt).  
+The metadata field contains a list of useful metrics. To access you can query `metadata.metric_name` for the `metric_name` of your choice.  Metrics included in metadata are: [`document_id`, `timestamp`, `date`, `geo_country`, `geo_city`, `app_build_id`, `normalized_channel`] as described [here](https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/dev/schemas/telemetry/core/core.9.parquetmr.txt).  
 
 The `seq` field indicates the order of the pings coming in. `seq` = 1 is the first ping we have received for that client id and can be used to proxy new users. 
 
@@ -58,7 +58,7 @@ The `seq` field indicates the order of the pings coming in. `seq` = 1 is the fir
 
 Mobile has a `core_client_count` table which has a created date and unique client id for each new install. This does not fully replicate what `client_count_daily` does for Desktop but can be useful for some analyses. 
 
-For other core ping derived tables see the documentation [here](https://wiki.mozilla.org/Mobile/Metrics/Redash).  These (with the exception of `mobile_clients`) are derived from the saved_session ping only available as an opt-in on Fennec release, so should be used with caution.
+For other core ping derived tables see the documentation [here](https://wiki.mozilla.org/Mobile/Metrics/Redash).  These (with the exception of `mobile_clients`) are derived from the `saved_session` ping only available as an opt-in on Fennec release, so should be used with caution.
 
 
 ### Event Ping Derived Datasets 
