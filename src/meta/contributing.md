@@ -64,10 +64,8 @@ to check.
 
 ## Style Guide
 
-Articles should be written in
-[Markdown](https://daringfireball.net/projects/markdown/syntax)
-(not [AsciiDoc](http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/)).
-Markdown is usually powerful enough and is a more common technology than AsciiDoc.
+Articles should be written in Markdown.
+mdBook uses the [CommonMark dialect][commonmark].
 
 Limit lines to **100 characters** where possible.
 Try to split lines at the end of sentences,
@@ -162,4 +160,5 @@ This document's structure is heavily influenced by
 You can find more context for this document in
 [this blog post](http://blog.harterrt.com/lit-review.html).
 
+[commonmark]: https://commonmark.org/help/
 [dtmo]: https://docs.telemetry.mozilla.org
