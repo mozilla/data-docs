@@ -50,4 +50,4 @@ Where to go next
 [measurement_dash]: https://telemetry.mozilla.org/new-pipeline/dist.html
 [evo_dash]: https://telemetry.mozilla.org/new-pipeline/evo.html
 [evo_gc_ms]: https://telemetry.mozilla.org/new-pipeline/evo.html#!aggregates=median!95th-percentile&cumulative=0&end_date=2017-06-13&keys=!__none__!__none__&max_channel_version=nightly%252F56&measure=GC_MS&min_channel_version=nightly%252F53&processType=*&product=Firefox&sanitize=1&sort_keys=submissions&start_date=2017-06-12&trim=1&use_submission_date=0
-[problem_client]: http://reports.telemetry.mozilla.org/post/projects%2Fproblematic_client.kp
+[problem_client]: https://mozilla.report/post/projects%2Fproblematic_client.kp

@@ -25,8 +25,6 @@ group by gfx_compositor
 `CrashSummary` contains one record for every
 [crash ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html)
 submitted by Firefox.
-It was built with the long term goal of providing a base for
-[`CrashAggregates`](../crash_aggregates/reference.md).
 
 ## Scheduling
 

@@ -1,10 +1,15 @@
 # Client Count Daily Reference
 
-This document is a work in progress.
-The work is being tracked
-[here](https://bugzilla.mozilla.org/show_bug.cgi?id=1364175).
+***As of 2019-04-10, this dataset has been deprecated and is no longer maintained. Please use [`clients_last_seen`](/datasets/bigquery/clients_last_seen/reference.md) instead. See [Bug 1543518](https://bugzilla.mozilla.org/show_bug.cgi?id=1543518) for more information.***
 
 <!-- toc -->
+
+# Replacement
+
+We've moved to calculating exact user counts based on
+[`clients_last_seen`](/datasets/bigquery/clients_last_seen/reference.md), see
+[DAU](../../../cookbooks/dau.md) and
+[Active DAU](../../../cookbooks/active_dau.md) for examples.
 
 # Introduction
 

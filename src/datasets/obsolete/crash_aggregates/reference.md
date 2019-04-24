@@ -1,4 +1,6 @@
-# Crash Aggregates Reference
+# Crash Aggregates
+
+ ***As of 2018-04-02, this dataset has been deprecated and is no longer maintained. Please use [error aggregates](../../streaming/error_aggregates/reference.md) instead. See [Bug 1388025](https://bugzilla.mozilla.org/show_bug.cgi?id=1388025) for more information.***
 
 <!-- toc -->
 
@@ -65,7 +67,7 @@ We ignore invalid pings in our processing. Invalid pings are defined as those th
 
 The `crash_aggregates` job is run daily, at midnight UTC.
 The job is scheduled on [Airflow](https://github.com/mozilla/telemetry-airflow).
-The DAG is [here](https://github.com/mozilla/telemetry-airflow/blob/master/dags/crash_aggregates.py)
+The DAG is [here](https://github.com/mozilla/telemetry-airflow/blob/d50b938/dags/crash_aggregates.py)
 
 ## Schema
 

@@ -1,5 +1,7 @@
 # Firefox Data Documentation
 
+[![Linux Build Status](https://travis-ci.org/mozilla/firefox-data-docs.svg?branch=master)](https://travis-ci.org/mozilla/firefox-data-docs)
+
 This document is intended to help Mozilla's developers and data scientists analyze and interpret the data gathered 
 by the Firefox Telemetry system.
 

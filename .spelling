@@ -12,9 +12,15 @@ addon
 addons
 Add-ons
 aDAU
+aMAU
+aWAU
 Algebird's
 analytics
 APIs
+APK
+app
+apps
+AsciiDoc
 ATMO
 autoscaling
 Awesomebar
@@ -24,6 +30,7 @@ backends
 backfilled
 behaviour
 Bhattacharyya
+BigQuery
 blocklist
 boolean
 booleans
@@ -57,8 +64,15 @@ E10s
 ElasticSearch
 EMR
 ETL
+Fenix
+Fennec
 filename
+FirefoxReality
+FireTV
 funnelcake
+geo-city
+geo-country
+FxA
 geoip
 Github
 GoFaster
@@ -81,7 +95,10 @@ JS
 JSON
 JSONSchema
 Jupyter
+Klar
+KPI
 lifecycle
+Lockbox
 lookups
 Lua
 matcher
@@ -116,6 +133,7 @@ Pingsender
 Plotly
 Postgres
 PostgreSQL
+post-mortem
 pre-computed
 pre-compiled
 pre-configured
@@ -123,6 +141,7 @@ pre-defined
 pre-loaded
 pre-processes
 pre-release
+pre-released
 pre-specified
 Prefs
 prefs
@@ -132,6 +151,7 @@ pushlog
 PySpark
 RDBMS
 RDD
+resampling
 rustc
 recommender
 release_calendar

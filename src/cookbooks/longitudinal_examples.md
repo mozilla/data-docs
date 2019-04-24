@@ -238,4 +238,4 @@ quotes. Try using single quotes instead.
 - [Longitudinal schema definition](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/Longitudinal.scala#L194)
 - [Custom dashboards with Re:dash](https://wiki.mozilla.org/Custom_dashboards_with_re:dash)
 
-[1]: http://reports.telemetry.mozilla.org/post/tutorials/longitudinal_dataset.kp
+[1]: https://mozilla.report/post/tutorials/longitudinal_dataset.kp

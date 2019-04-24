@@ -20,4 +20,4 @@ s3://telemetry-parquet/crash_aggregates/v1/
 #### Further Reading
 
 The technical documentation for this dataset can be found in the
-[telemetry-batch-view documentation](https://github.com/mozilla/telemetry-batch-view/blob/master/docs/CrashAggregateView.md)
+[telemetry-batch-view documentation](https://github.com/mozilla/telemetry-batch-view/blob/0128b08/docs/CrashAggregateView.md)
