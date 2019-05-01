@@ -82,9 +82,9 @@ instead.
 Links:
 
 -   [Documentation on array
-    functions](https://prestodb.io/docs/current/functions/array.html)
+    functions](https://prestosql.io/docs/current/functions/array.html)
 -   [`UNNEST`
-    documentation](https://prestodb.io/docs/current/sql/select.html#unnest)
+    documentation](https://prestosql.io/docs/current/sql/select.html#unnest)
 
 #### Maps
 
@@ -103,7 +103,7 @@ FROM adp GROUP BY 1 ORDER BY 2 DESC
 Links:
 
 -   [Documentation on map
-    functions](https://prestodb.io/docs/current/functions/map.html)
+    functions](https://prestosql.io/docs/current/functions/map.html)
 
 ### Sampling
 
@@ -210,7 +210,7 @@ Be careful not to overwrite an existing view! Using a unique name is
 important.
 
 Find more information
-[here](https://prestodb.io/docs/current/sql/create-view.html).
+[here](https://prestosql.io/docs/current/sql/create-view.html).
 
 ### Working offline
 
@@ -233,7 +233,7 @@ quotes. Try using single quotes instead.
 
 ### Other Resources
 
-- [Presto Docs](https://prestodb.io/docs/current/sql.html)
+- [Presto Docs](https://prestosql.io/docs/current/sql.html)
 - [Helpful FAQ covering Presto performance](https://docs.treasuredata.com/articles/presto-query-faq)
 - [Longitudinal schema definition](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/Longitudinal.scala#L194)
 - [Custom dashboards with Re:dash](https://wiki.mozilla.org/Custom_dashboards_with_re:dash)

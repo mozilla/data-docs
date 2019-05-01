@@ -416,7 +416,7 @@ graph LR
 [Metrics Graphics]: http://metricsgraphicsjs.org/
 [parquet]: http://parquet.apache.org/
 [Hive]: https://cwiki.apache.org/confluence/display/Hive/Home
-[Presto]: http://prestodb.io/
+[Presto]: http://prestosql.io/
 [Telemetry Aggregates]: https://github.com/mozilla/python_mozaggregator/#api
 [Amazon S3]: https://aws.amazon.com/s3/
 [TAAR Project]: https://github.com/mozilla/python_mozetl/blob/master/mozetl/taar/taar_dynamo.py
