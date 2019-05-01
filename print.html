@@ -1486,7 +1486,7 @@ different keys. In that case, data from both tables needs to be shuffled to ever
 <a class="header" href="#why-do-we-have-multiple-databases-why-not-use-athena-for-everything" id="why-do-we-have-multiple-databases-why-not-use-athena-for-everything"><h4>Why do we have multiple databases? Why not use Athena for everything?</h4></a>
 <p>Great question! Presto is something we control, and can upgrade it at-will. Athena is currently
 a serverless version of Presto, and as such doesn't have all of the bells and whistles. For example,
-it doesn't support <a href="https://prestodb.io/docs/current/functions/lambda.html">lambda expressions</a> or
+it doesn't support <a href="https://prestosql.io/docs/current/functions/lambda.html">lambda expressions</a> or
 UDFs, the latter of which we use in the <a href="../datasets/obsolete/client_count_daily/reference.html">Client Count Daily dataset</a>.</p>
 <a class="header" href="#key-takeaways" id="key-takeaways"><h4>Key Takeaways</h4></a>
 <ul>
@@ -1918,7 +1918,7 @@ style evo fill:lightgrey
   s3_parquet -.- Hive
 
 </pre>
-<p><a href="https://aws.amazon.com/s3/">Amazon S3</a> forms the backbone of the platform storage layer. The primary format used in the Data Lake is <a href="http://parquet.apache.org/">parquet</a>, which is a strongly typed columnar storage format that can easily be read and written by <a href="https://spark.apache.org/docs/latest/index.html">Spark</a>, as well as being compatible with SQL interfaces such as <a href="https://cwiki.apache.org/confluence/display/Hive/Home">Hive</a> and <a href="http://prestodb.io/">Presto</a>. Some data is also stored in <a href="https://hekad.readthedocs.io/en/dev/message/index.html#stream-framing">Heka-framed protobuf</a> format. This custom format is usually reserved for data where we do not have a complete <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas">JSONSchema specification</a>.</p>
+<p><a href="https://aws.amazon.com/s3/">Amazon S3</a> forms the backbone of the platform storage layer. The primary format used in the Data Lake is <a href="http://parquet.apache.org/">parquet</a>, which is a strongly typed columnar storage format that can easily be read and written by <a href="https://spark.apache.org/docs/latest/index.html">Spark</a>, as well as being compatible with SQL interfaces such as <a href="https://cwiki.apache.org/confluence/display/Hive/Home">Hive</a> and <a href="http://prestosql.io/">Presto</a>. Some data is also stored in <a href="https://hekad.readthedocs.io/en/dev/message/index.html#stream-framing">Heka-framed protobuf</a> format. This custom format is usually reserved for data where we do not have a complete <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas">JSONSchema specification</a>.</p>
 <p>Using S3 for storage avoids the need for an always-on cluster, which means that data at rest is inexpensive. S3 also makes it very easy to automatically expire (delete) objects after a certain period of time, which is helpful for implementing data retention policies.</p>
 <p>Once written to S3, the data is typically treated as immutable - data is not appended to existing files, nor is data normally updated in place. The exception here is when data is back-filled, in which case previous data may be overwritten.</p>
 <p>There are a number of other types of storage used for more specialized applications, including relational databases (such as PostgreSQL for the <a href="https://github.com/mozilla/python_mozaggregator/#api">Telemetry Aggregates</a>) and NoSQL databases (DynamoDB is used for a backing store for the <a href="https://github.com/mozilla/python_mozetl/blob/master/mozetl/taar/taar_dynamo.py">TAAR project</a>). Reading data from a variety of RDBMS sources is also supported via Re:dash.</p>
@@ -1977,7 +1977,7 @@ style evo fill:lightgrey
 <p>Clusters launched via ATMO are automatically killed after a user-defined period of time (by default, 8 hours), though their lifetime can be extended as needed. Each cluster has a user-specific <strong><code>EFS</code></strong> volume mounted on the <code>/home/hadoop</code> directory, which means that data stored locally on the cluster persists from one cluster to the next. This volume is shared by all clusters launched by a given ATMO user.</p>
 <a class="header" href="#stmo-sql-analysis" id="stmo-sql-analysis"><h5>STMO: SQL Analysis</h5></a>
 <p><a href="../../tools/stmo.html">STMO</a> is a customized <a href="https://sql.telemetry.mozilla.org">Re:dash</a> installation that provides self-serve access to a a variety of different <a href="../../concepts/choosing_a_dataset.html">datasets</a>. From here, you can query data in the Parquet Data Lake as well as various RDBMS data sources.</p>
-<p>STMO interfaces with the data lake using both <a href="http://prestodb.io/">Presto</a> and Amazon <a href="https://aws.amazon.com/athena/">Athena</a>. Each has its own data source in Re:dash. Since Athena does not support user-defined functions, datasets with HyperLogLog columns, such as <a href="../../datasets/obsolete/client_count_daily/reference.html"><code>client_count_daily</code></a>, are only available via Presto..</p>
+<p>STMO interfaces with the data lake using both <a href="http://prestosql.io/">Presto</a> and Amazon <a href="https://aws.amazon.com/athena/">Athena</a>. Each has its own data source in Re:dash. Since Athena does not support user-defined functions, datasets with HyperLogLog columns, such as <a href="../../datasets/obsolete/client_count_daily/reference.html"><code>client_count_daily</code></a>, are only available via Presto..</p>
 <p>Different <strong>Data Sources</strong> in STMO connect to different backends, and each backend might use a slightly different flavor of SQL. You should find a link to the documentation for the expected SQL variant next to the Data Sources list.</p>
 <p>Queries can be run just once, or scheduled to run periodically to keep data up-to-date.</p>
 <p>There is a command-line interface to STMO called <a href="https://github.com/mozilla/stmocli">St. Mocli</a>, if you prefer writing SQL using your own editor and tools.</p>
@@ -3569,9 +3569,9 @@ GROUP BY days, os ORDER BY days ASC
 instead.</p>
 <p>Links:</p>
 <ul>
-<li><a href="https://prestodb.io/docs/current/functions/array.html">Documentation on array
+<li><a href="https://prestosql.io/docs/current/functions/array.html">Documentation on array
 functions</a></li>
-<li><a href="https://prestodb.io/docs/current/sql/select.html#unnest"><code>UNNEST</code>
+<li><a href="https://prestosql.io/docs/current/sql/select.html#unnest"><code>UNNEST</code>
 documentation</a></li>
 </ul>
 <a class="header" href="#maps" id="maps"><h4>Maps</h4></a>
@@ -3586,7 +3586,7 @@ FROM adp GROUP BY 1 ORDER BY 2 DESC
 </code></pre>
 <p>Links:</p>
 <ul>
-<li><a href="https://prestodb.io/docs/current/functions/map.html">Documentation on map
+<li><a href="https://prestosql.io/docs/current/functions/map.html">Documentation on map
 functions</a></li>
 </ul>
 <a class="header" href="#sampling" id="sampling"><h3>Sampling</h3></a>
@@ -3662,7 +3662,7 @@ query</a>.</p>
 <p>Be careful not to overwrite an existing view! Using a unique name is
 important.</p>
 <p>Find more information
-<a href="https://prestodb.io/docs/current/sql/create-view.html">here</a>.</p>
+<a href="https://prestosql.io/docs/current/sql/create-view.html">here</a>.</p>
 <a class="header" href="#working-offline" id="working-offline"><h3>Working offline</h3></a>
 <p>It's often useful to keep a local sample of the longitudinal data when
 prototyping an analysis. The data is stored in
@@ -3678,7 +3678,7 @@ To initialize your AWS credentials, try <code>aws configure</code></p>
 quotes. Try using single quotes instead.</p>
 <a class="header" href="#other-resources" id="other-resources"><h3>Other Resources</h3></a>
 <ul>
-<li><a href="https://prestodb.io/docs/current/sql.html">Presto Docs</a></li>
+<li><a href="https://prestosql.io/docs/current/sql.html">Presto Docs</a></li>
 <li><a href="https://docs.treasuredata.com/articles/presto-query-faq">Helpful FAQ covering Presto performance</a></li>
 <li><a href="https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/Longitudinal.scala#L194">Longitudinal schema definition</a></li>
 <li><a href="https://wiki.mozilla.org/Custom_dashboards_with_re:dash">Custom dashboards with Re:dash</a></li>

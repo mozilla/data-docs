@@ -193,7 +193,7 @@ different keys. In that case, data from both tables needs to be shuffled to ever
 <a class="header" href="#why-do-we-have-multiple-databases-why-not-use-athena-for-everything" id="why-do-we-have-multiple-databases-why-not-use-athena-for-everything"><h4>Why do we have multiple databases? Why not use Athena for everything?</h4></a>
 <p>Great question! Presto is something we control, and can upgrade it at-will. Athena is currently
 a serverless version of Presto, and as such doesn't have all of the bells and whistles. For example,
-it doesn't support <a href="https://prestodb.io/docs/current/functions/lambda.html">lambda expressions</a> or
+it doesn't support <a href="https://prestosql.io/docs/current/functions/lambda.html">lambda expressions</a> or
 UDFs, the latter of which we use in the <a href="../datasets/obsolete/client_count_daily/reference.html">Client Count Daily dataset</a>.</p>
 <a class="header" href="#key-takeaways" id="key-takeaways"><h4>Key Takeaways</h4></a>
 <ul>
