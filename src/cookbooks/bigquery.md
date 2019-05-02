@@ -30,6 +30,7 @@ BigQuery datasets and tables can be accessed by the following methods:
     - For advanced use cases including automated workloads, ETL, [BigQuery Storage API](https://cloud.google.com/bigquery/docs/reference/storage/). Requires GCP access to be granted by Data Operations.
     - Allows access to BigQuery via [`bq` command-line tool](https://cloud.google.com/bigquery/docs/bq-command-line-tool)
 - [Databricks](bigquery.md#from-databricks)
+- [Colaboratory](bigquery.md#from-colaboratory)
 
 ## Access Request
 
@@ -84,6 +85,13 @@ Additional examples and documentation can be found [here](https://cloud.google.c
 Connectivity via BigQuery Spark Connector which uses [BigQuery Storage API](https://cloud.google.com/bigquery/docs/reference/storage/).
 
 _Work in progress_
+
+## From Colaboratory
+[Colaboratory](https://colab.research.google.com) is Jupyter notebook environment, managed by Google and running in the cloud. Notebooks are stored in Google Drive and can be shared in a similar way to Google Docs.
+
+Colaboratory can be used to easily access BigQuery and perform interactive analyses. See [example notebook](https://colab.research.google.com/drive/1NCkpZBx3cRc08-g_JKMBrf5cIxAvSNMv).
+
+Note: this is very similar to [API Access](bigquery.md#gcp-bigquery-api-access), so you will need access to your team's GCP project - file a request as described [above](bigquery.md#access-request).
 
 # Querying Tables
 
