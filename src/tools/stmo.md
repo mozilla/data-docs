@@ -91,47 +91,47 @@ query editing page:
 ![New Query Page](../assets/STMO_screenshots/new_query.png "New Query page")
 
 For this (and most queries where we're counting distinct client IDs) we'll want
-to use the [`clients_last_seen` data
-set](../datasets/bigquery/clients_last_seen/reference.md) that is generated from
-Firefox telemetry pings.
+to use
+[`clients_last_seen`](../datasets/bigquery/clients_last_seen/reference.md),
+which is generated from Firefox telemetry pings.
 
-* Check if the data set is in BigQuery
+* Check if the table is in BigQuery
 
   As mentioned above, BigQuery is replacing Athena and Presto, but not all data
   sets are yet available in BigQuery. Click on the 'Data Source' drop-down and
   select BigQuery, then check to see if the one we want is available by typing
   `clients_last_seen` into the "Search schema..." search box above the schema
   browser interface to the left of the main query edit box. You should see that
-  there is, in fact, a `clients_last_seen` data set (showing up as
+  there is, in fact, a `clients_last_seen` table (showing up as
   `telemetry.clients_last_seen`), as well as versioned `clients_last_seen` data
   sets (showing up as `telemetry.clients_last_seen_v<VERSION>`).
 
-* Check if the data set is in Athena
+* Check if the table is in Athena
 
   If it's not in BigQuery, now we should check to see if it's in Athena. If you
   click on the 'Data Source' drop-down and change the selection from 'BigQuery'
   to 'Athena' (with `clients_last_seen` still populating the filter input), you
-  should see that there are no matches for `clients_last_seen`, which means
-  this data set is not available in *Athena*.
+  should see that there is a match for `clients_last_seen`, which means this
+  table is available in *Athena*.
 
-* Check if the data set is in Presto
+* Check if the table is in Presto
 
   If it's also not in Athena, now we should check to see if it's in Presto. If
   you click on the 'Data Source' drop-down and change the selection from
   'Athena' to 'Presto' (with `clients_last_seen` still populating the filter
-  input), you should see that there are no matches for `clients_last_seen`,
-  which means this data set is not available in *Presto* either.
+  input), you should see that there is a match for `clients_last_seen`, which
+  means this table is available in *Presto*.
 
 * Introspect the available columns
 
   Click on the 'Data Source' drop-down and change the selection to 'BigQuery',
   and click on `telemetry.clients_last_seen` in the schema browser to expose
-  the columns that are available in the data set. Three of the columns are of
+  the columns that are available in the table. Three of the columns are of
   interest to us for this query: `country`, `days_since_seen`, and
   `submission_date`.
 
-So a query that extracts all of the unique country values and the most recent
-MAU for each one, sorted from highest MAU to lowest MAU looks like this:
+So a query that extracts all of the unique country values and the MAU for one
+day for each one, sorted from highest MAU to lowest MAU looks like this:
 
 ```sql
 SELECT
@@ -140,7 +140,7 @@ SELECT
 FROM
   telemetry.clients_last_seen
 WHERE
-  submission_date = DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
+  submission_date = '2019-04-01'
 GROUP BY
   country
 ORDER BY
@@ -199,7 +199,7 @@ SELECT
 FROM
   telemetry.clients_last_seen
 WHERE
-  submission_date = DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
+  submission_date = '2019-04-01'
 GROUP BY
   country
 ORDER BY
@@ -210,7 +210,7 @@ LIMIT
 
 If you edit the query to add a limit clause and again hit the 'Execute' button,
 you should get a new bar graph that only shows the 20 countries with the
-highest number of unique clients. In this case, the full data set has
+highest number of unique clients. In this case, the full result set has
 approximately 250 return values, and so limiting the result count improves
 readability. In other cases, however, an unlimited query might return thousands
 or even millions of rows. When those queries are run, readability is not the
@@ -221,7 +221,7 @@ of the other users of the system. Thus, a very important warning:
   **ALL QUERIES SHOULD INCLUDE A "LIMIT" STATEMENT BY DEFAULT!**
 
 You should be in the habit of adding a "LIMIT 100" clause to the end of all new
-queries, to prevent your query from returning a gigantic data set that causes
+queries, to prevent your query from returning a gigantic result set that causes
 UI and performance problems. You may learn that the total result set is small
 enough that the limit is unnecessary, but unless you're certain that is the
 case specifying an explicit LIMIT helps prevent unnecessary issues.
@@ -244,7 +244,7 @@ SELECT
 FROM
   telemetry.clients_last_seen
 WHERE
-  submission_date = DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
+  submission_date = '2019-04-01'
 GROUP BY
   country
 ORDER BY
@@ -304,7 +304,7 @@ SELECT
 FROM
   telemetry.clients_last_seen
 WHERE
-  submission_date = DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
+  submission_date = '2019-04-01'
 GROUP BY
   os
 ORDER BY
@@ -322,7 +322,7 @@ SELECT
 FROM
   telemetry.clients_last_seen
 WHERE
-  submission_date = DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
+  submission_date = '2019-04-01'
 GROUP BY
   channel
 ORDER BY
@@ -339,7 +339,7 @@ SELECT
 FROM
   telemetry.clients_last_seen
 WHERE
-  submission_date = DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
+  submission_date = '2019-04-01'
 GROUP BY
   app_name,
   app_version
