@@ -11,10 +11,31 @@ For the purposes of DAU, a profile is considered active if it sends any main pin
 
 To make the time boundaries more clear, let's consider a particular date 2019-01-28. The DAU number assigned to 2019-01-28 should consider all main pings received during 2019-01-28 UTC. We cannot observe the full data until 2019-01-28 closes (and in practice we need to wait a bit longer since we are usually referencing derived datasets like `clients_daily` that are updated once per day over several hours following midnight UTC), so the earliest we can calculate this value is on 2019-01-29. If plotted as a time series, this value should always be plotted at the point labeled 2019-01-28. Likewise, MAU for 2019-01-28 should consider a 28 day range that includes main pings received on 2019-01-28 and back to beginning of day UTC 2019-01-01. Again, the earliest we can calculate the value is on 2019-01-29.
 
-For quick analysis, using [`clients_last_seen`](../datasets/bigquery/clients_last_seen/reference.md) is recommended, but it is only available in BigQuery. Below is an example query for getting MAU, WAU, and DAU using `clients_last_seen`.
+For quick analysis, using [`firefox_desktop_exact_mau28_by_dimensions`](../datasets/bigquery/exact_mau/reference.md) is recommended. Below is an example query for getting MAU, WAU, and DAU for 2018 using `firefox_desktop_exact_mau28_by_dimensions`.
 
 ```sql
+SELECT
   submission_date,
+  SUM(mau) AS mau,
+  SUM(wau) AS wau,
+  SUM(dau) AS dau
+FROM
+  telemetry.firefox_desktop_exact_mau28_by_dimensions
+WHERE
+  submission_date_s3 >= '2018-01-01'
+  AND submission_date_s3 < '2019-01-01'
+GROUP BY
+  submission_date
+ORDER BY
+  submission_date
+```
+
+For analysis of dimensions not available in `firefox_desktop_exact_mau28_by_dimensions`, using [`clients_last_seen`](../datasets/bigquery/clients_last_seen/reference.md) is recommended. Below is an example query for getting MAU, WAU, and DAU by `app_version` for 2018 using `clients_last_seen`.
+
+```sql
+SELECT
+  submission_date,
+  app_version,
   -- days_since_seen is always between 0 and 28, so MAU could also be
   -- calculated with COUNT(days_since_seen) or COUNT(*)
   COUNTIF(days_since_seen < 28) AS mau,
@@ -24,13 +45,18 @@ For quick analysis, using [`clients_last_seen`](../datasets/bigquery/clients_las
   COUNTIF(days_since_seen < 1) AS dau
 FROM
   telemetry.clients_last_seen
+WHERE
+  submission_date_s3 >= '2018-01-01'
+  AND submission_date_s3 < '2019-01-01'
 GROUP BY
-  submission_date
+  submission_date,
+  app_version
 ORDER BY
-  submission_date ASC
+  submission_date,
+  app_version
 ```
 
-For analysis of only DAU, using [`clients_daily`](../datasets/batch_view/clients_daily/reference.md) is more efficient than `clients_last_seen`. Getting MAU and WAU from `clients_daily` is not recommended. Below is an example query for getting DAU using `clients_daily`.
+For analysis of only DAU, using [`clients_daily`](../datasets/batch_view/clients_daily/reference.md) is more efficient than `clients_last_seen`. Getting MAU and WAU from `clients_daily` is not recommended. Below is an example query for getting DAU for 2018 using `clients_daily`.
 
 ```sql
 SELECT
@@ -38,10 +64,14 @@ SELECT
   COUNT(*) AS dau
 FROM
   telemetry.clients_daily
+WHERE
+  -- In BigQuery use yyyy-MM-DD, e.g. '2018-01-01'
+  submission_date_s3 >= '20180101'
+  AND submission_date_s3 < '20190101'
 GROUP BY
   submission_date_s3
 ORDER BY
-  submission_date_s3 ASC
+  submission_date_s3
 ```
 
 [`main_summary`](../datasets/batch_view/main_summary/reference.md) can also be used for getting DAU. Below is an example query using a 1% sample over March 2018 using `main_summary`:
@@ -61,5 +91,5 @@ WHERE
 GROUP BY
   submission_date_s3
 ORDER BY
-  submission_date_s3 ASC
+  submission_date_s3
 ```

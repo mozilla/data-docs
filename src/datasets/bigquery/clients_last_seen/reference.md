@@ -58,9 +58,9 @@ ORDER BY
 ## Scheduling
 
 This dataset is updated daily via the
-[parquet to BigQuery](https://github.com/mozilla-services/spark-parquet-to-bigquery)
+[telemetry-airflow](https://github.com/mozilla/telemetry-airflow)
 infrastructure. The job runs as part of the
-[`reprocess_clients_daily_v6` DAG](https://github.com/mozilla-services/spark-parquet-to-bigquery/blob/master/dags/reprocess_clients_daily_v6.py).
+[`main_summary` DAG](https://github.com/mozilla/telemetry-airflow/blob/89a6dc3/dags/main_summary.py#L365).
 
 ## Schema
 
