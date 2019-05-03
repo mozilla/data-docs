@@ -149,8 +149,26 @@
 <p><strong>MAU</strong> is the number of unique clients who have been a DAU on any day in the last <strong>28 days</strong>. In other words, any client that contributes to DAU in the last 28 days would also contribute to MAU for that day. Note that this is not simply the sum of DAU over 28 days, since any particular client could be active on many days.</p>
 <p><strong>WAU</strong> is the number of unique clients who have been a DAU on any day in the last <strong>7 days</strong>. Caveats above for MAU also apply to WAU.</p>
 <p>To make the time boundaries more clear, let's consider a particular date 2019-01-28. The DAU number assigned to 2019-01-28 should consider all main pings received during 2019-01-28 UTC. We cannot observe the full data until 2019-01-28 closes (and in practice we need to wait a bit longer since we are usually referencing derived datasets like <code>clients_daily</code> that are updated once per day over several hours following midnight UTC), so the earliest we can calculate this value is on 2019-01-29. If plotted as a time series, this value should always be plotted at the point labeled 2019-01-28. Likewise, MAU for 2019-01-28 should consider a 28 day range that includes main pings received on 2019-01-28 and back to beginning of day UTC 2019-01-01. Again, the earliest we can calculate the value is on 2019-01-29.</p>
-<p>For quick analysis, using <a href="../datasets/bigquery/clients_last_seen/reference.html"><code>clients_last_seen</code></a> is recommended, but it is only available in BigQuery. Below is an example query for getting MAU, WAU, and DAU using <code>clients_last_seen</code>.</p>
-<pre><code class="language-sql">  submission_date,
+<p>For quick analysis, using <a href="../datasets/bigquery/exact_mau/reference.html"><code>firefox_desktop_exact_mau28_by_dimensions</code></a> is recommended. Below is an example query for getting MAU, WAU, and DAU for 2018 using <code>firefox_desktop_exact_mau28_by_dimensions</code>.</p>
+<pre><code class="language-sql">SELECT
+  submission_date,
+  SUM(mau) AS mau,
+  SUM(wau) AS wau,
+  SUM(dau) AS dau
+FROM
+  telemetry.firefox_desktop_exact_mau28_by_dimensions
+WHERE
+  submission_date_s3 &gt;= '2018-01-01'
+  AND submission_date_s3 &lt; '2019-01-01'
+GROUP BY
+  submission_date
+ORDER BY
+  submission_date
+</code></pre>
+<p>For analysis of dimensions not available in <code>firefox_desktop_exact_mau28_by_dimensions</code>, using <a href="../datasets/bigquery/clients_last_seen/reference.html"><code>clients_last_seen</code></a> is recommended. Below is an example query for getting MAU, WAU, and DAU by <code>app_version</code> for 2018 using <code>clients_last_seen</code>.</p>
+<pre><code class="language-sql">SELECT
+  submission_date,
+  app_version,
   -- days_since_seen is always between 0 and 28, so MAU could also be
   -- calculated with COUNT(days_since_seen) or COUNT(*)
   COUNTIF(days_since_seen &lt; 28) AS mau,
@@ -160,21 +178,30 @@
   COUNTIF(days_since_seen &lt; 1) AS dau
 FROM
   telemetry.clients_last_seen
+WHERE
+  submission_date_s3 &gt;= '2018-01-01'
+  AND submission_date_s3 &lt; '2019-01-01'
 GROUP BY
-  submission_date
+  submission_date,
+  app_version
 ORDER BY
-  submission_date ASC
+  submission_date,
+  app_version
 </code></pre>
-<p>For analysis of only DAU, using <a href="../datasets/batch_view/clients_daily/reference.html"><code>clients_daily</code></a> is more efficient than <code>clients_last_seen</code>. Getting MAU and WAU from <code>clients_daily</code> is not recommended. Below is an example query for getting DAU using <code>clients_daily</code>.</p>
+<p>For analysis of only DAU, using <a href="../datasets/batch_view/clients_daily/reference.html"><code>clients_daily</code></a> is more efficient than <code>clients_last_seen</code>. Getting MAU and WAU from <code>clients_daily</code> is not recommended. Below is an example query for getting DAU for 2018 using <code>clients_daily</code>.</p>
 <pre><code class="language-sql">SELECT
   submission_date_s3,
   COUNT(*) AS dau
 FROM
   telemetry.clients_daily
+WHERE
+  -- In BigQuery use yyyy-MM-DD, e.g. '2018-01-01'
+  submission_date_s3 &gt;= '20180101'
+  AND submission_date_s3 &lt; '20190101'
 GROUP BY
   submission_date_s3
 ORDER BY
-  submission_date_s3 ASC
+  submission_date_s3
 </code></pre>
 <p><a href="../datasets/batch_view/main_summary/reference.html"><code>main_summary</code></a> can also be used for getting DAU. Below is an example query using a 1% sample over March 2018 using <code>main_summary</code>:</p>
 <pre><code class="language-sql">SELECT
@@ -191,7 +218,7 @@ WHERE
 GROUP BY
   submission_date_s3
 ORDER BY
-  submission_date_s3 ASC
+  submission_date_s3
 </code></pre>
 
                     </main>

@@ -169,8 +169,7 @@ user counts such as <a href="../../../cookbooks/dau.html">DAU and MAU</a>.</p>
 <a href="/datasets/obsolete/client_count/reference.html"><code>client_count_daily</code> dataset</a>,
 and it includes the most recent values in a 28 day window for all columns in
 the <a href="/datasets/batch_view/clients_daily/reference.html"><code>clients_daily</code> dataset</a>.</p>
-<p>This dataset should be used instead of <code>client_count_daily</code> in BigQuery,
-and is not currently available outside of BigQuery.</p>
+<p>This dataset should be used instead of <code>client_count_daily</code>.</p>
 <a class="header" href="#content" id="content"><h4>Content</h4></a>
 <p>For each <code>submission_date</code> this dataset contains one row per <code>client_id</code>
 that appeared in <code>clients_daily</code> in a 28 day window including
@@ -248,9 +247,9 @@ ORDER BY
 </code></pre>
 <a class="header" href="#scheduling" id="scheduling"><h2>Scheduling</h2></a>
 <p>This dataset is updated daily via the
-<a href="https://github.com/mozilla-services/spark-parquet-to-bigquery">parquet to BigQuery</a>
+<a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a>
 infrastructure. The job runs as part of the
-<a href="https://github.com/mozilla-services/spark-parquet-to-bigquery/blob/master/dags/reprocess_clients_daily_v6.py"><code>reprocess_clients_daily_v6</code> DAG</a>.</p>
+<a href="https://github.com/mozilla/telemetry-airflow/blob/89a6dc3/dags/main_summary.py#L365"><code>main_summary</code> DAG</a>.</p>
 <a class="header" href="#schema" id="schema"><h2>Schema</h2></a>
 <p>The data is partitioned by <code>submission_date</code>.</p>
 <p>As of 2019-03-25, the current version of the <code>clients_last_seen</code> dataset is
