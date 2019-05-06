@@ -21,7 +21,7 @@ FROM
     clients_last_seen
 WHERE
     submission_date >= DATE_SUB(CURRENT_DATE, INTERVAL 1 WEEK)
-    AND last_seen_date = submission_date
+    AND days_since_seen = 0
 GROUP BY
     submission_date,
     os
@@ -44,7 +44,7 @@ FROM
     clients_last_seen
 WHERE
     submission_date >= DATE_SUB(CURRENT_DATE, INTERVAL 1 WEEK)
-    AND last_seen_date > DATE_SUB(submission_date, INTERVAL 1 WEEK)
+    AND days_since_seen < 7
 GROUP BY
     submission_date,
     normalized_channel
