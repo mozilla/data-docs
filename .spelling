@@ -16,12 +16,14 @@ aMAU
 aWAU
 Algebird's
 analytics
+anonymised
 APIs
 APK
 app
 apps
 AsciiDoc
 ATMO
+autofill
 autoscaling
 Awesomebar
 AWS
@@ -53,6 +55,7 @@ DataFrames
 DAU
 dataset
 datasets
+de-anonymise
 deduplicating
 discoverability
 Django's
@@ -70,6 +73,7 @@ filename
 FirefoxReality
 FireTV
 funnelcake
+GCP
 geo-city
 geo-country
 FxA
@@ -159,6 +163,7 @@ repo
 RTMO
 runtime
 S3
+scala
 schemas
 SciPy
 SDK
