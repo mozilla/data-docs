@@ -6931,36 +6931,98 @@ let ratioForDateInQuestion = rows
 <a class="header" href="#code-reference-7" id="code-reference-7"><h2>Code Reference</h2></a>
 <p>You can find the query that generates the SSL dataset
 <a href="https://sql.telemetry.mozilla.org/queries/49323/source#table">here</a>.</p>
-<a class="header" href="#sync-summary-reference" id="sync-summary-reference"><h1>Sync Summary Reference</h1></a>
+<a class="header" href="#sync-summary-and-sync-flat-summary-reference" id="sync-summary-and-sync-flat-summary-reference"><h1>Sync Summary and Sync Flat Summary Reference</h1></a>
 <ul>
-<li><a href="#introduction">Introduction</a></li>
+<li><a href="#introduction">Introduction</a>
+<ul>
+<li><a href="#which-dataset-should-i-use">Which dataset should I use?</a></li>
+</ul>
+</li>
 <li><a href="#data-reference">Data Reference</a>
 <ul>
+<li><a href="#a-note-about-user-ids">A note about user IDs</a></li>
+<li><a href="#which-apps-send-sync-telemetry-what-about-fenix">Which apps send sync telemetry? What about Fenix?</a></li>
+<li><a href="#whats-an-engine">What's an engine?</a></li>
 <li><a href="#example-queries">Example Queries</a></li>
 <li><a href="#sampling">Sampling</a></li>
 <li><a href="#scheduling">Scheduling</a></li>
-<li><a href="#schema">Schema</a></li>
+<li><a href="#sync-summary-schema">Sync Summary Schema</a></li>
+<li><a href="#sync-flat-summary-schema">Sync Flat Summary Schema</a></li>
 </ul>
 </li>
 </ul>
 <a class="header" href="#introduction-19" id="introduction-19"><h1>Introduction</h1></a>
-<p>Work in progress.
-Work is being tracked
-<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1364171">here</a>.</p>
+<p><em>Note: some of the information in this chapter is a duplication of the info found on <a href="https://wiki.mozilla.org/CloudServices/Sync/ReDash">this</a> wiki page. You can also find more detailed information about the data contained in the sync ping <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/sync-ping.html">here</a></em></p>
+<p><code>sync_summary</code> and <code>sync_flat_summary</code> are the primary datasets that track the health of sync. <code>sync_flat_summary</code> is derived from <code>sync_summary</code> by unpacking/exploding the <code>engines</code> field of the latter, so they ultimately contain the same data (see below).</p>
+<a class="header" href="#which-dataset-should-i-use" id="which-dataset-should-i-use"><h2>Which dataset should I use?</h2></a>
+<p>Which dataset to use depends on whether you are interested in <em>per-engine</em> sync success or <em>per-sync</em> sync success (see below). If you are interested in whether a sync failed overall, regardless of which engine may have caused the failure, then you can use <code>sync_summary</code>. Otherwise, if you are interested in per-engine data, you should use <code>sync_flat_summary</code>.</p>
+<p>If you aren't sure, or just trying to get acquainted, you should probably just use <code>sync_flat_summary</code>.</p>
 <a class="header" href="#data-reference-15" id="data-reference-15"><h1>Data Reference</h1></a>
+<a class="header" href="#a-note-about-user-ids" id="a-note-about-user-ids"><h2>A note about user IDs</h2></a>
+<p>Unlike most other telemetry datasets, these do not contain the profile-level identifier <code>client_id</code>. Because you need to sign up for a <a href="https://www.mozilla.org/en-US/firefox/accounts/">Firefox Account</a> in order to use sync, these datasets instead include an anonymised version of the user's Firefox Account user id <code>uid</code> and an anonymised version of their individual devices' <code>device_id</code>s. Put another way, each <code>uid</code> can have many associated <code>device_id</code>s.</p>
+<p><strong>Q:</strong> Why not include <code>client_id</code> in these datasets so that they can be joined on (e.g.) <code>main_summary</code>?</p>
+<p><strong>A:</strong> We've had a policy to keep main browser telemetry separate from sync and FxA telemetry. This is in part because FxA <code>uid</code>s are ultimately associated with email addresses in the FxA database, and thus a breach of that database in combination with access to telemetry could in theory de-anonymise client-side browser metrics.</p>
+<a class="header" href="#which-apps-send-sync-telemetry-what-about-fenix" id="which-apps-send-sync-telemetry-what-about-fenix"><h2>Which apps send sync telemetry? What about Fenix?</h2></a>
+<p>Currently, Firefox for desktop, Firefox for iOS and Firefox for Android (fennec) all have sync implemented, and they all send sync telemetry. Though there are some differences in the telemetry that each application sends, it all ends up in the <code>sync_summary</code> and <code>sync_flat_summary</code> datasets.</p>
+<p>Starting with Fenix, however, sync telemetry will start to be sent through <a href="https://github.com/mozilla-mobile/android-components/tree/master/components/service/glean">glean</a>. This means that, in all likelihood, Fenix sync telemetry will initially be segregated from existing sync telemetry (one reason is that current sync telemetry is on AWS while glean pings are ingested to GCP).</p>
+<a class="header" href="#whats-an-engine" id="whats-an-engine"><h2>What's an engine?</h2></a>
+<p>Firefox syncs many different types of browser data and (generally speaking) each one of these data types are synced by their own engine. When the app triggers a &quot;sync&quot; each engine makes their own determination of what needs to be synced (if anything). Many syncs can happen in a day (dozens or more on desktop, usually less on mobile). Telemetry about each sync is logged, and each <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/sync-ping.html">sync ping</a> (sent once a day, and whenever the user logs in or out of sync) contains information about multiple syncs. The scala code responsible for creating the <code>sync_summary</code> dataset unpacks each sync ping into one row per sync. The resulting <code>engines</code> field is an array of &quot;engine records&quot;: data about how each engine performed during that sync. <code>sync_flat_summary</code> further unpacking/exploding the <code>engines</code> field and creates a dataset that is one row per engine record.</p>
+<p>Existing engines (<code>engine_name</code> in <code>sync_flat_summary</code>) are listed below with brief descriptions in cases where their name isn't transparent.</p>
+<p>Note that not every device syncs each of these engines. They can be disabled individually and some are off by default.</p>
+<ul>
+<li><code>addons</code></li>
+<li><code>addresses</code> mailing addresses e.g. for e-commerce; part of form autofill.</li>
+<li><code>bookmarks</code></li>
+<li><code>clients</code> non-user-facing list of the sync account's associated devices</li>
+<li><code>creditcards</code> this used to be nightly only but was recently removed entirely</li>
+<li><code>extension-storage</code> WebExtension storage, in support of the <code>storage.sync</code> WebExtension API.</li>
+<li><code>history</code> browsing history.</li>
+<li><code>passwords</code></li>
+<li><code>forms</code> saved values in web forms</li>
+<li><code>prefs</code> not all prefs are synced</li>
+<li><code>tabs</code> note that this is not the same as the &quot;send tab&quot; feature, this is the engine that syncs the tabs you have open across your devices (used to populate the synced tabs sidebar). For data on the send-tab feature use the <code>sync_events</code> dataset.</li>
+</ul>
 <a class="header" href="#example-queries-11" id="example-queries-11"><h2>Example Queries</h2></a>
-<p>Work in progress.
-Work is being tracked
-<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1364171">here</a></p>
+<p>See <a href="https://sql.telemetry.mozilla.org/dashboard/sync-leif-status-dashboard-wip">this dashboard</a> to get a general sense of what this dataset is typically used for.</p>
+<p>Here's an example of a query that will calculate the failure and success rates for a subset of engines per day.</p>
+<pre><code class="language-sql">WITH
+    counts AS (
+        SELECT
+          submission_date_s3 AS day,
+          engine_name AS engine,
+          COUNT(*) AS total,
+          COUNT(CASE WHEN engine_status IS NOT NULL THEN true ELSE NULL END) AS count_errors,
+          /* note that `engine_status` is null on sync success. */  
+          COUNT(CASE WHEN engine_status IS NULL THEN true ELSE NULL END) AS count_success
+        FROM telemetry.sync_flat_summary
+        WHERE engine_name IN ('bookmarks','history','tabs','addons','addresses','passwords','prefs')
+        AND cast(submission_date_s3 AS integer) &gt;= 20190101
+        GROUP BY 1,2
+        ORDER BY 1
+    ),
+
+    rates AS (
+        SELECT
+          day,
+          engine,
+          total,
+          count_errors,
+          count_success,
+          CAST(count_errors AS double) / CAST(total AS double) * 100 AS error_rate,
+          CAST(count_success AS double) / CAST(total AS double) * 100 AS success_rate
+        FROM counts
+        ORDER BY 1
+    )
+
+SELECT * FROM rates
+</code></pre>
 <a class="header" href="#sampling-7" id="sampling-7"><h2>Sampling</h2></a>
-<p>Work in progress.
-Work is being tracked
-<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1364171">here</a></p>
+<p>Sadly, these datasets are not sampled. It should be possible to derive a <code>sample_id</code> on <code>uid</code>, however. Someone should do that because querying these datasets for long time horizons is very expensive.</p>
 <a class="header" href="#scheduling-13" id="scheduling-13"><h2>Scheduling</h2></a>
 <p>This dataset is updated daily, shortly after midnight UTC.
 The job is scheduled on <a href="https://github.com/mozilla/telemetry-airflow">Airflow</a>.
 The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/sync_view.py">here</a>.</p>
-<a class="header" href="#schema-14" id="schema-14"><h2>Schema</h2></a>
+<a class="header" href="#sync-summary-schema" id="sync-summary-schema"><h2>Sync Summary Schema</h2></a>
 <pre><code>root
  |-- app_build_id: string (nullable = true)
  |-- app_display_version: string (nullable = true)
@@ -7012,6 +7074,49 @@ The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dag
  |    |    |    |    |    |-- name: string
  |    |    |    |    |    |-- count: integer
 </code></pre>
+<a class="header" href="#sync-flat-summary-schema" id="sync-flat-summary-schema"><h2>Sync Flat Summary Schema</h2></a>
+<pre><code>root
+|-- app_build_id: string (nullable = true)
+|-- app_display_version: string (nullable = true)
+|-- app_name: string (nullable = true)
+|-- app_version: string (nullable = true)
+|-- app_channel: string (nullable = true)
+|-- os: string
+|-- os_version: string
+|-- os_locale: string
+|-- uid: string
+|-- device_id: string (nullable = true)
+|-- when: integer
+|-- took: integer
+|-- failure_reason: struct (nullable = true)
+|    |-- name: string
+|    |-- value: string (nullable = true)
+|-- status: struct (nullable = true)
+|    |-- sync: string (nullable = true)
+|    |-- status: string (nullable = true)
+|-- why: string (nullable = true)
+|-- devices: array (nullable = true)
+|    |-- element: struct (containsNull = false)
+|    |    |-- id: string
+|    |    |-- os: string
+|    |    |-- version: string
+|-- sync_id: string
+|-- sync_day: string
+|-- engine_name: string
+|-- engine_took: integer
+|-- engine_status: string (nullable = true)
+|-- engine_failure_reason: struct (nullable = true)
+|    |-- name: string
+|    |-- value: string (nullable = true)
+|-- engine_incoming_applied: integer (nullable = true)
+|-- engine_incoming_failed: integer (nullable = true)
+|-- engine_incoming_new_failed: integer (nullable = true)
+|-- engine_incoming_reconciled: integer (nullable = true)
+|-- engine_outgoing_batch_count: integer (nullable = true)
+|-- engine_outgoing_batch_total_sent: integer (nullable = true)
+|-- engine_outgoing_batch_total_failed: integer (nullable = true)
+|-- submission_date_s3: string
+</code></pre>
 <a class="header" href="#update" id="update"><h1>Update</h1></a>
 <ul>
 <li><a href="#introduction">Introduction</a>
@@ -7045,7 +7150,7 @@ Here's an <a href="https://sql.telemetry.mozilla.org/queries/31267#table">exampl
 <a class="header" href="#further-reading-12" id="further-reading-12"><h4>Further Reading</h4></a>
 <p>This dataset is generated automatically using direct to parquet. The configuration responsible for generating this dataset was introduced in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1384861">bug 1384861</a>.</p>
 <a class="header" href="#data-reference-16" id="data-reference-16"><h1>Data Reference</h1></a>
-<a class="header" href="#schema-15" id="schema-15"><h2>Schema</h2></a>
+<a class="header" href="#schema-14" id="schema-14"><h2>Schema</h2></a>
 <p>As of 2017-09-07, the current version of the <code>telemetry_update_parquet</code> dataset is <code>v1</code>, and has a schema as follows:</p>
 <pre><code>root
  |-- id: string (nullable = true)
@@ -7544,7 +7649,7 @@ For more details see the <a href="../../search.html">search data documentation</
 <p>This job is
 <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py#L135">scheduled on airflow</a>
 to run daily.</p>
-<a class="header" href="#schema-16" id="schema-16"><h2>Schema</h2></a>
+<a class="header" href="#schema-15" id="schema-15"><h2>Schema</h2></a>
 <p>As of 2018-11-28,
 the current version of <code>search_aggregates</code> is <code>v4</code>,
 and has a schema as follows.
@@ -7633,7 +7738,7 @@ For more details see the <a href="../../search.html">search data documentation</
 <a class="header" href="#scheduling-15" id="scheduling-15"><h2>Scheduling</h2></a>
 <p>This dataset is scheduled on Airflow
 (<a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py#L164">source</a>).</p>
-<a class="header" href="#schema-17" id="schema-17"><h2>Schema</h2></a>
+<a class="header" href="#schema-16" id="schema-16"><h2>Schema</h2></a>
 <p>As of 2018-11-28, the current version of <code>search_clients_daily</code> is <code>v4</code>,
 and has a schema as follows.
 It's backfilled through 2016-06-07</p>
@@ -7813,7 +7918,7 @@ into account.</li>
 The job DAG runs every day after <code>main_summary</code> is complete.
 You can find the job definition
 <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py#L187-L195">here</a>.</p>
-<a class="header" href="#schema-18" id="schema-18"><h2>Schema</h2></a>
+<a class="header" href="#schema-17" id="schema-17"><h2>Schema</h2></a>
 <p>As of 2017-10-05, the current version of the <code>heavy_users</code> dataset is <code>v1</code>, and has a schema as follows:</p>
 <pre><code>root
  |-- client_id: string (nullable = true)
@@ -7916,7 +8021,7 @@ ORDER BY build_id ASC
 <p>The <code>crash_aggregates</code> job is run daily, at midnight UTC.
 The job is scheduled on <a href="https://github.com/mozilla/telemetry-airflow">Airflow</a>.
 The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/d50b938/dags/crash_aggregates.py">here</a></p>
-<a class="header" href="#schema-19" id="schema-19"><h2>Schema</h2></a>
+<a class="header" href="#schema-18" id="schema-18"><h2>Schema</h2></a>
 <p>The <code>crash_aggregates</code> table has 4 commonly-used columns:</p>
 <ul>
 <li><code>submission_date</code> is the date pings were submitted for a particular aggregate.
@@ -8103,7 +8208,7 @@ where they appear. Over longer windows, like MAU, this is more likely to occur.<
 <p>This dataset is updated daily via the
 <a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a> infrastructure.
 The job runs as part of the <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py"><code>main_summary</code> DAG</a>.</p>
-<a class="header" href="#schema-20" id="schema-20"><h2>Schema</h2></a>
+<a class="header" href="#schema-19" id="schema-19"><h2>Schema</h2></a>
 <p>The data is partitioned by <code>submission_date</code> which is formatted as <code>%Y%m%d</code>,
 like <code>20180130</code>.</p>
 <p>As of 2018-03-15, the current version of the <code>client_count_daily</code> dataset
