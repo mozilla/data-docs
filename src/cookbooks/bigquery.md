@@ -6,6 +6,8 @@ in [BigQuery](https://cloud.google.com/bigquery/)
 As we transition to [GCP](https://cloud.google.com) we will use BigQuery as our primary data warehouse and
 SQL Query engine. BigQuery will eventually replace our previous SQL Query
 Engines, Presto and Athena, and our Parquet data lake.
+
+
 ## Table of Contents
 <!-- toc -->
 
@@ -14,13 +16,46 @@ There are multiple ways to access BigQuery. For most users the primary interface
 
 See below for additional interfaces. All other interfaces will require access to be provisioned.
 
+## Interfaces
+BigQuery datasets and tables can be accessed by the following methods:
+
+- [re:dash](bigquery.md#from-redash)
+- [GCP BigQuery Console](bigquery.md#gcp-bigquery-console)
+    - For advanced use cases including managing query outputs, table management. Requires GCP access to be granted by Data Operations.
+- [GCP BigQuery API Access](bigquery.md#gcp-bigquery-api-access)
+    - For advanced use cases including automated workloads, ETL, [BigQuery Storage API](https://cloud.google.com/bigquery/docs/reference/storage/). Requires GCP access to be granted by Data Operations.
+    - Allows access to BigQuery via [`bq` command-line tool](https://cloud.google.com/bigquery/docs/bq-command-line-tool)
+- [Databricks](bigquery.md#from-databricks)
+
+## Access Request
+
+For access to BigQuery via GCP Console and API please file a bug [here](https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=jthomas%40mozilla.com&bug_file_loc=https%3A%2F%2Fmana.mozilla.org%2Fwiki%2Fx%2FiIPeB&bug_ignored=0&bug_severity=normal&bug_status=NEW&bug_type=task&cf_fx_iteration=---&cf_fx_points=---&comment=Please%20grant%20me%20access%20to%20the%20BigQuery%20GCP%20console%20and%20API%20Access.%20I%20work%20on%20%3Cteam%3E.%0D%0A%0D%0AMy%20mozilla.com%20ldap%20login%20is%20%3Cyour%20ldap%20login%3E%40mozilla.com.&component=Operations&contenttypemethod=list&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-936=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Unspecified&priority=--&product=Data%20Platform%20and%20Tools&qa_contact=jthomas%40mozilla.com&rep_platform=Unspecified&short_desc=BigQuery%20GCP%20Console%20and%20API%20Access%20for%20%3Cyour%20ldap%20login%3E%40mozilla.com&target_milestone=---&version=unspecified). As part of this request we will add you to the appropriate Google Groups and provision a GCP Service Account.
+
 ## From re:dash
 All Mozilla users will be able to access BigQuery via [re:dash](https://sql.telemetry.mozilla.org/) through the following Data Sources:
 - `BigQuery Beta`
 - `BigQuery Search Beta`
     - This group is restricted to users in the re:dash `search` group.
 
-## From `bq` Command-line Tool
+Access via re:dash is read-only. You will not be able to create views or tables via re:dash.
+
+## GCP BigQuery Console
+
+- File a [bug](bigquery.md#access-request) with Data Operations for access to GCP Console.
+- Visit [GCP BigQuery Console](https://console.cloud.google.com/bigquery)
+- Switch to the project provided to you during your access request e.g `moz-fx-data-bq-<team-name>`
+
+See [Using the BigQuery web UI in the GCP Console](https://cloud.google.com/bigquery/docs/bigquery-web-ui) for more details.
+
+## GCP BigQuery API Access
+
+- File a [bug](bigquery.md#access-request) with Data Operations for access to GCP BigQuery API Access.
+
+A list of supported BigQuery client libraries can be found [here](https://cloud.google.com/bigquery/docs/reference/libraries).
+
+Detailed REST reference can be found [here](https://cloud.google.com/bigquery/docs/reference/rest/).
+
+### From `bq` Command-line Tool
 
 - Install the [GCP SDK](https://cloud.google.com/sdk/)
 - Authorize `gcloud` with either your user account or provisioned service account. See documentation [here](https://cloud.google.com/sdk/docs/authorizing).
@@ -29,7 +64,7 @@ All Mozilla users will be able to access BigQuery via [re:dash](https://sql.tele
     - `gcloud config set project moz-fx-data-bq-<team-name>`
     - project name will be provided for you when your account is provisioned.
 
-### `bq` Examples
+#### `bq` Examples
 List tables in a BigQuery dataset
 ``` bash
 bq ls moz-fx-data-derived-datasets:analysis
@@ -42,21 +77,9 @@ Query a table
 Additional examples and documentation can be found [here](https://cloud.google.com/bigquery/docs/bq-command-line-tool).
 
 ## From Databricks
+Connectivity via BigQuery Spark Connector which uses [BigQuery Storage API](https://cloud.google.com/bigquery/docs/reference/storage/).
+
 _Work in progress_
-
-
-## Interfaces
-BigQuery datasets and tables can be accessed by the following methods:
-
-- [re:dash](https://sql.telemetry.mozilla.org/)
-- [GCP BigQuery Console](https://console.cloud.google.com/bigquery)
-    - For advanced use cases including managing query outputs, table management. Requires GCP access to be granted by Data Operations.
-- [GCP BigQuery API Access](https://cloud.google.com/bigquery/docs/reference/rest/)
-    - For advanced use cases including automated workloads, ETL, [BigQuery Storage API](https://cloud.google.com/bigquery/docs/reference/storage/). Requires GCP access to be granted by Data Operations.
-    - Allows access to BigQuery via [`bq` command-line tool](https://cloud.google.com/bigquery/docs/bq-command-line-tool)
-- [Databricks](https://sso.mozilla.com/databricks) via BigQuery Spark Connector which uses [BigQuery Storage API](https://cloud.google.com/bigquery/docs/reference/storage/)
-
-For access to BigQuery via GCP Console and API please file a bug [here](https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=jthomas%40mozilla.com&bug_file_loc=https%3A%2F%2Fmana.mozilla.org%2Fwiki%2Fx%2FiIPeB&bug_ignored=0&bug_severity=normal&bug_status=NEW&bug_type=task&cf_fx_iteration=---&cf_fx_points=---&comment=Please%20grant%20me%20access%20to%20the%20BigQuery%20GCP%20console%20and%20API%20Access.%20I%20work%20on%20%3Cteam%3E.%0D%0A%0D%0AMy%20mozilla.com%20ldap%20login%20is%20%3Cyour%20ldap%20login%3E%40mozilla.com.&component=Operations&contenttypemethod=list&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-936=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Unspecified&priority=--&product=Data%20Platform%20and%20Tools&qa_contact=jthomas%40mozilla.com&rep_platform=Unspecified&short_desc=BigQuery%20GCP%20Console%20and%20API%20Access%20for%20%3Cyour%20ldap%20login%3E%40mozilla.com&target_milestone=---&version=unspecified). As part of this request we will add you to the appropriate Google Groups and provision a GCP Service Account.
 
 # Querying Tables
 
@@ -73,6 +96,7 @@ but it has changed from `YYYYMMDD` form to the more standards-friendly `YYYY-MM-
 namely that you must make use of the date partition fields for large tables (like `main_summary` or `clients_daily`).
 - Please read [_Query Optimizations_](bigquery.md#query-optimizations) section that contains advice on how to reduce cost and improve query performance.
 - re:dash BigQuery data sources will have a 10 TB data scanned limit per query. Please let us know in `#fx-metrics` on Slack if you run into issues!
+- There are no other partitioning fields in BigQuery versions of parquet datasets (e.g. `sample_id` is no longer a partitioning field and will not necessarily reduce data scanned).
 
 ### Projects with BigQuery datasets
 
@@ -147,6 +171,7 @@ To improve query performance and minimize the cost associated with using BigQuer
     - See [_Writing Queries_](bigquery.md#writing-queries) for examples.
 - Reduce data before using a JOIN
     - Trim the data as early in the query as possible, before the query performs a JOIN. If you reduce data early in the processing cycle, shuffling and other complex operations only execute on the data that you need.
+    - Use sub queries with filters or intermediate tables or views as a way of decreasing sides of a join, prior to the join itself.
 - Do not treat WITH clauses as prepared statements
     - WITH clauses are used primarily for readability because they are not materialized. For example, placing all your queries in WITH clauses and then running UNION ALL is a misuse of the WITH clause. If a query appears in more than one WITH clause, it executes in each clause.
 - Use approximate aggregation functions
