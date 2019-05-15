@@ -3,6 +3,10 @@
 This guide will give you a quick introduction to working with data stored
 in [BigQuery](https://cloud.google.com/bigquery/)
 
+BigQuery uses a columnar data storage format called [Capacitor](https://cloud.google.com/blog/products/gcp/inside-capacitor-bigquerys-next-generation-columnar-storage-format) which supports semi-structured data.
+
+There is a cost associated with using BigQuery based on operations. As of right now we pay an on-demand pricing for queries based on how much data a query scans. To minimize costs see [_Query Optimizations_](bigquery.md#query-optimizations). More detailed pricing information can be found [here](https://cloud.google.com/bigquery/pricing).
+
 As we transition to [GCP](https://cloud.google.com) we will use BigQuery as our primary data warehouse and
 SQL Query engine. BigQuery will eventually replace our previous SQL Query
 Engines, Presto and Athena, and our Parquet data lake.
