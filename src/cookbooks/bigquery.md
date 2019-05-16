@@ -159,6 +159,22 @@ ORDER BY
 
 Check out the [BigQuery Standard SQL Functions & Operators](https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators) for detailed documentation.
 
+### Writing query results to a permanent table
+
+You can write query results to a BigQuery table you have access via [GCP BigQuery Console](bigquery.md#gcp-bigquery-console) or [GCP BigQuery API Access](bigquery.md#gcp-bigquery-api-access)
+
+- Use `moz-fx-data-derived-datasets.analysis` dataset.
+    - Prefix your table with your username. If your username is `username@mozilla.com` create a table with `username_my_table`.
+- See [Writing query results](https://cloud.google.com/bigquery/docs/writing-results) documentation for detailed steps.
+
+### Creating a View
+You can create views in BigQuery if you have access via [GCP BigQuery Console](bigquery.md#gcp-bigquery-console) or [GCP BigQuery API Access](bigquery.md#gcp-bigquery-api-access).
+
+- Use `moz-fx-data-derived-datasets.analysis` dataset.
+    - Prefix your view with your username. If your username is `username@mozilla.com` create a table with `username_my_view`.
+- See [Creating Views](https://cloud.google.com/bigquery/docs/views) documentation for detailed steps.
+
+
 # Query Optimizations
 
 To improve query performance and minimize the cost associated with using BigQuery please see the following query optimizations:
