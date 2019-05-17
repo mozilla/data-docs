@@ -1,4 +1,4 @@
-# Accessing and Working with BigQuery
+# Accessing and working with BigQuery
 
 This guide will give you a quick introduction to working with data stored
 in [BigQuery](https://cloud.google.com/bigquery/)
