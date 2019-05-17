@@ -1,0 +1,451 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Accessing and working with BigQuery - Firefox Data Documentation</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../dtmo.css">
+        
+        <link rel="stylesheet" href="../mermaid.css">
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">var path_to_root = "../";</script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="../introduction.html">Firefox Data Documentation</a></li><li><a href="../concepts/reporting_a_problem.html"><strong aria-hidden="true">1.</strong> Reporting a problem</a></li><li><a href="../concepts/terminology.html"><strong aria-hidden="true">2.</strong> Terminology</a></li><li><a href="../concepts/getting_started.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li><ol class="section"><li><a href="../concepts/analysis_intro.html"><strong aria-hidden="true">3.1.</strong> Analysis Quick Start</a></li><li><a href="../concepts/choosing_a_dataset.html"><strong aria-hidden="true">3.2.</strong> Choosing a Dataset</a></li><li><a href="../concepts/choosing_a_dataset_mobile.html"><strong aria-hidden="true">3.3.</strong> Choosing a Dataset - Mobile Edition</a></li><li><a href="../tools/stmo.html"><strong aria-hidden="true">3.4.</strong> Intro to STMO</a></li><li><a href="../concepts/analysis_gotchas.html"><strong aria-hidden="true">3.5.</strong> Common Analysis Gotchas</a></li><li><a href="../concepts/sql_optimization.html"><strong aria-hidden="true">3.6.</strong> Optimizing Queries</a></li><li><a href="../datasets/new_data.html"><strong aria-hidden="true">3.7.</strong> Collecting New Data</a></li><li><a href="../concepts/getting_help.html"><strong aria-hidden="true">3.8.</strong> Getting Help</a></li></ol></li><li><a href="../tools/index.html"><strong aria-hidden="true">4.</strong> Tools</a></li><li><ol class="section"><li><a href="../tools/projects.html"><strong aria-hidden="true">4.1.</strong> Project Glossary</a></li><li><a href="../concepts/pipeline/data_pipeline.html"><strong aria-hidden="true">4.2.</strong> Overview of Mozilla's Data Pipeline</a></li><li><ol class="section"><li><a href="../concepts/pipeline/data_pipeline_detail.html"><strong aria-hidden="true">4.2.1.</strong> In-depth Data Pipeline Detail</a></li><li><a href="../concepts/pipeline/http_edge_spec.html"><strong aria-hidden="true">4.2.2.</strong> HTTP Edge Server Specification</a></li><li><a href="../concepts/pipeline/event_pipeline.html"><strong aria-hidden="true">4.2.3.</strong> Event Pipeline Detail</a></li></ol></li><li><a href="../tools/interfaces.html"><strong aria-hidden="true">4.3.</strong> Analysis Interfaces</a></li><li><a href="../tools/spark.html"><strong aria-hidden="true">4.4.</strong> Custom analysis with Spark</a></li><li><a href="../concepts/sql_style.html"><strong aria-hidden="true">4.5.</strong> SQL Style Guide</a></li></ol></li><li><a href="../cookbooks/index.html"><strong aria-hidden="true">5.</strong> Cookbooks</a></li><li><ol class="section"><li><a href="../tools/alerts.html"><strong aria-hidden="true">5.1.</strong> Alerts</a></li><li><a href="../cookbooks/parquet.html"><strong aria-hidden="true">5.2.</strong> Working with Parquet Data on ATMO Clusters</a></li><li><a href="../cookbooks/bigquery.html" class="active"><strong aria-hidden="true">5.3.</strong> Accessing and working with BigQuery</a></li><li><a href="../cookbooks/create_a_dataset.html"><strong aria-hidden="true">5.4.</strong> Creating a custom Re:dash dataset</a></li><li><a href="../cookbooks/new_ping.html"><strong aria-hidden="true">5.5.</strong> Sending a Custom Ping</a></li><li><a href="../cookbooks/hll_zeppelin.html"><strong aria-hidden="true">5.6.</strong> Using HyperLogLog in Zeppelin</a></li><li><a href="../cookbooks/client_guidelines.html"><strong aria-hidden="true">5.7.</strong> Client Implementation Guidelines</a></li><li><a href="../cookbooks/dataset_specific.html"><strong aria-hidden="true">5.8.</strong> Dataset Specific</a></li><li><ol class="section"><li><a href="../cookbooks/longitudinal_examples.html"><strong aria-hidden="true">5.8.1.</strong> Longitudinal Examples</a></li><li><a href="../cookbooks/crash_pings.html"><strong aria-hidden="true">5.8.2.</strong> Working with Crash Pings</a></li><li><a href="../cookbooks/normandy_events.html"><strong aria-hidden="true">5.8.3.</strong> Working with Normandy events</a></li></ol></li><li><a href="../cookbooks/realtime.html"><strong aria-hidden="true">5.9.</strong> Real-time</a></li><li><ol class="section"><li><a href="../cookbooks/realtime_analysis_plugin.html"><strong aria-hidden="true">5.9.1.</strong> Creating a Real-time Analysis Plugin</a></li><li><a href="../cookbooks/view_pings_cep.html"><strong aria-hidden="true">5.9.2.</strong> Seeing Your Own Pings</a></li><li><a href="../tools/cep_matcher.html"><strong aria-hidden="true">5.9.3.</strong> CEP Matcher</a></li></ol></li><li><a href="../cookbooks/metrics.html"><strong aria-hidden="true">5.10.</strong> Metrics</a></li><li><ol class="section"><li><a href="../cookbooks/dau.html"><strong aria-hidden="true">5.10.1.</strong> Daily Active Users (DAU)</a></li><li><a href="../cookbooks/active_dau.html"><strong aria-hidden="true">5.10.2.</strong> Active DAU (aDAU)</a></li><li><a href="../cookbooks/retention.html"><strong aria-hidden="true">5.10.3.</strong> Retention</a></li></ol></li><li><a href="../cookbooks/events_best_practices.html"><strong aria-hidden="true">5.11.</strong> Telemetry Events Best Practices</a></li><li class="spacer"></li></ol></li><li><a href="../datasets/reference.html"><strong aria-hidden="true">6.</strong> Dataset Reference</a></li><li><ol class="section"><li><a href="../datasets/pings.html"><strong aria-hidden="true">6.1.</strong> Pings</a></li><li><a href="../datasets/derived.html"><strong aria-hidden="true">6.2.</strong> Derived Datasets</a></li><li><ol class="section"><li><a href="../datasets/batch_view/addons/reference.html"><strong aria-hidden="true">6.2.1.</strong> Addons</a></li><li><a href="../datasets/mozetl/churn/reference.html"><strong aria-hidden="true">6.2.2.</strong> Churn</a></li><li><a href="../datasets/batch_view/clients_daily/reference.html"><strong aria-hidden="true">6.2.3.</strong> Clients Daily</a></li><li><a href="../datasets/bigquery/clients_last_seen/reference.html"><strong aria-hidden="true">6.2.4.</strong> Clients Last Seen</a></li><li><a href="../datasets/batch_view/crash_summary/reference.html"><strong aria-hidden="true">6.2.5.</strong> Crash Summary</a></li><li><a href="../datasets/batch_view/cross_sectional/reference.html"><strong aria-hidden="true">6.2.6.</strong> Cross Sectional</a></li><li><a href="../datasets/streaming/error_aggregates/reference.html"><strong aria-hidden="true">6.2.7.</strong> Error Aggregates</a></li><li><a href="../datasets/batch_view/events/reference.html"><strong aria-hidden="true">6.2.8.</strong> Events</a></li><li><a href="../datasets/bigquery/exact_mau/reference.html"><strong aria-hidden="true">6.2.9.</strong> Exact MAU</a></li><li><a href="../datasets/batch_view/first_shutdown_summary/reference.html"><strong aria-hidden="true">6.2.10.</strong> First Shutdown Summary</a></li><li><a href="../datasets/batch_view/longitudinal/reference.html"><strong aria-hidden="true">6.2.11.</strong> Longitudinal</a></li><li><a href="../datasets/batch_view/main_summary/reference.html"><strong aria-hidden="true">6.2.12.</strong> Main Summary</a></li><li><a href="../datasets/batch_view/new_profile/reference.html"><strong aria-hidden="true">6.2.13.</strong> New Profile</a></li><li><a href="../datasets/batch_view/retention/reference.html"><strong aria-hidden="true">6.2.14.</strong> Retention</a></li><li><a href="../datasets/other/socorro_crash/reference.html"><strong aria-hidden="true">6.2.15.</strong> Socorro Crash Reports</a></li><li><a href="../datasets/other/ssl/reference.html"><strong aria-hidden="true">6.2.16.</strong> SSL Ratios (public)</a></li><li><a href="../datasets/batch_view/sync_summary/reference.html"><strong aria-hidden="true">6.2.17.</strong> Sync Summary</a></li><li><a href="../datasets/batch_view/update/reference.html"><strong aria-hidden="true">6.2.18.</strong> Update</a></li></ol></li><li><a href="../tools/experiments.html"><strong aria-hidden="true">6.3.</strong> Experimental Datasets</a></li><li><ol class="section"><li><a href="../datasets/heartbeat.html"><strong aria-hidden="true">6.3.1.</strong> Accessing Heartbeat data</a></li><li><a href="../datasets/shield.html"><strong aria-hidden="true">6.3.2.</strong> Accessing Shield Study data</a></li></ol></li><li><a href="../datasets/search.html"><strong aria-hidden="true">6.4.</strong> Search Datasets</a></li><li><ol class="section"><li><a href="../datasets/mozetl/search_aggregates/reference.html"><strong aria-hidden="true">6.4.1.</strong> Search Aggregates</a></li><li><a href="../datasets/mozetl/search_clients_daily/reference.html"><strong aria-hidden="true">6.4.2.</strong> Search Clients Daily</a></li></ol></li><li><a href="../datasets/other.html"><strong aria-hidden="true">6.5.</strong> Other Datasets</a></li><li><ol class="section"><li><a href="../datasets/other/hgpush/reference.html"><strong aria-hidden="true">6.5.1.</strong> hgpush</a></li><li><a href="../datasets/other/stub_installer/reference.html"><strong aria-hidden="true">6.5.2.</strong> Stub installer ping</a></li></ol></li><li><a href="../datasets/obsolete.html"><strong aria-hidden="true">6.6.</strong> Obsolete Datasets</a></li><li><ol class="section"><li><a href="../datasets/obsolete/heavy_users/reference.html"><strong aria-hidden="true">6.6.1.</strong> Heavy Users</a></li><li><a href="../datasets/obsolete/crash_aggregates/reference.html"><strong aria-hidden="true">6.6.2.</strong> Crash Aggregates</a></li><li><a href="../datasets/obsolete/client_count/reference.html"><strong aria-hidden="true">6.6.3.</strong> Client Count</a></li><li><a href="../datasets/obsolete/client_count_daily/reference.html"><strong aria-hidden="true">6.6.4.</strong> Client Count Daily</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../concepts/index.html"><strong aria-hidden="true">7.</strong> Telemetry Behavior Reference</a></li><li><ol class="section"><li><a href="../concepts/profile/index.html"><strong aria-hidden="true">7.1.</strong> Profile Behavior</a></li><li><ol class="section"><li><a href="../concepts/profile/profile_creation.html"><strong aria-hidden="true">7.1.1.</strong> Profile Creation</a></li><li><a href="../concepts/profile/realworldusage.html"><strong aria-hidden="true">7.1.2.</strong> Real World Usage</a></li><li><a href="../concepts/profile/profilehistory.html"><strong aria-hidden="true">7.1.3.</strong> Profile History</a></li></ol></li><li><a href="../concepts/channels/index.html"><strong aria-hidden="true">7.2.</strong> Channel Behavior</a></li><li><ol class="section"><li><a href="../concepts/channels/channel_normalization.html"><strong aria-hidden="true">7.2.1.</strong> Channel Normalization and Querying</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../meta/index.html"><strong aria-hidden="true">8.</strong> About this Documentation</a></li><li><ol class="section"><li><a href="../meta/contributing.html"><strong aria-hidden="true">8.1.</strong> Contributing</a></li><li><a href="../meta/structure.html"><strong aria-hidden="true">8.2.</strong> Structure</a></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Firefox Data Documentation</h1> 
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#accessing-and-working-with-bigquery" id="accessing-and-working-with-bigquery"><h1>Accessing and working with BigQuery</h1></a>
+<p>This guide will give you a quick introduction to working with data stored
+in <a href="https://cloud.google.com/bigquery/">BigQuery</a></p>
+<p>BigQuery uses a columnar data storage format called <a href="https://cloud.google.com/blog/products/gcp/inside-capacitor-bigquerys-next-generation-columnar-storage-format">Capacitor</a> which supports semi-structured data.</p>
+<p>There is a cost associated with using BigQuery based on operations. As of right now we pay an on-demand pricing for queries based on how much data a query scans. To minimize costs see <a href="bigquery.html#query-optimizations"><em>Query Optimizations</em></a>. More detailed pricing information can be found <a href="https://cloud.google.com/bigquery/pricing">here</a>.</p>
+<p>As we transition to <a href="https://cloud.google.com">GCP</a> we will use BigQuery as our primary data warehouse and
+SQL Query engine. BigQuery will eventually replace our previous SQL Query
+Engines, Presto and Athena, and our Parquet data lake.</p>
+<a class="header" href="#table-of-contents" id="table-of-contents"><h2>Table of Contents</h2></a>
+<ul>
+<li><a href="#access">Access</a>
+<ul>
+<li><a href="#interfaces">Interfaces</a></li>
+<li><a href="#access-request">Access Request</a></li>
+<li><a href="#from-redash">From re:dash</a></li>
+<li><a href="#gcp-bigquery-console">GCP BigQuery Console</a></li>
+<li><a href="#gcp-bigquery-api-access">GCP BigQuery API Access</a>
+<ul>
+<li><a href="#from-">From </a></li>
+<li><a href="#bq">bq</a></li>
+<li><a href="#a-command-line-tool"> Command-line Tool</a>
+<ul>
+<li><a href="#bq">bq</a></li>
+<li><a href="#a-examples"> Examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#from-databricks">From Databricks</a></li>
+</ul>
+</li>
+<li><a href="#querying-tables">Querying Tables</a>
+<ul>
+<li><a href="#projects-datasets-and-tables-in-bigquery">Projects, Datasets and Tables in BigQuery</a>
+<ul>
+<li><a href="#caveats">Caveats</a></li>
+<li><a href="#projects-with-bigquery-datasets">Projects with BigQuery datasets</a></li>
+<li><a href="#writing-queries">Writing Queries</a></li>
+<li><a href="#writing-query-results-to-a-permanent-table">Writing query results to a permanent table</a></li>
+<li><a href="#creating-a-view">Creating a View</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#query-optimizations">Query Optimizations</a></li>
+</ul>
+<a class="header" href="#access" id="access"><h1>Access</h1></a>
+<p>There are multiple ways to access BigQuery. For most users the primary interface will be <a href="https://sql.telemetry.mozilla.org/">re:dash</a>.</p>
+<p>See below for additional interfaces. All other interfaces will require access to be provisioned.</p>
+<a class="header" href="#interfaces" id="interfaces"><h2>Interfaces</h2></a>
+<p>BigQuery datasets and tables can be accessed by the following methods:</p>
+<ul>
+<li><a href="bigquery.html#from-redash">re:dash</a></li>
+<li><a href="bigquery.html#gcp-bigquery-console">GCP BigQuery Console</a>
+<ul>
+<li>For advanced use cases including managing query outputs, table management. Requires GCP access to be granted by Data Operations.</li>
+</ul>
+</li>
+<li><a href="bigquery.html#gcp-bigquery-api-access">GCP BigQuery API Access</a>
+<ul>
+<li>For advanced use cases including automated workloads, ETL, <a href="https://cloud.google.com/bigquery/docs/reference/storage/">BigQuery Storage API</a>. Requires GCP access to be granted by Data Operations.</li>
+<li>Allows access to BigQuery via <a href="https://cloud.google.com/bigquery/docs/bq-command-line-tool"><code>bq</code> command-line tool</a></li>
+</ul>
+</li>
+<li><a href="bigquery.html#from-databricks">Databricks</a></li>
+</ul>
+<a class="header" href="#access-request" id="access-request"><h2>Access Request</h2></a>
+<p>For access to BigQuery via GCP Console and API please file a bug <a href="https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=jthomas%40mozilla.com&amp;bug_file_loc=https%3A%2F%2Fmana.mozilla.org%2Fwiki%2Fx%2FiIPeB&amp;bug_ignored=0&amp;bug_severity=normal&amp;bug_status=NEW&amp;bug_type=task&amp;cf_fx_iteration=---&amp;cf_fx_points=---&amp;comment=Please%20grant%20me%20access%20to%20the%20BigQuery%20GCP%20console%20and%20API%20Access.%20I%20work%20on%20%3Cteam%3E.%0D%0A%0D%0AMy%20mozilla.com%20ldap%20login%20is%20%3Cyour%20ldap%20login%3E%40mozilla.com.&amp;component=Operations&amp;contenttypemethod=list&amp;contenttypeselection=text%2Fplain&amp;defined_groups=1&amp;flag_type-4=X&amp;flag_type-607=X&amp;flag_type-800=X&amp;flag_type-803=X&amp;flag_type-936=X&amp;form_name=enter_bug&amp;maketemplate=Remember%20values%20as%20bookmarkable%20template&amp;op_sys=Unspecified&amp;priority=--&amp;product=Data%20Platform%20and%20Tools&amp;qa_contact=jthomas%40mozilla.com&amp;rep_platform=Unspecified&amp;short_desc=BigQuery%20GCP%20Console%20and%20API%20Access%20for%20%3Cyour%20ldap%20login%3E%40mozilla.com&amp;target_milestone=---&amp;version=unspecified">here</a>. As part of this request we will add you to the appropriate Google Groups and provision a GCP Service Account.</p>
+<a class="header" href="#from-redash" id="from-redash"><h2>From re:dash</h2></a>
+<p>All Mozilla users will be able to access BigQuery via <a href="https://sql.telemetry.mozilla.org/">re:dash</a> through the following Data Sources:</p>
+<ul>
+<li><code>BigQuery (Beta)</code></li>
+<li><code>BigQuery Search (Beta)</code>
+<ul>
+<li>This group is restricted to users in the re:dash <code>search</code> group.</li>
+</ul>
+</li>
+</ul>
+<p>Access via re:dash is read-only. You will not be able to create views or tables via re:dash.</p>
+<a class="header" href="#gcp-bigquery-console" id="gcp-bigquery-console"><h2>GCP BigQuery Console</h2></a>
+<ul>
+<li>File a <a href="bigquery.html#access-request">bug</a> with Data Operations for access to GCP Console.</li>
+<li>Visit <a href="https://console.cloud.google.com/bigquery">GCP BigQuery Console</a></li>
+<li>Switch to the project provided to you during your access request e.g <code>moz-fx-data-bq-&lt;team-name&gt;</code></li>
+</ul>
+<p>See <a href="https://cloud.google.com/bigquery/docs/bigquery-web-ui">Using the BigQuery web UI in the GCP Console</a> for more details.</p>
+<a class="header" href="#gcp-bigquery-api-access" id="gcp-bigquery-api-access"><h2>GCP BigQuery API Access</h2></a>
+<ul>
+<li>File a <a href="bigquery.html#access-request">bug</a> with Data Operations for access to GCP BigQuery API Access.</li>
+</ul>
+<p>A list of supported BigQuery client libraries can be found <a href="https://cloud.google.com/bigquery/docs/reference/libraries">here</a>.</p>
+<p>Detailed REST reference can be found <a href="https://cloud.google.com/bigquery/docs/reference/rest/">here</a>.</p>
+<a class="header" href="#from-bq-command-line-tool" id="from-bq-command-line-tool"><h3>From <code>bq</code> Command-line Tool</h3></a>
+<ul>
+<li>Install the <a href="https://cloud.google.com/sdk/">GCP SDK</a></li>
+<li>Authorize <code>gcloud</code> with either your user account or provisioned service account. See documentation <a href="https://cloud.google.com/sdk/docs/authorizing">here</a>.
+<ul>
+<li><code>gcloud auth login</code></li>
+</ul>
+</li>
+<li>Set your google project to your team project
+<ul>
+<li><code>gcloud config set project moz-fx-data-bq-&lt;team-name&gt;</code></li>
+<li>project name will be provided for you when your account is provisioned.</li>
+</ul>
+</li>
+</ul>
+<a class="header" href="#bq-examples" id="bq-examples"><h4><code>bq</code> Examples</h4></a>
+<p>List tables in a BigQuery dataset</p>
+<pre><code class="language-bash">bq ls moz-fx-data-derived-datasets:analysis
+</code></pre>
+<p>Query a table</p>
+<pre><code class="language-bash">bq query --nouse_legacy_sql 'select count(*) from `moz-fx-data-derived-datasets.telemetry.main_summary_v4` where submission_date_s3 = &quot;2019-03-01&quot;'
+</code></pre>
+<p>Additional examples and documentation can be found <a href="https://cloud.google.com/bigquery/docs/bq-command-line-tool">here</a>.</p>
+<a class="header" href="#from-databricks" id="from-databricks"><h2>From Databricks</h2></a>
+<p>Connectivity via BigQuery Spark Connector which uses <a href="https://cloud.google.com/bigquery/docs/reference/storage/">BigQuery Storage API</a>.</p>
+<p><em>Work in progress</em></p>
+<a class="header" href="#querying-tables" id="querying-tables"><h1>Querying Tables</h1></a>
+<a class="header" href="#projects-datasets-and-tables-in-bigquery" id="projects-datasets-and-tables-in-bigquery"><h2>Projects, Datasets and Tables in BigQuery</h2></a>
+<p>In GCP a <a href="https://cloud.google.com/resource-manager/docs/creating-managing-projects">project</a> is a way to organize cloud resources. We use multiple
+projects to maintain our BigQuery <a href="https://cloud.google.com/bigquery/docs/datasets-intro">datasets</a>. BigQuery datasets are a top-level container used to organize and
+control access to tables and views.</p>
+<a class="header" href="#caveats" id="caveats"><h3>Caveats</h3></a>
+<ul>
+<li>The date partition field (e.g. <code>submission_date_s3</code>, <code>submission_date</code>) is mostly used as a partitioning column,
+but it has changed from <code>YYYYMMDD</code> form to the more standards-friendly <code>YYYY-MM-DD</code> form.</li>
+<li>Unqualified queries can become very costly very easily. We've placed restrictions on large tables from accidentally querying &quot;all data for all time&quot;,
+namely that you must make use of the date partition fields for large tables (like <code>main_summary</code> or <code>clients_daily</code>).</li>
+<li>Please read <a href="bigquery.html#query-optimizations"><em>Query Optimizations</em></a> section that contains advice on how to reduce cost and improve query performance.</li>
+<li>re:dash BigQuery data sources will have a 10 TB data scanned limit per query. Please let us know in <code>#fx-metrics</code> on Slack if you run into issues!</li>
+<li>There are no other partitioning fields in BigQuery versions of parquet datasets (e.g. <code>sample_id</code> is no longer a partitioning field and will not necessarily reduce data scanned).</li>
+</ul>
+<a class="header" href="#projects-with-bigquery-datasets" id="projects-with-bigquery-datasets"><h3>Projects with BigQuery datasets</h3></a>
+<table><thead><tr><th>Project</th><th>Dataset</th><th>Purpose</th></tr></thead><tbody>
+<tr><td><code>moz-fx-data-derived-datasets</code></td><td>    </td><td>Imported parquet data, <a href="https://github.com/mozilla/bigquery-etl">BigQuery ETL</a>, ad-hoc analysis</td></tr>
+<tr><td>   </td><td><code>analysis</code></td><td>User generated tables for analysis</td></tr>
+<tr><td>   </td><td><code>backfill</code></td><td>Temporary staging area for back-fills</td></tr>
+<tr><td>   </td><td><code>blpadi</code></td><td>Blocklist ping derived data(<em>restricted</em>)</td></tr>
+<tr><td>   </td><td><code>search</code></td><td>Search data imported form parquet (<em>restricted</em>)</td></tr>
+<tr><td>   </td><td><code>static</code></td><td>Static data for use with analysis</td></tr>
+<tr><td>   </td><td><code>telemetry</code></td><td>Imported parquet data and data generated from <a href="https://github.com/mozilla/bigquery-etl">BigQuery ETL</a></td></tr>
+<tr><td>   </td><td><code>tmp</code></td><td>Temporary staging area for parquet data loads</td></tr>
+<tr><td>   </td><td><code>validation</code></td><td>Temporary staging area for validation</td></tr>
+<tr><td><code>moz-fx-data-shar-nonprod-efed</code></td><td> </td><td>Data produced by stage structured ingestion infrastructure</td></tr>
+</tbody></table>
+<p>BigQuery table data in <code>moz-fx-data-derived-datasets</code> is loaded daily via <a href="https://workflow.telemetry.mozilla.org/home">Airflow</a></p>
+<a class="header" href="#writing-queries" id="writing-queries"><h3>Writing Queries</h3></a>
+<p>To query a BigQuery table you will need to specify the dataset and table name. It is good practice to specify the project however depending on which project the query
+originates from this is optional.</p>
+<pre><code class="language-sql">SELECT
+    col1,
+    col2
+FROM
+    `project.dataset.table`
+WHERE
+    -- data_partition_field will vary based on table
+    date_partition_field &gt;= DATE_SUB(CURRENT_DATE, INTERVAL 1 MONTH)
+</code></pre>
+<p>An example query from <a href="../datasets/bigquery/clients_last_seen/reference.html">Clients Last Seen Reference</a></p>
+<pre><code class="language-sql">SELECT
+    submission_date,
+    os,
+    COUNT(*) AS count
+FROM
+    telemetry.clients_last_seen
+WHERE
+    submission_date &gt;= DATE_SUB(CURRENT_DATE, INTERVAL 1 WEEK)
+    AND days_since_seen = 0
+GROUP BY
+    submission_date,
+    os
+HAVING
+    count &gt; 10 -- remove outliers
+    AND lower(os) NOT LIKE '%windows%'
+ORDER BY
+    os,
+    submission_date DESC
+</code></pre>
+<p>Check out the <a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators">BigQuery Standard SQL Functions &amp; Operators</a> for detailed documentation.</p>
+<a class="header" href="#writing-query-results-to-a-permanent-table" id="writing-query-results-to-a-permanent-table"><h3>Writing query results to a permanent table</h3></a>
+<p>You can write query results to a BigQuery table you have access via <a href="bigquery.html#gcp-bigquery-console">GCP BigQuery Console</a> or <a href="bigquery.html#gcp-bigquery-api-access">GCP BigQuery API Access</a></p>
+<ul>
+<li>Use <code>moz-fx-data-derived-datasets.analysis</code> dataset.
+<ul>
+<li>Prefix your table with your username. If your username is <code>username@mozilla.com</code> create a table with <code>username_my_table</code>.</li>
+</ul>
+</li>
+<li>See <a href="https://cloud.google.com/bigquery/docs/writing-results">Writing query results</a> documentation for detailed steps.</li>
+</ul>
+<a class="header" href="#creating-a-view" id="creating-a-view"><h3>Creating a View</h3></a>
+<p>You can create views in BigQuery if you have access via <a href="bigquery.html#gcp-bigquery-console">GCP BigQuery Console</a> or <a href="bigquery.html#gcp-bigquery-api-access">GCP BigQuery API Access</a>.</p>
+<ul>
+<li>Use <code>moz-fx-data-derived-datasets.analysis</code> dataset.
+<ul>
+<li>Prefix your view with your username. If your username is <code>username@mozilla.com</code> create a table with <code>username_my_view</code>.</li>
+</ul>
+</li>
+<li>See <a href="https://cloud.google.com/bigquery/docs/views">Creating Views</a> documentation for detailed steps.</li>
+</ul>
+<a class="header" href="#query-optimizations" id="query-optimizations"><h1>Query Optimizations</h1></a>
+<p>To improve query performance and minimize the cost associated with using BigQuery please see the following query optimizations:</p>
+<ul>
+<li>Avoid <code>SELECT *</code> by selecting only the columns you need
+<ul>
+<li>Using <code>SELECT *</code> is the most expensive way to query data. When you use <code>SELECT *</code> <em>BigQuery does a full scan of every column in the table.</em></li>
+<li>Applying a <code>LIMIT</code> clause to a <code>SELECT *</code> query does not affect the amount of data read. You are billed for reading all bytes in the entire table.</li>
+<li>If you are experimenting with data or exploring data, use one of the <a href="https://cloud.google.com/bigquery/docs/best-practices-costs#preview-data">data preview options</a> instead of <code>SELECT *</code>.
+<ul>
+<li>Preview support is coming soon to BigQuery data sources in <a href="https://sql.telemetry.mozilla.org/">re:dash</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Limit the amount of data scanned by using a date partition filter
+<ul>
+<li>Tables that are larger than 1 TB will require that you provide a date partition filter as part of the query.</li>
+<li>You will receive an error if you attempt to query a table that requires a partition filter.
+<ul>
+<li><code>Cannot query over table 'moz-fx-data-derived-datasets.telemetry.main_summary_v4' without a filter over column(s) 'submission_date_s3' that can be used for partition elimination</code></li>
+</ul>
+</li>
+<li>See <a href="bigquery.html#writing-queries"><em>Writing Queries</em></a> for examples.</li>
+</ul>
+</li>
+<li>Reduce data before using a JOIN
+<ul>
+<li>Trim the data as early in the query as possible, before the query performs a JOIN. If you reduce data early in the processing cycle, shuffling and other complex operations only execute on the data that you need.</li>
+<li>Use sub queries with filters or intermediate tables or views as a way of decreasing sides of a join, prior to the join itself.</li>
+</ul>
+</li>
+<li>Do not treat WITH clauses as prepared statements
+<ul>
+<li>WITH clauses are used primarily for readability because they are not materialized. For example, placing all your queries in WITH clauses and then running UNION ALL is a misuse of the WITH clause. If a query appears in more than one WITH clause, it executes in each clause.</li>
+</ul>
+</li>
+<li>Use approximate aggregation functions
+<ul>
+<li>If the SQL aggregation function you're using has an equivalent approximation function, the approximation function will yield faster query performance. For example, instead of using <code>COUNT(DISTINCT)</code>, use <code>APPROX_COUNT_DISTINCT()</code>.</li>
+<li>See <a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators#approximate-aggregate-functions">approximate aggregation functions</a> in the standard SQL reference.</li>
+</ul>
+</li>
+</ul>
+<p>A complete list of optimizations can be found <a href="https://cloud.google.com/bigquery/docs/best-practices-performance-overview">here</a> and cost optimizations <a href="https://cloud.google.com/bigquery/docs/best-practices-costs">here</a></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../cookbooks/parquet.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../cookbooks/create_a_dataset.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../cookbooks/parquet.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../cookbooks/create_a_dataset.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="../mermaid-init.js"></script>
+        
+
+        
+
+    </body>
+</html>
