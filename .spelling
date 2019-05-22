@@ -155,6 +155,7 @@ pushlog
 PySpark
 RDBMS
 RDD
+Redash
 resampling
 rustc
 recommender
