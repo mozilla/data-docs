@@ -16,6 +16,7 @@
     * [In-depth Data Pipeline Detail](concepts/pipeline/data_pipeline_detail.md)
     * [HTTP Edge Server Specification](concepts/pipeline/http_edge_spec.md)
     * [Event Pipeline Detail](concepts/pipeline/event_pipeline.md)
+    * [Glean overview](concepts/glean.md)
   * [Analysis Interfaces](tools/interfaces.md)
   * [Custom analysis with Spark](tools/spark.md)
   * [SQL Style Guide](concepts/sql_style.md)
