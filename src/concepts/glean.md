@@ -1,24 +1,20 @@
-# Glean - mobile product analytics
+# Glean - product analytics & telemetry
 
-For Mozilla, getting reliable data from our products is critical to inform our decision making. Glean is our new product analytics & Telemetry solution that provides that data for our mobile products.
+For Mozilla, getting reliable data from our products is critical to inform our decision making. Glean is our new product analytics & telemetry solution that provides that data for our mobile products.
 It aims to be easy to integrate, reliable and transparent by providing an SDK and integrated tools.
 
 It currently supports Android products, while iOS support is planned.
-Note that this is different from Telemetry for Firefox Desktop ([1](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/index.html), [2](https://docs.telemetry.mozilla.org/concepts/choosing_a_dataset.html)), although it provides similar capabilities.
+Note that this is different from Telemetry for Firefox Desktop ([library](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/index.html), [datasets](choosing_a_dataset.html)), although it provides similar capabilities.
 
 Contents:
 
-*   [Overview](#overview)
-*   [What does it offer](#what-does-it-offer)
-*   [How to use Glean](#how-to-use-glean)
-*   [Contact](#contact)
-*   [References](#references)
+<!-- toc -->
 
 # Overview
 
 Glean consists of different pieces:
 
-*   Product-side tools - [The Glean SDK](https://github.com/mozilla-mobile/android-components/blob/master/components/service/glean/README.md) is what products integrate and record data into.
+*   Product-side tools - [the Glean SDK](https://github.com/mozilla-mobile/android-components/blob/master/components/service/glean/README.md) is what products integrate and record data into.
 *   Services - this is where the data is stored and made available for analysis in our data platform.
 *   Data Tools - these are used to look at the data, performing analysis and setting up dashboards.
 
@@ -44,7 +40,7 @@ By having collected data described in machine-readable files, our various data t
 To make the choice easier for which metric type to use, we are introducing higher-level data types that offer clear and understandable semantics - for example, when you want to count something, you use the _"count"_ type. This also gives us opportunities to offer better tooling for the data, both on the client and for data tooling.
 
 **Basic semantics on how the data is collected are clearly defined by the library.**
-To make it easier to understand the general semantics of our data, the Telemetry library will define and document when which kind of data will get sent. This gives data analysis common basic semantics.
+To make it easier to understand the general semantics of our data, the Glean SDK will define and document when which kind of data will get sent. This gives data analysis common basic semantics.
 
 # How to use Glean
 
@@ -56,7 +52,7 @@ To make it easier to understand the general semantics of our data, the Telemetry
     *   `_org_mozilla_fenix_metrics_parquet`
 *   _(Work in progress)_ Use events and [Amplitude](https://sso.mozilla.com/amplitude) for product analytics.
 *   [Use Databricks](https://sso.mozilla.com/databricks) for deep-dive analysis.
-*   Use the Glean debug ping viewer for QA & development.
+*   [Use the Glean debug ping viewer](https://docs.google.com/document/d/1LdXgXxOTDQQqD7_yGYj9TE80JQ3Wq2nx5vrgn7oDqt8/) for QA & development.
 *   _(Work in progress)_ For experimentation, you will be able to use our [Android experiments library](https://github.com/mozilla-mobile/android-components/blob/master/components/service/experiments/README.md), which integrates with Glean.
 
 # Contact
