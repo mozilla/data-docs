@@ -38,7 +38,7 @@ To make engineers more productive, the SDK keeps the amount of instrumentation c
 It's easy to limit data collection to what's necessary and documentation can be generated easily, aiding both transparency & understanding for analysis.
 
 **Better data tooling integration due to standardized data types & registering them in machine-readable files.**
-When having collected data described in machine-readable files, our various data tools can read them and support metrics automatically, without manual work.
+By having collected data described in machine-readable files, our various data tools can read them and support metrics automatically, without manual work.
 
 **Due to common high-level concepts for metrics, APIs & data tools can better match the use-cases.**
 To make the choice easier for which metric type to use, we are introducing higher-level data types that offer clear and understandable semantics - when you want to count something, you use the _"count"_ type. This also gives us opportunities to offer better tooling for the data, both on the client and for data tooling.
