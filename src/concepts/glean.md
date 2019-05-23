@@ -35,7 +35,7 @@ A baseline of analysis is important for all our mobile application, from countin
 To make engineers more productive, the SDK keeps the amount of instrumentation code required for metrics as small as possible. Engineers only need to specify what they want to instrument, with which semantics and then record the data using the Glean SDK. The SDK takes care of storing & sending that data reliably.
 
 **Following [lean data practices](https://leandatapractices.com/) through SDK design choices.**
-It's easy to limit data to what's necessary and documentation can be generated easily, aiding both transparency & understanding for analysis.
+It's easy to limit data collection to what's necessary and documentation can be generated easily, aiding both transparency & understanding for analysis.
 
 **Better data tooling integration due to standardized data types & registering them in machine-readable files.**
 When having collected data described in machine-readable files, our various data tools can read them and support metrics automatically, without manual work.
