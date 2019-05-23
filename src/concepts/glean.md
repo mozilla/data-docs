@@ -41,7 +41,7 @@ It's easy to limit data collection to what's necessary and documentation can be 
 By having collected data described in machine-readable files, our various data tools can read them and support metrics automatically, without manual work.
 
 **Due to common high-level concepts for metrics, APIs & data tools can better match the use-cases.**
-To make the choice easier for which metric type to use, we are introducing higher-level data types that offer clear and understandable semantics - when you want to count something, you use the _"count"_ type. This also gives us opportunities to offer better tooling for the data, both on the client and for data tooling.
+To make the choice easier for which metric type to use, we are introducing higher-level data types that offer clear and understandable semantics - for example, when you want to count something, you use the _"count"_ type. This also gives us opportunities to offer better tooling for the data, both on the client and for data tooling.
 
 **Basic semantics on how the data is collected are clearly defined by the library.**
 To make it easier to understand the general semantics of our data, the Telemetry library will define and document when which kind of data will get sent. This gives data analysis common basic semantics.
