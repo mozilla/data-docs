@@ -4,7 +4,7 @@ For Mozilla, getting reliable data from our products is critical to inform our d
 It aims to be easy to integrate, reliable and transparent by providing an SDK and integrated tools.
 
 It currently supports Android products, while iOS support is planned.
-Note that this is different from Telemetry for Firefox Desktop ([library](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/index.html), [datasets](choosing_a_dataset.html)), although it provides similar capabilities.
+Note that this is different from Telemetry for Firefox Desktop ([library](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/index.html), [datasets](choosing_a_dataset.md)), although it provides similar capabilities.
 
 Contents:
 
