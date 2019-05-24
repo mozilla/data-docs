@@ -13,10 +13,6 @@ and locate telemetry from add-on studies.
 
 ## Dashboards
 
-[Firefox Test Tube](https://firefox-test-tube.herokuapp.com/)
-shows live enrollment activity and a selection of browser activity metrics
-for active pref-flip (and some add-on)[^1] experiments.
-
 The
 [Shield Studies Viewer](https://strategy-and-insights.mozilla.com/shield-studies/index.html)
 and
@@ -32,8 +28,7 @@ The slug for pref-flip experiments is defined in the recipe by a field named `sl
 the slug for add-on experiments is defined in the recipe by a field named `name`.
 
 You can determine the slug for a particular experiment by consulting
-[this summary table](https://metrics.mozilla.com/~sguha/report/normandy_recipes.html),
-[Test Tube](https://firefox-test-tube.herokuapp.com/) (which may be missing add-on studies)[^1],
+[this summary table](https://metrics.mozilla.com/~sguha/report/normandy_recipes.html)
 or the list of active recipes at
 https://normandy.cdn.mozilla.net/api/v1/recipe/signed/.
 
