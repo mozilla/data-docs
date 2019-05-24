@@ -52,7 +52,7 @@ To make it easier to understand the general semantics of our data, the Glean SDK
     *   `_org_mozilla_fenix_metrics_parquet`
 *   _(Work in progress)_ Use events and [Amplitude](https://sso.mozilla.com/amplitude) for product analytics.
 *   [Use Databricks](https://sso.mozilla.com/databricks) for deep-dive analysis.
-*   [Use the Glean debug ping viewer](https://docs.google.com/document/d/1LdXgXxOTDQQqD7_yGYj9TE80JQ3Wq2nx5vrgn7oDqt8/) for QA & development.
+*   [Use the Glean debug ping viewer](https://debug-ping-preview.firebaseapp.com/https://docs.google.com/document/d/1LdXgXxOTDQQqD7_yGYj9TE80JQ3Wq2nx5vrgn7oDqt8/) for QA & development.
 *   _(Work in progress)_ For experimentation, you will be able to use our [Android experiments library](https://github.com/mozilla-mobile/android-components/blob/master/components/service/experiments/README.md), which integrates with Glean.
 
 # Contact
@@ -66,3 +66,4 @@ To make it easier to understand the general semantics of our data, the Glean SDK
 *   [Glean SDK](https://github.com/mozilla-mobile/android-components/blob/master/components/service/glean/) - the SDK/library that products integrate.
 *   [Reporting issues & bugs for the Glean SDK](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&component=Glean%3A%20SDK).
 *   Datasets documentation (TBD)
+*   [Glean Debug pings viewer](https://debug-ping-preview.firebaseapp.com/)
