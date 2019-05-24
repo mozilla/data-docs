@@ -18,7 +18,7 @@ Glean consists of different pieces:
 *   Services - this is where the data is stored and made available for analysis in our data platform.
 *   Data Tools - these are used to look at the data, performing analysis and setting up dashboards.
 
-![drawing](../assets/Glean_overview.jpg)
+![drawing](../../assets/Glean_overview.jpg)
 
 # What does it offer
 
@@ -52,7 +52,7 @@ To make it easier to understand the general semantics of our data, the Glean SDK
     *   `_org_mozilla_fenix_metrics_parquet`
 *   _(Work in progress)_ Use events and [Amplitude](https://sso.mozilla.com/amplitude) for product analytics.
 *   [Use Databricks](https://sso.mozilla.com/databricks) for deep-dive analysis.
-*   [Use the Glean debug ping viewer](https://debug-ping-preview.firebaseapp.com) for QA & development.
+*   [Use the Glean debug ping viewer](debug_ping_view.md) for QA & development.
 *   _(Work in progress)_ For experimentation, you will be able to use our [Android experiments library](https://github.com/mozilla-mobile/android-components/blob/master/components/service/experiments/README.md), which integrates with Glean.
 
 # Contact
