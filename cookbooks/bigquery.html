@@ -169,6 +169,7 @@ Engines, Presto and Athena, and our Parquet data lake.</p>
 </ul>
 </li>
 <li><a href="#from-databricks">From Databricks</a></li>
+<li><a href="#from-colaboratory">From Colaboratory</a></li>
 </ul>
 </li>
 <li><a href="#querying-tables">Querying Tables</a>
@@ -205,6 +206,7 @@ Engines, Presto and Athena, and our Parquet data lake.</p>
 </ul>
 </li>
 <li><a href="bigquery.html#from-databricks">Databricks</a></li>
+<li><a href="bigquery.html#from-colaboratory">Colaboratory</a></li>
 </ul>
 <a class="header" href="#access-request" id="access-request"><h2>Access Request</h2></a>
 <p>For access to BigQuery via GCP Console and API please file a bug <a href="https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=jthomas%40mozilla.com&amp;bug_file_loc=https%3A%2F%2Fmana.mozilla.org%2Fwiki%2Fx%2FiIPeB&amp;bug_ignored=0&amp;bug_severity=normal&amp;bug_status=NEW&amp;bug_type=task&amp;cf_fx_iteration=---&amp;cf_fx_points=---&amp;comment=Please%20grant%20me%20access%20to%20the%20BigQuery%20GCP%20console%20and%20API%20Access.%20I%20work%20on%20%3Cteam%3E.%0D%0A%0D%0AMy%20mozilla.com%20ldap%20login%20is%20%3Cyour%20ldap%20login%3E%40mozilla.com.&amp;component=Operations&amp;contenttypemethod=list&amp;contenttypeselection=text%2Fplain&amp;defined_groups=1&amp;flag_type-4=X&amp;flag_type-607=X&amp;flag_type-800=X&amp;flag_type-803=X&amp;flag_type-936=X&amp;form_name=enter_bug&amp;maketemplate=Remember%20values%20as%20bookmarkable%20template&amp;op_sys=Unspecified&amp;priority=--&amp;product=Data%20Platform%20and%20Tools&amp;qa_contact=jthomas%40mozilla.com&amp;rep_platform=Unspecified&amp;short_desc=BigQuery%20GCP%20Console%20and%20API%20Access%20for%20%3Cyour%20ldap%20login%3E%40mozilla.com&amp;target_milestone=---&amp;version=unspecified">here</a>. As part of this request we will add you to the appropriate Google Groups and provision a GCP Service Account.</p>
@@ -258,6 +260,10 @@ Engines, Presto and Athena, and our Parquet data lake.</p>
 <a class="header" href="#from-databricks" id="from-databricks"><h2>From Databricks</h2></a>
 <p>Connectivity via BigQuery Spark Connector which uses <a href="https://cloud.google.com/bigquery/docs/reference/storage/">BigQuery Storage API</a>.</p>
 <p><em>Work in progress</em></p>
+<a class="header" href="#from-colaboratory" id="from-colaboratory"><h2>From Colaboratory</h2></a>
+<p><a href="https://colab.research.google.com">Colaboratory</a> is Jupyter notebook environment, managed by Google and running in the cloud. Notebooks are stored in Google Drive and can be shared in a similar way to Google Docs.</p>
+<p>Colaboratory can be used to easily access BigQuery and perform interactive analyses. See <a href="https://colab.research.google.com/drive/1NCkpZBx3cRc08-g_JKMBrf5cIxAvSNMv">example notebook</a>.</p>
+<p>Note: this is very similar to <a href="bigquery.html#gcp-bigquery-api-access">API Access</a>, so you will need access to your team's GCP project - file a request as described <a href="bigquery.html#access-request">above</a>.</p>
 <a class="header" href="#querying-tables" id="querying-tables"><h1>Querying Tables</h1></a>
 <a class="header" href="#projects-datasets-and-tables-in-bigquery" id="projects-datasets-and-tables-in-bigquery"><h2>Projects, Datasets and Tables in BigQuery</h2></a>
 <p>In GCP a <a href="https://cloud.google.com/resource-manager/docs/creating-managing-projects">project</a> is a way to organize cloud resources. We use multiple
