@@ -4,7 +4,7 @@
 
 ## What is this good for?
 
-This enables you to easily see in real-time what data your mobile application is sending through [Glean](glean.md).
+Glean Debug Ping View enables you to easily see in real-time what data your mobile application is sending through [Glean](glean.md).
 
 This data is what actually arrives in our data pipeline, shown in a web interface that is automatically updated when new data arrives.
 
