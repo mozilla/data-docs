@@ -143,6 +143,13 @@
                         <a class="header" href="#analysis-gotchas" id="analysis-gotchas"><h1>Analysis Gotchas</h1></a>
 <p>When performing analysis on any data there are some mistakes that are easy to make and details that are easy to overlook. Do you know exactly what question you hope to answer? Is your sample representative of your population? Is your result &quot;real&quot;? How precisely can you state your conclusion?</p>
 <p>This document is not about those traps. Instead, it is about quirks and pitfalls specific to <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/index.html">Telemetry</a>.</p>
+<a class="header" href="#notable-historic-events" id="notable-historic-events"><h3>Notable historic events</h3></a>
+<p>When looking at trends, it is helpful to be aware of events from the past that might impact comparisons with history. Here are a few to keep in mind:</p>
+<ul>
+<li><strong>May 4 - May 11 2019</strong> - <a href="https://blog.mozilla.org/blog/2019/05/09/what-we-do-when-things-go-wrong/">Telemetry source data deleted</a>. No source data is available for this period and derived tables may have missing days or imputed values. Derived tables that depend on multiple days may have have affected dates beyond the deletion region.</li>
+<li><strong>November 2017</strong> - Quantum Launch. There was a surge in new profiles and usage.</li>
+<li><strong>March 2016</strong> - Unified Telemetry launched.</li>
+</ul>
 <a class="header" href="#pseudo-replication" id="pseudo-replication"><h3>Pseudo-replication</h3></a>
 <p>Telemetry data is a collection of pings. A single main-ping represents a single subsession. Some clients have more subsessions than others.</p>
 <p>So when you say <a href="https://mzl.la/2q75dbF">&quot;63% of beta 53 has Firefox set as its default browser&quot;</a>, make sure you specify it is 63% of <em>pings</em>, since it is only around 46% of clients. (Apparently users with Firefox Beta 53 set as their default browser submit more main-pings than users who don't).</p>
