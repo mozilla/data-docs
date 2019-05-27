@@ -25,9 +25,11 @@ _my-debug-tag_ is what will help you identify your data in the web interface, wh
 
 As for now, the following application ids are supported:
 
-*   `org.mozilla.fenix`
-*   `org.mozilla.reference.browser`
-*   `org.mozilla.samples.glean`
+* `org.mozilla.fenix`
+* `org.mozilla.reference.browser`
+* `org.mozilla.samples.glean`
+* `org.mozilla.tv.firefox`
+* ... and some debug versions of the above applications.
 
 ## Where can I see the data?
 
@@ -37,7 +39,7 @@ Any data sent from a mobile device usually shows up within 10 seconds, updating 
 
 ## Can you give me an example?
 
-For example to send a baseline ping immediately from the reference browser, with a debug identifier of `johndoe-test1`:
+For example to send a baseline ping immediately from the Reference Browser, with a debug identifier of `johndoe-test1`:
 
 ```
 adb shell am start -n org.mozilla.reference.browser/mozilla.components.service.glean.debug.GleanDebugActivity \
@@ -64,6 +66,15 @@ adb shell am start -n org.mozilla.reference.browser/mozilla.components.service.g
 
 **Note**: Glean will always attempt to collect data for the ping that was requested using the `sendPing` command line switch. However, if no data is recorded by the application, nothing will be sent. The `baseline` ping is _guaranteed_ to always be sent, since it’s populated by Glean itself.
 
+### Caveats
+
+Some important things to watch out for (see also the [Glean SDK documentation](https://github.com/mozilla-mobile/android-components/tree/master/components/service/glean#important-gleandebugactivity-notes)):
+
+- Options that are set using the `adb` flags are not immediately reset and will persist until the application is closed or manually reset.
+
+- There are a couple of different ways in which to send pings through the `GleanDebugActivity`:
+    1. You can use the `GleanDebugActivity` in order to tag pings and trigger them manually using the UI.  This should always produce a ping with all required fields.
+    2. You can use the `GleanDebugActivity` to tag _and_ send pings.  This has the side effect of potentially sending a ping which does not include all fields because `sendPings` triggers pings to be sent before certain application behaviors can occur which would record that information.  For example, `duration` is not calculated or included in a baseline ping sent with `sendPing` because it forces the ping to be sent before the `duration` metric has been recorded.
 
 ## Troubleshooting
 
@@ -71,8 +82,7 @@ If nothing is showing up on the dashboard, it would be useful to check the follo
 
 *   If `adb logcat` reports _”Glean must be enabled before sending pings.”_ right after calling the `GleanDebugActivity`, then the application has disabled Glean. Please check with the application team on how to fix that.
 *   If no error is reported when triggering tagged pings, but the data won't show up on the dashboard, check if the used `<application-id>` is the same expected by the Glean pipeline (i.e. the one used to publish the application on the Play Store).
-*   Before April 12 builds, Fenix had a crashing bug around Glean. This is now fixed, please update.
-*   The reference-browser debug builds currently don't enable Glean. You could override this in local builds.
+*   Fenix and the reference-browser debug builds currently don't enable Glean. You could override this in local builds.
 
 
 ## Questions? Problems?
