@@ -4,6 +4,14 @@ When performing analysis on any data there are some mistakes that are easy to ma
 
 This document is not about those traps. Instead, it is about quirks and pitfalls specific to [Telemetry](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/index.html).
 
+### Notable historic events
+
+When looking at trends, it is helpful to be aware of events from the past that might impact comparisons with history. Here are a few to keep in mind:
+
+- **May 4 - May 11 2019** - [Telemetry source data deleted](https://blog.mozilla.org/blog/2019/05/09/what-we-do-when-things-go-wrong/). No source data is available for this period and derived tables may have missing days or imputed values. Derived tables that depend on multiple days may have have affected dates beyond the deletion region.
+- **November 2017** - Quantum Launch. There was a surge in new profiles and usage.
+- **March 2016** - Unified Telemetry launched.
+
 ### Pseudo-replication
 
 Telemetry data is a collection of pings. A single main-ping represents a single subsession. Some clients have more subsessions than others.
