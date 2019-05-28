@@ -25,7 +25,7 @@ Glean consists of different pieces:
 Glean is designed to support typical product analytics use-cases and encourage best practices by requiring clearly defined metrics through the following:
 
 **Basic product analytics are collected out-of-the-box in a standardized way.**
-A baseline of analysis is important for all our mobile application, from counting active users to retention and session times. This is supported out-of-the-box by the library and work consistently across our mobile products.
+A baseline of analysis is important for all our mobile applications, from counting active users to retention and session times. This is supported out-of-the-box by the library and works consistently across our mobile products.
 
 **No custom code is required for adding new metrics to a product.**
 To make engineers more productive, the SDK keeps the amount of instrumentation code required for metrics as small as possible. Engineers only need to specify what they want to instrument, with which semantics and then record the data using the Glean SDK. The SDK takes care of storing & sending that data reliably.
