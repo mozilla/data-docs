@@ -25,14 +25,14 @@ SELECT window_start,
        sum(gpu_crashes) AS gpu,
        sum(plugin_crashes) AS plugin,
        sum(gmplugin_crashes) AS gmplugin
-FROM telemetry.error_aggregates_v2
+FROM error_aggregates_v2
   WHERE application = 'Firefox'
   AND (os_name = 'Darwin' or os_name = 'Linux' or os_name = 'Windows_NT')
   AND (channel = 'beta' or channel = 'release' or channel = 'nightly' or channel = 'esr')
   AND build_id > '201801'
   AND window_start > current_timestamp - (1 * interval '24' hour)
   AND experiment_id IS NULL
-  AND branch_id IS NULL
+  AND experiment_branch IS NULL
 GROUP BY window_start, channel, build_id, version, os_name
 ```
 
@@ -42,7 +42,7 @@ Get the number of `main_crashes` on Windows over a small interval
 
 ```sql
 SELECT window_start as time, sum(main_crashes) AS main_crashes
-FROM telemetry.error_aggregates_v2
+FROM error_aggregates_v2
   WHERE application = 'Firefox'
   AND os_name = 'Windows_NT'
   AND channel = 'release'
@@ -50,7 +50,7 @@ FROM telemetry.error_aggregates_v2
   AND window_start > timestamp '2018-02-21'
   AND window_end < timestamp '2018-02-22'
   AND experiment_id IS NULL
-  AND branch_id IS NULL
+  AND experiment_branch IS NULL
 GROUP BY window_start
 ```
 
