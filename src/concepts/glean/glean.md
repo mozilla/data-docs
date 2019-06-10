@@ -47,9 +47,9 @@ To make it easier to understand the general semantics of our data, the Glean SDK
 *   [Integrate the Glean SDK / library](https://github.com/mozilla-mobile/android-components/blob/master/components/service/glean/README.md) into your product.
 *   [File a data engineering bug](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&component=General&short_desc=Glean:%20Enable%20application%20id%20org.mozilla.myProduct) to enable your products application id.
 *   [Use Redash](https://sql.telemetry.mozilla.org/) to write SQL queries & build dashboards using your products datasets, e.g.:
-    *   `_org_mozilla_fenix_baseline_parquet`
-    *   `_org_mozilla_fenix_events_parquet`
-    *   `_org_mozilla_fenix_metrics_parquet`
+    *   `org_mozilla_fenix_baseline_parquet`
+    *   `org_mozilla_fenix_events_parquet`
+    *   `org_mozilla_fenix_metrics_parquet`
 *   _(Work in progress)_ Use events and [Amplitude](https://sso.mozilla.com/amplitude) for product analytics.
 *   [Use Databricks](https://sso.mozilla.com/databricks) for deep-dive analysis.
 *   [Use the Glean debug ping viewer](debug_ping_view.md) for QA & development.
