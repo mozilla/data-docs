@@ -42,6 +42,7 @@ root
  |-- build_version: string (nullable = true)
  |-- build_id: string (nullable = true)
  |-- channel: string (nullable = true)
+ |-- crash_time: string (nullable = true)
  |-- application: string (nullable = true)
  |-- os_name: string (nullable = true)
  |-- os_version: string (nullable = true)
