@@ -1,5 +1,3 @@
-[![CircleCI](https://circleci.com/gh/mozilla/addons_daily.svg?style=svg)](https://circleci.com/gh/mozilla/addons_daily)
-
 # `addons_daily` Derived Dataset
 Contributers: Sarah Melancon, Ben Miroglio, Brian Wright, Daniel Thorn
 
