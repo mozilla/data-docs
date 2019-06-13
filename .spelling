@@ -11,6 +11,7 @@ adb
 add-on
 addon
 addons
+addons_daily
 Add-ons
 aDAU
 aMAU
@@ -110,10 +111,12 @@ lifecycle
 Lockbox
 lookups
 Lua
+main_summary
 matcher
 matchers
 MAU
 mdbook
+Melancon
 metadata
 metastore
 Miroglio
@@ -215,6 +218,7 @@ unmanaged
 uri
 UUID
 versioned
+v1
 whitelist
 whitelists
 WAU
