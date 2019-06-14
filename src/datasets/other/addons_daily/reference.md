@@ -54,7 +54,7 @@ This dataset is updated daily via the telemetry-airflow infrastructure. The job 
 ### Schema
 
 The data is partitioned by `submission_date_s3` which is formatted as `%Y%m%d`, like `20180130`.
-As of 2019-06-05, the current version of the addons_daily dataset is `v1`, and has a schema as follows:
+As of 2019-06-05, the current version of the `addons_daily` dataset is `v1`, and has a schema as follows:
 
 ```
 root
