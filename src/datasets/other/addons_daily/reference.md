@@ -4,16 +4,16 @@ This ETL code produces daily aggregates of Firefox extensions. It supports the b
 
 ## Introduction:
 
-The addons_daily dataset serves as the central hub for all Firefox extension related questions. This includes questions regarding browser performance, user engagement, click through rates, etc. Each row in the table represents a unique addon, and each column is a unique metric.
+The `addons_daily` dataset serves as the central hub for all Firefox extension related questions. This includes questions regarding browser performance, user engagement, click through rates, etc. Each row in the table represents a unique addon, and each column is a unique metric.
 
 ### Contents
-Prior to construction of this dataset, extension related data lived in several different sources. Addons_daily has combined metrics aggregated from several sources, including raw pings, telemetry data, and google analytics data.
+Prior to construction of this dataset, extension related data lived in several different sources. `Addons_daily` has combined metrics aggregated from several sources, including raw pings, telemetry data, and google analytics data.
 
 ### Accessing the Data
 The data is stored as a parquet table in S3 [here](s3://net-mozaws-prod-us-west-2-pipeline-analysis/bmiroglio/addons_daily_test/)
 
 
-***The addons_daily table is accessible through re:dash using the Athena data source. It is also available via the Presto data source, though Athena should be preferred for performance and stability reasons.***
+***The `addons_daily` table is accessible through re:dash using the Athena data source. It is also available via the Presto data source, though Athena should be preferred for performance and stability reasons.***
 
 ## Data Reference
 
@@ -49,12 +49,12 @@ GROUP BY 1
 
 ### Scheduling
 
-This dataset is updated daily via the telemetry-airflow infrastructure. The job runs as part of the main_summary DAG.
+This dataset is updated daily via the telemetry-airflow infrastructure. The job runs as part of the `main_summary` DAG.
 
 ### Schema
 
 The data is partitioned by `submission_date_s3` which is formatted as `%Y%m%d`, like `20180130`.
-As of 2019-06-05, the current version of the addons_daily dataset is v1, and has a schema as follows:
+As of 2019-06-05, the current version of the addons_daily dataset is `v1`, and has a schema as follows:
 
 ```
 root
