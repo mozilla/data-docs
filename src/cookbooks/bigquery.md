@@ -29,7 +29,7 @@ BigQuery datasets and tables can be accessed by the following methods:
 - [GCP BigQuery API Access](bigquery.md#gcp-bigquery-api-access)
     - For advanced use cases including automated workloads, ETL, [BigQuery Storage API](https://cloud.google.com/bigquery/docs/reference/storage/). Requires GCP access to be granted by Data Operations.
     - Allows access to BigQuery via [`bq` command-line tool](https://cloud.google.com/bigquery/docs/bq-command-line-tool)
-- [Databricks](bigquery.md#from-databricks)
+- [Spark/Databricks](bigquery.md#from-spark-/-databricks)
 - [Colaboratory](bigquery.md#from-colaboratory)
 
 ## Access Request
@@ -81,7 +81,15 @@ Query a table
 
 Additional examples and documentation can be found [here](https://cloud.google.com/bigquery/docs/bq-command-line-tool).
 
-## From Databricks
+## From Spark / Databricks
+There are two Spark connectors you can use:
+
+### Standard SQL connector
+This [connector](https://github.com/akkomar/spark-bigquery) is based on [`spotify/spark-bigquery`](https://github.com/spotify/spark-bigquery). It allows to submit arbitrary SQL queries and get results in a DataFrame. It's worth noting that filtering on a DataFrame level won't be pushed down to BigQuery - this is quite a big difference to what you might be used to if you were using Parquet as your data source. Therefore offloading as much filtering as possible to the query is a great way to speed up and lower cost of your data loads.
+
+Connector library is added to `shared_serverless_python3` cluster on Databricks - see example [Scala](https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/130908) and [Python](https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/130819) notebooks.   
+
+### Storage API connector
 Connectivity via BigQuery Spark Connector which uses [BigQuery Storage API](https://cloud.google.com/bigquery/docs/reference/storage/).
 
 _Work in progress_
