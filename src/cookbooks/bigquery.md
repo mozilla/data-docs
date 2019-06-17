@@ -85,7 +85,7 @@ Additional examples and documentation can be found [here](https://cloud.google.c
 There are two Spark connectors you can use:
 
 ### Standard SQL connector
-This [connector](https://github.com/akkomar/spark-bigquery) is based on [spotify/spark-bigquery](https://github.com/spotify/spark-bigquery). It allows to submit arbitrary SQL queries and get results in a DataFrame. It's worth noting that filtering on a DataFrame level won't be pushed down to BigQuery - this is quite a big difference to what you might be used to if you were using Parquet as your data source. Therefore offloading as much filtering as possible to the query is a great way to speed up and lower cost of your data loads.
+This [connector](https://github.com/akkomar/spark-bigquery) is based on [`spotify/spark-bigquery`](https://github.com/spotify/spark-bigquery). It allows to submit arbitrary SQL queries and get results in a DataFrame. It's worth noting that filtering on a DataFrame level won't be pushed down to BigQuery - this is quite a big difference to what you might be used to if you were using Parquet as your data source. Therefore offloading as much filtering as possible to the query is a great way to speed up and lower cost of your data loads.
 
 Connector library is added to `shared_serverless_python3` cluster on Databricks - see example [Scala](https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/130908) and [Python](https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/130819) notebooks.   
 
