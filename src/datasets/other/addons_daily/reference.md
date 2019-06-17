@@ -1,19 +1,23 @@
 # `addons_daily` Derived Dataset
 
-This ETL code produces daily aggregates of Firefox extensions. It supports the broader "Extension Data for Developers" Project.
-
 ## Introduction:
 
-The `addons_daily` dataset serves as the central hub for all Firefox extension related questions. This includes questions regarding browser performance, user engagement, click through rates, etc. Each row in the table represents a unique addon, and each column is a unique metric.
+The `addons_daily` dataset serves as the central hub for all Firefox extension related questions.
+This includes questions regarding browser performance, user engagement, click through rates, etc.
+Each row in the table represents a unique add-on, and each column is a unique metric.
 
 ### Contents
-Prior to construction of this dataset, extension related data lived in several different sources. `Addons_daily` has combined metrics aggregated from several sources, including raw pings, telemetry data, and google analytics data.
+Prior to construction of this dataset, extension related data lived in several different sources.
+`Addons_daily` has combined metrics aggregated from several sources,
+including raw pings, telemetry data, and google analytics data.
 
 ### Accessing the Data
-The data is stored as a parquet table in S3 [here](s3://net-mozaws-prod-us-west-2-pipeline-analysis/bmiroglio/addons_daily_test/)
+The data is stored as a parquet table in S3 `s3://telemetry-parquet/addons_daily/v1/`
 
 
-***The `addons_daily` table is accessible through re:dash using the Athena data source. It is also available via the Presto data source, though Athena should be preferred for performance and stability reasons.***
+***The `addons_daily` table is accessible through re:dash using the Athena data source.
+It is also available via the Presto data source,
+though Athena should be preferred for performance and stability reasons.***
 
 ## Data Reference
 
@@ -22,14 +26,16 @@ The data is stored as a parquet table in S3 [here](s3://net-mozaws-prod-us-west-
 
 #### Query 1
 
+Select average daily, weekly, monthly active users,
+as well as the proportion of total daily active users per  for all non system `add-ons`.
 
 ```
 SELECT addon_id,
-       FIRST(name) as name,
-       avg(dau) as `Average DAU`,
-       avg(wau) as `Average WAU`,
-       avg(mau) as `Average MAU`,
-       avg(dau_prop) as `Average % of Total DAU`
+       arbitrary(name) as name,
+       avg(dau) as "Average DAU",
+       avg(wau) as "Average WAU",
+       avg(mau) as "Average MAU",
+       avg(dau_prop) as "Average % of Total DAU"
 FROM addons_daily
 WHERE
   is_system = false
@@ -38,18 +44,25 @@ GROUP BY 1
 ORDER BY 3 DESC
 ```
 
+This query can be seen and ran in STMO [here](https://sql.telemetry.mozilla.org/queries/63294/source).
+
 #### Query 2
 
+Select average daily active users across all `add-ons` for all dates.
+
 ```
-SELECT submission_date_s3 as 'Date',
-       avg(dau) as 'Average DAU'
-FROM addons_daily_tt
+SELECT submission_date_s3 as "Date",
+       avg(dau) as "Average DAU"
+FROM addons_daily
 GROUP BY 1
 ```
 
+This query can be seen and ran in STMO [here](https://sql.telemetry.mozilla.org/queries/63293/source#162153)
+
 ### Scheduling
 
-This dataset is updated daily via the telemetry-airflow infrastructure. The job runs as part of the `main_summary` DAG.
+This dataset is updated daily via the telemetry-airflow infrastructure.
+The job runs as part of the `main_summary` DAG.
 
 ### Schema
 
@@ -117,4 +130,5 @@ root
 
 ## Code Reference
 
-All code can be found [here](https://github.com/mozilla/addons_daily). Refer to this repository for information on how to run or augment the dataset.
+All code can be found [here](https://github.com/mozilla/addons_daily).
+Refer to this repository for information on how to run or augment the dataset.
