@@ -3273,7 +3273,12 @@ Engines, Presto and Athena, and our Parquet data lake.</p>
 </li>
 </ul>
 </li>
-<li><a href="#from-databricks">From Databricks</a></li>
+<li><a href="#from-spark--databricks">From Spark / Databricks</a>
+<ul>
+<li><a href="#standard-sql-connector">Standard SQL connector</a></li>
+<li><a href="#storage-api-connector">Storage API connector</a></li>
+</ul>
+</li>
 <li><a href="#from-colaboratory">From Colaboratory</a></li>
 </ul>
 </li>
@@ -3310,7 +3315,7 @@ Engines, Presto and Athena, and our Parquet data lake.</p>
 <li>Allows access to BigQuery via <a href="https://cloud.google.com/bigquery/docs/bq-command-line-tool"><code>bq</code> command-line tool</a></li>
 </ul>
 </li>
-<li><a href="bigquery.html#from-databricks">Databricks</a></li>
+<li><a href="bigquery.html#from-spark-/-databricks">Spark/Databricks</a></li>
 <li><a href="bigquery.html#from-colaboratory">Colaboratory</a></li>
 </ul>
 <a class="header" href="#access-request" id="access-request"><h2>Access Request</h2></a>
@@ -3362,7 +3367,12 @@ Engines, Presto and Athena, and our Parquet data lake.</p>
 <pre><code class="language-bash">bq query --nouse_legacy_sql 'select count(*) from `moz-fx-data-derived-datasets.telemetry.main_summary_v4` where submission_date_s3 = &quot;2019-03-01&quot;'
 </code></pre>
 <p>Additional examples and documentation can be found <a href="https://cloud.google.com/bigquery/docs/bq-command-line-tool">here</a>.</p>
-<a class="header" href="#from-databricks" id="from-databricks"><h2>From Databricks</h2></a>
+<a class="header" href="#from-spark--databricks" id="from-spark--databricks"><h2>From Spark / Databricks</h2></a>
+<p>There are two Spark connectors you can use:</p>
+<a class="header" href="#standard-sql-connector" id="standard-sql-connector"><h3>Standard SQL connector</h3></a>
+<p>This <a href="https://github.com/akkomar/spark-bigquery">connector</a> is based on <a href="https://github.com/spotify/spark-bigquery"><code>spotify/spark-bigquery</code></a>. It allows to submit arbitrary SQL queries and get results in a DataFrame. It's worth noting that filtering on a DataFrame level won't be pushed down to BigQuery - this is quite a big difference to what you might be used to if you were using Parquet as your data source. Therefore offloading as much filtering as possible to the query is a great way to speed up and lower cost of your data loads.</p>
+<p>Connector library is added to <code>shared_serverless_python3</code> cluster on Databricks - see example <a href="https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/130908">Scala</a> and <a href="https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/130819">Python</a> notebooks.</p>
+<a class="header" href="#storage-api-connector" id="storage-api-connector"><h3>Storage API connector</h3></a>
 <p>Connectivity via BigQuery Spark Connector which uses <a href="https://cloud.google.com/bigquery/docs/reference/storage/">BigQuery Storage API</a>.</p>
 <p><em>Work in progress</em></p>
 <a class="header" href="#from-colaboratory" id="from-colaboratory"><h2>From Colaboratory</h2></a>
