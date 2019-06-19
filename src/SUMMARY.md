@@ -49,6 +49,7 @@
   * [Pings](datasets/pings.md)
   * [Derived Datasets](datasets/derived.md)
     * [Addons](datasets/batch_view/addons/reference.md)
+    * [Addons Daily](datasets/other/addons_daily/reference.md)
     * [Churn](datasets/mozetl/churn/reference.md)
     * [Clients Daily](datasets/batch_view/clients_daily/reference.md)
     * [Clients Last Seen](datasets/bigquery/clients_last_seen/reference.md)
