@@ -10,6 +10,7 @@ Each row in the table represents a unique add-on, and each column is a unique me
 Prior to construction of this dataset, extension related data lived in several different sources.
 `Addons_daily` has combined metrics aggregated from several sources,
 including raw pings, telemetry data, and google analytics data.
+Note that the data is a 1% sample of Release Firefox, so metrics like `DAU`, `WAU`, etc are approximate.
 
 ### Accessing the Data
 The data is stored as a parquet table in S3 `s3://telemetry-parquet/addons_daily/v1/`
@@ -48,13 +49,14 @@ This query can be seen and ran in STMO [here](https://sql.telemetry.mozilla.org/
 
 #### Query 2
 
-Select average daily active users across all `add-ons` for all dates.
+Select average daily active users for the `uBlock add-on` for all dates.
 
 ```
-SELECT submission_date_s3 as "Date",
-       avg(dau) as "Average DAU"
+SELECT DATE_PARSE(submission_date_s3, '%Y%m%d') as "Date",
+       dau as "DAU"
 FROM addons_daily
-GROUP BY 1
+WHERE
+    addon_id = 'uBlock0@raymondhill.net'
 ```
 
 This query can be seen and ran in STMO [here](https://sql.telemetry.mozilla.org/queries/63293/source#162153)
