@@ -30,7 +30,7 @@ though Athena should be preferred for performance and stability reasons.***
 Select average daily, weekly, monthly active users,
 as well as the proportion of total daily active users per  for all non system `add-ons`.
 
-```
+```sql
 SELECT addon_id,
        arbitrary(name) as name,
        avg(dau) as "Average DAU",
@@ -51,7 +51,7 @@ This query can be seen and ran in STMO [here](https://sql.telemetry.mozilla.org/
 
 Select average daily active users for the `uBlock add-on` for all dates.
 
-```
+```sql
 SELECT DATE_PARSE(submission_date_s3, '%Y%m%d') as "Date",
        dau as "DAU"
 FROM addons_daily
