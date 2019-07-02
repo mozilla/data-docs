@@ -14,7 +14,7 @@ Contents:
 
 Glean consists of different pieces:
 
-*   Product-side tools - [the Glean SDK](https://github.com/mozilla-mobile/android-components/blob/master/components/service/glean/README.md) is what products integrate and record data into.
+*   Product-side tools - [the Glean SDK](https://mozilla.github.io/glean/) is what products integrate and record data into.
 *   Services - this is where the data is stored and made available for analysis in our data platform.
 *   Data Tools - these are used to look at the data, performing analysis and setting up dashboards.
 
@@ -44,7 +44,7 @@ To make it easier to understand the general semantics of our data, the Glean SDK
 
 # How to use Glean
 
-*   [Integrate the Glean SDK / library](https://github.com/mozilla-mobile/android-components/blob/master/components/service/glean/README.md) into your product.
+*   [Integrate the Glean SDK / library](https://mozilla.github.io/glean/book/user/adding-glean-to-your-project.html) into your product.
 *   [File a data engineering bug](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&component=General&short_desc=Glean:%20Enable%20application%20id%20org.mozilla.myProduct) to enable your products application id.
 *   [Use Redash](https://sql.telemetry.mozilla.org/) to write SQL queries & build dashboards using your products datasets, e.g.:
     *   `org_mozilla_fenix_baseline_parquet`
@@ -63,7 +63,9 @@ To make it easier to understand the general semantics of our data, the Glean SDK
 
 # References
 
-*   [Glean SDK](https://github.com/mozilla-mobile/android-components/blob/master/components/service/glean/) - the SDK/library that products integrate.
+* There currently two independent implementations of the Glean SDK:
+  * An Android-only implementation in [android-components](https://github.com/mozilla-mobile/android-components/tree/master/components/service/glean).
+  * A [cross-platform implementation](https://github.com/mozilla/glean/). (This implementation is currently under development and not ready for use).
 *   [Reporting issues & bugs for the Glean SDK](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&component=Glean%3A%20SDK).
 *   Datasets documentation (TBD)
 *   [Glean Debug pings viewer](https://debug-ping-preview.firebaseapp.com/)

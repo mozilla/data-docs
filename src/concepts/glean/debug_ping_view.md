@@ -19,7 +19,7 @@ adb shell am start -n <application-id>/mozilla.components.service.glean.debug.Gl
   --es tagPings my-debug-tag
 ```
 
-_my-debug-tag_ is what will help you identify your data in the web interface, while `<application-id>`  is the application identifier as declared in the [manifest](https://developer.android.com/studio/build/application-id) (e.g. `org.mozilla.reference.browser`). The debug commands are documented in more detail [in the Glean README](https://github.com/mozilla-mobile/android-components/blob/master/components/service/glean/README.md#debugging-products-using-glean).
+_my-debug-tag_ is what will help you identify your data in the web interface, while `<application-id>`  is the application identifier as declared in the [manifest](https://developer.android.com/studio/build/application-id) (e.g. `org.mozilla.reference.browser`). The debug commands are documented in more detail [in the Glean README](https://mozilla.github.io/glean/book/user/debugging.html).
 
 ### Supported applications
 
@@ -91,5 +91,5 @@ Reach out to Alessio Placitelli (`:dexter`) or Arkadiusz Komarzewski (`:akomar`)
 
 ## References
 
-*   [Glean debug commands in Glean README.](https://github.com/mozilla-mobile/android-components/blob/master/components/service/glean/README.md#debugging-products-using-glean)
+*   [Glean debug commands in Glean README.](https://mozilla.github.io/glean/book/user/debugging.html)
 *   [Glean Debug ping view web interface.](https://debug-ping-preview.firebaseapp.com/)
