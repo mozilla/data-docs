@@ -48,3 +48,132 @@ Users must confirm their login via email in the following cases:
 See [this chart](https://analytics.amplitude.com/mozilla-corp/chart/53dqtlo) for an example of how this funnel can be constructed for the firstrun (about:welcome) page. [Here](https://sql.telemetry.mozilla.org/queries/63048#161676) is a version in re:dash using the flow events.
 
 Note again that you may want to check whether the service you are analyzing requires email confirmation on login.
+
+## Branches off the Login Funnel: Password Reset, Account Recovery, 2FA.
+Some additional funnels are "branches" off the main login funnel above:
+
+1. The password reset funnel
+  - Optionally - the user resets their password with a recovery key
+2. Login with 2FA (TOTP)
+  - Optionally - user uses a 2FA recovery code to login to their 2FA-enabled account (e.g. if they misplace their second factor.)
+
+### Password Reset and Recovery Codes
+Users can click "Forgot Password?" during signin to begin the password reset process. The funnel is described in the chart below.
+
+**An important "FYI" here**: passwords are used to encrypt accounts' sync data. This implies a **bad scenario** where a change of password can lead to loss of sync data, if there are no longer any devices that can connect to the account and re-upload/restore the data after the reset occurs. This would happen, for example, if you only had one device connected to sync, lost the device, then tried to login to a new device to access your synced data. If you do a password reset while logging into the second device, the remote copy of your sync data will be overwritten (with whatever happens to be on the second device).
+
+Thus the recovery codes. If a user (1) sets up recovery codes via settings (and stores them somewhere accessible) (2) tries to reset their password and (3) enters a valid recovery code during the password reset process, sync data can be restored without risking the "bad scenario" above.
+
+#### Password Reset Funnel Without Recovery Key
+*Note: There may be other places where a user can initiate the password reset process, but I think that its most common during login. In any case, the steps starting at 2 should all be the same.*
+
+|Step|Amplitude Event|Flow Event|Description|
+|---|---|---|---|
+|1|`fxa_login - view`|`flow.signin.view`|View of the login form, which contains the "Forgot Password" Link.|
+|2|`fxa_login - forgot_password`|`flow.signin.forgot-password`|User clicks on the "Forgot Password" Link.|
+|3|Not Implemented|`flow.reset-password.view`|View of the form asking the user to confirm that they want to reset.|
+|4|`fxa_login - forgot_submit`|`flow.reset-password.engage`, `flow.reset-password.submit`|User clicks on the button confirming that they want to reset.|
+|5|`fxa_email - delivered` (`email_template` = `recoveryEmail`)|`email.recoveryEmail.delivered`|Delivery of the PW reset link to the user via email.|
+|5a|Not Implemented|`flow.confirm-reset-password.view`|View of the screen telling the user to confirm the reset via email.|
+|6|Not Implemented|`flow.complete-reset-password.view`|User views the form to create a new password. (viewable after clicking the link in the email above)|
+|7|Not Implemented|`flow.complete-reset-password.engage`|User clicks on the form to create a new password.|
+|8|Not Implemented|`flow.complete-reset-password.submit`|User submits the form to create a new password.|
+|9|`fxa_login - forgot_complete`|`flow.complete` (the auth server also emits `account.reset`)|User has completed the password reset funnel.|
+
+#### Password Reset Funnel With Recovery Key
+*Note we still need to implement amplitude events for the recovery code part of this funnel. The funnel is identical to the one above up until step 6.*
+
+|Step|Amplitude Event|Flow Event|Description|
+|---|---|---|---|
+|1|`fxa_login - view`|`flow.signin.view`|View of the login form, which contains the "Forgot Password" Link.|
+|2|`fxa_login - forgot_password`|`flow.signin.forgot-password`|User clicks on the "Forgot Password" Link.|
+|3|Not Implemented|`flow.reset-password.view`|View of the form asking the user to confirm that they want to reset.|
+|4|`fxa_login - forgot_submit`|`flow.reset-password.engage`, `flow.reset-password.submit`|User clicks on the button confirming that they want to reset.|
+|5|`fxa_email - delivered` (`email_template` = `recoveryEmail`)|`email.recoveryEmail.delivered`|Delivery of the PW reset link to the user via email.|
+|5a|Not Implemented|`flow.confirm-reset-password.view`|View of the screen telling the user to confirm the reset via email.|
+|6|Not Implemented|`flow.account-recovery-confirm-key.view`|User views the form to enter their account recovery key. (viewable after clicking the link in the email above)|
+|7|Not Implemented|`flow.account-recovery-confirm-key.engage`|User clicks on the form to enter their account recovery key.|
+|8|Not Implemented|`flow.account-recovery-confirm-key.submit`|User submits the form to enter their account recovery key.|
+|9|Not Implemented|`flow.account-recovery-confirm-key.success` or `flow.account-recovery-confirm-key.invalidRecoveryKey`|User submitted a valid (success) or invalid recovery key.|
+|10|Not Implemented|`flow.account-recovery-reset-password.view`|User views the form to change their password after submitting a valid recovery key.|
+|11|Not Implemented|`flow.account-recovery-reset-password.view`|User clicks on the form to change their password after submitting a valid recovery key.|
+|12|Not Implemented|`flow.account-recovery-reset-password.view`|User submits the form to change their password after submitting a valid recovery key.|
+|13|`fxa_login - forgot_complete`|`flow.complete` (the auth server also emits `account.reset`)|User has completed the password reset funnel.|
+
+### Login with 2FA (TOTP)
+Users can setup two factor authentication (2FA) on account login. 2FA is implemented via time-based one-time password (TOTP). If a user has set up 2FA (via settings), they will be required to enter a passcode generated by their second factor whenever they login to their account.
+
+Users are also provisioned a set of recovery codes as part of the 2FA setup process. These are one-time use codes that can be used to login to an account if a user loses access to their second factor. **Note that these 2FA recovery codes are different than the account recovery keys described above**.
+
+#### Login with 2FA/TOTP Funnel (No Recovery Code)
+*This funnel starts after the `fxa_login - success` / `account.login` step of the login funnel*
+
+|Step|Amplitude Event|Flow Event|Description|
+|---|---|---|---|
+|1|`fxa_login - totp_code_view`|`flow.signin-totp-code.view`|View of the TOTP form.|
+|2|`fxa_login - totp_code_engage`|`flow.signin-totp-code.engage`|Click on the TOTP form.|
+|3|`fxa_login - totp_code_submit`|`flow.signin-totp-code.submit`|Submission of the TOTP form.|
+|4|`fxa_login - totp_code_success`|`flow.signin-totp-code.success`|Successful submission of the TOTP form. Auth server also emits `totpToken.verified`|
+
+#### Login with 2FA/TOTP Funnel w/ Recovery Code
+*This funnel starts after user clicks to use a recovery code during the TOTP funnel.*
+
+|Step|Amplitude Event|Flow Event|Description|
+|---|---|---|---|
+|1|`fxa_login - totp_code_view`|`flow.signin-totp-code.view`|View of the TOTP form.|
+|2|Not Implemented|`flow.sign_in_recovery_code.view`|View of the TOTP recovery code form.|
+|3|Not Implemented|`recoveryCode.verified` (auth server)|User submitted a valid recovery code.|
+
+## Connect Another Device / SMS
+Sync is most valuable to users who have multiple devices connected to their account. Thus after a user completes a sync login or registration funnel, they are shown the "connect another device" form. This CTA contains a form for a phone number, as well as links to the Google Play and Apple stores where users can download mobile versions of Firefox. If a user submits a valid phone number (associated with a country that our service supports), then we send them an SMS message with links to their mobile phone's app store.
+
+At one point, at least for iOS, the SMS message contained a deep link that pre-filled the user's email address on the sign-in form once they installed the mobile browser. There is some uncertainty about whether this still works...
+
+### SMS Funnel
+*This funnel begins either (1) after a user has completed the login or registration funnel, or (2) if they click on "connect another device" from the FxA toolbar menu within the desktop browser (provided they are signed in). In the latter case the `signin` segment of the flow event will be omitted.*
+
+|Step|Amplitude Event|Flow Event|Description|
+|---|---|---|---|
+|1|`fxa_connect_device - view` (`connect_device_flow` = `sms`)|`flow.signin.sms.view`|User viewed the SMS form.|
+|2|`fxa_connect_device - engage` (`connect_device_flow` = `sms`)|`flow.signin.sms.engage`|User clicked somewhere on the SMS form.|
+|3|`fxa_connect_device - submit` (`connect_device_flow` = `sms`)|`flow.signin.sms.submit`|User submitted the SMS form.|
+|4|Not Implemented|`sms.region.{country_code}`|An sms was sent to a number with the two letter `country_code`.|
+|5|Not Implemented|`flow.sms.sent.view`|User views the message confirming that the SMS has been sent.|
+
+The sms form also contains app store links. If they are clicked, flow events `flow.signin.sms.link.app-store.android` or `flow.signin.sms.link.app-store.ios` will be logged.
+
+### Connect Another Device Funnel (Non-SMS)
+|Step|Amplitude Event|Flow Event|Description|
+|---|---|---|---|
+|1|`fxa_connect_device - view` (`connect_device_flow` = `cad`)|`flow.signin.connect-another-device.view`|User viewed the CAD form.|
+|2|`fxa_connect_device - view` (`connect_device_flow` = `cad`)|`flow.signin.connect-another-device.link.app-store.(android\|ios)`|User clicked on either the android or iOS app store button. In amplitude, use the event property `connect_device_os` to disambiguate which link was clicked.|
+
+## Settings
+A variety of metrics are logged that reflect user interaction with the settings page (https://accounts.firefox.com/settings). The chart below outlines some of these events (this may not be an exhaustive list).
+
+|Amplitude Event|Flow Event|Description|
+|---|---|---|
+|`fxa_pref - view`|`flow.settings.view`|User viewed the settings page.|
+|`fxa_pref - engage`|`flow.settings.*.engage`|User clicked somewhere on the settings page.|
+|`fxa_pref - two_step_authentication_view`|`flow.settings.two-step-authentication.view`|User viewed 2FA settings.|
+|Not Implemented|`flow.settings.two-step-authentication.recovery-codes.view`|User viewed their 2FA recovery codes. These are only viewable one time only, after a user sets up 2FA, or after they generate new codes.|
+|Not Implemented|`flow.settings.two-step-authentication.recovery-codes.print-option`|User clicks to print their 2FA recovery codes.|
+|Not Implemented|`flow.settings.two-step-authentication.recovery-codes.download-option`|User clicks to download their 2FA recovery codes.|
+|Not Implemented|`flow.settings.two-step-authentication.recovery-codes.copy-option`|User clicks to copy their 2FA recovery codes to the clipboard (this is fired only when they click the copy button, not if they copy using e.g. a keyboard shortcut).|
+|Not Implemented|`flow.settings.change-password.view`|User viewed the form to change their password.|
+|`fxa_pref - password`|`settings.change-password.success`|User changed their password via settings.|
+|`fxa_pref - newsletter` (see also user property `newsletter_state`)|`settings.communication-preferences.(optIn\|optOut).success`|User changed their newsletter email preferences.|
+|Not Implemented|`flow.settings.account_recovery.view`|User viewed account recovery settings.|
+|Not Implemented|`flow.settings.account_recovery.engage`|User clicked somewhere in account recovery settings.|
+|Not Implemented|`flow.settings.account-recovery.confirm-password.view`|User viewed the password form prior to turning on account recovery. (user first has to verify their email address)|
+|Not Implemented|`flow.settings.account-recovery.confirm-password.view`|User clicked the password form prior to turning on account recovery.|
+|Not Implemented|`flow.settings.account-recovery.confirm-password.submit`|User submitted the password form prior to turning on account recovery.|
+|Not Implemented|`flow.settings.account-recovery.confirm-password.success`|User successfully submitted the password form prior to turning on account recovery.|
+|Not Implemented|`flow.settings.account-recovery.recovery-key.view`|User viewed their recovery key. This is viewable one time only, after a user sets up account recovery, or after they generate a new key.|
+|Not Implemented|`flow.settings.account-recovery.recovery-key.print-option`|User clicks to print their recovery key.|
+|Not Implemented|`flow.settings.account-recovery.recovery-key.download-option`|User clicks to download their recovery key.|
+|Not Implemented|`flow.settings.account-recovery.recovery-key.copy-option`|User clicks to copy their recovery key to the clipboard (this is fired only when they click the copy button, not if they copy using e.g. a keyboard shortcut).|
+|Not Implemented|`flow.settings.account-recovery.refresh`|User generated a new recovery key.|
+|Not Implemented|`flow.settings.clients.view`|User viewed the list of clients ("Devices & Apps") connected to their account. AKA the device manager.|
+|Not Implemented|`flow.settings.clients.engage`|User clicked somewhere the list of clients connected to their account.|
+|Not Implemented|`flow.settings.clients.disconnect.view`|User viewed the dialog asking to confirm disconnection of a device.|
