@@ -156,7 +156,7 @@ Note that this is different from Telemetry for Firefox Desktop (<a href="https:/
 <a class="header" href="#overview" id="overview"><h1>Overview</h1></a>
 <p>Glean consists of different pieces:</p>
 <ul>
-<li>Product-side tools - <a href="https://github.com/mozilla-mobile/android-components/blob/master/components/service/glean/README.md">the Glean SDK</a> is what products integrate and record data into.</li>
+<li>Product-side tools - <a href="https://mozilla.github.io/glean/">the Glean SDK</a> is what products integrate and record data into.</li>
 <li>Services - this is where the data is stored and made available for analysis in our data platform.</li>
 <li>Data Tools - these are used to look at the data, performing analysis and setting up dashboards.</li>
 </ul>
@@ -177,7 +177,7 @@ To make the choice easier for which metric type to use, we are introducing highe
 To make it easier to understand the general semantics of our data, the Glean SDK will define and document when which kind of data will get sent. This gives data analysis common basic semantics.</p>
 <a class="header" href="#how-to-use-glean" id="how-to-use-glean"><h1>How to use Glean</h1></a>
 <ul>
-<li><a href="https://github.com/mozilla-mobile/android-components/blob/master/components/service/glean/README.md">Integrate the Glean SDK / library</a> into your product.</li>
+<li><a href="https://mozilla.github.io/glean/book/user/adding-glean-to-your-project.html">Integrate the Glean SDK / library</a> into your product.</li>
 <li><a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&amp;component=General&amp;short_desc=Glean:%20Enable%20application%20id%20org.mozilla.myProduct">File a data engineering bug</a> to enable your products application id.</li>
 <li><a href="https://sql.telemetry.mozilla.org/">Use Redash</a> to write SQL queries &amp; build dashboards using your products datasets, e.g.:
 <ul>
@@ -199,7 +199,12 @@ To make it easier to understand the general semantics of our data, the Glean SDK
 </ul>
 <a class="header" href="#references" id="references"><h1>References</h1></a>
 <ul>
-<li><a href="https://github.com/mozilla-mobile/android-components/blob/master/components/service/glean/">Glean SDK</a> - the SDK/library that products integrate.</li>
+<li>There currently two independent implementations of the Glean SDK:
+<ul>
+<li>An Android-only implementation in <a href="https://github.com/mozilla-mobile/android-components/tree/master/components/service/glean">android-components</a>.</li>
+<li>A <a href="https://github.com/mozilla/glean/">cross-platform implementation</a>. (This implementation is currently under development and not ready for use).</li>
+</ul>
+</li>
 <li><a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&amp;component=Glean%3A%20SDK">Reporting issues &amp; bugs for the Glean SDK</a>.</li>
 <li>Datasets documentation (TBD)</li>
 <li><a href="https://debug-ping-preview.firebaseapp.com/">Glean Debug pings viewer</a></li>
