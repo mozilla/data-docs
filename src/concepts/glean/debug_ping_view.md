@@ -91,5 +91,5 @@ Reach out to Alessio Placitelli (`:dexter`) or Arkadiusz Komarzewski (`:akomar`)
 
 ## References
 
-*   [Glean debug commands in Glean README.](https://mozilla.github.io/glean/book/user/debugging.html)
+*   [Glean debug commands in Glean documentation.](https://mozilla.github.io/glean/book/user/debugging.html)
 *   [Glean Debug ping view web interface.](https://debug-ping-preview.firebaseapp.com/)
