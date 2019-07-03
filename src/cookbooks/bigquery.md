@@ -117,6 +117,7 @@ namely that you must make use of the date partition fields for large tables (lik
 - Please read [_Query Optimizations_](bigquery.md#query-optimizations) section that contains advice on how to reduce cost and improve query performance.
 - re:dash BigQuery data sources will have a 10 TB data scanned limit per query. Please let us know in `#fx-metrics` on Slack if you run into issues!
 - There are no other partitioning fields in BigQuery versions of parquet datasets (e.g. `sample_id` is no longer a partitioning field and will not necessarily reduce data scanned).
+- There is no native map support in BigQuery. Instead, we are using structs with fields [key, value]. We have provided convenience functions to access these like key-value maps (described [below](bigquery.md#accessing-map-like-fields).)
 
 ### Projects with BigQuery datasets
 
@@ -190,6 +191,19 @@ You can create views in BigQuery if you have access via [GCP BigQuery Console](b
     - Prefix your view with your username. If your username is `username@mozilla.com` create a table with `username_my_view`.
 - See [Creating Views](https://cloud.google.com/bigquery/docs/views) documentation for detailed steps.
 
+### Accessing map-like fields
+
+BigQuery currently lacks native map support and our workaround is to use a STRUCT type with fields named [key, value]. We've created a user-defined function (UDFs) that provides key-based access with the signature: `udf.get_key(<struct>, <key>)`. The example below generates a count per `reason` key in the `event_map_values` field in the telemetry events table for Normandy unenrollment events from yesterday.
+```sql
+SELECT udf.get_key(event_map_values, 'reason') AS reason,
+       COUNT(*) AS EVENTS
+FROM telemetry.events
+WHERE submission_date_s3 = DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
+  AND event_category='normandy'
+  AND event_method='unenroll'
+GROUP BY 1
+ORDER BY 2 DESC
+```
 
 # Query Optimizations
 
