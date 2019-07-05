@@ -139,7 +139,8 @@ FROM
   telemetry.clients_daily
 WHERE
   submission_date > '20190701'
-GROUP BY 1, 2 -- Implicit grouping avoids repeating expressions
+GROUP BY 
+  1, 2 -- Implicit grouping avoids repeating expressions
 ```
 
 **Bad**
