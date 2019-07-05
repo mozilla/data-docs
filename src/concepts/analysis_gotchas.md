@@ -9,6 +9,7 @@ This document is not about those traps. Instead, it is about quirks and pitfalls
 When looking at trends, it is helpful to be aware of events from the past that might impact comparisons with history. Here are a few to keep in mind:
 
 - **May 4 - May 11 2019** - [Telemetry source data deleted](https://blog.mozilla.org/blog/2019/05/09/what-we-do-when-things-go-wrong/). No source data is available for this period and derived tables may have missing days or imputed values. Derived tables that depend on multiple days may have have affected dates beyond the deletion region.
+- **January 31 2019** - [Profile-per-install](https://bugzilla.mozilla.org/show_bug.cgi?id=1474285) landed in `mozilla-central` and affects how new profiles are created. Discussion [here](https://github.com/mozilla/bigquery-etl/issues/212).
 - **November 2017** - Quantum Launch. There was a surge in new profiles and usage.
 - **March 2016** - Unified Telemetry launched.
 
