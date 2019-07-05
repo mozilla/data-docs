@@ -3284,6 +3284,7 @@ Engines, Presto and Athena, and our Parquet data lake.</p>
 <li><a href="#storage-api-connector">Storage API connector</a></li>
 </ul>
 </li>
+<li><a href="#from-spark--dataproc">From Spark / Dataproc</a></li>
 <li><a href="#from-colaboratory">From Colaboratory</a></li>
 </ul>
 </li>
@@ -3321,6 +3322,7 @@ Engines, Presto and Athena, and our Parquet data lake.</p>
 </ul>
 </li>
 <li><a href="bigquery.html#from-spark-/-databricks">Spark/Databricks</a></li>
+<li><a href="bigquery.html#from-spark-/-dataproc">Spark/Dataproc</a></li>
 <li><a href="bigquery.html#from-colaboratory">Colaboratory</a></li>
 </ul>
 <a class="header" href="#access-request" id="access-request"><h2>Access Request</h2></a>
@@ -3380,6 +3382,25 @@ Engines, Presto and Athena, and our Parquet data lake.</p>
 <a class="header" href="#storage-api-connector" id="storage-api-connector"><h3>Storage API connector</h3></a>
 <p>Connectivity via BigQuery Spark Connector which uses <a href="https://cloud.google.com/bigquery/docs/reference/storage/">BigQuery Storage API</a>.</p>
 <p><em>Work in progress</em></p>
+<a class="header" href="#from-spark--dataproc" id="from-spark--dataproc"><h2>From Spark / Dataproc</h2></a>
+<p>Querying BigQuery from Dataproc will be faster than from Databricks because it will not involve cross-cloud data transfers.</p>
+<p>You can spin up a Dataproc cluster with Jupyter using the following command. Insert your values for <code>cluster-name</code>, <code>bucket-name</code>, and <code>project-id</code> there. Your notebooks will be stored in Cloud Storage under <code>gs://bucket-name/notebooks/jupyter</code>:</p>
+<pre><code class="language-bash">gcloud beta dataproc clusters create cluster-name \
+    --optional-components=ANACONDA,JUPYTER \
+    --image-version=1.4 \
+    --enable-component-gateway \
+    --properties=^#^spark:spark.jars=gs://spark-lib/bigquery/spark-bigquery-latest.jar,gs://spark-bigquery-dev-test/spark-bigquery-spotify-connector/spark-bigquery-assembly-0.3.0-SNAPSHOT.jar \
+    --num-workers=5 \
+    --max-idle=3h \
+    --bucket bucket-name \
+    --project project-id
+</code></pre>
+<p>Jupyter URL can be retrieved with the following command:</p>
+<pre><code class="language-bash">gcloud beta dataproc clusters describe cluster-name --project project-id | grep Jupyter
+</code></pre>
+<p>After you've finished your work, it's a good practice to delete your cluster:</p>
+<pre><code class="language-bash">gcloud beta dataproc clusters delete cluster-name --project project-id
+</code></pre>
 <a class="header" href="#from-colaboratory" id="from-colaboratory"><h2>From Colaboratory</h2></a>
 <p><a href="https://colab.research.google.com">Colaboratory</a> is Jupyter notebook environment, managed by Google and running in the cloud. Notebooks are stored in Google Drive and can be shared in a similar way to Google Docs.</p>
 <p>Colaboratory can be used to easily access BigQuery and perform interactive analyses. See <a href="https://colab.research.google.com/drive/1NCkpZBx3cRc08-g_JKMBrf5cIxAvSNMv">example notebook</a>.</p>
