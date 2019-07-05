@@ -30,6 +30,7 @@ BigQuery datasets and tables can be accessed by the following methods:
     - For advanced use cases including automated workloads, ETL, [BigQuery Storage API](https://cloud.google.com/bigquery/docs/reference/storage/). Requires GCP access to be granted by Data Operations.
     - Allows access to BigQuery via [`bq` command-line tool](https://cloud.google.com/bigquery/docs/bq-command-line-tool)
 - [Spark/Databricks](bigquery.md#from-spark-/-databricks)
+- [Spark/Dataproc](bigquery.md#from-spark-/-dataproc)
 - [Colaboratory](bigquery.md#from-colaboratory)
 
 ## Access Request
@@ -93,6 +94,32 @@ Connector library is added to `shared_serverless_python3` cluster on Databricks 
 Connectivity via BigQuery Spark Connector which uses [BigQuery Storage API](https://cloud.google.com/bigquery/docs/reference/storage/).
 
 _Work in progress_
+
+## From Spark / Dataproc
+Querying BigQuery from Dataproc will be faster than from Databricks because it will not involve cross-cloud data transfers.
+
+You can spin up a Dataproc cluster with Jupyter using the following command. Insert your values for `cluster-name`, `bucket-name`, and `project-id` there. Your notebooks will be stored in Cloud Storage under `gs://bucket-name/notebooks/jupyter`:
+```bash
+gcloud beta dataproc clusters create cluster-name \
+    --optional-components=ANACONDA,JUPYTER \
+    --image-version=1.4 \
+    --enable-component-gateway \
+    --properties=^#^spark:spark.jars=gs://spark-lib/bigquery/spark-bigquery-latest.jar,gs://spark-bigquery-dev-test/spark-bigquery-spotify-connector/spark-bigquery-assembly-0.3.0-SNAPSHOT.jar \
+    --num-workers=5 \
+    --max-idle=3h \
+    --bucket bucket-name \
+    --project project-id
+```
+
+Jupyter URL can be retrieved with the following command:
+```bash
+gcloud beta dataproc clusters describe cluster-name --project project-id | grep Jupyter
+```
+
+After you've finished your work, it's a good practice to delete your cluster:
+```bash
+gcloud beta dataproc clusters delete cluster-name --project project-id
+```
 
 ## From Colaboratory
 [Colaboratory](https://colab.research.google.com) is Jupyter notebook environment, managed by Google and running in the cloud. Notebooks are stored in Google Drive and can be shared in a similar way to Google Docs.
