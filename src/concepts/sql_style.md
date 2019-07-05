@@ -34,9 +34,13 @@ Always use uppercase for reserved keywords like `SELECT`, `WHERE`, or `AS`.
 1. Names must begin with a letter and may not end in an underscore.
 1. Only use letters, numbers, and underscores in variable names.
 
-## Aliasing
+## Be Explicit
 
-Always include the `AS` keyword when aliasing a variable,
+When choosing between explicit or implicit syntax, prefer explicit.
+
+### Aliasing
+
+Always include the `AS` keyword when aliasing a variable or table name,
 it's easier to read when explicit.
 
 **Good**
@@ -57,6 +61,45 @@ FROM
   main_summary
 LIMIT
   10
+```
+
+### Joins
+
+Always include the `JOIN` type rather than relying on the default join.
+
+**Good**
+```sql
+SELECT
+  submission_date,
+  e.key AS experiment_id,
+  e.value AS experiment_branch,
+  count(*) AS count
+FROM
+  telemetry.clients_daily
+CROSS JOIN
+  UNNEST(experiments) AS e(key, value)
+WHERE
+  submission_date > '20190701'
+  AND sample_id = '10'
+GROUP BY
+  1, 2, 3
+```
+
+**Bad**
+```sql
+SELECT
+  submission_date,
+  e.key AS experiment_id,
+  e.value AS experiment_branch,
+  count(*) AS count
+FROM
+  telemetry.clients_daily,
+  UNNEST(experiments) AS e(key, value)
+WHERE
+  submission_date > '20190701'
+  AND sample_id = '10'
+GROUP BY
+  1, 2, 3
 ```
 
 ## Left Align Root Keywords
