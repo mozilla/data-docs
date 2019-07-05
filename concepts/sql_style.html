@@ -146,7 +146,13 @@
 <li><a href="#consistency">Consistency</a></li>
 <li><a href="#reserved-words">Reserved Words</a></li>
 <li><a href="#variable-names">Variable Names</a></li>
+<li><a href="#be-explicit">Be Explicit</a>
+<ul>
 <li><a href="#aliasing">Aliasing</a></li>
+<li><a href="#joins">Joins</a></li>
+<li><a href="#grouping-columns">Grouping Columns</a></li>
+</ul>
+</li>
 <li><a href="#left-align-root-keywords">Left Align Root Keywords</a></li>
 <li><a href="#code-blocks">Code Blocks</a></li>
 <li><a href="#parentheses">Parentheses</a></li>
@@ -174,14 +180,16 @@ And don't hesitate to ask!</p>
 <li>Use consistent and descriptive identifiers and names.</li>
 <li>Use lower case names with underscores, such as <code>first_name</code>.
 Do not use CamelCase.</li>
-<li>Presto functions, such as <code>cardinality</code>, <code>approx_distinct</code>, or <code>substr</code>,
+<li>Functions, such as <code>cardinality</code>, <code>approx_distinct</code>, or <code>substr</code>,
 <a href="https://www.postgresql.org/docs/10/static/sql-syntax-lexical.html#SQL-SYNTAX-IDENTIFIERS">are identifiers</a>
 and should be treated like variable names.</li>
 <li>Names must begin with a letter and may not end in an underscore.</li>
 <li>Only use letters, numbers, and underscores in variable names.</li>
 </ol>
-<a class="header" href="#aliasing" id="aliasing"><h2>Aliasing</h2></a>
-<p>Always include the <code>AS</code> keyword when aliasing a variable,
+<a class="header" href="#be-explicit" id="be-explicit"><h2>Be Explicit</h2></a>
+<p>When choosing between explicit or implicit syntax, prefer explicit.</p>
+<a class="header" href="#aliasing" id="aliasing"><h3>Aliasing</h3></a>
+<p>Always include the <code>AS</code> keyword when aliasing a variable or table name,
 it's easier to read when explicit.</p>
 <p><strong>Good</strong></p>
 <pre><code class="language-sql">SELECT
@@ -198,6 +206,87 @@ FROM
   main_summary
 LIMIT
   10
+</code></pre>
+<a class="header" href="#joins" id="joins"><h3>Joins</h3></a>
+<p>Always include the <code>JOIN</code> type rather than relying on the default join.</p>
+<p><strong>Good</strong></p>
+<pre><code class="language-sql">-- BigQuery Standard SQL Syntax
+SELECT
+  submission_date,
+  experiment.key AS experiment_id,
+  experiment.value AS experiment_branch,
+  count(*) AS count
+FROM
+  telemetry.clients_daily
+CROSS JOIN
+  UNNEST(experiments.key_value) AS experiment
+WHERE
+  submission_date &gt; '2019-07-01'
+  AND sample_id = '10'
+GROUP BY
+  submission_date,
+  experiment_id,
+  experiment_branch
+</code></pre>
+<p><strong>Bad</strong></p>
+<pre><code class="language-sql">-- BigQuery Standard SQL Syntax
+SELECT
+  submission_date,
+  experiment.key AS experiment_id,
+  experiment.value AS experiment_branch,
+  count(*) AS count
+FROM
+  telemetry.clients_daily,
+  UNNEST(experiments.key_value) AS experiment -- Implicit JOIN
+WHERE
+  submission_date &gt; '2019-07-01'
+  AND sample_id = '10'
+GROUP BY
+  1, 2, 3 -- Implicit grouping column names
+</code></pre>
+<a class="header" href="#grouping-columns" id="grouping-columns"><h3>Grouping Columns</h3></a>
+<p>In the previous example, implicit grouping columns were discouraged, but there are cases where it makes sense.</p>
+<p>In some SQL flavors (such as <a href="https://prestodb.github.io/docs/current/sql/select.html">Presto</a>) grouping elements must refer to the expression before any aliasing is done. If you are grouping by a complex expression it may be desirable to use implicit grouping columns rather than repeating the expression.</p>
+<p><strong>Good</strong></p>
+<pre><code class="language-sql">-- BigQuery SQL Syntax
+SELECT
+  submission_date,
+  normalized_channel IN ('nightly', 'aurora', 'beta') AS is_prerelease,
+  count(*) AS count
+FROM
+  telemetry.clients_daily
+WHERE
+  submission_date &gt; '2019-07-01'
+GROUP BY
+  submission_date,
+  is_prerelease -- Grouping by aliases is supported in BigQuery
+</code></pre>
+<p><strong>Good</strong></p>
+<pre><code class="language-sql">-- Presto SQL Syntax
+SELECT
+  submission_date,
+  normalized_channel IN ('nightly', 'aurora', 'beta') AS is_prerelease,
+  count(*) AS count
+FROM
+  telemetry.clients_daily
+WHERE
+  submission_date &gt; '20190701'
+GROUP BY 
+  1, 2 -- Implicit grouping avoids repeating expressions
+</code></pre>
+<p><strong>Bad</strong></p>
+<pre><code class="language-sql">-- Presto SQL Syntax
+SELECT
+  submission_date,
+  normalized_channel IN ('nightly', 'aurora', 'beta') AS is_prerelease,
+  count(*) AS count
+FROM
+  telemetry.clients_daily
+WHERE
+  submission_date &gt; '20190701'
+GROUP BY
+  submission_date,
+  normalized_channel IN ('nightly', 'aurora', 'beta')
 </code></pre>
 <a class="header" href="#left-align-root-keywords" id="left-align-root-keywords"><h2>Left Align Root Keywords</h2></a>
 <p>Root keywords should all start on the same character boundary.
