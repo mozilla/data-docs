@@ -90,7 +90,7 @@ GROUP BY
 
 **Bad**
 ```sql
--- BigQuery SQL Syntax
+-- BigQuery Standard SQL Syntax
 SELECT
   submission_date,
   experiment.key AS experiment_id,
