@@ -28,15 +28,19 @@ Always use uppercase for reserved keywords like `SELECT`, `WHERE`, or `AS`.
 1. Use consistent and descriptive identifiers and names.
 1. Use lower case names with underscores, such as `first_name`.
    Do not use CamelCase.
-1. Presto functions, such as `cardinality`, `approx_distinct`, or `substr`,
+1. Functions, such as `cardinality`, `approx_distinct`, or `substr`,
    [are identifiers](https://www.postgresql.org/docs/10/static/sql-syntax-lexical.html#SQL-SYNTAX-IDENTIFIERS)
    and should be treated like variable names.
 1. Names must begin with a letter and may not end in an underscore.
 1. Only use letters, numbers, and underscores in variable names.
 
-## Aliasing
+## Be Explicit
 
-Always include the `AS` keyword when aliasing a variable,
+When choosing between explicit or implicit syntax, prefer explicit.
+
+### Aliasing
+
+Always include the `AS` keyword when aliasing a variable or table name,
 it's easier to read when explicit.
 
 **Good**
@@ -57,6 +61,102 @@ FROM
   main_summary
 LIMIT
   10
+```
+
+### Joins
+
+Always include the `JOIN` type rather than relying on the default join.
+
+**Good**
+```sql
+-- BigQuery Standard SQL Syntax
+SELECT
+  submission_date,
+  experiment.key AS experiment_id,
+  experiment.value AS experiment_branch,
+  count(*) AS count
+FROM
+  telemetry.clients_daily
+CROSS JOIN
+  UNNEST(experiments.key_value) AS experiment
+WHERE
+  submission_date > '2019-07-01'
+  AND sample_id = '10'
+GROUP BY
+  submission_date,
+  experiment_id,
+  experiment_branch
+```
+
+**Bad**
+```sql
+-- BigQuery Standard SQL Syntax
+SELECT
+  submission_date,
+  experiment.key AS experiment_id,
+  experiment.value AS experiment_branch,
+  count(*) AS count
+FROM
+  telemetry.clients_daily,
+  UNNEST(experiments.key_value) AS experiment -- Implicit JOIN
+WHERE
+  submission_date > '2019-07-01'
+  AND sample_id = '10'
+GROUP BY
+  1, 2, 3 -- Implicit grouping column names
+```
+
+### Grouping Columns
+
+In the previous example, implicit grouping columns were discouraged, but there are cases where it makes sense.
+
+In some SQL flavors (such as [Presto](https://prestodb.github.io/docs/current/sql/select.html)) grouping elements must refer to the expression before any aliasing is done. If you are grouping by a complex expression it may be desirable to use implicit grouping columns rather than repeating the expression.
+
+**Good**
+```sql
+-- BigQuery SQL Syntax
+SELECT
+  submission_date,
+  normalized_channel IN ('nightly', 'aurora', 'beta') AS is_prerelease,
+  count(*) AS count
+FROM
+  telemetry.clients_daily
+WHERE
+  submission_date > '2019-07-01'
+GROUP BY
+  submission_date,
+  is_prerelease -- Grouping by aliases is supported in BigQuery
+```
+
+**Good**
+```sql
+-- Presto SQL Syntax
+SELECT
+  submission_date,
+  normalized_channel IN ('nightly', 'aurora', 'beta') AS is_prerelease,
+  count(*) AS count
+FROM
+  telemetry.clients_daily
+WHERE
+  submission_date > '20190701'
+GROUP BY 
+  1, 2 -- Implicit grouping avoids repeating expressions
+```
+
+**Bad**
+```sql
+-- Presto SQL Syntax
+SELECT
+  submission_date,
+  normalized_channel IN ('nightly', 'aurora', 'beta') AS is_prerelease,
+  count(*) AS count
+FROM
+  telemetry.clients_daily
+WHERE
+  submission_date > '20190701'
+GROUP BY
+  submission_date,
+  normalized_channel IN ('nightly', 'aurora', 'beta')
 ```
 
 ## Left Align Root Keywords
