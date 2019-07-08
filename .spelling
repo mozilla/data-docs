@@ -6,6 +6,8 @@
 1KiB
 200-tab
 28-day
+2FA
+5a
 ad-hoc
 add-on
 addon
@@ -15,6 +17,7 @@ aDAU
 aMAU
 aWAU
 Algebird's
+AMO
 analytics
 APIs
 APK
@@ -31,6 +34,7 @@ backfilled
 behaviour
 Bhattacharyya
 BigQuery
+BQ
 blocklist
 boolean
 booleans
@@ -44,6 +48,7 @@ config
 CommonMark
 CPOW
 CSV
+CTA
 cutover
 dashboarding
 Databricks
@@ -63,12 +68,15 @@ e.g.
 E10s
 ElasticSearch
 EMR
+entrypoint
+entrypoints
 ETL
 Fenix
 Fennec
 filename
 FirefoxReality
 FireTV
+firstrun
 funnelcake
 geo-city
 geo-country
@@ -85,8 +93,10 @@ hostname
 hostnames
 https
 HyperLogLog
+IAM
 ISO8601
 i.e.
+implementational
 inlined
 int64
 interpretability
@@ -99,6 +109,7 @@ Klar
 KPI
 lifecycle
 Lockbox
+Lockwise
 lookups
 Lua
 matcher
@@ -109,6 +120,7 @@ metadata
 metastore
 Miroglio
 Mocli
+mozilla.org
 MozTelemetry
 MySQL
 multipreffer
@@ -124,9 +136,11 @@ NoSQL
 npm
 NSIS
 NumPy
+oauth
 ORM-like
 optout
 parquet2hive
+passcode
 performant
 Pep8
 Pingsender
@@ -138,6 +152,7 @@ pre-computed
 pre-compiled
 pre-configured
 pre-defined
+pre-filled
 pre-loaded
 pre-processes
 pre-release
@@ -155,6 +170,8 @@ resampling
 rustc
 recommender
 release_calendar
+relier
+reliers
 repo
 RTMO
 runtime
@@ -166,6 +183,10 @@ searchfox
 SendPing
 SERP
 serverless
+signin
+signup
+signups
+SMS
 Sonatype
 SSL
 STMO
@@ -183,8 +204,10 @@ timestamps
 tryserver
 TMO
 TODO
+TOTP
 toolbars
 toolchain
+trailhead
 trailheads
 triaged
 triaging
@@ -200,6 +223,7 @@ unenroll
 unenrollment
 unmanaged
 uri
+utm
 UUID
 versioned
 whitelist

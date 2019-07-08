@@ -1,5 +1,10 @@
 # Attribution of Firefox Accounts
 
+## Table of Contents
+<!-- toc -->
+
+## Introduction
+
 Users can create or login to an account through an increasingly large number of relying services and entrypoints. This article describes how we attribute authentications to their point of origin, and documents some of the most frequently trafficked entrypoints (it would not be feasible to list them all, but we will try to update this document when there are substantial changes).
 
 ## Types of Attribution
@@ -18,20 +23,20 @@ There is a variable called `service` that we use to (1) attribute users to the r
 |`send`|`20f7931c9054d833`|Firefox Send (android app)|
 |`pocket-mobile`|`7377719276ad44ee`|Pocket Mobile App|
 |`pocket-web`|`749818d3f2e7857f`|Pocket Website|
-|`firefox-addons`|`3a1f53aabe17ba32`|addons.mozilla.org|
-|`amo-web`|`a4907de5fa9d78fc`|addons.mozilla.org (still unsure how this differs from `firefox-addons`)|
+|`firefox-addons`|`3a1f53aabe17ba32`|`addons.mozilla.org`|
+|`amo-web`|`a4907de5fa9d78fc`|`addons.mozilla.org` (still unsure how this differs from `firefox-addons`)|
 |`screenshots`|`5e75409a5a3f096d`|Firefox Screenshots ([website](https://screenshots.firefox.com/), no longer supported)|
 |`notes`|`a3dbd8c5a6fd93e2`|Firefox Notes (desktop extension)|
 |`notes`|`7f368c6886429f19`|Firefox Notes (android app)|
-|`fxa-content`|`ea3ca969f8c6bb0d`|Oauth ID used when a user is signing in with cached credentials (i.e. does not have to re-enter username/password) and when the user is lopgging into the FxA settings page.|
+|`fxa-content`|`ea3ca969f8c6bb0d`|Oauth ID used when a user is signing in with cached credentials (i.e. does not have to re-enter username/password) and when the user is logging into the FxA settings page.|
 |`mozilla-email-preferences`|`c40f32fd2938f0b6`|Oauth ID used when a user is signing in to modify their marketing email preferences (e.g., to opt-out.)|
 
 In amplitude, there is also a `fxa_services_used` user property which maintains an array of all the services a user has authenticated with.
 
 Some amplitude charts segmenting by service can be found [here](https://analytics.amplitude.com/mozilla-corp/notebook/detelo9).
 
-## Funnel Attribution (entrypoint and utm_* parameters)
-We can also attribute users to where they began the authentication process, be it from a website or an application. Attribution is done through query parameters appended to links that point at accounts.firefox.com (which hosts the actual authentication process). These parameters are logged along with with any metrics events that the user generates during the authentication flow. The table below lists the query parameters that are currently in use, along with the values associated with some of the most common funnels. Note that only `entrypoint` is typically logged for flows beginning within the browser. Web-based entrypoints are listed first, followed by entrypoints that are found within the browser chrome itself.
+### Funnel Attribution (entrypoint and utm parameters)
+We can also attribute users to where they began the authentication process, be it from a website or an application. Attribution is done through query parameters appended to links that point at `accounts.firefox.com` (which hosts the actual authentication process). These parameters are logged along with with any metrics events that the user generates during the authentication flow. The table below lists the query parameters that are currently in use, along with the values associated with some of the most common funnels. Note that only `entrypoint` is typically logged for flows beginning within the browser. Web-based entrypoints are listed first, followed by entrypoints that are found within the browser chrome itself.
 
 See [this documentation](https://mozilla.github.io/application-services/docs/accounts/metrics.html) for more implementational detail on utm/entrypoint parameters.
 
@@ -40,7 +45,7 @@ See [this documentation](https://mozilla.github.io/application-services/docs/acc
 |`activity-stream-firstrun`|**`utm_source`** = `activity-stream`, **`utm_campaign`** = `firstrun`, **`utm_medium`** = `referral` or `email`|The [about:welcome](about:welcome) page that is shown to new profiles on browser firstrun. `utm_term` is sometimes used to track variations for experiments.|
 |`firstrun` (not supported for current versions)|**`utm_source`** = `firstrun`|This is the old version of the firstrun page that was hosted on the web as part of mozilla.org ([example](https://www.mozilla.org/en-US/firefox/62.0/firstrun/)). Starting with Firefox version 62, it was replaced by an in-browser version (see row above). Although it is not used for newer versions, it is still hosted for the sake of e.g. profiles coming through the dark funnel on older versions.|
 |`mozilla.org-whatsnewXX`|**`utm_source`** = `whatsnewXX`, **`utm_campaign`** = `fxa-embedded-form`, **`utm_content`** = `whatsnew`, **`utm_medium`** = `referral` or `email` |Where `XX` = the browser version, e.g. 67 ([example](https://www.mozilla.org/en-US/firefox/67.0.1/whatsnew/)). The "what's new" page that is shown to users after they upgrade browser versions. Important notes: **(1)** Users who are signed into a Firefox account have a different experience than those that are signed out. Signed-in users typically see a promotion of FxA-relying services, while signed-out users see a CTA to create an account. **(2)** The attribution parameters for this page were standardized starting on version 66. **Previous values for entrypoint** include `whatsnew` and `mozilla.org-wnp64` - these values should be used when doing historical analysis of versions prior to 66.|
-|`new-install-page` (current), `firefox-new` (previously)|varies (can contain values passed through by referrals)|[example](https://www.mozilla.org/en-US/firefox/new/). The "install firefox" page. This page doesn't always promote FxA and it will often only promote it to a certain % of traffic or to certain segments.|
+|`new-install-page` (current), `firefox-new` (previously)|varies (can contain values passed through by referrals)|[example](https://www.mozilla.org/en-US/firefox/new/). The "install Firefox" page. This page doesn't always promote FxA and it will often only promote it to a certain % of traffic or to certain segments.|
 |`fxa-discoverability-native`|NA|The in-browser toolbar icon. This was introduced with version 67.0|
 |`menupanel`|NA|The in-browser account item in the "hamburger" menu on desktop (three-line menu in the upper right corner) as well as the sync/FxA menu item on android and iOS.|
 |`preferences`|NA|The "sign into sync" button found in the sync section in desktop preferences.|

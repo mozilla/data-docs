@@ -1,5 +1,10 @@
 # Firefox Account Funnels
 
+## Table of Contents
+<!-- toc -->
+
+## Introduction
+
 There are two primary "funnels" that users step through when authenticating with FxA. The **registration** funnel reflects the steps required for a **new** FxA user (or more precisely, email address) to create an account. The **login** funnel reflects the steps necessary for an **existing** FxA user to sign into their account.
 
 We are also in the process of developing funnels for paying subscribers. We will add documentation on that once the work is is closer to complete.
@@ -16,13 +21,16 @@ While there are some variations, the typical registration funnel is comprised of
 |4|`fxa_reg - submit`|`flow.signup.submit`|A user submits the registration form (could be unsuccessfully).|
 |5|`fxa_reg - created`|`account.created`|This event is emitted by the auth server. It indicates that user has entered a valid email address and password, and that their account has been created and added to the DB. However, the account is still "unverified" at this point and therefore not accessible by the user.|
 |6|`fxa_email - sent` (`email_type` = `registration`)|`email.verification.sent`|An email is sent to the user to verify their new account. Depending on the service, it either contains a verification link or a verification code that the user enters into the registration form to verify their email address.|
-|7|`fxa_email - click`| `email.verify_code.clicked`  |A user has clicked on the verification link contained in the email sent in step 6. Note this only applies to cases where a clickable link is sent; for reliers that use activation codes, this event will not be emitted (so be aware of this when constructing your funnels).|
-|8|`fxa_reg - email_confirmed`|`account.verified`|This event is emitted by the auth server. A user has successfully verified their account. They should now be able to use it.|
-|9|`fxa_reg - complete`|`flow.complete`|The account registration process is complete. Note there are NO actions required of the user to advance from step 8 to step 9; there should be virtually no drop-off there. The flow event is identical for registration and login.|
+|7|`fxa_reg - cwts_view`|`flow.signup.choose-what-to-sync.view`|User views the "choose what to sync" screen which allows the users to select what types of browser data they want to synchronize. **Note that the user is not required to submit this page** - if they do not take any action then all the data types will be synced by default. Thus you may not want to include this (and the following two events) in your funnel analysis if you do not care about the user's actions here. |
+|8|`fxa_reg - cwts_engage`|Not Implemented|User clicks on the "choose what to sync" screen.|
+|9|`fxa_reg - cwts_submit`|Not Implemented|User submits the "choose what to sync" screen. See also the amplitude user property `sync_engines` which stores which data types the user selected.|
+|10|`fxa_email - click`| `email.verify_code.clicked`  |A user has clicked on the verification link contained in the email sent in step 6. Note this only applies to cases where a clickable link is sent; for reliers that use activation codes, this event will not be emitted (so be aware of this when constructing your funnels).|
+|11|`fxa_reg - email_confirmed`|`account.verified`|This event is emitted by the auth server. A user has successfully verified their account. They should now be able to use it.|
+|12|`fxa_reg - complete`|`flow.complete`|The account registration process is complete. Note there are NO actions required of the user to advance from step 8 to step 9; there should be virtually no drop-off there. The flow event is identical for registration and login.|
 
 See [this chart](https://analytics.amplitude.com/mozilla-corp/chart/a9yjkzf) for an example of how this funnel can be constructed for the firstrun (about:welcome) page in amplitude. [Here](https://sql.telemetry.mozilla.org/queries/62595#160701) is a version in re:dash using the flow events.
 
-The chart above provides the most detailed version of the registration funnel that can currently be constructed. However, it should not be considered the "canonical" version of the funnel - depending on the question it may make sense to omit some of the steps. For example, at the time of writing some browser entrypoints (e.g. `menupanel`) link directly to step 2 and skip the initial email form. Having both steps 7 and 8 may also be redundant in some cases, etc.
+The chart above provides the most detailed version of the registration funnel that can currently be constructed. However, it should not be considered the "canonical" version of the funnel - depending on the question it may make sense to omit some of the steps. For example, at the time of writing some browser entrypoints (e.g. `menupanel`) link directly to step 2 and skip the initial email form. Having both steps 7 and 8 may also be redundant in some cases, etc. Also, as noted above, you may want to omit the "choose what to sync" steps if you do not care about the users' actions there.
 
 ## Login Funnel
 
@@ -137,10 +145,10 @@ At one point, at least for iOS, the SMS message contained a deep link that pre-f
 |1|`fxa_connect_device - view` (`connect_device_flow` = `sms`)|`flow.signin.sms.view`|User viewed the SMS form.|
 |2|`fxa_connect_device - engage` (`connect_device_flow` = `sms`)|`flow.signin.sms.engage`|User clicked somewhere on the SMS form.|
 |3|`fxa_connect_device - submit` (`connect_device_flow` = `sms`)|`flow.signin.sms.submit`|User submitted the SMS form.|
-|4|Not Implemented|`sms.region.{country_code}`|An sms was sent to a number with the two letter `country_code`.|
+|4|Not Implemented|`sms.region.{country_code}`|An SMS was sent to a number with the two letter `country_code`.|
 |5|Not Implemented|`flow.sms.sent.view`|User views the message confirming that the SMS has been sent.|
 
-The sms form also contains app store links. If they are clicked, flow events `flow.signin.sms.link.app-store.android` or `flow.signin.sms.link.app-store.ios` will be logged.
+The SMS form also contains app store links. If they are clicked, flow events `flow.signin.sms.link.app-store.android` or `flow.signin.sms.link.app-store.ios` will be logged.
 
 ### Connect Another Device Funnel (Non-SMS)
 |Step|Amplitude Event|Flow Event|Description|

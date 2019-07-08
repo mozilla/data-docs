@@ -1,5 +1,9 @@
 # FxA Email Metrics
 
+## Table of Contents
+<!-- toc -->
+
+## Introduction
 Users must provide an email address when they sign up for a Firefox Account. Emails are sent to users to confirm authentication, alert them to new sign-ins, and to complete password resets. Users can also opt-in to marketing emails, however metrics for those are not covered in this article.
 
 Events that we track relating to email:
@@ -12,7 +16,7 @@ Metrics relating to emails also contain the following properties:
 
 1. The email service of the recipient
 2. The `email_template` - the [template](https://github.com/mozilla/fxa/tree/master/packages/fxa-auth-server/lib/senders/templates) of the email that was sent (we currently only track this for sending events, not click events). This is more specific than the
-3. `email_type`, which is broader grouping of many email templates in to related categories, see chart below.
+3. `email_type`, which is broader grouping of many email templates into related categories, see chart below.
 
 
 ## Email Templates and Email Types
