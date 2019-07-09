@@ -91,9 +91,9 @@ This [connector](https://github.com/akkomar/spark-bigquery) is based on [`spotif
 Connector library is added to `shared_serverless_python3` cluster on Databricks - see example [Scala](https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/130908) and [Python](https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/130819) notebooks.   
 
 ### Storage API connector
-Connectivity via BigQuery Spark Connector which uses [BigQuery Storage API](https://cloud.google.com/bigquery/docs/reference/storage/).
+[Storage API Connector](https://github.com/GoogleCloudPlatform/spark-bigquery-connector) uses [BigQuery Storage API](https://cloud.google.com/bigquery/docs/reference/storage/). Although both API and connector are in Beta, this is the recommended way for accessing BigQuery from Spark as it offers better performance and is more cost-effective than the standard connector. This connector has some limited support for pushing down filtering predicates, it can also be used together with BigQuery client which allows to run arbitrary SQL queries and load results to Spark.
 
-_Work in progress_
+Connector library is added to `shared_serverless_python3` cluster on Databricks - see example [Python notebook](https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/141939) for more details on the topics mentioned above.
 
 ## From Spark / Dataproc
 Querying BigQuery from Dataproc will be faster than from Databricks because it will not involve cross-cloud data transfers.
