@@ -81,6 +81,10 @@
     * [Crash Aggregates](datasets/obsolete/crash_aggregates/reference.md)
     * [Client Count](datasets/obsolete/client_count/reference.md)
     * [Client Count Daily](datasets/obsolete/client_count_daily/reference.md)
+  * [Firefox Accounts Datasets](datasets/fxa.md)
+    * [Firefox Account Attribution](datasets/fxa_metrics/attribution.md)
+    * [Firefox Account Funnel Metrics](datasets/fxa_metrics/funnels.md)
+    * [Firefox Account Email Metrics](datasets/fxa_metrics/emails.md)
 
 
 ---

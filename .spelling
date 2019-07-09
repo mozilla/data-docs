@@ -6,6 +6,7 @@
 1KiB
 200-tab
 28-day
+2FA
 ad-hoc
 adb
 add-on
@@ -17,6 +18,7 @@ aMAU
 aWAU
 Alessio
 Algebird's
+AMO
 analytics
 anonymised
 APIs
@@ -71,6 +73,8 @@ e.g.
 E10s
 ElasticSearch
 EMR
+entrypoint
+entrypoints
 ETL
 Fenix
 Fennec
@@ -94,8 +98,10 @@ hostname
 hostnames
 https
 HyperLogLog
+IAM
 ISO8601
 i.e.
+implementational
 inlined
 int64
 interpretability
@@ -109,6 +115,7 @@ KPI
 Komarzewski
 lifecycle
 Lockbox
+Lockwise
 lookups
 Lua
 matcher
@@ -120,6 +127,7 @@ metadata
 metastore
 Miroglio
 Mocli
+mozilla.org
 MozTelemetry
 MySQL
 multipreffer
@@ -135,6 +143,7 @@ NoSQL
 npm
 NSIS
 NumPy
+oauth
 ORM-like
 optout
 parquet2hive
@@ -150,6 +159,7 @@ pre-computed
 pre-compiled
 pre-configured
 pre-defined
+pre-filled
 pre-loaded
 pre-processes
 pre-release
@@ -169,6 +179,8 @@ resampling
 rustc
 recommender
 release_calendar
+relier
+reliers
 repo
 RTMO
 runtime
@@ -181,6 +193,7 @@ searchfox
 SendPing
 SERP
 serverless
+SMS
 Sonatype
 SSL
 STMO
@@ -198,8 +211,10 @@ timestamps
 tryserver
 TMO
 TODO
+TOTP
 toolbars
 toolchain
+trailhead
 trailheads
 triaged
 triaging
@@ -215,6 +230,7 @@ unenroll
 unenrollment
 unmanaged
 uri
+utm
 UUID
 versioned
 whitelist
