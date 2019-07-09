@@ -7,7 +7,6 @@
 200-tab
 28-day
 2FA
-5a
 ad-hoc
 add-on
 addon
@@ -34,7 +33,6 @@ backfilled
 behaviour
 Bhattacharyya
 BigQuery
-BQ
 blocklist
 boolean
 booleans
@@ -48,7 +46,6 @@ config
 CommonMark
 CPOW
 CSV
-CTA
 cutover
 dashboarding
 Databricks
@@ -76,7 +73,6 @@ Fennec
 filename
 FirefoxReality
 FireTV
-firstrun
 funnelcake
 geo-city
 geo-country
@@ -140,7 +136,6 @@ oauth
 ORM-like
 optout
 parquet2hive
-passcode
 performant
 Pep8
 Pingsender
@@ -183,9 +178,6 @@ searchfox
 SendPing
 SERP
 serverless
-signin
-signup
-signups
 SMS
 Sonatype
 SSL

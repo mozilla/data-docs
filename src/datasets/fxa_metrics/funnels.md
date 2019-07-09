@@ -28,7 +28,7 @@ While there are some variations, the typical registration funnel is comprised of
 |11|`fxa_reg - email_confirmed`|`account.verified`|This event is emitted by the auth server. A user has successfully verified their account. They should now be able to use it.|
 |12|`fxa_reg - complete`|`flow.complete`|The account registration process is complete. Note there are NO actions required of the user to advance from step 8 to step 9; there should be virtually no drop-off there. The flow event is identical for registration and login.|
 
-See [this chart](https://analytics.amplitude.com/mozilla-corp/chart/a9yjkzf) for an example of how this funnel can be constructed for the firstrun (about:welcome) page in amplitude. [Here](https://sql.telemetry.mozilla.org/queries/62595#160701) is a version in re:dash using the flow events.
+See [this chart](https://analytics.amplitude.com/mozilla-corp/chart/a9yjkzf) for an example of how this funnel can be constructed for the `firstrun` (about:welcome) page in amplitude. [Here](https://sql.telemetry.mozilla.org/queries/62595#160701) is a version in re:dash using the flow events.
 
 The chart above provides the most detailed version of the registration funnel that can currently be constructed. However, it should not be considered the "canonical" version of the funnel - depending on the question it may make sense to omit some of the steps. For example, at the time of writing some browser entrypoints (e.g. `menupanel`) link directly to step 2 and skip the initial email form. Having both steps 7 and 8 may also be redundant in some cases, etc. Also, as noted above, you may want to omit the "choose what to sync" steps if you do not care about the users' actions there.
 
@@ -53,7 +53,7 @@ Users must confirm their login via email in the following cases:
 |8|`fxa_login - email_confirmed`|`account.confirmed`|This event is emitted by the auth server. A user has successfully confirmed the login via email.|
 |9|`fxa_login - complete`|`flow.complete`|The account registration process is complete. Note there are NO actions required of the user to advance from step 8 to step 9; there should be virtually no drop-off there. The flow event is identical for registration and login.|
 
-See [this chart](https://analytics.amplitude.com/mozilla-corp/chart/53dqtlo) for an example of how this funnel can be constructed for the firstrun (about:welcome) page. [Here](https://sql.telemetry.mozilla.org/queries/63048#161676) is a version in re:dash using the flow events.
+See [this chart](https://analytics.amplitude.com/mozilla-corp/chart/53dqtlo) for an example of how this funnel can be constructed for the `firstrun` (about:welcome) page. [Here](https://sql.telemetry.mozilla.org/queries/63048#161676) is a version in re:dash using the flow events.
 
 Note again that you may want to check whether the service you are analyzing requires email confirmation on login.
 
@@ -66,7 +66,7 @@ Some additional funnels are "branches" off the main login funnel above:
   - Optionally - user uses a 2FA recovery code to login to their 2FA-enabled account (e.g. if they misplace their second factor.)
 
 ### Password Reset and Recovery Codes
-Users can click "Forgot Password?" during signin to begin the password reset process. The funnel is described in the chart below.
+Users can click "Forgot Password?" during sign-in to begin the password reset process. The funnel is described in the chart below.
 
 **An important "FYI" here**: passwords are used to encrypt accounts' sync data. This implies a **bad scenario** where a change of password can lead to loss of sync data, if there are no longer any devices that can connect to the account and re-upload/restore the data after the reset occurs. This would happen, for example, if you only had one device connected to sync, lost the device, then tried to login to a new device to access your synced data. If you do a password reset while logging into the second device, the remote copy of your sync data will be overwritten (with whatever happens to be on the second device).
 
@@ -82,7 +82,7 @@ Thus the recovery codes. If a user (1) sets up recovery codes via settings (and 
 |3|Not Implemented|`flow.reset-password.view`|View of the form asking the user to confirm that they want to reset.|
 |4|`fxa_login - forgot_submit`|`flow.reset-password.engage`, `flow.reset-password.submit`|User clicks on the button confirming that they want to reset.|
 |5|`fxa_email - delivered` (`email_template` = `recoveryEmail`)|`email.recoveryEmail.delivered`|Delivery of the PW reset link to the user via email.|
-|5a|Not Implemented|`flow.confirm-reset-password.view`|View of the screen telling the user to confirm the reset via email.|
+|5-a|Not Implemented|`flow.confirm-reset-password.view`|View of the screen telling the user to confirm the reset via email.|
 |6|Not Implemented|`flow.complete-reset-password.view`|User views the form to create a new password. (viewable after clicking the link in the email above)|
 |7|Not Implemented|`flow.complete-reset-password.engage`|User clicks on the form to create a new password.|
 |8|Not Implemented|`flow.complete-reset-password.submit`|User submits the form to create a new password.|
@@ -98,7 +98,7 @@ Thus the recovery codes. If a user (1) sets up recovery codes via settings (and 
 |3|Not Implemented|`flow.reset-password.view`|View of the form asking the user to confirm that they want to reset.|
 |4|`fxa_login - forgot_submit`|`flow.reset-password.engage`, `flow.reset-password.submit`|User clicks on the button confirming that they want to reset.|
 |5|`fxa_email - delivered` (`email_template` = `recoveryEmail`)|`email.recoveryEmail.delivered`|Delivery of the PW reset link to the user via email.|
-|5a|Not Implemented|`flow.confirm-reset-password.view`|View of the screen telling the user to confirm the reset via email.|
+|5-a|Not Implemented|`flow.confirm-reset-password.view`|View of the screen telling the user to confirm the reset via email.|
 |6|Not Implemented|`flow.account-recovery-confirm-key.view`|User views the form to enter their account recovery key. (viewable after clicking the link in the email above)|
 |7|Not Implemented|`flow.account-recovery-confirm-key.engage`|User clicks on the form to enter their account recovery key.|
 |8|Not Implemented|`flow.account-recovery-confirm-key.submit`|User submits the form to enter their account recovery key.|
@@ -109,7 +109,7 @@ Thus the recovery codes. If a user (1) sets up recovery codes via settings (and 
 |13|`fxa_login - forgot_complete`|`flow.complete` (the auth server also emits `account.reset`)|User has completed the password reset funnel.|
 
 ### Login with 2FA (TOTP)
-Users can setup two factor authentication (2FA) on account login. 2FA is implemented via time-based one-time password (TOTP). If a user has set up 2FA (via settings), they will be required to enter a passcode generated by their second factor whenever they login to their account.
+Users can setup two factor authentication (2FA) on account login. 2FA is implemented via time-based one-time password (TOTP). If a user has set up 2FA (via settings), they will be required to enter a pass code generated by their second factor whenever they login to their account.
 
 Users are also provisioned a set of recovery codes as part of the 2FA setup process. These are one-time use codes that can be used to login to an account if a user loses access to their second factor. **Note that these 2FA recovery codes are different than the account recovery keys described above**.
 
@@ -133,7 +133,7 @@ Users are also provisioned a set of recovery codes as part of the 2FA setup proc
 |3|Not Implemented|`recoveryCode.verified` (auth server)|User submitted a valid recovery code.|
 
 ## Connect Another Device / SMS
-Sync is most valuable to users who have multiple devices connected to their account. Thus after a user completes a sync login or registration funnel, they are shown the "connect another device" form. This CTA contains a form for a phone number, as well as links to the Google Play and Apple stores where users can download mobile versions of Firefox. If a user submits a valid phone number (associated with a country that our service supports), then we send them an SMS message with links to their mobile phone's app store.
+Sync is most valuable to users who have multiple devices connected to their account. Thus after a user completes a sync login or registration funnel, they are shown the "connect another device" form. This Call to Action contains a form for a phone number, as well as links to the Google Play and Apple stores where users can download mobile versions of Firefox. If a user submits a valid phone number (associated with a country that our service supports), then we send them an SMS message with links to their mobile phone's app store.
 
 At one point, at least for iOS, the SMS message contained a deep link that pre-filled the user's email address on the sign-in form once they installed the mobile browser. There is some uncertainty about whether this still works...
 
