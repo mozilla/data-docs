@@ -5,10 +5,14 @@ addons:
       - parallel
 install:
   - npm install markdown-spellcheck markdown-link-check -g
-  - curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-dtmo
+  - curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git rust-lang-nursery/mdBook
+  - curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-toc
+  - curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-mermaid
 script:
-  - mdbook-dtmo --version
-  - mdbook-dtmo build .
+  - mdbook --version
+  - mdbook-toc --version
+  - mdbook-mermaid --version
+  - mdbook build .
   - mdspell 'src/**/*.md' --ignore-numbers --en-us --report
   - bash scripts/link_check.sh
 deploy:
