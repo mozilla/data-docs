@@ -4,6 +4,13 @@ title = "Firefox Data Documentation"
 [build]
 create-missing = false
 
+[preprocessor.mermaid]
+command = "mdbook-mermaid"
+renderer = ["html"]
+
+[preprocessor.toc]
+command = "mdbook-toc"
+
 [output.html]
 additional-css = ["dtmo.css", "mermaid.css"]
 additional-js = ["mermaid.min.js", "mermaid-init.js"]
