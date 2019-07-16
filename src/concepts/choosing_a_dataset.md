@@ -70,7 +70,7 @@ This section describes the derived datasets we provide to make analyzing this da
 
 ## `crash_aggregates`
 
-{{#include ../datasets/batch_view/crash_aggregates/intro.md}}
+{{#include ../datasets/obsolete/crash_aggregates/intro.md}}
 
 ## `crash_summary`
 
