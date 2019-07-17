@@ -70,7 +70,7 @@ This section describes the derived datasets we provide to make analyzing this da
 
 ## `error_aggregates`
 
-{{#include ../datasets/streaming/error_aggregates/crash_aggregates/intro.md}}
+{{#include ../datasets/streaming/error_aggregates/intro.md}}
 
 ## `crash_summary`
 
