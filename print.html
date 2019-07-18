@@ -365,7 +365,13 @@ take a look at our <a href="../tools/experiments.html">tools for experimentation
 </li>
 <li><a href="#crash-ping-derived-datasets">Crash Ping Derived Datasets</a>
 <ul>
-<li><a href="#crash_aggregates">crash_aggregates</a></li>
+<li><a href="#error_aggregates">error_aggregates</a>
+<ul>
+<li><a href="#contents">Contents</a></li>
+<li><a href="#accessing-the-data">Accessing the data</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
 <li><a href="#crash_summary">crash_summary</a>
 <ul>
 <li><a href="#contents">Contents</a></li>
@@ -836,22 +842,43 @@ is captured after the main Firefox process crashes or after a content process cr
 whether or not the crash report is submitted to <code>crash-stats.mozilla.org</code>.
 It includes non-identifying metadata about the crash.</p>
 <p>This section describes the derived datasets we provide to make analyzing this data easier.</p>
-<a class="header" href="#crash_aggregates" id="crash_aggregates"><h2><code>crash_aggregates</code></h2></a>
-<p>{{#include ../datasets/batch_view/crash_aggregates/intro.md}}</p>
+<a class="header" href="#error_aggregates" id="error_aggregates"><h2><code>error_aggregates</code></h2></a>
+<p>The <code>error_aggregates_v2</code> table represents counts of errors counted from main and crash
+pings, aggregated every 5 minutes. It is the dataset backing the main <a href="https://data-missioncontrol.dev.mozaws.net/">mission
+control</a> view, but may also be queried
+independently.</p>
+<a class="header" href="#contents-5" id="contents-5"><h4>Contents</h4></a>
+<p>The <code>error_aggregates_v2</code> table contains counts of various error measures (for
+example: crashes, &quot;the slow script dialog showing&quot;), aggregated across each
+unique set of dimensions (for example: channel, operating system) every 5
+minutes. You can get an aggregated count for any particular set of dimensions
+by summing using SQL.</p>
+<a class="header" href="#experiment-unpacking" id="experiment-unpacking"><h5>Experiment unpacking</h5></a>
+<p>It's important to note that when this dataset is written, pings from clients participating in an experiment
+are aggregated on the <code>experiment_id</code> and <code>experiment_branch</code> dimensions corresponding to what experiment and branch
+they are participating in. However, they are also aggregated with the rest of the population where the values of
+these dimensions are null.
+Therefore care must be taken when writing aggregating queries over the whole population - in these cases one needs to
+filter for <code>experiment_id is null</code> and <code>experiment_branch is null</code> in order to not double-count pings from experiments.</p>
+<a class="header" href="#accessing-the-data-9" id="accessing-the-data-9"><h4>Accessing the data</h4></a>
+<p>You can access the data via re:dash. Choose <code>Athena</code> and then select the
+<code>telemetry.error_aggregates_v2</code> table.</p>
+<a class="header" href="#further-reading-3" id="further-reading-3"><h4>Further Reading</h4></a>
+<p>The code responsible for generating this dataset is <a href="https://github.com/mozilla/telemetry-streaming/blob/master/src/main/scala/com/mozilla/telemetry/streaming/ErrorAggregator.scala">here</a>.</p>
 <a class="header" href="#crash_summary" id="crash_summary"><h2><code>crash_summary</code></h2></a>
 <p>The <code>crash_summary</code> table is the most direct representation of a crash ping.</p>
-<a class="header" href="#contents-5" id="contents-5"><h4>Contents</h4></a>
+<a class="header" href="#contents-6" id="contents-6"><h4>Contents</h4></a>
 <p>The <code>crash_summary</code> table contains one row for each crash ping.
 Each column represents one field from the crash ping payload,
 though only a subset of all crash ping fields are included.</p>
-<a class="header" href="#accessing-the-data-9" id="accessing-the-data-9"><h4>Accessing the Data</h4></a>
+<a class="header" href="#accessing-the-data-10" id="accessing-the-data-10"><h4>Accessing the Data</h4></a>
 <p>The data is stored as a parquet table in S3 at the following address.
 See <a href="../../../cookbooks/parquet.html">this cookbook</a> to get started working with the data in Spark.</p>
 <pre><code>s3://telemetry-parquet/crash_summary/v1/
 </code></pre>
 <p><code>crash_summary</code> is accessible through re:dash.
 Here's an <a href="https://sql.telemetry.mozilla.org/queries/4793/source">example query</a>.</p>
-<a class="header" href="#further-reading-3" id="further-reading-3"><h4>Further Reading</h4></a>
+<a class="header" href="#further-reading-4" id="further-reading-4"><h4>Further Reading</h4></a>
 <p>The technical documentation for <code>crash_summary</code> is located in the
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/docs/CrashSummary.md">telemetry-batch-view documentation</a>.</p>
 <p>The code responsible for generating this dataset is
@@ -862,16 +889,16 @@ is sent from Firefox Desktop on the first session of a newly created profile and
 information about the user environment.</p>
 <p>This data is available in the <code>telemetry_new_profile_parquet</code> dataset.</p>
 <p>The <code>telemetry_new_profile_parquet</code> table is the most direct representation of a new-profile ping.</p>
-<a class="header" href="#contents-6" id="contents-6"><h4>Contents</h4></a>
+<a class="header" href="#contents-7" id="contents-7"><h4>Contents</h4></a>
 <p>The table contains one row for each ping. Each column represents one field from the new-profile ping payload, though only a subset of all fields are included.</p>
-<a class="header" href="#accessing-the-data-10" id="accessing-the-data-10"><h4>Accessing the Data</h4></a>
+<a class="header" href="#accessing-the-data-11" id="accessing-the-data-11"><h4>Accessing the Data</h4></a>
 <p>The data is stored as a parquet table in S3 at the following address.
 See <a href="../../../cookbooks/parquet.html">this cookbook</a> to get started working with the data in Spark.</p>
 <pre><code>s3://net-mozaws-prod-us-west-2-pipeline-data/telemetry-new-profile-parquet/v2/
 </code></pre>
 <p>The <code>telemetry_new_profile_parquet</code> is accessible through re:dash.
 Here's an <a href="https://sql.telemetry.mozilla.org/queries/5888#table">example query</a>.</p>
-<a class="header" href="#further-reading-4" id="further-reading-4"><h4>Further Reading</h4></a>
+<a class="header" href="#further-reading-5" id="further-reading-5"><h4>Further Reading</h4></a>
 <p>This dataset is generated automatically using direct to parquet. The configuration responsible for generating this dataset was introduced in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1360256">bug 1360256</a>.</p>
 <a class="header" href="#update-derived-dataset" id="update-derived-dataset"><h1>Update Derived Dataset</h1></a>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/update-ping.html">update ping</a>
@@ -879,30 +906,30 @@ is sent from Firefox Desktop when a browser update is ready to be applied and af
 It contains the build information and the update blob information, in addition to some information about the
 user environment.
 The <code>telemetry_update_parquet</code> table is the most direct representation of an update ping.</p>
-<a class="header" href="#contents-7" id="contents-7"><h4>Contents</h4></a>
+<a class="header" href="#contents-8" id="contents-8"><h4>Contents</h4></a>
 <p>The table contains one row for each ping. Each column represents one field from the update ping payload, though only a subset of all fields are included.</p>
-<a class="header" href="#accessing-the-data-11" id="accessing-the-data-11"><h4>Accessing the Data</h4></a>
+<a class="header" href="#accessing-the-data-12" id="accessing-the-data-12"><h4>Accessing the Data</h4></a>
 <p>The data is stored as a parquet table in S3 at the following address.
 See <a href="../../../cookbooks/parquet.html">this cookbook</a> to get started working with the data in Spark.</p>
 <pre><code>s3://net-mozaws-prod-us-west-2-pipeline-data/telemetry-update-parquet/v1/
 </code></pre>
 <p>The <code>telemetry_update_parquet</code> is accessible through re:dash.
 Here's an <a href="https://sql.telemetry.mozilla.org/queries/31267#table">example query</a>.</p>
-<a class="header" href="#further-reading-5" id="further-reading-5"><h4>Further Reading</h4></a>
+<a class="header" href="#further-reading-6" id="further-reading-6"><h4>Further Reading</h4></a>
 <p>This dataset is generated automatically using direct to parquet. The configuration responsible for generating this dataset was introduced in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1384861">bug 1384861</a>.</p>
 <a class="header" href="#other-datasets" id="other-datasets"><h1>Other Datasets</h1></a>
 <p>Public crash statistics for Firefox are available through the Data Platform in a <code>socorro_crash</code> dataset.
 The crash data in <a href="https://wiki.mozilla.org/Socorro">Socorro</a> is sanitized and made available to ATMO and STMO.
 A nightly import job converts batches of JSON documents into a columnar format using the associated JSON Schema.</p>
-<a class="header" href="#contents-8" id="contents-8"><h3>Contents</h3></a>
-<a class="header" href="#accessing-the-data-12" id="accessing-the-data-12"><h4>Accessing the Data</h4></a>
+<a class="header" href="#contents-9" id="contents-9"><h3>Contents</h3></a>
+<a class="header" href="#accessing-the-data-13" id="accessing-the-data-13"><h4>Accessing the Data</h4></a>
 <p>The dataset is available in parquet at <code>s3://telemetry-parquet/socorro_crash/v2</code>.
 It is also indexed with Athena and Presto with the table name <code>socorro_crash</code>.</p>
 <a class="header" href="#obsolete-datasets" id="obsolete-datasets"><h1>Obsolete Datasets</h1></a>
 <a class="header" href="#heavy_users" id="heavy_users"><h2><code>heavy_users</code></h2></a>
 <p>The <code>heavy_users</code> table provides information about whether a given <code>client_id</code> is
 considered a &quot;heavy user&quot; on each day (using submission date).</p>
-<a class="header" href="#contents-9" id="contents-9"><h4>Contents</h4></a>
+<a class="header" href="#contents-10" id="contents-10"><h4>Contents</h4></a>
 <p>The <code>heavy_users</code> table contains one row per client-day, where day is
 <code>submission_date</code>. A client has a row for a specific <code>submission_date</code> if
 they were active at all in the 28 day window ending on that <code>submission_date</code>.</p>
@@ -929,7 +956,7 @@ profile was created are counted as zero <code>active_ticks</code>. Analyses may
 need to use the included <code>profile_creation_date</code> field to take this
 into account.</li>
 </ol>
-<a class="header" href="#accessing-the-data-13" id="accessing-the-data-13"><h4>Accessing the Data</h4></a>
+<a class="header" href="#accessing-the-data-14" id="accessing-the-data-14"><h4>Accessing the Data</h4></a>
 <p>The data is available both via <code>sql.t.m.o</code> and Spark.</p>
 <p>In Spark:</p>
 <pre><code class="language-python">spark.read.parquet(&quot;s3://telemetry-parquet/heavy_users/v1&quot;)
@@ -937,7 +964,7 @@ into account.</li>
 <p>In SQL:</p>
 <pre><code class="language-sql">SELECT * FROM heavy_users LIMIT 3
 </code></pre>
-<a class="header" href="#further-reading-6" id="further-reading-6"><h4>Further Reading</h4></a>
+<a class="header" href="#further-reading-7" id="further-reading-7"><h4>Further Reading</h4></a>
 <p>The code responsible for generating this dataset is
 <a href="BROKEN:https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/HeavyUsersView.scala">here</a></p>
 <a class="header" href="#appendix" id="appendix"><h1>Appendix</h1></a>
@@ -5264,10 +5291,10 @@ made to be:</p>
 <strong>check to make sure there isn't already a derived dataset</strong> made for your purpose.
 If you do need to work with raw ping data, be aware that loading the data can take a while.
 Try to limit the size of your data by controlling the date range, etc.</p>
-<a class="header" href="#accessing-the-data-14" id="accessing-the-data-14"><h4>Accessing the Data</h4></a>
+<a class="header" href="#accessing-the-data-15" id="accessing-the-data-15"><h4>Accessing the Data</h4></a>
 <p>You can access raw ping data from an <a href="https://analysis.telemetry.mozilla.org/">ATMO cluster</a> using the <a href="https://python-moztelemetry.readthedocs.io/en/stable/api.html#module-moztelemetry.dataset">Dataset API</a>.
 Raw ping data are not available in <a href="https://sql.telemetry.mozilla.org/">re:dash</a>.</p>
-<a class="header" href="#further-reading-7" id="further-reading-7"><h4>Further Reading</h4></a>
+<a class="header" href="#further-reading-8" id="further-reading-8"><h4>Further Reading</h4></a>
 <p>You can find <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/index.html">the complete ping documentation</a>.
 To augment our data collection, see <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Adding_a_new_Telemetry_probe">Collecting New Data</a> and the
 <a href="https://wiki.mozilla.org/Firefox/Data_Collection">Data Collection Policy</a>.</p>
@@ -5387,12 +5414,12 @@ please look
 <p>The <code>addons_daily</code> dataset serves as the central hub for all Firefox extension related questions.
 This includes questions regarding browser performance, user engagement, click through rates, etc.
 Each row in the table represents a unique add-on, and each column is a unique metric.</p>
-<a class="header" href="#contents-10" id="contents-10"><h3>Contents</h3></a>
+<a class="header" href="#contents-11" id="contents-11"><h3>Contents</h3></a>
 <p>Prior to construction of this dataset, extension related data lived in several different sources.
 <code>Addons_daily</code> has combined metrics aggregated from several sources,
 including raw pings, telemetry data, and google analytics data.
 Note that the data is a 1% sample of Release Firefox, so metrics like <code>DAU</code>, <code>WAU</code>, etc are approximate.</p>
-<a class="header" href="#accessing-the-data-15" id="accessing-the-data-15"><h3>Accessing the Data</h3></a>
+<a class="header" href="#accessing-the-data-16" id="accessing-the-data-16"><h3>Accessing the Data</h3></a>
 <p>The data is stored as a parquet table in S3 <code>s3://telemetry-parquet/addons_daily/v1/</code></p>
 <p><strong><em>The <code>addons_daily</code> table is accessible through re:dash using the Athena data source.
 It is also available via the Presto data source,
@@ -5577,7 +5604,7 @@ is tractable in STMO with <code>main_summary</code> or <code>clients_daily</code
 </ul>
 </li>
 </ul>
-<a class="header" href="#accessing-the-data-16" id="accessing-the-data-16"><h4>Accessing the Data</h4></a>
+<a class="header" href="#accessing-the-data-17" id="accessing-the-data-17"><h4>Accessing the Data</h4></a>
 <p><code>churn</code> is available in Re:dash under Athena and Presto. The data is also
 available in parquet for consumption by columnar data engines at
 <code>s3://telemetry-parquet/churn/v3</code>.</p>
@@ -5734,11 +5761,11 @@ be found in
 about how people use Firefox. It should be easy to answer simple questions.
 Each row in the table is a (<code>client_id</code>, <code>submission_date</code>) and contains a
 number of aggregates about that day's activity.</p>
-<a class="header" href="#contents-11" id="contents-11"><h4>Contents</h4></a>
+<a class="header" href="#contents-12" id="contents-12"><h4>Contents</h4></a>
 <p>Many questions about Firefox take the form &quot;What did clients with
 characteristics X, Y, and Z do during the period S to E?&quot; The
 <code>clients_daily</code> table is aimed at answer those questions.</p>
-<a class="header" href="#accessing-the-data-17" id="accessing-the-data-17"><h4>Accessing the Data</h4></a>
+<a class="header" href="#accessing-the-data-18" id="accessing-the-data-18"><h4>Accessing the Data</h4></a>
 <p>The data is stored as a parquet table in S3 at the following address.</p>
 <pre><code>s3://telemetry-parquet/clients_daily/v6/
 </code></pre>
@@ -6045,7 +6072,7 @@ correctly calculated using <code>days_since_visited_5_uri</code>.</p>
 because a given <code>client_id</code> will only be in one group per <code>submission_date</code>. So
 if MAU were calculated by <code>country</code> and <code>channel</code>, then the sum of the MAU for
 each <code>country</code> would be the same as if MAU were calculated only by <code>channel</code>.</p>
-<a class="header" href="#accessing-the-data-18" id="accessing-the-data-18"><h4>Accessing the Data</h4></a>
+<a class="header" href="#accessing-the-data-19" id="accessing-the-data-19"><h4>Accessing the Data</h4></a>
 <p>The data is available in Re:dash and BigQuery. Take a look at this full running
 <a href="https://sql.telemetry.mozilla.org/queries/62029/source#159510">example query in Re:dash</a>.</p>
 <a class="header" href="#data-reference-5" id="data-reference-5"><h1>Data Reference</h1></a>
@@ -6119,18 +6146,18 @@ infrastructure. The job runs as part of the
 </ul>
 <a class="header" href="#introduction-9" id="introduction-9"><h1>Introduction</h1></a>
 <p>The <code>crash_summary</code> table is the most direct representation of a crash ping.</p>
-<a class="header" href="#contents-12" id="contents-12"><h4>Contents</h4></a>
+<a class="header" href="#contents-13" id="contents-13"><h4>Contents</h4></a>
 <p>The <code>crash_summary</code> table contains one row for each crash ping.
 Each column represents one field from the crash ping payload,
 though only a subset of all crash ping fields are included.</p>
-<a class="header" href="#accessing-the-data-19" id="accessing-the-data-19"><h4>Accessing the Data</h4></a>
+<a class="header" href="#accessing-the-data-20" id="accessing-the-data-20"><h4>Accessing the Data</h4></a>
 <p>The data is stored as a parquet table in S3 at the following address.
 See <a href="../../../cookbooks/parquet.html">this cookbook</a> to get started working with the data in Spark.</p>
 <pre><code>s3://telemetry-parquet/crash_summary/v1/
 </code></pre>
 <p><code>crash_summary</code> is accessible through re:dash.
 Here's an <a href="https://sql.telemetry.mozilla.org/queries/4793/source">example query</a>.</p>
-<a class="header" href="#further-reading-8" id="further-reading-8"><h4>Further Reading</h4></a>
+<a class="header" href="#further-reading-9" id="further-reading-9"><h4>Further Reading</h4></a>
 <p>The technical documentation for <code>crash_summary</code> is located in the
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/docs/CrashSummary.md">telemetry-batch-view documentation</a>.</p>
 <p>The code responsible for generating this dataset is
@@ -6217,23 +6244,23 @@ please look at the case classes
 pings, aggregated every 5 minutes. It is the dataset backing the main <a href="https://data-missioncontrol.dev.mozaws.net/">mission
 control</a> view, but may also be queried
 independently.</p>
-<a class="header" href="#contents-13" id="contents-13"><h4>Contents</h4></a>
+<a class="header" href="#contents-14" id="contents-14"><h4>Contents</h4></a>
 <p>The <code>error_aggregates_v2</code> table contains counts of various error measures (for
 example: crashes, &quot;the slow script dialog showing&quot;), aggregated across each
 unique set of dimensions (for example: channel, operating system) every 5
 minutes. You can get an aggregated count for any particular set of dimensions
 by summing using SQL.</p>
-<a class="header" href="#experiment-unpacking" id="experiment-unpacking"><h5>Experiment unpacking</h5></a>
+<a class="header" href="#experiment-unpacking-1" id="experiment-unpacking-1"><h5>Experiment unpacking</h5></a>
 <p>It's important to note that when this dataset is written, pings from clients participating in an experiment
 are aggregated on the <code>experiment_id</code> and <code>experiment_branch</code> dimensions corresponding to what experiment and branch
 they are participating in. However, they are also aggregated with the rest of the population where the values of
 these dimensions are null.
 Therefore care must be taken when writing aggregating queries over the whole population - in these cases one needs to
 filter for <code>experiment_id is null</code> and <code>experiment_branch is null</code> in order to not double-count pings from experiments.</p>
-<a class="header" href="#accessing-the-data-20" id="accessing-the-data-20"><h4>Accessing the data</h4></a>
+<a class="header" href="#accessing-the-data-21" id="accessing-the-data-21"><h4>Accessing the data</h4></a>
 <p>You can access the data via re:dash. Choose <code>Athena</code> and then select the
 <code>telemetry.error_aggregates_v2</code> table.</p>
-<a class="header" href="#further-reading-9" id="further-reading-9"><h4>Further Reading</h4></a>
+<a class="header" href="#further-reading-10" id="further-reading-10"><h4>Further Reading</h4></a>
 <p>The code responsible for generating this dataset is <a href="https://github.com/mozilla/telemetry-streaming/blob/master/src/main/scala/com/mozilla/telemetry/streaming/ErrorAggregator.scala">here</a>.</p>
 <a class="header" href="#data-reference-7" id="data-reference-7"><h1>Data Reference</h1></a>
 <a class="header" href="#example-queries-7" id="example-queries-7"><h2>Example Queries</h2></a>
@@ -6605,7 +6632,7 @@ and the schemas are visible via the <code>telemetry</code> dataset in <a href="h
 <a class="header" href="#introduction-13" id="introduction-13"><h1>Introduction</h1></a>
 <p>The <code>first_shutdown_summary</code> table is a summary of the <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/first-shutdown-ping.html"><code>first-shutdown</code>
 ping</a>.</p>
-<a class="header" href="#contents-14" id="contents-14"><h4>Contents</h4></a>
+<a class="header" href="#contents-15" id="contents-15"><h4>Contents</h4></a>
 <p>The first shutdown ping contains first session usage data. The
 dataset has rows similar to the
 <a href="/datasets/batch_view/new_profile/reference.html"><code>telemetry_new_profile_parquet</code></a>,
@@ -6617,7 +6644,7 @@ shutdown ping-sender mechanism in Firefox 55. To maintain consistent historical
 behavior, the first main ping is not sent until the second start up. In Firefox 57, a
 separate first-shutdown ping was created to evaluate first-shutdown behavior while maintaining backwards compatibility.</p>
 <p>In many cases, the first-shutdown ping is a duplicate of the main ping. The first-shutdown summary can be used in conjunction with the main summary by taking the union and deduplicating on the <code>document_id</code>.</p>
-<a class="header" href="#accessing-the-data-21" id="accessing-the-data-21"><h4>Accessing the Data</h4></a>
+<a class="header" href="#accessing-the-data-22" id="accessing-the-data-22"><h4>Accessing the Data</h4></a>
 <p>The data can be accessed as <code>first_shutdown_summary</code>. It is currently stored in the following path.</p>
 <pre><code>s3://telemetry-parquet/first_shutdown_summary/v4/
 </code></pre>
@@ -6654,7 +6681,7 @@ separate first-shutdown ping was created to evaluate first-shutdown behavior whi
 organized so that each row corresponds to a <code>client_id</code>.
 If you're not sure which dataset to use for your analysis,
 this is probably what you want.</p>
-<a class="header" href="#contents-15" id="contents-15"><h4>Contents</h4></a>
+<a class="header" href="#contents-16" id="contents-16"><h4>Contents</h4></a>
 <p>Each row in the <code>longitudinal</code> dataset represents one <code>client_id</code>,
 which is approximately a user.
 Each column represents a field from the main ping.
@@ -6674,7 +6701,7 @@ and down-samples to 1% of all clients to reduce query computation time and save 
 <li>The longitudinal dataset samples to 1% of all <code>client_id</code>s</li>
 </ul>
 <p>Please note that this dataset only contains release (or opt-out) histograms and scalars.</p>
-<a class="header" href="#accessing-the-data-22" id="accessing-the-data-22"><h4>Accessing the Data</h4></a>
+<a class="header" href="#accessing-the-data-23" id="accessing-the-data-23"><h4>Accessing the Data</h4></a>
 <p>The <code>longitudinal</code> is available in re:dash,
 though it can be difficult to work with the array values in SQL.
 Take a look at this <a href="https://sql.telemetry.mozilla.org/queries/4189/source">example query</a>.</p>
@@ -6754,7 +6781,7 @@ Refer to this repository for information on how to run or augment the dataset.</
 <p>The <code>main_summary</code> table is the most direct representation of a main ping
 but can be difficult to work with due to its size.
 Prefer the <code>clients_daily</code> dataset unless it doesn't aggregate the measurements you're interested in.</p>
-<a class="header" href="#contents-16" id="contents-16"><h4>Contents</h4></a>
+<a class="header" href="#contents-17" id="contents-17"><h4>Contents</h4></a>
 <p>The <code>main_summary</code> table contains one row for each ping.
 Each column represents one field from the main ping payload,
 though only a subset of all main ping fields are included.
@@ -6769,7 +6796,7 @@ If these datasets do not suffice, consider using Spark on an
 <a href="https://analysis.telemetry.mozilla.org">ATMO</a> cluster.
 In the odd case where these queries are necessary,
 make use of the <code>sample_id</code> field and limit to a short submission date range.</p>
-<a class="header" href="#accessing-the-data-23" id="accessing-the-data-23"><h4>Accessing the Data</h4></a>
+<a class="header" href="#accessing-the-data-24" id="accessing-the-data-24"><h4>Accessing the Data</h4></a>
 <p>The data is stored as a parquet table in S3 at the following address.
 See <a href="../../../cookbooks/parquet.html">this cookbook</a> to get started working with the data in Spark.</p>
 <pre><code>s3://telemetry-parquet/main_summary/v4/
@@ -6778,7 +6805,7 @@ See <a href="../../../cookbooks/parquet.html">this cookbook</a> to get started w
 Here's an <a href="https://sql.telemetry.mozilla.org/queries/4201/source">example query</a>.
 Your queries will be slow to complete and can <strong>impact performance for other users</strong>,
 since re:dash is on a shared cluster.</p>
-<a class="header" href="#further-reading-10" id="further-reading-10"><h4>Further Reading</h4></a>
+<a class="header" href="#further-reading-11" id="further-reading-11"><h4>Further Reading</h4></a>
 <p>The technical documentation for <code>main_summary</code> is located in the
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/docs/MainSummary.md">telemetry-batch-view documentation</a>.</p>
 <p>The code responsible for generating this dataset is
@@ -7233,16 +7260,16 @@ Refer to this repository for information on how to run or augment the dataset.</
 </ul>
 <a class="header" href="#introduction-16" id="introduction-16"><h1>Introduction</h1></a>
 <p>The <code>telemetry_new_profile_parquet</code> table is the most direct representation of a new-profile ping.</p>
-<a class="header" href="#contents-17" id="contents-17"><h4>Contents</h4></a>
+<a class="header" href="#contents-18" id="contents-18"><h4>Contents</h4></a>
 <p>The table contains one row for each ping. Each column represents one field from the new-profile ping payload, though only a subset of all fields are included.</p>
-<a class="header" href="#accessing-the-data-24" id="accessing-the-data-24"><h4>Accessing the Data</h4></a>
+<a class="header" href="#accessing-the-data-25" id="accessing-the-data-25"><h4>Accessing the Data</h4></a>
 <p>The data is stored as a parquet table in S3 at the following address.
 See <a href="../../../cookbooks/parquet.html">this cookbook</a> to get started working with the data in Spark.</p>
 <pre><code>s3://net-mozaws-prod-us-west-2-pipeline-data/telemetry-new-profile-parquet/v2/
 </code></pre>
 <p>The <code>telemetry_new_profile_parquet</code> is accessible through re:dash.
 Here's an <a href="https://sql.telemetry.mozilla.org/queries/5888#table">example query</a>.</p>
-<a class="header" href="#further-reading-11" id="further-reading-11"><h4>Further Reading</h4></a>
+<a class="header" href="#further-reading-12" id="further-reading-12"><h4>Further Reading</h4></a>
 <p>This dataset is generated automatically using direct to parquet. The configuration responsible for generating this dataset was introduced in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1360256">bug 1360256</a>.</p>
 <a class="header" href="#data-reference-12" id="data-reference-12"><h1>Data Reference</h1></a>
 <a class="header" href="#schema-11" id="schema-11"><h2>Schema</h2></a>
@@ -7332,7 +7359,7 @@ Here's an <a href="https://sql.telemetry.mozilla.org/queries/5888#table">example
 <a class="header" href="#introduction-17" id="introduction-17"><h1>Introduction</h1></a>
 <p>The <code>retention</code> table provides client counts relevant to client retention at a
 1-day granularity. The project is tracked in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1381840">Bug 1381840</a></p>
-<a class="header" href="#contents-18" id="contents-18"><h3>Contents</h3></a>
+<a class="header" href="#contents-19" id="contents-19"><h3>Contents</h3></a>
 <p>The <code>retention</code> table contains a set of attribute columns used to specify a
 cohort of users and a set of metric columns to describe cohort activity. Each
 row contains a permutation of attributes, an approximate set of clients in a
@@ -7364,7 +7391,7 @@ size of the HLL object is 2^13 bits or 1KiB. This maintains about a 1% error
 on average. See <a href="https://github.com/twitter/algebird/blob/develop/algebird-core/src/main/scala/com/twitter/algebird/HyperLogLog.scala#L230-L255">this table from Algebird's HLL implementation</a> for
 more details.</li>
 </ol>
-<a class="header" href="#accessing-the-data-25" id="accessing-the-data-25"><h4>Accessing the Data</h4></a>
+<a class="header" href="#accessing-the-data-26" id="accessing-the-data-26"><h4>Accessing the Data</h4></a>
 <p>The data is primarily available through <a href="https://sql.telemetry.mozilla.org">Re:dash on STMO</a> via
 the Presto source. This service has been configured to use predefined HLL
 functions.</p>
@@ -7448,8 +7475,8 @@ EMR. This script can be used to perform backfill.</p>
 <p>Public crash statistics for Firefox are available through the Data Platform in a <code>socorro_crash</code> dataset.
 The crash data in <a href="https://wiki.mozilla.org/Socorro">Socorro</a> is sanitized and made available to ATMO and STMO.
 A nightly import job converts batches of JSON documents into a columnar format using the associated JSON Schema.</p>
-<a class="header" href="#contents-19" id="contents-19"><h3>Contents</h3></a>
-<a class="header" href="#accessing-the-data-26" id="accessing-the-data-26"><h4>Accessing the Data</h4></a>
+<a class="header" href="#contents-20" id="contents-20"><h3>Contents</h3></a>
+<a class="header" href="#accessing-the-data-27" id="accessing-the-data-27"><h4>Accessing the Data</h4></a>
 <p>The dataset is available in parquet at <code>s3://telemetry-parquet/socorro_crash/v2</code>.
 It is also indexed with Athena and Presto with the table name <code>socorro_crash</code>.</p>
 <a class="header" href="#data-reference-14" id="data-reference-14"><h2>Data Reference</h2></a>
@@ -7513,7 +7540,7 @@ fewer than 5000 page loads is omitted from the dataset.</li>
 <li>This is hopefully just a temporary dataset to stopgap release aggregates going away
 until we can come up with a better way to publicly publish datasets.</li>
 </ul>
-<a class="header" href="#accessing-the-data-27" id="accessing-the-data-27"><h4>Accessing the Data</h4></a>
+<a class="header" href="#accessing-the-data-28" id="accessing-the-data-28"><h4>Accessing the Data</h4></a>
 <p>For details on accessing the data, please look at
 <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1414839">bug 1414839</a>.</p>
 <a class="header" href="#data-reference-15" id="data-reference-15"><h1>Data Reference</h1></a>
@@ -7781,16 +7808,16 @@ is sent from Firefox Desktop when a browser update is ready to be applied and af
 It contains the build information and the update blob information, in addition to some information about the
 user environment.
 The <code>telemetry_update_parquet</code> table is the most direct representation of an update ping.</p>
-<a class="header" href="#contents-20" id="contents-20"><h4>Contents</h4></a>
+<a class="header" href="#contents-21" id="contents-21"><h4>Contents</h4></a>
 <p>The table contains one row for each ping. Each column represents one field from the update ping payload, though only a subset of all fields are included.</p>
-<a class="header" href="#accessing-the-data-28" id="accessing-the-data-28"><h4>Accessing the Data</h4></a>
+<a class="header" href="#accessing-the-data-29" id="accessing-the-data-29"><h4>Accessing the Data</h4></a>
 <p>The data is stored as a parquet table in S3 at the following address.
 See <a href="../../../cookbooks/parquet.html">this cookbook</a> to get started working with the data in Spark.</p>
 <pre><code>s3://net-mozaws-prod-us-west-2-pipeline-data/telemetry-update-parquet/v1/
 </code></pre>
 <p>The <code>telemetry_update_parquet</code> is accessible through re:dash.
 Here's an <a href="https://sql.telemetry.mozilla.org/queries/31267#table">example query</a>.</p>
-<a class="header" href="#further-reading-12" id="further-reading-12"><h4>Further Reading</h4></a>
+<a class="header" href="#further-reading-13" id="further-reading-13"><h4>Further Reading</h4></a>
 <p>This dataset is generated automatically using direct to parquet. The configuration responsible for generating this dataset was introduced in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1384861">bug 1384861</a>.</p>
 <a class="header" href="#data-reference-17" id="data-reference-17"><h1>Data Reference</h1></a>
 <a class="header" href="#schema-15" id="schema-15"><h2>Schema</h2></a>
@@ -8244,7 +8271,7 @@ by a limited number of client characteristics which are relevant to search marke
 However, it is not possible to normalize by client count.
 If you need fine-grained data, consider using <code>search_clients_daily</code>
 which breaks down search counts by client</p>
-<a class="header" href="#contents-21" id="contents-21"><h4>Contents</h4></a>
+<a class="header" href="#contents-22" id="contents-22"><h4>Contents</h4></a>
 <p>Each row of <code>search_aggregates</code> contains
 the standard search count aggregations
 for each unique combination of the following columns.
@@ -8270,7 +8297,7 @@ the column value is <code>null</code>.</p>
 <!--
 #### Background and Caveats
 -->
-<a class="header" href="#accessing-the-data-29" id="accessing-the-data-29"><h4>Accessing the Data</h4></a>
+<a class="header" href="#accessing-the-data-30" id="accessing-the-data-30"><h4>Accessing the Data</h4></a>
 <p>Access to <code>search_aggregates</code> is heavily restricted.
 You will not be able to access this table without additional permissions.
 For more details see the <a href="../../search.html">search data documentation</a>.</p>
@@ -8334,7 +8361,7 @@ The dataset is backfilled through 2016-06-06</p>
 <p><code>search_clients_daily</code> is designed to enable client-level search analyses.
 Querying this dataset can be slow;
 consider using <code>search_aggregates</code> for coarse analyses.</p>
-<a class="header" href="#contents-22" id="contents-22"><h4>Contents</h4></a>
+<a class="header" href="#contents-23" id="contents-23"><h4>Contents</h4></a>
 <p><code>search_clients_daily</code> has one row for each unique combination of:
 (<code>client_id</code>, <code>submission_date</code>, <code>engine</code>, <code>source</code>).</p>
 <p>In addition to the standard search count aggregations,
@@ -8360,7 +8387,7 @@ This ensures users who never search are included in this dataset.</p>
 Consider using an <a href="../../../tools/spark.html">ATMO Spark cluster</a> for heavy analyses.
 If you're querying this dataset from re:dash,
 heavily limit the data you read using <code>submission_date_s3</code> or <code>sample_id</code>.</p>
-<a class="header" href="#accessing-the-data-30" id="accessing-the-data-30"><h4>Accessing the Data</h4></a>
+<a class="header" href="#accessing-the-data-31" id="accessing-the-data-31"><h4>Accessing the Data</h4></a>
 <p>Access to <code>search_clients_daily</code> is heavily restricted.
 You will not be able to access this table without additional permissions.
 For more details see the <a href="../../search.html">search data documentation</a>.</p>
@@ -8507,7 +8534,7 @@ FROM
 <a class="header" href="#introduction-25" id="introduction-25"><h1>Introduction</h1></a>
 <p>The <code>heavy_users</code> table provides information about whether a given <code>client_id</code> is
 considered a &quot;heavy user&quot; on each day (using submission date).</p>
-<a class="header" href="#contents-23" id="contents-23"><h4>Contents</h4></a>
+<a class="header" href="#contents-24" id="contents-24"><h4>Contents</h4></a>
 <p>The <code>heavy_users</code> table contains one row per client-day, where day is
 <code>submission_date</code>. A client has a row for a specific <code>submission_date</code> if
 they were active at all in the 28 day window ending on that <code>submission_date</code>.</p>
@@ -8534,7 +8561,7 @@ profile was created are counted as zero <code>active_ticks</code>. Analyses may
 need to use the included <code>profile_creation_date</code> field to take this
 into account.</li>
 </ol>
-<a class="header" href="#accessing-the-data-31" id="accessing-the-data-31"><h4>Accessing the Data</h4></a>
+<a class="header" href="#accessing-the-data-32" id="accessing-the-data-32"><h4>Accessing the Data</h4></a>
 <p>The data is available both via <code>sql.t.m.o</code> and Spark.</p>
 <p>In Spark:</p>
 <pre><code class="language-python">spark.read.parquet(&quot;s3://telemetry-parquet/heavy_users/v1&quot;)
@@ -8542,7 +8569,7 @@ into account.</li>
 <p>In SQL:</p>
 <pre><code class="language-sql">SELECT * FROM heavy_users LIMIT 3
 </code></pre>
-<a class="header" href="#further-reading-13" id="further-reading-13"><h4>Further Reading</h4></a>
+<a class="header" href="#further-reading-14" id="further-reading-14"><h4>Further Reading</h4></a>
 <p>The code responsible for generating this dataset is
 <a href="BROKEN:https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/HeavyUsersView.scala">here</a></p>
 <a class="header" href="#data-reference-22" id="data-reference-22"><h1>Data Reference</h1></a>
@@ -8603,13 +8630,13 @@ Refer to this repository for information on how to run or augment the dataset.</
 Each row is a distinct set of dimensions, along with their associated crash stats.
 Example stratifying dimensions include channel and country,
 example statistics include usage hours and plugin crashes.</p>
-<a class="header" href="#accessing-the-data-32" id="accessing-the-data-32"><h4>Accessing the Data</h4></a>
+<a class="header" href="#accessing-the-data-33" id="accessing-the-data-33"><h4>Accessing the Data</h4></a>
 <p>This dataset is accessible via re:dash.</p>
 <p>The data is stored as a parquet table in S3 at the following address.
 See <a href="../../../cookbooks/parquet.html">this cookbook</a> to get started working with the data in Spark.</p>
 <pre><code>s3://telemetry-parquet/crash_aggregates/v1/
 </code></pre>
-<a class="header" href="#further-reading-14" id="further-reading-14"><h4>Further Reading</h4></a>
+<a class="header" href="#further-reading-15" id="further-reading-15"><h4>Further Reading</h4></a>
 <p>The technical documentation for this dataset can be found in the
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/0128b08/docs/CrashAggregateView.md">telemetry-batch-view documentation</a></p>
 <a class="header" href="#data-reference-23" id="data-reference-23"><h1>Data Reference</h1></a>
@@ -8765,12 +8792,12 @@ The <a href="https://sql.telemetry.mozilla.org/queries/81/source#129">Firefox ER
 is a good example to review.
 Finally, Roberto has a relevant write-up
 <a href="https://robertovitillo.com/2016/04/12/measuring-product-engagment-at-scale/">here</a>.</p>
-<a class="header" href="#accessing-the-data-33" id="accessing-the-data-33"><h4>Accessing the Data</h4></a>
+<a class="header" href="#accessing-the-data-34" id="accessing-the-data-34"><h4>Accessing the Data</h4></a>
 <p>The data is available in Re:dash.
 Take a look at this
 <a href="https://sql.telemetry.mozilla.org/queries/81/source#129">example query</a>.</p>
 <p>I don't recommend accessing this data from ATMO.</p>
-<a class="header" href="#further-reading-15" id="further-reading-15"><h4>Further Reading</h4></a>
+<a class="header" href="#further-reading-16" id="further-reading-16"><h4>Further Reading</h4></a>
 <a class="header" href="#data-reference-24" id="data-reference-24"><h1>Data Reference</h1></a>
 <a class="header" href="#example-queries-18" id="example-queries-18"><h2>Example Queries</h2></a>
 <a class="header" href="#compute-dau-for-non-windows-clients-for-the-last-week-1" id="compute-dau-for-non-windows-clients-for-the-last-week-1"><h4>Compute DAU for non-windows clients for the last week</h4></a>
