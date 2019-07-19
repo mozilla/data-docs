@@ -4,6 +4,8 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Alerts - Firefox Data Documentation</title>
+        
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,7 +38,10 @@
     </head>
     <body class="light">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">var path_to_root = "../";</script>
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = "light";
+        </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script type="text/javascript">
@@ -57,8 +62,8 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
-            if (theme === null || theme === undefined) { theme = 'light'; }
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
         </script>
@@ -76,7 +81,10 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="../introduction.html">Firefox Data Documentation</a></li><li><a href="../concepts/reporting_a_problem.html"><strong aria-hidden="true">1.</strong> Reporting a problem</a></li><li><a href="../concepts/terminology.html"><strong aria-hidden="true">2.</strong> Terminology</a></li><li><a href="../concepts/getting_started.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li><ol class="section"><li><a href="../concepts/analysis_intro.html"><strong aria-hidden="true">3.1.</strong> Analysis Quick Start</a></li><li><a href="../concepts/choosing_a_dataset.html"><strong aria-hidden="true">3.2.</strong> Choosing a Dataset</a></li><li><a href="../concepts/choosing_a_dataset_mobile.html"><strong aria-hidden="true">3.3.</strong> Choosing a Dataset - Mobile Edition</a></li><li><a href="../tools/stmo.html"><strong aria-hidden="true">3.4.</strong> Intro to STMO</a></li><li><a href="../concepts/analysis_gotchas.html"><strong aria-hidden="true">3.5.</strong> Common Analysis Gotchas</a></li><li><a href="../concepts/sql_optimization.html"><strong aria-hidden="true">3.6.</strong> Optimizing Queries</a></li><li><a href="../datasets/new_data.html"><strong aria-hidden="true">3.7.</strong> Collecting New Data</a></li><li><a href="../concepts/getting_help.html"><strong aria-hidden="true">3.8.</strong> Getting Help</a></li></ol></li><li><a href="../tools/index.html"><strong aria-hidden="true">4.</strong> Tools</a></li><li><ol class="section"><li><a href="../tools/projects.html"><strong aria-hidden="true">4.1.</strong> Project Glossary</a></li><li><a href="../concepts/pipeline/data_pipeline.html"><strong aria-hidden="true">4.2.</strong> Overview of Mozilla's Data Pipeline</a></li><li><ol class="section"><li><a href="../concepts/pipeline/data_pipeline_detail.html"><strong aria-hidden="true">4.2.1.</strong> In-depth Data Pipeline Detail</a></li><li><a href="../concepts/pipeline/http_edge_spec.html"><strong aria-hidden="true">4.2.2.</strong> HTTP Edge Server Specification</a></li><li><a href="../concepts/pipeline/event_pipeline.html"><strong aria-hidden="true">4.2.3.</strong> Event Pipeline Detail</a></li></ol></li><li><a href="../tools/interfaces.html"><strong aria-hidden="true">4.3.</strong> Analysis Interfaces</a></li><li><a href="../tools/spark.html"><strong aria-hidden="true">4.4.</strong> Custom analysis with Spark</a></li><li><a href="../concepts/sql_style.html"><strong aria-hidden="true">4.5.</strong> SQL Style Guide</a></li><li><a href="../concepts/glean/glean.html"><strong aria-hidden="true">4.6.</strong> Glean overview</a></li><li><ol class="section"><li><a href="../concepts/glean/debug_ping_view.html"><strong aria-hidden="true">4.6.1.</strong> Glean Debug ping viewer</a></li></ol></li></ol></li><li><a href="../cookbooks/index.html"><strong aria-hidden="true">5.</strong> Cookbooks</a></li><li><ol class="section"><li><a href="../tools/alerts.html" class="active"><strong aria-hidden="true">5.1.</strong> Alerts</a></li><li><a href="../cookbooks/parquet.html"><strong aria-hidden="true">5.2.</strong> Working with Parquet Data on ATMO Clusters</a></li><li><a href="../cookbooks/bigquery.html"><strong aria-hidden="true">5.3.</strong> Accessing and working with BigQuery</a></li><li><a href="../cookbooks/create_a_dataset.html"><strong aria-hidden="true">5.4.</strong> Creating a custom Re:dash dataset</a></li><li><a href="../cookbooks/new_ping.html"><strong aria-hidden="true">5.5.</strong> Sending a Custom Ping</a></li><li><a href="../cookbooks/hll_zeppelin.html"><strong aria-hidden="true">5.6.</strong> Using HyperLogLog in Zeppelin</a></li><li><a href="../cookbooks/client_guidelines.html"><strong aria-hidden="true">5.7.</strong> Client Implementation Guidelines</a></li><li><a href="../cookbooks/dataset_specific.html"><strong aria-hidden="true">5.8.</strong> Dataset Specific</a></li><li><ol class="section"><li><a href="../cookbooks/longitudinal_examples.html"><strong aria-hidden="true">5.8.1.</strong> Longitudinal Examples</a></li><li><a href="../cookbooks/crash_pings.html"><strong aria-hidden="true">5.8.2.</strong> Working with Crash Pings</a></li><li><a href="../cookbooks/normandy_events.html"><strong aria-hidden="true">5.8.3.</strong> Working with Normandy events</a></li></ol></li><li><a href="../cookbooks/realtime.html"><strong aria-hidden="true">5.9.</strong> Real-time</a></li><li><ol class="section"><li><a href="../cookbooks/realtime_analysis_plugin.html"><strong aria-hidden="true">5.9.1.</strong> Creating a Real-time Analysis Plugin</a></li><li><a href="../cookbooks/view_pings_cep.html"><strong aria-hidden="true">5.9.2.</strong> Seeing Your Own Pings</a></li><li><a href="../tools/cep_matcher.html"><strong aria-hidden="true">5.9.3.</strong> CEP Matcher</a></li></ol></li><li><a href="../cookbooks/metrics.html"><strong aria-hidden="true">5.10.</strong> Metrics</a></li><li><ol class="section"><li><a href="../cookbooks/dau.html"><strong aria-hidden="true">5.10.1.</strong> Daily Active Users (DAU)</a></li><li><a href="../cookbooks/active_dau.html"><strong aria-hidden="true">5.10.2.</strong> Active DAU (aDAU)</a></li><li><a href="../cookbooks/retention.html"><strong aria-hidden="true">5.10.3.</strong> Retention</a></li></ol></li><li><a href="../cookbooks/events_best_practices.html"><strong aria-hidden="true">5.11.</strong> Telemetry Events Best Practices</a></li><li class="spacer"></li></ol></li><li><a href="../datasets/reference.html"><strong aria-hidden="true">6.</strong> Dataset Reference</a></li><li><ol class="section"><li><a href="../datasets/pings.html"><strong aria-hidden="true">6.1.</strong> Pings</a></li><li><a href="../datasets/derived.html"><strong aria-hidden="true">6.2.</strong> Derived Datasets</a></li><li><ol class="section"><li><a href="../datasets/batch_view/addons/reference.html"><strong aria-hidden="true">6.2.1.</strong> Addons</a></li><li><a href="../datasets/other/addons_daily/reference.html"><strong aria-hidden="true">6.2.2.</strong> Addons Daily</a></li><li><a href="../datasets/mozetl/churn/reference.html"><strong aria-hidden="true">6.2.3.</strong> Churn</a></li><li><a href="../datasets/batch_view/clients_daily/reference.html"><strong aria-hidden="true">6.2.4.</strong> Clients Daily</a></li><li><a href="../datasets/bigquery/clients_last_seen/reference.html"><strong aria-hidden="true">6.2.5.</strong> Clients Last Seen</a></li><li><a href="../datasets/batch_view/crash_summary/reference.html"><strong aria-hidden="true">6.2.6.</strong> Crash Summary</a></li><li><a href="../datasets/batch_view/cross_sectional/reference.html"><strong aria-hidden="true">6.2.7.</strong> Cross Sectional</a></li><li><a href="../datasets/streaming/error_aggregates/reference.html"><strong aria-hidden="true">6.2.8.</strong> Error Aggregates</a></li><li><a href="../datasets/batch_view/events/reference.html"><strong aria-hidden="true">6.2.9.</strong> Events</a></li><li><a href="../datasets/bigquery/exact_mau/reference.html"><strong aria-hidden="true">6.2.10.</strong> Exact MAU</a></li><li><a href="../datasets/batch_view/first_shutdown_summary/reference.html"><strong aria-hidden="true">6.2.11.</strong> First Shutdown Summary</a></li><li><a href="../datasets/batch_view/longitudinal/reference.html"><strong aria-hidden="true">6.2.12.</strong> Longitudinal</a></li><li><a href="../datasets/batch_view/main_summary/reference.html"><strong aria-hidden="true">6.2.13.</strong> Main Summary</a></li><li><a href="../datasets/batch_view/new_profile/reference.html"><strong aria-hidden="true">6.2.14.</strong> New Profile</a></li><li><a href="../datasets/batch_view/retention/reference.html"><strong aria-hidden="true">6.2.15.</strong> Retention</a></li><li><a href="../datasets/other/socorro_crash/reference.html"><strong aria-hidden="true">6.2.16.</strong> Socorro Crash Reports</a></li><li><a href="../datasets/other/ssl/reference.html"><strong aria-hidden="true">6.2.17.</strong> SSL Ratios (public)</a></li><li><a href="../datasets/batch_view/sync_summary/reference.html"><strong aria-hidden="true">6.2.18.</strong> Sync Summary</a></li><li><a href="../datasets/batch_view/update/reference.html"><strong aria-hidden="true">6.2.19.</strong> Update</a></li></ol></li><li><a href="../tools/experiments.html"><strong aria-hidden="true">6.3.</strong> Experimental Datasets</a></li><li><ol class="section"><li><a href="../datasets/heartbeat.html"><strong aria-hidden="true">6.3.1.</strong> Accessing Heartbeat data</a></li><li><a href="../datasets/shield.html"><strong aria-hidden="true">6.3.2.</strong> Accessing Shield Study data</a></li></ol></li><li><a href="../datasets/search.html"><strong aria-hidden="true">6.4.</strong> Search Datasets</a></li><li><ol class="section"><li><a href="../datasets/mozetl/search_aggregates/reference.html"><strong aria-hidden="true">6.4.1.</strong> Search Aggregates</a></li><li><a href="../datasets/mozetl/search_clients_daily/reference.html"><strong aria-hidden="true">6.4.2.</strong> Search Clients Daily</a></li></ol></li><li><a href="../datasets/other.html"><strong aria-hidden="true">6.5.</strong> Other Datasets</a></li><li><ol class="section"><li><a href="../datasets/other/hgpush/reference.html"><strong aria-hidden="true">6.5.1.</strong> hgpush</a></li><li><a href="../datasets/other/stub_installer/reference.html"><strong aria-hidden="true">6.5.2.</strong> Stub installer ping</a></li></ol></li><li><a href="../datasets/obsolete.html"><strong aria-hidden="true">6.6.</strong> Obsolete Datasets</a></li><li><ol class="section"><li><a href="../datasets/obsolete/heavy_users/reference.html"><strong aria-hidden="true">6.6.1.</strong> Heavy Users</a></li><li><a href="../datasets/obsolete/crash_aggregates/reference.html"><strong aria-hidden="true">6.6.2.</strong> Crash Aggregates</a></li><li><a href="../datasets/obsolete/client_count/reference.html"><strong aria-hidden="true">6.6.3.</strong> Client Count</a></li><li><a href="../datasets/obsolete/client_count_daily/reference.html"><strong aria-hidden="true">6.6.4.</strong> Client Count Daily</a></li></ol></li><li><a href="../datasets/fxa.html"><strong aria-hidden="true">6.7.</strong> Firefox Accounts Datasets</a></li><li><ol class="section"><li><a href="../datasets/fxa_metrics/attribution.html"><strong aria-hidden="true">6.7.1.</strong> Firefox Account Attribution</a></li><li><a href="../datasets/fxa_metrics/funnels.html"><strong aria-hidden="true">6.7.2.</strong> Firefox Account Funnel Metrics</a></li><li><a href="../datasets/fxa_metrics/emails.html"><strong aria-hidden="true">6.7.3.</strong> Firefox Account Email Metrics</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../concepts/index.html"><strong aria-hidden="true">7.</strong> Telemetry Behavior Reference</a></li><li><ol class="section"><li><a href="../concepts/profile/index.html"><strong aria-hidden="true">7.1.</strong> Profile Behavior</a></li><li><ol class="section"><li><a href="../concepts/profile/profile_creation.html"><strong aria-hidden="true">7.1.1.</strong> Profile Creation</a></li><li><a href="../concepts/profile/realworldusage.html"><strong aria-hidden="true">7.1.2.</strong> Real World Usage</a></li><li><a href="../concepts/profile/profilehistory.html"><strong aria-hidden="true">7.1.3.</strong> Profile History</a></li></ol></li><li><a href="../concepts/channels/index.html"><strong aria-hidden="true">7.2.</strong> Channel Behavior</a></li><li><ol class="section"><li><a href="../concepts/channels/channel_normalization.html"><strong aria-hidden="true">7.2.1.</strong> Channel Normalization and Querying</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../meta/index.html"><strong aria-hidden="true">8.</strong> About this Documentation</a></li><li><ol class="section"><li><a href="../meta/contributing.html"><strong aria-hidden="true">8.1.</strong> Contributing</a></li><li><a href="../meta/structure.html"><strong aria-hidden="true">8.2.</strong> Structure</a></li></ol></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="affix"><a href="../introduction.html">Firefox Data Documentation</a></li><li><a href="../concepts/reporting_a_problem.html"><strong aria-hidden="true">1.</strong> Reporting a problem</a></li><li><a href="../concepts/terminology.html"><strong aria-hidden="true">2.</strong> Terminology</a></li><li><a href="../concepts/getting_started.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li><ol class="section"><li><a href="../concepts/analysis_intro.html"><strong aria-hidden="true">3.1.</strong> Analysis Quick Start</a></li><li><a href="../concepts/choosing_a_dataset.html"><strong aria-hidden="true">3.2.</strong> Choosing a Dataset</a></li><li><a href="../concepts/choosing_a_dataset_mobile.html"><strong aria-hidden="true">3.3.</strong> Choosing a Dataset - Mobile Edition</a></li><li><a href="../tools/stmo.html"><strong aria-hidden="true">3.4.</strong> Intro to STMO</a></li><li><a href="../concepts/analysis_gotchas.html"><strong aria-hidden="true">3.5.</strong> Common Analysis Gotchas</a></li><li><a href="../concepts/sql_optimization.html"><strong aria-hidden="true">3.6.</strong> Optimizing Queries</a></li><li><a href="../datasets/new_data.html"><strong aria-hidden="true">3.7.</strong> Collecting New Data</a></li><li><a href="../concepts/getting_help.html"><strong aria-hidden="true">3.8.</strong> Getting Help</a></li></ol></li><li><a href="../tools/index.html"><strong aria-hidden="true">4.</strong> Tools</a></li><li><ol class="section"><li><a href="../tools/projects.html"><strong aria-hidden="true">4.1.</strong> Project Glossary</a></li><li><a href="../concepts/pipeline/data_pipeline.html"><strong aria-hidden="true">4.2.</strong> Overview of Mozilla's Data Pipeline</a></li><li><ol class="section"><li><a href="../concepts/pipeline/data_pipeline_detail.html"><strong aria-hidden="true">4.2.1.</strong> In-depth Data Pipeline Detail</a></li><li><a href="../concepts/pipeline/http_edge_spec.html"><strong aria-hidden="true">4.2.2.</strong> HTTP Edge Server Specification</a></li><li><a href="../concepts/pipeline/event_pipeline.html"><strong aria-hidden="true">4.2.3.</strong> Event Pipeline Detail</a></li></ol></li><li><a href="../tools/interfaces.html"><strong aria-hidden="true">4.3.</strong> Analysis Interfaces</a></li><li><a href="../tools/spark.html"><strong aria-hidden="true">4.4.</strong> Custom analysis with Spark</a></li><li><a href="../concepts/sql_style.html"><strong aria-hidden="true">4.5.</strong> SQL Style Guide</a></li><li><a href="../concepts/glean/glean.html"><strong aria-hidden="true">4.6.</strong> Glean overview</a></li><li><ol class="section"><li><a href="../concepts/glean/debug_ping_view.html"><strong aria-hidden="true">4.6.1.</strong> Glean Debug ping viewer</a></li></ol></li></ol></li><li><a href="../cookbooks/index.html"><strong aria-hidden="true">5.</strong> Cookbooks</a></li><li><ol class="section"><li><a href="../tools/alerts.html" class="active"><strong aria-hidden="true">5.1.</strong> Alerts</a></li><li><a href="../cookbooks/parquet.html"><strong aria-hidden="true">5.2.</strong> Working with Parquet Data on ATMO Clusters</a></li><li><a href="../cookbooks/bigquery.html"><strong aria-hidden="true">5.3.</strong> Accessing and working with BigQuery</a></li><li><a href="../cookbooks/create_a_dataset.html"><strong aria-hidden="true">5.4.</strong> Creating a custom Re:dash dataset</a></li><li><a href="../cookbooks/new_ping.html"><strong aria-hidden="true">5.5.</strong> Sending a Custom Ping</a></li><li><a href="../cookbooks/hll_zeppelin.html"><strong aria-hidden="true">5.6.</strong> Using HyperLogLog in Zeppelin</a></li><li><a href="../cookbooks/client_guidelines.html"><strong aria-hidden="true">5.7.</strong> Client Implementation Guidelines</a></li><li><a href="../cookbooks/dataset_specific.html"><strong aria-hidden="true">5.8.</strong> Dataset Specific</a></li><li><ol class="section"><li><a href="../cookbooks/longitudinal_examples.html"><strong aria-hidden="true">5.8.1.</strong> Longitudinal Examples</a></li><li><a href="../cookbooks/crash_pings.html"><strong aria-hidden="true">5.8.2.</strong> Working with Crash Pings</a></li><li><a href="../cookbooks/normandy_events.html"><strong aria-hidden="true">5.8.3.</strong> Working with Normandy events</a></li></ol></li><li><a href="../cookbooks/realtime.html"><strong aria-hidden="true">5.9.</strong> Real-time</a></li><li><ol class="section"><li><a href="../cookbooks/realtime_analysis_plugin.html"><strong aria-hidden="true">5.9.1.</strong> Creating a Real-time Analysis Plugin</a></li><li><a href="../cookbooks/view_pings_cep.html"><strong aria-hidden="true">5.9.2.</strong> Seeing Your Own Pings</a></li><li><a href="../tools/cep_matcher.html"><strong aria-hidden="true">5.9.3.</strong> CEP Matcher</a></li></ol></li><li><a href="../cookbooks/metrics.html"><strong aria-hidden="true">5.10.</strong> Metrics</a></li><li><ol class="section"><li><a href="../cookbooks/dau.html"><strong aria-hidden="true">5.10.1.</strong> Daily Active Users (DAU)</a></li><li><a href="../cookbooks/active_dau.html"><strong aria-hidden="true">5.10.2.</strong> Active DAU (aDAU)</a></li><li><a href="../cookbooks/retention.html"><strong aria-hidden="true">5.10.3.</strong> Retention</a></li></ol></li><li><a href="../cookbooks/events_best_practices.html"><strong aria-hidden="true">5.11.</strong> Telemetry Events Best Practices</a></li><li class="spacer"></li></ol></li><li><a href="../datasets/reference.html"><strong aria-hidden="true">6.</strong> Dataset Reference</a></li><li><ol class="section"><li><a href="../datasets/pings.html"><strong aria-hidden="true">6.1.</strong> Pings</a></li><li><a href="../datasets/derived.html"><strong aria-hidden="true">6.2.</strong> Derived Datasets</a></li><li><ol class="section"><li><a href="../datasets/batch_view/addons/reference.html"><strong aria-hidden="true">6.2.1.</strong> Addons</a></li><li><a href="../datasets/other/addons_daily/reference.html"><strong aria-hidden="true">6.2.2.</strong> Addons Daily</a></li><li><a href="../datasets/mozetl/churn/reference.html"><strong aria-hidden="true">6.2.3.</strong> Churn</a></li><li><a href="../datasets/batch_view/clients_daily/reference.html"><strong aria-hidden="true">6.2.4.</strong> Clients Daily</a></li><li><a href="../datasets/bigquery/clients_last_seen/reference.html"><strong aria-hidden="true">6.2.5.</strong> Clients Last Seen</a></li><li><a href="../datasets/batch_view/crash_summary/reference.html"><strong aria-hidden="true">6.2.6.</strong> Crash Summary</a></li><li><a href="../datasets/batch_view/cross_sectional/reference.html"><strong aria-hidden="true">6.2.7.</strong> Cross Sectional</a></li><li><a href="../datasets/streaming/error_aggregates/reference.html"><strong aria-hidden="true">6.2.8.</strong> Error Aggregates</a></li><li><a href="../datasets/batch_view/events/reference.html"><strong aria-hidden="true">6.2.9.</strong> Events</a></li><li><a href="../datasets/bigquery/exact_mau/reference.html"><strong aria-hidden="true">6.2.10.</strong> Exact MAU</a></li><li><a href="../datasets/batch_view/first_shutdown_summary/reference.html"><strong aria-hidden="true">6.2.11.</strong> First Shutdown Summary</a></li><li><a href="../datasets/batch_view/longitudinal/reference.html"><strong aria-hidden="true">6.2.12.</strong> Longitudinal</a></li><li><a href="../datasets/batch_view/main_summary/reference.html"><strong aria-hidden="true">6.2.13.</strong> Main Summary</a></li><li><a href="../datasets/batch_view/new_profile/reference.html"><strong aria-hidden="true">6.2.14.</strong> New Profile</a></li><li><a href="../datasets/batch_view/retention/reference.html"><strong aria-hidden="true">6.2.15.</strong> Retention</a></li><li><a href="../datasets/other/socorro_crash/reference.html"><strong aria-hidden="true">6.2.16.</strong> Socorro Crash Reports</a></li><li><a href="../datasets/other/ssl/reference.html"><strong aria-hidden="true">6.2.17.</strong> SSL Ratios (public)</a></li><li><a href="../datasets/batch_view/sync_summary/reference.html"><strong aria-hidden="true">6.2.18.</strong> Sync Summary</a></li><li><a href="../datasets/batch_view/update/reference.html"><strong aria-hidden="true">6.2.19.</strong> Update</a></li></ol></li><li><a href="../tools/experiments.html"><strong aria-hidden="true">6.3.</strong> Experimental Datasets</a></li><li><ol class="section"><li><a href="../datasets/heartbeat.html"><strong aria-hidden="true">6.3.1.</strong> Accessing Heartbeat data</a></li><li><a href="../datasets/shield.html"><strong aria-hidden="true">6.3.2.</strong> Accessing Shield Study data</a></li></ol></li><li><a href="../datasets/search.html"><strong aria-hidden="true">6.4.</strong> Search Datasets</a></li><li><ol class="section"><li><a href="../datasets/mozetl/search_aggregates/reference.html"><strong aria-hidden="true">6.4.1.</strong> Search Aggregates</a></li><li><a href="../datasets/mozetl/search_clients_daily/reference.html"><strong aria-hidden="true">6.4.2.</strong> Search Clients Daily</a></li></ol></li><li><a href="../datasets/other.html"><strong aria-hidden="true">6.5.</strong> Other Datasets</a></li><li><ol class="section"><li><a href="../datasets/other/hgpush/reference.html"><strong aria-hidden="true">6.5.1.</strong> hgpush</a></li><li><a href="../datasets/other/stub_installer/reference.html"><strong aria-hidden="true">6.5.2.</strong> Stub installer ping</a></li></ol></li><li><a href="../datasets/obsolete.html"><strong aria-hidden="true">6.6.</strong> Obsolete Datasets</a></li><li><ol class="section"><li><a href="../datasets/obsolete/heavy_users/reference.html"><strong aria-hidden="true">6.6.1.</strong> Heavy Users</a></li><li><a href="../datasets/obsolete/crash_aggregates/reference.html"><strong aria-hidden="true">6.6.2.</strong> Crash Aggregates</a></li><li><a href="../datasets/obsolete/client_count/reference.html"><strong aria-hidden="true">6.6.3.</strong> Client Count</a></li><li><a href="../datasets/obsolete/client_count_daily/reference.html"><strong aria-hidden="true">6.6.4.</strong> Client Count Daily</a></li></ol></li><li><a href="../datasets/fxa.html"><strong aria-hidden="true">6.7.</strong> Firefox Accounts Datasets</a></li><li><ol class="section"><li><a href="../datasets/fxa_metrics/attribution.html"><strong aria-hidden="true">6.7.1.</strong> Firefox Account Attribution</a></li><li><a href="../datasets/fxa_metrics/funnels.html"><strong aria-hidden="true">6.7.2.</strong> Firefox Account Funnel Metrics</a></li><li><a href="../datasets/fxa_metrics/emails.html"><strong aria-hidden="true">6.7.3.</strong> Firefox Account Email Metrics</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../concepts/index.html"><strong aria-hidden="true">7.</strong> Telemetry Behavior Reference</a></li><li><ol class="section"><li><a href="../concepts/profile/index.html"><strong aria-hidden="true">7.1.</strong> Profile Behavior</a></li><li><ol class="section"><li><a href="../concepts/profile/profile_creation.html"><strong aria-hidden="true">7.1.1.</strong> Profile Creation</a></li><li><a href="../concepts/profile/realworldusage.html"><strong aria-hidden="true">7.1.2.</strong> Real World Usage</a></li><li><a href="../concepts/profile/profilehistory.html"><strong aria-hidden="true">7.1.3.</strong> Profile History</a></li></ol></li><li><a href="../concepts/channels/index.html"><strong aria-hidden="true">7.2.</strong> Channel Behavior</a></li><li><ol class="section"><li><a href="../concepts/channels/channel_normalization.html"><strong aria-hidden="true">7.2.1.</strong> Channel Normalization and Querying</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../meta/index.html"><strong aria-hidden="true">8.</strong> About this Documentation</a></li><li><ol class="section"><li><a href="../meta/contributing.html"><strong aria-hidden="true">8.1.</strong> Contributing</a></li><li><a href="../meta/structure.html"><strong aria-hidden="true">8.2.</strong> Structure</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -93,7 +101,7 @@
                                 <i class="fa fa-paint-brush"></i>
                             </button>
                             <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -106,12 +114,13 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Firefox Data Documentation</h1> 
+                        <h1 class="menu-title">Firefox Data Documentation</h1>
 
                         <div class="right-buttons">
                             <a href="../print.html" title="Print this book" aria-label="Print this book">
                                 <i id="print-button" class="fa fa-print"></i>
                             </a>
+                            
                         </div>
                     </div>
                 </div>
@@ -140,7 +149,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#telemetry-alerts" id="telemetry-alerts"><h1>Telemetry Alerts</h1></a>
+                        <h1><a class="header" href="#telemetry-alerts" id="telemetry-alerts">Telemetry Alerts</a></h1>
 <p>Many Telemetry probes were created to show performance trends over time.
 Sudden changes happening in Nightly could be the sign of an
 unintentional performance regression, so we introduced a system to
@@ -148,7 +157,7 @@ automatically detect and alert developers about such changes.</p>
 <p>Thus we created Telemetry Alerts. It comes in two pieces:
 <a href="https://github.com/mozilla/cerberus/">Cerberus</a> the Detector and
 <a href="https://github.com/mozilla/medusa/">Medusa</a> the Front-end.</p>
-<a class="header" href="#cerberus" id="cerberus"><h3>Cerberus</h3></a>
+<h3><a class="header" href="#cerberus" id="cerberus">Cerberus</a></h3>
 <p>Every day Cerberus grabs the latest aggregated information about all
 non-keyed Telemetry probes from <code>aggregates.telemetry.mozilla.org</code> and
 compares the distribution of values from the <strong>Nightly</strong> builds of the
@@ -160,18 +169,18 @@ the two distributions and guessing whether or not they are <a href="https://gith
 and
 narrow</a>.</p>
 <p>It places all detected changes in a file for ingestion by Medusa.</p>
-<a class="header" href="#medusa" id="medusa"><h3>Medusa</h3></a>
+<h3><a class="header" href="#medusa" id="medusa">Medusa</a></h3>
 <p>Medusa is in charge of emailing people when distributions change and for
 displaying the website <a href="https://alerts.telemetry.mozilla.org">https://alerts.telemetry.mozilla.org</a> which
 contains pertinent information about each detected regression.</p>
 <p>Medusa also checks for expiring histograms and sends emails notifying of
 their expiry.</p>
-<a class="header" href="#what-it-can-do" id="what-it-can-do"><h2>What it can do</h2></a>
+<h2><a class="header" href="#what-it-can-do" id="what-it-can-do">What it can do</a></h2>
 <p>Telemetry Alerts is very good at identifying sudden changes in the
 shapes of normalized distributions of Telemetry probes. If you can see
 the distribution of <a href="https://mzl.la/2vdMRax"><code>GC_MS</code></a> shift from one day
 to the next, then likely so can Cerberus.</p>
-<a class="header" href="#what-cant-it-do" id="what-cant-it-do"><h2>What can't it do</h2></a>
+<h2><a class="header" href="#what-cant-it-do" id="what-cant-it-do">What can't it do</a></h2>
 <p>Telemetry Alerts is not able to see sudden shifts in volume. It is also
 very easily fooled if a change happens over a long period of time or
 doesn't fundamentally alter the shape of the probe's histogram.</p>
@@ -188,14 +197,14 @@ given how good Session Restore is these days)</li>
 of the distribution changed insufficiently much for Cerberus to pick
 up on it)</li>
 </ul>
-<a class="header" href="#telemetry-alert-emails" id="telemetry-alert-emails"><h2>Telemetry Alert Emails</h2></a>
+<h2><a class="header" href="#telemetry-alert-emails" id="telemetry-alert-emails">Telemetry Alert Emails</a></h2>
 <p>One of the main ways humans interact with Telemetry Alerts is through
 the emails sent by Medusa.</p>
 <p>At present the email contains a link to the alert's page on
 <a href="https://alerts.telemetry.mozilla.org">https://alerts.telemetry.mozilla.org</a> and a link to a pushlog on
 <a href="https://hg.mozilla.org">https://hg.mozilla.org</a> detailing the changes newly-present in the
 Nightly build that exhibited the change.</p>
-<a class="header" href="#triaging-a-telemetry-alert-email" id="triaging-a-telemetry-alert-email"><h2>Triaging a Telemetry Alert Email</h2></a>
+<h2><a class="header" href="#triaging-a-telemetry-alert-email" id="triaging-a-telemetry-alert-email">Triaging a Telemetry Alert Email</a></h2>
 <p>Congratulations! You have just received a Telemetry Alert!</p>
 <p>Now what?</p>
 <p><strong>Assumption:</strong> Alerts happen because of changes in probes. Changes in
@@ -208,93 +217,59 @@ good/bad/intentional/exceptional/temporary/permanent/still
 relevant/having its alerts properly looked after.</p>
 <p><strong>Guide:</strong></p>
 <ol>
-<li>
-<p>Is this alert just one of a group of similar changes by topic? By
-build?</p>
-</li>
+<li>Is this alert just one of a group of similar changes by topic? By
+build?</li>
 </ol>
 <ul>
-<li>
-<p>If there's a group by topic (<code>SPDY</code>, <code>URLCLASSIFIER</code>, ...) check to see
-if the changes are similar in direction/magnitude. They usually are.</p>
-</li>
-<li>
-<p>If there's a group by build but not topic, maybe a large merge
+<li>If there's a group by topic (<code>SPDY</code>, <code>URLCLASSIFIER</code>, ...) check to see
+if the changes are similar in direction/magnitude. They usually are.</li>
+<li>If there's a group by build but not topic, maybe a large merge
 kicked things over. Unfortunate, as that will make finding the source
-more difficult.</p>
-</li>
+more difficult.</li>
 </ul>
 <ol start="2">
-<li>
-<p>Open the <code>hg.mozilla.org</code> and <code>alerts.telemetry.mozilla.org</code> links in
-tabs</p>
-</li>
+<li>Open the <code>hg.mozilla.org</code> and <code>alerts.telemetry.mozilla.org</code> links in
+tabs</li>
 </ol>
 <ul>
-<li>
-<p>On <code>alerts.tmo</code>, does it look like an improvement or regression? (This
+<li>On <code>alerts.tmo</code>, does it look like an improvement or regression? (This
 is just a first idea and might change. There are often extenuating
 circumstances that make something that looks bad into an
-improvement, and vice versa.)</p>
-</li>
-<li>
-<p>On <code>hg.mo</code>, does the topic of the changed probe exist in the pushlog?
+improvement, and vice versa.)</li>
+<li>On <code>hg.mo</code>, does the topic of the changed probe exist in the pushlog?
 In other words, does any part of the probe's name show up in the
-summaries of any of the commits?</p>
-</li>
+summaries of any of the commits?</li>
 </ul>
 <ol start="3">
-<li>
-<p>From <code>alerts.tmo</code>, open the <a href="https://telemetry.mozilla.org">https://telemetry.mozilla.org</a> link by
-clicking on the plot's title. Open another tab to the Evolution View.</p>
-</li>
+<li>From <code>alerts.tmo</code>, open the <a href="https://telemetry.mozilla.org">https://telemetry.mozilla.org</a> link by
+clicking on the plot's title. Open another tab to the Evolution View.</li>
 </ol>
 <ul>
-<li>
-<p>Is the change temporary? (might have been noticed elsewhere and
-backed out)</p>
-</li>
-<li>
-<p>Is the change up or down?</p>
-</li>
-<li>
-<p>Has it happened before?</p>
-</li>
-<li>
-<p>Was it accompanied by a decrease in submission volume? (the second
-graph at the bottom of the Evolution View)</p>
-</li>
-<li>
-<p>On the Distribution View, did the Sample Count increase? Decrease?
+<li>Is the change temporary? (might have been noticed elsewhere and
+backed out)</li>
+<li>Is the change up or down?</li>
+<li>Has it happened before?</li>
+<li>Was it accompanied by a decrease in submission volume? (the second
+graph at the bottom of the Evolution View)</li>
+<li>On the Distribution View, did the Sample Count increase? Decrease?
 (this signifies that the change could be because of the addition or
 subtraction of a population of values. For instance, we could
 suddenly stop sending 0 values which would shift the graph to
 the right. This could be a good thing (we're not handling useless
 things any longer) a bad thing (something broke and we're no longer
-measuring the same thing we used to measure) or indifferent)</p>
-</li>
+measuring the same thing we used to measure) or indifferent)</li>
 </ul>
 <ol start="4">
-<li>
-<p>If you still don't have a cause</p>
-</li>
+<li>If you still don't have a cause</li>
 </ol>
 <ul>
-<li>
-<p>Use DXR or searchfox to find where the probe is accumulated.</p>
-</li>
-<li>
-<p>Click &quot;Log&quot; in that view.</p>
-</li>
-<li>
-<p>Are there any changesets in the resultant <code>hg.mo</code> list that ended up
-in the build we received the Alert for?</p>
-</li>
+<li>Use DXR or searchfox to find where the probe is accumulated.</li>
+<li>Click &quot;Log&quot; in that view.</li>
+<li>Are there any changesets in the resultant <code>hg.mo</code> list that ended up
+in the build we received the Alert for?</li>
 </ul>
 <ol start="5">
-<li>
-<p>If you <em>still</em> don't know what's going on</p>
-</li>
+<li>If you <em>still</em> don't know what's going on</li>
 </ol>
 <ul>
 <li>find a domain expert on IRC and bother them to help you out. Domain

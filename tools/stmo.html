@@ -4,6 +4,8 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Intro to STMO - Firefox Data Documentation</title>
+        
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,7 +38,10 @@
     </head>
     <body class="light">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">var path_to_root = "../";</script>
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = "light";
+        </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script type="text/javascript">
@@ -57,8 +62,8 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
-            if (theme === null || theme === undefined) { theme = 'light'; }
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
         </script>
@@ -76,7 +81,10 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="../introduction.html">Firefox Data Documentation</a></li><li><a href="../concepts/reporting_a_problem.html"><strong aria-hidden="true">1.</strong> Reporting a problem</a></li><li><a href="../concepts/terminology.html"><strong aria-hidden="true">2.</strong> Terminology</a></li><li><a href="../concepts/getting_started.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li><ol class="section"><li><a href="../concepts/analysis_intro.html"><strong aria-hidden="true">3.1.</strong> Analysis Quick Start</a></li><li><a href="../concepts/choosing_a_dataset.html"><strong aria-hidden="true">3.2.</strong> Choosing a Dataset</a></li><li><a href="../concepts/choosing_a_dataset_mobile.html"><strong aria-hidden="true">3.3.</strong> Choosing a Dataset - Mobile Edition</a></li><li><a href="../tools/stmo.html" class="active"><strong aria-hidden="true">3.4.</strong> Intro to STMO</a></li><li><a href="../concepts/analysis_gotchas.html"><strong aria-hidden="true">3.5.</strong> Common Analysis Gotchas</a></li><li><a href="../concepts/sql_optimization.html"><strong aria-hidden="true">3.6.</strong> Optimizing Queries</a></li><li><a href="../datasets/new_data.html"><strong aria-hidden="true">3.7.</strong> Collecting New Data</a></li><li><a href="../concepts/getting_help.html"><strong aria-hidden="true">3.8.</strong> Getting Help</a></li></ol></li><li><a href="../tools/index.html"><strong aria-hidden="true">4.</strong> Tools</a></li><li><ol class="section"><li><a href="../tools/projects.html"><strong aria-hidden="true">4.1.</strong> Project Glossary</a></li><li><a href="../concepts/pipeline/data_pipeline.html"><strong aria-hidden="true">4.2.</strong> Overview of Mozilla's Data Pipeline</a></li><li><ol class="section"><li><a href="../concepts/pipeline/data_pipeline_detail.html"><strong aria-hidden="true">4.2.1.</strong> In-depth Data Pipeline Detail</a></li><li><a href="../concepts/pipeline/http_edge_spec.html"><strong aria-hidden="true">4.2.2.</strong> HTTP Edge Server Specification</a></li><li><a href="../concepts/pipeline/event_pipeline.html"><strong aria-hidden="true">4.2.3.</strong> Event Pipeline Detail</a></li></ol></li><li><a href="../tools/interfaces.html"><strong aria-hidden="true">4.3.</strong> Analysis Interfaces</a></li><li><a href="../tools/spark.html"><strong aria-hidden="true">4.4.</strong> Custom analysis with Spark</a></li><li><a href="../concepts/sql_style.html"><strong aria-hidden="true">4.5.</strong> SQL Style Guide</a></li><li><a href="../concepts/glean/glean.html"><strong aria-hidden="true">4.6.</strong> Glean overview</a></li><li><ol class="section"><li><a href="../concepts/glean/debug_ping_view.html"><strong aria-hidden="true">4.6.1.</strong> Glean Debug ping viewer</a></li></ol></li></ol></li><li><a href="../cookbooks/index.html"><strong aria-hidden="true">5.</strong> Cookbooks</a></li><li><ol class="section"><li><a href="../tools/alerts.html"><strong aria-hidden="true">5.1.</strong> Alerts</a></li><li><a href="../cookbooks/parquet.html"><strong aria-hidden="true">5.2.</strong> Working with Parquet Data on ATMO Clusters</a></li><li><a href="../cookbooks/bigquery.html"><strong aria-hidden="true">5.3.</strong> Accessing and working with BigQuery</a></li><li><a href="../cookbooks/create_a_dataset.html"><strong aria-hidden="true">5.4.</strong> Creating a custom Re:dash dataset</a></li><li><a href="../cookbooks/new_ping.html"><strong aria-hidden="true">5.5.</strong> Sending a Custom Ping</a></li><li><a href="../cookbooks/hll_zeppelin.html"><strong aria-hidden="true">5.6.</strong> Using HyperLogLog in Zeppelin</a></li><li><a href="../cookbooks/client_guidelines.html"><strong aria-hidden="true">5.7.</strong> Client Implementation Guidelines</a></li><li><a href="../cookbooks/dataset_specific.html"><strong aria-hidden="true">5.8.</strong> Dataset Specific</a></li><li><ol class="section"><li><a href="../cookbooks/longitudinal_examples.html"><strong aria-hidden="true">5.8.1.</strong> Longitudinal Examples</a></li><li><a href="../cookbooks/crash_pings.html"><strong aria-hidden="true">5.8.2.</strong> Working with Crash Pings</a></li><li><a href="../cookbooks/normandy_events.html"><strong aria-hidden="true">5.8.3.</strong> Working with Normandy events</a></li></ol></li><li><a href="../cookbooks/realtime.html"><strong aria-hidden="true">5.9.</strong> Real-time</a></li><li><ol class="section"><li><a href="../cookbooks/realtime_analysis_plugin.html"><strong aria-hidden="true">5.9.1.</strong> Creating a Real-time Analysis Plugin</a></li><li><a href="../cookbooks/view_pings_cep.html"><strong aria-hidden="true">5.9.2.</strong> Seeing Your Own Pings</a></li><li><a href="../tools/cep_matcher.html"><strong aria-hidden="true">5.9.3.</strong> CEP Matcher</a></li></ol></li><li><a href="../cookbooks/metrics.html"><strong aria-hidden="true">5.10.</strong> Metrics</a></li><li><ol class="section"><li><a href="../cookbooks/dau.html"><strong aria-hidden="true">5.10.1.</strong> Daily Active Users (DAU)</a></li><li><a href="../cookbooks/active_dau.html"><strong aria-hidden="true">5.10.2.</strong> Active DAU (aDAU)</a></li><li><a href="../cookbooks/retention.html"><strong aria-hidden="true">5.10.3.</strong> Retention</a></li></ol></li><li><a href="../cookbooks/events_best_practices.html"><strong aria-hidden="true">5.11.</strong> Telemetry Events Best Practices</a></li><li class="spacer"></li></ol></li><li><a href="../datasets/reference.html"><strong aria-hidden="true">6.</strong> Dataset Reference</a></li><li><ol class="section"><li><a href="../datasets/pings.html"><strong aria-hidden="true">6.1.</strong> Pings</a></li><li><a href="../datasets/derived.html"><strong aria-hidden="true">6.2.</strong> Derived Datasets</a></li><li><ol class="section"><li><a href="../datasets/batch_view/addons/reference.html"><strong aria-hidden="true">6.2.1.</strong> Addons</a></li><li><a href="../datasets/other/addons_daily/reference.html"><strong aria-hidden="true">6.2.2.</strong> Addons Daily</a></li><li><a href="../datasets/mozetl/churn/reference.html"><strong aria-hidden="true">6.2.3.</strong> Churn</a></li><li><a href="../datasets/batch_view/clients_daily/reference.html"><strong aria-hidden="true">6.2.4.</strong> Clients Daily</a></li><li><a href="../datasets/bigquery/clients_last_seen/reference.html"><strong aria-hidden="true">6.2.5.</strong> Clients Last Seen</a></li><li><a href="../datasets/batch_view/crash_summary/reference.html"><strong aria-hidden="true">6.2.6.</strong> Crash Summary</a></li><li><a href="../datasets/batch_view/cross_sectional/reference.html"><strong aria-hidden="true">6.2.7.</strong> Cross Sectional</a></li><li><a href="../datasets/streaming/error_aggregates/reference.html"><strong aria-hidden="true">6.2.8.</strong> Error Aggregates</a></li><li><a href="../datasets/batch_view/events/reference.html"><strong aria-hidden="true">6.2.9.</strong> Events</a></li><li><a href="../datasets/bigquery/exact_mau/reference.html"><strong aria-hidden="true">6.2.10.</strong> Exact MAU</a></li><li><a href="../datasets/batch_view/first_shutdown_summary/reference.html"><strong aria-hidden="true">6.2.11.</strong> First Shutdown Summary</a></li><li><a href="../datasets/batch_view/longitudinal/reference.html"><strong aria-hidden="true">6.2.12.</strong> Longitudinal</a></li><li><a href="../datasets/batch_view/main_summary/reference.html"><strong aria-hidden="true">6.2.13.</strong> Main Summary</a></li><li><a href="../datasets/batch_view/new_profile/reference.html"><strong aria-hidden="true">6.2.14.</strong> New Profile</a></li><li><a href="../datasets/batch_view/retention/reference.html"><strong aria-hidden="true">6.2.15.</strong> Retention</a></li><li><a href="../datasets/other/socorro_crash/reference.html"><strong aria-hidden="true">6.2.16.</strong> Socorro Crash Reports</a></li><li><a href="../datasets/other/ssl/reference.html"><strong aria-hidden="true">6.2.17.</strong> SSL Ratios (public)</a></li><li><a href="../datasets/batch_view/sync_summary/reference.html"><strong aria-hidden="true">6.2.18.</strong> Sync Summary</a></li><li><a href="../datasets/batch_view/update/reference.html"><strong aria-hidden="true">6.2.19.</strong> Update</a></li></ol></li><li><a href="../tools/experiments.html"><strong aria-hidden="true">6.3.</strong> Experimental Datasets</a></li><li><ol class="section"><li><a href="../datasets/heartbeat.html"><strong aria-hidden="true">6.3.1.</strong> Accessing Heartbeat data</a></li><li><a href="../datasets/shield.html"><strong aria-hidden="true">6.3.2.</strong> Accessing Shield Study data</a></li></ol></li><li><a href="../datasets/search.html"><strong aria-hidden="true">6.4.</strong> Search Datasets</a></li><li><ol class="section"><li><a href="../datasets/mozetl/search_aggregates/reference.html"><strong aria-hidden="true">6.4.1.</strong> Search Aggregates</a></li><li><a href="../datasets/mozetl/search_clients_daily/reference.html"><strong aria-hidden="true">6.4.2.</strong> Search Clients Daily</a></li></ol></li><li><a href="../datasets/other.html"><strong aria-hidden="true">6.5.</strong> Other Datasets</a></li><li><ol class="section"><li><a href="../datasets/other/hgpush/reference.html"><strong aria-hidden="true">6.5.1.</strong> hgpush</a></li><li><a href="../datasets/other/stub_installer/reference.html"><strong aria-hidden="true">6.5.2.</strong> Stub installer ping</a></li></ol></li><li><a href="../datasets/obsolete.html"><strong aria-hidden="true">6.6.</strong> Obsolete Datasets</a></li><li><ol class="section"><li><a href="../datasets/obsolete/heavy_users/reference.html"><strong aria-hidden="true">6.6.1.</strong> Heavy Users</a></li><li><a href="../datasets/obsolete/crash_aggregates/reference.html"><strong aria-hidden="true">6.6.2.</strong> Crash Aggregates</a></li><li><a href="../datasets/obsolete/client_count/reference.html"><strong aria-hidden="true">6.6.3.</strong> Client Count</a></li><li><a href="../datasets/obsolete/client_count_daily/reference.html"><strong aria-hidden="true">6.6.4.</strong> Client Count Daily</a></li></ol></li><li><a href="../datasets/fxa.html"><strong aria-hidden="true">6.7.</strong> Firefox Accounts Datasets</a></li><li><ol class="section"><li><a href="../datasets/fxa_metrics/attribution.html"><strong aria-hidden="true">6.7.1.</strong> Firefox Account Attribution</a></li><li><a href="../datasets/fxa_metrics/funnels.html"><strong aria-hidden="true">6.7.2.</strong> Firefox Account Funnel Metrics</a></li><li><a href="../datasets/fxa_metrics/emails.html"><strong aria-hidden="true">6.7.3.</strong> Firefox Account Email Metrics</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../concepts/index.html"><strong aria-hidden="true">7.</strong> Telemetry Behavior Reference</a></li><li><ol class="section"><li><a href="../concepts/profile/index.html"><strong aria-hidden="true">7.1.</strong> Profile Behavior</a></li><li><ol class="section"><li><a href="../concepts/profile/profile_creation.html"><strong aria-hidden="true">7.1.1.</strong> Profile Creation</a></li><li><a href="../concepts/profile/realworldusage.html"><strong aria-hidden="true">7.1.2.</strong> Real World Usage</a></li><li><a href="../concepts/profile/profilehistory.html"><strong aria-hidden="true">7.1.3.</strong> Profile History</a></li></ol></li><li><a href="../concepts/channels/index.html"><strong aria-hidden="true">7.2.</strong> Channel Behavior</a></li><li><ol class="section"><li><a href="../concepts/channels/channel_normalization.html"><strong aria-hidden="true">7.2.1.</strong> Channel Normalization and Querying</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../meta/index.html"><strong aria-hidden="true">8.</strong> About this Documentation</a></li><li><ol class="section"><li><a href="../meta/contributing.html"><strong aria-hidden="true">8.1.</strong> Contributing</a></li><li><a href="../meta/structure.html"><strong aria-hidden="true">8.2.</strong> Structure</a></li></ol></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="affix"><a href="../introduction.html">Firefox Data Documentation</a></li><li><a href="../concepts/reporting_a_problem.html"><strong aria-hidden="true">1.</strong> Reporting a problem</a></li><li><a href="../concepts/terminology.html"><strong aria-hidden="true">2.</strong> Terminology</a></li><li><a href="../concepts/getting_started.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li><ol class="section"><li><a href="../concepts/analysis_intro.html"><strong aria-hidden="true">3.1.</strong> Analysis Quick Start</a></li><li><a href="../concepts/choosing_a_dataset.html"><strong aria-hidden="true">3.2.</strong> Choosing a Dataset</a></li><li><a href="../concepts/choosing_a_dataset_mobile.html"><strong aria-hidden="true">3.3.</strong> Choosing a Dataset - Mobile Edition</a></li><li><a href="../tools/stmo.html" class="active"><strong aria-hidden="true">3.4.</strong> Intro to STMO</a></li><li><a href="../concepts/analysis_gotchas.html"><strong aria-hidden="true">3.5.</strong> Common Analysis Gotchas</a></li><li><a href="../concepts/sql_optimization.html"><strong aria-hidden="true">3.6.</strong> Optimizing Queries</a></li><li><a href="../datasets/new_data.html"><strong aria-hidden="true">3.7.</strong> Collecting New Data</a></li><li><a href="../concepts/getting_help.html"><strong aria-hidden="true">3.8.</strong> Getting Help</a></li></ol></li><li><a href="../tools/index.html"><strong aria-hidden="true">4.</strong> Tools</a></li><li><ol class="section"><li><a href="../tools/projects.html"><strong aria-hidden="true">4.1.</strong> Project Glossary</a></li><li><a href="../concepts/pipeline/data_pipeline.html"><strong aria-hidden="true">4.2.</strong> Overview of Mozilla's Data Pipeline</a></li><li><ol class="section"><li><a href="../concepts/pipeline/data_pipeline_detail.html"><strong aria-hidden="true">4.2.1.</strong> In-depth Data Pipeline Detail</a></li><li><a href="../concepts/pipeline/http_edge_spec.html"><strong aria-hidden="true">4.2.2.</strong> HTTP Edge Server Specification</a></li><li><a href="../concepts/pipeline/event_pipeline.html"><strong aria-hidden="true">4.2.3.</strong> Event Pipeline Detail</a></li></ol></li><li><a href="../tools/interfaces.html"><strong aria-hidden="true">4.3.</strong> Analysis Interfaces</a></li><li><a href="../tools/spark.html"><strong aria-hidden="true">4.4.</strong> Custom analysis with Spark</a></li><li><a href="../concepts/sql_style.html"><strong aria-hidden="true">4.5.</strong> SQL Style Guide</a></li><li><a href="../concepts/glean/glean.html"><strong aria-hidden="true">4.6.</strong> Glean overview</a></li><li><ol class="section"><li><a href="../concepts/glean/debug_ping_view.html"><strong aria-hidden="true">4.6.1.</strong> Glean Debug ping viewer</a></li></ol></li></ol></li><li><a href="../cookbooks/index.html"><strong aria-hidden="true">5.</strong> Cookbooks</a></li><li><ol class="section"><li><a href="../tools/alerts.html"><strong aria-hidden="true">5.1.</strong> Alerts</a></li><li><a href="../cookbooks/parquet.html"><strong aria-hidden="true">5.2.</strong> Working with Parquet Data on ATMO Clusters</a></li><li><a href="../cookbooks/bigquery.html"><strong aria-hidden="true">5.3.</strong> Accessing and working with BigQuery</a></li><li><a href="../cookbooks/create_a_dataset.html"><strong aria-hidden="true">5.4.</strong> Creating a custom Re:dash dataset</a></li><li><a href="../cookbooks/new_ping.html"><strong aria-hidden="true">5.5.</strong> Sending a Custom Ping</a></li><li><a href="../cookbooks/hll_zeppelin.html"><strong aria-hidden="true">5.6.</strong> Using HyperLogLog in Zeppelin</a></li><li><a href="../cookbooks/client_guidelines.html"><strong aria-hidden="true">5.7.</strong> Client Implementation Guidelines</a></li><li><a href="../cookbooks/dataset_specific.html"><strong aria-hidden="true">5.8.</strong> Dataset Specific</a></li><li><ol class="section"><li><a href="../cookbooks/longitudinal_examples.html"><strong aria-hidden="true">5.8.1.</strong> Longitudinal Examples</a></li><li><a href="../cookbooks/crash_pings.html"><strong aria-hidden="true">5.8.2.</strong> Working with Crash Pings</a></li><li><a href="../cookbooks/normandy_events.html"><strong aria-hidden="true">5.8.3.</strong> Working with Normandy events</a></li></ol></li><li><a href="../cookbooks/realtime.html"><strong aria-hidden="true">5.9.</strong> Real-time</a></li><li><ol class="section"><li><a href="../cookbooks/realtime_analysis_plugin.html"><strong aria-hidden="true">5.9.1.</strong> Creating a Real-time Analysis Plugin</a></li><li><a href="../cookbooks/view_pings_cep.html"><strong aria-hidden="true">5.9.2.</strong> Seeing Your Own Pings</a></li><li><a href="../tools/cep_matcher.html"><strong aria-hidden="true">5.9.3.</strong> CEP Matcher</a></li></ol></li><li><a href="../cookbooks/metrics.html"><strong aria-hidden="true">5.10.</strong> Metrics</a></li><li><ol class="section"><li><a href="../cookbooks/dau.html"><strong aria-hidden="true">5.10.1.</strong> Daily Active Users (DAU)</a></li><li><a href="../cookbooks/active_dau.html"><strong aria-hidden="true">5.10.2.</strong> Active DAU (aDAU)</a></li><li><a href="../cookbooks/retention.html"><strong aria-hidden="true">5.10.3.</strong> Retention</a></li></ol></li><li><a href="../cookbooks/events_best_practices.html"><strong aria-hidden="true">5.11.</strong> Telemetry Events Best Practices</a></li><li class="spacer"></li></ol></li><li><a href="../datasets/reference.html"><strong aria-hidden="true">6.</strong> Dataset Reference</a></li><li><ol class="section"><li><a href="../datasets/pings.html"><strong aria-hidden="true">6.1.</strong> Pings</a></li><li><a href="../datasets/derived.html"><strong aria-hidden="true">6.2.</strong> Derived Datasets</a></li><li><ol class="section"><li><a href="../datasets/batch_view/addons/reference.html"><strong aria-hidden="true">6.2.1.</strong> Addons</a></li><li><a href="../datasets/other/addons_daily/reference.html"><strong aria-hidden="true">6.2.2.</strong> Addons Daily</a></li><li><a href="../datasets/mozetl/churn/reference.html"><strong aria-hidden="true">6.2.3.</strong> Churn</a></li><li><a href="../datasets/batch_view/clients_daily/reference.html"><strong aria-hidden="true">6.2.4.</strong> Clients Daily</a></li><li><a href="../datasets/bigquery/clients_last_seen/reference.html"><strong aria-hidden="true">6.2.5.</strong> Clients Last Seen</a></li><li><a href="../datasets/batch_view/crash_summary/reference.html"><strong aria-hidden="true">6.2.6.</strong> Crash Summary</a></li><li><a href="../datasets/batch_view/cross_sectional/reference.html"><strong aria-hidden="true">6.2.7.</strong> Cross Sectional</a></li><li><a href="../datasets/streaming/error_aggregates/reference.html"><strong aria-hidden="true">6.2.8.</strong> Error Aggregates</a></li><li><a href="../datasets/batch_view/events/reference.html"><strong aria-hidden="true">6.2.9.</strong> Events</a></li><li><a href="../datasets/bigquery/exact_mau/reference.html"><strong aria-hidden="true">6.2.10.</strong> Exact MAU</a></li><li><a href="../datasets/batch_view/first_shutdown_summary/reference.html"><strong aria-hidden="true">6.2.11.</strong> First Shutdown Summary</a></li><li><a href="../datasets/batch_view/longitudinal/reference.html"><strong aria-hidden="true">6.2.12.</strong> Longitudinal</a></li><li><a href="../datasets/batch_view/main_summary/reference.html"><strong aria-hidden="true">6.2.13.</strong> Main Summary</a></li><li><a href="../datasets/batch_view/new_profile/reference.html"><strong aria-hidden="true">6.2.14.</strong> New Profile</a></li><li><a href="../datasets/batch_view/retention/reference.html"><strong aria-hidden="true">6.2.15.</strong> Retention</a></li><li><a href="../datasets/other/socorro_crash/reference.html"><strong aria-hidden="true">6.2.16.</strong> Socorro Crash Reports</a></li><li><a href="../datasets/other/ssl/reference.html"><strong aria-hidden="true">6.2.17.</strong> SSL Ratios (public)</a></li><li><a href="../datasets/batch_view/sync_summary/reference.html"><strong aria-hidden="true">6.2.18.</strong> Sync Summary</a></li><li><a href="../datasets/batch_view/update/reference.html"><strong aria-hidden="true">6.2.19.</strong> Update</a></li></ol></li><li><a href="../tools/experiments.html"><strong aria-hidden="true">6.3.</strong> Experimental Datasets</a></li><li><ol class="section"><li><a href="../datasets/heartbeat.html"><strong aria-hidden="true">6.3.1.</strong> Accessing Heartbeat data</a></li><li><a href="../datasets/shield.html"><strong aria-hidden="true">6.3.2.</strong> Accessing Shield Study data</a></li></ol></li><li><a href="../datasets/search.html"><strong aria-hidden="true">6.4.</strong> Search Datasets</a></li><li><ol class="section"><li><a href="../datasets/mozetl/search_aggregates/reference.html"><strong aria-hidden="true">6.4.1.</strong> Search Aggregates</a></li><li><a href="../datasets/mozetl/search_clients_daily/reference.html"><strong aria-hidden="true">6.4.2.</strong> Search Clients Daily</a></li></ol></li><li><a href="../datasets/other.html"><strong aria-hidden="true">6.5.</strong> Other Datasets</a></li><li><ol class="section"><li><a href="../datasets/other/hgpush/reference.html"><strong aria-hidden="true">6.5.1.</strong> hgpush</a></li><li><a href="../datasets/other/stub_installer/reference.html"><strong aria-hidden="true">6.5.2.</strong> Stub installer ping</a></li></ol></li><li><a href="../datasets/obsolete.html"><strong aria-hidden="true">6.6.</strong> Obsolete Datasets</a></li><li><ol class="section"><li><a href="../datasets/obsolete/heavy_users/reference.html"><strong aria-hidden="true">6.6.1.</strong> Heavy Users</a></li><li><a href="../datasets/obsolete/crash_aggregates/reference.html"><strong aria-hidden="true">6.6.2.</strong> Crash Aggregates</a></li><li><a href="../datasets/obsolete/client_count/reference.html"><strong aria-hidden="true">6.6.3.</strong> Client Count</a></li><li><a href="../datasets/obsolete/client_count_daily/reference.html"><strong aria-hidden="true">6.6.4.</strong> Client Count Daily</a></li></ol></li><li><a href="../datasets/fxa.html"><strong aria-hidden="true">6.7.</strong> Firefox Accounts Datasets</a></li><li><ol class="section"><li><a href="../datasets/fxa_metrics/attribution.html"><strong aria-hidden="true">6.7.1.</strong> Firefox Account Attribution</a></li><li><a href="../datasets/fxa_metrics/funnels.html"><strong aria-hidden="true">6.7.2.</strong> Firefox Account Funnel Metrics</a></li><li><a href="../datasets/fxa_metrics/emails.html"><strong aria-hidden="true">6.7.3.</strong> Firefox Account Email Metrics</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../concepts/index.html"><strong aria-hidden="true">7.</strong> Telemetry Behavior Reference</a></li><li><ol class="section"><li><a href="../concepts/profile/index.html"><strong aria-hidden="true">7.1.</strong> Profile Behavior</a></li><li><ol class="section"><li><a href="../concepts/profile/profile_creation.html"><strong aria-hidden="true">7.1.1.</strong> Profile Creation</a></li><li><a href="../concepts/profile/realworldusage.html"><strong aria-hidden="true">7.1.2.</strong> Real World Usage</a></li><li><a href="../concepts/profile/profilehistory.html"><strong aria-hidden="true">7.1.3.</strong> Profile History</a></li></ol></li><li><a href="../concepts/channels/index.html"><strong aria-hidden="true">7.2.</strong> Channel Behavior</a></li><li><ol class="section"><li><a href="../concepts/channels/channel_normalization.html"><strong aria-hidden="true">7.2.1.</strong> Channel Normalization and Querying</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../meta/index.html"><strong aria-hidden="true">8.</strong> About this Documentation</a></li><li><ol class="section"><li><a href="../meta/contributing.html"><strong aria-hidden="true">8.1.</strong> Contributing</a></li><li><a href="../meta/structure.html"><strong aria-hidden="true">8.2.</strong> Structure</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -93,7 +101,7 @@
                                 <i class="fa fa-paint-brush"></i>
                             </button>
                             <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -106,12 +114,13 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Firefox Data Documentation</h1> 
+                        <h1 class="menu-title">Firefox Data Documentation</h1>
 
                         <div class="right-buttons">
                             <a href="../print.html" title="Print this book" aria-label="Print this book">
                                 <i id="print-button" class="fa fa-print"></i>
                             </a>
+                            
                         </div>
                     </div>
                 </div>
@@ -140,7 +149,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#introduction" id="introduction"><h2>Introduction</h2></a>
+                        <h2><a class="header" href="#introduction" id="introduction">Introduction</a></h2>
 <p>STMO is shorthand for
 <a href="https://sql.telemetry.mozilla.org"><code>sql.telemetry.mozilla.org</code></a>, an installation
 of the excellent <a href="https://redash.io/">Re:dash</a> data analysis and dashboarding
@@ -149,10 +158,10 @@ Firefox organization's data sets. As the name and URL imply, effective use of
 this tool requires familiarity with the
 <a href="https://en.wikipedia.org/wiki/SQL">SQL</a> query language, with which all of the
 tool's data extraction and analysis are performed.</p>
-<a class="header" href="#concepts" id="concepts"><h2>Concepts</h2></a>
+<h2><a class="header" href="#concepts" id="concepts">Concepts</a></h2>
 <p>There are three building block from which analyses in STMO are constructed:
 queries, visualizations, and dashboards.</p>
-<a class="header" href="#queries" id="queries"><h4>Queries</h4></a>
+<h4><a class="header" href="#queries" id="queries">Queries</a></h4>
 <p>STMO's basic unit of analysis is the query. A query is a block of SQL code that
 extracts and (optionally) transforms data from a single data source. Queries
 can vary widely in complexity. Some queries are trivial one liners
@@ -162,7 +171,7 @@ small programs in their own right.</p>
 return values for the query's output columns. A query can be run manually or it
 can be specified to have a refresh schedule, where it will execute
 automatically after a specified interval of time.</p>
-<a class="header" href="#visualizations" id="visualizations"><h4>Visualizations</h4></a>
+<h4><a class="header" href="#visualizations" id="visualizations">Visualizations</a></h4>
 <p>Tabular data is great, but rarely is a grid of values the best way to make
 sense of your data. Each query can be associated with multiple visualizations,
 each visualization rendering the extracted data in some more useful
@@ -172,13 +181,13 @@ provides a set of configuration parameters that allow you to specify how to map
 from the raw query output to the desired visualization. Some visualization types
 make demands of the query output; a map visualization requires each row to contain
 a longitude value and a latitude value, for instance.</p>
-<a class="header" href="#dashboards" id="dashboards"><h4>Dashboards</h4></a>
+<h4><a class="header" href="#dashboards" id="dashboards">Dashboards</a></h4>
 <p>A dashboard is a collection of visualizations, combined into a single visual
 presentation for convenient perusal. A dashboard is decoupled from any
 particular queries. While it is possible to include multiple visualizations
 from a single query in one dashboard, it is not required; users can add any
 visualizations they can access to the dashboards they create.</p>
-<a class="header" href="#data-sources" id="data-sources"><h2>Data Sources</h2></a>
+<h2><a class="header" href="#data-sources" id="data-sources">Data Sources</a></h2>
 <p>SQL provides the ability to extract and manipulate the data, but you won't get
 very far without having some familiarity with what data is actually available,
 and how that data is structured. Each query in STMO is associated with exactly
@@ -200,10 +209,10 @@ dataset</a> page. If you have data set
 questions, or would like to know if specific data is or can be made available
 in STMO, please inquire in the <code>#datapipeline</code> or <code>#datatools</code> channels on
 <code>irc.mozilla.org</code>.</p>
-<a class="header" href="#creating-an-example-dashboard" id="creating-an-example-dashboard"><h2>Creating an Example Dashboard</h2></a>
+<h2><a class="header" href="#creating-an-example-dashboard" id="creating-an-example-dashboard">Creating an Example Dashboard</a></h2>
 <p>The rest of this document will take you through the process of creating a
 simple dashboard using STMO.</p>
-<a class="header" href="#creating-a-query" id="creating-a-query"><h4>Creating A Query</h4></a>
+<h4><a class="header" href="#creating-a-query" id="creating-a-query">Creating A Query</a></h4>
 <p>We start by creating a query. Our first query will count the number of client
 ids that we have coming from each country, for the top N countries. Clicking on
 the 'New Query' button near the top left of the site will bring you to the
@@ -276,7 +285,7 @@ the page; it should turn into an edit box, allowing you to rename the
 query. For this exercise, you should use a unique prefix (such as your name)
 for your query name, so it will be easy to find your query later; I used
 <code>rmiller:Top Countries</code>.</p>
-<a class="header" href="#creating-a-visualization" id="creating-a-visualization"><h4>Creating A Visualization</h4></a>
+<h4><a class="header" href="#creating-a-visualization" id="creating-a-visualization">Creating A Visualization</a></h4>
 <p>Now that the query is created, we'll want to provide a simple
 visualization. The table with results from the first query execution should be
 showing up underneath the query edit box. Next to the <code>TABLE</code> heading should be
@@ -292,7 +301,7 @@ more settings on the <code>X AXIS</code> tab. You'll want to click on this tab a
 change the 'Scale' setting to 'Category', and un-check the 'Sort Values'
 check-box to allow the query's sort order to take precedence:</p>
 <p><img src="../assets/STMO_screenshots/x_axis_editor.png" alt="Visualization X Axis" title="Visualization X Axis" /></p>
-<a class="header" href="#a-note-about-limits" id="a-note-about-limits"><h4>A Note About Limits</h4></a>
+<h4><a class="header" href="#a-note-about-limits" id="a-note-about-limits">A Note About Limits</a></h4>
 <p>Once you save the visualization settings and return to the query source page,
 you should have a nice bar graph near the bottom of the page. You may notice,
 however, that the graph has quite a long tail. Rather than seeing <em>all</em> of
@@ -327,7 +336,7 @@ queries, to prevent your query from returning a gigantic result set that causes
 UI and performance problems. You may learn that the total result set is small
 enough that the limit is unnecessary, but unless you're certain that is the
 case specifying an explicit LIMIT helps prevent unnecessary issues.</p>
-<a class="header" href="#query-parameters" id="query-parameters"><h4>Query Parameters</h4></a>
+<h4><a class="header" href="#query-parameters" id="query-parameters">Query Parameters</a></h4>
 <p>We got our chart under control by adding a &quot;LIMIT 20&quot; clause at the end. But
 what if we only want the top 10? Or maybe sometimes we want to see the top 30?
 We don't always know how many results our users will want. Is it possible to
@@ -354,7 +363,7 @@ see an input field show up directly above the bar chart. If you enter a numeric
 value into this input box and click on 'Execute' the query will run with the
 specified limit. Clicking on the 'Save' button will then save the query, using
 the entered parameter value as the default.</p>
-<a class="header" href="#creating-a-dashboard" id="creating-a-dashboard"><h4>Creating A Dashboard</h4></a>
+<h4><a class="header" href="#creating-a-dashboard" id="creating-a-dashboard">Creating A Dashboard</a></h4>
 <p>Now we can create a dashboard to display our visualization. Do this by clicking
 on the 'Dashboards' drop-down near the top left of the page, and then clicking
 the 'New Dashboard' option. Choose a name for your dashboard, and you will be
@@ -377,7 +386,7 @@ visualizations to use. Choose the bar chart you created and then click on the
 &quot;Add to Dashboard&quot; button. Voila! Now your dashboard should have a bar chart,
 and you should be able to edit the <code>country_count</code> value and click the refresh
 button to change the number of countries that show up on the chart.</p>
-<a class="header" href="#completing-the-dashboard" id="completing-the-dashboard"><h4>Completing the Dashboard</h4></a>
+<h4><a class="header" href="#completing-the-dashboard" id="completing-the-dashboard">Completing the Dashboard</a></h4>
 <p>A dashboard with just one graph is a bit sad, so let's flesh it out by adding a
 handful of additional widgets. We're going to create three more queries, each
 with a very similar bar chart. The text of the queries will be provided here,
@@ -467,7 +476,7 @@ the work that has been published by others.</p>
 diving into Re:dash and all of its capabilities.</p>
 </li>
 </ul>
-<a class="header" href="#prototyping-queries" id="prototyping-queries"><h4>Prototyping Queries</h4></a>
+<h4><a class="header" href="#prototyping-queries" id="prototyping-queries">Prototyping Queries</a></h4>
 <p>Sometimes you want to start working on your query before the data is available.
 You can do this with most of the data sources by selecting a static test data
 set, then working with it as usual. You can also use this method to explore

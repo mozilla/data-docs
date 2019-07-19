@@ -4,6 +4,8 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Custom analysis with Spark - Firefox Data Documentation</title>
+        
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,7 +38,10 @@
     </head>
     <body class="light">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">var path_to_root = "../";</script>
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = "light";
+        </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script type="text/javascript">
@@ -57,8 +62,8 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
-            if (theme === null || theme === undefined) { theme = 'light'; }
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
         </script>
@@ -76,7 +81,10 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="../introduction.html">Firefox Data Documentation</a></li><li><a href="../concepts/reporting_a_problem.html"><strong aria-hidden="true">1.</strong> Reporting a problem</a></li><li><a href="../concepts/terminology.html"><strong aria-hidden="true">2.</strong> Terminology</a></li><li><a href="../concepts/getting_started.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li><ol class="section"><li><a href="../concepts/analysis_intro.html"><strong aria-hidden="true">3.1.</strong> Analysis Quick Start</a></li><li><a href="../concepts/choosing_a_dataset.html"><strong aria-hidden="true">3.2.</strong> Choosing a Dataset</a></li><li><a href="../concepts/choosing_a_dataset_mobile.html"><strong aria-hidden="true">3.3.</strong> Choosing a Dataset - Mobile Edition</a></li><li><a href="../tools/stmo.html"><strong aria-hidden="true">3.4.</strong> Intro to STMO</a></li><li><a href="../concepts/analysis_gotchas.html"><strong aria-hidden="true">3.5.</strong> Common Analysis Gotchas</a></li><li><a href="../concepts/sql_optimization.html"><strong aria-hidden="true">3.6.</strong> Optimizing Queries</a></li><li><a href="../datasets/new_data.html"><strong aria-hidden="true">3.7.</strong> Collecting New Data</a></li><li><a href="../concepts/getting_help.html"><strong aria-hidden="true">3.8.</strong> Getting Help</a></li></ol></li><li><a href="../tools/index.html"><strong aria-hidden="true">4.</strong> Tools</a></li><li><ol class="section"><li><a href="../tools/projects.html"><strong aria-hidden="true">4.1.</strong> Project Glossary</a></li><li><a href="../concepts/pipeline/data_pipeline.html"><strong aria-hidden="true">4.2.</strong> Overview of Mozilla's Data Pipeline</a></li><li><ol class="section"><li><a href="../concepts/pipeline/data_pipeline_detail.html"><strong aria-hidden="true">4.2.1.</strong> In-depth Data Pipeline Detail</a></li><li><a href="../concepts/pipeline/http_edge_spec.html"><strong aria-hidden="true">4.2.2.</strong> HTTP Edge Server Specification</a></li><li><a href="../concepts/pipeline/event_pipeline.html"><strong aria-hidden="true">4.2.3.</strong> Event Pipeline Detail</a></li></ol></li><li><a href="../tools/interfaces.html"><strong aria-hidden="true">4.3.</strong> Analysis Interfaces</a></li><li><a href="../tools/spark.html" class="active"><strong aria-hidden="true">4.4.</strong> Custom analysis with Spark</a></li><li><a href="../concepts/sql_style.html"><strong aria-hidden="true">4.5.</strong> SQL Style Guide</a></li><li><a href="../concepts/glean/glean.html"><strong aria-hidden="true">4.6.</strong> Glean overview</a></li><li><ol class="section"><li><a href="../concepts/glean/debug_ping_view.html"><strong aria-hidden="true">4.6.1.</strong> Glean Debug ping viewer</a></li></ol></li></ol></li><li><a href="../cookbooks/index.html"><strong aria-hidden="true">5.</strong> Cookbooks</a></li><li><ol class="section"><li><a href="../tools/alerts.html"><strong aria-hidden="true">5.1.</strong> Alerts</a></li><li><a href="../cookbooks/parquet.html"><strong aria-hidden="true">5.2.</strong> Working with Parquet Data on ATMO Clusters</a></li><li><a href="../cookbooks/bigquery.html"><strong aria-hidden="true">5.3.</strong> Accessing and working with BigQuery</a></li><li><a href="../cookbooks/create_a_dataset.html"><strong aria-hidden="true">5.4.</strong> Creating a custom Re:dash dataset</a></li><li><a href="../cookbooks/new_ping.html"><strong aria-hidden="true">5.5.</strong> Sending a Custom Ping</a></li><li><a href="../cookbooks/hll_zeppelin.html"><strong aria-hidden="true">5.6.</strong> Using HyperLogLog in Zeppelin</a></li><li><a href="../cookbooks/client_guidelines.html"><strong aria-hidden="true">5.7.</strong> Client Implementation Guidelines</a></li><li><a href="../cookbooks/dataset_specific.html"><strong aria-hidden="true">5.8.</strong> Dataset Specific</a></li><li><ol class="section"><li><a href="../cookbooks/longitudinal_examples.html"><strong aria-hidden="true">5.8.1.</strong> Longitudinal Examples</a></li><li><a href="../cookbooks/crash_pings.html"><strong aria-hidden="true">5.8.2.</strong> Working with Crash Pings</a></li><li><a href="../cookbooks/normandy_events.html"><strong aria-hidden="true">5.8.3.</strong> Working with Normandy events</a></li></ol></li><li><a href="../cookbooks/realtime.html"><strong aria-hidden="true">5.9.</strong> Real-time</a></li><li><ol class="section"><li><a href="../cookbooks/realtime_analysis_plugin.html"><strong aria-hidden="true">5.9.1.</strong> Creating a Real-time Analysis Plugin</a></li><li><a href="../cookbooks/view_pings_cep.html"><strong aria-hidden="true">5.9.2.</strong> Seeing Your Own Pings</a></li><li><a href="../tools/cep_matcher.html"><strong aria-hidden="true">5.9.3.</strong> CEP Matcher</a></li></ol></li><li><a href="../cookbooks/metrics.html"><strong aria-hidden="true">5.10.</strong> Metrics</a></li><li><ol class="section"><li><a href="../cookbooks/dau.html"><strong aria-hidden="true">5.10.1.</strong> Daily Active Users (DAU)</a></li><li><a href="../cookbooks/active_dau.html"><strong aria-hidden="true">5.10.2.</strong> Active DAU (aDAU)</a></li><li><a href="../cookbooks/retention.html"><strong aria-hidden="true">5.10.3.</strong> Retention</a></li></ol></li><li><a href="../cookbooks/events_best_practices.html"><strong aria-hidden="true">5.11.</strong> Telemetry Events Best Practices</a></li><li class="spacer"></li></ol></li><li><a href="../datasets/reference.html"><strong aria-hidden="true">6.</strong> Dataset Reference</a></li><li><ol class="section"><li><a href="../datasets/pings.html"><strong aria-hidden="true">6.1.</strong> Pings</a></li><li><a href="../datasets/derived.html"><strong aria-hidden="true">6.2.</strong> Derived Datasets</a></li><li><ol class="section"><li><a href="../datasets/batch_view/addons/reference.html"><strong aria-hidden="true">6.2.1.</strong> Addons</a></li><li><a href="../datasets/other/addons_daily/reference.html"><strong aria-hidden="true">6.2.2.</strong> Addons Daily</a></li><li><a href="../datasets/mozetl/churn/reference.html"><strong aria-hidden="true">6.2.3.</strong> Churn</a></li><li><a href="../datasets/batch_view/clients_daily/reference.html"><strong aria-hidden="true">6.2.4.</strong> Clients Daily</a></li><li><a href="../datasets/bigquery/clients_last_seen/reference.html"><strong aria-hidden="true">6.2.5.</strong> Clients Last Seen</a></li><li><a href="../datasets/batch_view/crash_summary/reference.html"><strong aria-hidden="true">6.2.6.</strong> Crash Summary</a></li><li><a href="../datasets/batch_view/cross_sectional/reference.html"><strong aria-hidden="true">6.2.7.</strong> Cross Sectional</a></li><li><a href="../datasets/streaming/error_aggregates/reference.html"><strong aria-hidden="true">6.2.8.</strong> Error Aggregates</a></li><li><a href="../datasets/batch_view/events/reference.html"><strong aria-hidden="true">6.2.9.</strong> Events</a></li><li><a href="../datasets/bigquery/exact_mau/reference.html"><strong aria-hidden="true">6.2.10.</strong> Exact MAU</a></li><li><a href="../datasets/batch_view/first_shutdown_summary/reference.html"><strong aria-hidden="true">6.2.11.</strong> First Shutdown Summary</a></li><li><a href="../datasets/batch_view/longitudinal/reference.html"><strong aria-hidden="true">6.2.12.</strong> Longitudinal</a></li><li><a href="../datasets/batch_view/main_summary/reference.html"><strong aria-hidden="true">6.2.13.</strong> Main Summary</a></li><li><a href="../datasets/batch_view/new_profile/reference.html"><strong aria-hidden="true">6.2.14.</strong> New Profile</a></li><li><a href="../datasets/batch_view/retention/reference.html"><strong aria-hidden="true">6.2.15.</strong> Retention</a></li><li><a href="../datasets/other/socorro_crash/reference.html"><strong aria-hidden="true">6.2.16.</strong> Socorro Crash Reports</a></li><li><a href="../datasets/other/ssl/reference.html"><strong aria-hidden="true">6.2.17.</strong> SSL Ratios (public)</a></li><li><a href="../datasets/batch_view/sync_summary/reference.html"><strong aria-hidden="true">6.2.18.</strong> Sync Summary</a></li><li><a href="../datasets/batch_view/update/reference.html"><strong aria-hidden="true">6.2.19.</strong> Update</a></li></ol></li><li><a href="../tools/experiments.html"><strong aria-hidden="true">6.3.</strong> Experimental Datasets</a></li><li><ol class="section"><li><a href="../datasets/heartbeat.html"><strong aria-hidden="true">6.3.1.</strong> Accessing Heartbeat data</a></li><li><a href="../datasets/shield.html"><strong aria-hidden="true">6.3.2.</strong> Accessing Shield Study data</a></li></ol></li><li><a href="../datasets/search.html"><strong aria-hidden="true">6.4.</strong> Search Datasets</a></li><li><ol class="section"><li><a href="../datasets/mozetl/search_aggregates/reference.html"><strong aria-hidden="true">6.4.1.</strong> Search Aggregates</a></li><li><a href="../datasets/mozetl/search_clients_daily/reference.html"><strong aria-hidden="true">6.4.2.</strong> Search Clients Daily</a></li></ol></li><li><a href="../datasets/other.html"><strong aria-hidden="true">6.5.</strong> Other Datasets</a></li><li><ol class="section"><li><a href="../datasets/other/hgpush/reference.html"><strong aria-hidden="true">6.5.1.</strong> hgpush</a></li><li><a href="../datasets/other/stub_installer/reference.html"><strong aria-hidden="true">6.5.2.</strong> Stub installer ping</a></li></ol></li><li><a href="../datasets/obsolete.html"><strong aria-hidden="true">6.6.</strong> Obsolete Datasets</a></li><li><ol class="section"><li><a href="../datasets/obsolete/heavy_users/reference.html"><strong aria-hidden="true">6.6.1.</strong> Heavy Users</a></li><li><a href="../datasets/obsolete/crash_aggregates/reference.html"><strong aria-hidden="true">6.6.2.</strong> Crash Aggregates</a></li><li><a href="../datasets/obsolete/client_count/reference.html"><strong aria-hidden="true">6.6.3.</strong> Client Count</a></li><li><a href="../datasets/obsolete/client_count_daily/reference.html"><strong aria-hidden="true">6.6.4.</strong> Client Count Daily</a></li></ol></li><li><a href="../datasets/fxa.html"><strong aria-hidden="true">6.7.</strong> Firefox Accounts Datasets</a></li><li><ol class="section"><li><a href="../datasets/fxa_metrics/attribution.html"><strong aria-hidden="true">6.7.1.</strong> Firefox Account Attribution</a></li><li><a href="../datasets/fxa_metrics/funnels.html"><strong aria-hidden="true">6.7.2.</strong> Firefox Account Funnel Metrics</a></li><li><a href="../datasets/fxa_metrics/emails.html"><strong aria-hidden="true">6.7.3.</strong> Firefox Account Email Metrics</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../concepts/index.html"><strong aria-hidden="true">7.</strong> Telemetry Behavior Reference</a></li><li><ol class="section"><li><a href="../concepts/profile/index.html"><strong aria-hidden="true">7.1.</strong> Profile Behavior</a></li><li><ol class="section"><li><a href="../concepts/profile/profile_creation.html"><strong aria-hidden="true">7.1.1.</strong> Profile Creation</a></li><li><a href="../concepts/profile/realworldusage.html"><strong aria-hidden="true">7.1.2.</strong> Real World Usage</a></li><li><a href="../concepts/profile/profilehistory.html"><strong aria-hidden="true">7.1.3.</strong> Profile History</a></li></ol></li><li><a href="../concepts/channels/index.html"><strong aria-hidden="true">7.2.</strong> Channel Behavior</a></li><li><ol class="section"><li><a href="../concepts/channels/channel_normalization.html"><strong aria-hidden="true">7.2.1.</strong> Channel Normalization and Querying</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../meta/index.html"><strong aria-hidden="true">8.</strong> About this Documentation</a></li><li><ol class="section"><li><a href="../meta/contributing.html"><strong aria-hidden="true">8.1.</strong> Contributing</a></li><li><a href="../meta/structure.html"><strong aria-hidden="true">8.2.</strong> Structure</a></li></ol></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="affix"><a href="../introduction.html">Firefox Data Documentation</a></li><li><a href="../concepts/reporting_a_problem.html"><strong aria-hidden="true">1.</strong> Reporting a problem</a></li><li><a href="../concepts/terminology.html"><strong aria-hidden="true">2.</strong> Terminology</a></li><li><a href="../concepts/getting_started.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li><ol class="section"><li><a href="../concepts/analysis_intro.html"><strong aria-hidden="true">3.1.</strong> Analysis Quick Start</a></li><li><a href="../concepts/choosing_a_dataset.html"><strong aria-hidden="true">3.2.</strong> Choosing a Dataset</a></li><li><a href="../concepts/choosing_a_dataset_mobile.html"><strong aria-hidden="true">3.3.</strong> Choosing a Dataset - Mobile Edition</a></li><li><a href="../tools/stmo.html"><strong aria-hidden="true">3.4.</strong> Intro to STMO</a></li><li><a href="../concepts/analysis_gotchas.html"><strong aria-hidden="true">3.5.</strong> Common Analysis Gotchas</a></li><li><a href="../concepts/sql_optimization.html"><strong aria-hidden="true">3.6.</strong> Optimizing Queries</a></li><li><a href="../datasets/new_data.html"><strong aria-hidden="true">3.7.</strong> Collecting New Data</a></li><li><a href="../concepts/getting_help.html"><strong aria-hidden="true">3.8.</strong> Getting Help</a></li></ol></li><li><a href="../tools/index.html"><strong aria-hidden="true">4.</strong> Tools</a></li><li><ol class="section"><li><a href="../tools/projects.html"><strong aria-hidden="true">4.1.</strong> Project Glossary</a></li><li><a href="../concepts/pipeline/data_pipeline.html"><strong aria-hidden="true">4.2.</strong> Overview of Mozilla's Data Pipeline</a></li><li><ol class="section"><li><a href="../concepts/pipeline/data_pipeline_detail.html"><strong aria-hidden="true">4.2.1.</strong> In-depth Data Pipeline Detail</a></li><li><a href="../concepts/pipeline/http_edge_spec.html"><strong aria-hidden="true">4.2.2.</strong> HTTP Edge Server Specification</a></li><li><a href="../concepts/pipeline/event_pipeline.html"><strong aria-hidden="true">4.2.3.</strong> Event Pipeline Detail</a></li></ol></li><li><a href="../tools/interfaces.html"><strong aria-hidden="true">4.3.</strong> Analysis Interfaces</a></li><li><a href="../tools/spark.html" class="active"><strong aria-hidden="true">4.4.</strong> Custom analysis with Spark</a></li><li><a href="../concepts/sql_style.html"><strong aria-hidden="true">4.5.</strong> SQL Style Guide</a></li><li><a href="../concepts/glean/glean.html"><strong aria-hidden="true">4.6.</strong> Glean overview</a></li><li><ol class="section"><li><a href="../concepts/glean/debug_ping_view.html"><strong aria-hidden="true">4.6.1.</strong> Glean Debug ping viewer</a></li></ol></li></ol></li><li><a href="../cookbooks/index.html"><strong aria-hidden="true">5.</strong> Cookbooks</a></li><li><ol class="section"><li><a href="../tools/alerts.html"><strong aria-hidden="true">5.1.</strong> Alerts</a></li><li><a href="../cookbooks/parquet.html"><strong aria-hidden="true">5.2.</strong> Working with Parquet Data on ATMO Clusters</a></li><li><a href="../cookbooks/bigquery.html"><strong aria-hidden="true">5.3.</strong> Accessing and working with BigQuery</a></li><li><a href="../cookbooks/create_a_dataset.html"><strong aria-hidden="true">5.4.</strong> Creating a custom Re:dash dataset</a></li><li><a href="../cookbooks/new_ping.html"><strong aria-hidden="true">5.5.</strong> Sending a Custom Ping</a></li><li><a href="../cookbooks/hll_zeppelin.html"><strong aria-hidden="true">5.6.</strong> Using HyperLogLog in Zeppelin</a></li><li><a href="../cookbooks/client_guidelines.html"><strong aria-hidden="true">5.7.</strong> Client Implementation Guidelines</a></li><li><a href="../cookbooks/dataset_specific.html"><strong aria-hidden="true">5.8.</strong> Dataset Specific</a></li><li><ol class="section"><li><a href="../cookbooks/longitudinal_examples.html"><strong aria-hidden="true">5.8.1.</strong> Longitudinal Examples</a></li><li><a href="../cookbooks/crash_pings.html"><strong aria-hidden="true">5.8.2.</strong> Working with Crash Pings</a></li><li><a href="../cookbooks/normandy_events.html"><strong aria-hidden="true">5.8.3.</strong> Working with Normandy events</a></li></ol></li><li><a href="../cookbooks/realtime.html"><strong aria-hidden="true">5.9.</strong> Real-time</a></li><li><ol class="section"><li><a href="../cookbooks/realtime_analysis_plugin.html"><strong aria-hidden="true">5.9.1.</strong> Creating a Real-time Analysis Plugin</a></li><li><a href="../cookbooks/view_pings_cep.html"><strong aria-hidden="true">5.9.2.</strong> Seeing Your Own Pings</a></li><li><a href="../tools/cep_matcher.html"><strong aria-hidden="true">5.9.3.</strong> CEP Matcher</a></li></ol></li><li><a href="../cookbooks/metrics.html"><strong aria-hidden="true">5.10.</strong> Metrics</a></li><li><ol class="section"><li><a href="../cookbooks/dau.html"><strong aria-hidden="true">5.10.1.</strong> Daily Active Users (DAU)</a></li><li><a href="../cookbooks/active_dau.html"><strong aria-hidden="true">5.10.2.</strong> Active DAU (aDAU)</a></li><li><a href="../cookbooks/retention.html"><strong aria-hidden="true">5.10.3.</strong> Retention</a></li></ol></li><li><a href="../cookbooks/events_best_practices.html"><strong aria-hidden="true">5.11.</strong> Telemetry Events Best Practices</a></li><li class="spacer"></li></ol></li><li><a href="../datasets/reference.html"><strong aria-hidden="true">6.</strong> Dataset Reference</a></li><li><ol class="section"><li><a href="../datasets/pings.html"><strong aria-hidden="true">6.1.</strong> Pings</a></li><li><a href="../datasets/derived.html"><strong aria-hidden="true">6.2.</strong> Derived Datasets</a></li><li><ol class="section"><li><a href="../datasets/batch_view/addons/reference.html"><strong aria-hidden="true">6.2.1.</strong> Addons</a></li><li><a href="../datasets/other/addons_daily/reference.html"><strong aria-hidden="true">6.2.2.</strong> Addons Daily</a></li><li><a href="../datasets/mozetl/churn/reference.html"><strong aria-hidden="true">6.2.3.</strong> Churn</a></li><li><a href="../datasets/batch_view/clients_daily/reference.html"><strong aria-hidden="true">6.2.4.</strong> Clients Daily</a></li><li><a href="../datasets/bigquery/clients_last_seen/reference.html"><strong aria-hidden="true">6.2.5.</strong> Clients Last Seen</a></li><li><a href="../datasets/batch_view/crash_summary/reference.html"><strong aria-hidden="true">6.2.6.</strong> Crash Summary</a></li><li><a href="../datasets/batch_view/cross_sectional/reference.html"><strong aria-hidden="true">6.2.7.</strong> Cross Sectional</a></li><li><a href="../datasets/streaming/error_aggregates/reference.html"><strong aria-hidden="true">6.2.8.</strong> Error Aggregates</a></li><li><a href="../datasets/batch_view/events/reference.html"><strong aria-hidden="true">6.2.9.</strong> Events</a></li><li><a href="../datasets/bigquery/exact_mau/reference.html"><strong aria-hidden="true">6.2.10.</strong> Exact MAU</a></li><li><a href="../datasets/batch_view/first_shutdown_summary/reference.html"><strong aria-hidden="true">6.2.11.</strong> First Shutdown Summary</a></li><li><a href="../datasets/batch_view/longitudinal/reference.html"><strong aria-hidden="true">6.2.12.</strong> Longitudinal</a></li><li><a href="../datasets/batch_view/main_summary/reference.html"><strong aria-hidden="true">6.2.13.</strong> Main Summary</a></li><li><a href="../datasets/batch_view/new_profile/reference.html"><strong aria-hidden="true">6.2.14.</strong> New Profile</a></li><li><a href="../datasets/batch_view/retention/reference.html"><strong aria-hidden="true">6.2.15.</strong> Retention</a></li><li><a href="../datasets/other/socorro_crash/reference.html"><strong aria-hidden="true">6.2.16.</strong> Socorro Crash Reports</a></li><li><a href="../datasets/other/ssl/reference.html"><strong aria-hidden="true">6.2.17.</strong> SSL Ratios (public)</a></li><li><a href="../datasets/batch_view/sync_summary/reference.html"><strong aria-hidden="true">6.2.18.</strong> Sync Summary</a></li><li><a href="../datasets/batch_view/update/reference.html"><strong aria-hidden="true">6.2.19.</strong> Update</a></li></ol></li><li><a href="../tools/experiments.html"><strong aria-hidden="true">6.3.</strong> Experimental Datasets</a></li><li><ol class="section"><li><a href="../datasets/heartbeat.html"><strong aria-hidden="true">6.3.1.</strong> Accessing Heartbeat data</a></li><li><a href="../datasets/shield.html"><strong aria-hidden="true">6.3.2.</strong> Accessing Shield Study data</a></li></ol></li><li><a href="../datasets/search.html"><strong aria-hidden="true">6.4.</strong> Search Datasets</a></li><li><ol class="section"><li><a href="../datasets/mozetl/search_aggregates/reference.html"><strong aria-hidden="true">6.4.1.</strong> Search Aggregates</a></li><li><a href="../datasets/mozetl/search_clients_daily/reference.html"><strong aria-hidden="true">6.4.2.</strong> Search Clients Daily</a></li></ol></li><li><a href="../datasets/other.html"><strong aria-hidden="true">6.5.</strong> Other Datasets</a></li><li><ol class="section"><li><a href="../datasets/other/hgpush/reference.html"><strong aria-hidden="true">6.5.1.</strong> hgpush</a></li><li><a href="../datasets/other/stub_installer/reference.html"><strong aria-hidden="true">6.5.2.</strong> Stub installer ping</a></li></ol></li><li><a href="../datasets/obsolete.html"><strong aria-hidden="true">6.6.</strong> Obsolete Datasets</a></li><li><ol class="section"><li><a href="../datasets/obsolete/heavy_users/reference.html"><strong aria-hidden="true">6.6.1.</strong> Heavy Users</a></li><li><a href="../datasets/obsolete/crash_aggregates/reference.html"><strong aria-hidden="true">6.6.2.</strong> Crash Aggregates</a></li><li><a href="../datasets/obsolete/client_count/reference.html"><strong aria-hidden="true">6.6.3.</strong> Client Count</a></li><li><a href="../datasets/obsolete/client_count_daily/reference.html"><strong aria-hidden="true">6.6.4.</strong> Client Count Daily</a></li></ol></li><li><a href="../datasets/fxa.html"><strong aria-hidden="true">6.7.</strong> Firefox Accounts Datasets</a></li><li><ol class="section"><li><a href="../datasets/fxa_metrics/attribution.html"><strong aria-hidden="true">6.7.1.</strong> Firefox Account Attribution</a></li><li><a href="../datasets/fxa_metrics/funnels.html"><strong aria-hidden="true">6.7.2.</strong> Firefox Account Funnel Metrics</a></li><li><a href="../datasets/fxa_metrics/emails.html"><strong aria-hidden="true">6.7.3.</strong> Firefox Account Email Metrics</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../concepts/index.html"><strong aria-hidden="true">7.</strong> Telemetry Behavior Reference</a></li><li><ol class="section"><li><a href="../concepts/profile/index.html"><strong aria-hidden="true">7.1.</strong> Profile Behavior</a></li><li><ol class="section"><li><a href="../concepts/profile/profile_creation.html"><strong aria-hidden="true">7.1.1.</strong> Profile Creation</a></li><li><a href="../concepts/profile/realworldusage.html"><strong aria-hidden="true">7.1.2.</strong> Real World Usage</a></li><li><a href="../concepts/profile/profilehistory.html"><strong aria-hidden="true">7.1.3.</strong> Profile History</a></li></ol></li><li><a href="../concepts/channels/index.html"><strong aria-hidden="true">7.2.</strong> Channel Behavior</a></li><li><ol class="section"><li><a href="../concepts/channels/channel_normalization.html"><strong aria-hidden="true">7.2.1.</strong> Channel Normalization and Querying</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../meta/index.html"><strong aria-hidden="true">8.</strong> About this Documentation</a></li><li><ol class="section"><li><a href="../meta/contributing.html"><strong aria-hidden="true">8.1.</strong> Contributing</a></li><li><a href="../meta/structure.html"><strong aria-hidden="true">8.2.</strong> Structure</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -93,7 +101,7 @@
                                 <i class="fa fa-paint-brush"></i>
                             </button>
                             <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -106,12 +114,13 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Firefox Data Documentation</h1> 
+                        <h1 class="menu-title">Firefox Data Documentation</h1>
 
                         <div class="right-buttons">
                             <a href="../print.html" title="Print this book" aria-label="Print this book">
                                 <i id="print-button" class="fa fa-print"></i>
                             </a>
+                            
                         </div>
                     </div>
                 </div>
@@ -140,7 +149,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#introduction" id="introduction"><h2>Introduction</h2></a>
+                        <h2><a class="header" href="#introduction" id="introduction">Introduction</a></h2>
 <p><a href="https://spark.apache.org/">Apache Spark</a>
 is a data processing engine designed to be fast and easy to use.
 We have setup
@@ -153,7 +162,7 @@ The Spark Python API is called PySpark.</p>
 <p>Note that this documentation focuses on ATMO, but analysis with Spark is also possible using Databricks.
 For more information please see this
 <a href="https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/30598/command/30599">example notebook</a>.</p>
-<a class="header" href="#setting-up-a-spark-cluster-on-atmo" id="setting-up-a-spark-cluster-on-atmo"><h2>Setting Up a Spark Cluster On ATMO</h2></a>
+<h2><a class="header" href="#setting-up-a-spark-cluster-on-atmo" id="setting-up-a-spark-cluster-on-atmo">Setting Up a Spark Cluster On ATMO</a></h2>
 <ol>
 <li>Go to <a href="https://analysis.telemetry.mozilla.org">https://analysis.telemetry.mozilla.org</a></li>
 <li>Click “Launch an ad-hoc Spark cluster”.</li>
@@ -177,14 +186,14 @@ For example:</p>
 <pre><code class="language-bash">ssh -i ~/.ssh/id_rsa -L 8888:localhost:8888 hadoop@ec2-54-70-129-221.us-west-2.compute.amazonaws.com
 </code></pre>
 <p>Finally, you can launch Jupyter in Firefox by visiting http://localhost:8888.</p>
-<a class="header" href="#the-python-jupyter-notebook" id="the-python-jupyter-notebook"><h2>The Python Jupyter Notebook</h2></a>
+<h2><a class="header" href="#the-python-jupyter-notebook" id="the-python-jupyter-notebook">The Python Jupyter Notebook</a></h2>
 <p>When you access http://localhost:8888, two example Jupyter notebooks
 are available to peruse.</p>
 <p>Starting out, we recommend looking through the
 <a href="https://github.com/mozilla/mozilla-reports/blob/master/tutorials/telemetry_hello_world.kp/orig_src/Telemetry%20Hello%20World.ipynb">Telemetry Hello World</a>
 notebook.
 It gives a nice overview of Jupyter and analyzing telemetry data using PySpark and the RDD API.</p>
-<a class="header" href="#using-jupyter" id="using-jupyter"><h3>Using Jupyter</h3></a>
+<h3><a class="header" href="#using-jupyter" id="using-jupyter">Using Jupyter</a></h3>
 <p>Jupyter Notebooks contain a series of cells.
 Each cell contains code or markdown.
 To switch between the two, use the drop-down at the top.
@@ -196,7 +205,7 @@ To output plots inlined with the cell,
 run <code>%pylab inline</code>, usually below your import statements:</p>
 <p>The notebook is setup to work with Spark. See the &quot;Using Spark&quot; section
 for more information.</p>
-<a class="header" href="#schedule-a-periodic-job" id="schedule-a-periodic-job"><h3>Schedule a periodic job</h3></a>
+<h3><a class="header" href="#schedule-a-periodic-job" id="schedule-a-periodic-job">Schedule a periodic job</a></h3>
 <p>Scheduled Spark jobs allow a Jupyter notebook to be updated consistently,
 making a nice and easy-to-use dashboard.</p>
 <p>To schedule a Spark job:</p>
@@ -221,9 +230,9 @@ working directory at the end of the job will be automatically uploaded
 to S3, which comes in handy for simple ETL workloads for example.</p>
 <p>For reference, see
 <a href="https://robertovitillo.com/2015/03/13/simple-dashboards-with-scheduled-spark-jobs-and-plotly">Simple Dashboard with Scheduled Spark Jobs and Plotly</a>.</p>
-<a class="header" href="#sharing-a-notebook" id="sharing-a-notebook"><h3>Sharing a Notebook</h3></a>
+<h3><a class="header" href="#sharing-a-notebook" id="sharing-a-notebook">Sharing a Notebook</a></h3>
 <p>Jupyter notebooks can be shared in a few different ways.</p>
-<a class="header" href="#sharing-a-static-notebook" id="sharing-a-static-notebook"><h4>Sharing a Static Notebook</h4></a>
+<h4><a class="header" href="#sharing-a-static-notebook" id="sharing-a-static-notebook">Sharing a Static Notebook</a></h4>
 <p>An easy way to share is using a gist on Github.</p>
 <ol>
 <li>Download file as <code>.ipynb</code></li>
@@ -231,14 +240,14 @@ to S3, which comes in handy for simple ETL workloads for example.</p>
 <li>Enter the gist URL at <a href="https://nbviewer.jupyter.org/">Jupyter nbviewer</a></li>
 <li>Share with your colleagues!</li>
 </ol>
-<a class="header" href="#sharing-a-scheduled-notebook" id="sharing-a-scheduled-notebook"><h4>Sharing a Scheduled Notebook</h4></a>
+<h4><a class="header" href="#sharing-a-scheduled-notebook" id="sharing-a-scheduled-notebook">Sharing a Scheduled Notebook</a></h4>
 <p>Setup your scheduled notebook. After it's run, do the following:</p>
 <ol>
 <li>Go to the &quot;Schedule a Spark job&quot; tab in ATMO</li>
 <li>Get the URL for the notebook (under 'Currently Scheduled Jobs')</li>
 <li>Paste that URL into <a href="https://nbviewer.jupyter.org/">Jupyter nbviewer</a></li>
 </ol>
-<a class="header" href="#zeppelin-notebooks" id="zeppelin-notebooks"><h2>Zeppelin Notebooks</h2></a>
+<h2><a class="header" href="#zeppelin-notebooks" id="zeppelin-notebooks">Zeppelin Notebooks</a></h2>
 <p>We also have support for <a href="https://zeppelin.apache.org/">Apache Zeppelin</a>
 notebooks. The notebook server for that is running on port 8890, so you
 can connect to it just by tunnelling the port (instead of port 8888 for
@@ -246,7 +255,7 @@ Jupyter). For example:</p>
 <pre><code>ssh -i \~/.ssh/id\_rsa -L 8890:localhost:8890
 hadoop@ec2-54-70-129-221.us-west-2.compute.amazonaws.com
 </code></pre>
-<a class="header" href="#using-spark" id="using-spark"><h2>Using Spark</h2></a>
+<h2><a class="header" href="#using-spark" id="using-spark">Using Spark</a></h2>
 <p>Spark is a general-purpose cluster computing system - it allows users to
 run general execution graphs. APIs are available in Python, Scala, and
 Java. The Jupyter notebook utilizes the Python API. In a nutshell, it
@@ -255,7 +264,7 @@ distributed data.</p>
 <p>Check out
 <a href="https://robertovitillo.com/2015/06/30/spark-best-practices/">Spark Best Practices</a>
 for tips on using Spark to its full capabilities.</p>
-<a class="header" href="#sparkcontext-sc" id="sparkcontext-sc"><h3><code>SparkContext</code> (<code>sc</code>)</h3></a>
+<h3><a class="header" href="#sparkcontext-sc" id="sparkcontext-sc"><code>SparkContext</code> (<code>sc</code>)</a></h3>
 <p>Access to the Spark API is provided through <code>SparkContext</code>. In the Jupyter
 notebook, this is the <code>sc</code> object. For example, to create a
 distributed RDD of monotonically increasing numbers 1-1000:</p>
@@ -264,7 +273,7 @@ distributed RDD of monotonically increasing numbers 1-1000:</p>
 numsRdd = sc.parallelize(numbers)
 nums.take(10) #no guaranteed order
 </code></pre>
-<a class="header" href="#spark-rdd" id="spark-rdd"><h3>Spark RDD</h3></a>
+<h3><a class="header" href="#spark-rdd" id="spark-rdd">Spark RDD</a></h3>
 <p>The Resilient Distributed Dataset (RDD) is Spark's basic data structure.
 The operations that are performed on these structures are distributed to
 the cluster. Only certain actions (such as collect() or take(N)) pull an
@@ -288,7 +297,7 @@ sin_values.takeOrdered(5, lambda x : -x[1])
 </code></pre>
 <p>For jumping into working with Spark RDD's, we recommend reading the
 <a href="https://spark.apache.org/docs/latest/programming-guide.html">Spark Programming Guide</a>.</p>
-<a class="header" href="#spark-sql-and-spark-dataframesdatasets" id="spark-sql-and-spark-dataframesdatasets"><h3>Spark SQL and Spark DataFrames/Datasets</h3></a>
+<h3><a class="header" href="#spark-sql-and-spark-dataframesdatasets" id="spark-sql-and-spark-dataframesdatasets">Spark SQL and Spark DataFrames/Datasets</a></h3>
 <p>Spark also supports traditional SQL, along with special data structures
 that require schemas. The Spark SQL API can be accessed with the
 <code>spark</code> object. For example:</p>
@@ -309,23 +318,23 @@ worth the effort to learn the DataFrame API.</p>
 See also the
 <a href="https://mozilla.report/post/tutorials/longitudinal_dataset.kp">Longitudinal Tutorial</a>,
 one of the available example notebooks when you start a cluster.</p>
-<a class="header" href="#available-data-sources-for-sparksql" id="available-data-sources-for-sparksql"><h3>Available Data Sources for <code>SparkSQL</code></h3></a>
+<h3><a class="header" href="#available-data-sources-for-sparksql" id="available-data-sources-for-sparksql">Available Data Sources for <code>SparkSQL</code></a></h3>
 <p>For information about data sources available for querying (e.g. Longitudinal dataset),
 see <a href="../concepts/choosing_a_dataset.html">Choosing a Dataset</a>.</p>
 <p>These datasets are optimized for fast access, and will far out-perform
 analysis on the raw Telemetry ping data.</p>
-<a class="header" href="#accessing-the-spark-ui" id="accessing-the-spark-ui"><h3>Accessing the Spark UI</h3></a>
+<h3><a class="header" href="#accessing-the-spark-ui" id="accessing-the-spark-ui">Accessing the Spark UI</a></h3>
 <p>After establishing an SSH connection to the Spark cluster, go to https://localhost:8888/spark
 to see the Spark UI.
 It has information about job statuses and task completion,
 and may help you debug your job.</p>
-<a class="header" href="#the-moztelemetry-library" id="the-moztelemetry-library"><h2>The <code>MozTelemetry</code> Library</h2></a>
+<h2><a class="header" href="#the-moztelemetry-library" id="the-moztelemetry-library">The <code>MozTelemetry</code> Library</a></h2>
 <p>We have provided a library that gives easy access to the raw telemetry ping data.
 For example usage, see the
 <a href="https://github.com/mozilla/mozilla-reports/blob/master/tutorials/telemetry_hello_world.kp/orig_src/Telemetry%20Hello%20World.ipynb">Telemetry Hello World example notebook</a>.
 Detailed API documentation for the library can be found at the
 <a href="https://mozilla.github.io/python_moztelemetry/">Python MozTelemetry Documentation</a>.</p>
-<a class="header" href="#using-the-raw-ping-data" id="using-the-raw-ping-data"><h3>Using the Raw Ping Data</h3></a>
+<h3><a class="header" href="#using-the-raw-ping-data" id="using-the-raw-ping-data">Using the Raw Ping Data</a></h3>
 <p>First off, import the <code>moztelemetry</code> library using the following:</p>
 <p><code>from moztelemetry.dataset import Dataset</code></p>
 <p>The ping data is an RDD of JSON elements. For example, using the
@@ -349,21 +358,21 @@ function, which will gather the data for you:</p>
 subset = get_pings_properties(pings, [&quot;environment/system/os/name&quot;])
 subset.map(lambda x: (x[&quot;environment/system/os/name&quot;], 1)).reduceByKey(lambda x, y: x + y).collect()
 </code></pre>
-<a class="header" href="#faq" id="faq"><h2>FAQ</h2></a>
+<h2><a class="header" href="#faq" id="faq">FAQ</a></h2>
 <p>Please add more FAQ as questions are answered by you or for you.</p>
-<a class="header" href="#how-can-i-load-parquet-datasets-in-a-jupyter-notebook" id="how-can-i-load-parquet-datasets-in-a-jupyter-notebook"><h3>How can I load parquet datasets in a Jupyter notebook?</h3></a>
+<h3><a class="header" href="#how-can-i-load-parquet-datasets-in-a-jupyter-notebook" id="how-can-i-load-parquet-datasets-in-a-jupyter-notebook">How can I load parquet datasets in a Jupyter notebook?</a></h3>
 <p>Use <code>spark.read.parquet</code>, e.g.:</p>
 <pre><code class="language-python">dataset = spark.read.parquet(&quot;s3://the_bucket/the_prefix/the_version&quot;)`
 </code></pre>
 <p>For more information see <a href="../cookbooks/parquet.html">Working with Parquet</a>.</p>
-<a class="header" href="#i-got-a-remote-host-identification-has-changed-error" id="i-got-a-remote-host-identification-has-changed-error"><h3>I got a REMOTE HOST IDENTIFICATION HAS CHANGED! error</h3></a>
+<h3><a class="header" href="#i-got-a-remote-host-identification-has-changed-error" id="i-got-a-remote-host-identification-has-changed-error">I got a REMOTE HOST IDENTIFICATION HAS CHANGED! error</a></h3>
 <p>AWS recycles hostnames, so this warning is expected.
 Removing the offending key from <code>$HOME/.ssh/known_hosts</code> will remove the warning.
 You can find the line to remove by finding the line in the output that says</p>
 <p><code>Offending key in /path/to/hosts/known_hosts:2</code></p>
 <p>Where 2 is the line number of the key that can be deleted.
 Just remove that line, save the file, and try again.</p>
-<a class="header" href="#why-is-my-notebook-hanging" id="why-is-my-notebook-hanging"><h3>Why is my notebook hanging?</h3></a>
+<h3><a class="header" href="#why-is-my-notebook-hanging" id="why-is-my-notebook-hanging">Why is my notebook hanging?</a></h3>
 <p>There are a few common causes for this:</p>
 <ol>
 <li>Currently, our Spark notebooks can only run a single Python kernel at
@@ -377,7 +386,7 @@ be spinning up a new cluster.</li>
 that might be running in the background. If your spark commands seem to
 be hanging, try running <code>sc.cancelAllJobs()</code>.</li>
 </ol>
-<a class="header" href="#how-can-i-keep-running-after-closing-the-notebook" id="how-can-i-keep-running-after-closing-the-notebook"><h3>How can I keep running after closing the notebook?</h3></a>
+<h3><a class="header" href="#how-can-i-keep-running-after-closing-the-notebook" id="how-can-i-keep-running-after-closing-the-notebook">How can I keep running after closing the notebook?</a></h3>
 <p>For long-running computation, it might be nice to close the notebook
 (and the SSH session) and look at the results later.
 Unfortunately, <strong>all cell output will be lost when a notebook is closed</strong>
@@ -389,7 +398,7 @@ available when you reconnect.</li>
 <li>Put %%capture at the beginning of the cell to store all output.
 <a href="https://ipython.org/ipython-doc/3/interactive/magics.html#cellmagic-capture">See the documentation</a>.</li>
 </ol>
-<a class="header" href="#how-do-i-load-an-external-library-into-the-cluster" id="how-do-i-load-an-external-library-into-the-cluster"><h3>How do I load an external library into the cluster?</h3></a>
+<h3><a class="header" href="#how-do-i-load-an-external-library-into-the-cluster" id="how-do-i-load-an-external-library-into-the-cluster">How do I load an external library into the cluster?</a></h3>
 <p>Assuming you've got a URL for the repo, you can create an egg for it
 this way:</p>
 <pre><code class="language-python">!git clone `&lt;repo url&gt;` &amp;&amp; cd `&lt;repo-name&gt;` &amp;&amp; python setup.py bdist_egg`\
