@@ -3467,7 +3467,8 @@ namely that you must make use of the date partition fields for large tables (lik
 <tr><td></td><td><code>blpadi</code></td><td>Blocklist ping derived data(<em>restricted</em>)</td></tr>
 <tr><td></td><td><code>search</code></td><td>Search data imported form parquet (<em>restricted</em>)</td></tr>
 <tr><td></td><td><code>static</code></td><td>Static data for use with analysis</td></tr>
-<tr><td></td><td><code>telemetry</code></td><td>Imported parquet data and data generated from <a href="https://github.com/mozilla/bigquery-etl">BigQuery ETL</a></td></tr>
+<tr><td></td><td><code>telemetry</code></td><td>User-facing views on imported parquet data and tables generated from <a href="https://github.com/mozilla/bigquery-etl">BigQuery ETL</a></td></tr>
+<tr><td></td><td><code>telemetry_raw</code></td><td>Imported parquet data</td></tr>
 <tr><td></td><td><code>tmp</code></td><td>Temporary staging area for parquet data loads</td></tr>
 <tr><td></td><td><code>validation</code></td><td>Temporary staging area for validation</td></tr>
 <tr><td><code>moz-fx-data-shar-nonprod-efed</code></td><td></td><td>Data produced by stage structured ingestion infrastructure</td></tr>
@@ -3532,7 +3533,13 @@ ORDER BY
 <li>Avoid <code>SELECT *</code> by selecting only the columns you need
 <ul>
 <li>Using <code>SELECT *</code> is the most expensive way to query data. When you use <code>SELECT *</code> <em>BigQuery does a full scan of every column in the table.</em></li>
-<li>Applying a <code>LIMIT</code> clause to a <code>SELECT *</code> query does not affect the amount of data read. You are billed for reading all bytes in the entire table.</li>
+<li>Applying a <code>LIMIT</code> clause to a <code>SELECT *</code> query might not affect the amount of data read, depending on the table structure.
+<ul>
+<li>Many of our tables are configured to use <em>clustering</em> in which case a <code>LIMIT</code> clause does effectively limit the amount of data that needs to be scanned.</li>
+<li>Tables that include a <code>sample_id</code> field will usually have that as one of the clustering fields and you can efficiently scan random samples of users by specifying <code>WHERE sample_id = 0</code> (1% sample), <code>WHERE sample_id &lt; 10</code> (10% sample), etc. This can be especially helpful with <code>main_summary</code>, <code>clients_daily</code>, and <code>clients_last_seen</code> which are very large tables and are all clustered on <code>sample_id</code>.</li>
+<li>To check whether your <code>LIMIT</code> and <code>WHERE</code> clauses are actually improving performance, you should see a lower value reported for actual &quot;Data Scanned&quot; by a query compared to the prediction (&quot;This query will process X bytes&quot;) in STMO or the BigQuery UI.</li>
+</ul>
+</li>
 <li>If you are experimenting with data or exploring data, use one of the <a href="https://cloud.google.com/bigquery/docs/best-practices-costs#preview-data">data preview options</a> instead of <code>SELECT *</code>.
 <ul>
 <li>Preview support is coming soon to BigQuery data sources in <a href="https://sql.telemetry.mozilla.org/">re:dash</a></li>
@@ -3568,6 +3575,7 @@ ORDER BY
 <li>See <a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators#approximate-aggregate-functions">approximate aggregation functions</a> in the standard SQL reference.</li>
 </ul>
 </li>
+<li>Reference the data size prediction (&quot;This query will process X bytes&quot;) in STMO and the BigQuery UI to help gauge the efficiency of your queries. You should see this number go down as you limit the range of <code>submission_date</code>s or include fewer fields in your <code>SELECT</code> statement. For clustered tables, this estimate won't take into account benefits from <code>LIMIT</code>s and <code>WHERE</code> clauses on clustering fields, so you'll need to compare to the actual &quot;Data Scanned&quot; after the query is run. <a href="https://cloud.google.com/bigquery/pricing#on_demand_pricing">Queries are charged by data scanned at $5/TB</a> so each 200 GB of data scanned will cost $1; it can be useful to keep the data estimate below 200 GB while developing and testing a query to limit cost and query time, then open up to the full range of data you need when you have confidence in the results.</li>
 </ul>
 <p>A complete list of optimizations can be found <a href="https://cloud.google.com/bigquery/docs/best-practices-performance-overview">here</a> and cost optimizations <a href="https://cloud.google.com/bigquery/docs/best-practices-costs">here</a></p>
 <h1><a class="header" href="#creating-your-own-dataset-to-query-in-redash" id="creating-your-own-dataset-to-query-in-redash">Creating Your Own Dataset to Query in re:dash</a></h1>
