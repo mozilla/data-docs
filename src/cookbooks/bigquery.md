@@ -227,7 +227,7 @@ To improve query performance and minimize the cost associated with using BigQuer
     - Using `SELECT *` is the most expensive way to query data. When you use `SELECT *` _BigQuery does a full scan of every column in the table._
     - Applying a `LIMIT` clause to a `SELECT *` query might not affect the amount of data read, depending on the table structure.
       - Many of our tables are configured to use _clustering_ in which case a `LIMIT` clause does effectively limit the amount of data that needs to be scanned.
-      - Tables that include a `sample_id` field will usually have that as one of the clustering fields and you can efficiently scan random samples of users by specifying `WHERE sample_id = 0` (1% sample), `WHERE sample_id < 10` (10% sample), etc.
+      - Tables that include a `sample_id` field will usually have that as one of the clustering fields and you can efficiently scan random samples of users by specifying `WHERE sample_id = 0` (1% sample), `WHERE sample_id < 10` (10% sample), etc. This can be especially helpful with `main_summary`, `clients_daily`, and `clients_last_seen` which are very large tables and are all clustered on `sample_id`.
       - To check whether your `LIMIT` and `WHERE` clauses are actually improving performance, you should see a lower value reported for actual "Data Scanned" by a query compared to the prediction ("This query will process X bytes") in STMO or the BigQuery UI.
     - If you are experimenting with data or exploring data, use one of the [data preview options](https://cloud.google.com/bigquery/docs/best-practices-costs#preview-data) instead of `SELECT *`.
         - Preview support is coming soon to BigQuery data sources in [re:dash](https://sql.telemetry.mozilla.org/)
