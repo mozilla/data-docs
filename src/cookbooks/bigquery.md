@@ -198,7 +198,7 @@ BigQuery currently lacks native map support and our workaround is to use a STRUC
 SELECT udf.get_key(event_map_values, 'reason') AS reason,
        COUNT(*) AS EVENTS
 FROM telemetry.events
-WHERE submission_date_s3 = DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
+WHERE submission_date = DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
   AND event_category='normandy'
   AND event_method='unenroll'
 GROUP BY 1
