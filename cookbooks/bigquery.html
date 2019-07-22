@@ -194,6 +194,7 @@ Engines, Presto and Athena, and our Parquet data lake.</p>
 <li><a href="#writing-queries">Writing Queries</a></li>
 <li><a href="#writing-query-results-to-a-permanent-table">Writing query results to a permanent table</a></li>
 <li><a href="#creating-a-view">Creating a View</a></li>
+<li><a href="#accessing-map-like-fields">Accessing map-like fields</a></li>
 </ul>
 </li>
 </ul>
@@ -316,6 +317,7 @@ namely that you must make use of the date partition fields for large tables (lik
 <li>Please read <a href="bigquery.html#query-optimizations"><em>Query Optimizations</em></a> section that contains advice on how to reduce cost and improve query performance.</li>
 <li>re:dash BigQuery data sources will have a 10 TB data scanned limit per query. Please let us know in <code>#fx-metrics</code> on Slack if you run into issues!</li>
 <li>There are no other partitioning fields in BigQuery versions of parquet datasets (e.g. <code>sample_id</code> is no longer a partitioning field and will not necessarily reduce data scanned).</li>
+<li>There is no native map support in BigQuery. Instead, we are using structs with fields [key, value]. We have provided convenience functions to access these like key-value maps (described <a href="bigquery.html#accessing-map-like-fields">below</a>.)</li>
 </ul>
 <h3><a class="header" href="#projects-with-bigquery-datasets" id="projects-with-bigquery-datasets">Projects with BigQuery datasets</a></h3>
 <table><thead><tr><th>Project</th><th>Dataset</th><th>Purpose</th></tr></thead><tbody>
@@ -385,6 +387,17 @@ ORDER BY
 </li>
 <li>See <a href="https://cloud.google.com/bigquery/docs/views">Creating Views</a> documentation for detailed steps.</li>
 </ul>
+<h3><a class="header" href="#accessing-map-like-fields" id="accessing-map-like-fields">Accessing map-like fields</a></h3>
+<p>BigQuery currently lacks native map support and our workaround is to use a STRUCT type with fields named [key, value]. We've created a user-defined function (UDFs) that provides key-based access with the signature: <code>udf.get_key(&lt;struct&gt;, &lt;key&gt;)</code>. The example below generates a count per <code>reason</code> key in the <code>event_map_values</code> field in the telemetry events table for Normandy unenrollment events from yesterday.</p>
+<pre><code class="language-sql">SELECT udf.get_key(event_map_values, 'reason') AS reason,
+       COUNT(*) AS EVENTS
+FROM telemetry.events
+WHERE submission_date = DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
+  AND event_category='normandy'
+  AND event_method='unenroll'
+GROUP BY 1
+ORDER BY 2 DESC
+</code></pre>
 <h1><a class="header" href="#query-optimizations" id="query-optimizations">Query Optimizations</a></h1>
 <p>To improve query performance and minimize the cost associated with using BigQuery please see the following query optimizations:</p>
 <ul>
