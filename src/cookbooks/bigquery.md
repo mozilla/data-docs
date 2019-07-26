@@ -82,6 +82,37 @@ Query a table
 
 Additional examples and documentation can be found [here](https://cloud.google.com/bigquery/docs/bq-command-line-tool).
 
+### From client SDKs
+
+Client SDKs for various programming languages don't access credentials the
+same way as the `gcloud` and `bq` command-line tools. The client SDKs
+generally assume that the machine is configured with a service account and
+will look for JSON-based credentials in several well-known locations rather
+than looking for user credentials.
+
+If you have service account credentials, you can point client SDKs at them
+by setting:
+
+```
+export GOOGLE_APPLICATION_CREDENTIALS=/path/to/creds.json
+```
+
+If you don't have appropriate service account credentials, but your GCP user
+account has sufficient access, you can have your user credentials mimic a
+service account by running:
+
+```
+gcloud auth application-default login
+```
+
+Once you've followed the browser flow to grant access, you should be able to,
+for example, access BigQuery from Python:
+
+```
+pip install google-cloud-bigquery
+python -c 'from google.cloud import bigquery; print([d.dataset_id for d in bigquery.Client().list_datasets()])'
+```
+
 ## From Spark / Databricks
 There are two Spark connectors you can use:
 
