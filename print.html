@@ -3315,6 +3315,7 @@ Engines, Presto and Athena, and our Parquet data lake.</p>
 <li><a href="cookbooks/bigquery.html#-examples"> Examples</a></li>
 </ul>
 </li>
+<li><a href="cookbooks/bigquery.html#from-client-sdks">From client SDKs</a></li>
 </ul>
 </li>
 <li><a href="cookbooks/bigquery.html#from-spark--databricks">From Spark / Databricks</a>
@@ -3414,6 +3415,26 @@ Engines, Presto and Athena, and our Parquet data lake.</p>
 <pre><code class="language-bash">bq query --nouse_legacy_sql 'select count(*) from `moz-fx-data-derived-datasets.telemetry.main_summary_v4` where submission_date_s3 = &quot;2019-03-01&quot;'
 </code></pre>
 <p>Additional examples and documentation can be found <a href="https://cloud.google.com/bigquery/docs/bq-command-line-tool">here</a>.</p>
+<h3><a class="header" href="#from-client-sdks" id="from-client-sdks">From client SDKs</a></h3>
+<p>Client SDKs for various programming languages don't access credentials the
+same way as the <code>gcloud</code> and <code>bq</code> command-line tools. The client SDKs
+generally assume that the machine is configured with a service account and
+will look for JSON-based credentials in several well-known locations rather
+than looking for user credentials.</p>
+<p>If you have service account credentials, you can point client SDKs at them
+by setting:</p>
+<pre><code>export GOOGLE_APPLICATION_CREDENTIALS=/path/to/creds.json
+</code></pre>
+<p>If you don't have appropriate service account credentials, but your GCP user
+account has sufficient access, you can have your user credentials mimic a
+service account by running:</p>
+<pre><code>gcloud auth application-default login
+</code></pre>
+<p>Once you've followed the browser flow to grant access, you should be able to,
+for example, access BigQuery from Python:</p>
+<pre><code>pip install google-cloud-bigquery
+python -c 'from google.cloud import bigquery; print([d.dataset_id for d in bigquery.Client().list_datasets()])'
+</code></pre>
 <h2><a class="header" href="#from-spark--databricks" id="from-spark--databricks">From Spark / Databricks</a></h2>
 <p>There are two Spark connectors you can use:</p>
 <h3><a class="header" href="#standard-sql-connector" id="standard-sql-connector">Standard SQL connector</a></h3>
