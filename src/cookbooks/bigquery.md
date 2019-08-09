@@ -7,9 +7,12 @@ BigQuery uses a columnar data storage format called [Capacitor](https://cloud.go
 
 There is a cost associated with using BigQuery based on operations. As of right now we pay an on-demand pricing for queries based on how much data a query scans. To minimize costs see [_Query Optimizations_](bigquery.md#query-optimizations). More detailed pricing information can be found [here](https://cloud.google.com/bigquery/pricing).
 
-As we transition to [GCP](https://cloud.google.com) we will use BigQuery as our primary data warehouse and
-SQL Query engine. BigQuery will eventually replace our previous SQL Query
-Engines, Presto and Athena, and our Parquet data lake.
+As we transition to [GCP](https://cloud.google.com) BigQuery has become our primary data warehouse and
+SQL Query engine. Our previous SQL Query
+Engines, Presto and Athena, and our Parquet data lake will no longer be accessible
+by the end of 2019. Specific guidance for transitioning off of the AWS data
+infrastructure, including up-to-date timelines of data availability, is
+maintained in the [Data Access Continuity Guide](https://docs.google.com/document/d/1nlzhRGGwAaClwbotd0oWnnkB5GcvpodIxN3Dk5vWvNI/edit#) Google Doc.
 
 
 ## Table of Contents
@@ -73,11 +76,11 @@ Detailed REST reference can be found [here](https://cloud.google.com/bigquery/do
 #### `bq` Examples
 List tables in a BigQuery dataset
 ``` bash
-bq ls moz-fx-data-derived-datasets:analysis
+bq ls moz-fx-data-shared-prod:analysis
 ```
 Query a table
  ``` bash
- bq query --nouse_legacy_sql 'select count(*) from `moz-fx-data-derived-datasets.telemetry.main_summary_v4` where submission_date_s3 = "2019-03-01"'
+ bq query --nouse_legacy_sql 'select count(*) from `moz-fx-data-shared-prod.telemetry.main_summary_v4` where submission_date_s3 = "2019-03-01"'
  ```
 
 Additional examples and documentation can be found [here](https://cloud.google.com/bigquery/docs/bq-command-line-tool).
@@ -163,37 +166,84 @@ Note: this is very similar to [API Access](bigquery.md#gcp-bigquery-api-access),
 
 ## Projects, Datasets and Tables in BigQuery
 In GCP a [project](https://cloud.google.com/resource-manager/docs/creating-managing-projects) is a way to organize cloud resources. We use multiple
-projects to maintain our BigQuery [datasets](https://cloud.google.com/bigquery/docs/datasets-intro). BigQuery datasets are a top-level container used to organize and
+projects to maintain our BigQuery [datasets](https://cloud.google.com/bigquery/docs/datasets-intro). 
+
+Note that we have historically used the term _dataset_ to describe a set of
+records all following the same schema, but this idea corresponds to a _table_
+in BigQuery. In BigQuery terminology,
+datasets are a top-level container used to organize and
 control access to tables and views.
 
 ### Caveats
 
 - The date partition field (e.g. `submission_date_s3`, `submission_date`) is mostly used as a partitioning column,
-but it has changed from `YYYYMMDD` form to the more standards-friendly `YYYY-MM-DD` form.
+but it has changed from `YYYYMMDD` string form to a proper `DATE` type that accepts string literals in the more standards-friendly `YYYY-MM-DD` form.
 - Unqualified queries can become very costly very easily. We've placed restrictions on large tables from accidentally querying "all data for all time",
 namely that you must make use of the date partition fields for large tables (like `main_summary` or `clients_daily`).
 - Please read [_Query Optimizations_](bigquery.md#query-optimizations) section that contains advice on how to reduce cost and improve query performance.
 - re:dash BigQuery data sources will have a 10 TB data scanned limit per query. Please let us know in `#fx-metrics` on Slack if you run into issues!
-- There are no other partitioning fields in BigQuery versions of parquet datasets (e.g. `sample_id` is no longer a partitioning field and will not necessarily reduce data scanned).
 - There is no native map support in BigQuery. Instead, we are using structs with fields [key, value]. We have provided convenience functions to access these like key-value maps (described [below](bigquery.md#accessing-map-like-fields).)
 
 ### Projects with BigQuery datasets
 
 |Project|Dataset|Purpose|
 |---|---|---|
-|`moz-fx-data-derived-datasets`|    |Imported parquet data, [BigQuery ETL](https://github.com/mozilla/bigquery-etl), ad-hoc analysis|
+|`moz-fx-data-shared-prod` |    |All production data including full pings, imported parquet data, [BigQuery ETL](https://github.com/mozilla/bigquery-etl), and ad-hoc analysis |
+|   |`<namespace>_live`    |See _live datasets_ below|
+|   |`<namespace>_stable`  |See _stable datasets_ below|
+|   |`<namespace>_derived` |See _derived datasets_ below|
+|   |`<namespace>`         |See _user-facing (unsuffixed) datasets_ below|
 |   |`analysis`|User generated tables for analysis|
 |   |`backfill`|Temporary staging area for back-fills|
 |   |`blpadi`|Blocklist ping derived data(_restricted_)|
+|   |`payload_bytes_raw` |Raw JSON payloads as received from clients, used for reprocessing scenarios, a.k.a. "landfill" (_restricted_) |
+|   |`payload_bytes_decoded` |`gzip`-compressed decoded JSON payloads, used for reprocessing scenarios  |
+|   |`payload_bytes_error` |`gzip`-compressed JSON payloads that were rejected in some phase of the pipeline; particularly useful for investigating schema validation errors|
 |   |`search`|Search data imported form parquet (_restricted_)|
-|   |`static`|Static data for use with analysis|
-|   |`telemetry`|User-facing views on imported parquet data and tables generated from [BigQuery ETL](https://github.com/mozilla/bigquery-etl)     |
-|   |`telemetry_raw`|Imported parquet data|
+|   |`static`|Static tables, often useful for data-enriching joins|
 |   |`tmp`|Temporary staging area for parquet data loads|
+|   |`udf` |Persistent user-defined functions defined in SQL|
+|   |`udf_js` |Persistent user-defined functions defined in JavaScript|
 |   |`validation`|Temporary staging area for validation|
+|`moz-fx-data-derived-datasets`|    |Legacy project that contains only views to data in `moz-fx-data-shared-prod` during a transition period |
 |`moz-fx-data-shar-nonprod-efed`| |Data produced by stage structured ingestion infrastructure|
 
-BigQuery table data in `moz-fx-data-derived-datasets` is loaded daily via [Airflow](https://workflow.telemetry.mozilla.org/home)
+### Table Layout and Naming
+
+Under the single `moz-fx-data-shared-prod` project,
+each document namespace (corresponding to folders underneath the [schemas directory of `mozilla-pipeline-schemas`](https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/master/schemas)) has four BigQuery datasets provisioned with the following properties:
+
+- _Live datasets_ (`telemetry_live`, `activity_stream_live`, etc.) contain live ping tables (see definitions of table types in the next paragraph)
+- _Stable datasets_ (`telemetry_stable`, `activity_stream_stable`, etc.) contain historical ping tables
+- _Derived datasets_ (`telemetry_derived`, `activity_stream_derived`, etc.) contain derived tables, primarily populated via nightly queries defined in [BigQuery ETL](https://github.com/mozilla/bigquery-etl) and managed by Airflow
+- _User-facing (unsuffixed) datasets_ (`telemetry`, `activity_stream`, etc.) contain user-facing views on top of the tables in the corresponding stable and derived datasets.
+
+The table and view types referenced above are defined as follows:
+
+- _Live ping tables_ are the final destination for the telemetry ingestion pipeline. Dataflow jobs process incoming ping payloads from clients, batch them together by document type, and load the results to these tables approximately every five minutes, although a few document types are opted in to a more expensive streaming path that makes records available in BigQuery within seconds of ingestion. These tables are partitioned by date according to `submission_timestamp` and are also clustered on that same field, so it is possible to make efficient queries over short windows of recent data such as the last hour. They have a rolling expiration period of 30 days, but that window may be shortened in the future. Analyses should only use these tables if they need results for the current (partial) day.
+- _Historical ping tables_ have exactly the same schema as their corresponding live ping tables, but they are populated only once per day via an Airflow job and have a 25 month retention period. These tables are superior to the live ping tables for historical analysis because they never contain partial days, they have additional deduplication applied, and they are clustered on `sample_id`, allowing efficient queries on a 1% sample of clients. It is guaranteed that `document_id` is distinct within each UTC day of each historical ping table, but it is still possible for a document to appear multiple times if a client sends the same payload across multiple days.
+- _Derived tables_ are populated by nightly [Airflow](https://workflow.telemetry.mozilla.org/home) jobs and are considered an implementation detail; their structure may change at any time at the discretion of the data platform team to allow refactoring or efficiency improvements.
+- _User-facing views_ are the schema objects that users are primarily expected to use in analyses. Many of these views correspond directly to an underlying historical ping table or derived table, but they provide the flexibility to hide deprecated columns or present additional calculated columns to users. These views are the schema contract with users and they should not change in backwards-incompatible ways without a version increase or an announcement to users about a breaking change. 
+
+Spark and other applications relying on the BigQuery Storage API for data access may need to reference derived tables or historical ping tables directly rather than user-facing views in some cases, but we generally recommend instead that users run a query on top of user-facing views with the output saved in a destination table, which can then be accessed from Spark.
+
+
+### Structure of Ping Tables in BigQuery
+
+Unlike with the previous AWS-based data infrastructure, we don't have different mechanisms for accessing entire pings vs. "summary" tables. As such, there are no longer special libraries or infrastructure necessary for accessing full pings, rather each document type maps to a user-facing view that can be queried in STMO. For example:
+
+- "main" pings are accessible from view `telemetry.main`
+- "crash" pings are accessible from view `telemetry.crash`
+- "baseline" pings for Fenix are accessible from view `org_mozilla_fenix.baseline`
+
+All fields in the incoming pings are accessible in these views, and (where possible) match the nested data structures of the original JSON. Field names are converted from `camelCase` form to `snake_case` for consistency and SQL compatibility. 
+
+Any fields not present in the ping schemas are present in an `additional_properties` field containing leftover JSON. BigQuery provides [functions for parsing and manipulating JSON data via SQL](https://cloud.google.com/bigquery/docs/reference/standard-sql/json_functions).
+
+Later in this document, we demonstrate the use of a few Mozilla-specific
+functions that we have defined to allow ergonomic querying of
+[map-like fields](#accessing-map-like-fields) (which are represented as arrays of structs in BigQuery) and
+[histograms](#accessing-histograms) (which are encoded as raw JSON strings).
 
 ### Writing Queries
 
@@ -239,14 +289,14 @@ Check out the [BigQuery Standard SQL Functions & Operators](https://cloud.google
 
 You can write query results to a BigQuery table you have access via [GCP BigQuery Console](bigquery.md#gcp-bigquery-console) or [GCP BigQuery API Access](bigquery.md#gcp-bigquery-api-access)
 
-- Use `moz-fx-data-derived-datasets.analysis` dataset.
+- Use `moz-fx-data-shared-prod.analysis` dataset.
     - Prefix your table with your username. If your username is `username@mozilla.com` create a table with `username_my_table`.
 - See [Writing query results](https://cloud.google.com/bigquery/docs/writing-results) documentation for detailed steps.
 
 ### Creating a View
 You can create views in BigQuery if you have access via [GCP BigQuery Console](bigquery.md#gcp-bigquery-console) or [GCP BigQuery API Access](bigquery.md#gcp-bigquery-api-access).
 
-- Use `moz-fx-data-derived-datasets.analysis` dataset.
+- Use `moz-fx-data-shared-prod.analysis` dataset.
     - Prefix your view with your username. If your username is `username@mozilla.com` create a table with `username_my_view`.
 - See [Creating Views](https://cloud.google.com/bigquery/docs/views) documentation for detailed steps.
 
@@ -264,6 +314,37 @@ GROUP BY 1
 ORDER BY 2 DESC
 ```
 
+### Accessing histograms
+
+We considered many potential ways to represent histograms as BigQuery fields
+and found the most efficient encoding was actually to leave them as raw JSON
+strings. To make these strings easier to use for analysis, you can convert them
+into nested structures using `udf.json_extract_histogram`:
+
+```sql
+WITH
+  extracted AS (
+  SELECT
+    submission_timestamp,
+    udf.json_extract_histogram(payload.histograms.a11y_consumers) AS a11y_consumers
+  FROM
+    telemetry.main )
+  --
+SELECT
+  a11y_consumers.bucket_count,
+  a11y_consumers.sum,
+  a11y_consumers.range[ORDINAL(1)] AS range_low,
+  udf.get_key(a11y_consumers.values, 11) AS value_11
+FROM
+  extracted
+WHERE
+  a11y_consumers.bucket_count IS NOT NULL
+  AND DATE(submission_timestamp) = "2019-08-09"
+LIMIT
+  10
+```
+
+
 # Query Optimizations
 
 To improve query performance and minimize the cost associated with using BigQuery please see the following query optimizations:
@@ -279,7 +360,7 @@ To improve query performance and minimize the cost associated with using BigQuer
 - Limit the amount of data scanned by using a date partition filter
     - Tables that are larger than 1 TB will require that you provide a date partition filter as part of the query.
     - You will receive an error if you attempt to query a table that requires a partition filter.
-        - `Cannot query over table 'moz-fx-data-derived-datasets.telemetry.main_summary_v4' without a filter over column(s) 'submission_date_s3' that can be used for partition elimination`
+        - `Cannot query over table 'moz-fx-data-shared-prod.telemetry_derived.main_summary_v4' without a filter over column(s) 'submission_date' that can be used for partition elimination`
     - See [_Writing Queries_](bigquery.md#writing-queries) for examples.
 - Reduce data before using a JOIN
     - Trim the data as early in the query as possible, before the query performs a JOIN. If you reduce data early in the processing cycle, shuffling and other complex operations only execute on the data that you need.

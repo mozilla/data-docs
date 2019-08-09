@@ -128,7 +128,7 @@ Try to limit the size of your data by controlling the date range, etc.
 #### Accessing the Data
 
 Ping data lives in BigQuery and is accessible in [re:dash][stmo];
-see our [BigQuery into]()../cookbooks/bigquery.md).
+see our [BigQuery intro](../cookbooks/bigquery.md).
 There is currently limited history for main pings available in BigQuery;
 an import of historical data is planned, but without a determined timeline,
 so longer history requires an [ATMO cluster][atmo] using the [Dataset API][dataset].

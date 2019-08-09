@@ -16,6 +16,7 @@ Add-ons
 aDAU
 aMAU
 aWAU
+a.k.a.
 Alessio
 Algebird's
 AMO
@@ -60,10 +61,12 @@ DataFrame
 DataFrames
 Dataproc
 DAU
+Dataflow
 dataset
 datasets
 de-anonymise
 deduplicating
+deduplication
 discoverability
 Django's
 DWL
@@ -178,6 +181,7 @@ RDBMS
 RDD
 Redash
 README
+reprocessing
 resampling
 rustc
 recommender
@@ -210,6 +214,8 @@ TAAR
 Taskcluster
 TBD
 TCP
+timeline
+timelines
 timestamp
 timestamps
 tryserver
@@ -233,6 +239,8 @@ un-publish
 unenroll
 unenrollment
 unmanaged
+unsuffixed
+up-to-date
 uri
 utm
 UUID
