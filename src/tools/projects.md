@@ -81,6 +81,7 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 | [`analysis.t.m.o`][atmo_gh]       | [Self serve data analysis platform][atmo]
 | [Mission Control][mc]             | Low latency dashboard for stability and health metrics
 | [Re:dash][redash]                 | Mozilla's fork of the [data query / visualization system][stmo]
+| [`redash-stmo`][redashstmo]       | Mozilla's extensions to Re:dash
 | [TAAR][taar]                      | Telemetry-aware addon recommender
 | [Ensemble][ensemble]              | A minimalist platform for publishing data
 | [Hardware Report][hwreport_gh]    | Firefox Hardware Report, [available here][hwreport]
@@ -97,6 +98,7 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 [atmo_gh]: https://github.com/mozilla/telemetry-analysis-service
 [mc]: https://github.com/mozilla/missioncontrol
 [redash]: https://github.com/mozilla/redash
+[redashstmo]: https://github.com/mozilla/redash-stmo
 [taar]: https://github.com/mozilla/taar
 [ensemble]: https://github.com/mozilla/ensemble
 [shield]: https://wiki.mozilla.org/index.php?title=Firefox/Shield
