@@ -5,17 +5,17 @@
 Before doing an analysis, it is important to know which products you want to include. Here is a quick overview of Mozilla's mobile products. 
 
 
-| Product Name           | App Name           | OS      | Notes                            | 
+| Product Name           | App Name           | OS      | Notes                            |
 | ---------------------- | ------------------ | ------- | -------------------------------- |
 | Firefox Android        | `Fennec`           | Android |                                  |
 | Firefox iOS            | `Fennec`           | iOS     |                                  |
 | Focus Android          | `Focus`            | Android | Privacy browser                  |
 | Focus iOS              | `Focus`            | iOS     | Privacy browser                  |
-| Klar                   | `Klar`             | Android | German Focus release              | 
+| Klar                   | `Klar`             | Android | German Focus release             |
 | Firefox for Fire TV    | `FirefoxForFireTV` | Android |                                  |
 | Firefox for Echo Show  | `FirefoxConnect`   | Android |                                  |
-| Firefox Lite           | `Zerda`            | Android | Formerly Rocket (See below)      | 
-
+| Firefox Lite           | `Zerda`            | Android | Formerly Rocket (See below)      |
+| Fenix (Firefox Preview)| N/A                | Android | Uses Glean (see below)           |
 
 Firefox Lite was formerly known as Rocket. It is only available in certain countries in Asia Pacific - for more information on Firefox Lite data please see the [telemetry documentation](https://github.com/mozilla-tw/FirefoxLite/blob/master/docs/telemetry.md). 
 
