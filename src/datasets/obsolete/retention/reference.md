@@ -1,5 +1,9 @@
 # 1 Day Retention
 
+***As of 2019-08-13, this dataset has been deprecated and is no longer
+maintained. See [Bug
+1571565](https://bugzilla.mozilla.org/show_bug.cgi?id=1571565)***
+
 <!-- toc -->
 
 # Introduction
