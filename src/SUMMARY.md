@@ -25,7 +25,6 @@
   * [Alerts](tools/alerts.md)
   * [Working with Parquet Data on ATMO Clusters](cookbooks/parquet.md)
   * [Accessing and working with BigQuery](cookbooks/bigquery.md)
-  * [Creating a custom Re:dash dataset](cookbooks/create_a_dataset.md)
   * [Sending a Custom Ping](cookbooks/new_ping.md)
   * [Using HyperLogLog in Zeppelin](cookbooks/hll_zeppelin.md)
   * [Client Implementation Guidelines](cookbooks/client_guidelines.md)
