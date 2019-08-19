@@ -9,7 +9,6 @@ though only a subset of all crash ping fields are included.
 #### Accessing the Data
 
 The data is stored as a parquet table in S3 at the following address.
-See [this cookbook](../../../cookbooks/parquet.md) to get started working with the data in Spark.
 ```
 s3://telemetry-parquet/crash_summary/v1/
 ```

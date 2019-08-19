@@ -33,8 +33,6 @@ though it can be difficult to work with the array values in SQL.
 Take a look at this [example query](https://sql.telemetry.mozilla.org/queries/4189/source).
 
 The data is stored as a parquet table in S3 at the following address.
-See [this cookbook](../../../cookbooks/parquet.md) to get started working with the data
-in [Spark](http://spark.apache.org/docs/latest/quick-start.html).
 ```
 s3://telemetry-parquet/longitudinal/
 ```

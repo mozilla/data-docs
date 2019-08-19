@@ -285,13 +285,17 @@ Please add more FAQ as questions are answered by you or for you.
 
 ### How can I load parquet datasets in a Jupyter notebook?
 
-Use `spark.read.parquet`, e.g.:
+Load tables with:
+
+```python
+dataset = spark.table("main_summary")
+```
+
+or use `spark.read.parquet` like:
 
 ```python
 dataset = spark.read.parquet("s3://the_bucket/the_prefix/the_version")`
 ```
-
-For more information see [Working with Parquet](../cookbooks/parquet.md).
 
 ### I got a REMOTE HOST IDENTIFICATION HAS CHANGED! error
 
