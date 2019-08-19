@@ -59,7 +59,3 @@ test_dataframe.write.mode('error') \
 
 Note: data saved to `s3://telemetry-test-bucket` will automatically be deleted
 after 30 days.
-
-# Accessing Parquet Tables from Re:dash
-
-See [Creating a custom re:dash dataset](create_a_dataset.md).
