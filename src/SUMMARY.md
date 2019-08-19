@@ -23,7 +23,6 @@
     * [Glean Debug ping viewer](concepts/glean/debug_ping_view.md)
 * [Cookbooks](cookbooks/index.md)
   * [Alerts](tools/alerts.md)
-  * [Working with Parquet Data on ATMO Clusters](cookbooks/parquet.md)
   * [Accessing and working with BigQuery](cookbooks/bigquery.md)
   * [Sending a Custom Ping](cookbooks/new_ping.md)
   * [Client Implementation Guidelines](cookbooks/client_guidelines.md)
