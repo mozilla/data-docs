@@ -30,7 +30,6 @@
   * [Using HyperLogLog in Zeppelin](cookbooks/hll_zeppelin.md)
   * [Client Implementation Guidelines](cookbooks/client_guidelines.md)
   * [Dataset Specific](cookbooks/dataset_specific.md)
-    * [Longitudinal Examples](cookbooks/longitudinal_examples.md)
     * [Working with Crash Pings](cookbooks/crash_pings.md)
     * [Working with Normandy events](cookbooks/normandy_events.md)
   * [Real-time](cookbooks/realtime.md)
