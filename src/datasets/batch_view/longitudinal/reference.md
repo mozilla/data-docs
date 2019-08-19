@@ -8,11 +8,6 @@
 
 # Data Reference
 
-## Example Queries
-
-Take a look at the
-[Longitudinal Examples Cookbook](../../../cookbooks/longitudinal_examples.md).
-
 ## Sampling
 
 ### Pings Within Last 6 Months
