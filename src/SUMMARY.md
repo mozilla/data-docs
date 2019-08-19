@@ -25,7 +25,6 @@
   * [Accessing and working with BigQuery](cookbooks/bigquery.md)
     * [Scheduling BigQuery Queries in Airflow](cookbooks/bigquery-airflow.md)
   * [Dataset Specific](cookbooks/dataset_specific.md)
-    * [Longitudinal Examples](cookbooks/longitudinal_examples.md)
     * [Working with Crash Pings](cookbooks/crash_pings.md)
     * [Working with Normandy events](cookbooks/normandy_events.md)
   * [Real-time](cookbooks/realtime.md)
