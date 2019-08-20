@@ -74,13 +74,13 @@ Detailed REST reference can be found [here](https://cloud.google.com/bigquery/do
     - project name will be provided for you when your account is provisioned.
 
 #### `bq` Examples
-List tables in a BigQuery dataset
+List tables and views in a BigQuery dataset
 ``` bash
 bq ls moz-fx-data-shared-prod:analysis
 ```
-Query a table
+Query a table or view
  ``` bash
- bq query --nouse_legacy_sql 'select count(*) from `moz-fx-data-shared-prod.telemetry.main_summary_v4` where submission_date_s3 = "2019-03-01"'
+ bq query --nouse_legacy_sql 'select count(*) from `moz-fx-data-shared-prod.telemetry.main` where submission_date = "2019-03-01" LIMIT 10'
  ```
 
 Additional examples and documentation can be found [here](https://cloud.google.com/bigquery/docs/bq-command-line-tool).
@@ -199,14 +199,15 @@ namely that you must make use of the date partition fields for large tables (lik
 |   |`payload_bytes_raw` |Raw JSON payloads as received from clients, used for reprocessing scenarios, a.k.a. "landfill" (_restricted_) |
 |   |`payload_bytes_decoded` |`gzip`-compressed decoded JSON payloads, used for reprocessing scenarios  |
 |   |`payload_bytes_error` |`gzip`-compressed JSON payloads that were rejected in some phase of the pipeline; particularly useful for investigating schema validation errors|
-|   |`search`|Search data imported form parquet (_restricted_)|
+|   |`search`|Search data imported from parquet (_restricted_) |
 |   |`static`|Static tables, often useful for data-enriching joins|
 |   |`tmp`|Temporary staging area for parquet data loads|
 |   |`udf` |Persistent user-defined functions defined in SQL; see [Using UDFs](#using-udfs)|
 |   |`udf_js` |Persistent user-defined functions defined in JavaScript; see [Using UDFs](#using-udfs)|
 |   |`validation`|Temporary staging area for validation|
-|`moz-fx-data-derived-datasets`|    |Legacy project that contains only views to data in `moz-fx-data-shared-prod` during a transition period |
-|`moz-fx-data-shar-nonprod-efed`| |Data produced by stage structured ingestion infrastructure|
+|`moz-fx-data-derived-datasets`|    |Legacy project that contains mostly views to data in `moz-fx-data-shared-prod` during a transition period; STMO currently points at this project but we will announce a transition to `moz-fx-data-shared-prod` by end of 2019|
+|   |`analysis`|User generated tables for analysis; note that this dataset is separate from `moz-fx-data-shared-prod:analysis` and users are responsible for migrating or cloning data during the transition period|
+|`moz-fx-data-shar-nonprod-efed`| |Non-production data produced by stage ingestion infrastructure |
 
 ### Table Layout and Naming
 
