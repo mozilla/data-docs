@@ -225,6 +225,15 @@ see [Choosing a Dataset](../concepts/choosing_a_dataset.md).
 These datasets are optimized for fast access, and will far out-perform
 analysis on the raw Telemetry ping data.
 
+### Persisting data
+
+You can save data to the [Databricks Filesystem][dbfs]
+or to a subdirectory of the S3 bucket
+`s3://net-mozaws-prod-us-west-2-pipeline-analysis/<username>/`.
+
+[dbfs]: https://docs.databricks.com/user-guide/databricks-file-system.html#dbfs
+
+
 ### Accessing the Spark UI
 
 After establishing an SSH connection to the Spark cluster, go to https://localhost:8888/spark
