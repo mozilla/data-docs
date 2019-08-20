@@ -155,7 +155,7 @@ gcloud beta dataproc clusters delete cluster-name --project project-id
 ## From Colaboratory
 [Colaboratory](https://colab.research.google.com) is Jupyter notebook environment, managed by Google and running in the cloud. Notebooks are stored in Google Drive and can be shared in a similar way to Google Docs.
 
-Colaboratory can be used to easily access BigQuery and perform interactive analyses. See [example notebook](https://colab.research.google.com/drive/1NCkpZBx3cRc08-g_JKMBrf5cIxAvSNMv).
+Colaboratory can be used to easily access BigQuery and perform interactive analyses. See [`Telemetry Hello World` notebook](https://colab.research.google.com/drive/1uXmrPnqzDATiCVH2RNJKD8obIZuofFHx).
 
 Note: this is very similar to [API Access](bigquery.md#gcp-bigquery-api-access), so you will need access to your team's GCP project - file a request as described [above](bigquery.md#access-request).
 
