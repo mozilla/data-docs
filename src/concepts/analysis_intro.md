@@ -43,7 +43,7 @@ The second plot on the Evolution View is the number of pings we saw containing t
 Where to go next
 ----------------
 * [Analysis using STMO](../tools/stmo.md)
-* [Advanced analysis with ATMO](../tools/spark.md)
+* [Advanced analysis with Spark](../tools/spark.md)
 * [Experimental data](../tools/experiments.md)
 * [Adding probes, collecting more data](https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Adding_a_new_Telemetry_probe)
 * [Augmenting the derived datasets](../datasets/derived.md)
