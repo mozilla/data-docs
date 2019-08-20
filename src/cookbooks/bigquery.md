@@ -202,8 +202,8 @@ namely that you must make use of the date partition fields for large tables (lik
 |   |`search`|Search data imported form parquet (_restricted_)|
 |   |`static`|Static tables, often useful for data-enriching joins|
 |   |`tmp`|Temporary staging area for parquet data loads|
-|   |`udf` |Persistent user-defined functions defined in SQL|
-|   |`udf_js` |Persistent user-defined functions defined in JavaScript|
+|   |`udf` |Persistent user-defined functions defined in SQL; see [Using UDFs](#using-udfs)|
+|   |`udf_js` |Persistent user-defined functions defined in JavaScript; see [Using UDFs](#using-udfs)|
 |   |`validation`|Temporary staging area for validation|
 |`moz-fx-data-derived-datasets`|    |Legacy project that contains only views to data in `moz-fx-data-shared-prod` during a transition period |
 |`moz-fx-data-shar-nonprod-efed`| |Data produced by stage structured ingestion infrastructure|
@@ -300,9 +300,15 @@ You can create views in BigQuery if you have access via [GCP BigQuery Console](b
     - Prefix your view with your username. If your username is `username@mozilla.com` create a table with `username_my_view`.
 - See [Creating Views](https://cloud.google.com/bigquery/docs/views) documentation for detailed steps.
 
-### Accessing map-like fields
+### Using UDFs
 
-BigQuery currently lacks native map support and our workaround is to use a STRUCT type with fields named [key, value]. We've created a user-defined function (UDFs) that provides key-based access with the signature: `udf.get_key(<struct>, <key>)`. The example below generates a count per `reason` key in the `event_map_values` field in the telemetry events table for Normandy unenrollment events from yesterday.
+BigQuery offers [user-defined functions](https://cloud.google.com/bigquery/docs/reference/standard-sql/user-defined-functions) (UDFs) that can be defined in SQL or JavaScript as part of a query or as a persistent function stored in a dataset. We have defined a suite of persistent functions to enable transformations specific to our data formats, available in datasets `udf` (for functions defined in SQL) and `udf_js` (for functions defined in JavaScript). Note that JavaScript functions are potentially much slower than those defined in SQL, so use functions in `udf_js` with some caution, likely only after performing aggregation in your query.
+
+We document a few of the most broadly useful UDFs below, but you can see the full list of UDFs with source code in [`bigquery-etl/udf`](https://github.com/mozilla/bigquery-etl/tree/master/udf) and [`bigquery-etl/udf_js`](https://github.com/mozilla/bigquery-etl/tree/master/udf_js). Publishing a full reference page for our persistent UDFs is a planned improvement, tracked in [`bigquery-etl#228`](https://github.com/mozilla/bigquery-etl/issues/228).
+
+#### Accessing map-like fields
+
+BigQuery currently lacks native map support and our workaround is to use a STRUCT type with fields named [key, value]. We've created a UDF that provides key-based access with the signature: `udf.get_key(<struct>, <key>)`. The example below generates a count per `reason` key in the `event_map_values` field in the telemetry events table for Normandy unenrollment events from yesterday.
 ```sql
 SELECT udf.get_key(event_map_values, 'reason') AS reason,
        COUNT(*) AS EVENTS
@@ -314,7 +320,7 @@ GROUP BY 1
 ORDER BY 2 DESC
 ```
 
-### Accessing histograms
+#### Accessing histograms
 
 We considered many potential ways to represent histograms as BigQuery fields
 and found the most efficient encoding was actually to leave them as raw JSON
