@@ -1,5 +1,11 @@
 # Churn
 
+***As of 2019-08-21, this dataset has been deprecated and is no longer
+maintained. See [Bug
+1561048](https://bugzilla.mozilla.org/show_bug.cgi?id=1561048) for historical
+sources. See the [retention cookbook](../../../cookbooks/retention.md) for
+current best practices.***
+
 <!-- toc -->
 
 # Introduction
@@ -155,6 +161,6 @@ root
 ## Code Reference
 
 The script for generating `churn` currently lives in
-[`mozilla/python_mozetl`](https://github.com/mozilla/python_mozetl). The job can
+[`mozilla/python_mozetl`](https://github.com/mozilla/python_mozetl/tree/9217335652cad46940a51c7c2784cc5c6d3a00f4). The job can
 be found in
-[`mozetl/engagement/churn`](https://github.com/mozilla/python_mozetl/blob/master/mozetl/engagement/churn/job.py).
+[`mozetl/engagement/churn`](https://github.com/mozilla/python_mozetl/blob/9217335652cad46940a51c7c2784cc5c6d3a00f4/mozetl/engagement/churn/job.py#L1-L27).
