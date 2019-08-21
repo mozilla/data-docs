@@ -12,7 +12,7 @@ behaviour (Environment, New Profiles, Updates, Crashes).
 
 For instance, a user's first session in Firefox might have four pings like this:
 
-![](images/first_session_pings.png)
+![Flowchart of pings in the user's first session](/datasets/images/first_session_pings.png)
 
 ### "main" ping
 
