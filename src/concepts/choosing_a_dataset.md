@@ -47,10 +47,6 @@ This section describes the derived datasets we provide to make analyzing this da
 
 {{#include ../datasets/bigquery/clients_last_seen/intro.md}}
 
-## `churn`
-
-{{#include ../datasets/mozetl/churn/intro.md}}
-
 ## `clients_daily`
 
 {{#include ../datasets/batch_view/clients_daily/intro.md}}
@@ -99,6 +95,10 @@ This data is available in the `telemetry_new_profile_parquet` dataset.
 ## `retention`
 
 {{#include ../datasets/obsolete/retention/intro.md}}
+
+## `churn`
+
+{{#include ../datasets/obsolete/churn/intro.md}}
 
 # Appendix
 
