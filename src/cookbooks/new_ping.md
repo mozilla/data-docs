@@ -169,14 +169,14 @@ so that they can investigate. Once the table is available, it should contain
 all the pings sent during that first day, regardless of how long it takes for
 the table to appear.
 
-### ATMO
+### Spark
 The data should be available in S3 at:
 
 `s3://net-mozaws-prod-us-west-2-pipeline-data/<namespace>-<doctype>-parquet/v<docversion>/`
 
 Note: here `<namespace>` should not be escaped.
 
-Refer to the [Spark FAQ](../tools/spark.md#faq) for details on accessing this table via ATMO.
+Refer to the [Spark FAQ](../tools/spark.md#faq) for details on accessing this table via Spark.
 
 Write ETL Jobs
 --------------
@@ -185,7 +185,7 @@ a [Longitudinal](https://github.com/mozilla/telemetry-batch-view/blob/master/src
 or [client-count-daily](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/GenericCountView.scala)
 like dataset. Otherwise, you'll have to write your own.
 
-Build Dashboards Using ATMO or STMO
+Build Dashboards Using Spark or STMO
 -----------------------------------
 Last steps! What are you using this data for anyway?
 

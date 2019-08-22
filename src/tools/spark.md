@@ -12,7 +12,8 @@ and, when combined with Spark, enable richer analysis than SQL alone.
 The Spark clusters can be launched from [ATMO](https://analysis.telemetry.mozilla.org).
 The Spark Python API is called PySpark.
 
-Note that this documentation focuses on ATMO, but analysis with Spark is also possible using Databricks.
+Note that this documentation focuses on ATMO, which is deprecated.
+Databricks is the preferred Spark analysis platform.
 For more information please see this
 [example notebook](https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/30598/command/30599).
 
@@ -225,6 +226,15 @@ see [Choosing a Dataset](../concepts/choosing_a_dataset.md).
 These datasets are optimized for fast access, and will far out-perform
 analysis on the raw Telemetry ping data.
 
+### Persisting data
+
+You can save data to the [Databricks Filesystem][dbfs]
+or to a subdirectory of the S3 bucket
+`s3://net-mozaws-prod-us-west-2-pipeline-analysis/<username>/`.
+
+[dbfs]: https://docs.databricks.com/user-guide/databricks-file-system.html#dbfs
+
+
 ### Accessing the Spark UI
 
 After establishing an SSH connection to the Spark cluster, go to https://localhost:8888/spark
@@ -285,13 +295,17 @@ Please add more FAQ as questions are answered by you or for you.
 
 ### How can I load parquet datasets in a Jupyter notebook?
 
-Use `spark.read.parquet`, e.g.:
+Load tables with:
+
+```python
+dataset = spark.table("main_summary")
+```
+
+or use `spark.read.parquet` like:
 
 ```python
 dataset = spark.read.parquet("s3://the_bucket/the_prefix/the_version")`
 ```
-
-For more information see [Working with Parquet](../cookbooks/parquet.md).
 
 ### I got a REMOTE HOST IDENTIFICATION HAS CHANGED! error
 
