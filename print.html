@@ -313,38 +313,74 @@ take a look at our <a href="concepts/../tools/experiments.html">tools for experi
 </li>
 <li><a href="concepts/choosing_a_dataset.html#main-ping-derived-datasets">Main Ping Derived Datasets</a>
 <ul>
+<li><a href="concepts/choosing_a_dataset.html#longitudinal"><code>longitudinal</code></a>
+<ul>
 <li><a href="concepts/choosing_a_dataset.html#contents">Contents</a></li>
 <li><a href="concepts/choosing_a_dataset.html#background-and-caveats">Background and Caveats</a></li>
 <li><a href="concepts/choosing_a_dataset.html#accessing-the-data">Accessing the Data</a></li>
+</ul>
+</li>
+<li><a href="concepts/choosing_a_dataset.html#main_summary"><code>main_summary</code></a>
+<ul>
 <li><a href="concepts/choosing_a_dataset.html#contents">Contents</a></li>
 <li><a href="concepts/choosing_a_dataset.html#background-and-caveats">Background and Caveats</a></li>
 <li><a href="concepts/choosing_a_dataset.html#accessing-the-data">Accessing the Data</a></li>
 <li><a href="concepts/choosing_a_dataset.html#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="concepts/choosing_a_dataset.html#first_shutdown_summary"><code>first_shutdown_summary</code></a>
+<ul>
 <li><a href="concepts/choosing_a_dataset.html#contents">Contents</a></li>
 <li><a href="concepts/choosing_a_dataset.html#background-and-caveats">Background and Caveats</a></li>
 <li><a href="concepts/choosing_a_dataset.html#accessing-the-data">Accessing the Data</a></li>
+</ul>
+</li>
+<li><a href="concepts/choosing_a_dataset.html#client_count_daily"><code>client_count_daily</code></a>
+<ul>
 <li><a href="concepts/choosing_a_dataset.html#content">Content</a></li>
 <li><a href="concepts/choosing_a_dataset.html#background-and-caveats">Background and Caveats</a></li>
 <li><a href="concepts/choosing_a_dataset.html#accessing-the-data">Accessing the Data</a></li>
 <li><a href="concepts/choosing_a_dataset.html#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="concepts/choosing_a_dataset.html#clients_last_seen"><code>clients_last_seen</code></a>
+<ul>
 <li><a href="concepts/choosing_a_dataset.html#content">Content</a></li>
 <li><a href="concepts/choosing_a_dataset.html#background-and-caveats">Background and Caveats</a></li>
 <li><a href="concepts/choosing_a_dataset.html#accessing-the-data">Accessing the Data</a></li>
+</ul>
+</li>
+<li><a href="concepts/choosing_a_dataset.html#churn"><code>churn</code></a>
+<ul>
 <li><a href="concepts/choosing_a_dataset.html#content">Content</a></li>
 <li><a href="concepts/choosing_a_dataset.html#background-and-caveats">Background and Caveats</a></li>
 <li><a href="concepts/choosing_a_dataset.html#accessing-the-data">Accessing the Data</a></li>
+</ul>
+</li>
+<li><a href="concepts/choosing_a_dataset.html#clients_daily"><code>clients_daily</code></a>
+<ul>
 <li><a href="concepts/choosing_a_dataset.html#contents">Contents</a></li>
 <li><a href="concepts/choosing_a_dataset.html#accessing-the-data">Accessing the Data</a></li>
 </ul>
 </li>
+</ul>
+</li>
 <li><a href="concepts/choosing_a_dataset.html#crash-ping-derived-datasets">Crash Ping Derived Datasets</a>
+<ul>
+<li><a href="concepts/choosing_a_dataset.html#error_aggregates"><code>error_aggregates</code></a>
 <ul>
 <li><a href="concepts/choosing_a_dataset.html#contents">Contents</a></li>
 <li><a href="concepts/choosing_a_dataset.html#accessing-the-data">Accessing the data</a></li>
 <li><a href="concepts/choosing_a_dataset.html#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="concepts/choosing_a_dataset.html#crash_summary"><code>crash_summary</code></a>
+<ul>
 <li><a href="concepts/choosing_a_dataset.html#contents">Contents</a></li>
 <li><a href="concepts/choosing_a_dataset.html#accessing-the-data">Accessing the Data</a></li>
 <li><a href="concepts/choosing_a_dataset.html#further-reading">Further Reading</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="concepts/choosing_a_dataset.html#new-profile-derived-datasets">New-Profile Derived Datasets</a>
@@ -372,14 +408,22 @@ take a look at our <a href="concepts/../tools/experiments.html">tools for experi
 </li>
 <li><a href="concepts/choosing_a_dataset.html#obsolete-datasets">Obsolete Datasets</a>
 <ul>
+<li><a href="concepts/choosing_a_dataset.html#heavy_users"><code>heavy_users</code></a>
+<ul>
 <li><a href="concepts/choosing_a_dataset.html#contents">Contents</a></li>
 <li><a href="concepts/choosing_a_dataset.html#background-and-caveats">Background and Caveats</a></li>
 <li><a href="concepts/choosing_a_dataset.html#accessing-the-data">Accessing the Data</a></li>
 <li><a href="concepts/choosing_a_dataset.html#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="concepts/choosing_a_dataset.html#retention"><code>retention</code></a>
+<ul>
 <li><a href="concepts/choosing_a_dataset.html#contents">Contents</a>
 <ul>
 <li><a href="concepts/choosing_a_dataset.html#background-and-caveats">Background and Caveats</a></li>
 <li><a href="concepts/choosing_a_dataset.html#accessing-the-data">Accessing the Data</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -401,7 +445,7 @@ To review a complete list of ping types and their schemata, see
 primitives (Histograms, Events, Scalars) and for keeping an eye on Firefox
 behaviour (Environment, New Profiles, Updates, Crashes).</p>
 <p>For instance, a user's first session in Firefox might have four pings like this:</p>
-<p><img src="concepts/images/first_session_pings.png" alt="" /></p>
+<p><img src="concepts//datasets/images/first_session_pings.png" alt="Flowchart of pings in the user's first session" /></p>
 <h3><a class="header" href="#main-ping" id="main-ping">&quot;main&quot; ping</a></h3>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html">&quot;main&quot; ping</a> is the workhorse of the Firefox Telemetry system.
 It delivers the Telemetry Environment as well as Histograms and Scalars for all
@@ -3309,8 +3353,10 @@ Engines, Presto and Athena, and our Parquet data lake.</p>
 <li><a href="cookbooks/bigquery.html#gcp-bigquery-api-access">GCP BigQuery API Access</a>
 <ul>
 <li><a href="cookbooks/bigquery.html#from-">From </a></li>
+<li><a href="cookbooks/bigquery.html#bq"><code>bq</code></a></li>
 <li><a href="cookbooks/bigquery.html#-command-line-tool"> Command-line Tool</a>
 <ul>
+<li><a href="cookbooks/bigquery.html#bq"><code>bq</code></a></li>
 <li><a href="cookbooks/bigquery.html#-examples"> Examples</a></li>
 </ul>
 </li>
@@ -5016,7 +5062,7 @@ To review a complete list of ping types and their schemata, see
 primitives (Histograms, Events, Scalars) and for keeping an eye on Firefox
 behaviour (Environment, New Profiles, Updates, Crashes).</p>
 <p>For instance, a user's first session in Firefox might have four pings like this:</p>
-<p><img src="datasets/images/first_session_pings.png" alt="" /></p>
+<p><img src="datasets//datasets/images/first_session_pings.png" alt="Flowchart of pings in the user's first session" /></p>
 <h3><a class="header" href="#main-ping-1" id="main-ping-1">&quot;main&quot; ping</a></h3>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html">&quot;main&quot; ping</a> is the workhorse of the Firefox Telemetry system.
 It delivers the Telemetry Environment as well as Histograms and Scalars for all
@@ -7688,10 +7734,19 @@ and locate telemetry from add-on studies.</p>
 <li><a href="datasets/shield.html#experiment-slugs">Experiment slugs</a></li>
 <li><a href="datasets/shield.html#tables">Tables</a>
 <ul>
+<li><a href="datasets/shield.html#experiments"><code>experiments</code></a></li>
 <li><a href="datasets/shield.html#-column"> column</a></li>
+<li><a href="datasets/shield.html#experiments"><code>experiments</code></a></li>
+<li><a href="datasets/shield.html#events"><code>events</code></a></li>
+<li><a href="datasets/shield.html#telemetry_shield_study_addon_parquet"><code>telemetry_shield_study_addon_parquet</code></a></li>
+<li><a href="datasets/shield.html#telemetry_shield_study_parquet"><code>telemetry_shield_study_parquet</code></a></li>
 </ul>
 </li>
-<li><a href="datasets/shield.html#raw-ping-sources">Raw ping sources</a></li>
+<li><a href="datasets/shield.html#raw-ping-sources">Raw ping sources</a>
+<ul>
+<li><a href="datasets/shield.html#telemetry-cohorts"><code>telemetry-cohorts</code></a></li>
+</ul>
+</li>
 </ul>
 <h2><a class="header" href="#dashboards-1" id="dashboards-1">Dashboards</a></h2>
 <p>The

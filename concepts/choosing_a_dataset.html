@@ -181,38 +181,74 @@ take a look at our <a href="../tools/experiments.html">tools for experimentation
 </li>
 <li><a href="#main-ping-derived-datasets">Main Ping Derived Datasets</a>
 <ul>
+<li><a href="#longitudinal"><code>longitudinal</code></a>
+<ul>
 <li><a href="#contents">Contents</a></li>
 <li><a href="#background-and-caveats">Background and Caveats</a></li>
 <li><a href="#accessing-the-data">Accessing the Data</a></li>
+</ul>
+</li>
+<li><a href="#main_summary"><code>main_summary</code></a>
+<ul>
 <li><a href="#contents">Contents</a></li>
 <li><a href="#background-and-caveats">Background and Caveats</a></li>
 <li><a href="#accessing-the-data">Accessing the Data</a></li>
 <li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#first_shutdown_summary"><code>first_shutdown_summary</code></a>
+<ul>
 <li><a href="#contents">Contents</a></li>
 <li><a href="#background-and-caveats">Background and Caveats</a></li>
 <li><a href="#accessing-the-data">Accessing the Data</a></li>
+</ul>
+</li>
+<li><a href="#client_count_daily"><code>client_count_daily</code></a>
+<ul>
 <li><a href="#content">Content</a></li>
 <li><a href="#background-and-caveats">Background and Caveats</a></li>
 <li><a href="#accessing-the-data">Accessing the Data</a></li>
 <li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#clients_last_seen"><code>clients_last_seen</code></a>
+<ul>
 <li><a href="#content">Content</a></li>
 <li><a href="#background-and-caveats">Background and Caveats</a></li>
 <li><a href="#accessing-the-data">Accessing the Data</a></li>
+</ul>
+</li>
+<li><a href="#churn"><code>churn</code></a>
+<ul>
 <li><a href="#content">Content</a></li>
 <li><a href="#background-and-caveats">Background and Caveats</a></li>
 <li><a href="#accessing-the-data">Accessing the Data</a></li>
+</ul>
+</li>
+<li><a href="#clients_daily"><code>clients_daily</code></a>
+<ul>
 <li><a href="#contents">Contents</a></li>
 <li><a href="#accessing-the-data">Accessing the Data</a></li>
 </ul>
 </li>
+</ul>
+</li>
 <li><a href="#crash-ping-derived-datasets">Crash Ping Derived Datasets</a>
+<ul>
+<li><a href="#error_aggregates"><code>error_aggregates</code></a>
 <ul>
 <li><a href="#contents">Contents</a></li>
 <li><a href="#accessing-the-data">Accessing the data</a></li>
 <li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#crash_summary"><code>crash_summary</code></a>
+<ul>
 <li><a href="#contents">Contents</a></li>
 <li><a href="#accessing-the-data">Accessing the Data</a></li>
 <li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#new-profile-derived-datasets">New-Profile Derived Datasets</a>
@@ -240,14 +276,22 @@ take a look at our <a href="../tools/experiments.html">tools for experimentation
 </li>
 <li><a href="#obsolete-datasets">Obsolete Datasets</a>
 <ul>
+<li><a href="#heavy_users"><code>heavy_users</code></a>
+<ul>
 <li><a href="#contents">Contents</a></li>
 <li><a href="#background-and-caveats">Background and Caveats</a></li>
 <li><a href="#accessing-the-data">Accessing the Data</a></li>
 <li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li><a href="#retention"><code>retention</code></a>
+<ul>
 <li><a href="#contents">Contents</a>
 <ul>
 <li><a href="#background-and-caveats">Background and Caveats</a></li>
 <li><a href="#accessing-the-data">Accessing the Data</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -269,7 +313,7 @@ To review a complete list of ping types and their schemata, see
 primitives (Histograms, Events, Scalars) and for keeping an eye on Firefox
 behaviour (Environment, New Profiles, Updates, Crashes).</p>
 <p>For instance, a user's first session in Firefox might have four pings like this:</p>
-<p><img src="images/first_session_pings.png" alt="" /></p>
+<p><img src="/datasets/images/first_session_pings.png" alt="Flowchart of pings in the user's first session" /></p>
 <h3><a class="header" href="#main-ping" id="main-ping">&quot;main&quot; ping</a></h3>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html">&quot;main&quot; ping</a> is the workhorse of the Firefox Telemetry system.
 It delivers the Telemetry Environment as well as Histograms and Scalars for all
