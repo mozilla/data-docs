@@ -170,7 +170,7 @@ The data stored in Heka format is [readable from Spark](../../tools/spark.md) us
 
 Parquet data can be read and written natively from Spark, and many datasets are indexed in a [Hive] Metastore, making them available through a SQL interface on Re:dash and in notebooks via Spark SQL. Many other SQL data sources are also made available via Re:dash, see [this article](../../tools/stmo.md) for more information on accessing data using SQL.
 
-There is a separate data store for self-serve **Analysis Outputs**, intended to keep ad-hoc, temporary data out of the Data Lake. This is implemented as a separate S3 location, with personal output locations prefixed with each person's user id, similar to the layout of the `/home` directory on a Unix system. See the [Working with Parquet data] cookbook for more details.
+There is a separate data store for self-serve **Analysis Outputs**, intended to keep ad-hoc, temporary data out of the Data Lake. This is implemented as a separate S3 location, with personal output locations prefixed with each person's user id, similar to the layout of the `/home` directory on a Unix system.
 
 Analysis outputs can also be made public using the **Public Outputs** bucket. This is a web-accessible S3 location for powering public dashboards. This public data is available at `https://analysis-output.telemetry.mozilla.org/<job name>/data/<files>`.
 
@@ -430,5 +430,4 @@ graph LR
 [St. Mocli]: https://github.com/mozilla/stmocli
 [Kafka]: https://kafka.apache.org/
 [Spark]: https://spark.apache.org/docs/latest/index.html
-[Working with Parquet data]: https://docs.telemetry.mozilla.org/cookbooks/parquet.html#where-to-save-data
 [Athena]: https://aws.amazon.com/athena/
