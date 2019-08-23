@@ -76,11 +76,11 @@ Detailed REST reference can be found [here](https://cloud.google.com/bigquery/do
 #### `bq` Examples
 List tables and views in a BigQuery dataset
 ``` bash
-bq ls moz-fx-data-shared-prod:analysis
+bq ls moz-fx-data-derived-datasets:telemetry
 ```
 Query a table or view
  ``` bash
- bq query --nouse_legacy_sql 'select count(*) from `moz-fx-data-shared-prod.telemetry.main` where submission_date = "2019-03-01" LIMIT 10'
+ bq query --nouse_legacy_sql 'select count(*) from `moz-fx-data-derived-datasets.telemetry.main` where submission_date = "2019-08-22" LIMIT 10'
  ```
 
 Additional examples and documentation can be found [here](https://cloud.google.com/bigquery/docs/bq-command-line-tool).
