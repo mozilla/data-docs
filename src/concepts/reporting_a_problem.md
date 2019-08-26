@@ -12,8 +12,8 @@ in the [General component](https://bugzilla.mozilla.org/enter_bug.cgi?product=Da
 Components are triaged at least weekly by the component owner(s). For issues needing
 urgent attention, it is recommended that you use the `needinfo` flag to attract attention
 from a specific person. If an issue doesn't receive the appropriate attention within a
-week, you can send email to the `fx-data-dev` mailing list or reach out on IRC
-in `#datapipeline`.
+week, you can send email to the `fx-data-dev` mailing list, reach out on IRC
+in `#datapipeline`, or on Slack in `#fx-metrics`.
 
 When a bug is triaged, it will be assigned a **priority** and **points**. **Priorities** have the
 following meanings:
