@@ -118,7 +118,7 @@ python -c 'from google.cloud import bigquery; print([d.dataset_id for d in bigqu
 ```
 
 ## From Spark
-We recommend [Storage API Connector](https://github.com/GoogleCloudPlatform/spark-bigquery-connector) for accessing
+We recommend the [Storage API Connector](https://github.com/GoogleCloudPlatform/spark-bigquery-connector) for accessing
 BigQuery tables in Spark as it is the most modern and actively developed connector. It works well with the BigQuery
 client library which is useful if you need to run arbitrary SQL queries (see example Databricks notebook) and load their
 results to Spark.
