@@ -181,13 +181,12 @@ maintained in the <a href="https://docs.google.com/document/d/1nlzhRGGwAaClwbotd
 <li><a href="#from-client-sdks">From client SDKs</a></li>
 </ul>
 </li>
-<li><a href="#from-spark--databricks">From Spark / Databricks</a>
+<li><a href="#from-spark">From Spark</a>
 <ul>
-<li><a href="#standard-sql-connector">Standard SQL connector</a></li>
-<li><a href="#storage-api-connector">Storage API connector</a></li>
+<li><a href="#on-databricks">On Databricks</a></li>
+<li><a href="#on-dataproc">On Dataproc</a></li>
 </ul>
 </li>
-<li><a href="#from-spark--dataproc">From Spark / Dataproc</a></li>
 <li><a href="#from-colaboratory">From Colaboratory</a></li>
 </ul>
 </li>
@@ -232,8 +231,12 @@ maintained in the <a href="https://docs.google.com/document/d/1nlzhRGGwAaClwbotd
 <li>Allows access to BigQuery via <a href="https://cloud.google.com/bigquery/docs/bq-command-line-tool"><code>bq</code> command-line tool</a></li>
 </ul>
 </li>
-<li><a href="bigquery.html#from-spark-/-databricks">Spark/Databricks</a></li>
-<li><a href="bigquery.html#from-spark-/-dataproc">Spark/Dataproc</a></li>
+<li><a href="bigquery.html#from-spark">Spark</a>
+<ul>
+<li><a href="bigquery.html#on-databricks">Databricks</a></li>
+<li><a href="bigquery.html#on-dataproc">Dataproc</a></li>
+</ul>
+</li>
 <li><a href="bigquery.html#from-colaboratory">Colaboratory</a></li>
 </ul>
 <h2><a class="header" href="#access-request" id="access-request">Access Request</a></h2>
@@ -305,16 +308,18 @@ for example, access BigQuery from Python:</p>
 <pre><code>pip install google-cloud-bigquery
 python -c 'from google.cloud import bigquery; print([d.dataset_id for d in bigquery.Client().list_datasets()])'
 </code></pre>
-<h2><a class="header" href="#from-spark--databricks" id="from-spark--databricks">From Spark / Databricks</a></h2>
-<p>There are two Spark connectors you can use:</p>
-<h3><a class="header" href="#standard-sql-connector" id="standard-sql-connector">Standard SQL connector</a></h3>
-<p>This <a href="https://github.com/akkomar/spark-bigquery">connector</a> is based on <a href="https://github.com/spotify/spark-bigquery"><code>spotify/spark-bigquery</code></a>. It allows to submit arbitrary SQL queries and get results in a DataFrame. It's worth noting that filtering on a DataFrame level won't be pushed down to BigQuery - this is quite a big difference to what you might be used to if you were using Parquet as your data source. Therefore offloading as much filtering as possible to the query is a great way to speed up and lower cost of your data loads.</p>
-<p>Connector library is added to <code>shared_serverless_python3</code> cluster on Databricks - see example <a href="https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/130908">Scala</a> and <a href="https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/130819">Python</a> notebooks.</p>
-<h3><a class="header" href="#storage-api-connector" id="storage-api-connector">Storage API connector</a></h3>
-<p><a href="https://github.com/GoogleCloudPlatform/spark-bigquery-connector">Storage API Connector</a> uses <a href="https://cloud.google.com/bigquery/docs/reference/storage/">BigQuery Storage API</a>. Although both API and connector are in Beta, this is the recommended way for accessing BigQuery from Spark as it offers better performance and is more cost-effective than the standard connector. This connector has some limited support for pushing down filtering predicates, it can also be used together with BigQuery client which allows to run arbitrary SQL queries and load results to Spark.</p>
-<p>Connector library is added to <code>shared_serverless_python3</code> cluster on Databricks - see example <a href="https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/141939">Python notebook</a> for more details on the topics mentioned above.</p>
-<h2><a class="header" href="#from-spark--dataproc" id="from-spark--dataproc">From Spark / Dataproc</a></h2>
-<p>Querying BigQuery from Dataproc will be faster than from Databricks because it will not involve cross-cloud data transfers.</p>
+<h2><a class="header" href="#from-spark" id="from-spark">From Spark</a></h2>
+<p>We recommend the <a href="https://github.com/GoogleCloudPlatform/spark-bigquery-connector">Storage API Connector</a> for accessing
+BigQuery tables in Spark as it is the most modern and actively developed connector. It works well with the BigQuery
+client library which is useful if you need to run arbitrary SQL queries (see example Databricks notebook) and load their
+results into Spark.</p>
+<h3><a class="header" href="#on-databricks" id="on-databricks">On Databricks</a></h3>
+<p>The <code>shared_serverless_python3</code> cluster is configured with shared default GCP credentials that will be automatically picked
+up by BigQuery client libraries. It also has the Storage API Connector library added as seen in the example
+<a href="https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/141939">Python notebook</a>.</p>
+<h3><a class="header" href="#on-dataproc" id="on-dataproc">On Dataproc</a></h3>
+<p>Dataproc is Google's managed Spark cluster service. Accessing BigQuery from there will be faster than from Databricks
+because it will not involve cross-cloud data transfers.</p>
 <p>You can spin up a Dataproc cluster with Jupyter using the following command. Insert your values for <code>cluster-name</code>, <code>bucket-name</code>, and <code>project-id</code> there. Your notebooks will be stored in Cloud Storage under <code>gs://bucket-name/notebooks/jupyter</code>:</p>
 <pre><code class="language-bash">gcloud beta dataproc clusters create cluster-name \
     --optional-components=ANACONDA,JUPYTER \
