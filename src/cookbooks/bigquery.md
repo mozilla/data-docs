@@ -124,7 +124,7 @@ client library which is useful if you need to run arbitrary SQL queries (see exa
 results into Spark.
 
 ### On Databricks
-`shared_serverless_python3` cluster is configured with shared, default GCP credentials that will be automatically picked
+The `shared_serverless_python3` cluster is configured with shared default GCP credentials that will be automatically picked
 up by BigQuery client libraries. It also has the Storage API Connector library added - see example
 [Python notebook](https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/141939).
 
