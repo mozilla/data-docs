@@ -10,6 +10,7 @@ When looking at trends, it is helpful to be aware of events from the past that m
 
 - **May 4 - May 11 2019** - [Telemetry source data deleted](https://blog.mozilla.org/blog/2019/05/09/what-we-do-when-things-go-wrong/). No source data is available for this period and derived tables may have missing days or imputed values. Derived tables that depend on multiple days may have have affected dates beyond the deletion region.
 - **January 31 2019** - [Profile-per-install](https://bugzilla.mozilla.org/show_bug.cgi?id=1474285) landed in `mozilla-central` and affects how new profiles are created. See [discussion in `bigquery-etl#212`](https://github.com/mozilla/bigquery-etl/issues/212).
+- **October 25 2018** - many `client_id`s on Firefox Android were reset to the same `client_id`.  For more information see the blameless post-mortem document [here](https://docs.google.com/document/d/1r1PDQnqhsrPkft0pB46v9uhXGxR_FzK4laKJLGttXdA) or [bug 1501329](https://bugzilla.mozilla.org/show_bug.cgi?id=1501329).
 - **November 2017** - Quantum Launch. There was a surge in new profiles and usage.
 - **March 2016** - Unified Telemetry launched.
 
