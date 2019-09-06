@@ -3,6 +3,10 @@
 Got some new data you want to send to us? How in the world do you send a new ping? Follow this guide
 to find out.
 
+Most new data collection in Firefox does not require creating a new ping document type. To add a
+histogram, scalar, or event collection to Firefox, please see the documentation on [adding a new
+probe](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/start/adding-a-new-probe.html).
+
 ## Write Your Questions
 
 Do not try and implement new pings unless you know specifically what questions you're trying to
