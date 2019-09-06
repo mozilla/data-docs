@@ -1,4 +1,4 @@
-# Choosing a Dataset - Mobile Edition
+# Choosing a Mobile Product Dataset
 
 ## Products Overview
 

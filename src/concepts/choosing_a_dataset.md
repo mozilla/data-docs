@@ -1,4 +1,4 @@
-# Choosing a Dataset
+# Choosing a Desktop Product Dataset
 
 This document will help you find the best data source for a given analysis.
 
@@ -111,4 +111,3 @@ There are several tables owned by the mobile team documented
 * `android_clients`
 * `android_addons`
 * `mobile_clients`
-
