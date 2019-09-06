@@ -100,7 +100,7 @@ When and how a ping is sent depends on the reason the subsession ends:
 <td style="text-align: left;"><code>shutdown</code></td>
 <td style="text-align: left;">Browser is closed</td>
 <td style="text-align: left;">77%</td>
-<td style="text-align: left;">For Firefox 55 or later, sent by <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/pingsender.html"><code>Pingsender</code></a> on browser close unless the OS is shutting down. Otherwise, sent by <a href="https://searchfox.org/mozilla-central/rev/532e4b94b9e807d157ba8e55034aef05c1196dc9/toolkit/components/telemetry/app/TelemetrySend.jsm#677"><code>TelemetrySendImpl.setup</code></a> on the following browser launch.</td>
+<td style="text-align: left;">For Firefox 55 or later, sent by <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/pingsender.html"><code>Pingsender</code></a> on browser close unless the OS is shutting down. Otherwise, sent by <a href="https://searchfox.org/mozilla-central/rev/532e4b94b9e807d157ba8e55034aef05c1196dc9/toolkit/components/telemetry/app/TelemetrySend.jsm#677">`TelemetrySendImpl.setup`</a> on the following browser launch.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>environment-change</code></td>
