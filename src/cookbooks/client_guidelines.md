@@ -1,34 +1,14 @@
 # Client Implementation Guidelines for Experiments
 
-There are three supported approaches to developing experimental features for Firefox:
+There are three supported approaches for enabling experimental features for Firefox:
 
-- [Feature Gates](#feature-gates)
-  - The preferred method for testing experimental features is to __land in-tree__ and ship behind a __feature gate__.
 - [Firefox Prefs](#prefs)
-  - If feature gates are [not appropriate](#feature-gate-caveats) for your project, Firefox Preferences (AKA "__Prefs__") should be used.
+  - Prefs can be used to control features that __land in-tree__.
+    [Feature Gates](#feature-gates) provide a wrapper around prefs that can be used from JavaScript.
 - [Firefox Extensions](#extensions) AKA "__Add-ons__".
   - If the feature being tested should not land in the tree, or if it will ultimately ship as an extension, then an extension should be used.
 
 New features go through the standard Firefox review, testing, and deployment processes, and are then enabled experimentally in the field using [Normandy][normandy-docs].
-
-## Feature Gates
-
-A new Feature Gate library for Firefox Desktop is now available.
-
-__Each feature gate should represent a different experimental treatment__. If your experimental feature requires multiple flags, then Normandy will not be able to support this directly and an [extension](#extensions) may be used.
-
-### Feature Gate caveats
-
-The current Feature Gate library comes with a few caveats, and may not be appropriate for your situation:
-
-- Only JS is supported.
-- Always asynchronous.
-
-Future versions of the Feature Gate API will include C++/Rust support and a synchronous API.
-
-### Using the Feature Gate library
-
-Read [the documentation][feature-gate-docs] to get started.
 
 ## Prefs
 
@@ -71,6 +51,25 @@ More information is available in the [Preference service documentation][pref-ser
 - Prefs should be set by default in `firefox.js`
 
 If your feature cannot abide by one or more of these rules (for instance, it needs to run at startup and/or cannot be toggled at runtime) then experimental preferences can be set on the `user branch`. This is more complex than using the methods described above; user branch prefs override the users choice, which is a really complex thing to try to support when flipping prefs experimentally. We also need to be careful to back up and reset the pref, and then figure out how to resolve conflicts if the user has changed the pref in the meantime.
+
+## Feature Gates
+
+A new Feature Gate library for Firefox Desktop is now available.
+
+__Each feature gate should represent a different experimental treatment__. If your experimental feature requires multiple flags, then Normandy will not be able to support this directly and an [extension](#extensions) may be used.
+
+### Feature Gate caveats
+
+The current Feature Gate library comes with a few caveats, and may not be appropriate for your situation:
+
+- Only JS is supported.
+- Always asynchronous.
+
+Future versions of the Feature Gate API will include C++/Rust support and a synchronous API.
+
+### Using the Feature Gate library
+
+Read [the documentation][feature-gate-docs] to get started.
 
 ## Extensions
 
