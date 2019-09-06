@@ -174,7 +174,7 @@ See [the HTTP edge server specification](../concepts/pipeline/http_edge_spec.md)
 [non-Telemetry example](../concepts/pipeline/http_edge_spec.md#postput-request) for documentation
 about the expected format.
 
-## (Non-Telemetry) Access Your Data
+## Access Your Data
 
 First confirm with the reviewers of [your schema pull
 request](#submit-schema-to-mozilla-servicesmozilla-pipeline-schemas) that your schemas have been
