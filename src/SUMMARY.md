@@ -72,6 +72,7 @@
   * [Other Datasets](datasets/other.md)
     * [hgpush](datasets/other/hgpush/reference.md)
     * [Stub installer ping](datasets/other/stub_installer/reference.md)
+    * [Content Delivery Networks](datasets/other/cdn/reference.md)
   * [Obsolete Datasets](datasets/obsolete.md)
     * [Heavy Users](datasets/obsolete/heavy_users/reference.md)
     * [Crash Aggregates](datasets/obsolete/crash_aggregates/reference.md)
