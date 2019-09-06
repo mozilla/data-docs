@@ -17,7 +17,7 @@ With the following restrictions and features:
 * All combinations of values from the category, method, and object properties must be unique to that particular event (no other event can produce events with the same combination). 
 * Events can be 'turned on' or 'turned off' by it's category value. i.e. we can instruct the browser to "stop sending us events from the `devtools` category."
 
-These records are then stored in [event pings](http://gecko-docs.mozilla.org.s3.amazonaws.com/toolkit/components/telemetry/telemetry/data/event-ping.html) and available in the [events dataset](https://docs.telemetry.mozilla.org/datasets/batch_view/events/reference.html). 
+These records are then stored in [event pings](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/data/event-ping.html) and available in the [events dataset](https://docs.telemetry.mozilla.org/datasets/batch_view/events/reference.html). 
 
 ## Identifying Events
 
