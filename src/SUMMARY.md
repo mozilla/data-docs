@@ -8,7 +8,6 @@
   * [Intro to STMO](tools/stmo.md)
   * [Common Analysis Gotchas](concepts/analysis_gotchas.md)
   * [Optimizing Queries](concepts/sql_optimization.md)
-  * [Collecting New Data](datasets/new_data.md)
   * [Getting Help](concepts/getting_help.md)
 * [Tools](tools/index.md)
   * [Project Glossary](tools/projects.md)
@@ -22,10 +21,8 @@
   * [Glean overview](concepts/glean/glean.md)
     * [Glean Debug ping viewer](concepts/glean/debug_ping_view.md)
   * [Alerts](tools/alerts.md)
-* [Cookbooks](cookbooks/index.md)
+* [Analysis cookbooks](cookbooks/index.md)
   * [Accessing and working with BigQuery](cookbooks/bigquery.md)
-  * [Sending a Custom Ping](cookbooks/new_ping.md)
-  * [Client Implementation Guidelines](cookbooks/client_guidelines.md)
   * [Dataset Specific](cookbooks/dataset_specific.md)
     * [Longitudinal Examples](cookbooks/longitudinal_examples.md)
     * [Working with Crash Pings](cookbooks/crash_pings.md)
@@ -38,7 +35,10 @@
     * [Daily Active Users (DAU)](cookbooks/dau.md)
     * [Active DAU (aDAU)](cookbooks/active_dau.md)
     * [Retention](cookbooks/retention.md)
-  * [Telemetry Events Best Practices](cookbooks/events_best_practices.md)
+* [Sending telemetry](datasets/new_data.md)
+  * [Implementing Experiments](cookbooks/client_guidelines.md)
+  * [Sending Events](cookbooks/events_best_practices.md)
+  * [Sending a Custom Ping](cookbooks/new_ping.md)
 
 ---
 
