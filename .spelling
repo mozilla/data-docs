@@ -45,6 +45,7 @@ booleans
 bugzilla
 CamelCase
 CEP
+CFR
 changesets
 chromehangs
 CircleCI
@@ -149,11 +150,13 @@ npm
 NSIS
 NumPy
 oauth
+onboarding
 ORM-like
 optout
 parquet2hive
 performant
 Pep8
+PingCentre
 Pingsender
 Placitelli
 Plotly
@@ -221,6 +224,8 @@ timestamps
 tryserver
 TMO
 TODO
+Topsite
+Topsites
 TOTP
 toolbars
 toolchain
