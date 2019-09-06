@@ -29,146 +29,207 @@ letters from the [ISO basic Latin alphabet](https://en.wikipedia.org/wiki/ISO_ba
 Use JSON Schema to start with. See the ["Adding a new schema"
 documentation](https://github.com/mozilla-services/mozilla-pipeline-schemas#adding-a-new-schema) and
 examples schemas in the [Mozilla Pipeline Schemas
-repo](https://github.com/mozilla-services/mozilla-pipeline-schemas/). This schema is just used to
-validate the incoming data; any ping that doesn't match the schema will be removed. Validate your
-JSON Schema using a [validation tool](https://jsonschemalint.com/#/version/draft-04/markup/json).
+repo](https://github.com/mozilla-services/mozilla-pipeline-schemas/). This schema is used to
+validate the incoming data; any ping that doesn't match the schema will be removed. This schema will
+also be transformed into a BigQuery table schema via the [Mozilla Schema
+Generator](https://github.com/mozilla/mozilla-schema-generator). Validate your JSON Schema using a
+[validation tool](https://jsonschemalint.com/#/version/draft-04/markup/json).
 
-We already have automatic deduplicating based on `docId`, which catches about 90% of duplicates and
-removes them from the dataset.
+Ensuring the ping contains a top-level `id` will enable document-level deduplication, which catches
+over 90% of duplicates and removes them from the dataset.
 
 ## Start a Data Review
 
-Data review for new pings is more complicated than when adding new probes. See [Data Review for
+Data review for new pings is often more complicated than adding new probes. See [Data Review for
 Focus-Event Ping](https://bugzilla.mozilla.org/show_bug.cgi?id=1347266) as an example. Consider
-where the data falls in the [Data Collection
+where the data falls under the [Data Collection
 Categories](https://wiki.mozilla.org/Firefox/Data_Collection).
 
 ## Submit Schema to `mozilla-services/mozilla-pipeline-schemas`
 
-The first schema added should be the JSON Schema made in step 2. Add at least one example ping which
-the data can be validated against. These test pings will be validated automatically during the
-build.
+Create a PR including a template and rendered schema to `mozilla-pipeline-schemas`. Add at least one
+validation ping that exercises the structure of schema as a test. These pings are validated during
+the build and help catch mistakes during the writing process.
 
-Additionally, a [Parquet
-output](https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/master/schemas/telemetry/core/core.9.parquetmr.txt)
-schema should be added. This would add a new dataset, available in
-[Re:dash](https://sql.telemetry.mozilla.org). The best documentation we have for the Parquet schema
-is by looking at the examples in
-[`mozilla-pipeline-schemas`](https://github.com/mozilla-services/mozilla-pipeline-schemas).
+### Example: A rendered schema for response times
 
-Parquet output also has a `metadata` section. These are fields added to the ping at ingestion time;
-they might come from the URL submitted to the edge server, or the IP Address used to make the
-request. [This
-document](https://pipeline-cep.prod.mozaws.net/dashboard_output/analysis.moz_telemetry_parquet_schema.parquet.txt)
-lists available metadata fields for all pings.
+We may want to collect a set of response measurements in milliseconds on a per-client basis. The
+pings take on the following shape:
 
-The stream you're interested in is probably `telemetry`. For example, look at
-`system-addon-deployment-diagnostics` immediately under the `telemetry` top-level field. The
-`schema` element has top-level fields (e.g. `Timestamp`, `Type`), as well as more fields under the
-`Fields` element. Any of these can be used in the `metadata` section of your parquet schema, except
-for `submission`.
+```json
+{"id": "08317b11-85f7-4688-9b35-48af10c3ccdf", "clientId": "1d5ce2fc-a554-42f0-ab21-2ad8ada9bb88", "payload": {"response_ms": 324}}
+{"id": "a97108ac-483b-40be-9c64-3419326f5113", "clientId": "3f1b2e1c-c241-464f-aa46-576f5795e488", "payload": {"response_ms": 221}}
+{"id": "b8a7e3f9-38c0-4a13-b42a-c969feb454f6", "clientId": "14f27409-5f6f-46e0-9f9d-da5cd716ee42", "payload": {"response_ms": 549}}
+```
 
-Some common ones for Telemetry data might be:
+This document can be described in the following way:
 
-- `Date`
-- `submissionDate`
-- `geoCountry`
-- `geoCity`
-- `geoSubdivision1`
-- `geoSubdivision2`
-- `normalizedChannel`
-- `appVersion`
-- `appBuildId`
+```json
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "string",
+            "description": "The document identifier"
+        },
+        "clientId": {
+            "type": "string",
+            "description": "The client identifier"
+        },
+        "payload": {
+            "type": "object",
+            "properties": {
+                "response_ms": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "description": "Response time of the client, in milliseconds"
+                }
+            }
+        }
+    }
+}
+```
 
-And for non-Telemetry data:
+Fields like `id` and `clientId` have template components as part of the build-system. These would be
+included as `@TELEMETRY_ID_1_JSON@` and `@TELEMETRY_CLIENTID_1_JSON@` respectively. The best way to
+become familiar with template schemas is to browse the repository; the
+[`telemetry/main/main.4.schema.json`
+document](https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/master/templates/telemetry/main/main.4.schema.json)
+a good starting place.
 
-- `geoCountry`
-- `geoCity`
-- `geoSubdivision1`
-- `geoSubdivision2`
-- `documentId`
+As part of the automated deployment process, the JSON schemas are translated into a table schema
+used by BigQuery. These schemas closely reflect the schemas used for data validation.
 
-*Important Note*: Schema evolution of nested structs is currently broken, so you will not be able to
-add any fields in the future to your `metadata` section. We recommend adding any that may seem
-useful.
+```json
+[
+  {
+    "mode": "NULLABLE",
+    "name": "clientId",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "id",
+    "type": "STRING"
+  },
+  {
+    "fields": [
+      {
+        "mode": "NULLABLE",
+        "name": "response_ms",
+        "type": "INT64"
+      }
+    ],
+    "mode": "NULLABLE",
+    "name": "payload",
+    "type": "RECORD"
+  }
+]
+```
+
+### Ingestion Metadata
+
+The generated schemas contain metadata added to the schema before deployment to the ingestion
+service. These are fields added to the ping at ingestion time; they might come from the URL
+submitted to the edge server, or the IP Address used to make the request. [This
+document](https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/master/schemas/metadata/telemetry-ingestion/telemetry-ingestion.1.schema.json)
+lists available metadata fields for the telemetry-ingestion pings, which are largely shared across
+all namespaces.
+
+A list of metadata fields are listed here for reference, but refer to the above document or the
+schema explorer for an up-to-date list of metadata fields.
+
+<!-- table generated via `scripts/new_ping_metadata_table.py > src/cookbooks/new_ping_metadata_table.md` -->
+
+{{#include ./new_ping_metadata_table.md}}
 
 ### Testing The Schema
 
 For new data, use the [edge validator](https://github.com/mozilla-services/edge-validator) to test
 your schema.
 
-If your data is _already_ being sent, and you want to test the schema you're writing on the data
-that is currently being ingested, you can test your Parquet output in
-[Hindsight](https://pipeline-cep.prod.mozaws.net/) by using an output plugin. See [Core ping output
-plugin](https://bugzilla.mozilla.org/attachment.cgi?id=8829626) for an example, where the parquet
-schema is specified as `parquet_schema`. If no errors arise, that means it should be correct. The
-"Deploy" button should not be used to actually deploy, that will be done by operations in the next
-step.
+## Deployment
 
-## (Telemetry-specific) Deploy the Plugin
-
-File [a bug to deploy the new schema.](https://bugzilla.mozilla.org/show_bug.cgi?id=1333203)
-
-Real-time analysis will be key to ensuring your data is being processed and parsed correctly. It
-should follow the format specified in [MozTelemetry `docType`
-monitor](https://mozilla-services.github.io/lua_sandbox_extensions/moz_telemetry/sandboxes/heka/analysis/moz_telemetry_doctype_monitor.html).
-This allows you to check validation errors, size changes, duplicates, and more. Once you have the
-numbers set, file a [bug to let ops deploy
-it](https://bugzilla.mozilla.org/show_bug.cgi?id=1356380).
+Schemas are automatically deployed once a day around 00:00 UTC, scheduled after the probe scraper in
+the following [Airflow
+DAG](https://github.com/mozilla/telemetry-airflow/blob/master/dags/probe_scraper.py). The latest
+schemas can be viewed at
+[`mozilla-pipeline-schemas/generated-schemas`](https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/generated-schemas).
 
 ## Start Sending Data
 
-If you're using the Telemetry APIs, use those built-in. These can be with the [Gecko Telemetry
+Use the built-in Telemetry APIs when possible. A few examples are the [Gecko Telemetry
 APIs](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html),
 the [Android Telemetry APIs](https://github.com/mozilla-mobile/telemetry-android), or the [iOS
 Telemetry APIs](https://github.com/mozilla-mobile/telemetry-ios).
 
-For non-Telemetry data, see [our HTTP edge server
-specification](../concepts/pipeline/http_edge_spec.md) and specifically the [non-Telemetry
-example](../concepts/pipeline/http_edge_spec.md#postput-request) for the expected format. The edge
-server endpoint is `https://incoming.telemetry.mozilla.org`.
+For all other use-cases, send documents to the ingestion endpoint:
+
+```text
+https://incoming.telemetry.mozilla.org
+```
+
+See [the HTTP edge server specification](../concepts/pipeline/http_edge_spec.md) and the
+[non-Telemetry example](../concepts/pipeline/http_edge_spec.md#postput-request) for documentation
+about the expected format.
 
 ## (Non-Telemetry) Access Your Data
 
 First confirm with the reviewers of [your schema pull
 request](#submit-schema-to-mozilla-servicesmozilla-pipeline-schemas) that your schemas have been
-deployed.
+deployed. You may also check the diff of the latest commit to [`mozilla-pipeline-schemas/generated
+schemas`](https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/generated-schemas).
 
 In the following links, replace `<namespace>`, `<doctype>` And `<docversion>` with appropriate
 values. Also replace `-` with `_` in `<namespace>` if your namespace contains `-` characters.
 
-### CEP
+### STMO / BigQuery
 
-Once you've sent some pings, refer to the following real-time analysis plugins to verify that your
-data is being processed:
+In the BigQuery (beta) data source, several new tables will be created for your data. 
 
-- `https://pipeline-cep.prod.mozaws.net/dashboard_output/graphs/analysis.moz_generic_error_monitor.<namespace>.html`
-- `https://pipeline-cep.prod.mozaws.net/dashboard_output/analysis.moz_generic_<namespace>_<doctype>_<docversion>.submissions.json`
-- `https://pipeline-cep.prod.mozaws.net/dashboard_output/analysis.moz_generic_<namespace>_<doctype>_<docversion>.errors.txt`
+The first table is the live table found under
+`moz-fx-data-shared-prod.<namespace>_live.<doctype>_v<docversion>`. This table is updated on a 5
+minute interval, partitioned on `submission_timestamp`, and may contain partial days of data.
 
-If this first graph shows ingestion errors, you can view the corresponding error messages in the
-third link. Otherwise, you should be able to view the last ten processed submissions via the second
-link. You can also write your own custom real-time analysis plugins using this same infrastructure
-if you desire; use the above plugins as examples and see [here](realtime_analysis_plugin.md) for a
-more detailed explanation.
+```sql
+SELECT
+    count(*) as n_rows
+FROM
+  `moz-fx-data-shared-prod.telemetry_live.main_v4`
+WHERE
+  submission_timestamp > TIMESTAMP_SUB(current_timestamp, INTERVAL 30 minute)
+```
 
-If you encounter schema validation errors, you can fix your data or [submit another pull
-request](#submit-schema-to-mozilla-servicesmozilla-pipeline-schemas) to amend your schemas.
-Backwards-incompatible schema changes should generally be accompanied by an increment to
-`docversion`.
+The second table that is created is the clustered table under
+`moz-fx-data-shared-prod.<namespace>_stable.<doctype>_v<docversion>`. This table will only contain
+complete days of submissions. The data is clustered by `submission_timestamp` and `sample_id` to
+improve the efficiency of queries.
 
-Once you've established that your pings are flowing through the real-time system, verify that you
-can access the data from the downstream systems.
+```sql
+SELECT
+  COUNT(DISTINCT client_id)*100 AS dau
+FROM
+  `moz-fx-data-shared-prod.telemetry_stable.main_v4`
+WHERE
+  submission_timestamp > TIMESTAMP_SUB(current_timestamp, INTERVAL 1 day)
+  AND sample_id = 1
+```
 
-### STMO
+For convenience, `moz-fx-data-shared-prod.<namespace>.<doctype>` is an alias to the latest, stable
+table.
 
-In the Athena data source, a new table `<namespace>_<doctype>_parquet_<docversion>` will be created
-for your data. A convenience pointer `<namespace>_<doctype>_parquet` will also refer to the latest
-available `docversion` of the ping. The data is partitioned by `submission_date_s3` which is
-formatted as `%Y%m%d`, like `20180130`, and is generally updated hourly. Refer to the [STMO
-documentation](../tools/stmo.md) for general information about using Re:dash.
+```sql
+SELECT
+  COUNT(DISTINCT client_id)*100 AS dau
+FROM
+  `moz-fx-data-shared-prod.telemetry.main`
+WHERE
+  submission_timestamp > TIMESTAMP_SUB(current_timestamp, INTERVAL 1 day)
+  AND sample_id = 1
+```
 
-This table may take up to a day to appear in the Athena source; if you still don't see a table for
+This table may take up to a day to appear in the BigQuery source; if you still don't see a table for
 your new ping after 24 hours, [contact Data
 Operations](https://mana.mozilla.org/wiki/display/SVCOPS/Contacting+Data+Operations) so that they
 can investigate. Once the table is available, it should contain all the pings sent during that first
@@ -176,22 +237,8 @@ day, regardless of how long it takes for the table to appear.
 
 ### Spark
 
-The data should be available in S3 at:
-
-`s3://net-mozaws-prod-us-west-2-pipeline-data/<namespace>-<doctype>-parquet/v<docversion>/`
-
-Note: here `<namespace>` should not be escaped.
-
-Refer to the [Spark FAQ](../tools/spark.md#faq) for details on accessing this table via Spark.
-
-## Write ETL Jobs
-
-We have some basic generalized ETL jobs you can use to transform your data on a batch basis - for
-example, a
-[Longitudinal](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/GenericLongitudinal.scala)
-or
-[client-count-daily](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/GenericCountView.scala)
-like dataset. Otherwise, you'll have to write your own.
+Refer to the [Spark FAQ](../cookbooks/bigquery.md#from-spark) for details on accessing this table
+via Spark.
 
 ## Build Dashboards Using Spark or STMO
 
