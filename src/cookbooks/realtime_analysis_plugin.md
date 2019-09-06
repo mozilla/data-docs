@@ -1,5 +1,10 @@
 # Creating a Real-time Analysis Plugin
 
+> This technique relies on the AWS ingestion pipeline.
+In [BigQuery](bigquery.md), the tables in the `moz-fx-data-shared-prod:telemetry_live` dataset
+have only a few minutes of latency, so you can query those from STMO or the BigQuery console
+for near real-time data access instead of writing an analysis plugin.
+
 ## Getting Started
 
 Creating an analysis plugin consists of three steps:

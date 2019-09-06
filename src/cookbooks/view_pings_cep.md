@@ -1,5 +1,10 @@
 # See My Pings
 
+> This technique relies on the AWS ingestion pipeline.
+In [BigQuery](bigquery.md), the tables in the `moz-fx-data-shared-prod:telemetry_live` dataset
+have only a few minutes of latency, so you can query those tables for pings from your `client_id`
+using STMO or the BigQuery console instead of writing an analysis plugin.
+
 So you want to see what you're sending the telemetry pipeline, huh? Well follow these steps and we'll have you reading some JSON in no time.
 
 For a more thorough introduction, see [Creating a Real-Time Analysis Plugin Cookbook](realtime_analysis_plugin.md).
