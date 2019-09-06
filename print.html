@@ -4696,16 +4696,12 @@ please read the <a href="https://wiki.mozilla.org/Firefox/Data_Collection">Data 
 ingestion of structured (JSON) data that utilizes the same underlying
 infrastructure. See <a href="datasets/../cookbooks/new_ping.html">this cookbook</a> for details on using it.</p>
 <h1><a class="header" href="#client-implementation-guidelines-for-experiments" id="client-implementation-guidelines-for-experiments">Client Implementation Guidelines for Experiments</a></h1>
-<p>There are three supported approaches to developing experimental features for Firefox:</p>
+<p>There are three supported approaches for enabling experimental features for Firefox:</p>
 <ul>
-<li><a href="cookbooks/client_guidelines.html#feature-gates">Feature Gates</a>
-<ul>
-<li>The preferred method for testing experimental features is to <strong>land in-tree</strong> and ship behind a <strong>feature gate</strong>.</li>
-</ul>
-</li>
 <li><a href="cookbooks/client_guidelines.html#prefs">Firefox Prefs</a>
 <ul>
-<li>If feature gates are <a href="cookbooks/client_guidelines.html#feature-gate-caveats">not appropriate</a> for your project, Firefox Preferences (AKA &quot;<strong>Prefs</strong>&quot;) should be used.</li>
+<li>Prefs can be used to control features that <strong>land in-tree</strong>.
+<a href="cookbooks/client_guidelines.html#feature-gates">Feature Gates</a> provide a wrapper around prefs that can be used from JavaScript.</li>
 </ul>
 </li>
 <li><a href="cookbooks/client_guidelines.html#extensions">Firefox Extensions</a> AKA &quot;<strong>Add-ons</strong>&quot;.
@@ -4715,18 +4711,6 @@ infrastructure. See <a href="datasets/../cookbooks/new_ping.html">this cookbook<
 </li>
 </ul>
 <p>New features go through the standard Firefox review, testing, and deployment processes, and are then enabled experimentally in the field using <a href="https://github.com/mozilla/normandy">Normandy</a>.</p>
-<h2><a class="header" href="#feature-gates" id="feature-gates">Feature Gates</a></h2>
-<p>A new Feature Gate library for Firefox Desktop is now available.</p>
-<p><strong>Each feature gate should represent a different experimental treatment</strong>. If your experimental feature requires multiple flags, then Normandy will not be able to support this directly and an <a href="cookbooks/client_guidelines.html#extensions">extension</a> may be used.</p>
-<h3><a class="header" href="#feature-gate-caveats" id="feature-gate-caveats">Feature Gate caveats</a></h3>
-<p>The current Feature Gate library comes with a few caveats, and may not be appropriate for your situation:</p>
-<ul>
-<li>Only JS is supported.</li>
-<li>Always asynchronous.</li>
-</ul>
-<p>Future versions of the Feature Gate API will include C++/Rust support and a synchronous API.</p>
-<h3><a class="header" href="#using-the-feature-gate-library" id="using-the-feature-gate-library">Using the Feature Gate library</a></h3>
-<p>Read <a href="https://firefox-source-docs.mozilla.org/toolkit/components/featuregates/featuregates/index.html">the documentation</a> to get started.</p>
 <h2><a class="header" href="#prefs" id="prefs">Prefs</a></h2>
 <p>Firefox Preferences (AKA &quot;prefs&quot;) are commonly used to enable and disable features. However, prefs are more complex to implement correctly than <a href="cookbooks/client_guidelines.html#feature-gates">feature gates</a>.</p>
 <p><strong>Each pref should represent a different experimental treatment</strong>. If your experimental feature requires multiple prefs, then Normandy does not currently support this but will soon. In the meantime, an <a href="cookbooks/client_guidelines.html#extensions">extension</a> such as <a href="https://github.com/nhnt11/multipreffer">multipreffer</a> may be used.</p>
@@ -4761,6 +4745,18 @@ infrastructure. See <a href="datasets/../cookbooks/new_ping.html">this cookbook<
 </li>
 </ul>
 <p>If your feature cannot abide by one or more of these rules (for instance, it needs to run at startup and/or cannot be toggled at runtime) then experimental preferences can be set on the <code>user branch</code>. This is more complex than using the methods described above; user branch prefs override the users choice, which is a really complex thing to try to support when flipping prefs experimentally. We also need to be careful to back up and reset the pref, and then figure out how to resolve conflicts if the user has changed the pref in the meantime.</p>
+<h2><a class="header" href="#feature-gates" id="feature-gates">Feature Gates</a></h2>
+<p>A new Feature Gate library for Firefox Desktop is now available.</p>
+<p><strong>Each feature gate should represent a different experimental treatment</strong>. If your experimental feature requires multiple flags, then Normandy will not be able to support this directly and an <a href="cookbooks/client_guidelines.html#extensions">extension</a> may be used.</p>
+<h3><a class="header" href="#feature-gate-caveats" id="feature-gate-caveats">Feature Gate caveats</a></h3>
+<p>The current Feature Gate library comes with a few caveats, and may not be appropriate for your situation:</p>
+<ul>
+<li>Only JS is supported.</li>
+<li>Always asynchronous.</li>
+</ul>
+<p>Future versions of the Feature Gate API will include C++/Rust support and a synchronous API.</p>
+<h3><a class="header" href="#using-the-feature-gate-library" id="using-the-feature-gate-library">Using the Feature Gate library</a></h3>
+<p>Read <a href="https://firefox-source-docs.mozilla.org/toolkit/components/featuregates/featuregates/index.html">the documentation</a> to get started.</p>
 <h2><a class="header" href="#extensions" id="extensions">Extensions</a></h2>
 <p>Firefox currently supports the <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions">Web Extensions API</a>.</p>
 <p><strong>If new WebExtension APIs are needed, they should land in-tree</strong>. Extensions which are signed by Mozilla can load privileged code using the <a href="https://firefox-source-docs.mozilla.org/toolkit/components/extensions/webextensions/index.html">WebExtension Experiments</a>, but this is not preferred.</p>
