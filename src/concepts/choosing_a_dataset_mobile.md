@@ -68,26 +68,26 @@ There are multiple event tables for mobile data. The two main event tables are `
 
 #### `telemetry_mobile_events_parquet`
 
-This table contains event data for Firefox for Fire TV, Firefox for Echo Show and Firefox Lite. There is a metadata column containing a list of metrics including [].  
+This table contains event data for Firefox for Fire TV, Firefox for Echo Show and Firefox Lite. There is a metadata column containing a list of metrics.
 
-Like when querying `telemetry_core_parquet` there are multiple apps contained in each table, so it is best practice to filter on at lease`app_name` and `os`.  One thing to note is that there is no `app_version` field in these tables, so in order to filter or join on a specific version you must know the corresponding `metadata.app_build_id`(s) for that `app_version`.  This can be found by reaching out to the engineering team building the app. 
+Like when querying `telemetry_core_parquet`, there are multiple apps contained in each table, so it is best practice to filter on at least `app_name` and `os`.  One thing to note is that there is no `app_version` field in these tables, so in order to filter or join on a specific version you must know the corresponding `metadata.app_build_id`(s) for that `app_version`.  This can be found by reaching out to the engineering team building the app.
 
-Some other applications also send event data to this table, including Lockbox and FirefoxReality.  For more information on the event data sent from these applications, see their documentation. 
+Some other applications also send event data to this table, including Lockbox and FirefoxReality.  For more information on the event data sent from these applications, see their documentation.
 
- 
+
 #### `telemetry_focus_events_parquet`
 
 This table contains event data for Focus Android, Focus iOS and Klar.
 
-Like when querying `telemetry_core_parquet` there are multiple apps contained in each table, so it is best practice to filter on at lease`app_name` and `os`.  One thing to note is that there is no `app_version` field in these tables, so in order to filter or join on a specific version you must know the corresponding `app_build_id`(s) for that `app_version`.  This can be found by reaching out to the engineering team building the app. 
+Like when querying `telemetry_core_parquet`, there are multiple apps contained in each table, so it is best practice to filter on at least `app_name` and `os`.  One thing to note is that there is no `app_version` field in these tables, so in order to filter or join on a specific version you must know the corresponding `app_build_id`(s) for that `app_version`.  This can be found by reaching out to the engineering team building the app.
 
-Some other applications send data to this table but it is preferred to use this only for analysis of event data from Focus and it's related apps. 
+Some other applications send data to this table, but it is preferred to use this only for analysis of event data from Focus and its related apps.
 
 ### Notes
 
-Each app has it's own set of release channels and each app implements them in it's own way.  Most have a `nightly`, `beta`, `release` and an `other` channel, used at various stages of development.  Users sign up to test pre-released versions of the app.  In Focus Android, the `beta` channel uses the same APK in the Google Play Store as the `release` channel, but beta users get access to this version earlier than the release population. Once the `release` version is published, Beta users will be on the same version of the app as Release users and will be indistinguishable (without a query going back and flagging them by `client_id`). Beta releases have their `normalized_channel` tagged `release` and the only way to filter to beta users is to check that they were on a higher version number before the official release date. 
+Each app has its own set of release channels and each app implements them in its own way.  Most have a `nightly`, `beta`, `release` and an `other` channel, used at various stages of development.  Users sign up to test pre-released versions of the app.  In Focus Android, the `beta` channel uses the same APK in the Google Play Store as the `release` channel, but beta users get access to this version earlier than the release population. Once the `release` version is published, Beta users will be on the same version of the app as Release users and will be indistinguishable (without a query going back and flagging them by `client_id`). Beta releases have their `normalized_channel` tagged `release` and the only way to filter to beta users is to check that they were on a higher version number before the official release date.
 
-There was an incident on Oct 25, 2018 where a chunk of `client_id`s on Firefox Android were reset to the same `client_id`.  For more information see the blameless post-mortem document [here](https://docs.google.com/document/d/1r1PDQnqhsrPkft0pB46v9uhXGxR_FzK4laKJLGttXdA) or [bug](https://bugzilla.mozilla.org/show_bug.cgi?id=1501329).  Because of this, some retention analyses spanning this time frame may be impacted.   
+There was an incident on Oct 25, 2018 where a chunk of `client_id`s on Firefox Android were reset to the same `client_id`.  For more information see the blameless post-mortem document [here](https://docs.google.com/document/d/1r1PDQnqhsrPkft0pB46v9uhXGxR_FzK4laKJLGttXdA) or [bug 1501329](https://bugzilla.mozilla.org/show_bug.cgi?id=1501329).  Because of this, some retention analyses spanning this time frame may be impacted.
 
 ### Upcoming Changes
 
