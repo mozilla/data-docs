@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Format telemetry-ingestion metadata into a markdown table."""
+"""Format telemetry-ingestion metadata into a markdown table.
+
+./scripts/new_ping_metadata_table.py > src/cookbooks/new_ping_metadata_table.md
+"""
 import json
 import urllib.request
 from typing import Any, Dict, List, Tuple
@@ -21,11 +24,8 @@ def transform(data: Dict[str, Any]) -> List[Tuple[str, str]]:
             path = prefix + [key]
             if sub["type"] == "object":
                 queue += [(path, sub["properties"])]
-            elif "description" in sub:
-                result += [(".".join(path), sub["description"])]
             else:
-                # not a leaf with a description
-                pass
+                result += [(".".join(path), sub.get("description", "N/A"))]
     return result
 
 
