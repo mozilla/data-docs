@@ -3,8 +3,9 @@
 Got some new data you want to send to us? How in the world do you send a new ping? Follow this guide
 to find out.
 
-Most new data collection in Firefox does not require creating a new ping document type. To add a
-histogram, scalar, or event collection to Firefox, please see the documentation on [adding a new
+**Note**: Most new data collection in Firefox via Telemetry or Glean does not require creating a new
+ping document type. To add a histogram, scalar, or event collection to Firefox, please see the
+documentation on [adding a new
 probe](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/start/adding-a-new-probe.html).
 
 ## Write Your Questions
@@ -19,8 +20,8 @@ here](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telem
 
 ## Choose a Namespace and DocType
 
-For new telemetry pings, the namespace is simply `telemetry`. For non-Telemetry pings, choose a
-namespace that uniquely identifies the product that will be generating the data.
+Choose a namespace that uniquely identifies the product that will be generating the data. The
+`telemetry` namespace is reserved for pings added by the Firefox Client Telemetry team.
 
 The DocType is used to differentiate pings within a namespace. It can be as simple as `event`, but
 should generally be descriptive of the data being collected.
@@ -30,17 +31,18 @@ letters from the [ISO basic Latin alphabet](https://en.wikipedia.org/wiki/ISO_ba
 
 ## Create a Schema
 
-Use JSON Schema to start with. See the ["Adding a new schema"
+Write a JSON Schema. See the ["Adding a new schema"
 documentation](https://github.com/mozilla-services/mozilla-pipeline-schemas#adding-a-new-schema) and
 examples schemas in the [Mozilla Pipeline Schemas
 repo](https://github.com/mozilla-services/mozilla-pipeline-schemas/). This schema is used to
 validate the incoming data; any ping that doesn't match the schema will be removed. This schema will
 also be transformed into a BigQuery table schema via the [Mozilla Schema
-Generator](https://github.com/mozilla/mozilla-schema-generator). Validate your JSON Schema using a
-[validation tool](https://jsonschemalint.com/#/version/draft-04/markup/json).
+Generator](https://github.com/mozilla/mozilla-schema-generator). Note that parquet schemas are no
+longer necessary because of the generated schemas. Validate your JSON Schema using a [validation
+tool](https://jsonschemalint.com/#/version/draft-04/markup/json).
 
-Ensuring the ping contains a top-level `id` will enable document-level deduplication, which catches
-over 90% of duplicates and removes them from the dataset.
+Ensuring the ping contains a unique top-level `id` will enable document-level deduplication, which
+catches over 90% of duplicates and removes them from the dataset.
 
 ## Start a Data Review
 
@@ -165,8 +167,8 @@ schemas can be viewed at
 
 Use the built-in Telemetry APIs when possible. A few examples are the [Gecko Telemetry
 APIs](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html),
-the [Android Telemetry APIs](https://github.com/mozilla-mobile/telemetry-android), or the [iOS
-Telemetry APIs](https://github.com/mozilla-mobile/telemetry-ios).
+or the [iOS Telemetry APIs](https://github.com/mozilla-mobile/telemetry-ios). Users on Android
+should use Glean, which does not require building out custom pings.
 
 For all other use-cases, send documents to the ingestion endpoint:
 
@@ -205,23 +207,10 @@ WHERE
   submission_timestamp > TIMESTAMP_SUB(current_timestamp, INTERVAL 30 minute)
 ```
 
-The second table that is created is the clustered table under
-`moz-fx-data-shared-prod.<namespace>_stable.<doctype>_v<docversion>`. This table will only contain
-complete days of submissions. The data is clustered by `submission_timestamp` and `sample_id` to
-improve the efficiency of queries.
-
-```sql
-SELECT
-  COUNT(DISTINCT client_id)*100 AS dau
-FROM
-  `moz-fx-data-shared-prod.telemetry_stable.main_v4`
-WHERE
-  submission_timestamp > TIMESTAMP_SUB(current_timestamp, INTERVAL 1 day)
-  AND sample_id = 1
-```
-
-For convenience, `moz-fx-data-shared-prod.<namespace>.<doctype>` is an alias to the latest, stable
-table.
+The second table that is created is the clustered table view under
+`moz-fx-data-shared-prod.<namespace>.<doctype>_v<docversion>`. This view will only contain complete
+days of submissions. The data is clustered by `submission_timestamp` and `sample_id` to improve the
+efficiency of queries.
 
 ```sql
 SELECT
