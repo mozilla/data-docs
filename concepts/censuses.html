@@ -1,0 +1,331 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Census metrics - Firefox Data Documentation</title>
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../dtmo.css">
+        
+        <link rel="stylesheet" href="../mermaid.css">
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="affix"><a href="../introduction.html">Firefox Data Documentation</a></li><li><a href="../concepts/reporting_a_problem.html"><strong aria-hidden="true">1.</strong> Reporting a problem</a></li><li><a href="../concepts/terminology.html"><strong aria-hidden="true">2.</strong> Terminology</a></li><li><a href="../concepts/getting_started.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li><ol class="section"><li><a href="../concepts/analysis_intro.html"><strong aria-hidden="true">3.1.</strong> Analysis Quick Start</a></li><li><a href="../concepts/choosing_a_dataset.html"><strong aria-hidden="true">3.2.</strong> Choosing a Desktop Dataset</a></li><li><a href="../concepts/choosing_a_dataset_mobile.html"><strong aria-hidden="true">3.3.</strong> Choosing a Mobile Dataset</a></li><li><a href="../tools/stmo.html"><strong aria-hidden="true">3.4.</strong> Intro to STMO</a></li><li><a href="../concepts/analysis_gotchas.html"><strong aria-hidden="true">3.5.</strong> Common Analysis Gotchas</a></li><li><a href="../concepts/sql_optimization.html"><strong aria-hidden="true">3.6.</strong> Optimizing Queries</a></li><li><a href="../concepts/getting_help.html"><strong aria-hidden="true">3.7.</strong> Getting Help</a></li></ol></li><li><a href="../tools/index.html"><strong aria-hidden="true">4.</strong> Tools</a></li><li><ol class="section"><li><a href="../tools/projects.html"><strong aria-hidden="true">4.1.</strong> Project Glossary</a></li><li><a href="../concepts/pipeline/data_pipeline.html"><strong aria-hidden="true">4.2.</strong> Overview of Mozilla's Data Pipeline</a></li><li><ol class="section"><li><a href="../concepts/pipeline/data_pipeline_detail.html"><strong aria-hidden="true">4.2.1.</strong> In-depth Data Pipeline Detail</a></li><li><a href="../concepts/pipeline/http_edge_spec.html"><strong aria-hidden="true">4.2.2.</strong> HTTP Edge Server Specification</a></li><li><a href="../concepts/pipeline/event_pipeline.html"><strong aria-hidden="true">4.2.3.</strong> Event Pipeline Detail</a></li></ol></li><li><a href="../tools/interfaces.html"><strong aria-hidden="true">4.3.</strong> Analysis Interfaces</a></li><li><a href="../tools/spark.html"><strong aria-hidden="true">4.4.</strong> Custom analysis with Spark</a></li><li><a href="../concepts/sql_style.html"><strong aria-hidden="true">4.5.</strong> SQL Style Guide</a></li><li><a href="../concepts/glean/glean.html"><strong aria-hidden="true">4.6.</strong> Glean overview</a></li><li><ol class="section"><li><a href="../concepts/glean/debug_ping_view.html"><strong aria-hidden="true">4.6.1.</strong> Glean Debug ping viewer</a></li></ol></li><li><a href="../tools/alerts.html"><strong aria-hidden="true">4.7.</strong> Alerts</a></li></ol></li><li><a href="../cookbooks/index.html"><strong aria-hidden="true">5.</strong> Analysis cookbooks</a></li><li><ol class="section"><li><a href="../cookbooks/bigquery.html"><strong aria-hidden="true">5.1.</strong> Accessing and working with BigQuery</a></li><li><a href="../cookbooks/dataset_specific.html"><strong aria-hidden="true">5.2.</strong> Dataset Specific</a></li><li><ol class="section"><li><a href="../cookbooks/longitudinal_examples.html"><strong aria-hidden="true">5.2.1.</strong> Longitudinal Examples</a></li><li><a href="../cookbooks/crash_pings.html"><strong aria-hidden="true">5.2.2.</strong> Working with Crash Pings</a></li><li><a href="../cookbooks/normandy_events.html"><strong aria-hidden="true">5.2.3.</strong> Working with Normandy events</a></li></ol></li><li><a href="../cookbooks/realtime.html"><strong aria-hidden="true">5.3.</strong> Real-time</a></li><li><ol class="section"><li><a href="../cookbooks/realtime_analysis_plugin.html"><strong aria-hidden="true">5.3.1.</strong> Creating a Real-time Analysis Plugin</a></li><li><a href="../cookbooks/view_pings_cep.html"><strong aria-hidden="true">5.3.2.</strong> Seeing Your Own Pings</a></li><li><a href="../tools/cep_matcher.html"><strong aria-hidden="true">5.3.3.</strong> CEP Matcher</a></li></ol></li><li><a href="../cookbooks/metrics.html"><strong aria-hidden="true">5.4.</strong> Metrics</a></li><li><ol class="section"><li><a href="../cookbooks/dau.html"><strong aria-hidden="true">5.4.1.</strong> Daily Active Users (DAU)</a></li><li><a href="../cookbooks/active_dau.html"><strong aria-hidden="true">5.4.2.</strong> Active DAU (aDAU)</a></li><li><a href="../cookbooks/retention.html"><strong aria-hidden="true">5.4.3.</strong> Retention</a></li></ol></li></ol></li><li><a href="../datasets/new_data.html"><strong aria-hidden="true">6.</strong> Sending telemetry</a></li><li><ol class="section"><li><a href="../cookbooks/client_guidelines.html"><strong aria-hidden="true">6.1.</strong> Implementing Experiments</a></li><li><a href="../cookbooks/events_best_practices.html"><strong aria-hidden="true">6.2.</strong> Sending Events</a></li><li><a href="../cookbooks/new_ping.html"><strong aria-hidden="true">6.3.</strong> Sending a Custom Ping</a></li><li class="spacer"></li></ol></li><li><a href="../datasets/reference.html"><strong aria-hidden="true">7.</strong> Dataset Reference</a></li><li><ol class="section"><li><a href="../datasets/pings.html"><strong aria-hidden="true">7.1.</strong> Pings</a></li><li><a href="../datasets/derived.html"><strong aria-hidden="true">7.2.</strong> Derived Datasets</a></li><li><ol class="section"><li><a href="../datasets/batch_view/addons/reference.html"><strong aria-hidden="true">7.2.1.</strong> Addons</a></li><li><a href="../datasets/other/addons_daily/reference.html"><strong aria-hidden="true">7.2.2.</strong> Addons Daily</a></li><li><a href="../datasets/batch_view/clients_daily/reference.html"><strong aria-hidden="true">7.2.3.</strong> Clients Daily</a></li><li><a href="../datasets/bigquery/clients_last_seen/reference.html"><strong aria-hidden="true">7.2.4.</strong> Clients Last Seen</a></li><li><a href="../datasets/batch_view/crash_summary/reference.html"><strong aria-hidden="true">7.2.5.</strong> Crash Summary</a></li><li><a href="../datasets/batch_view/cross_sectional/reference.html"><strong aria-hidden="true">7.2.6.</strong> Cross Sectional</a></li><li><a href="../datasets/streaming/error_aggregates/reference.html"><strong aria-hidden="true">7.2.7.</strong> Error Aggregates</a></li><li><a href="../datasets/batch_view/events/reference.html"><strong aria-hidden="true">7.2.8.</strong> Events</a></li><li><a href="../datasets/bigquery/exact_mau/reference.html"><strong aria-hidden="true">7.2.9.</strong> Exact MAU</a></li><li><a href="../datasets/batch_view/first_shutdown_summary/reference.html"><strong aria-hidden="true">7.2.10.</strong> First Shutdown Summary</a></li><li><a href="../datasets/batch_view/longitudinal/reference.html"><strong aria-hidden="true">7.2.11.</strong> Longitudinal</a></li><li><a href="../datasets/batch_view/main_summary/reference.html"><strong aria-hidden="true">7.2.12.</strong> Main Summary</a></li><li><a href="../datasets/batch_view/new_profile/reference.html"><strong aria-hidden="true">7.2.13.</strong> New Profile</a></li><li><a href="../datasets/other/socorro_crash/reference.html"><strong aria-hidden="true">7.2.14.</strong> Socorro Crash Reports</a></li><li><a href="../datasets/other/ssl/reference.html"><strong aria-hidden="true">7.2.15.</strong> SSL Ratios (public)</a></li><li><a href="../datasets/batch_view/sync_summary/reference.html"><strong aria-hidden="true">7.2.16.</strong> Sync Summary</a></li><li><a href="../datasets/batch_view/telemetry_aggregates/reference.html"><strong aria-hidden="true">7.2.17.</strong> Telemetry Aggregates</a></li><li><a href="../datasets/batch_view/update/reference.html"><strong aria-hidden="true">7.2.18.</strong> Update</a></li></ol></li><li><a href="../tools/experiments.html"><strong aria-hidden="true">7.3.</strong> Experimental Datasets</a></li><li><ol class="section"><li><a href="../datasets/heartbeat.html"><strong aria-hidden="true">7.3.1.</strong> Accessing Heartbeat data</a></li><li><a href="../datasets/shield.html"><strong aria-hidden="true">7.3.2.</strong> Accessing Shield Study data</a></li></ol></li><li><a href="../datasets/search.html"><strong aria-hidden="true">7.4.</strong> Search Datasets</a></li><li><ol class="section"><li><a href="../datasets/mozetl/search_aggregates/reference.html"><strong aria-hidden="true">7.4.1.</strong> Search Aggregates</a></li><li><a href="../datasets/mozetl/search_clients_daily/reference.html"><strong aria-hidden="true">7.4.2.</strong> Search Clients Daily</a></li></ol></li><li><a href="../datasets/other.html"><strong aria-hidden="true">7.5.</strong> Other Datasets</a></li><li><ol class="section"><li><a href="../datasets/other/hgpush/reference.html"><strong aria-hidden="true">7.5.1.</strong> hgpush</a></li><li><a href="../datasets/other/stub_installer/reference.html"><strong aria-hidden="true">7.5.2.</strong> Stub installer ping</a></li><li><a href="../datasets/other/activity-stream/reference.html"><strong aria-hidden="true">7.5.3.</strong> Activity Stream</a></li></ol></li><li><a href="../datasets/obsolete.html"><strong aria-hidden="true">7.6.</strong> Obsolete Datasets</a></li><li><ol class="section"><li><a href="../datasets/obsolete/heavy_users/reference.html"><strong aria-hidden="true">7.6.1.</strong> Heavy Users</a></li><li><a href="../datasets/obsolete/crash_aggregates/reference.html"><strong aria-hidden="true">7.6.2.</strong> Crash Aggregates</a></li><li><a href="../datasets/obsolete/client_count/reference.html"><strong aria-hidden="true">7.6.3.</strong> Client Count</a></li><li><a href="../datasets/obsolete/client_count_daily/reference.html"><strong aria-hidden="true">7.6.4.</strong> Client Count Daily</a></li><li><a href="../datasets/obsolete/retention/reference.html"><strong aria-hidden="true">7.6.5.</strong> Retention</a></li><li><a href="../datasets/obsolete/churn/reference.html"><strong aria-hidden="true">7.6.6.</strong> Churn</a></li></ol></li><li><a href="../datasets/fxa.html"><strong aria-hidden="true">7.7.</strong> Firefox Accounts Datasets</a></li><li><ol class="section"><li><a href="../datasets/fxa_metrics/attribution.html"><strong aria-hidden="true">7.7.1.</strong> Firefox Account Attribution</a></li><li><a href="../datasets/fxa_metrics/funnels.html"><strong aria-hidden="true">7.7.2.</strong> Firefox Account Funnel Metrics</a></li><li><a href="../datasets/fxa_metrics/emails.html"><strong aria-hidden="true">7.7.3.</strong> Firefox Account Email Metrics</a></li><li class="spacer"></li></ol></li></ol></li><li><a href="../concepts/index.html"><strong aria-hidden="true">8.</strong> Telemetry Behavior Reference</a></li><li><ol class="section"><li><a href="../concepts/history.html"><strong aria-hidden="true">8.1.</strong> History of Telemetry</a></li><li><a href="../concepts/profile/index.html"><strong aria-hidden="true">8.2.</strong> Profile Behavior</a></li><li><ol class="section"><li><a href="../concepts/profile/profile_creation.html"><strong aria-hidden="true">8.2.1.</strong> Profile Creation</a></li><li><a href="../concepts/profile/realworldusage.html"><strong aria-hidden="true">8.2.2.</strong> Real World Usage</a></li><li><a href="../concepts/profile/profilehistory.html"><strong aria-hidden="true">8.2.3.</strong> Profile History</a></li></ol></li><li><a href="../concepts/channels/index.html"><strong aria-hidden="true">8.3.</strong> Channel Behavior</a></li><li><ol class="section"><li><a href="../concepts/channels/channel_normalization.html"><strong aria-hidden="true">8.3.1.</strong> Channel Normalization and Querying</a></li></ol></li><li><a href="../concepts/censuses.html" class="active"><strong aria-hidden="true">8.4.</strong> Census metrics</a></li><li><a href="../concepts/engagement.html"><strong aria-hidden="true">8.5.</strong> Engagement metrics</a></li><li class="spacer"></li></ol></li><li><a href="../meta/index.html"><strong aria-hidden="true">9.</strong> About this Documentation</a></li><li><ol class="section"><li><a href="../meta/contributing.html"><strong aria-hidden="true">9.1.</strong> Contributing</a></li><li><a href="../meta/structure.html"><strong aria-hidden="true">9.2.</strong> Structure</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Firefox Data Documentation</h1>
+
+                        <div class="right-buttons">
+                            <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2><a class="header" href="#censuses" id="censuses">Censuses</a></h2>
+<blockquote>
+<p>This section was originally included in the <a href="https://mozilla-private.report/smoot-existing-metrics/book/05_overview.html">Project Smoot existing metrics report</a>
+(Mozilla internal link).</p>
+</blockquote>
+<p>ADI and DAU are oft-discussed censuses. This chapter discusses their history and definition.</p>
+<h3><a class="header" href="#adi--active-daily-installs-blocklist-fetches" id="adi--active-daily-installs-blocklist-fetches">ADI / Active Daily Installs (blocklist fetches)</a></h3>
+<p>ADI, one of Firefox’s oldest client censuses, is computed as the number
+of conforming requests to the Firefox
+<a href="https://wiki.mozilla.org/Blocklisting">blocklist</a> endpoint. ADI data is
+available since July 13, 2008.</p>
+<p>It is not possible to opt-out of the blocklist using the Firefox UI, but
+users can disable the update mechanism by changing preference values.</p>
+<p>A blocklist is shipped in each release and updated when Firefox notices
+that more than 24 hours have elapsed since the last update.</p>
+<p>The blocklist request does not contain the telemetry <code>client_id</code> or any
+other persistent identifiers. Some data about the install are provided
+as URI parameters:</p>
+<ul>
+<li>App ID</li>
+<li>App version</li>
+<li>Product name</li>
+<li>Build ID</li>
+<li>Build target</li>
+<li>Locale</li>
+<li>Update channel</li>
+<li>OS version</li>
+<li>Distribution</li>
+<li>Distribution version</li>
+<li>Number of pings sent by this client for this version of Firefox
+(stored in the pref <code>extensions.blocklist.pingCountVersion</code>)</li>
+<li>Total ping count (stored in the pref
+<code>extensions.blocklist.pingCountTotal</code>)</li>
+<li>Number of full days since last ping</li>
+</ul>
+<p>so subsets of ADI may be queried along these dimensions.</p>
+<p>The blocklist is kept up-to-date locally using the <code>UpdateTimerManager</code>
+facility; the update is scheduled <a href="https://searchfox.org/mozilla-central/rev/b36e97fc776635655e84f2048ff59f38fa8a4626/toolkit/mozapps/extensions/extensions.manifest#1">in a
+manifest</a>
+and performed by
+<a href="https://searchfox.org/mozilla-central/rev/b36e97fc776635655e84f2048ff59f38fa8a4626/toolkit/mozapps/extensions/Blocklist.jsm#569"><code>Blocklist#notify</code></a>.</p>
+<p>Upon browser startup, after a delay (30 seconds by default),
+<code>UpdateTimerManager</code> checks whether any of its scheduled tasks are
+ready. At each wakeup, the single most-overdue task is triggered, if one
+exists. <code>UpdateTimerManager</code> then sleeps at least two minutes or until
+the next task is scheduled.</p>
+<p>Failures are ignored.</p>
+<p>A visualization of real and detrended ADI is available at <a href="https://strategy-and-insights.mozilla.com/dailyUsageSignals/adiDetails.html">Desktop API
+Details: Long-term trend and
+decomposition</a>.
+ADI is also plotted in the <a href="https://www.mozdatacollective.com/report/index/index/element/877/segment/0">Mozilla Data
+Collective</a>.</p>
+<p>Telemetry only reports whether blocklist checking is enabled or disabled
+on the client; there is no data in telemetry about blocklist fetches,
+age, or update failures.</p>
+<h3><a class="header" href="#dau--daily-active-users" id="dau--daily-active-users">DAU / Daily Active Users</a></h3>
+<p>Firefox DAU is currently computed as the number of unique <code>client_id</code>s
+observed in <code>main</code> pings received on a calendar day. The DAU count
+excludes users who have <a href="https://support.mozilla.org/en-US/kb/share-data-mozilla-help-improve-firefox">opted out of
+telemetry</a>.</p>
+<p>Each <code>main</code> ping describes a single subsession of browser activity.</p>
+<p>When and how a ping is sent depends on the reason the subsession ends:</p>
+<div id="tbl:pingreasons">
+<table style="width:99%;">
+<caption>Table 1: When <code>main</code> pings are sent, and why.</caption>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 75%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Reason</th>
+<th style="text-align: left;">Trigger</th>
+<th style="text-align: left;">Percent of subsessions [1]</th>
+<th style="text-align: left;">Mechanism</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>shutdown</code></td>
+<td style="text-align: left;">Browser is closed</td>
+<td style="text-align: left;">77%</td>
+<td style="text-align: left;">For Firefox 55 or later, sent by <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/pingsender.html"><code>Pingsender</code></a> on browser close unless the OS is shutting down. Otherwise, sent by <a href="https://searchfox.org/mozilla-central/rev/532e4b94b9e807d157ba8e55034aef05c1196dc9/toolkit/components/telemetry/app/TelemetrySend.jsm#677">`TelemetrySendImpl.setup`</a> on the following browser launch.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>environment-change</code></td>
+<td style="text-align: left;">The telemetry environment changed</td>
+<td style="text-align: left;">13%</td>
+<td style="text-align: left;">Sent when change is detected by <a href="https://searchfox.org/mozilla-central/rev/532e4b94b9e807d157ba8e55034aef05c1196dc9/toolkit/components/telemetry/pings/TelemetrySession.jsm#1510">`TelemetrySession._onEnvironmentChange`</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>daily</code></td>
+<td style="text-align: left;">more than 24 hours have elapsed since the last ping was sent and the time is local midnight</td>
+<td style="text-align: left;">8%</td>
+<td style="text-align: left;">Sent at local midnight after a random 0-60 min delay</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>aborted-session</code></td>
+<td style="text-align: left;">A session terminates uncleanly (e.g. crash or lost power)</td>
+<td style="text-align: left;">3%</td>
+<td style="text-align: left;">Sent by the browser on the next launch; the payload to send is <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/crashes.html">written to disk every 5 minutes</a> during an active session and removed by a clean shutdown</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3><a class="header" href="#coverage-pings" id="coverage-pings">Coverage pings</a></h3>
+<p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/coverage-ping.html">coverage
+ping</a>
+(<a href="https://blog.mozilla.org/data/2018/08/20/effectively-measuring-search-in-firefox/">announcement</a>)
+is a periodic census intended to estimate telemetry opt-out rates.</p>
+<p>We estimate that <a href="https://metrics.mozilla.com/%7Erharter/reports/coverage/index.html">93% of release channel
+profiles</a>
+have telemetry enabled (and are therefore included in DAU).</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../concepts/channels/channel_normalization.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../concepts/engagement.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../concepts/channels/channel_normalization.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../concepts/engagement.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="../mermaid-init.js"></script>
+        
+
+        
+
+    </body>
+</html>
