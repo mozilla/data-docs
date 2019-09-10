@@ -9722,66 +9722,29 @@ It is very hard to distinguish between the different branches of the same profil
 <h2><a class="header" href="#app-update-channel" id="app-update-channel">App Update Channel</a></h2>
 <p>This is the channel reported by the application directly. This could really be anything, but is usually one of the
 expected release channels listed above.</p>
-<h3><a class="header" href="#accessing-app-update-channel" id="accessing-app-update-channel">Accessing App Update Channel</a></h3>
-<h4><a class="header" href="#main-summary-1" id="main-summary-1">Main Summary</a></h4>
-<p>The field here is called <code>channel</code>, e.g.</p>
-<pre><code>SELECT channel
-FROM main_summary
-WHERE submission_date_s3 = '20180823'
-LIMIT 10
-</code></pre>
-<h4><a class="header" href="#other-sql-tables" id="other-sql-tables">Other SQL Tables</a></h4>
-<p>This will only be available if the <code>appUpdateChannel</code> is available in the schema, <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/master/schemas/telemetry/anonymous/anonymous.4.parquetmr.txt#L10">See here for an example</a></p>
-<p>The data will be available as follows:</p>
-<pre><code>SELECT metadata.app_update_channel
-FROM telemetry_anonymous_parquet
-WHERE submission_date_s3 = '20180823'
-LIMIT 10
-</code></pre>
-<h4><a class="header" href="#in-raw-pings-using-the-dataset-api" id="in-raw-pings-using-the-dataset-api">In Raw Pings (Using the Dataset API)</a></h4>
-<p>NOTE: The querying dimension of the dataset API called <code>appUpdateChannel</code> sets any channels not
-in the traditional channels list above to <code>OTHER</code>. For example, the following would return
-no pings:</p>
-<pre><code>Dataset.from_source(&quot;telemetry&quot;).where(appUpdateChannel = &quot;non-normalized-channel-name&quot;)
-</code></pre>
-<p>This would return any non-traditional channels:</p>
-<pre><code>Dataset.from_source(&quot;telemetry&quot;).where(appUpdateChannel = &quot;OTHER&quot;)
-</code></pre>
-<p>This field is available in the metadata in the raw pings. </p>
-<pre><code>pings = Dataset.from_source(&quot;telemetry&quot;).where(docType = &quot;main&quot;, submissionDate = &quot;20180823&quot;).records()
-pings.map(lambda x: x.get(&quot;meta&quot;, {}).get(&quot;appUpdateChannel&quot;))
+<p>For BigQuery tables corresponding to Telemetry Ping types, such as <code>main</code>, <code>crash</code> or <code>event</code>, the field here is called <code>app_update_channel</code> and is found in <code>metadata.uri</code>. For example:</p>
+<pre><code>SELECT
+  metadata.uri.app_update_channel
+FROM
+  telemetry.main
+WHERE
+  DATE(submission_timestamp) = '2019-09-01'
+LIMIT
+  10
 </code></pre>
 <h2><a class="header" href="#normalized-channel" id="normalized-channel">Normalized Channel</a></h2>
-<p>This field is a normalization of <code>appUpdateChannel</code>. If the channel doesn't match one of those above,
-it is set to <code>Other</code>. The only exception is variations on <code>nightly-cck-*</code>, which become <code>nightly</code>. <a href="https://github.com/mozilla-services/lua_sandbox_extensions/blob/14ecde17b118d6734fd70e2dd920d8a91ecf5393/moz_telemetry/modules/moz_telemetry/normalize.lua#L175-L178">See the relevant code here</a>.</p>
-<h3><a class="header" href="#accessing-normalized-channel" id="accessing-normalized-channel">Accessing Normalized Channel</a></h3>
-<h4><a class="header" href="#main-summary-2" id="main-summary-2">Main Summary</a></h4>
-<p>The field here is called <code>normalized_channel</code>, e.g.</p>
-<pre><code>SELECT normalized_channel
-FROM main_summary
-WHERE submission_date_s3 = '20180823'
-LIMIT 10
+<p>This field is a normalization of the directly reported channel, and replaces unusual and unexpected values with the string <code>Other</code>. There are a couple of exceptions, notably that variations on <code>nightly-cck-*</code> become <code>nightly</code>.
+<a href="https://github.com/mozilla/gcp-ingestion/blob/92ba503c4debc887e746d5f2ff5ee60becb8072f/ingestion-beam/src/main/java/com/mozilla/telemetry/transforms/NormalizeAttributes.java#L38">See the relevant code here</a>.</p>
+<p>Normalized channel is available in the Telemetry Ping tables as a top-level field called <code>normalized_channel</code>. For example:</p>
+<pre><code>SELECT
+  normalized_channel
+FROM
+  telemetry.crash
+WHERE
+  DATE(submission_timestamp) = '2019-09-01'
+LIMIT
+  10
 </code></pre>
-<h4><a class="header" href="#other-sql-tables-1" id="other-sql-tables-1">Other SQL Tables</a></h4>
-<p>This will only be available if the <code>normalizedChannel</code> is available in the schema, <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/master/schemas/telemetry/anonymous/anonymous.4.parquetmr.txt#L11">See here for an example</a></p>
-<p>The data will be available as follows:</p>
-<pre><code>SELECT metadata.normalized_channel
-FROM telemetry_anonymous_parquet
-WHERE submission_date_s3 = '20180823'
-LIMIT 10
-</code></pre>
-<h4><a class="header" href="#in-raw-pings-using-the-dataset-api-1" id="in-raw-pings-using-the-dataset-api-1">In Raw Pings (Using the Dataset API)</a></h4>
-<p>This field is available in the metadata in the raw pings. </p>
-<pre><code>pings = Dataset.from_source(&quot;telemetry&quot;).where(docType = &quot;main&quot;, submissionDate = &quot;20180823&quot;).records()
-pings.map(lambda x: x.get(&quot;meta&quot;, {}).get(&quot;normalizedChannel&quot;))
-</code></pre>
-<h2><a class="header" href="#raw-ping-example" id="raw-ping-example">Raw Ping Example</a></h2>
-<p>Given that you were looking for the channel <code>nightly-cck-test</code>, you would do the following:</p>
-<ol>
-<li>Filter for channel <code>OTHER</code>: <code>pings = Dataset.from_source(&quot;telemetry&quot;).where(docType = &quot;main&quot;, appUpdateChannel = &quot;OTHER&quot;)</code></li>
-<li>Filter the RDD for the full channel: <code>pings = pings.filter(lambda x: x.get(&quot;meta&quot;, {}).get(&quot;appUpdateChannel&quot;) == &quot;nightly-cck-test&quot;)</code></li>
-<li>See that the normalized channels is <code>nightly</code>: <code>pings.map(lambda x: x.get(&quot;meta&quot;, {}).get(&quot;normalizedChannel&quot;).distinct()</code></li>
-</ol>
 <h1><a class="header" href="#about-this-documentation" id="about-this-documentation">About this documentation</a></h1>
 <h2><a class="header" href="#a-hrefmetacontributinghtmlcontributinga" id="a-hrefmetacontributinghtmlcontributinga"><a href="meta/contributing.html">Contributing</a></a></h2>
 <h2><a class="header" href="#a-hrefmetastructurehtmlstructurea" id="a-hrefmetastructurehtmlstructurea"><a href="meta/structure.html">Structure</a></a></h2>
