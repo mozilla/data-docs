@@ -1,6 +1,11 @@
 CEP Matcher
 ===========
 
+> This technique relies on the AWS ingestion pipeline.
+In [BigQuery](../cookbooks/bigquery.md), the tables in the `moz-fx-data-shared-prod:telemetry_live` dataset
+have only a few minutes of latency, so you can query those from STMO or the BigQuery console
+for near real-time data access instead of writing an analysis plugin.
+
 The CEP Matcher tab lets you easily view some current pings of any ping type. To access it, follow
 [these first few directions](../cookbooks/realtime_analysis_plugin.md) for accessing the CEP. Once there,
 click on the "Matcher" tab. The message-matcher is set by default to `TRUE`, meaning all pings will
