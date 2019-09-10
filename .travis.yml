@@ -13,7 +13,7 @@ script:
   - mdbook-toc --version
   - mdbook-mermaid --version
   - mdbook build .
-  - mdspell 'src/**/*.md' --ignore-numbers --en-us --report
+  - bash scripts/spell_check.sh
   - bash scripts/link_check.sh
 deploy:
   provider: pages
