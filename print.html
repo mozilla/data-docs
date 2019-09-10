@@ -3990,6 +3990,12 @@ Normal unenroll events at the termination of a study will occur for the reason <
 </code></pre>
 <h1><a class="header" href="#real-time" id="real-time">Real-time</a></h1>
 <h1><a class="header" href="#creating-a-real-time-analysis-plugin" id="creating-a-real-time-analysis-plugin">Creating a Real-time Analysis Plugin</a></h1>
+<blockquote>
+<p>This technique relies on the AWS ingestion pipeline.
+In <a href="cookbooks/bigquery.html">BigQuery</a>, the tables in the <code>moz-fx-data-shared-prod:telemetry_live</code> dataset
+have only a few minutes of latency, so you can query those from STMO or the BigQuery console
+for near real-time data access instead of writing an analysis plugin.</p>
+</blockquote>
 <h2><a class="header" href="#getting-started-1" id="getting-started-1">Getting Started</a></h2>
 <p>Creating an analysis plugin consists of three steps:</p>
 <ol>
@@ -4194,6 +4200,12 @@ the source or stop the plugin.</li>
 </li>
 </ul>
 <h1><a class="header" href="#see-my-pings" id="see-my-pings">See My Pings</a></h1>
+<blockquote>
+<p>This technique relies on the AWS ingestion pipeline.
+In <a href="cookbooks/bigquery.html">BigQuery</a>, the tables in the <code>moz-fx-data-shared-prod:telemetry_live</code> dataset
+have only a few minutes of latency, so you can query those tables for pings from your <code>client_id</code>
+using STMO or the BigQuery console instead of writing an analysis plugin.</p>
+</blockquote>
 <p>So you want to see what you're sending the telemetry pipeline, huh? Well follow these steps and we'll have you reading some JSON in no time.</p>
 <p>For a more thorough introduction, see <a href="cookbooks/realtime_analysis_plugin.html">Creating a Real-Time Analysis Plugin Cookbook</a>.</p>
 <h2><a class="header" href="#steps-to-create-a-viewing-output" id="steps-to-create-a-viewing-output">Steps to Create a Viewing Output</a></h2>
@@ -4257,6 +4269,12 @@ end
 </li>
 </ol>
 <h1><a class="header" href="#cep-matcher" id="cep-matcher">CEP Matcher</a></h1>
+<blockquote>
+<p>This technique relies on the AWS ingestion pipeline.
+In <a href="tools/../cookbooks/bigquery.html">BigQuery</a>, the tables in the <code>moz-fx-data-shared-prod:telemetry_live</code> dataset
+have only a few minutes of latency, so you can query those from STMO or the BigQuery console
+for near real-time data access instead of writing an analysis plugin.</p>
+</blockquote>
 <p>The CEP Matcher tab lets you easily view some current pings of any ping type. To access it, follow
 <a href="tools/../cookbooks/realtime_analysis_plugin.html">these first few directions</a> for accessing the CEP. Once there,
 click on the &quot;Matcher&quot; tab. The message-matcher is set by default to <code>TRUE</code>, meaning all pings will

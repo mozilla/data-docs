@@ -150,6 +150,12 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#see-my-pings" id="see-my-pings">See My Pings</a></h1>
+<blockquote>
+<p>This technique relies on the AWS ingestion pipeline.
+In <a href="bigquery.html">BigQuery</a>, the tables in the <code>moz-fx-data-shared-prod:telemetry_live</code> dataset
+have only a few minutes of latency, so you can query those tables for pings from your <code>client_id</code>
+using STMO or the BigQuery console instead of writing an analysis plugin.</p>
+</blockquote>
 <p>So you want to see what you're sending the telemetry pipeline, huh? Well follow these steps and we'll have you reading some JSON in no time.</p>
 <p>For a more thorough introduction, see <a href="realtime_analysis_plugin.html">Creating a Real-Time Analysis Plugin Cookbook</a>.</p>
 <h2><a class="header" href="#steps-to-create-a-viewing-output" id="steps-to-create-a-viewing-output">Steps to Create a Viewing Output</a></h2>

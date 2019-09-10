@@ -150,6 +150,12 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#cep-matcher" id="cep-matcher">CEP Matcher</a></h1>
+<blockquote>
+<p>This technique relies on the AWS ingestion pipeline.
+In <a href="../cookbooks/bigquery.html">BigQuery</a>, the tables in the <code>moz-fx-data-shared-prod:telemetry_live</code> dataset
+have only a few minutes of latency, so you can query those from STMO or the BigQuery console
+for near real-time data access instead of writing an analysis plugin.</p>
+</blockquote>
 <p>The CEP Matcher tab lets you easily view some current pings of any ping type. To access it, follow
 <a href="../cookbooks/realtime_analysis_plugin.html">these first few directions</a> for accessing the CEP. Once there,
 click on the &quot;Matcher&quot; tab. The message-matcher is set by default to <code>TRUE</code>, meaning all pings will
