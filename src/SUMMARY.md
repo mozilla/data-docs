@@ -89,12 +89,15 @@
 ---
 
 * [Telemetry Behavior Reference](concepts/index.md)
+    * [History of Telemetry](concepts/history.md)
     * [Profile Behavior](concepts/profile/index.md)
         * [Profile Creation](concepts/profile/profile_creation.md)
         * [Real World Usage](concepts/profile/realworldusage.md)
         * [Profile History](concepts/profile/profilehistory.md)
     * [Channel Behavior](concepts/channels/index.md)
         * [Channel Normalization and Querying](concepts/channels/channel_normalization.md)
+    * [Census metrics](concepts/censuses.md)
+    * [Engagement metrics](concepts/engagement.md)
 
 ---
 
