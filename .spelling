@@ -37,8 +37,6 @@ backend
 backends
 backfilled
 behaviour
-bgbb_airflow
-bgbb_lib
 Bhattacharyya
 BigQuery
 blocklist
