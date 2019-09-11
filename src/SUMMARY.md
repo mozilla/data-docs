@@ -45,6 +45,7 @@
 * [Dataset Reference](datasets/reference.md)
   * [Pings](datasets/pings.md)
   * [Derived Datasets](datasets/derived.md)
+    * [Active Profiles](datasets/active_profiles.md)
     * [Addons](datasets/batch_view/addons/reference.md)
     * [Addons Daily](datasets/other/addons_daily/reference.md)
     * [Clients Daily](datasets/batch_view/clients_daily/reference.md)
