@@ -107,7 +107,5 @@ This data is available in the `telemetry_new_profile_parquet` dataset.
 There are several tables owned by the mobile team documented
 [here](https://wiki.mozilla.org/Mobile/Metrics/Redash):
 
-* `android_events`
-* `android_clients`
 * `android_addons`
 * `mobile_clients`
