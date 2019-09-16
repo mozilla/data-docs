@@ -138,7 +138,7 @@ gcloud beta dataproc clusters create cluster-name \
     --optional-components=ANACONDA,JUPYTER \
     --image-version=1.4 \
     --enable-component-gateway \
-    --properties=^#^spark:spark.jars=gs://spark-lib/bigquery/spark-bigquery-latest.jar,gs://spark-bigquery-dev-test/spark-bigquery-spotify-connector/spark-bigquery-assembly-0.3.0-SNAPSHOT.jar \
+    --properties=^#^spark:spark.jars=gs://spark-lib/bigquery/spark-bigquery-latest.jar \
     --num-workers=5 \
     --max-idle=3h \
     --bucket bucket-name \
@@ -152,7 +152,7 @@ gcloud beta dataproc clusters describe cluster-name --project project-id | grep 
 
 After you've finished your work, it's a good practice to delete your cluster:
 ```bash
-gcloud beta dataproc clusters delete cluster-name --project project-id
+gcloud beta dataproc clusters delete cluster-name --project project-id --quiet
 ```
 
 ## From Colaboratory
