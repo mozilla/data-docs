@@ -5,7 +5,8 @@ is still an active user of the browser at a given point in time, as well as prob
 of the client's future activity. These quantities are estimated by a model that attempts to infer
 and decouple a client's latent propensity to leave Firefox and become inactive, as well as their
 latent propensity to use the browser while still active. These estimates are currently
-generated for desktop browser profiles only, across all operating systems and geographies.
+generated for release desktop browser profiles only, across all operating systems and
+geographies.
 
 
 # Model
