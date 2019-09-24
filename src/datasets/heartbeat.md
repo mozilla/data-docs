@@ -18,10 +18,10 @@ of the [`show-heartbeat` recipe][show-heartbeat].
 
 Heartbeat never reports telemetry `client_id`s to SurveyGizmo, but,
 when `includeTelemetryUUID` is true,
-a new, random UUID is generated and reported to SurveyGizmo
+the Normandy `user_id` is reported to SurveyGizmo
 as the `userid` URL variable.
 Simultaneously, a `heartbeat` ping is sent to Mozilla,
-containing both the telemetry `client_id` and the new `userid` that was reported to SurveyGizmo.
+containing both the telemetry `client_id` and the Normandy `userid` that was reported to SurveyGizmo.
 
 The `userid` is reported by appending it to the `surveyId` field of the ping, like:
 
