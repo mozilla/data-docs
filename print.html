@@ -7771,10 +7771,10 @@ if there is a <code>&quot;includeTelemetryUUID&quot;: true</code> key in the <co
 of the <a href="https://normandy.readthedocs.io/user/actions/show-heartbeat.html"><code>show-heartbeat</code> recipe</a>.</p>
 <p>Heartbeat never reports telemetry <code>client_id</code>s to SurveyGizmo, but,
 when <code>includeTelemetryUUID</code> is true,
-a new, random UUID is generated and reported to SurveyGizmo
+the Normandy <code>user_id</code> is reported to SurveyGizmo
 as the <code>userid</code> URL variable.
 Simultaneously, a <code>heartbeat</code> ping is sent to Mozilla,
-containing both the telemetry <code>client_id</code> and the new <code>userid</code> that was reported to SurveyGizmo.</p>
+containing both the telemetry <code>client_id</code> and the Normandy <code>userid</code> that was reported to SurveyGizmo.</p>
 <p>The <code>userid</code> is reported by appending it to the <code>surveyId</code> field of the ping, like:</p>
 <pre><code>hb-example-slug::e87bcae5-bb63-4829-822a-85ba41ee5d53
 </code></pre>
