@@ -226,7 +226,7 @@ The table and view types referenced above are defined as follows:
 - _Derived tables_ are populated by nightly [Airflow](https://workflow.telemetry.mozilla.org/home) jobs and are considered an implementation detail; their structure may change at any time at the discretion of the data platform team to allow refactoring or efficiency improvements.
 - _User-facing views_ are the schema objects that users are primarily expected to use in analyses. Many of these views correspond directly to an underlying historical ping table or derived table, but they provide the flexibility to hide deprecated columns or present additional calculated columns to users. These views are the schema contract with users and they should not change in backwards-incompatible ways without a version increase or an announcement to users about a breaking change. 
 
-Spark and other applications relying on the BigQuery Storage API for data access may need to reference derived tables or historical ping tables directly rather than user-facing views in some cases, but we generally recommend instead that users run a query on top of user-facing views with the output saved in a destination table, which can then be accessed from Spark.
+Spark and other applications relying on the BigQuery Storage API for data access need to reference derived tables or historical ping tables directly rather than user-facing views. Unless the query result is relatively small we generally recommend instead that users run a query on top of user-facing views with the output saved in a destination table, which can then be accessed from Spark.
 
 
 ### Structure of Ping Tables in BigQuery
