@@ -31,52 +31,6 @@ After `/templates/example/client_ids/query.sql` is created,
 `/script/generate_sql` can be run to generate the associated query in `/sql/examples/client_ids/query.sql`
 which is the query that will be run by the Airflow task.
 
-Related tests are placed in `/tests/example/client_ids/{test_name}/` and run with `pytest`.  
-Tests takes query parameters in `query_params.yaml`, 
-a table to read from as newline delimited JSON `{table_name}.ndjson`, 
-schema for the table to read from as JSON `{table_name}.schema.json`, 
-and expected output as newline delimited JSON `expect.ndjson`.
-
-For example, in `/tests/example/client_ids` we could have:
-
-`query_params.yaml`:
-```yaml
-- name: submission_date
-  type: DATE
-  value: 2019-01-01
-```
-
-`telemetry_derived.main_summary_v4.schema.json`:
-```json
-[
-  {
-    "type": "DATE",
-    "name": "submission_date",
-    "mode": "REQUIRED"
-  },
-  {
-    "type": "STRING",
-    "name": "client_id",
-    "mode": "NULLABLE"
-  },
-  ...
-]
-```
-
-`telemetry_derived.main_summary_v4.ndjson`:
-```json
-{"submission_date":  "2019-01-01", "client_id": "a", ...}
-{"submission_date":  "2019-01-01", "client_id": "b", ...}
-{"submission_date":  "2019-01-01", "client_id": "b", ...}
-{"submission_date":  "2019-01-02", "client_id": "c", ...}
-```
-
-`expect.ndjson`:
-```json
-{"client_id": "a", "submission_date":  "2019-01-01"}
-{"client_id": "b", "submission_date":  "2019-01-01"}
-```
-
 Commit both changes in `templates/` and `/sql`. 
 When a commit is made to master in BigQuery-ETL, the Docker image is pushed and available to Airflow.
 
