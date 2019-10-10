@@ -3456,16 +3456,17 @@ because it will not involve cross-cloud data transfers.</p>
     --image-version=1.4 \
     --enable-component-gateway \
     --properties=^#^spark:spark.jars=gs://spark-lib/bigquery/spark-bigquery-latest.jar \
-    --num-workers=5 \
+    --num-workers=3 \
     --max-idle=3h \
     --bucket bucket-name \
+    --region=us-west1 \
     --project project-id
 </code></pre>
 <p>Jupyter URL can be retrieved with the following command:</p>
-<pre><code class="language-bash">gcloud beta dataproc clusters describe cluster-name --project project-id | grep Jupyter
+<pre><code class="language-bash">gcloud beta dataproc clusters describe cluster-name --region=us-west1 --project project-id | grep Jupyter
 </code></pre>
 <p>After you've finished your work, it's a good practice to delete your cluster:</p>
-<pre><code class="language-bash">gcloud beta dataproc clusters delete cluster-name --project project-id --quiet
+<pre><code class="language-bash">gcloud beta dataproc clusters delete cluster-name --region=us-west1 --project project-id --quiet
 </code></pre>
 <h2><a class="header" href="#from-colaboratory" id="from-colaboratory">From Colaboratory</a></h2>
 <p><a href="https://colab.research.google.com">Colaboratory</a> is Jupyter notebook environment, managed by Google and running in the cloud. Notebooks are stored in Google Drive and can be shared in a similar way to Google Docs.</p>
