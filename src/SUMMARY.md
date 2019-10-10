@@ -23,6 +23,7 @@
   * [Alerts](tools/alerts.md)
 * [Analysis cookbooks](cookbooks/index.md)
   * [Accessing and working with BigQuery](cookbooks/bigquery.md)
+    * [Scheduling BigQuery Queries in Airflow](cookbooks/bigquery-airflow.md)
   * [Dataset Specific](cookbooks/dataset_specific.md)
     * [Longitudinal Examples](cookbooks/longitudinal_examples.md)
     * [Working with Crash Pings](cookbooks/crash_pings.md)
