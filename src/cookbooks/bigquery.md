@@ -139,20 +139,21 @@ gcloud beta dataproc clusters create cluster-name \
     --image-version=1.4 \
     --enable-component-gateway \
     --properties=^#^spark:spark.jars=gs://spark-lib/bigquery/spark-bigquery-latest.jar \
-    --num-workers=5 \
+    --num-workers=3 \
     --max-idle=3h \
     --bucket bucket-name \
+    --region=us-west1 \
     --project project-id
 ```
 
 Jupyter URL can be retrieved with the following command:
 ```bash
-gcloud beta dataproc clusters describe cluster-name --project project-id | grep Jupyter
+gcloud beta dataproc clusters describe cluster-name --region=us-west1 --project project-id | grep Jupyter
 ```
 
 After you've finished your work, it's a good practice to delete your cluster:
 ```bash
-gcloud beta dataproc clusters delete cluster-name --project project-id --quiet
+gcloud beta dataproc clusters delete cluster-name --region=us-west1 --project project-id --quiet
 ```
 
 ## From Colaboratory
