@@ -9,7 +9,7 @@ Queries in [BigQuery-ETL](https://github.com/mozilla/bigquery-etl) can be schedu
 
 In the BigQuery-ETL project, queries are written in `/templates`.
 The directory structure is based on the destination table: `/templates/{dataset_id}/{table_name}`.
-For example, [/templates/telemetry/core_clients_last_seen_raw_v1/query.sql](https://github.com/mozilla/bigquery-etl/blob/master/templates/telemetry/core_clients_last_seen_raw_v1/query.sql)
+For example, [`/templates/telemetry/core_clients_last_seen_raw_v1/query.sql`](https://github.com/mozilla/bigquery-etl/blob/master/templates/telemetry/core_clients_last_seen_raw_v1/query.sql)
 is a query that will write results to the `core_clients_last_seen_raw_v1` table in the `telemetry` dataset.
 This can be overridden in Airflow.
 
@@ -33,9 +33,9 @@ which is the query that will be run by the Airflow task.
 
 Related tests are placed in `/tests/example/client_ids/{test_name}/` and run with `pytest`.  
 Tests takes query parameters in `query_params.yaml`, 
-a table to read from as newline delimited json `{table_name}.ndjson`, 
-schema for the table to read from as json `{table_name}.schema.json`, 
-and expected output as newline delimited json `expect.ndjson`.
+a table to read from as newline delimited JSON `{table_name}.ndjson`, 
+schema for the table to read from as JSON `{table_name}.schema.json`, 
+and expected output as newline delimited JSON `expect.ndjson`.
 
 For example, in `/tests/example/client_ids` we could have:
 
