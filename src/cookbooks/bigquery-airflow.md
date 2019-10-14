@@ -1,13 +1,13 @@
 # Scheduling BigQuery Queries in Airflow
 
-Queries in [BigQuery-ETL](https://github.com/mozilla/bigquery-etl) can be scheduled in 
+Queries in [`bigquery-etl`](https://github.com/mozilla/bigquery-etl) can be scheduled in 
 [Airflow](https://github.com/mozilla/telemetry-airflow) to be run regularly with the results written to a table.
 
 <!-- toc -->
 
-## In BigQuery-ETL
+## In bigquery-etl
 
-In the BigQuery-ETL project, queries are written in `/templates`.
+In the [`bigquery-etl`](https://github.com/mozilla/bigquery-etl) project, queries are written in `/templates`.
 The directory structure is based on the destination table: `/templates/{dataset_id}/{table_name}`.
 For example, [`/templates/telemetry/core_clients_last_seen_raw_v1/query.sql`](https://github.com/mozilla/bigquery-etl/blob/master/templates/telemetry/core_clients_last_seen_raw_v1/query.sql)
 is a query that will write results to the `core_clients_last_seen_raw_v1` table in the `telemetry` dataset.
@@ -32,12 +32,12 @@ After `/templates/example/client_ids/query.sql` is created,
 which is the query that will be run by the Airflow task.
 
 Commit both changes in `templates/` and `/sql`. 
-When a commit is made to master in BigQuery-ETL, the Docker image is pushed and available to Airflow.
+When a commit is made to master in `bigquery-etl`, the Docker image is pushed and available to Airflow.
 
 ## In telemetry-airflow
 
 The next step is to create a DAG or add a task to an existing DAG that will run the query.  
-In telemetry-airflow, BigQuery related functions are found in `/dags/utils/gcp.py`.
+In [telemetry-airflow](https://github.com/mozilla/telemetry-airflow), BigQuery related functions are found in `/dags/utils/gcp.py`.
 The function we are interested in is [`bigquery_etl_query`](https://github.com/mozilla/telemetry-airflow/blob/c103f3eee4ddc653316325d0ee0deab0bb35ee57/dags/utils/gcp.py#L390).
 
 For our `client_ids` example, we could create a new DAG, `/dags/client_ids.py`:
@@ -72,5 +72,5 @@ writing results to the `client_ids` table in the `example` dataset in the `deriv
   - `date_partition_parameter` argument in `bigquery_etl_query` can be set to `None` to overwrite the whole table
 - Airflow can be tested locally following instructions here: 
 [https://github.com/mozilla/telemetry-airflow#testing-gke-jobs-including-bigquery-etl-changes](https://github.com/mozilla/telemetry-airflow#testing-gke-jobs-including-bigquery-etl-changes)
-- It's possible to change the Docker image that Airflow uses to test changes to BigQuery-ETL before merging changes to master
+- It's possible to change the Docker image that Airflow uses to test changes to `bigquery-etl` before merging changes to master
   - Supply a value to the `docker_image` argument in `bigquery_etl_query`
