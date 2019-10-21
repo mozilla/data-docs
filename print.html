@@ -1409,10 +1409,12 @@ SELECT b, try(cast(b AS boolean)) from bar
 <h3><a class="header" href="#notable-historic-events" id="notable-historic-events">Notable historic events</a></h3>
 <p>When looking at trends, it is helpful to be aware of events from the past that might impact comparisons with history. Here are a few to keep in mind:</p>
 <ul>
+<li><strong>September 1 - October 18 2019</strong> - BigQuery Ping tables are <a href="https://github.com/mozilla-services/cloudops-infra/pull/1491">missing the <code>X-PingSender-Version</code> header information</a>. This data is available before and after this time period.</li>
 <li><strong>May 4 - May 11 2019</strong> - <a href="https://blog.mozilla.org/blog/2019/05/09/what-we-do-when-things-go-wrong/">Telemetry source data deleted</a>. No source data is available for this period and derived tables may have missing days or imputed values. Derived tables that depend on multiple days may have have affected dates beyond the deletion region.</li>
 <li><strong>January 31 2019</strong> - <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1474285">Profile-per-install</a> landed in <code>mozilla-central</code> and affects how new profiles are created. See <a href="https://github.com/mozilla/bigquery-etl/issues/212">discussion in <code>bigquery-etl#212</code></a>.</li>
 <li><strong>October 25 2018</strong> - many <code>client_id</code>s on Firefox Android were reset to the same <code>client_id</code>.  For more information see the blameless post-mortem document <a href="https://docs.google.com/document/d/1r1PDQnqhsrPkft0pB46v9uhXGxR_FzK4laKJLGttXdA">here</a> or <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1501329">bug 1501329</a>.</li>
 <li><strong>November 2017</strong> - Quantum Launch. There was a surge in new profiles and usage.</li>
+<li><strong>June 1 and 5, 2016</strong> - <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1482509">Main Summary <code>v4</code> data is missing</a> for these two days.</li>
 <li><strong>March 2016</strong> - Unified Telemetry launched.</li>
 </ul>
 <h3><a class="header" href="#pseudo-replication" id="pseudo-replication">Pseudo-replication</a></h3>
