@@ -2,6 +2,7 @@
   * [Reporting a problem](concepts/reporting_a_problem.md)
   * [Terminology](concepts/terminology.md)
 * [Getting Started](concepts/getting_started.md)
+  * [Gaining Access](concepts/gaining_access.md)
   * [Analysis Quick Start](concepts/analysis_intro.md)
   * [Choosing a Desktop Dataset](concepts/choosing_a_dataset.md)
   * [Choosing a Mobile Dataset](concepts/choosing_a_dataset_mobile.md)
