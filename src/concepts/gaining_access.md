@@ -1,7 +1,7 @@
 Access to Firefox's telemetry data is limited to two groups:
 
 1. Mozilla employees and contractors
-2. Contributors who have signed an [NDA](https://wiki.mozilla.org/NDA),
+2. Contributors who have signed a [non-disclosure agreement](https://wiki.mozilla.org/NDA),
    have a sustained track record of contribution, and have a
    demonstrated need to access this data.
 
