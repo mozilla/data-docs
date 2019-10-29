@@ -63,9 +63,7 @@ To make it easier to understand the general semantics of our data, the Glean SDK
 
 # References
 
-* There currently two independent implementations of the Glean SDK:
-  * An Android-only implementation in [android-components](https://github.com/mozilla-mobile/android-components/tree/master/components/service/glean).
-  * A [cross-platform implementation](https://github.com/mozilla/glean/). (This implementation is currently under development and not ready for use).
-*   [Reporting issues & bugs for the Glean SDK](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&component=Glean%3A%20SDK).
-*   Datasets documentation (TBD)
-*   [Glean Debug pings viewer](https://debug-ping-preview.firebaseapp.com/)
+* The [cross-platform implementation](https://github.com/mozilla/glean/)
+* [Reporting issues & bugs for the Glean SDK](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&component=Glean%3A%20SDK).
+* Datasets documentation (TBD)
+* [Glean Debug pings viewer](https://debug-ping-preview.firebaseapp.com/)
