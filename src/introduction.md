@@ -1,15 +1,15 @@
 # Firefox Data Documentation
 
-This documentation is intended to help Mozilla's developers and data scientists analyze and interpret the data gathered 
-by the Firefox Telemetry system. 
+This documentation is intended to help Mozilla's developers and data scientists analyze and interpret the data gathered
+by the Firefox Telemetry system.
 
 At [Mozilla](https://www.mozilla.org), our data-gathering and data-handling practices are anchored in our
 [Data Privacy Principles](https://www.mozilla.org/en-US/privacy/principles/) and elaborated in the
 [Mozilla Privacy Policy](https://www.mozilla.org/en-US/privacy/). You can learn more about what data Firefox
-collects and the choices you can make as a Firefox user in the 
-[Firefox Privacy Notice](https://www.mozilla.org/en-US/privacy/firefox/). 
+collects and the choices you can make as a Firefox user in the
+[Firefox Privacy Notice](https://www.mozilla.org/en-US/privacy/firefox/).
 
-If there's information missing from these docs, or if you'd like to contribute, see [this article on contributing](meta/contributing.md), 
+If there's information missing from these docs, or if you'd like to contribute, see [this article on contributing](meta/contributing.md),
 and feel free to [file a bug here](https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&component=Documentation%20and%20Knowledge%20Repo%20%28RTMO%29&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=--&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&target_milestone=---&version=unspecified).
 
 The source for this documentation can be found in [this repo](https://github.com/mozilla/firefox-data-docs).
@@ -37,6 +37,6 @@ This documentation is divided into four main sections:
   You do not need to read this section end-to-end.
 
 You can find the [fully-rendered documentation here](https://mozilla.github.io/firefox-data-docs/),
-rendered with [mdBook](https://github.com/rust-lang-nursery/mdBook), and hosted on Github pages.
+rendered with [mdBook](https://github.com/rust-lang/mdBook), and hosted on Github pages.
 
 
