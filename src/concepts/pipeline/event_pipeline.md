@@ -9,7 +9,6 @@ graph TD
 subgraph Products
 fx_code(fa:fa-cog Firefox code) --> firefox(fa:fa-firefox Firefox Telemetry)
 fx_extensions(fa:fa-cog Mozilla extensions) --> firefox
-fx_hybrid(fa:fa-cog Hybrid Content) --> firefox
 mobile(fa:fa-cog Mobile products) --> mobile_telemetry(fa:fa-firefox Mobile Telemetry)
 end
 
@@ -32,7 +31,6 @@ end
 
 style fx_code fill:#f94,stroke-width:0px
 style fx_extensions fill:#f94,stroke-width:0px
-style fx_hybrid fill:#f94,stroke-width:0px
 style mobile fill:#f94,stroke-width:0px
 style firefox fill:#f61,stroke-width:0px
 style mobile_telemetry fill:#f61,stroke-width:0px
@@ -101,8 +99,6 @@ use cases:
   code.
 - The *[Telemetry WebExtension API](https://searchfox.org/mozilla-central/rev/55da592d85c2baf8d8818010c41d9738c97013d2/toolkit/components/extensions/schemas/telemetry.json#87)* ([introduced here](https://bugzilla.mozilla.org/show_bug.cgi?id=1280234))
   which allows Mozilla extensions to record new events into Telemetry.
-- The [*Hybrid-content API*](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/hybrid-content.html)
-  allows specific white-listed Mozilla content code to record new events into Telemetry.
 
 For all these APIs, events will get sent to the pipeline through the
 [event ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/event-ping.html), which gets sent hourly, if any pings were recorded, or up to every 10 minutes whenever 1000 events were recorded.
