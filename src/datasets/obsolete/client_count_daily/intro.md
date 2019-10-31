@@ -1,5 +1,5 @@
 The `client_count_daily` dataset is useful for estimating user counts over a few
-[pre-defined dimensions](https://github.com/mozilla/telemetry-airflow/blob/master/jobs/client_count_daily_view.sh).
+[pre-defined dimensions][client_count_daily_view.sh].
 
 The `client_count_daily` dataset is similar to the deprecated
 [`client_count` dataset](/datasets/batch_view/client_count/reference.md)
@@ -12,7 +12,7 @@ The `hll` column contains a
 [HyperLogLog](https://en.wikipedia.org/wiki/HyperLogLog)
 variable, which is an approximation to the exact count.
 The factor columns include **submission** date and the dimensions listed
-[here](https://github.com/mozilla/telemetry-airflow/blob/master/jobs/client_count_daily_view.sh).
+[here][client_count_daily_view.sh].
 Each row represents one combinations of the factor columns.
 
 #### Background and Caveats
@@ -37,3 +37,5 @@ Take a look at this
 I don't recommend accessing this data from ATMO.
 
 #### Further Reading
+
+[client_count_daily_view.sh]: https://github.com/mozilla/telemetry-airflow/blob/adfce4a30895faa607ccf586b292b61ad68d8f75/jobs/client_count_daily_view.sh
