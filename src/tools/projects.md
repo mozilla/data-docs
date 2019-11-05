@@ -78,7 +78,6 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 |-----------------------------------|-----------------------------------------|
 | [`telemetry.mozilla.org`][tmo_gh] | Main entry point for viewing [aggregate Telemetry data][tmo]
 | [Cerberus][cer] & [Medusa][med]   | Automatic alert system for telemetry aggregates
-| [`analysis.t.m.o`][atmo_gh]       | [Self serve data analysis platform][atmo]
 | [Mission Control][mc]             | Low latency dashboard for stability and health metrics
 | [Re:dash][redash]                 | Mozilla's fork of the [data query / visualization system][stmo]
 | [`redash-stmo`][redashstmo]       | Mozilla's extensions to Re:dash
@@ -95,7 +94,6 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 [tmo_gh]: https://github.com/mozilla/telemetry-dashboard
 [cer]: https://github.com/mozilla/cerberus
 [med]: https://github.com/mozilla/medusa
-[atmo_gh]: https://github.com/mozilla/telemetry-analysis-service
 [mc]: https://github.com/mozilla/missioncontrol
 [redash]: https://github.com/mozilla/redash
 [redashstmo]: https://github.com/mozilla/redash-stmo
@@ -103,7 +101,6 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 [ensemble]: https://github.com/mozilla/ensemble
 [shield]: https://wiki.mozilla.org/index.php?title=Firefox/Shield
 [tmo]: https://telemetry.mozilla.org
-[atmo]: https://analysis.telemetry.mozilla.org
 [stmo]: https://sql.telemetry.mozilla.org
 [hwreport_gh]: https://github.com/mozilla/firefox-hardware-report
 [hwreport]: https://hardware.metrics.mozilla.com/

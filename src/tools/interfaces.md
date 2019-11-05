@@ -18,7 +18,7 @@ reported in our [issue tracker](https://github.com/mozilla/redash/issues).
 #### [`analysis.telemetry.mozilla.org`](spark.md) (ATMO)
 
 The
-[`analysis.telemetry.mozilla.org`](https://analysis.telemetry.mozilla.org)
+[`analysis.telemetry.mozilla.org`](BROKEN:https://analysis.telemetry.mozilla.org)
 (ATMO) site can be used to launch and gain access to virtual machines running
 Apache Spark clusters which have been pre-configured with access to the raw data
 stored in our long term storage S3 buckets. Spark allows you to use

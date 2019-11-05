@@ -203,16 +203,6 @@ graph TD
     s3_output_public[Public Outputs]
     s3_output_private[Analysis Outputs]
   end
-  subgraph ATMO
-    Jupyter -->|runs on| emr_cluster[Ad hoc EMR Cluster]
-    Zeppelin -->|runs on| emr_cluster
-    atmo_service[ATMO Service] -->|launch| emr_cluster
-    atmo_service -->|schedule| emr_job[fa:fa-clock-o Scheduled EMR Job]
-    emr_cluster -->|mount| EFS
-    emr_cluster -->|read + write| lake
-    emr_job -->|read + write| s3_output_public
-    emr_job -->|read + write| s3_output_private
-  end
   subgraph STMO
     redash[Re:dash] -->|read| lake
   end
@@ -233,14 +223,6 @@ Most of the data analysis tooling has been developed with the goal of being "sel
 
 The use of these self-serve tools is described in the [Getting Started] article. This section focuses on how these tools integrate with the platform infrastructure.
 
-##### ATMO: Spark Analysis
-
-[ATMO] is a service for managing Spark clusters for data analysis. Clusters can be launched on demand, or can be scheduled to run a job on an ongoing basis. These clusters can read from the Data Lake described in the **Storage** section above, and can write results to either public (web-accessible) or private output locations.
-
-Jupyter or Zeppelin notebooks are the usual interface to getting work done using a cluster, though you get full SSH access to the cluster.
-
-Clusters launched via ATMO are automatically killed after a user-defined period of time (by default, 8 hours), though their lifetime can be extended as needed. Each cluster has a user-specific **`EFS`** volume mounted on the `/home/hadoop` directory, which means that data stored locally on the cluster persists from one cluster to the next. This volume is shared by all clusters launched by a given ATMO user.
-
 ##### STMO: SQL Analysis
 
 [STMO] is a customized [Re:dash] installation that provides self-serve access to a a variety of different [datasets](../../concepts/choosing_a_dataset.md). From here, you can query data in the Parquet Data Lake as well as various RDBMS data sources.
@@ -257,7 +239,11 @@ There is a command-line interface to STMO called [St. Mocli], if you prefer writ
 
 Our [Databricks instance] (see [Databricks docs]) offers another notebook interface for doing analysis in Scala, SQL, Python and R.
 
-Databricks provides an always-on shared server which is nice for quick data investigations. ATMO clusters take some time to start up, usually on the order of tens of minutes. The shared server allows you to avoid this start-up cost. Prefer ATMO for heavy analyses since you will have dedicated resources.
+Databricks provides an always-on shared server which is nice for quick data investigations.
+
+##### ATMO (deprecated): Spark Analysis
+
+[ATMO] was a service for managing Spark clusters for data analysis on AWS. It was deprecated in Q3 2019 and removed in Q4.
 
 ##### TMO: Aggregate Graphs
 
@@ -273,9 +259,7 @@ The landing page at [`telemetry.mozilla.org`][tmo] is a good place to look for e
 
 ##### Notebooks
 
-Use of interactive notebooks has become a standard in the industry, and Mozilla makes heavy use of this approach. [ATMO] makes it easy to run, share, and schedule [Jupyter] and [Zeppelin] notebooks.
-
-[Databricks notebooks][Databricks docs] are also an option.
+Use of interactive notebooks has become a standard in the industry, and Mozilla makes heavy use of this approach. Databricks makes it easy to run, share, and schedule notebooks.
 
 ##### Others
 
@@ -297,7 +281,7 @@ Next, we monitor the "transport" functionality of the system. This includes moni
 
 Once data has been safely ingested and stored, we run some automatic regression detection on all Telemetry [histogram measures] using [Cerberus]. This code looks for changes in the distribution of a measure, and emails probe owners if a significant change is observed.
 
-Production ETL jobs are run via [Airflow], which monitors batch job progress and alerts if there are failures in any job. Self-serve batch jobs run via ATMO also generate alerts upon failure.
+Production ETL jobs are run via [Airflow], which monitors batch job progress and alerts if there are failures in any job. Self-serve batch jobs running via Databricks also generate alerts upon failure.
 
 Scheduled [Re:dash] queries may also be configured to generate alerts, which is used to monitor the last-mile user facing status of derived datasets. Re:dash may also be used to monitor and alert on high-level characteristics of the data, or really anything you can think of.
 
@@ -372,7 +356,6 @@ graph LR
   Presto --> hive
   redash -.-> Athena
   Athena --> hive
-  ATMO -.-> spcluster[Spark Cluster]
   warehouse_heka --> spcluster
   warehouse_parquet --> spcluster
   spcluster --> warehouse_analysis
@@ -403,7 +386,7 @@ graph LR
 [histogram measures]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/histograms.html
 [Airflow]: https://github.com/mozilla/telemetry-airflow
 [Re:dash]: https://sql.telemetry.mozilla.org
-[ATMO]: https://analysis.telemetry.mozilla.org
+[ATMO]: BROKEN:https://analysis.telemetry.mozilla.org
 [STMO]: ../../tools/stmo.md
 [Jupyter]: https://jupyter.org/
 [Zeppelin]: https://zeppelin.apache.org/

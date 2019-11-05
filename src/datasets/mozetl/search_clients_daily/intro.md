@@ -32,7 +32,8 @@ We impute a `NULL` `engine` and `source` for pings with no search counts.
 This ensures users who never search are included in this dataset.
 
 This dataset is large.
-Consider using an [ATMO Spark cluster](../../../tools/spark.md) for heavy analyses.
+Consider using an [Databricks](../../../tools/spark.md) for heavy analyses.
+If these datasets do not suffice, consider using Spark on [Databricks](https://dbc-caf9527b-e073.cloud.databricks.com).
 If you're querying this dataset from re:dash,
 heavily limit the data you read using `submission_date_s3` or `sample_id`.
 

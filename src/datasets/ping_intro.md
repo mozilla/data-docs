@@ -153,7 +153,7 @@ To augment our data collection, see [Collecting New Data][addprobe] and the
 [main_reasons]: https://sql.telemetry.mozilla.org/queries/3434
 [stack_traces]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html#stack-traces
 [preferences]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/preferences.html
-[atmo]: https://analysis.telemetry.mozilla.org/
+[atmo]: BROKEN:https://analysis.telemetry.mozilla.org/
 [stmo]: https://sql.telemetry.mozilla.org/
 [dataset]: https://python-moztelemetry.readthedocs.io/en/stable/api.html#module-moztelemetry.dataset
 [addprobe]: https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Adding_a_new_Telemetry_probe
