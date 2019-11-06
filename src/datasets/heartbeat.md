@@ -89,4 +89,4 @@ telemetry_heartbeat_parquet
 
 [heartbeat]: https://docs.telemetry.mozilla.org/tools/experiments.html#heartbeat
 [hbping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/heartbeat-ping.html
-[show-heartbeat]: https://normandy.readthedocs.io/user/actions/show-heartbeat.html
+[show-heartbeat]: https://mozilla.github.io/normandy/user/actions/show-heartbeat.html
