@@ -134,7 +134,7 @@ data latency should be less than 1 hour.
 The `telemetry-cohorts` dataset contains a subset of pings
 from clients enrolled in experiments,
 accessible as a
-[Dataset](https://python-moztelemetry.readthedocs.io/en/stable/api.html#dataset),
+[Dataset](https://mozilla.github.io/python_moztelemetry/api.html#dataset),
 and partitioned by `experimentId` and `docType`.
 
 Experiments deployed to large fractions of the release channel

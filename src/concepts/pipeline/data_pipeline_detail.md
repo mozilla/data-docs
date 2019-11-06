@@ -420,7 +420,7 @@ graph LR
 [Telemetry Aggregates]: https://github.com/mozilla/python_mozaggregator/#api
 [Amazon S3]: https://aws.amazon.com/s3/
 [TAAR Project]: https://github.com/mozilla/python_mozetl/blob/master/mozetl/taar/taar_dynamo.py
-[py_dataset]: https://python-moztelemetry.readthedocs.io/en/latest/api.html#dataset
+[py_dataset]: https://mozilla.github.io/python_moztelemetry/api.html#dataset
 [moztelemetry]: https://github.com/mozilla/moztelemetry/blob/master/src/main/scala/com/mozilla/telemetry/heka/Dataset.scala
 [statsd]: https://github.com/etsy/statsd
 [hslog]: https://mozilla-services.github.io/lua_sandbox_extensions/moz_logging/
