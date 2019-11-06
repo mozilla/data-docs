@@ -83,9 +83,9 @@ Sadly, these datasets are not sampled. It should be possible to derive a `sample
 
 ## Scheduling
 
-This dataset is updated daily, shortly after midnight UTC.
-The job is scheduled on [Airflow](https://github.com/mozilla/telemetry-airflow).
-The DAG is [here](https://github.com/mozilla/telemetry-airflow/blob/27d34a73db02131a39f469f3950c1da747bc8a95/dags/sync_view.py).
+This dataset was updated daily, shortly after midnight UTC.
+The job was scheduled on [Airflow](https://github.com/mozilla/telemetry-airflow).
+The DAG was [here](https://github.com/mozilla/telemetry-airflow/blob/27d34a73db02131a39f469f3950c1da747bc8a95/dags/sync_view.py).
 
 ## Sync Summary Schema
 
