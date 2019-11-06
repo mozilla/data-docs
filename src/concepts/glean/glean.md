@@ -63,7 +63,7 @@ To make it easier to understand the general semantics of our data, the Glean SDK
 
 # References
 
-* The [cross-platform implementation](https://github.com/mozilla/glean/)
+* The [Glean SDK](https://github.com/mozilla/glean/) implementation.
 * [Reporting issues & bugs for the Glean SDK](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&component=Glean%3A%20SDK).
 * Datasets documentation (TBD)
 * [Glean Debug pings viewer](https://debug-ping-preview.firebaseapp.com/)
