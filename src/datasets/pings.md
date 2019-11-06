@@ -18,7 +18,7 @@ information about the ingestion environment, including timestamps;
 Geo-IP data about the client;
 and fields extracted from the ping or client headers that are useful for downstream processing.
 
-The [Dataset API](https://python-moztelemetry.readthedocs.io/en/latest/api.html#dataset)
+The [Dataset API](https://mozilla.github.io/python_moztelemetry/api.html#dataset)
 represents this metadata by appending a `meta` key to the ping body.
 These fields may also be available as members of a `metadata` struct column
 in direct-to-parquet datasets.
