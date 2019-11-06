@@ -40,7 +40,6 @@ These tables should be accessible from ATMO, Databricks, Presto, and Athena.
 
 [`main_summary`](batch_view/main_summary/reference.md),
 [`clients_daily`](batch_view/clients_daily/reference.md),
-[`crash_summary`](batch_view/crash_summary/reference.md),
 and some other tables
 include a `experiments` column
 which is a mapping from experiment slug to branch.

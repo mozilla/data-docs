@@ -1,4 +1,6 @@
-The `crash_summary` table is the most direct representation of a crash ping.
+  ***As of 2019-11-06, this dataset has been deprecated and is no longer maintained. Please use the `telemetry.crash` table instead, which is generated directly from live pings and is much more complete. See [Bug 1572069](https://bugzilla.mozilla.org/show_bug.cgi?id=1572069) for more information.***
+
+The `crash_summary` table is the a direct representation of a crash ping.
 
 #### Contents
 
