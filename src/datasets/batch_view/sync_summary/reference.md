@@ -85,7 +85,7 @@ Sadly, these datasets are not sampled. It should be possible to derive a `sample
 
 This dataset is updated daily, shortly after midnight UTC.
 The job is scheduled on [Airflow](https://github.com/mozilla/telemetry-airflow).
-The DAG is [here](https://github.com/mozilla/telemetry-airflow/blob/master/dags/sync_view.py).
+The DAG is [here](https://github.com/mozilla/telemetry-airflow/blob/27d34a73db02131a39f469f3950c1da747bc8a95/dags/sync_view.py).
 
 ## Sync Summary Schema
 
