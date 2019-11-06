@@ -8,6 +8,7 @@ This document is not about those traps. Instead, it is about quirks and pitfalls
 
 When looking at trends, it is helpful to be aware of events from the past that might impact comparisons with history. Here are a few to keep in mind:
 
+- **October 29 2019** - Glean SDK Timing Distribution(s) are reporting buckets 1 nanosecond apart. This is due to a potential rounding bug in Glean SDK versions less than `19.0.0`. See [this bug](https://bugzilla.mozilla.org/show_bug.cgi?id=1591938).
 - **September 1 - October 18 2019** - BigQuery Ping tables are [missing the `X-PingSender-Version` header information](https://github.com/mozilla-services/cloudops-infra/pull/1491). This data is available before and after this time period.
 - **May 4 - May 11 2019** - [Telemetry source data deleted](https://blog.mozilla.org/blog/2019/05/09/what-we-do-when-things-go-wrong/). No source data is available for this period and derived tables may have missing days or imputed values. Derived tables that depend on multiple days may have have affected dates beyond the deletion region.
 - **January 31 2019** - [Profile-per-install](https://bugzilla.mozilla.org/show_bug.cgi?id=1474285) landed in `mozilla-central` and affects how new profiles are created. See [discussion in `bigquery-etl#212`](https://github.com/mozilla/bigquery-etl/issues/212).
