@@ -295,6 +295,15 @@ You can write query results to a BigQuery table you have access via [GCP BigQuer
     - Prefix your table with your username. If your username is `username@mozilla.com` create a table with `username_my_table`.
 - See [Writing query results](https://cloud.google.com/bigquery/docs/writing-results) documentation for detailed steps.
 
+### Writing results to GCS (object store)
+
+If a BigQuery table is not a suitable destination for your analysis results,
+we also have a GCS bucket available for storing analysis results. It is usually
+Spark jobs that will need to do this.
+
+- Use bucket `gs://moz-fx-data-prod-analysis/`
+    - Prefix object paths with your username. If your username is `username@mozilla.com`, you might store a file to `gs://moz-fx-data-prod-analysis/username/myresults.json`.
+
 ### Creating a View
 You can create views in BigQuery if you have access via [GCP BigQuery Console](bigquery.md#gcp-bigquery-console) or [GCP BigQuery API Access](bigquery.md#gcp-bigquery-api-access).
 
