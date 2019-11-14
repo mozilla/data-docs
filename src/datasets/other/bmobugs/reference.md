@@ -6,7 +6,7 @@ This dataset mirrors bugs (defects, enhancements, tasks) reported in the
 # Data Reference
 
 The dataset is accessible via [`STMO`](https://sql.telemetry.mozilla.org).
-Use the `????` table with the `????` data source.
+Use the `eng_workflow.bmobugs` table with the `Telemetry (BigQuery)` data source.
 
 ## Field Types and Descriptions
 
