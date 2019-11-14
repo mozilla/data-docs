@@ -304,16 +304,6 @@
     s3_output_public[Public Outputs]
     s3_output_private[Analysis Outputs]
   end
-  subgraph ATMO
-    Jupyter -->|runs on| emr_cluster[Ad hoc EMR Cluster]
-    Zeppelin -->|runs on| emr_cluster
-    atmo_service[ATMO Service] -->|launch| emr_cluster
-    atmo_service -->|schedule| emr_job[fa:fa-clock-o Scheduled EMR Job]
-    emr_cluster -->|mount| EFS
-    emr_cluster -->|read + write| lake
-    emr_job -->|read + write| s3_output_public
-    emr_job -->|read + write| s3_output_private
-  end
   subgraph STMO
     redash[Re:dash] -->|read| lake
   end
@@ -331,10 +321,6 @@
 </pre>
 <p>Most of the data analysis tooling has been developed with the goal of being &quot;self-serve&quot;. This means that people should be able to access and analyze data on their own, without involving data engineers or operations. Thus can data access scale beyond a small set of people with specialized knowledge of the entire pipeline.</p>
 <p>The use of these self-serve tools is described in the <a href="../../concepts/analysis_intro.html">Getting Started</a> article. This section focuses on how these tools integrate with the platform infrastructure.</p>
-<h5><a class="header" href="#atmo-spark-analysis" id="atmo-spark-analysis">ATMO: Spark Analysis</a></h5>
-<p><a href="https://analysis.telemetry.mozilla.org">ATMO</a> is a service for managing Spark clusters for data analysis. Clusters can be launched on demand, or can be scheduled to run a job on an ongoing basis. These clusters can read from the Data Lake described in the <strong>Storage</strong> section above, and can write results to either public (web-accessible) or private output locations.</p>
-<p>Jupyter or Zeppelin notebooks are the usual interface to getting work done using a cluster, though you get full SSH access to the cluster.</p>
-<p>Clusters launched via ATMO are automatically killed after a user-defined period of time (by default, 8 hours), though their lifetime can be extended as needed. Each cluster has a user-specific <strong><code>EFS</code></strong> volume mounted on the <code>/home/hadoop</code> directory, which means that data stored locally on the cluster persists from one cluster to the next. This volume is shared by all clusters launched by a given ATMO user.</p>
 <h5><a class="header" href="#stmo-sql-analysis" id="stmo-sql-analysis">STMO: SQL Analysis</a></h5>
 <p><a href="../../tools/stmo.html">STMO</a> is a customized <a href="https://sql.telemetry.mozilla.org">Re:dash</a> installation that provides self-serve access to a a variety of different <a href="../../concepts/choosing_a_dataset.html">datasets</a>. From here, you can query data in the Parquet Data Lake as well as various RDBMS data sources.</p>
 <p>STMO interfaces with the data lake using both <a href="http://prestosql.io/">Presto</a> and Amazon <a href="https://aws.amazon.com/athena/">Athena</a>. Each has its own data source in Re:dash. Since Athena does not support user-defined functions, datasets with HyperLogLog columns, such as <a href="../../datasets/obsolete/client_count_daily/reference.html"><code>client_count_daily</code></a>, are only available via Presto..</p>
@@ -343,7 +329,9 @@
 <p>There is a command-line interface to STMO called <a href="https://github.com/mozilla/stmocli">St. Mocli</a>, if you prefer writing SQL using your own editor and tools.</p>
 <h5><a class="header" href="#databricks-managed-spark-analysis" id="databricks-managed-spark-analysis">Databricks: Managed Spark Analysis</a></h5>
 <p>Our <a href="https://dbc-caf9527b-e073.cloud.databricks.com">Databricks instance</a> (see <a href="https://docs.databricks.com/user-guide/notebooks/index.html">Databricks docs</a>) offers another notebook interface for doing analysis in Scala, SQL, Python and R.</p>
-<p>Databricks provides an always-on shared server which is nice for quick data investigations. ATMO clusters take some time to start up, usually on the order of tens of minutes. The shared server allows you to avoid this start-up cost. Prefer ATMO for heavy analyses since you will have dedicated resources.</p>
+<p>Databricks provides an always-on shared server which is nice for quick data investigations.</p>
+<h5><a class="header" href="#atmo-deprecated-spark-analysis" id="atmo-deprecated-spark-analysis">ATMO (deprecated): Spark Analysis</a></h5>
+<p><a href="BROKEN:https://analysis.telemetry.mozilla.org">ATMO</a> was a service for managing Spark clusters for data analysis on AWS. It was deprecated in Q3 2019 and removed in Q4.</p>
 <h5><a class="header" href="#tmo-aggregate-graphs" id="tmo-aggregate-graphs">TMO: Aggregate Graphs</a></h5>
 <p><a href="https://telemetry.mozilla.org">TMO</a> provides easy visualizations of histogram and scalar measures over time. Time can be in terms of either builds or submission dates. This is the most convenient interface to the Telemetry data, as it does not require any custom code.</p>
 <h2><a class="header" href="#visualization" id="visualization">Visualization</a></h2>
@@ -351,8 +339,7 @@
 <h5><a class="header" href="#tmo-dashboards" id="tmo-dashboards">TMO Dashboards</a></h5>
 <p>The landing page at <a href="https://telemetry.mozilla.org"><code>telemetry.mozilla.org</code></a> is a good place to look for existing graphs, notably the <a href="https://telemetry.mozilla.org/new-pipeline/dist.html">measurement dashboard</a> which gives a lot of information about histogram and scalar measures collected on pre-release channels.</p>
 <h5><a class="header" href="#notebooks" id="notebooks">Notebooks</a></h5>
-<p>Use of interactive notebooks has become a standard in the industry, and Mozilla makes heavy use of this approach. <a href="https://analysis.telemetry.mozilla.org">ATMO</a> makes it easy to run, share, and schedule <a href="https://jupyter.org/">Jupyter</a> and <a href="https://zeppelin.apache.org/">Zeppelin</a> notebooks.</p>
-<p><a href="https://docs.databricks.com/user-guide/notebooks/index.html">Databricks notebooks</a> are also an option.</p>
+<p>Use of interactive notebooks has become a standard in the industry, and Mozilla makes heavy use of this approach. Databricks makes it easy to run, share, and schedule notebooks.</p>
 <h5><a class="header" href="#others" id="others">Others</a></h5>
 <p><a href="https://sql.telemetry.mozilla.org">Re:dash</a> lets you query the data using SQL, but it also supports a number of useful visualizations.</p>
 <p><a href="http://pipeline-cep.prod.mozaws.net/">Hindsight's web interface</a> has the ability to visualize time-series data.</p>
@@ -363,7 +350,7 @@
 <p>At a low level, the system is monitored to ensure that it is functioning as expected. This includes things like machine-level resources (network capacity, disk space, available RAM, CPU load) which are typically monitored using <a href="http://datadoghq.com/">DataDog</a>.</p>
 <p>Next, we monitor the &quot;transport&quot; functionality of the system. This includes monitoring incoming submission rates, payload sizes, traffic patterns, schema validation failure rates, and alerting if anomalies are detected. This type of anomaly detection and alerting is handled by <a href="https://github.com/mozilla-services/hindsight">Hindsight</a>.</p>
 <p>Once data has been safely ingested and stored, we run some automatic regression detection on all Telemetry <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/histograms.html">histogram measures</a> using <a href="https://github.com/mozilla/cerberus">Cerberus</a>. This code looks for changes in the distribution of a measure, and emails probe owners if a significant change is observed.</p>
-<p>Production ETL jobs are run via <a href="https://github.com/mozilla/telemetry-airflow">Airflow</a>, which monitors batch job progress and alerts if there are failures in any job. Self-serve batch jobs run via ATMO also generate alerts upon failure.</p>
+<p>Production ETL jobs are run via <a href="https://github.com/mozilla/telemetry-airflow">Airflow</a>, which monitors batch job progress and alerts if there are failures in any job. Self-serve batch jobs running via Databricks also generate alerts upon failure.</p>
 <p>Scheduled <a href="https://sql.telemetry.mozilla.org">Re:dash</a> queries may also be configured to generate alerts, which is used to monitor the last-mile user facing status of derived datasets. Re:dash may also be used to monitor and alert on high-level characteristics of the data, or really anything you can think of.</p>
 <h2><a class="header" href="#data-exports" id="data-exports">Data Exports</a></h2>
 <p>Data is exported from the pipeline to a few other tools and systems. Examples include integration with <a href="https://amplitude.com/">Amplitude</a> for mobile and product analytics, publishing reports and visualizations to the <a href="https://www.mozdatacollective.com/home">Mozilla Data Collective</a>, and shipping data to other parts of the Mozilla organization.</p>
@@ -430,7 +417,6 @@
   Presto --> hive
   redash -.-> Athena
   Athena --> hive
-  ATMO -.-> spcluster[Spark Cluster]
   warehouse_heka --> spcluster
   warehouse_parquet --> spcluster
   spcluster --> warehouse_analysis

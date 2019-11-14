@@ -405,7 +405,7 @@ Try to limit the size of your data by controlling the date range, etc.</p>
 see our <a href="../cookbooks/bigquery.html">BigQuery intro</a>.
 There is currently limited history for main pings available in BigQuery;
 an import of historical data is <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1568042">planned</a>, but without a determined timeline,
-so longer history requires an <a href="https://analysis.telemetry.mozilla.org/">ATMO cluster</a> using the <a href="https://mozilla.github.io/python_moztelemetry/api.html#module-moztelemetry.dataset">Dataset API</a>.</p>
+so longer history requires an <a href="BROKEN:https://analysis.telemetry.mozilla.org/">ATMO cluster</a> using the <a href="https://mozilla.github.io/python_moztelemetry/api.html#module-moztelemetry.dataset">Dataset API</a>.</p>
 <h4><a class="header" href="#further-reading" id="further-reading">Further Reading</a></h4>
 <p>You can find <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/index.html">the complete ping documentation</a>.
 To augment our data collection, see <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Adding_a_new_Telemetry_probe">Collecting New Data</a> and the
@@ -461,8 +461,7 @@ You should <strong>avoid querying <code>main_summary</code></strong> from <a hre
 Your queries will be <strong>slow to complete</strong> and can <strong>impact performance for other users</strong>,
 since re:dash on a shared cluster.</p>
 <p>Instead, we recommend using the <code>longitudinal</code> or <code>clients_daily</code> dataset where possible.
-If these datasets do not suffice, consider using Spark on an
-<a href="https://analysis.telemetry.mozilla.org">ATMO</a> cluster.
+If these datasets do not suffice, consider using Spark on <a href="https://dbc-caf9527b-e073.cloud.databricks.com">Databricks</a>.
 In the odd case where these queries are necessary,
 make use of the <code>sample_id</code> field and limit to a short submission date range.</p>
 <h4><a class="header" href="#accessing-the-data-2" id="accessing-the-data-2">Accessing the Data</a></h4>

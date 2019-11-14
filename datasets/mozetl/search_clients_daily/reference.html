@@ -197,7 +197,8 @@ if we did not receive a ping for that <code>submission_date</code>.</p>
 <p>We impute a <code>NULL</code> <code>engine</code> and <code>source</code> for pings with no search counts.
 This ensures users who never search are included in this dataset.</p>
 <p>This dataset is large.
-Consider using an <a href="../../../tools/spark.html">ATMO Spark cluster</a> for heavy analyses.
+Consider using an <a href="../../../tools/spark.html">Databricks</a> for heavy analyses.
+If these datasets do not suffice, consider using Spark on <a href="https://dbc-caf9527b-e073.cloud.databricks.com">Databricks</a>.
 If you're querying this dataset from re:dash,
 heavily limit the data you read using <code>submission_date_s3</code> or <code>sample_id</code>.</p>
 <h4><a class="header" href="#accessing-the-data" id="accessing-the-data">Accessing the Data</a></h4>

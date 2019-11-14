@@ -196,8 +196,7 @@ You should <strong>avoid querying <code>main_summary</code></strong> from <a hre
 Your queries will be <strong>slow to complete</strong> and can <strong>impact performance for other users</strong>,
 since re:dash on a shared cluster.</p>
 <p>Instead, we recommend using the <code>longitudinal</code> or <code>clients_daily</code> dataset where possible.
-If these datasets do not suffice, consider using Spark on an
-<a href="https://analysis.telemetry.mozilla.org">ATMO</a> cluster.
+If these datasets do not suffice, consider using Spark on <a href="https://dbc-caf9527b-e073.cloud.databricks.com">Databricks</a>.
 In the odd case where these queries are necessary,
 make use of the <code>sample_id</code> field and limit to a short submission date range.</p>
 <h4><a class="header" href="#accessing-the-data" id="accessing-the-data">Accessing the Data</a></h4>

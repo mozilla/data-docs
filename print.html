@@ -537,7 +537,7 @@ Try to limit the size of your data by controlling the date range, etc.</p>
 see our <a href="concepts/../cookbooks/bigquery.html">BigQuery intro</a>.
 There is currently limited history for main pings available in BigQuery;
 an import of historical data is <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1568042">planned</a>, but without a determined timeline,
-so longer history requires an <a href="https://analysis.telemetry.mozilla.org/">ATMO cluster</a> using the <a href="https://mozilla.github.io/python_moztelemetry/api.html#module-moztelemetry.dataset">Dataset API</a>.</p>
+so longer history requires an <a href="concepts/BROKEN:https://analysis.telemetry.mozilla.org/">ATMO cluster</a> using the <a href="https://mozilla.github.io/python_moztelemetry/api.html#module-moztelemetry.dataset">Dataset API</a>.</p>
 <h4><a class="header" href="#further-reading" id="further-reading">Further Reading</a></h4>
 <p>You can find <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/index.html">the complete ping documentation</a>.
 To augment our data collection, see <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Adding_a_new_Telemetry_probe">Collecting New Data</a> and the
@@ -593,8 +593,7 @@ You should <strong>avoid querying <code>main_summary</code></strong> from <a hre
 Your queries will be <strong>slow to complete</strong> and can <strong>impact performance for other users</strong>,
 since re:dash on a shared cluster.</p>
 <p>Instead, we recommend using the <code>longitudinal</code> or <code>clients_daily</code> dataset where possible.
-If these datasets do not suffice, consider using Spark on an
-<a href="https://analysis.telemetry.mozilla.org">ATMO</a> cluster.
+If these datasets do not suffice, consider using Spark on <a href="https://dbc-caf9527b-e073.cloud.databricks.com">Databricks</a>.
 In the odd case where these queries are necessary,
 make use of the <code>sample_id</code> field and limit to a short submission date range.</p>
 <h4><a class="header" href="#accessing-the-data-2" id="accessing-the-data-2">Accessing the Data</a></h4>
@@ -1659,7 +1658,6 @@ nothing of interest.</p>
 <table><thead><tr><th>Name and repo</th><th>Description</th></tr></thead><tbody>
 <tr><td><a href="https://github.com/mozilla/telemetry-dashboard"><code>telemetry.mozilla.org</code></a></td><td>Main entry point for viewing <a href="https://telemetry.mozilla.org">aggregate Telemetry data</a></td></tr>
 <tr><td><a href="https://github.com/mozilla/cerberus">Cerberus</a> &amp; <a href="https://github.com/mozilla/medusa">Medusa</a></td><td>Automatic alert system for telemetry aggregates</td></tr>
-<tr><td><a href="https://github.com/mozilla/telemetry-analysis-service"><code>analysis.t.m.o</code></a></td><td><a href="https://analysis.telemetry.mozilla.org">Self serve data analysis platform</a></td></tr>
 <tr><td><a href="https://github.com/mozilla/missioncontrol">Mission Control</a></td><td>Low latency dashboard for stability and health metrics</td></tr>
 <tr><td><a href="https://github.com/mozilla/redash">Re:dash</a></td><td>Mozilla's fork of the <a href="https://sql.telemetry.mozilla.org">data query / visualization system</a></td></tr>
 <tr><td><a href="https://github.com/mozilla/redash-stmo"><code>redash-stmo</code></a></td><td>Mozilla's extensions to Re:dash</td></tr>
@@ -1767,9 +1765,7 @@ style cerberus fill:royalblue
 <p>The data has traditionally been serialized to <a href="https://hekad.readthedocs.io/en/latest/message/index.html#stream-framing">Protobuf</a> sequence files which contain some nasty “free-form” JSON fields. Hindsight gained recently the ability to <a href="https://github.com/mozilla-services/lua_sandbox_extensions/pull/48">dump data directly in Parquet form</a> though.</p>
 <p>The deployment scripts and configuration files of the CEP &amp; DWL live in a <a href="https://github.com/mozilla-services/puppet-config/tree/02f716a3e0df1117fc2494b41e85a1416f8e2a64/pipeline">private repository</a>.</p>
 <h1><a class="header" href="#spark" id="spark">Spark</a></h1>
-<p>Once the data reaches our data lake on S3 it can be processed with Spark. We provide a portal (<a href="https://analysis.telemetry.mozilla.org/">ATMO</a>) that allows Mozilla employees to create their own Spark cluster pre-loaded with a set of libraries &amp; tools, like Jupyter, NumPy, SciPy, Pandas etc., and <a href="https://mozilla.github.io/python_moztelemetry/api.html#module-moztelemetry.dataset">an API</a> to conveniently read data stored in Protobuf form on S3 in a Spark RDD using a ORM-like interface. Behind the scenes we use <a href="https://github.com/mozilla/emr-bootstrap-spark/">EMR</a> to create Spark clusters, which are then monitored by ATMO.</p>
-<p><img src="concepts/pipeline/../../assets/ATMO_example.jpeg" alt="ATMO" title="ATMO – monitoring clusters" /></p>
-<p>ATMO is mainly used to write custom analyses; since our users aren’t necessary data engineers/scientists we chose Python as the main supported language to interface with Spark. From ATMO it’s also possible to schedule periodic notebook runs and inspect the results from a web UI.</p>
+<p>Once the data reaches our data lake on S3 it can be processed with Spark on Mozilla's <a href="https://dbc-caf9527b-e073.cloud.databricks.com">Databricks instance</a>. Databricks allows Mozilla employees to write custom analyses in notebooks, and also schedule Databricks jobs to run periodically.</p>
 <p>As mentioned earlier, most of our data lake contains data serialized to Protobuf with free-form JSON fields. Needless to say, parsing JSON is terribly slow when ingesting Terabytes of data per day. A set of <a href="https://github.com/mozilla/telemetry-batch-view">ETL jobs</a>, written in Scala by Data Engineers and scheduled with <a href="https://github.com/mozilla/telemetry-airflow/">Airflow</a>, create <a href="concepts/pipeline/../choosing_a_dataset.html">Parquet views</a> of our raw data. We have a Github repository <a href="https://github.com/mozilla/telemetry-batch-view/">telemetry-batch-view</a> that showcases this.</p>
 <h1><a class="header" href="#aggregates-dataset" id="aggregates-dataset">Aggregates Dataset</a></h1>
 <pre class="mermaid">graph TD
@@ -1825,7 +1821,7 @@ style evo fill:lightgrey
 <p>Presto, and other databases, are behind a <a href="https://sql.telemetry.mozilla.org/">re:dash</a> service (<a href="https://sql.telemetry.mozilla.org/">STMO</a>) which provides a convenient &amp; powerful interface to query SQL engines and build dashboards that can be shared within the company. Mozilla maintains its own <a href="https://github.com/mozilla/redash">fork of re:dash</a> to iterate quickly on new features, but as good open source citizen we push our changes upstream.</p>
 <p><img src="concepts/pipeline/../../assets/STMO_example.jpeg" alt="STMO" title="STMO – who doesn’t love SQL?" /></p>
 <h1><a class="header" href="#is-that-it" id="is-that-it">Is that it?</a></h1>
-<p>No, not really. If you want to read more, check out <a href="concepts/pipeline/data_pipeline_detail.html">this article</a>. For example, the DWL pushes some of the Telemetry data to Redshift and other tools that satisfy more niche needs. The pipeline ingests logs from services as well and there are many specialized dashboards out there I haven’t mentioned. We also use <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1369519">Zeppelin</a> as a means to create interactive data analysis notebooks that supports Spark, SQL, Scala and more.</p>
+<p>No, not really. If you want to read more, check out <a href="concepts/pipeline/data_pipeline_detail.html">this article</a>. For example, the DWL pushes some of the Telemetry data to Redshift and other tools that satisfy more niche needs. The pipeline ingests logs from services as well and there are many specialized dashboards out there I haven’t mentioned.</p>
 <p>There is a vast ecosystem of tools for processing data at scale, each with their pros &amp; cons. The pipeline grew organically and we added new tools as new use-cases came up that we couldn’t solve with our existing stack. There are still scars left from that growth though which require some effort to get rid of, like ingesting data from schema-less format.</p>
 <h1><a class="header" href="#a-detailed-look-at-the-data-platform" id="a-detailed-look-at-the-data-platform">A Detailed Look at the Data Platform</a></h1>
 <p>For a more gentle introduction to the data platform, please read the <a href="concepts/pipeline/data_pipeline.html">Pipeline Overview</a> article.</p>
@@ -1979,16 +1975,6 @@ style evo fill:lightgrey
     s3_output_public[Public Outputs]
     s3_output_private[Analysis Outputs]
   end
-  subgraph ATMO
-    Jupyter -->|runs on| emr_cluster[Ad hoc EMR Cluster]
-    Zeppelin -->|runs on| emr_cluster
-    atmo_service[ATMO Service] -->|launch| emr_cluster
-    atmo_service -->|schedule| emr_job[fa:fa-clock-o Scheduled EMR Job]
-    emr_cluster -->|mount| EFS
-    emr_cluster -->|read + write| lake
-    emr_job -->|read + write| s3_output_public
-    emr_job -->|read + write| s3_output_private
-  end
   subgraph STMO
     redash[Re:dash] -->|read| lake
   end
@@ -2006,10 +1992,6 @@ style evo fill:lightgrey
 </pre>
 <p>Most of the data analysis tooling has been developed with the goal of being &quot;self-serve&quot;. This means that people should be able to access and analyze data on their own, without involving data engineers or operations. Thus can data access scale beyond a small set of people with specialized knowledge of the entire pipeline.</p>
 <p>The use of these self-serve tools is described in the <a href="concepts/pipeline/../../concepts/analysis_intro.html">Getting Started</a> article. This section focuses on how these tools integrate with the platform infrastructure.</p>
-<h5><a class="header" href="#atmo-spark-analysis" id="atmo-spark-analysis">ATMO: Spark Analysis</a></h5>
-<p><a href="https://analysis.telemetry.mozilla.org">ATMO</a> is a service for managing Spark clusters for data analysis. Clusters can be launched on demand, or can be scheduled to run a job on an ongoing basis. These clusters can read from the Data Lake described in the <strong>Storage</strong> section above, and can write results to either public (web-accessible) or private output locations.</p>
-<p>Jupyter or Zeppelin notebooks are the usual interface to getting work done using a cluster, though you get full SSH access to the cluster.</p>
-<p>Clusters launched via ATMO are automatically killed after a user-defined period of time (by default, 8 hours), though their lifetime can be extended as needed. Each cluster has a user-specific <strong><code>EFS</code></strong> volume mounted on the <code>/home/hadoop</code> directory, which means that data stored locally on the cluster persists from one cluster to the next. This volume is shared by all clusters launched by a given ATMO user.</p>
 <h5><a class="header" href="#stmo-sql-analysis" id="stmo-sql-analysis">STMO: SQL Analysis</a></h5>
 <p><a href="concepts/pipeline/../../tools/stmo.html">STMO</a> is a customized <a href="https://sql.telemetry.mozilla.org">Re:dash</a> installation that provides self-serve access to a a variety of different <a href="concepts/pipeline/../../concepts/choosing_a_dataset.html">datasets</a>. From here, you can query data in the Parquet Data Lake as well as various RDBMS data sources.</p>
 <p>STMO interfaces with the data lake using both <a href="http://prestosql.io/">Presto</a> and Amazon <a href="https://aws.amazon.com/athena/">Athena</a>. Each has its own data source in Re:dash. Since Athena does not support user-defined functions, datasets with HyperLogLog columns, such as <a href="concepts/pipeline/../../datasets/obsolete/client_count_daily/reference.html"><code>client_count_daily</code></a>, are only available via Presto..</p>
@@ -2018,7 +2000,9 @@ style evo fill:lightgrey
 <p>There is a command-line interface to STMO called <a href="https://github.com/mozilla/stmocli">St. Mocli</a>, if you prefer writing SQL using your own editor and tools.</p>
 <h5><a class="header" href="#databricks-managed-spark-analysis" id="databricks-managed-spark-analysis">Databricks: Managed Spark Analysis</a></h5>
 <p>Our <a href="https://dbc-caf9527b-e073.cloud.databricks.com">Databricks instance</a> (see <a href="https://docs.databricks.com/user-guide/notebooks/index.html">Databricks docs</a>) offers another notebook interface for doing analysis in Scala, SQL, Python and R.</p>
-<p>Databricks provides an always-on shared server which is nice for quick data investigations. ATMO clusters take some time to start up, usually on the order of tens of minutes. The shared server allows you to avoid this start-up cost. Prefer ATMO for heavy analyses since you will have dedicated resources.</p>
+<p>Databricks provides an always-on shared server which is nice for quick data investigations.</p>
+<h5><a class="header" href="#atmo-deprecated-spark-analysis" id="atmo-deprecated-spark-analysis">ATMO (deprecated): Spark Analysis</a></h5>
+<p><a href="concepts/pipeline/BROKEN:https://analysis.telemetry.mozilla.org">ATMO</a> was a service for managing Spark clusters for data analysis on AWS. It was deprecated in Q3 2019 and removed in Q4.</p>
 <h5><a class="header" href="#tmo-aggregate-graphs" id="tmo-aggregate-graphs">TMO: Aggregate Graphs</a></h5>
 <p><a href="https://telemetry.mozilla.org">TMO</a> provides easy visualizations of histogram and scalar measures over time. Time can be in terms of either builds or submission dates. This is the most convenient interface to the Telemetry data, as it does not require any custom code.</p>
 <h2><a class="header" href="#visualization" id="visualization">Visualization</a></h2>
@@ -2026,8 +2010,7 @@ style evo fill:lightgrey
 <h5><a class="header" href="#tmo-dashboards" id="tmo-dashboards">TMO Dashboards</a></h5>
 <p>The landing page at <a href="https://telemetry.mozilla.org"><code>telemetry.mozilla.org</code></a> is a good place to look for existing graphs, notably the <a href="https://telemetry.mozilla.org/new-pipeline/dist.html">measurement dashboard</a> which gives a lot of information about histogram and scalar measures collected on pre-release channels.</p>
 <h5><a class="header" href="#notebooks" id="notebooks">Notebooks</a></h5>
-<p>Use of interactive notebooks has become a standard in the industry, and Mozilla makes heavy use of this approach. <a href="https://analysis.telemetry.mozilla.org">ATMO</a> makes it easy to run, share, and schedule <a href="https://jupyter.org/">Jupyter</a> and <a href="https://zeppelin.apache.org/">Zeppelin</a> notebooks.</p>
-<p><a href="https://docs.databricks.com/user-guide/notebooks/index.html">Databricks notebooks</a> are also an option.</p>
+<p>Use of interactive notebooks has become a standard in the industry, and Mozilla makes heavy use of this approach. Databricks makes it easy to run, share, and schedule notebooks.</p>
 <h5><a class="header" href="#others" id="others">Others</a></h5>
 <p><a href="https://sql.telemetry.mozilla.org">Re:dash</a> lets you query the data using SQL, but it also supports a number of useful visualizations.</p>
 <p><a href="http://pipeline-cep.prod.mozaws.net/">Hindsight's web interface</a> has the ability to visualize time-series data.</p>
@@ -2038,7 +2021,7 @@ style evo fill:lightgrey
 <p>At a low level, the system is monitored to ensure that it is functioning as expected. This includes things like machine-level resources (network capacity, disk space, available RAM, CPU load) which are typically monitored using <a href="http://datadoghq.com/">DataDog</a>.</p>
 <p>Next, we monitor the &quot;transport&quot; functionality of the system. This includes monitoring incoming submission rates, payload sizes, traffic patterns, schema validation failure rates, and alerting if anomalies are detected. This type of anomaly detection and alerting is handled by <a href="https://github.com/mozilla-services/hindsight">Hindsight</a>.</p>
 <p>Once data has been safely ingested and stored, we run some automatic regression detection on all Telemetry <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/histograms.html">histogram measures</a> using <a href="https://github.com/mozilla/cerberus">Cerberus</a>. This code looks for changes in the distribution of a measure, and emails probe owners if a significant change is observed.</p>
-<p>Production ETL jobs are run via <a href="https://github.com/mozilla/telemetry-airflow">Airflow</a>, which monitors batch job progress and alerts if there are failures in any job. Self-serve batch jobs run via ATMO also generate alerts upon failure.</p>
+<p>Production ETL jobs are run via <a href="https://github.com/mozilla/telemetry-airflow">Airflow</a>, which monitors batch job progress and alerts if there are failures in any job. Self-serve batch jobs running via Databricks also generate alerts upon failure.</p>
 <p>Scheduled <a href="https://sql.telemetry.mozilla.org">Re:dash</a> queries may also be configured to generate alerts, which is used to monitor the last-mile user facing status of derived datasets. Re:dash may also be used to monitor and alert on high-level characteristics of the data, or really anything you can think of.</p>
 <h2><a class="header" href="#data-exports" id="data-exports">Data Exports</a></h2>
 <p>Data is exported from the pipeline to a few other tools and systems. Examples include integration with <a href="https://amplitude.com/">Amplitude</a> for mobile and product analytics, publishing reports and visualizations to the <a href="https://www.mozdatacollective.com/home">Mozilla Data Collective</a>, and shipping data to other parts of the Mozilla organization.</p>
@@ -2105,7 +2088,6 @@ style evo fill:lightgrey
   Presto --> hive
   redash -.-> Athena
   Athena --> hive
-  ATMO -.-> spcluster[Spark Cluster]
   warehouse_heka --> spcluster
   warehouse_parquet --> spcluster
   spcluster --> warehouse_analysis
@@ -2345,7 +2327,7 @@ be explicitly exposed as an STMO data source. Bugs or feature requests can be
 reported in our <a href="https://github.com/mozilla/redash/issues">issue tracker</a>.</p>
 <h4><a class="header" href="#a-hreftoolssparkhtmlanalysistelemetrymozillaorga-atmo" id="a-hreftoolssparkhtmlanalysistelemetrymozillaorga-atmo"><a href="tools/spark.html"><code>analysis.telemetry.mozilla.org</code></a> (ATMO)</a></h4>
 <p>The
-<a href="https://analysis.telemetry.mozilla.org"><code>analysis.telemetry.mozilla.org</code></a>
+<a href="tools/BROKEN:https://analysis.telemetry.mozilla.org"><code>analysis.telemetry.mozilla.org</code></a>
 (ATMO) site can be used to launch and gain access to virtual machines running
 Apache Spark clusters which have been pre-configured with access to the raw data
 stored in our long term storage S3 buckets. Spark allows you to use
@@ -2392,7 +2374,7 @@ We have setup
 that use Spark to analyze our Telemetry data.
 Jupyter notebooks can be easily shared and updated among colleagues,
 and, when combined with Spark, enable richer analysis than SQL alone.</p>
-<p>The Spark clusters can be launched from <a href="https://analysis.telemetry.mozilla.org">ATMO</a>.
+<p>The Spark clusters can be launched from <a href="tools/BROKEN:https://analysis.telemetry.mozilla.org">ATMO</a>.
 The Spark Python API is called PySpark.</p>
 <p>Note that this documentation focuses on ATMO, which is deprecated.
 Databricks is the preferred Spark analysis platform.
@@ -2400,7 +2382,7 @@ For more information please see this
 <a href="https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/30598/command/30599">example notebook</a>.</p>
 <h2><a class="header" href="#setting-up-a-spark-cluster-on-atmo" id="setting-up-a-spark-cluster-on-atmo">Setting Up a Spark Cluster On ATMO</a></h2>
 <ol>
-<li>Go to <a href="https://analysis.telemetry.mozilla.org">https://analysis.telemetry.mozilla.org</a></li>
+<li>Go to <a href="tools/BROKEN:https://analysis.telemetry.mozilla.org">BROKEN:https://analysis.telemetry.mozilla.org</a></li>
 <li>Click “Launch an ad-hoc Spark cluster”.</li>
 <li>Enter some details:
 <ol>
@@ -2447,7 +2429,7 @@ making a nice and easy-to-use dashboard.</p>
 <p>To schedule a Spark job:</p>
 <ol>
 <li>Visit the analysis provisioning dashboard at
-<a href="https://analysis.telemetry.mozilla.org">https://analysis.telemetry.mozilla.org</a> and sign in</li>
+<a href="tools/BROKEN:https://analysis.telemetry.mozilla.org">BROKEN:https://analysis.telemetry.mozilla.org</a> and sign in</li>
 <li>Click “Schedule a Spark Job”</li>
 <li>Enter some details:
 <ol>
@@ -5166,7 +5148,7 @@ Try to limit the size of your data by controlling the date range, etc.</p>
 see our <a href="datasets/../cookbooks/bigquery.html">BigQuery intro</a>.
 There is currently limited history for main pings available in BigQuery;
 an import of historical data is <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1568042">planned</a>, but without a determined timeline,
-so longer history requires an <a href="https://analysis.telemetry.mozilla.org/">ATMO cluster</a> using the <a href="https://mozilla.github.io/python_moztelemetry/api.html#module-moztelemetry.dataset">Dataset API</a>.</p>
+so longer history requires an <a href="datasets/BROKEN:https://analysis.telemetry.mozilla.org/">ATMO cluster</a> using the <a href="https://mozilla.github.io/python_moztelemetry/api.html#module-moztelemetry.dataset">Dataset API</a>.</p>
 <h4><a class="header" href="#further-reading-8" id="further-reading-8">Further Reading</a></h4>
 <p>You can find <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/index.html">the complete ping documentation</a>.
 To augment our data collection, see <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Adding_a_new_Telemetry_probe">Collecting New Data</a> and the
@@ -6552,8 +6534,7 @@ You should <strong>avoid querying <code>main_summary</code></strong> from <a hre
 Your queries will be <strong>slow to complete</strong> and can <strong>impact performance for other users</strong>,
 since re:dash on a shared cluster.</p>
 <p>Instead, we recommend using the <code>longitudinal</code> or <code>clients_daily</code> dataset where possible.
-If these datasets do not suffice, consider using Spark on an
-<a href="https://analysis.telemetry.mozilla.org">ATMO</a> cluster.
+If these datasets do not suffice, consider using Spark on <a href="https://dbc-caf9527b-e073.cloud.databricks.com">Databricks</a>.
 In the odd case where these queries are necessary,
 make use of the <code>sample_id</code> field and limit to a short submission date range.</p>
 <h4><a class="header" href="#accessing-the-data-23" id="accessing-the-data-23">Accessing the Data</a></h4>
@@ -7942,7 +7923,8 @@ if we did not receive a ping for that <code>submission_date</code>.</p>
 <p>We impute a <code>NULL</code> <code>engine</code> and <code>source</code> for pings with no search counts.
 This ensures users who never search are included in this dataset.</p>
 <p>This dataset is large.
-Consider using an <a href="datasets/mozetl/search_clients_daily/../../../tools/spark.html">ATMO Spark cluster</a> for heavy analyses.
+Consider using an <a href="datasets/mozetl/search_clients_daily/../../../tools/spark.html">Databricks</a> for heavy analyses.
+If these datasets do not suffice, consider using Spark on <a href="https://dbc-caf9527b-e073.cloud.databricks.com">Databricks</a>.
 If you're querying this dataset from re:dash,
 heavily limit the data you read using <code>submission_date_s3</code> or <code>sample_id</code>.</p>
 <h4><a class="header" href="#accessing-the-data-30" id="accessing-the-data-30">Accessing the Data</a></h4>
