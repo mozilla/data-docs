@@ -9,7 +9,7 @@ that use Spark to analyze our Telemetry data.
 Jupyter notebooks can be easily shared and updated among colleagues,
 and, when combined with Spark, enable richer analysis than SQL alone.
 
-The Spark clusters can be launched from [ATMO](https://analysis.telemetry.mozilla.org).
+The Spark clusters can be launched from [ATMO](BROKEN:https://analysis.telemetry.mozilla.org).
 The Spark Python API is called PySpark.
 
 Note that this documentation focuses on ATMO, which is deprecated.
@@ -20,7 +20,7 @@ For more information please see this
 Setting Up a Spark Cluster On ATMO
 ----------------------------------
 
-1.  Go to <https://analysis.telemetry.mozilla.org>
+1.  Go to <BROKEN:https://analysis.telemetry.mozilla.org>
 2.  Click “Launch an ad-hoc Spark cluster”.
 3.  Enter some details:
     1.  The “Cluster Name” field should be a short descriptive name,
@@ -78,7 +78,7 @@ making a nice and easy-to-use dashboard.
 To schedule a Spark job:
 
 1.  Visit the analysis provisioning dashboard at
-    <https://analysis.telemetry.mozilla.org> and sign in
+    <BROKEN:https://analysis.telemetry.mozilla.org> and sign in
 2.  Click “Schedule a Spark Job”
 3.  Enter some details:
     1.  The “Job Name” field should be a short descriptive name, like

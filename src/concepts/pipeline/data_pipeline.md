@@ -95,11 +95,7 @@ The deployment scripts and configuration files of the CEP & DWL live in a [priva
 
 # Spark
 
-Once the data reaches our data lake on S3 it can be processed with Spark. We provide a portal ([ATMO]) that allows Mozilla employees to create their own Spark cluster pre-loaded with a set of libraries & tools, like Jupyter, NumPy, SciPy, Pandas etc., and [an API] to conveniently read data stored in Protobuf form on S3 in a Spark RDD using a ORM-like interface. Behind the scenes we use [EMR] to create Spark clusters, which are then monitored by ATMO.
-
-![ATMO](../../assets/ATMO_example.jpeg "ATMO – monitoring clusters")
-
-ATMO is mainly used to write custom analyses; since our users aren’t necessary data engineers/scientists we chose Python as the main supported language to interface with Spark. From ATMO it’s also possible to schedule periodic notebook runs and inspect the results from a web UI.
+Once the data reaches our data lake on S3 it can be processed with Spark on Mozilla's [Databricks instance]. Databricks allows Mozilla employees to write custom analyses in notebooks, and also schedule Databricks jobs to run periodically.
 
 As mentioned earlier, most of our data lake contains data serialized to Protobuf with free-form JSON fields. Needless to say, parsing JSON is terribly slow when ingesting Terabytes of data per day. A set of [ETL jobs], written in Scala by Data Engineers and scheduled with [Airflow], create [Parquet views] of our raw data. We have a Github repository [telemetry-batch-view] that showcases this.
 
@@ -167,7 +163,7 @@ Presto, and other databases, are behind a [re:dash] service ([STMO]) which provi
 
 # Is that it?
 
-No, not really. If you want to read more, check out [this article](data_pipeline_detail.md). For example, the DWL pushes some of the Telemetry data to Redshift and other tools that satisfy more niche needs. The pipeline ingests logs from services as well and there are many specialized dashboards out there I haven’t mentioned. We also use [Zeppelin] as a means to create interactive data analysis notebooks that supports Spark, SQL, Scala and more.
+No, not really. If you want to read more, check out [this article](data_pipeline_detail.md). For example, the DWL pushes some of the Telemetry data to Redshift and other tools that satisfy more niche needs. The pipeline ingests logs from services as well and there are many specialized dashboards out there I haven’t mentioned.
 
 There is a vast ecosystem of tools for processing data at scale, each with their pros & cons. The pipeline grew organically and we added new tools as new use-cases came up that we couldn’t solve with our existing stack. There are still scars left from that growth though which require some effort to get rid of, like ingesting data from schema-less format.
 
@@ -198,7 +194,6 @@ There is a vast ecosystem of tools for processing data at scale, each with their
 [Protobuf]: https://hekad.readthedocs.io/en/latest/message/index.html#stream-framing
 [dump data directly in Parquet form]: https://github.com/mozilla-services/lua_sandbox_extensions/pull/48
 [private repository]: https://github.com/mozilla-services/puppet-config/tree/02f716a3e0df1117fc2494b41e85a1416f8e2a64/pipeline
-[ATMO]: https://analysis.telemetry.mozilla.org/
 [an API]: https://mozilla.github.io/python_moztelemetry/api.html#module-moztelemetry.dataset
 [EMR]: https://github.com/mozilla/emr-bootstrap-spark/
 [ETL jobs]: https://github.com/mozilla/telemetry-batch-view
@@ -211,4 +206,4 @@ There is a vast ecosystem of tools for processing data at scale, each with their
 [re:dash]: https://sql.telemetry.mozilla.org/
 [STMO]: https://sql.telemetry.mozilla.org/
 [fork of re:dash]: https://github.com/mozilla/redash
-[Zeppelin]: https://bugzilla.mozilla.org/show_bug.cgi?id=1369519
+[Databricks instance]: https://dbc-caf9527b-e073.cloud.databricks.com

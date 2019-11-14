@@ -16,8 +16,7 @@ Your queries will be **slow to complete** and can **impact performance for other
 since re:dash on a shared cluster.
 
 Instead, we recommend using the `longitudinal` or `clients_daily` dataset where possible.
-If these datasets do not suffice, consider using Spark on an
-[ATMO](https://analysis.telemetry.mozilla.org) cluster.
+If these datasets do not suffice, consider using Spark on [Databricks](https://dbc-caf9527b-e073.cloud.databricks.com).
 In the odd case where these queries are necessary,
 make use of the `sample_id` field and limit to a short submission date range.
 
