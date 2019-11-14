@@ -155,7 +155,7 @@ To augment our data collection, see [Collecting New Data][addprobe] and the
 [preferences]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/preferences.html
 [atmo]: BROKEN:https://analysis.telemetry.mozilla.org/
 [stmo]: https://sql.telemetry.mozilla.org/
-[dataset]: https://python-moztelemetry.readthedocs.io/en/stable/api.html#module-moztelemetry.dataset
+[dataset]: https://mozilla.github.io/python_moztelemetry/api.html#module-moztelemetry.dataset
 [addprobe]: https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Adding_a_new_Telemetry_probe
 [datacollection]: https://wiki.mozilla.org/Firefox/Data_Collection
 [pingsender]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/pingsender.html

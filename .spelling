@@ -41,6 +41,7 @@ backfilled
 behaviour
 Bhattacharyya
 BigQuery
+bigquery-etl
 blocklist
 boolean
 booleans
@@ -96,6 +97,7 @@ GCP
 geo-city
 geo-country
 FxA
+GCS
 geoip
 Github
 GoFaster

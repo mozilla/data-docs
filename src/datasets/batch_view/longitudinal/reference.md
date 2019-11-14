@@ -8,11 +8,6 @@
 
 # Data Reference
 
-## Example Queries
-
-Take a look at the
-[Longitudinal Examples Cookbook](../../../cookbooks/longitudinal_examples.md).
-
 ## Sampling
 
 ### Pings Within Last 6 Months
@@ -46,7 +41,7 @@ you can recreate this sample by doing this filter manually.
 
 The `longitudinal` job is run weekly, early on Sunday morning UTC.
 The job is scheduled on [Airflow](https://github.com/mozilla/telemetry-airflow).
-The DAG is [here](https://github.com/mozilla/telemetry-airflow/blob/master/dags/longitudinal.py).
+The DAG is [here](https://github.com/mozilla/telemetry-airflow/blob/54cffc42a2ca24e46056b7030735f0d4d093c0c7/dags/longitudinal.py).
 
 ## Schema
 

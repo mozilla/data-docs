@@ -20,7 +20,7 @@ To begin contributing to the docs, fork the `firefox-data-docs` repo.
 
 ## Building the Documentation
 
-The documentation is rendered with [mdBook](https://github.com/rust-lang-nursery/mdBook).
+The documentation is rendered with [mdBook](https://github.com/rust-lang/mdBook).
 
 To build the documentation locally, you'll need additional preprocessors:
 
@@ -52,7 +52,7 @@ You can then serve the documentation locally with:
 mdbook serve
 ```
 
-The complete documentation for the mdBook toolchain is available online at <https://rust-lang-nursery.github.io/mdBook/>.
+The complete documentation for the mdBook toolchain is available online at <https://rust-lang.github.io/mdBook/>.
 If you run into any technical limitations, let `@harterrt` or `@badboy` know.
 We are happy to change the tooling to make it as much fun as possible to write.
 

@@ -43,8 +43,8 @@ For access to BigQuery via GCP Console and API please file a bug [here](https://
 
 ## From re:dash
 All Mozilla users will be able to access BigQuery via [re:dash](https://sql.telemetry.mozilla.org/) through the following Data Sources:
-- `BigQuery (Beta)`
-- `BigQuery Search (Beta)`
+- `Telemetry (BigQuery)`
+- `Telemetry Search (BigQuery)`
     - This group is restricted to users in the re:dash `search` group.
 
 Access via re:dash is read-only. You will not be able to create views or tables via re:dash.
@@ -139,20 +139,21 @@ gcloud beta dataproc clusters create cluster-name \
     --image-version=1.4 \
     --enable-component-gateway \
     --properties=^#^spark:spark.jars=gs://spark-lib/bigquery/spark-bigquery-latest.jar \
-    --num-workers=5 \
+    --num-workers=3 \
     --max-idle=3h \
     --bucket bucket-name \
+    --region=us-west1 \
     --project project-id
 ```
 
 Jupyter URL can be retrieved with the following command:
 ```bash
-gcloud beta dataproc clusters describe cluster-name --project project-id | grep Jupyter
+gcloud beta dataproc clusters describe cluster-name --region=us-west1 --project project-id | grep Jupyter
 ```
 
 After you've finished your work, it's a good practice to delete your cluster:
 ```bash
-gcloud beta dataproc clusters delete cluster-name --project project-id --quiet
+gcloud beta dataproc clusters delete cluster-name --region=us-west1 --project project-id --quiet
 ```
 
 ## From Colaboratory
@@ -222,11 +223,11 @@ each document namespace (corresponding to folders underneath the [schemas direct
 The table and view types referenced above are defined as follows:
 
 - _Live ping tables_ are the final destination for the [telemetry ingestion pipeline](https://mozilla.github.io/gcp-ingestion/). Dataflow jobs process incoming ping payloads from clients, batch them together by document type, and load the results to these tables approximately every five minutes, although a few document types are opted in to a more expensive streaming path that makes records available in BigQuery within seconds of ingestion. These tables are partitioned by date according to `submission_timestamp` and are also clustered on that same field, so it is possible to make efficient queries over short windows of recent data such as the last hour. They have a rolling expiration period of 30 days, but that window may be shortened in the future. Analyses should only use these tables if they need results for the current (partial) day.
-- _Historical ping tables_ have exactly the same schema as their corresponding live ping tables, but they are populated only once per day via an Airflow job and have a 25 month retention period. These tables are superior to the live ping tables for historical analysis because they never contain partial days, they have additional deduplication applied, and they are clustered on `sample_id`, allowing efficient queries on a 1% sample of clients. It is guaranteed that `document_id` is distinct within each UTC day of each historical ping table, but it is still possible for a document to appear multiple times if a client sends the same payload across multiple days.
+- _Historical ping tables_ have exactly the same schema as their corresponding live ping tables, but they are populated only once per day via an Airflow job and have a 25 month retention period. These tables are superior to the live ping tables for historical analysis because they never contain partial days, they have additional deduplication applied, and they are clustered on `sample_id`, allowing efficient queries on a 1% sample of clients. It is guaranteed that `document_id` is distinct within each UTC day of each historical ping table, but it is still possible for a document to appear multiple times if a client sends the same payload across multiple days. Note that this requirement is relaxed for older telemetry ping data that was backfilled from AWS; approximately 0.5% of documents are duplicated in `telemetry.main` and other historical ping tables for 2019-04-30 and earlier dates.
 - _Derived tables_ are populated by nightly [Airflow](https://workflow.telemetry.mozilla.org/home) jobs and are considered an implementation detail; their structure may change at any time at the discretion of the data platform team to allow refactoring or efficiency improvements.
 - _User-facing views_ are the schema objects that users are primarily expected to use in analyses. Many of these views correspond directly to an underlying historical ping table or derived table, but they provide the flexibility to hide deprecated columns or present additional calculated columns to users. These views are the schema contract with users and they should not change in backwards-incompatible ways without a version increase or an announcement to users about a breaking change. 
 
-Spark and other applications relying on the BigQuery Storage API for data access may need to reference derived tables or historical ping tables directly rather than user-facing views in some cases, but we generally recommend instead that users run a query on top of user-facing views with the output saved in a destination table, which can then be accessed from Spark.
+Spark and other applications relying on the BigQuery Storage API for data access need to reference derived tables or historical ping tables directly rather than user-facing views. Unless the query result is relatively large, we  recommend instead that users run a query on top of user-facing views with the output saved in a destination table, which can then be accessed from Spark.
 
 
 ### Structure of Ping Tables in BigQuery
@@ -293,6 +294,15 @@ You can write query results to a BigQuery table you have access via [GCP BigQuer
 - Use `moz-fx-data-shared-prod.analysis` dataset.
     - Prefix your table with your username. If your username is `username@mozilla.com` create a table with `username_my_table`.
 - See [Writing query results](https://cloud.google.com/bigquery/docs/writing-results) documentation for detailed steps.
+
+### Writing results to GCS (object store)
+
+If a BigQuery table is not a suitable destination for your analysis results,
+we also have a GCS bucket available for storing analysis results. It is usually
+Spark jobs that will need to do this.
+
+- Use bucket `gs://moz-fx-data-prod-analysis/`
+    - Prefix object paths with your username. If your username is `username@mozilla.com`, you might store a file to `gs://moz-fx-data-prod-analysis/username/myresults.json`.
 
 ### Creating a View
 You can create views in BigQuery if you have access via [GCP BigQuery Console](bigquery.md#gcp-bigquery-console) or [GCP BigQuery API Access](bigquery.md#gcp-bigquery-api-access).

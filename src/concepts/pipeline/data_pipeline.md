@@ -194,7 +194,7 @@ There is a vast ecosystem of tools for processing data at scale, each with their
 [Protobuf]: https://hekad.readthedocs.io/en/latest/message/index.html#stream-framing
 [dump data directly in Parquet form]: https://github.com/mozilla-services/lua_sandbox_extensions/pull/48
 [private repository]: https://github.com/mozilla-services/puppet-config/tree/02f716a3e0df1117fc2494b41e85a1416f8e2a64/pipeline
-[an API]: https://python-moztelemetry.readthedocs.io/en/stable/api.html#module-moztelemetry.dataset
+[an API]: https://mozilla.github.io/python_moztelemetry/api.html#module-moztelemetry.dataset
 [EMR]: https://github.com/mozilla/emr-bootstrap-spark/
 [ETL jobs]: https://github.com/mozilla/telemetry-batch-view
 [Airflow]: https://github.com/mozilla/telemetry-airflow/
