@@ -49,7 +49,7 @@ We ignore invalid pings in our processing. Invalid pings are defined as those th
 
 The `telemetry_aggregates` job is run daily, at midnight UTC.
 The job is scheduled on [Airflow](https://github.com/mozilla/telemetry-airflow).
-The DAG is [here](https://github.com/mozilla/telemetry-airflow/blob/master/dags/mozaggregator_parquet.py)
+The DAG is [here](https://github.com/mozilla/telemetry-airflow/blob/831fe84a36347f440ede4f5a90e0bf83d4fa1e1e/dags/mozaggregator_parquet.py)
 
 ## Schema
 
