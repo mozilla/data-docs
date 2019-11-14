@@ -43,8 +43,8 @@ For access to BigQuery via GCP Console and API please file a bug [here](https://
 
 ## From re:dash
 All Mozilla users will be able to access BigQuery via [re:dash](https://sql.telemetry.mozilla.org/) through the following Data Sources:
-- `BigQuery (Beta)`
-- `BigQuery Search (Beta)`
+- `Telemetry (BigQuery)`
+- `Telemetry Search (BigQuery)`
     - This group is restricted to users in the re:dash `search` group.
 
 Access via re:dash is read-only. You will not be able to create views or tables via re:dash.
