@@ -36,7 +36,9 @@ One more thing: China runs its own stack for sync, but Chinese sign-ups for oaut
 
 Unlike most telemetry described in these docs, FxA metrics are logged server-side. There are many [FxA "servers"](https://github.com/mozilla/fxa/tree/master/packages) that handle different aspects of account authentication and management. The metrics of most interest to data analysts are logged by the FxA auth server, content server and oauth server. Each server writes their metrics into their log stream, and some post-processing scripts combine the metrics events from all three servers into datasets that are available in Databricks, BigQuery, STMO and Amplitude.
 
-In general, metrics logged by the [FxA auth server](https://github.com/mozilla/fxa/tree/master/packages/fxa-auth-server) reflect authentication events such as account creation, logins to existing accounts, etc. Metrics logged by the [FxA content server](https://github.com/mozilla/fxa/tree/master/packages/fxa-content-server) reflect user interaction and progression through the FxA web UI - form views, form engagement, form submission, etc. The [FxA oauth server](https://github.com/mozilla/fxa/tree/master/packages/fxa-auth-server/fxa-oauth-server) logs metrics events when oauth clients (Monitor, Lockwise, etc) create and check authentication tokens.
+In general, metrics logged by the [FxA auth server](https://github.com/mozilla/fxa/tree/master/packages/fxa-auth-server) reflect authentication events such as account creation, logins to existing accounts, etc.
+Metrics logged by the [FxA content server](https://github.com/mozilla/fxa/tree/master/packages/fxa-content-server) reflect user interaction and progression through the FxA web UI - form views, form engagement, form submission, etc.
+The [FxA oauth server](https://github.com/mozilla/fxa/pull/3176) logs metrics events when oauth clients (Monitor, Lockwise, etc) create and check authentication tokens.
 
 ## Metrics Taxonomies
 

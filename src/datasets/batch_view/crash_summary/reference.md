@@ -31,7 +31,7 @@ submitted by Firefox.
 This dataset is updated daily, shortly after midnight UTC.
 The job is scheduled on
 [telemetry-airflow](https://github.com/mozilla/telemetry-airflow).
-The DAG is [here](https://github.com/mozilla/telemetry-airflow/blob/master/dags/crash_summary.py).
+The DAG is [here](https://github.com/mozilla/telemetry-airflow/blob/166e0a555ee2de0d3c7f0add1011f7771f7ea23d/dags/crash_summary.py).
 
 ## Schema
 
