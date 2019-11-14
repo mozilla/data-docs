@@ -118,13 +118,14 @@ Select the number of bugs in the Core product filed
 in the past 7 days:
 
 ```sql
-select
-    count(1)
-from
-    ???
-where
-    product = 'Core'
-    and date_diff('day', from_unixtime(creation_ts), now()) < 7
+SELECT
+  count(distinct bug_id)
+FROM
+  eng_workflow.bmobugs
+WHERE
+  product = 'Core'
+  AND date_diff(current_date(), date(parse_timestamp('%Y-%m-%d %H:%M:%S', creation_ts)), DAY) <= 7
+  AND date(submission_timestamp) >= '2019-01-01' -- required submission date filter
 ```
 
 # Code Reference
