@@ -1,7 +1,7 @@
 # bmobugs
 
 This dataset mirrors bugs (defects, enhancements, tasks) reported in the 
-[`Bugzilla`](https://bugzilla.mozilla.org/mozilla-central/) bug tracker.
+[`Bugzilla`](https://bugzilla.mozilla.org/) bug tracker.
 
 # Data Reference
 
