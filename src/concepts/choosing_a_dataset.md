@@ -64,10 +64,6 @@ This section describes the derived datasets we provide to make analyzing this da
 
 {{#include ../datasets/streaming/error_aggregates/intro.md}}
 
-## `crash_summary`
-
-{{#include ../datasets/batch_view/crash_summary/intro.md}}
-
 # New-Profile Derived Datasets
 
 The [new-profile ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/new-profile-ping.html)
