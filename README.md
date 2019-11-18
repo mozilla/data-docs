@@ -12,7 +12,7 @@ At [Mozilla](https://www.mozilla.org), our data-gathering and data-handling prac
 To learn more about what data Firefox collects and the choices you can make as a user, please see the
 [Firefox Privacy Notice](https://www.mozilla.org/en-US/privacy/firefox/).
 
-You can find the [rendered documentation here](https://mozilla.github.io/firefox-data-docs/).
+You can find the [rendered documentation here](https://docs.telemetry.mozilla.org/).
 
 This documentation is rendered with [mdBook](https://github.com/rust-lang/mdBook).
 
