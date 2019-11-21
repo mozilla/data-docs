@@ -87,14 +87,14 @@ contains a Telemetry Environment, [Crash Annotations][crash_annotations], and
 
 It was introduced in Firefox 40.
 
-### "optout" ping
+### "deletion request" ping
 
 In the event a user opts out of Telemetry, we send one final
-["optout" ping][optout_ping] to let us know. We try exactly once to send it,
-discarding the ping if sending fails. It contains only the
-[common ping data][common_ping_data] and an empty payload.
+["deletion-request" ping][deletion_request_ping] to let us know. It contains
+only the [common ping data][common_ping_data] and an empty payload.
 
-It was introduced in Firefox 63.
+It was introduced in Firefox 72, replacing the ["optout" ping][optout_ping]
+(which was in turn introduced in Firefox 63).
 
 ### Pingsender
 
@@ -147,7 +147,8 @@ To augment our data collection, see [Collecting New Data][addprobe] and the
 [update_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/update-ping.html
 [new_profile_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/new-profile-ping.html
 [crash_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html
-[optout_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/optout-ping.html
+[deletion_request_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/data/deletion-request-ping.html
+[optout_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/obsolete/optout-ping.html
 [crash_annotations]: https://searchfox.org/mozilla-central/source/toolkit/crashreporter/CrashAnnotations.yaml
 [common_ping_data]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/common-ping.html
 [main_reasons]: https://sql.telemetry.mozilla.org/queries/3434
