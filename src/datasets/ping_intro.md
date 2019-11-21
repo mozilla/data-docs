@@ -93,8 +93,8 @@ In the event a user opts out of Telemetry, we send one final
 ["deletion-request" ping][deletion_request_ping] to let us know. It contains
 only the [common ping data][common_ping_data] and an empty payload.
 
-It was introduced in Firefox 70, replacing the ["optout" ping][optout_ping]
-(which was in turn introduced in Firefox 63). 
+It was introduced in Firefox 72, replacing the ["optout" ping][optout_ping]
+(which was in turn introduced in Firefox 63).
 
 ### Pingsender
 
