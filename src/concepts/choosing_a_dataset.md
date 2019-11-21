@@ -51,19 +51,6 @@ This section describes the derived datasets we provide to make analyzing this da
 
 {{#include ../datasets/batch_view/clients_daily/intro.md}}
 
-# Crash Ping Derived Datasets
-
-The [crash ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html)
-is captured after the main Firefox process crashes or after a content process crashes,
-whether or not the crash report is submitted to `crash-stats.mozilla.org`.
-It includes non-identifying metadata about the crash.
-
-This section describes the derived datasets we provide to make analyzing this data easier.
-
-## `error_aggregates`
-
-{{#include ../datasets/streaming/error_aggregates/intro.md}}
-
 # New-Profile Derived Datasets
 
 The [new-profile ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/new-profile-ping.html)
@@ -95,6 +82,10 @@ This data is available in the `telemetry_new_profile_parquet` dataset.
 ## `churn`
 
 {{#include ../datasets/obsolete/churn/intro.md}}
+
+## `error_aggregates`
+
+{{#include ../datasets/obsolete/error_aggregates/intro.md}}
 
 # Appendix
 
