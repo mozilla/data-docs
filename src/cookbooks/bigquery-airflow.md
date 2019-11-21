@@ -9,7 +9,7 @@ Queries in [`bigquery-etl`](https://github.com/mozilla/bigquery-etl) can be sche
 
 In the [`bigquery-etl`](https://github.com/mozilla/bigquery-etl) project, queries are written in `/templates`.
 The directory structure is based on the destination table: `/templates/{dataset_id}/{table_name}`.
-For example, [`/templates/telemetry/core_clients_last_seen_raw_v1/query.sql`](https://github.com/mozilla/bigquery-etl/blob/master/templates/telemetry/core_clients_last_seen_raw_v1/query.sql)
+For example, [`/templates/telemetry/core_clients_last_seen_raw_v1/query.sql`](https://github.com/mozilla/bigquery-etl/blob/8822b522aad4a5199a56f5b6143804a91228ad86/templates/telemetry/core_clients_last_seen_raw_v1/query.sql)
 is a query that will write results to the `core_clients_last_seen_raw_v1` table in the `telemetry` dataset.
 This can be overridden in Airflow.
 
