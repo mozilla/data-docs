@@ -72,7 +72,7 @@ client. This approach proved fragile and was abandoned. A [persistent
 client identifier](https://bugzilla.mozilla.org/show_bug.cgi?id=968419)
 was implemented for Firefox 30.
 
-## Telemetry today
+## Firefox Desktop Telemetry today
 
 FHR was retired and merged with telemetry to produce the current
 generation of telemetry data, distinguished as “v4 telemetry” or
@@ -138,3 +138,9 @@ Telemetry pings can contain several different types of measurements:
 Data types are discussed in more depth in the [telemetry data
 collection](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/index.html)
 documentation.
+
+## Firefox Desktop Telemetry: The Next Generation
+
+The next step for Firefox Desktop Telemetry is to prototype an implemntation using [Glean](glean/glean.md).
+
+This effort is known as "Firefox on Glean" or FOG. This effort is expected to begin in late 2019 / early 2020.

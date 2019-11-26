@@ -27,6 +27,14 @@ This ping includes histograms, scalars, and events.
 
 This section describes the derived datasets we provide to make analyzing this data easier.
 
+## `clients_daily`
+
+{{#include ../datasets/batch_view/clients_daily/intro.md}}
+
+## `clients_last_seen`
+
+{{#include ../datasets/bigquery/clients_last_seen/intro.md}}
+
 ## `longitudinal`
 
 {{#include ../datasets/batch_view/longitudinal/intro.md}}
@@ -43,13 +51,7 @@ This section describes the derived datasets we provide to make analyzing this da
 
 {{#include ../datasets/obsolete/client_count_daily/intro.md}}
 
-## `clients_last_seen`
 
-{{#include ../datasets/bigquery/clients_last_seen/intro.md}}
-
-## `clients_daily`
-
-{{#include ../datasets/batch_view/clients_daily/intro.md}}
 
 # New-Profile Derived Datasets
 

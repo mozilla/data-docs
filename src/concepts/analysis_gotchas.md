@@ -36,6 +36,8 @@ The only things we can count are pings and clients. Clients we can count because
 
 When in doubt, be precise. You're counting _clients_.
 
+[This article](../profile/index.md) contains a more thorough treatment of the concept of "profiles".
+
 ### Opt-in vs Opt-out
 
 We don't collect the same information from everyone.
@@ -58,9 +60,9 @@ Any timestamp recorded by the user is subject to "clock skew." The user's clock 
 
 Examples of client times: `crashDate`, `crashTime`, `meta/Date`, `sessionStartDate`, `subsessionStartDate`, `profile/creationDate`
 
-Examples of server times you can trust: `Timestamp`, `submission_date`
+Examples of server times you can trust: `submission_timestamp`, `submission_date`
 
-*Note that `submissionDate` does not appear in the
+*Note that `submission_date` does not appear in the
 [ping documentation](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/common-ping.html)
 because it is added in post-processing.
 It can be found in the `meta` field of the ping as in the
@@ -70,7 +72,7 @@ It can be found in the `meta` field of the ping as in the
 
 Not all dates and times are created equal. Most of the dates and times in Telemetry pings are [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601). Most are full timestamps, though their resolution may differ from being per-second to being per-day.
 
-Then there's `profile/creationDate` which is just a number of days since epoch. Like `17177` for the date 2017-01-11.
+Then there's `profile/creationDate` which is just a number of days since epoch (January 1, 1970). Like `17177` for the date 2017-01-11.
 
 **Tip:** To convert `profile/creationDate` to a usable date in SQL: `DATE_ADD('day', profile_created, DATE '1970-01-01')`
 
