@@ -25,7 +25,7 @@ for i in range(1, N_WEEKS + 1):
     PERIODS[i] = {
         'start': i * 7,
         'end': i * 7 + 6
-    }  
+    }
 ```
 Which gives us
 
@@ -115,6 +115,7 @@ def from_unixtime_handler(ut):
 
 Now we can load in a subset of `main_summary` and construct the necessary fields for retention calculations:
 
+FIXME
 ```python
 ms = spark.sql("""
     SELECT

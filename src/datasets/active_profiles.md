@@ -117,20 +117,25 @@ a sample query that will give averages for predicted MAU, probability that users
 active, and other quantities across different operating systems:
 
 ```
-select
-  ap.os
-  , cast(sum(ap.prob_mau) AS int64) as predicted_mau
-  , count(*) as n
-  , round(avg(ap.prob_active) * 100, 1) as prob_active
-  , round(avg(ap.prob_daily_leave) * 100, 1) as prob_daily_leave
-  , round(avg(ap.prob_daily_usage) * 100, 1) as prob_daily_usage
-  , round(avg(ap.e_total_days_in_next_28_days), 1) as e_total_days_in_next_28_days
-from `telemetry.active_profiles` ap
-where submission_date = '2019-08-01'
-      and sample_id = 1
-group by 1
-having count(*) > 100
-order by avg(ap.prob_daily_usage) desc
+SELECT
+  os,
+  cast(sum(prob_mau) AS int64) AS predicted_mau,
+  count(*) AS n,
+  round(avg(prob_active) * 100, 1) AS prob_active,
+  round(avg(prob_daily_leave) * 100, 1) AS prob_daily_leave,
+  round(avg(prob_daily_usage) * 100, 1) AS prob_daily_usage,
+  round(avg(e_total_days_in_next_28_days), 1) AS e_total_days_in_next_28_days
+FROM
+  `telemetry.active_profiles`
+WHERE
+  submission_date = '2019-08-01'
+  AND sample_id = 1
+GROUP BY
+  1
+HAVING
+  count(*) > 100
+ORDER BY
+  avg(prob_daily_usage) DESC
 ```
 
 ## Scheduling

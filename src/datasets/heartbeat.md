@@ -37,7 +37,7 @@ SPLIT(payload.survey_id,'::')[1] AS surveygizmo_userid
 
 ## Data reference
 
-The `telemetry_heartbeat_parquet` table
+FIXME The `telemetry_heartbeat_parquet` table
 is partitioned by `submission_date_s3`
 and has the schema:
 

@@ -34,7 +34,7 @@ https://normandy.cdn.mozilla.net/api/v1/recipe/signed/.
 
 ## Tables
 
-These tables should be accessible from ATMO, Databricks, Presto, and Athena.
+These tables are accessible from BigQuery and Databricks.
 
 ### `experiments` column
 
@@ -48,10 +48,12 @@ You can collect rows from enrolled clients using query syntax like:
 
 ```sql
 SELECT
-  *,
-  experiments['some-experiment-slug-12345'] AS branch
-FROM clients_daily
-WHERE experiments['some-experiment-slug-12345'] IS NOT NULL
+  ... some fields ...,
+  udf.get_key(experiments, 'some-experiment-slug-12345') AS branch
+FROM
+  telemetry.clients_daily
+WHERE
+  udf.get_key(experiments, 'some-experiment-slug-12345') IS NOT NULL
 ```
 
 ### `experiments`
@@ -87,6 +89,7 @@ The event schema is described
 The `events` table is updated daily.
 
 ### `telemetry_shield_study_addon_parquet`
+FIXME
 
 The `telemetry_shield_study_addon_parquet` table contains SHIELD telemetry from add-on experiments,
 i.e. key-value pairs sent with the

@@ -50,7 +50,7 @@ enrollments_by_day = (
 )
 ```
 
-Equivalently, in Presto SQL:
+FIXME Equivalently, in Presto SQL:
 
 ```sql
 SELECT

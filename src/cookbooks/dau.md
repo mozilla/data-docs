@@ -1,4 +1,4 @@
-# DAU and MAU
+# Daily and Monthly Active Users (DAU and MAU)
 
 For the purposes of DAU, a profile is considered active if it sends any main ping.
 * Dates are defined by `submission_date_s3` or `submission_date`.

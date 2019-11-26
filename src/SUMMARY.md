@@ -26,7 +26,6 @@
   * [Accessing and working with BigQuery](cookbooks/bigquery.md)
     * [Scheduling BigQuery Queries in Airflow](cookbooks/bigquery-airflow.md)
   * [Dataset Specific](cookbooks/dataset_specific.md)
-    * [Working with Crash Pings](cookbooks/crash_pings.md)
     * [Working with Normandy events](cookbooks/normandy_events.md)
   * [Real-time](cookbooks/realtime.md)
     * [Creating a Real-time Analysis Plugin](cookbooks/realtime_analysis_plugin.md)
@@ -100,6 +99,7 @@
         * [Channel Normalization and Querying](concepts/channels/channel_normalization.md)
     * [Census metrics](concepts/censuses.md)
     * [Engagement metrics](concepts/engagement.md)
+    * [Sampling](concepts/sample_id.md)
 
 ---
 

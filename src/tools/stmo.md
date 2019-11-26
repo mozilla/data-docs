@@ -6,8 +6,8 @@ STMO is shorthand for
 of the excellent [Re:dash](https://redash.io/) data analysis and dashboarding
 tool that has been customized and configured for use with a number of the
 Firefox organization's data sets. As the name and URL imply, effective use of
-this tool requires familiarity with the
-[SQL](https://en.wikipedia.org/wiki/SQL) query language, with which all of the
+this tool requires familiarity with
+[SQL](https://en.wikipedia.org/wiki/SQL), with which all of the
 tool's data extraction and analysis are performed.
 
 Concepts
@@ -21,7 +21,7 @@ queries, visualizations, and dashboards.
 STMO's basic unit of analysis is the query. A query is a block of SQL code that
 extracts and (optionally) transforms data from a single data source. Queries
 can vary widely in complexity. Some queries are trivial one liners
-(e.g. `SELECT * FROM tablename LIMIT 10`), while others are many pages long,
+(e.g. `SELECT some_field FROM tablename LIMIT 10`), while others are many pages long,
 small programs in their own right.
 
 The raw output from a query is tabular data, where each row is one set of
@@ -57,23 +57,18 @@ very far without having some familiarity with what data is actually available,
 and how that data is structured. Each query in STMO is associated with exactly
 one data source, and you have to know ahead of time which data source contains
 the information that you need. One of the most commonly used data sources is
-called *Athena* (referring to Amazon's [Athena](https://aws.amazon.com/athena/)
-query service, on which it is built), which contains most of the data that is
-obtained from telemetry pings received from Firefox clients. The *BigQuery*
-(referring to Google's [BigQuery](https://cloud.google.com/bigquery/) service)
-source is slowly replacing the *Athena* and *Presto* data sources. *BigQuery*
-contains some of the data that's exposed via *Athena*, as well as new data
-that is calculated there. *Presto* contains all of the data that's exposed via
-*Athena* and more, but returns query results much more slowly.
+called *Telemetry (BigQuery)*, which contains most of the data that is
+obtained from telemetry pings received from Firefox clients. *BigQuery*
+refers to Google's [BigQuery](https://cloud.google.com/bigquery/) data warehouse.
 
 Other available data sources include *Crash DB*, *Tiles*, *Sync Stats*, *Push*,
-*Test Pilot*, *ATMO*, and even a *Re:dash metadata* which connects to STMO's
+*Test Pilot*, and even a *Re:dash metadata* which connects to STMO's
 own Re:dash database. You can learn more about the available data sets and how
 to find the one that's right for you on the [Choosing a
 dataset](../concepts/choosing_a_dataset.md) page. If you have data set
 questions, or would like to know if specific data is or can be made available
 in STMO, please inquire in the `#datapipeline` or `#datatools` channels on
-`irc.mozilla.org`.
+`irc.mozilla.org`; or in `#fx-metrics` on Slack.
 
 Creating an Example Dashboard
 -----------------------------
@@ -95,37 +90,26 @@ to use
 [`clients_last_seen`](../datasets/bigquery/clients_last_seen/reference.md),
 which is generated from Firefox telemetry pings.
 
-* Check if the table is in BigQuery
+* Search for the table in `Telemetry (BigQuery)`
 
-  As mentioned above, BigQuery is replacing Athena and Presto, but not all data
-  sets are yet available in BigQuery. Click on the 'Data Source' drop-down and
-  select BigQuery, then check to see if the one we want is available by typing
+  Click on the 'Data Source' drop-down and
+  select `Telemetry (BigQuery)`, then search for the table we want by typing
   `clients_last_seen` into the "Search schema..." search box above the schema
   browser interface to the left of the main query edit box. You should see that
   there is, in fact, a `clients_last_seen` table (showing up as
   `telemetry.clients_last_seen`), as well as versioned `clients_last_seen` data
   sets (showing up as `telemetry.clients_last_seen_v<VERSION>`).
 
-* Check if the table is in Athena
+* If the table you want is not found
 
-  If it's not in BigQuery, now we should check to see if it's in Athena. If you
-  click on the 'Data Source' drop-down and change the selection from 'BigQuery'
-  to 'Athena' (with `clients_last_seen` still populating the filter input), you
-  should see that there is a match for `clients_last_seen`, which means this
-  table is available in *Athena*.
-
-* Check if the table is in Presto
-
-  If it's also not in Athena, now we should check to see if it's in Presto. If
-  you click on the 'Data Source' drop-down and change the selection from
-  'Athena' to 'Presto' (with `clients_last_seen` still populating the filter
-  input), you should see that there is a match for `clients_last_seen`, which
-  means this table is available in *Presto*.
+  Again, there are many different data sources connected to STMO, so if the
+  one you want is not in the Telemetry source, we should check other sources.
+  If you're having trouble finding the data you need, feel free to ask in
+  `#fx-metrics` on Slack
 
 * Introspect the available columns
 
-  Click on the 'Data Source' drop-down and change the selection to 'BigQuery',
-  and click on `telemetry.clients_last_seen` in the schema browser to expose
+  Click on `telemetry.clients_last_seen` in the schema browser to expose
   the columns that are available in the table. Three of the columns are of
   interest to us for this query: `country`, `days_since_seen`, and
   `submission_date`.
