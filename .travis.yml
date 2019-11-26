@@ -1,20 +1,32 @@
-language: rust
-addons:
-  apt:
-    packages:
-      - parallel
-install:
-  - npm install markdown-spellcheck markdown-link-check -g
-  - curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git rust-lang/mdBook
-  - curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-toc
-  - curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-mermaid
-script:
-  - mdbook --version
-  - mdbook-toc --version
-  - mdbook-mermaid --version
-  - mdbook build .
-  - bash scripts/spell_check.sh
-  - bash scripts/link_check.sh
+matrix:
+  include:
+    - name: build
+      language: rust
+      script:
+        - curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git rust-lang/mdBook
+        - curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-toc
+        - curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-mermaid
+        - mdbook --version
+        - mdbook-toc --version
+        - mdbook-mermaid --version
+        - mdbook build .
+    - name: spell-check
+      language: node_js
+      node_js:
+      - 12
+      script:
+        - npm install markdown-spellcheck -g
+        - bash scripts/spell_check.sh
+    - name: link-check
+      language: node_js
+      node_js:
+      - 12
+      script:
+        - npm install markdown-link-check -g
+        - bash scripts/link_check.sh
+jobs:
+  allow_failures:
+  - name: link-check
 deploy:
   provider: pages
   skip-cleanup: true
