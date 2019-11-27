@@ -33,4 +33,4 @@ sampleid = (crc & 0xFFFFFFFF) % 100
 print("Client ID {} => Sample ID {}".format(clientid, sampleid))
 ```
 
-[CRC]: TODO
+[CRC]: https://en.wikipedia.org/wiki/Cyclic_redundancy_check

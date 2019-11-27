@@ -14,7 +14,7 @@ For example, let’s say we are calculating retention for new Firefox users. Eac
 
 
 
-Given a dataset in Spark, we can construct a field `retention_period` that uses `submission_date_s3` to determine the period to which a ping belongs (i.e. if a user created their profile on April 1st, all pings submitted between April 8th and April 14th are assigned to week 1). 1-week retention can then be simplified to the percent of users with a 1 value for `retention_period`, 2-week retention simplifies to the percent of users with a 2 value for `retention_period`, ..., etc. Note that each retention period is independent of the others, so it is possible to have higher 2-week retention than 1-week retention (especially during holidays).
+Given a dataset in Spark, we can construct a field `retention_period` that uses `submission_date` to determine the period to which a ping belongs (i.e. if a user created their profile on April 1st, all pings submitted between April 8th and April 14th are assigned to week 1). 1-week retention can then be simplified to the percent of users with a 1 value for `retention_period`, 2-week retention simplifies to the percent of users with a 2 value for `retention_period`, ..., etc. Note that each retention period is independent of the others, so it is possible to have higher 2-week retention than 1-week retention (especially during holidays).
 
 First let's map 1, 2, ..., N week retention the the amount of days elapsed after the anchor point:
 
@@ -49,7 +49,7 @@ import pyspark.sql.functions as F
 
 udf = F.udf
 
-def date_diff(d1, d2, fmt='%Y%m%d'):
+def date_diff(d1, d2, fmt='%Y-%m-%d'):
     """
     Returns days elapsed from d2 to d1 as an integer
 
@@ -58,10 +58,10 @@ def date_diff(d1, d2, fmt='%Y%m%d'):
     d2 (str)
     fmt (str): format of d1 and d2 (must be the same)
 
-    >>> date_diff('20170205', '20170201')
+    >>> date_diff('2017-02-05', '2017-02-01')
     4
 
-    >>> date_diff('20170201', '20170205)
+    >>> date_diff('2017-02-01', '2017-02-05)
     -4
     """
     try:
@@ -72,15 +72,15 @@ def date_diff(d1, d2, fmt='%Y%m%d'):
 
 
 @udf(returnType=st.IntegerType())
-def get_period(anchor, submission_date_s3):
+def get_period(anchor, submission_date):
     """
-    Given an anchor and a submission_date_s3,
+    Given an anchor and a submission_date,
     returns what period a ping belongs to. This
     is a spark UDF.
 
     Params:
     anchor (col): anchor date
-    submission_date_s3 (col): a ping's submission_date to s3
+    submission_date (col): a ping's submission_date
 
     Global:
     PERIODS (dict): defined globally based on n-week method
@@ -88,7 +88,7 @@ def get_period(anchor, submission_date_s3):
     Returns an integer indicating the retention period
     """
     if anchor is not None:
-        diff = date_diff(submission_date_s3, anchor)
+        diff = date_diff(submission_date, anchor)
         if diff >= 7: # exclude first 7 days
             for period in sorted(PERIODS):
                 if diff <= PERIODS[period]['end']:
@@ -97,7 +97,7 @@ def get_period(anchor, submission_date_s3):
 @udf(returnType=st.StringType())
 def from_unixtime_handler(ut):
     """
-    Converts unix time (in days) to a string in %Y%m%d format.
+    Converts unix time (in days) to a string in %Y-%m-%d format.
     This is a spark UDF.
 
     Params:
@@ -107,7 +107,7 @@ def from_unixtime_handler(ut):
     """
     if ut is not None:
         try:
-            return (dt.datetime.fromtimestamp(ut * 24 * 60 * 60).strftime("%Y%m%d"))
+            return (dt.datetime.fromtimestamp(ut * 24 * 60 * 60).strftime("%Y-%m-%d"))
         except:
             return None
 
@@ -115,31 +115,24 @@ def from_unixtime_handler(ut):
 
 Now we can load in a subset of `main_summary` and construct the necessary fields for retention calculations:
 
-FIXME
 ```python
-ms = spark.sql("""
-    SELECT
-        client_id,
-        submission_date_s3,
-        profile_creation_date,
-        os
-    FROM main_summary
-    WHERE
-        submission_date_s3 >= '20180401'
-        AND submission_date_s3 <= '20180603'
-        AND sample_id = '42'
-        AND app_name = 'Firefox'
-        AND normalized_channel = 'release'
-        AND os in ('Darwin', 'Windows_NT', 'Linux')
-    """)
+ms = spark.read.format("bigquery") \
+    .option("table", "moz-fx-data-derived-datasets.telemetry_derived.main_summary_v4") \
+    .load() \
+    .where("submission_date >= to_date('2018-04-01') AND submission_date <= to_date('2018-06-03')") \
+    .where("sample_id = 42") \
+    .where("app_name = 'Firefox'") \
+    .where("normalized_channel = 'release'") \
+    .where("os in ('Darwin', 'Windows_NT', 'Linux')") \
+    .select("client_id", "submission_date", "profile_creation_date", "os")
 
-PCD_CUTS = ('20180401', '20180415')
+PCD_CUTS = ('2018-04-01', '2018-04-15')
 
 ms = (
     ms.withColumn("pcd", from_unixtime_handler("profile_creation_date")) # i.e. 17500 -> '20171130'
       .filter("pcd >= '{}'".format(PCD_CUTS[0]))
       .filter("pcd <= '{}'".format(PCD_CUTS[1]))
-      .withColumn("period", get_period("pcd", "submission_date_s3"))
+      .withColumn("period", get_period("pcd", "submission_date"))
 )
 ```
 

@@ -21,9 +21,9 @@ this is likely your issue.
 To get access permissions, file a bug using the [search permissions template]
 
 Once you have proper permissions,
-you'll have access to a new source in re:dash called FIXME `Presto Search`.
+you'll have access to a new source in re:dash called `Telemetry Search (BigQuery)`.
 **You will not be able to access any of the search datasets
-via the standard `Presto` data source**, even with proper permissions.
+via the standard `Telemetry (BigQuery)` data source**, even with proper permissions.
 
 
 # Terminology

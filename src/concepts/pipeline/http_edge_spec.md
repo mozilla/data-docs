@@ -79,8 +79,15 @@ to apply for validation. This logic is part of the downstream [decoder] job.
 
 ### Supported HTTP Headers
 
-* `X-PingSender-Version` - TODO
-* `X-Debug-ID`
+The following headers will be passed through the pipeline and made available as metadata.
+
+* `Date` - The client-supplied timestamp of the incoming request.
+  Used for computing client clock skew.
+* `DNT` - The "Do Not Track" header.
+* `X-PingSender-Version` - The version of [Pingsender] used to send this ping (if applicable).
+* `X-Debug-ID` - An optional tag used to make data available to the [Glean Debug View].
+
+[Pingsender]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/pingsender.html
 
 ## Other Considerations
 
@@ -88,7 +95,7 @@ to apply for validation. This logic is part of the downstream [decoder] job.
 
 Compression of submission payloads is optional but recommended.
 
-The supported compression schheme is `gzip`.
+The supported compression scheme is `gzip`.
 
 We do not decompress or validate the content of submissions at the edge,
 the server will reply with a success code even if a message is badly formed.
@@ -111,4 +118,11 @@ long-term storage.
 ### Data Retention
 
 The edge server only stores data while waiting for it to be accepted to
-PubSub, spilling to local disk in the case of a PubSub outage. FIXME: characterize what this means for retention.
+PubSub, spilling to local disk in the case of a PubSub outage.
+
+This means that in the normal case, data is not retained on the edge at all.
+In the case of errors writing to PubSub, data is retained until the service
+is restored and messages can be flushed to the queue.
+Based on [past outages], this is typically a few hours or less.
+
+[past outages]: https://status.cloud.google.com/incident/cloud-pubsub

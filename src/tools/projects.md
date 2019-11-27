@@ -46,8 +46,8 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 |---------------------------------------|-----------------------------------------|
 | [`mozilla-pipeline-schemas`][schemas] | JSON and Parquet Schemas for Mozilla Telemetry and other structured data
 | [`gcp-ingestion`][gcp-ingestion]      | Documentation and implementation of the Mozilla telemetry ingestion system on Google Cloud Platform
-| [`json-schema-transpiler`][transpiler]| Convert JSON Schema into BigQuery table definitions
-| [`mozilla-schema-generator`][msg]     | Incorporate probe metadata to generate BQ table schemas
+| [`jsonschema-transpiler`][transpiler] | Convert JSON Schema into BigQuery table definitions
+| [`mozilla-schema-generator`][msg]     | Incorporate probe metadata to generate BigQuery table schemas
 | [`hindsight`][hs]                     | Real-time data processing
 | [`lua_sandbox`][lsb]                  | Generic sandbox for safe data analysis
 | [`lua_sandbox_extensions`][lsbx]      | Modules and packages that extend the Lua sandbox
@@ -59,8 +59,8 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 
 [schemas]: https://github.com/mozilla-services/mozilla-pipeline-schemas
 [gcp-ingestion]: https://github.com/mozilla/gcp-ingestion
-[transpiler]: TODO
-[msg]: TODO
+[transpiler]: https://github.com/mozilla/jsonschema-transpiler
+[msg]: https://github.com/mozilla/mozilla-schema-generator
 [hs]: https://github.com/mozilla-services/hindsight
 [lsb]: https://github.com/mozilla-services/lua_sandbox
 [lsbx]: https://github.com/mozilla-services/lua_sandbox_extensions
@@ -102,9 +102,9 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 | [St. Moab][stmoab]                | Automatically generate Re:dash dashboard for A/B experiments
 
 [tmo_gh]: https://github.com/mozilla/telemetry-dashboard
-[gud]: TODO
-[glam]: TODO
-[gdv]: TODO
+[gud]: https://growth-stage.bespoke.nonprod.dataops.mozgcp.net
+[glam]: https://github.com/mozilla/glam
+[gdv]: https://debug-ping-preview.firebaseapp.com
 [cer]: https://github.com/mozilla/cerberus
 [med]: https://github.com/mozilla/medusa
 [mc]: https://github.com/mozilla/missioncontrol

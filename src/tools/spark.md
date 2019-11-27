@@ -29,7 +29,7 @@ Jupyter notebooks can be shared in a few different ways.
 #### Sharing a Static Notebook
 
 An easy way to share is using a gist on Github. Jupyter notebook files checked
-in to a github repository will be rendered in the Github web UI, which makes
+in to a Github repository will be rendered in the Github web UI, which makes
 sharing convenient.
 
 You can also upload the `.ipynb` file as a gist to share with your colleagues.
@@ -51,17 +51,95 @@ Other useful introductory materials:
 * [Spark Programming Guide](https://spark.apache.org/docs/latest/programming-guide.html)
 * [Spark SQL Programming Guide](https://spark.apache.org/docs/latest/sql-programming-guide.html)
 
-FIXME: include info about where to save intermediate / self-generated data (gcs? bq?)
-FIXME: include an inline example showing BQ access
-FIXME: describe the lack of access to VIEWs via the Storage API
+
+### Reading data from BigQuery into Spark
+
+There are two main ways to read data from BigQuery into Spark.
+
+#### Storage API
+First, using the Storage API - this bypasses BigQuery's execution engine and
+directly reads from the underlying storage.
+
+This is the preferred method of loading data from BigQuery into Spark.
+
+It is more efficient for reading large amounts of data into Spark, and
+supports basic column and partitioning filters.
+
+Example of using the Storage API from Databricks:
+```python
+dbutils.library.installPyPI("google-cloud-bigquery", "1.16.0")
+dbutils.library.restartPython()
+
+# Read one day of pings and select a subset of columns.
+core_pings_single_day = spark.read.format("bigquery") \
+    .option("table", "moz-fx-data-shared-prod.telemetry_stable.core_v10") \
+    .load() \
+    .where("submission_timestamp >= to_date('2019-08-25') submission_timestamp < to_date('2019-08-26')") \
+    .select("client_id", "experiments", "normalized_channel")
+```
+
+A couple of things are worth noting in the above example.
+
+* You must supply an actual _table_ name to read from here, fully qualified
+  with project name and dataset name.
+  The Storage API does not support accessing `VIEW`s, so the convenience names
+  such as `telemetry.core` are not available via this API.
+  You can find the table corresponding to a given view using the BigQuery
+  console or using Data Catalog.
+* You must supply a filter on the table's date partitioning column, in this
+  case `submission_timestamp`.
+  Additionally, you must use the `to_date` function to make sure that predicate
+  push-down works properly for these filters.
+
+#### Query API
+
+If you want to read the results of a query (rather than directly reading
+tables), you may also use the Query API.
+
+This pushes the execution of the query into BigQuery's computation engine,
+and is typically suitable for reading smaller amounts of data. If you need
+to read large amounts of data, prefer the Storage API as described above.
+
+Example:
+```python
+
+from google.cloud import bigquery
+
+bq = bigquery.Client()
+
+query = """
+SELECT
+  event_string_value,
+  count(distinct client_id) AS client_count
+FROM
+  `moz-fx-data-derived-datasets.telemetry.events`
+WHERE
+  event_category = 'normandy'
+  AND event_method = 'enroll'
+  AND submission_date_s3 = '2019-06-01'
+GROUP BY
+  event_string_value
+ORDER BY
+  client_count DESC
+LIMIT 20
+"""
+query_job = bq.query(query)
+# Wait for query execution, then fetch results as a pandas dataframe.
+rows = query_job.result().to_dataframe()
+
+```
+
 
 ### Persisting data
 
-You can save data to the [Databricks Filesystem][dbfs]
-or FIXME: somewhere on GCS?.
+You can save data resulting from your Spark analysis as a [BigQuery table](persist_bq)
+or to [Google Cloud Storage](persist_gcs).
+
+You can also save data to the [Databricks Filesystem][dbfs].
 
 [dbfs]: https://docs.databricks.com/user-guide/databricks-file-system.html#dbfs
-
+[persist_bq]: ../cookbooks/bigquery.md#writing-query-results-to-a-permanent-table
+[persist_gcs]: ../cookbooks/bigquery.md#writing-results-to-gcs-object-store
 
 
 FAQ

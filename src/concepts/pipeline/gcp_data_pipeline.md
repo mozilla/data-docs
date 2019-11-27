@@ -84,7 +84,7 @@ If there is a processing error or data-loss downstream in the pipeline, this is 
 
 # Decoding
 
-Once the raw data has been enqueued, it's time to process it.
+Once the raw data has been added to the PubSub queue, it's time to process it.
 
 The decoder is implemented as a [Dataflow] job, and is written in Java.
 

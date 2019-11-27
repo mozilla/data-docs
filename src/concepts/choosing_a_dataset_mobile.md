@@ -88,7 +88,7 @@ Best practice is to always filter on `app_name`, `os`, app version
 (found as `metadata_app_version`) and release channel (which can be found as
 under metadata as `metadata.normalized_channel`).
 
-There are versioned tables for core ping storage, but the un-suffixed table is
+There are versioned tables for core ping storage, but the table without a version suffix is
 the most up-to-date table and it is best to use this in your analysis.
 
 The `seq` field indicates the order of the pings coming in. A record

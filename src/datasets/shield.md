@@ -13,11 +13,11 @@ and locate telemetry from add-on studies.
 
 ## Dashboards
 
-The
-[Shield Studies Viewer](https://strategy-and-insights.mozilla.com/shield-studies/index.html)
-and
-[Experimenter](https://experimenter.services.mozilla.com/)
+The [Shield Studies Viewer] and [Experimenter] dashboards
 are other places to find lists of live experiments.
+
+[Shield Studies Viewer]: https://strategy-and-insights.mozilla.com/shield-studies/index.html
+[Experimenter]: https://experimenter.services.mozilla.com/
 
 ## Experiment slugs
 
@@ -88,10 +88,9 @@ The event schema is described
 
 The `events` table is updated daily.
 
-### `telemetry_shield_study_addon_parquet`
-FIXME
+### `telemetry.shield_study_addon`
 
-The `telemetry_shield_study_addon_parquet` table contains SHIELD telemetry from add-on experiments,
+The `telemetry.shield_study_addon` table contains SHIELD telemetry from add-on experiments,
 i.e. key-value pairs sent with the
 `browser.study.sendTelemetry()` method from the
 [SHIELD study add-on utilities](https://github.com/mozilla/shield-studies-addon-utils/)
@@ -104,16 +103,18 @@ This is set by the add-on; sometimes it takes the value of
 This is often not the same as the Normandy slug.
 
 The schema for shield-study-addon pings is described in the
-[`mozilla-pipeline-schemas` repository](https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/dev/schemas/telemetry/shield-study-addon).
+[`mozilla-pipeline-schemas` repository](https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/master/schemas/telemetry/shield-study-addon).
 
 The key-value pairs are present in `data` attribute of the `payload` column.
 
-The `telemetry_shield_study_addon_parquet` table is produced by direct-to-parquet;
-data latency should be less than 1 hour.
+The `telemetry.shield_study_addon` table contains only full days of data.
+If you need access to data with lower latency, you can use the "live" table
+`telemetry_live.shield_study_addon_v4` which should have latency significantly
+less than 1 hour.
 
-### `telemetry_shield_study_parquet`
+### `telemetry.shield_study`
 
-The `telemetry_shield_study_parquet` dataset includes
+The `telemetry.shield_study` dataset includes
 enrollment and unenrollment events for add-on experiments only,
 sent by the [SHIELD study add-on utilities](https://github.com/mozilla/shield-studies-addon-utils/).
 
@@ -126,28 +127,7 @@ This is often not the same as the Normandy slug.
 Normandy also emits its own enrollment and unenrollment events for these studies,
 which are available in the `events` table.
 
-The `telemetry_shield_study_parquet` table is produced by direct-to-parquet;
-data latency should be less than 1 hour.
-
-## Raw ping sources
-
-### `telemetry-cohorts`
-
-The `telemetry-cohorts` dataset contains a subset of pings
-from clients enrolled in experiments,
-accessible as a
-[Dataset](https://mozilla.github.io/python_moztelemetry/api.html#dataset),
-and partitioned by `experimentId` and `docType`.
-
-Experiments deployed to large fractions of the release channel
-may have the `isHighVolume` flag set in the Normandy recipe;
-those experiments will not be aggregated into the `telemetry-cohorts` source.
-
-To learn which branch clients are enrolled in,
-reference the `environment.experiments` map.
-
-[^1] Add-on experiments are displayed in Test Tube
-when the `name` given in the Normandy recipe matches the
-the identifier registered with the SHIELD add-on utilities
-(which is sometimes the `applications.gecko.id` listed in the add-on's `manifest.json`).
-These often do not match.
+The `telemetry.shield_study` table contains only full days of data.
+If you need access to data with lower latency, you can use the "live" table
+`telemetry_live.shield_study_v4` which should have latency significantly
+less than 1 hour.

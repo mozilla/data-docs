@@ -50,14 +50,14 @@ enrollments_by_day = (
 )
 ```
 
-FIXME Equivalently, in Presto SQL:
+Equivalently, in BigQuery SQL:
 
 ```sql
 SELECT
   submission_date_s3,
-  event_map_values['branch'] AS branch,
+  udf.get_key(event_map_values, 'branch') AS branch,
   COUNT(*) AS n
-FROM events
+FROM telemetry.events
 WHERE
   event_category = 'normandy'
   AND event_method = 'enroll'

@@ -7,7 +7,9 @@ take advantage of those two pieces.
 ## TL;DR: What to do for quick improvements
 
 - Filter on a partitioned column† (_even_ if you have a `LIMIT`)
-- Use a sample of the data based on the `sample_id` field. This can be helpful for initial development, even if you later run the query using the entire un-sampled population.
+- Use a sample of the data based on the `sample_id` field. This can be helpful
+  for initial development, even if you later run the query using the entire
+  population (without sampling).
 - Select only the columns you want explicitly (Don't use `SELECT *`)
 - Use approximate algorithms: e.g. `approx_distinct(...)` instead of `COUNT(DISTINCT ...)`
 
