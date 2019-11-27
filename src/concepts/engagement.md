@@ -73,15 +73,16 @@ Some filters are applied to `onLocationChange` events:
 
   - Error pages are excluded.
   - Only top-level pageloads (where `webProgress.isTopLevel`,
-    [documented
-    inline](https://searchfox.org/mozilla-central/rev/f1c7ba91fad60bfea184006f3728dd6ac48c8e56/uriloader/base/nsIWebProgress.idl#144),
-    is true) are counted – i.e, not navigations within a frame.
+    [documented inline][total_uri_src], is true) are counted – i.e,
+    not navigations within a frame.
   - Tab restore events are excluded.
   - URIs visited in private browsing mode are excluded unless
     `browser.engagement.total_uri_count.pbm` is true. (The pref has been
     flipped on for small populations in a couple of short studies, but,
-    [for now](https://bugzilla.mozilla.org/show_bug.cgi?id=1535169)
-    remains false by default.)
+    [for now][bug1535169] remains false by default.)
+
+[total_uri_src]: https://searchfox.org/mozilla-central/rev/f1c7ba91fad60bfea184006f3728dd6ac48c8e56/uriloader/base/nsIWebProgress.idl#144
+[bug1535169]: https://bugzilla.mozilla.org/show_bug.cgi?id=1535169
 
 ### `unfiltered_uri_count`
 
@@ -94,6 +95,7 @@ e.g. `about:config` and `about:telemetry` are included.
 
 No applications of `unfiltered_uri_count` have been identified.
 
-1.  Ping `reason` for `main` pings
-    [observed](https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/82297/revision/1554433978453)
+1.  Ping `reason` for `main` pings [observed][db_notebook]
     from Firefox 65 `release` channel users on February 21, 2019.
+
+[db_notebook]: https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/82297/revision/1554433978453

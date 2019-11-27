@@ -21,8 +21,8 @@ take a look at our [tools for experimentation](../tools/experiments.md).
 
 # Main Ping Derived Datasets
 
-The [main ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html)
-contains most of the measurements used to track performance and health of Firefox in the wild.
+The [main ping] contains most of the measurements used to track performance
+and health of Firefox in the wild.
 This ping includes histograms, scalars, and events.
 
 This section describes the derived datasets we provide to make analyzing this data easier.
@@ -52,12 +52,10 @@ This section describes the derived datasets we provide to make analyzing this da
 {{#include ../datasets/obsolete/client_count_daily/intro.md}}
 
 
-
 # New-Profile Derived Datasets
 
-The [new-profile ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/new-profile-ping.html)
-is sent from Firefox Desktop on the first session of a newly created profile and contains the initial
-information about the user environment.
+The [new-profile ping] is sent from Firefox Desktop on the first session of a newly
+created profile and contains the initial information about the user environment.
 
 This data is available in the `telemetry_new_profile_parquet` dataset.
 
@@ -98,3 +96,7 @@ There are several tables owned by the mobile team documented
 
 * `android_addons`
 * `mobile_clients`
+
+[main ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html
+[crash ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html
+[new-profile ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/new-profile-ping.html
