@@ -82,7 +82,7 @@ where the distinction matters.
 
 When in doubt, be precise. You're counting _clients_.
 
-[This article](../profile/index.md) contains a more thorough treatment of
+[This article](./profile/index.md) contains a more thorough treatment of
 the concept of "profiles".
 
 ### Opt-in vs Opt-out

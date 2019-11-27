@@ -379,7 +379,7 @@ graph LR
 [cutover]: https://bugzilla.mozilla.org/show_bug.cgi?id=1302265
 [OpenResty]: http://openresty.org/en/
 [Amplitude]: https://amplitude.com/
-[Mozilla Data Collective]: https://www.mozdatacollective.com/home
+[Mozilla Data Collective]: BROKEN:https://www.mozdatacollective.com/home
 [Firefox Hardware Report]: https://hardware.metrics.mozilla.com/
 [DataDog]: http://datadoghq.com/
 [Cerberus]: https://github.com/mozilla/cerberus

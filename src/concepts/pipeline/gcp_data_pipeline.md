@@ -70,8 +70,8 @@ Firefox will store the ping on disk and retry to send it until the maximum ping 
 # Ingestion
 
 HTTP submissions coming in from the wild hit a load balancer and then an
-HTTP Server that accepts POST requests containing a message body of
-optionally-gzipped JSON.
+HTTP Server that [accepts POST requests](http_edge_spec.md) containing a
+message body of optionally-gzipped JSON.
 
 These messages are forwarded to a PubSub message queue with minimal processing,
 and made available in a **Raw** topic.

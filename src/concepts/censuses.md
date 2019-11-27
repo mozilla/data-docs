@@ -65,7 +65,7 @@ age, or update failures.
 [manifest]: https://searchfox.org/mozilla-central/rev/b36e97fc776635655e84f2048ff59f38fa8a4626/toolkit/mozapps/extensions/extensions.manifest#1
 [bl_notify]: https://searchfox.org/mozilla-central/rev/b36e97fc776635655e84f2048ff59f38fa8a4626/toolkit/mozapps/extensions/Blocklist.jsm#569
 [adi_graph]: https://strategy-and-insights.mozilla.com/dailyUsageSignals/adiDetails.html
-[adi_mdc]: https://www.mozdatacollective.com/report/index/index/element/877/segment/0
+[adi_mdc]: BROKEN:https://www.mozdatacollective.com/report/index/index/element/877/segment/0
 
 ### DAU / Daily Active Users
 

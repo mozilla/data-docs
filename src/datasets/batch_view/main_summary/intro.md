@@ -38,4 +38,4 @@ The technical documentation for `main_summary` is located in the
 [telemetry-batch-view documentation](https://github.com/mozilla/telemetry-batch-view/blob/master/docs/MainSummary.md).
 
 The code responsible for generating this dataset is
-[here](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/MainSummaryView.scala)
+[here](https://github.com/mozilla/telemetry-batch-view/blob/master/GRAVEYARD.md#main-summary-clients-daily-and-addons)
