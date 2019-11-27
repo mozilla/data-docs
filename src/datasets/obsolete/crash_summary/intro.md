@@ -24,4 +24,4 @@ The technical documentation for `crash_summary` is located in the
 [telemetry-batch-view documentation](https://github.com/mozilla/telemetry-batch-view/blob/master/docs/CrashSummary.md).
 
 The code responsible for generating this dataset is
-[here](https://github.com/mozilla/telemetry-batch-view/blob/master/src/main/scala/com/mozilla/telemetry/views/CrashSummaryView.scala)
+[here](https://github.com/mozilla/telemetry-batch-view/blob/master/GRAVEYARD.md#crash-summary)

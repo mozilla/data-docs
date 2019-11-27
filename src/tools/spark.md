@@ -132,8 +132,8 @@ rows = query_job.result().to_dataframe()
 
 ### Persisting data
 
-You can save data resulting from your Spark analysis as a [BigQuery table](persist_bq)
-or to [Google Cloud Storage](persist_gcs).
+You can save data resulting from your Spark analysis as a [BigQuery table][persist_bq]
+or to [Google Cloud Storage][persist_gcs].
 
 You can also save data to the [Databricks Filesystem][dbfs].
 
