@@ -205,8 +205,8 @@ WHERE
 ```
 
 The second table that is created is the `stable` clustered table (and corresponding view) under
-`moz-fx-data-shared-prod.<namespace>.<doctype>_v<docversion>`. This view will only contain complete
-days of submissions. The data is clustered by `submission_timestamp` and `sample_id` to improve the
+`moz-fx-data-shared-prod.<namespace>.<doctype>`. This view will only contain complete
+days of submissions. The data is clustered by `normalized_channel` and `sample_id` to improve the
 efficiency of queries.
 
 ```sql

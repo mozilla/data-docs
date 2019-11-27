@@ -5,7 +5,7 @@ The remainder of this section section describes Firefox Desktop Telemetry
 which goes back in various forms for many years.
 Modern data collection is based on the [Glean platform](glean/glean.md).
 Older mobile product data is slightly different again, and is described
-in [this article](choosing_a_dataset_mobile.md).
+in [Choosing a Mobile Dataset](choosing_a_dataset_mobile.md).
 
 Firefox clients out in the wild send us data as *pings*.
 [`Main` pings][main_ping] contain some combination of *environment* data

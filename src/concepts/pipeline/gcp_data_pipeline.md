@@ -129,17 +129,17 @@ and the [schema generator].
 The result are tables that contains SQL-friendly field names for all known
 measures, as implemented in the [probe scraper].
 
-A Dataflow job reads from the Decoded topic and writes out to **[Live tables]**.
+A Dataflow job reads from the Decoded topic and writes out to **[live ping tables]**.
 These tables are updated frequently, and typically reflect data within a few
 minutes of it being ingested. They are optimized for accessing recent data,
-but do not contain all of history.
+but are only guaranteed to contain a few days of history.
 
-For older data, data is also stored in **[Stable tables]**.
+Historical raw ping data is stored in **[historical ping tables]**, also known as **stable tables**.
 These tables include only completed days of data, are populated once a day
 shortly after midnight UTC.
 Data in the Stable tables is partitioned by day, and optimized for accessing
 larger time periods. It is also optimized for limiting analysis to a fraction
-of the data using the `sample_id` field.
+of the data using the `normalized_channel` and `sample_id` fields.
 
 # Workflow Management and ETL
 

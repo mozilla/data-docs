@@ -14,9 +14,9 @@ SELECT
   submission_timestamp,
   document_id --FIXME
 FROM
-  telemetry_live.main -- or crash, event, core, etc
+  telemetry_live.main_v4 -- or crash, event, core, etc
 WHERE
-  submission_timestamp > TIMESTAMP_SUB(current_timestamp, INTERVAL 3 HOUR)
+  submission_timestamp > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 3 HOUR)
   AND client_id = '<your_client_id>'
 ORDER BY
   submission_timestamp DESC

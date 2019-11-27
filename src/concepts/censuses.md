@@ -56,7 +56,8 @@ Failures are ignored.
 
 A visualization of real and detrended ADI is available at
 [Desktop API Details: Long-term trend and decomposition][adi_graph].
-ADI is also plotted in the [Mozilla Data Collective][adi_mdc].
+ADI is also plotted in the [Mozilla Data Collective][adi_mdc]
+and the raw data is available in BigQuery (see an example [ADI query in Redash](https://sql.telemetry.mozilla.org/queries/66481)).
 
 Telemetry only reports whether blocklist checking is enabled or disabled
 on the client; there is no data in telemetry about blocklist fetches,

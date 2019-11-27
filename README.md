@@ -13,7 +13,7 @@ and elaborated in the [Mozilla Privacy Policy](https://www.mozilla.org/en-US/pri
 To learn more about what data Firefox collects and the choices you can make
 as a user, please see the [Firefox Privacy Notice](https://www.mozilla.org/en-US/privacy/firefox/).
 
-You can find the [rendered documentation here](https://docs.telemetry.mozilla.org/).
+The rendered documentation is hosted at [https://docs.telemetry.mozilla.org/](https://docs.telemetry.mozilla.org/).
 
 This documentation is rendered with [mdBook](https://github.com/rust-lang/mdBook).
 

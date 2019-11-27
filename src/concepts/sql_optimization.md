@@ -154,7 +154,7 @@ WHERE country == 'US'
 The database wouldn't have to even read the file! It could just look at the path and realize there was
 nothing of interest.
 
-Our tables are usually partitioned by date, e.g. `submission_timestamp`.
+Our tables are usually partitioned by date, e.g. `submission_date` or `DATE(submission_timestamp)`.
 
 #### Key Takeaways
 
