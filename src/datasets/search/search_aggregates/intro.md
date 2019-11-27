@@ -27,9 +27,6 @@ There are five aggregation columns:
 `sap`, `tagged-sap`, and `tagged-follow-on`, `organic` and `unknown`.
 Each of these columns represent different types of searches.
 For more details, see the [search data documentation]
-Note that, if there were no such searches in a row's segment
-(i.e. the count would be 0),
-the column value is `null`.
 
 <!--
 #### Background and Caveats

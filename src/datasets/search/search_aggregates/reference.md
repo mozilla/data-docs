@@ -20,22 +20,23 @@ For more details see the [search data documentation].
 ## Scheduling
 
 This job is
-[scheduled on airflow](https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py#L135)
+[scheduled on airflow](https://github.com/mozilla/telemetry-airflow/blob/9af06204f7073d7fd5b0240db9091b57a7454a74/dags/main_summary.py#L597)
 to run daily.
 
 ## Schema
 
-As of 2018-11-28,
-the current version of `search_aggregates` is `v4`,
+As of 2019-11-27,
+the current version of `search_aggregates` is `v8`,
 and has a schema as follows.
-The dataset is backfilled through 2016-06-06
+The dataset is backfilled through 2016-03-11
 
 ```
 root
+ |-- submission_date: date (nullable = true)
+ |-- submission_date_s3: date (nullable = true)
  |-- country: string (nullable = true)
  |-- engine: string (nullable = true)
  |-- source: string (nullable = true)
- |-- submission_date: string (nullable = true)
  |-- app_version: string (nullable = true)
  |-- distribution_id: string (nullable = true)
  |-- locale: string (nullable = true)
@@ -45,13 +46,21 @@ root
  |-- tagged-follow-on: long (nullable = true)
  |-- sap: long (nullable = true)
  |-- organic: long (nullable = true)
+ |-- search_with_ads: long (nullable = true)
+ |-- ad_click: long (nullable = true)
  |-- unknown: long (nullable = true)
+ |-- client_count: long (nullable = true)
+ |-- default_search_engine: string (nullable = true)
+ |-- default_private_search_engine: string (nullable = true)
+ |-- os: string (nullable = true)
+ |-- os_version: string (nullable = true)
+ |-- addon_version: string (nullable = true)
 ```
 
 # Code Reference
 
 The `search_aggregates` job is
-[defined in `python_mozetl`](https://github.com/mozilla/python_mozetl/blob/master/mozetl/search/aggregates.py)
+[defined in `bigquery-etl`](https://github.com/mozilla/bigquery-etl/blob/master/templates/search_derived/search_aggregates_v8/query.sql)
 
 
 [search data documentation]: ../../search.md
