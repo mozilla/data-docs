@@ -1,6 +1,6 @@
 # Glean - product analytics & telemetry
 
-For Mozilla, getting reliable data from our products is critical to inform our decision making. Glean is our new product analytics & telemetry solution that provides that data for our mobile products.
+For Mozilla, getting reliable data from our products is critical to inform our decision making. Glean is our new product analytics & telemetry solution that provides that data for our products.
 It aims to be easy to integrate, reliable and transparent by providing an SDK and integrated tools.
 
 It currently supports Android products, while iOS support is planned.
@@ -53,7 +53,7 @@ To make it easier to understand the general semantics of our data, the Glean SDK
 *   _(Work in progress)_ Use events and [Amplitude](https://sso.mozilla.com/amplitude) for product analytics.
 *   [Use Databricks](https://sso.mozilla.com/databricks) for deep-dive analysis.
 *   [Use the Glean debug ping viewer](debug_ping_view.md) for QA & development.
-*   _(Work in progress)_ For experimentation, you will be able to use our [Android experiments library](https://github.com/mozilla-mobile/android-components/blob/master/components/service/experiments/README.md), which integrates with Glean.
+*   For experimentation, you will be able to use [Android experiments library](https://github.com/mozilla-mobile/android-components/blob/master/components/service/experiments/README.md), which integrates with Glean.
 
 # Contact
 
