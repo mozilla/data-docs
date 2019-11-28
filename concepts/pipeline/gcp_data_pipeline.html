@@ -1,0 +1,357 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Overview of Mozilla's Data Pipeline - Firefox Data Documentation</title>
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../../dtmo.css">
+        
+        <link rel="stylesheet" href="../../mermaid.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div id="sidebar-scrollbox" class="sidebar-scrollbox">
+                <ol class="chapter"><li class="expanded affix "><a href="../../introduction.html">Firefox Data Documentation</a></li><li class="expanded "><a href="../../concepts/reporting_a_problem.html"><strong aria-hidden="true">1.</strong> Reporting a problem</a></li><li class="expanded "><a href="../../concepts/terminology.html"><strong aria-hidden="true">2.</strong> Terminology</a></li><li class="expanded "><a href="../../concepts/getting_started.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="../../concepts/analysis_intro.html"><strong aria-hidden="true">3.1.</strong> Analysis Quick Start</a></li><li class="expanded "><a href="../../concepts/choosing_a_dataset.html"><strong aria-hidden="true">3.2.</strong> Choosing a Desktop Dataset</a></li><li class="expanded "><a href="../../concepts/choosing_a_dataset_mobile.html"><strong aria-hidden="true">3.3.</strong> Choosing a Mobile Dataset</a></li><li class="expanded "><a href="../../tools/stmo.html"><strong aria-hidden="true">3.4.</strong> Intro to STMO</a></li><li class="expanded "><a href="../../concepts/analysis_gotchas.html"><strong aria-hidden="true">3.5.</strong> Common Analysis Gotchas</a></li><li class="expanded "><a href="../../concepts/sql_optimization.html"><strong aria-hidden="true">3.6.</strong> Optimizing Queries</a></li><li class="expanded "><a href="../../concepts/getting_help.html"><strong aria-hidden="true">3.7.</strong> Getting Help</a></li></ol></li><li class="expanded "><a href="../../tools/index.html"><strong aria-hidden="true">4.</strong> Tools</a></li><li><ol class="section"><li class="expanded "><a href="../../tools/projects.html"><strong aria-hidden="true">4.1.</strong> Project Glossary</a></li><li class="expanded "><a href="../../concepts/pipeline/gcp_data_pipeline.html" class="active"><strong aria-hidden="true">4.2.</strong> Overview of Mozilla's Data Pipeline</a></li><li><ol class="section"><li class="expanded "><a href="../../concepts/pipeline/http_edge_spec.html"><strong aria-hidden="true">4.2.1.</strong> HTTP Edge Server Specification</a></li><li class="expanded "><a href="../../concepts/pipeline/event_pipeline.html"><strong aria-hidden="true">4.2.2.</strong> Event Pipeline Detail</a></li><li class="expanded "><a href="../../concepts/pipeline/data_pipeline.html"><strong aria-hidden="true">4.2.3.</strong> Previous AWS Pipeline Overview</a></li><li class="expanded "><a href="../../concepts/pipeline/data_pipeline_detail.html"><strong aria-hidden="true">4.2.4.</strong> In-depth AWS Data Pipeline Detail</a></li></ol></li><li class="expanded "><a href="../../tools/interfaces.html"><strong aria-hidden="true">4.3.</strong> Analysis Interfaces</a></li><li class="expanded "><a href="../../tools/spark.html"><strong aria-hidden="true">4.4.</strong> Custom analysis with Spark</a></li><li class="expanded "><a href="../../concepts/sql_style.html"><strong aria-hidden="true">4.5.</strong> SQL Style Guide</a></li><li class="expanded "><a href="../../concepts/glean/glean.html"><strong aria-hidden="true">4.6.</strong> Glean overview</a></li><li><ol class="section"><li class="expanded "><a href="../../concepts/glean/debug_ping_view.html"><strong aria-hidden="true">4.6.1.</strong> Glean Debug ping viewer</a></li></ol></li><li class="expanded "><a href="../../tools/alerts.html"><strong aria-hidden="true">4.7.</strong> Alerts</a></li></ol></li><li class="expanded "><a href="../../cookbooks/index.html"><strong aria-hidden="true">5.</strong> Analysis cookbooks</a></li><li><ol class="section"><li class="expanded "><a href="../../cookbooks/bigquery.html"><strong aria-hidden="true">5.1.</strong> Accessing and working with BigQuery</a></li><li><ol class="section"><li class="expanded "><a href="../../cookbooks/bigquery-airflow.html"><strong aria-hidden="true">5.1.1.</strong> Scheduling BigQuery Queries in Airflow</a></li></ol></li><li class="expanded "><a href="../../cookbooks/dataset_specific.html"><strong aria-hidden="true">5.2.</strong> Dataset Specific</a></li><li><ol class="section"><li class="expanded "><a href="../../cookbooks/normandy_events.html"><strong aria-hidden="true">5.2.1.</strong> Working with Normandy events</a></li></ol></li><li class="expanded "><a href="../../cookbooks/realtime.html"><strong aria-hidden="true">5.3.</strong> Real-time</a></li><li><ol class="section"><li class="expanded "><a href="../../cookbooks/realtime_analysis_plugin.html"><strong aria-hidden="true">5.3.1.</strong> Creating a Real-time Analysis Plugin</a></li><li class="expanded "><a href="../../cookbooks/view_pings_cep.html"><strong aria-hidden="true">5.3.2.</strong> Seeing Your Own Pings</a></li><li class="expanded "><a href="../../tools/cep_matcher.html"><strong aria-hidden="true">5.3.3.</strong> CEP Matcher</a></li></ol></li><li class="expanded "><a href="../../cookbooks/metrics.html"><strong aria-hidden="true">5.4.</strong> Metrics</a></li><li><ol class="section"><li class="expanded "><a href="../../cookbooks/dau.html"><strong aria-hidden="true">5.4.1.</strong> Daily Active Users (DAU)</a></li><li class="expanded "><a href="../../cookbooks/active_dau.html"><strong aria-hidden="true">5.4.2.</strong> Active DAU (aDAU)</a></li><li class="expanded "><a href="../../cookbooks/retention.html"><strong aria-hidden="true">5.4.3.</strong> Retention</a></li></ol></li></ol></li><li class="expanded "><a href="../../datasets/new_data.html"><strong aria-hidden="true">6.</strong> Sending telemetry</a></li><li><ol class="section"><li class="expanded "><a href="../../cookbooks/client_guidelines.html"><strong aria-hidden="true">6.1.</strong> Implementing Experiments</a></li><li class="expanded "><a href="../../cookbooks/events_best_practices.html"><strong aria-hidden="true">6.2.</strong> Sending Events</a></li><li class="expanded "><a href="../../cookbooks/new_ping.html"><strong aria-hidden="true">6.3.</strong> Sending a Custom Ping</a></li><li class="spacer"></li></ol></li><li class="expanded "><a href="../../datasets/reference.html"><strong aria-hidden="true">7.</strong> Dataset Reference</a></li><li><ol class="section"><li class="expanded "><a href="../../datasets/pings.html"><strong aria-hidden="true">7.1.</strong> Pings</a></li><li class="expanded "><a href="../../datasets/derived.html"><strong aria-hidden="true">7.2.</strong> Derived Datasets</a></li><li><ol class="section"><li class="expanded "><a href="../../datasets/active_profiles.html"><strong aria-hidden="true">7.2.1.</strong> Active Profiles</a></li><li class="expanded "><a href="../../datasets/batch_view/addons/reference.html"><strong aria-hidden="true">7.2.2.</strong> Addons</a></li><li class="expanded "><a href="../../datasets/other/addons_daily/reference.html"><strong aria-hidden="true">7.2.3.</strong> Addons Daily</a></li><li class="expanded "><a href="../../datasets/batch_view/clients_daily/reference.html"><strong aria-hidden="true">7.2.4.</strong> Clients Daily</a></li><li class="expanded "><a href="../../datasets/bigquery/clients_last_seen/reference.html"><strong aria-hidden="true">7.2.5.</strong> Clients Last Seen</a></li><li class="expanded "><a href="../../datasets/batch_view/events/reference.html"><strong aria-hidden="true">7.2.6.</strong> Events</a></li><li class="expanded "><a href="../../datasets/bigquery/exact_mau/reference.html"><strong aria-hidden="true">7.2.7.</strong> Exact MAU</a></li><li class="expanded "><a href="../../datasets/batch_view/first_shutdown_summary/reference.html"><strong aria-hidden="true">7.2.8.</strong> First Shutdown Summary</a></li><li class="expanded "><a href="../../datasets/batch_view/main_summary/reference.html"><strong aria-hidden="true">7.2.9.</strong> Main Summary</a></li><li class="expanded "><a href="../../datasets/batch_view/new_profile/reference.html"><strong aria-hidden="true">7.2.10.</strong> New Profile</a></li><li class="expanded "><a href="../../datasets/other/socorro_crash/reference.html"><strong aria-hidden="true">7.2.11.</strong> Socorro Crash Reports</a></li><li class="expanded "><a href="../../datasets/other/ssl/reference.html"><strong aria-hidden="true">7.2.12.</strong> SSL Ratios (public)</a></li><li class="expanded "><a href="../../datasets/batch_view/telemetry_aggregates/reference.html"><strong aria-hidden="true">7.2.13.</strong> Telemetry Aggregates</a></li><li class="expanded "><a href="../../datasets/batch_view/update/reference.html"><strong aria-hidden="true">7.2.14.</strong> Update</a></li></ol></li><li class="expanded "><a href="../../tools/experiments.html"><strong aria-hidden="true">7.3.</strong> Experimental Datasets</a></li><li><ol class="section"><li class="expanded "><a href="../../datasets/heartbeat.html"><strong aria-hidden="true">7.3.1.</strong> Accessing Heartbeat data</a></li><li class="expanded "><a href="../../datasets/shield.html"><strong aria-hidden="true">7.3.2.</strong> Accessing Shield Study data</a></li></ol></li><li class="expanded "><a href="../../datasets/search.html"><strong aria-hidden="true">7.4.</strong> Search Datasets</a></li><li><ol class="section"><li class="expanded "><a href="../../datasets/mozetl/search_aggregates/reference.html"><strong aria-hidden="true">7.4.1.</strong> Search Aggregates</a></li><li class="expanded "><a href="../../datasets/mozetl/search_clients_daily/reference.html"><strong aria-hidden="true">7.4.2.</strong> Search Clients Daily</a></li></ol></li><li class="expanded "><a href="../../datasets/other.html"><strong aria-hidden="true">7.5.</strong> Other Datasets</a></li><li><ol class="section"><li class="expanded "><a href="../../datasets/other/hgpush/reference.html"><strong aria-hidden="true">7.5.1.</strong> hgpush</a></li><li class="expanded "><a href="../../datasets/other/stub_installer/reference.html"><strong aria-hidden="true">7.5.2.</strong> Stub installer ping</a></li><li class="expanded "><a href="../../datasets/other/activity-stream/reference.html"><strong aria-hidden="true">7.5.3.</strong> Activity Stream</a></li></ol></li><li class="expanded "><a href="../../datasets/obsolete.html"><strong aria-hidden="true">7.6.</strong> Obsolete Datasets</a></li><li><ol class="section"><li class="expanded "><a href="../../datasets/obsolete/churn/reference.html"><strong aria-hidden="true">7.6.1.</strong> Churn</a></li><li class="expanded "><a href="../../datasets/obsolete/client_count/reference.html"><strong aria-hidden="true">7.6.2.</strong> Client Count</a></li><li class="expanded "><a href="../../datasets/obsolete/client_count_daily/reference.html"><strong aria-hidden="true">7.6.3.</strong> Client Count Daily</a></li><li class="expanded "><a href="../../datasets/obsolete/crash_aggregates/reference.html"><strong aria-hidden="true">7.6.4.</strong> Crash Aggregates</a></li><li class="expanded "><a href="../../datasets/obsolete/crash_summary/reference.html"><strong aria-hidden="true">7.6.5.</strong> Crash Summary</a></li><li class="expanded "><a href="../../datasets/obsolete/error_aggregates/reference.html"><strong aria-hidden="true">7.6.6.</strong> Error Aggregates</a></li><li class="expanded "><a href="../../datasets/obsolete/heavy_users/reference.html"><strong aria-hidden="true">7.6.7.</strong> Heavy Users</a></li><li class="expanded "><a href="../../datasets/obsolete/longitudinal/reference.html"><strong aria-hidden="true">7.6.8.</strong> Longitudinal</a></li><li class="expanded "><a href="../../datasets/obsolete/retention/reference.html"><strong aria-hidden="true">7.6.9.</strong> Retention</a></li><li class="expanded "><a href="../../datasets/obsolete/sync_summary/reference.html"><strong aria-hidden="true">7.6.10.</strong> Sync Summary</a></li></ol></li><li class="expanded "><a href="../../datasets/fxa.html"><strong aria-hidden="true">7.7.</strong> Firefox Accounts Datasets</a></li><li><ol class="section"><li class="expanded "><a href="../../datasets/fxa_metrics/attribution.html"><strong aria-hidden="true">7.7.1.</strong> Firefox Account Attribution</a></li><li class="expanded "><a href="../../datasets/fxa_metrics/funnels.html"><strong aria-hidden="true">7.7.2.</strong> Firefox Account Funnel Metrics</a></li><li class="expanded "><a href="../../datasets/fxa_metrics/emails.html"><strong aria-hidden="true">7.7.3.</strong> Firefox Account Email Metrics</a></li><li class="spacer"></li></ol></li></ol></li><li class="expanded "><a href="../../concepts/index.html"><strong aria-hidden="true">8.</strong> Telemetry Behavior Reference</a></li><li><ol class="section"><li class="expanded "><a href="../../concepts/history.html"><strong aria-hidden="true">8.1.</strong> History of Telemetry</a></li><li class="expanded "><a href="../../concepts/profile/index.html"><strong aria-hidden="true">8.2.</strong> Profile Behavior</a></li><li><ol class="section"><li class="expanded "><a href="../../concepts/profile/profile_creation.html"><strong aria-hidden="true">8.2.1.</strong> Profile Creation</a></li><li class="expanded "><a href="../../concepts/profile/realworldusage.html"><strong aria-hidden="true">8.2.2.</strong> Real World Usage</a></li><li class="expanded "><a href="../../concepts/profile/profilehistory.html"><strong aria-hidden="true">8.2.3.</strong> Profile History</a></li></ol></li><li class="expanded "><a href="../../concepts/channels/index.html"><strong aria-hidden="true">8.3.</strong> Channel Behavior</a></li><li><ol class="section"><li class="expanded "><a href="../../concepts/channels/channel_normalization.html"><strong aria-hidden="true">8.3.1.</strong> Channel Normalization and Querying</a></li></ol></li><li class="expanded "><a href="../../concepts/censuses.html"><strong aria-hidden="true">8.4.</strong> Census metrics</a></li><li class="expanded "><a href="../../concepts/engagement.html"><strong aria-hidden="true">8.5.</strong> Engagement metrics</a></li><li class="expanded "><a href="../../concepts/sample_id.html"><strong aria-hidden="true">8.6.</strong> Sampling</a></li><li class="spacer"></li></ol></li><li class="expanded "><a href="../../meta/index.html"><strong aria-hidden="true">9.</strong> About this Documentation</a></li><li><ol class="section"><li class="expanded "><a href="../../meta/contributing.html"><strong aria-hidden="true">9.1.</strong> Contributing</a></li><li class="expanded "><a href="../../meta/structure.html"><strong aria-hidden="true">9.2.</strong> Structure</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Firefox Data Documentation</h1>
+
+                        <div class="right-buttons">
+                            <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#an-overview-of-mozillas-data-pipeline" id="an-overview-of-mozillas-data-pipeline">An overview of Mozilla’s Data Pipeline</a></h1>
+<p>This post describes the architecture of Mozilla’s data pipeline,
+which is used to collect Telemetry data from our products and logs from various services.</p>
+<p>The bulk of the data handled by this pipeline is Firefox Telemetry data, but the
+same tool-chain is used to collect, store, and analyze data coming from many
+sources.</p>
+<p>Here is a simplified diagram of how data is ingested into the data warehouse.</p>
+<pre class="mermaid">graph TD
+
+f1(fa:fa-firefox Firefox) -->|HTTP Post| k1(fa:fa-filter Ingestion Edge)
+k1 --> p1(fa:fa-stream Raw Topic)
+p1 --> d1(fa:fa-exchange-alt Landfill Sink)
+d1 --> b1(fa:fa-database Landfill BQ)
+p1 --> d2(fa:fa-exchange-alt Decoder)
+d2 -->|success| p2(fa:fa-stream Decoded Topic)
+d2 -.->|fail| p3(fa:fa-stream Errors Topic)
+p3 --> d4(fa:fa-exchange-alt Errors Sink)
+p2 --> d3(fa:fa-exchange-alt BigQuery Sink)
+d3 --> b2(fa:fa-database Live Tables BQ)
+d4 --> b3(fa:fa-database Error Tables BQ)
+
+classDef pubsub fill:#eff,stroke:#099;
+classDef dataflow fill:#efe,stroke:#090;
+classDef kube fill:#fef,stroke:#909;
+classDef producers fill:#fee,stroke:#f90;
+classDef bq fill:#ececff,stroke:#9370db;
+class p1,p2,p3 pubsub
+class d1,d2,d3,d4 dataflow
+class k1 kube
+class f1 producers
+class b1,b2,b3 bq
+</pre>
+<h2><a class="header" href="#firefox" id="firefox">Firefox</a></h2>
+<p>There are different APIs and formats to <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/index.html">collect data</a> in Firefox, all suiting different use cases:</p>
+<ul>
+<li><a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/histograms.html">histograms</a> – for recording multiple data points;</li>
+<li><a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/scalars.html">scalars</a> – for recording single values;</li>
+<li><a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/measuring-time.html">timings</a> – for measuring how long operations take;</li>
+<li><a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html">events</a> – for recording time-stamped events.</li>
+</ul>
+<p>These are commonly referred to as <em><a href="../../datasets/new_data.html">probes</a></em>.
+Each probe must declare the <a href="https://wiki.mozilla.org/Firefox/Data_Collection">collection policy</a> it conforms to: either <em>release</em> or <em>prerelease</em>.
+When adding a new measurement data-reviewers carefully inspect the probe and eventually approve the requested collection policy:</p>
+<ul>
+<li>Release data is collected from all Firefox users.</li>
+<li>Prerelease data is collected from users on Firefox Nightly and Beta channels.</li>
+</ul>
+<p>Users may choose to turn the data collection off in preferences.</p>
+<p>A <em>session</em> begins when Firefox starts up and ends when it shuts down.
+As a session could be long-running and last weeks, it gets sliced into
+smaller logical units called <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/sessions.html#subsessions">subsessions</a>.
+Each subsession generates a batch of data containing the current state
+of all probes collected so far, in the form of a [<code>main</code> ping], which is
+sent to our servers.
+The <code>main</code> ping is just one of the many <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/pings.html#ping-types">ping types</a> we support.
+Developers can <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html">create their own ping types</a> if needed.</p>
+<p><em>Pings</em> are submitted via an <a href="https://dxr.mozilla.org/mozilla-central/rev/6a23526fe5168087d7e4132c0705aefcaed5f571/toolkit/components/telemetry/TelemetryController.jsm#202">API</a> that performs a HTTP POST request to our edge servers.
+If a ping fails to successfully <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/submission.html#submission">submit</a> (e.g. because of missing internet connection),
+Firefox will store the ping on disk and retry to send it until the maximum ping age is exceeded.</p>
+<h2><a class="header" href="#ingestion" id="ingestion">Ingestion</a></h2>
+<p>Submissions coming in from the wild hit a load balancer and then an
+HTTP Server that <a href="http_edge_spec.html">accepts POST requests</a> containing a
+message body of optionally-gzipped JSON.</p>
+<p>These messages are forwarded to a PubSub message queue with minimal processing,
+and made available in a <strong>Raw</strong> topic.</p>
+<p>A Dataflow job reads this topic and writes the raw messages to a BigQuery <strong>Landfill</strong> sink.
+This Landfill data is not used for analysis, but is stored in its raw form for
+recovery and backfill purposes.</p>
+<p>If there is a processing error or data-loss downstream in the pipeline, this is an important fail-safe.</p>
+<h2><a class="header" href="#decoding" id="decoding">Decoding</a></h2>
+<p>Once the raw data has been added to the PubSub queue, it's time to process it.</p>
+<p>The decoder is implemented as a [Dataflow] job, and is written in Java.</p>
+<p>The decoding process tackles decompression, parsing, validation, deduplication,
+and enrichment of incoming messages.</p>
+<p>After a message is decompressed and parsed as JSON, we apply [JSONSchema validation]
+to ensure that submissions are well-formed.</p>
+<p>Sometimes duplicate submissions are sent to the pipeline, either due to normal
+networking failures or [weird behaviour] out there in the world.
+We watch for duplicate submissions, and discard any subsequent occurrences of
+already-seen records.</p>
+<p>Submissions are also enriched with some metadata about the request itself,
+including things like HTTP headers, GeoIP information, and submission timestamp.</p>
+<p>Messages that pass <em>successfully</em> through all these steps are written to another
+PubSub <strong>Decoded</strong> topic.</p>
+<p>A failure in any of these steps results in messages being sent to the <strong>Errors</strong> sink.
+This separates invalid data from valid data, while still making it available for
+monitoring and debugging.
+This is a good way to keep an eye on the health of the pipeline and the data
+flowing through.</p>
+<h2><a class="header" href="#data-warehouse" id="data-warehouse">Data Warehouse</a></h2>
+<p>Decoded data is ultimately written out to BigQuery, which acts as the data warehouse.</p>
+<p>By this time, incoming data has already been validated against the corresponding
+JSONSchema specification for each document type.
+Part of the decoding process above transforms this JSON structure into something
+more easily represented in BigQuery.
+One important transformation here is to convert all incoming fields from
+<code>UPPER CASE</code> or <code>camelCase</code> to <code>snake_case</code>.
+Another important transformation is to incorporate metadata about known probes
+and metrics to generate more complete schemas.</p>
+<p>This is handled by a combination of the decoder above, the [schema transpiler]
+and the [schema generator].
+The result are tables that contains SQL-friendly field names for all known
+measures, as implemented in the [probe scraper].</p>
+<p>A Dataflow job reads from the Decoded topic and writes out to <strong>[live ping tables]</strong>.
+These tables are updated frequently, and typically reflect data within a few
+minutes of it being ingested. They are optimized for accessing recent data,
+but are only guaranteed to contain a few days of history.</p>
+<p>Historical raw ping data is stored in <strong>[historical ping tables]</strong>, also known as <strong>stable tables</strong>.
+These tables include only completed days of data, are populated once a day
+shortly after midnight UTC.
+Data in the Stable tables is partitioned by day, and optimized for accessing
+larger time periods. It is also optimized for limiting analysis to a fraction
+of the data using the <code>normalized_channel</code> and <code>sample_id</code> fields.</p>
+<h1><a class="header" href="#beyond-the-data-warehouse" id="beyond-the-data-warehouse">Beyond the Data Warehouse</a></h1>
+<p>The diagram above shows the path data takes to get into the data warehouse.
+After that, we have to start using it!</p>
+<h2><a class="header" href="#workflow-management-and-etl" id="workflow-management-and-etl">Workflow Management and ETL</a></h2>
+<p>We use <a href="https://github.com/mozilla/telemetry-airflow/">Airflow</a> for workflow management.</p>
+<p>It orchestrates the daily creation of the Stable tables described above,
+as well as many other derived datasets.</p>
+<p>The ETL code to create derived datasets is commonly implemented using queries in BigQuery.</p>
+<p>Many examples can be found in the [bigquery-etl] repository.</p>
+<p>Data in BigQuery is also accessible via Spark, and several ETL jobs also run via Dataproc.</p>
+<p>These jobs produce data sets that are used for downstream analysis and data
+applications (such as <a href="https://telemetry.mozilla.org/">measurement</a> and <a href="https://missioncontrol.telemetry.mozilla.org">stability</a> dashboards,
+<a href="https://github.com/mozilla/taar">addon recommendation</a>, and other <a href="../../tools/projects.html#data-applications">data products</a>).</p>
+<h2><a class="header" href="#data-analysis" id="data-analysis">Data Analysis</a></h2>
+<p>Once the data reaches our data warehouse in BigQuery it can be processed
+in a number of ways as described in the <a href="../../cookbooks/bigquery.html">Accessing BigQuery</a> article.</p>
+<p>Data analysis is most commonly done using <a href="https://sql.telemetry.mozilla.org/">SQL queries</a> or using <a href="../../tools/spark.html">Spark</a>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../tools/projects.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../concepts/pipeline/http_edge_spec.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../../tools/projects.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../../concepts/pipeline/http_edge_spec.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+        
+        
+        <script type="text/javascript">
+            window.playpen_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../../mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="../../mermaid-init.js"></script>
+        
+
+        
+
+    </body>
+</html>
