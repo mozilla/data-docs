@@ -35,10 +35,6 @@ This section describes the derived datasets we provide to make analyzing this da
 
 {{#include ../datasets/bigquery/clients_last_seen/intro.md}}
 
-## `longitudinal`
-
-{{#include ../datasets/batch_view/longitudinal/intro.md}}
-
 ## `main_summary`
 
 {{#include ../datasets/batch_view/main_summary/intro.md}}

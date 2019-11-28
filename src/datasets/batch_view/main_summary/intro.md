@@ -15,7 +15,7 @@ You should **avoid querying `main_summary`** from [re:dash](https://sql.telemetr
 Your queries will be **slow to complete** and can **impact performance for other users**,
 since re:dash on a shared cluster.
 
-Instead, we recommend using the `longitudinal` or `clients_daily` dataset where possible.
+Instead, we recommend using the `clients_daily` or `clients_last_seen` dataset where possible.
 If these datasets do not suffice, consider using Spark on [Databricks](https://dbc-caf9527b-e073.cloud.databricks.com).
 In the odd case where these queries are necessary,
 make use of the `sample_id` field and limit to a short submission date range.
