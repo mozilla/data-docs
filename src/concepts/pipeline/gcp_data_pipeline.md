@@ -7,36 +7,36 @@ The bulk of the data handled by this pipeline is Firefox Telemetry data, but the
 same tool-chain is used to collect, store, and analyze data coming from many
 sources.
 
+Here is a simplified diagram of how data is ingested into the data warehouse.
+
 ```mermaid
 graph TD
 
-f1(Producers) --> k1(Ingestion Edge)
-k1 --> p1(Raw Topics)
-p1 --> d1(Landfill Sink)
-d1 --> c1(Cloud Storage)
-p1 --> d2(Decoder)
-m1(Cloud Memorystore) --- d2
-d2 --> p2(Decoded Topics)
-p2 --> d3(BigQuery Sink)
-d3 --> b1(BigQuery)
-p2 --> d4(Dataset Sink)
-d4 --> c2(Cloud Storage)
-p2 --> d5(Republisher)
-m1 --> d5
-d5 --> p5(Per DocType Topics)
-d5 --> p6(Monitoring Sample Topics)
+f1(fa:fa-firefox Firefox) -->|HTTP Post| k1(fa:fa-filter Ingestion Edge)
+k1 --> p1(fa:fa-stream Raw Topic)
+p1 --> d1(fa:fa-exchange-alt Landfill Sink)
+d1 --> b1(fa:fa-database Landfill BQ)
+p1 --> d2(fa:fa-exchange-alt Decoder)
+d2 -->|success| p2(fa:fa-stream Decoded Topic)
+d2 -.->|fail| p3(fa:fa-stream Errors Topic)
+p3 --> d4(fa:fa-exchange-alt Errors Sink)
+p2 --> d3(fa:fa-exchange-alt BigQuery Sink)
+d3 --> b2(fa:fa-database Live Tables BQ)
+d4 --> b3(fa:fa-database Error Tables BQ)
 
-classDef cyan fill:#eff,stroke:#099;
-classDef green fill:#efe,stroke:#090;
-classDef magenta fill:#fef,stroke:#909;
-classDef orange fill:#fee,stroke:#f90;
-class p,p0,p1,p2,p3,p4,p5,p6 cyan
-class d,d0,d1,d2,d3,d4,d5 green
-class k,k0,k1 magenta
-class f,f1 orange
+classDef pubsub fill:#eff,stroke:#099;
+classDef dataflow fill:#efe,stroke:#090;
+classDef kube fill:#fef,stroke:#909;
+classDef producers fill:#fee,stroke:#f90;
+classDef bq fill:#ececff,stroke:#9370db;
+class p1,p2,p3 pubsub
+class d1,d2,d3,d4 dataflow
+class k1 kube
+class f1 producers
+class b1,b2,b3 bq
 ```
 
-# Firefox
+## Firefox
 
 There are different APIs and formats to [collect data] in Firefox, all suiting different use cases:
 
@@ -67,9 +67,9 @@ Developers can [create their own ping types] if needed.
 If a ping fails to successfully [submit] (e.g. because of missing internet connection),
 Firefox will store the ping on disk and retry to send it until the maximum ping age is exceeded.
 
-# Ingestion
+## Ingestion
 
-HTTP submissions coming in from the wild hit a load balancer and then an
+Submissions coming in from the wild hit a load balancer and then an
 HTTP Server that [accepts POST requests](http_edge_spec.md) containing a
 message body of optionally-gzipped JSON.
 
@@ -82,7 +82,7 @@ recovery and backfill purposes.
 
 If there is a processing error or data-loss downstream in the pipeline, this is an important fail-safe.
 
-# Decoding
+## Decoding
 
 Once the raw data has been added to the PubSub queue, it's time to process it.
 
@@ -111,7 +111,7 @@ monitoring and debugging.
 This is a good way to keep an eye on the health of the pipeline and the data
 flowing through.
 
-# Data Warehouse
+## Data Warehouse
 
 Decoded data is ultimately written out to BigQuery, which acts as the data warehouse.
 
@@ -141,7 +141,12 @@ Data in the Stable tables is partitioned by day, and optimized for accessing
 larger time periods. It is also optimized for limiting analysis to a fraction
 of the data using the `normalized_channel` and `sample_id` fields.
 
-# Workflow Management and ETL
+# Beyond the Data Warehouse
+
+The diagram above shows the path data takes to get into the data warehouse.
+After that, we have to start using it!
+
+## Workflow Management and ETL
 
 We use [Airflow] for workflow management.
 
@@ -154,12 +159,16 @@ Many examples can be found in the [bigquery-etl] repository.
 
 Data in BigQuery is also accessible via Spark, and several ETL jobs also run via Dataproc.
 
-# Data Analysis
+These jobs produce data sets that are used for downstream analysis and data
+applications (such as [measurement][TMO] and [stability][MC] dashboards,
+[addon recommendation][taar], and other [data products]).
+
+## Data Analysis
 
 Once the data reaches our data warehouse in BigQuery it can be processed
 in a number of ways as described in the [Accessing BigQuery] article.
 
-Data analysis is most commonly done using SQL queries or using Spark.
+Data analysis is most commonly done using [SQL queries][stmo] or using [Spark].
 
 [collect data]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/index.html
 [histograms]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/histograms.html
@@ -178,6 +187,8 @@ Data analysis is most commonly done using SQL queries or using Spark.
 [TMO]: https://telemetry.mozilla.org/
 [re:dash]: https://sql.telemetry.mozilla.org/
 [STMO]: https://sql.telemetry.mozilla.org/
-[fork of re:dash]: https://github.com/mozilla/redash
-[Databricks instance]: https://dbc-caf9527b-e073.cloud.databricks.com
+[Spark]: ../../tools/spark.md
 [Accessing BigQuery]: ../../cookbooks/bigquery.md
+[taar]: https://github.com/mozilla/taar
+[MC]: https://data-missioncontrol.dev.mozaws.net
+[data products]: ../../tools/projects.md#data-applications
