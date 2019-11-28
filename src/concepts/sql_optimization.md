@@ -4,14 +4,13 @@ After you write a query in [STMO](https://sql.telemetry.mozilla.org), you can ma
 understanding how data is stored, what databases are doing under the covers, and what you can change about your query to
 take advantage of those two pieces.
 
-Note that this advice is most relevant for the `Presto`, `Athena`, and `Presto-Search` data sources, as well as `Spark SQL`
-and Spark notebooks in general.
-
 ## TL;DR: What to do for quick improvements
 
-- Switch to [Athena](https://aws.amazon.com/athena/)
 - Filter on a partitioned column† (_even_ if you have a `LIMIT`)
-- Select the columns you want explicitly (Don't use `SELECT *`)
+- Use a sample of the data based on the `sample_id` field. This can be helpful
+  for initial development, even if you later run the query using the entire
+  population (without sampling).
+- Select only the columns you want explicitly (Don't use `SELECT *`)
 - Use approximate algorithms: e.g. `approx_distinct(...)` instead of `COUNT(DISTINCT ...)`
 
 † Partitioned columns can be identified in the Schema Explorer in [re:dash](https://sql.telemetry.mozilla.org).
@@ -24,13 +23,9 @@ learn how to properly optimize queries.
 
 ### What are these databases?
 
-The databases we use are not traditional relational databases like PostgreSQL or MySQL. They are
-distributed SQL engines, where the data is stored separately from the cluster itself. They
-include multiple machines all working together in a coordinated fashion. This is why the
-clusters can get slow when there are lots of competing queries - because the queries are
-sharing resources.
-
-Note that Athena is serverless, which is why we recommend people use that when they can.
+The databases we use are not traditional relational databases like PostgreSQL or MySQL.
+They are distributed SQL engines, where the data is stored separately from the compute resources.
+They include multiple machines all working together in a coordinated fashion.
 
 #### How does this impact my queries?
 
@@ -43,7 +38,7 @@ For example, consider the following query, which gives the number of rows presen
 
 ```
 SELECT client_id, COUNT(*)
-FROM main_summary
+FROM telemetry.main
 GROUP BY client_id
 ```
 
@@ -62,18 +57,10 @@ The steps that would happen are this:
 A similar process happens on data joins, where different machines are told to join on
 different keys. In that case, data from both tables needs to be shuffled to every machine.
 
-#### Why do we have multiple databases? Why not use Athena for everything?
-
-Great question! Presto is something we control, and can upgrade it at-will. Athena is currently
-a serverless version of Presto, and as such doesn't have all of the bells and whistles. For example,
-it doesn't support [lambda expressions](https://prestosql.io/docs/current/functions/lambda.html) or
-UDFs, the latter of which we use in the [Client Count Daily dataset](../datasets/obsolete/client_count_daily/reference.md).
-
 #### Key Takeaways
 
-- Use Athena, since it doesn't have the resource constraints that `Presto` or `Spark` do.
-- Use `LIMIT`. At the end of a query all the data needs to be sent to a single machine, using `LIMIT`
-  will reduce that amount and possible prevent an out of memory situation.
+- Use `LIMIT` for query prototyping. This can dramatically reduce the amount of data scanned
+  as well as speeding things up.
 - Use approximate algorithms. These mean less data needs to be shuffled, since we can use
   probabilistic data structures instead of the raw data itself.
 - Specify large tables first in a `JOIN` operation. In this case, small tables can be sent to
@@ -167,7 +154,7 @@ WHERE country == 'US'
 The database wouldn't have to even read the file! It could just look at the path and realize there was
 nothing of interest.
 
-Our tables are often partitioned by date, e.g. `submission_date_s3`.
+Our tables are usually partitioned by date, e.g. `submission_date` or `DATE(submission_timestamp)`.
 
 #### Key Takeaways
 

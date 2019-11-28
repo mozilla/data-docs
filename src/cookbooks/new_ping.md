@@ -21,13 +21,13 @@ here](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telem
 ## Choose a Namespace and DocType
 
 Choose a namespace that uniquely identifies the product that will be generating the data. The
-`telemetry` namespace is reserved for pings added by the Firefox Client Telemetry team.
+`telemetry` namespace is reserved for pings added by the Firefox Desktop Telemetry team.
 
 The DocType is used to differentiate pings within a namespace. It can be as simple as `event`, but
 should generally be descriptive of the data being collected.
 
-Both namespace and DocType are limited to the pattern `[a-zA-Z-]`. In other words, hyphens and
-letters from the [ISO basic Latin alphabet](https://en.wikipedia.org/wiki/ISO_basic_Latin_alphabet).
+Both namespace and DocType are limited to the pattern `[a-z-]`. In other words, hyphens and
+lowercase letters from the [ISO basic Latin alphabet](https://en.wikipedia.org/wiki/ISO_basic_Latin_alphabet).
 
 ## Create a Schema
 
@@ -41,26 +41,23 @@ Generator](https://github.com/mozilla/mozilla-schema-generator). Note that parqu
 longer necessary because of the generated schemas. Validate your JSON Schema using a [validation
 tool](https://jsonschemalint.com/#/version/draft-04/markup/json).
 
-Ensuring the ping contains a unique top-level `id` will enable document-level deduplication, which
-catches over 90% of duplicates and removes them from the dataset.
-
 ## Start a Data Review
 
 Data review for new pings is often more complicated than adding new probes. See [Data Review for
-Focus-Event Ping](https://bugzilla.mozilla.org/show_bug.cgi?id=1347266) as an example. Consider
-where the data falls under the [Data Collection
-Categories](https://wiki.mozilla.org/Firefox/Data_Collection).
+Focus-Event Ping](https://bugzilla.mozilla.org/show_bug.cgi?id=1347266) as an example.
+Consider where the data falls under the
+[Data Collection Categories](https://wiki.mozilla.org/Firefox/Data_Collection).
 
 ## Submit Schema to `mozilla-services/mozilla-pipeline-schemas`
 
-Create a PR including a template and rendered schema to `mozilla-pipeline-schemas`. Add at least one
-validation ping that exercises the structure of schema as a test. These pings are validated during
-the build and help catch mistakes during the writing process.
+Create a pull request including both a template and rendered schema to `mozilla-pipeline-schemas`.
+Add at least one validation ping that exercises the structure of schema as a test.
+These pings are validated during the build and help catch mistakes during the writing process.
 
 ### Example: A rendered schema for response times
 
-We may want to collect a set of response measurements in milliseconds on a per-client basis. The
-pings take on the following shape:
+Imagine we want to collect a set of response measurements in milliseconds on a per-client basis.
+The pings take on the following shape:
 
 ```json
 {"id": "08317b11-85f7-4688-9b35-48af10c3ccdf", "clientId": "1d5ce2fc-a554-42f0-ab21-2ad8ada9bb88", "payload": {"response_ms": 324}}
@@ -143,7 +140,7 @@ document](https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/mast
 lists available metadata fields for the telemetry-ingestion pings, which are largely shared across
 all namespaces.
 
-A list of metadata fields are listed here for reference, but refer to the above document or the
+A list of metadata fields are included here for reference, but refer to the above document or the
 schema explorer for an up-to-date list of metadata fields.
 
 <!-- table generated via `scripts/new_ping_metadata_table.py > src/cookbooks/new_ping_metadata_table.md` -->
@@ -167,8 +164,9 @@ schemas can be viewed at
 
 Use the built-in Telemetry APIs when possible. A few examples are the [Gecko Telemetry
 APIs](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html),
-or the [iOS Telemetry APIs](https://github.com/mozilla-mobile/telemetry-ios). Users on Android
-should use Glean, which does not require building out custom pings.
+or the [iOS Telemetry APIs](https://github.com/mozilla-mobile/telemetry-ios).
+
+**Users on Android should use [Glean](../concepts/glean/glean.md)**, which does not require building out custom pings.
 
 For all other use-cases, send documents to the ingestion endpoint:
 
@@ -176,8 +174,7 @@ For all other use-cases, send documents to the ingestion endpoint:
 https://incoming.telemetry.mozilla.org
 ```
 
-See [the HTTP edge server specification](../concepts/pipeline/http_edge_spec.md) and the
-[non-Telemetry example](../concepts/pipeline/http_edge_spec.md#postput-request) for documentation
+See [the HTTP edge server specification](../concepts/pipeline/http_edge_spec.md) for documentation
 about the expected format.
 
 ## Access Your Data
@@ -192,24 +189,24 @@ values. Also replace `-` with `_` in `<namespace>` if your namespace contains `-
 
 ### STMO / BigQuery
 
-In the BigQuery (beta) data source, several new tables will be created for your data. 
+In the `Telemetry (BigQuery)` data source, several new tables will be created for your data.
 
-The first table is the live table found under
+The first table is the `live` table found under
 `moz-fx-data-shared-prod.<namespace>_live.<doctype>_v<docversion>`. This table is updated on a 5
 minute interval, partitioned on `submission_timestamp`, and may contain partial days of data.
 
 ```sql
 SELECT
-    count(*) as n_rows
+    count(*) AS n_rows
 FROM
   `moz-fx-data-shared-prod.telemetry_live.main_v4`
 WHERE
   submission_timestamp > TIMESTAMP_SUB(current_timestamp, INTERVAL 30 minute)
 ```
 
-The second table that is created is the clustered table view under
-`moz-fx-data-shared-prod.<namespace>.<doctype>_v<docversion>`. This view will only contain complete
-days of submissions. The data is clustered by `submission_timestamp` and `sample_id` to improve the
+The second table that is created is the `stable` clustered table (and corresponding view) under
+`moz-fx-data-shared-prod.<namespace>.<doctype>`. This view will only contain complete
+days of submissions. The data is clustered by `normalized_channel` and `sample_id` to improve the
 efficiency of queries.
 
 ```sql
@@ -230,7 +227,7 @@ day, regardless of how long it takes for the table to appear.
 
 ### Spark
 
-Refer to the [Spark FAQ](../cookbooks/bigquery.md#from-spark) for details on accessing this table
+Refer to the [Spark notes](../cookbooks/bigquery.md#from-spark) for details on accessing the data
 via Spark.
 
 ## Build Dashboards Using Spark or STMO

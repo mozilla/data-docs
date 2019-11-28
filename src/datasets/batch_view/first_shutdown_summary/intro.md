@@ -20,10 +20,6 @@ In many cases, the first-shutdown ping is a duplicate of the main ping. The firs
 
 #### Accessing the Data
 
-The data can be accessed as `first_shutdown_summary`. It is currently stored in the following path.
-
-```
-s3://telemetry-parquet/first_shutdown_summary/v4/
-```
+The data can be accessed as `first_shutdown_summary`.
 
 The data is backfilled to 2017-09-22, the date of its first nightly appearance. This data should be available to all releases on and after Firefox 57.

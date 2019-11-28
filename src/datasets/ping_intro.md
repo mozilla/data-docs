@@ -4,7 +4,7 @@ each containing different measurements and sent for different purposes.
 To review a complete list of ping types and their schemata, see
 [this section of the Mozilla Source Tree Docs][sourcedocs].
 
-Many pings are also described by a JSONSchema specification which can be found in [this repository][jschemas].
+Pings are also described by a JSONSchema specification which can be found in [the `mozilla-pipeline-schemas` repository][jschemas].
 
 There are a few pings that are central to delivering our core data collection
 primitives (Histograms, Events, Scalars) and for keeping an eye on Firefox
@@ -122,16 +122,13 @@ made to be:
 
 Before analyzing raw ping data,
 **check to make sure there isn't already a derived dataset** made for your purpose.
-If you do need to work with raw ping data, be aware that loading the data can take a while.
-Try to limit the size of your data by controlling the date range, etc.
+If you do need to work with raw ping data, be aware that the volume of data can be high.
+Try to limit the size of your data by controlling the date range, and start off using a sample.
 
 #### Accessing the Data
 
 Ping data lives in BigQuery and is accessible in [re:dash][stmo];
-see our [BigQuery intro](../cookbooks/bigquery.md).
-There is currently limited history for main pings available in BigQuery;
-an import of historical data is [planned](https://bugzilla.mozilla.org/show_bug.cgi?id=1568042), but without a determined timeline,
-so longer history requires an [ATMO cluster][atmo] using the [Dataset API][dataset].
+see the [BigQuery intro](../cookbooks/bigquery.md) article.
 
 #### Further Reading
 

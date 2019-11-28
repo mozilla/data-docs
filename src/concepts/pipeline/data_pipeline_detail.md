@@ -287,7 +287,7 @@ Scheduled [Re:dash] queries may also be configured to generate alerts, which is 
 
 ## Data Exports
 
-Data is exported from the pipeline to a few other tools and systems. Examples include integration with [Amplitude] for mobile and product analytics, publishing reports and visualizations to the [Mozilla Data Collective], and shipping data to other parts of the Mozilla organization.
+Data is exported from the pipeline to a few other tools and systems. Examples include integration with [Amplitude] for mobile and product analytics and shipping data to other parts of the Mozilla organization.
 
 There are also a few data sets which are made publicly available, such as the [Firefox Hardware Report].
 
@@ -379,7 +379,6 @@ graph LR
 [cutover]: https://bugzilla.mozilla.org/show_bug.cgi?id=1302265
 [OpenResty]: http://openresty.org/en/
 [Amplitude]: https://amplitude.com/
-[Mozilla Data Collective]: https://www.mozdatacollective.com/home
 [Firefox Hardware Report]: https://hardware.metrics.mozilla.com/
 [DataDog]: http://datadoghq.com/
 [Cerberus]: https://github.com/mozilla/cerberus

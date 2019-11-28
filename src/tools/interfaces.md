@@ -17,22 +17,13 @@ reported in our [issue tracker](https://github.com/mozilla/redash/issues).
 
 #### [`analysis.telemetry.mozilla.org`](spark.md) (ATMO)
 
-The
-[`analysis.telemetry.mozilla.org`](BROKEN:https://analysis.telemetry.mozilla.org)
-(ATMO) site can be used to launch and gain access to virtual machines running
-Apache Spark clusters which have been pre-configured with access to the raw data
-stored in our long term storage S3 buckets. Spark allows you to use
-Python or Scala to perform arbitrary analysis and generate arbitrary
-output. Once developed, ATMO can also be used to run recurring Spark jobs
-for data transformation, processing, or reporting. Requires Python or Scala
-programming skills and knowledge of various data APIs. Learn more by visiting
-the [documentation](https://wiki.mozilla.org/Telemetry) or
-[tutorials](spark.md).
+**As of 2019-11-08, ATMO is obsolete and has been decommissioned. Instead,
+use STMO or Databricks for analysis.**
 
 #### [Databricks](https://dbc-caf9527b-e073.cloud.databricks.com/)
 
 Offers notebook interface with shared, always-on, autoscaling cluster
-(attaching your notebooks to `shared_serverless` is the best way to start).
+(attaching your notebooks to `shared_serverless_python3` is the best way to start).
 Convenient for quick data investigations. Users can get help on `#databricks`
 channel on IRC and are advised to join the
 [`databricks-discuss@mozilla.com`](https://groups.google.com/a/mozilla.com/forum/#!forum/databricks-discuss) group.
@@ -47,19 +38,3 @@ examining at the individual client level. It provides a powerful UI that allows
 for sophisticated ad-hoc analysis without the need for any specialized
 programming skills, but with so many options the UI can be a bit intimidating
 for novice users.
-
-#### [Real Time / CEP](../cookbooks/realtime_analysis_plugin.md)
-
-The "real time" or "complex event processing" (CEP)
-[system](https://pipeline-cep.prod.mozaws.net/) is part of the ingestion
-infrastructure that processes all of our Firefox telemetry data. It provides
-extremely low latency access to the data as it's flowing through our ingestion
-system on its way to long term storage. As a CEP system, it is unlike the rest
-of our analysis tools in that it is up to the analyst to specify and maintain
-state from the data that is flowing; it is non-trivial to revisit older data
-that has already passed through the system. The CEP is very powerful, allowing
-for sophisticated monitoring, alerting, reporting, and dashboarding. Developing
-new analysis plugins requires knowledge of the Lua programming language,
-relevant APIs, and a custom filter configuration syntax. Learn more about how
-to do this in our [Creating a Real-time Analysis
-Plugin](../cookbooks/realtime_analysis_plugin.md) article.

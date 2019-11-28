@@ -56,6 +56,7 @@ Colaboratory
 config
 CommonMark
 CPOW
+CRC
 CSV
 cutover
 dashboarding
@@ -187,6 +188,7 @@ Prefs
 prefs
 prepended
 protobuf
+PubSub
 pushlog
 PyPI
 PySpark
@@ -246,6 +248,7 @@ toolbars
 toolchain
 trailhead
 trailheads
+transpiler
 triaged
 triaging
 TTL

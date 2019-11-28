@@ -43,10 +43,8 @@ as URI parameters:
 so subsets of ADI may be queried along these dimensions.
 
 The blocklist is kept up-to-date locally using the `UpdateTimerManager`
-facility; the update is scheduled [in a
-manifest](https://searchfox.org/mozilla-central/rev/b36e97fc776635655e84f2048ff59f38fa8a4626/toolkit/mozapps/extensions/extensions.manifest#1)
-and performed by
-[`Blocklist#notify`](https://searchfox.org/mozilla-central/rev/b36e97fc776635655e84f2048ff59f38fa8a4626/toolkit/mozapps/extensions/Blocklist.jsm#569).
+facility; the update is scheduled in a [manifest] and performed by
+[`Blocklist#notify`][bl_notify].
 
 Upon browser startup, after a delay (30 seconds by default),
 `UpdateTimerManager` checks whether any of its scheduled tasks are
@@ -56,22 +54,25 @@ the next task is scheduled.
 
 Failures are ignored.
 
-A visualization of real and detrended ADI is available at [Desktop API
-Details: Long-term trend and
-decomposition](https://strategy-and-insights.mozilla.com/dailyUsageSignals/adiDetails.html).
-ADI is also plotted in the [Mozilla Data
-Collective](https://www.mozdatacollective.com/report/index/index/element/877/segment/0).
+A visualization of real and detrended ADI is available at
+[Desktop API Details: Long-term trend and decomposition][adi_graph].
+The raw data is available in BigQuery (see an example [ADI query in Redash](https://sql.telemetry.mozilla.org/queries/66481)).
 
 Telemetry only reports whether blocklist checking is enabled or disabled
 on the client; there is no data in telemetry about blocklist fetches,
 age, or update failures.
 
+[manifest]: https://searchfox.org/mozilla-central/rev/b36e97fc776635655e84f2048ff59f38fa8a4626/toolkit/mozapps/extensions/extensions.manifest#1
+[bl_notify]: https://searchfox.org/mozilla-central/rev/b36e97fc776635655e84f2048ff59f38fa8a4626/toolkit/mozapps/extensions/Blocklist.jsm#569
+[adi_graph]: https://strategy-and-insights.mozilla.com/dailyUsageSignals/adiDetails.html
+
 ### DAU / Daily Active Users
 
 Firefox DAU is currently computed as the number of unique `client_id`s
 observed in `main` pings received on a calendar day. The DAU count
-excludes users who have [opted out of
-telemetry](https://support.mozilla.org/en-US/kb/share-data-mozilla-help-improve-firefox).
+excludes users who have [opted out of telemetry][optout].
+
+[optout]: https://support.mozilla.org/en-US/kb/share-data-mozilla-help-improve-firefox
 
 Each `main` ping describes a single subsession of browser activity.
 
@@ -127,11 +128,12 @@ When and how a ping is sent depends on the reason the subsession ends:
 
 ### Coverage pings
 
-The [coverage
-ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/coverage-ping.html)
+The [coverage ping]
 ([announcement](https://blog.mozilla.org/data/2018/08/20/effectively-measuring-search-in-firefox/))
 is a periodic census intended to estimate telemetry opt-out rates.
 
 We estimate that [93% of release channel
 profiles](https://metrics.mozilla.com/~rharter/reports/coverage/index.html)
 have telemetry enabled (and are therefore included in DAU).
+
+[coverage ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/coverage-ping.html

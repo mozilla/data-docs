@@ -7,10 +7,11 @@ BigQuery uses a columnar data storage format called [Capacitor](https://cloud.go
 
 There is a cost associated with using BigQuery based on operations. As of right now we pay an on-demand pricing for queries based on how much data a query scans. To minimize costs see [_Query Optimizations_](bigquery.md#query-optimizations). More detailed pricing information can be found [here](https://cloud.google.com/bigquery/pricing).
 
-As we transition to [GCP](https://cloud.google.com) BigQuery has become our primary data warehouse and
-SQL Query engine. Our previous SQL Query
-Engines, Presto and Athena, and our Parquet data lake will no longer be accessible
-by the end of 2019. Specific guidance for transitioning off of the AWS data
+With the transition to [GCP](https://cloud.google.com) in 2019, BigQuery has become our primary data warehouse and
+SQL Query engine.
+Our previous SQL Query Engines, Presto and Athena, and our Parquet data lake will no longer be accessible
+by the end of 2019.
+Specific guidance for transitioning off of the AWS data
 infrastructure, including up-to-date timelines of data availability, is
 maintained in the [Data Access Continuity Guide](https://docs.google.com/document/d/1nlzhRGGwAaClwbotd0oWnnkB5GcvpodIxN3Dk5vWvNI/edit#) Google Doc.
 
@@ -167,7 +168,7 @@ Note: this is very similar to [API Access](bigquery.md#gcp-bigquery-api-access),
 
 ## Projects, Datasets and Tables in BigQuery
 In GCP a [project](https://cloud.google.com/resource-manager/docs/creating-managing-projects) is a way to organize cloud resources. We use multiple
-projects to maintain our BigQuery [datasets](https://cloud.google.com/bigquery/docs/datasets-intro). 
+projects to maintain our BigQuery [datasets](https://cloud.google.com/bigquery/docs/datasets-intro).
 
 Note that we have historically used the term _dataset_ to describe a set of
 records all following the same schema, but this idea corresponds to a _table_
@@ -225,7 +226,7 @@ The table and view types referenced above are defined as follows:
 - _Live ping tables_ are the final destination for the [telemetry ingestion pipeline](https://mozilla.github.io/gcp-ingestion/). Dataflow jobs process incoming ping payloads from clients, batch them together by document type, and load the results to these tables approximately every five minutes, although a few document types are opted in to a more expensive streaming path that makes records available in BigQuery within seconds of ingestion. These tables are partitioned by date according to `submission_timestamp` and are also clustered on that same field, so it is possible to make efficient queries over short windows of recent data such as the last hour. They have a rolling expiration period of 30 days, but that window may be shortened in the future. Analyses should only use these tables if they need results for the current (partial) day.
 - _Historical ping tables_ have exactly the same schema as their corresponding live ping tables, but they are populated only once per day via an Airflow job and have a 25 month retention period. These tables are superior to the live ping tables for historical analysis because they never contain partial days, they have additional deduplication applied, and they are clustered on `sample_id`, allowing efficient queries on a 1% sample of clients. It is guaranteed that `document_id` is distinct within each UTC day of each historical ping table, but it is still possible for a document to appear multiple times if a client sends the same payload across multiple days. Note that this requirement is relaxed for older telemetry ping data that was backfilled from AWS; approximately 0.5% of documents are duplicated in `telemetry.main` and other historical ping tables for 2019-04-30 and earlier dates.
 - _Derived tables_ are populated by nightly [Airflow](https://workflow.telemetry.mozilla.org/home) jobs and are considered an implementation detail; their structure may change at any time at the discretion of the data platform team to allow refactoring or efficiency improvements.
-- _User-facing views_ are the schema objects that users are primarily expected to use in analyses. Many of these views correspond directly to an underlying historical ping table or derived table, but they provide the flexibility to hide deprecated columns or present additional calculated columns to users. These views are the schema contract with users and they should not change in backwards-incompatible ways without a version increase or an announcement to users about a breaking change. 
+- _User-facing views_ are the schema objects that users are primarily expected to use in analyses. Many of these views correspond directly to an underlying historical ping table or derived table, but they provide the flexibility to hide deprecated columns or present additional calculated columns to users. These views are the schema contract with users and they should not change in backwards-incompatible ways without a version increase or an announcement to users about a breaking change.
 
 Spark and other applications relying on the BigQuery Storage API for data access need to reference derived tables or historical ping tables directly rather than user-facing views. Unless the query result is relatively large, we  recommend instead that users run a query on top of user-facing views with the output saved in a destination table, which can then be accessed from Spark.
 
@@ -238,7 +239,7 @@ Unlike with the previous AWS-based data infrastructure, we don't have different 
 - "crash" pings are accessible from view `telemetry.crash`
 - "baseline" pings for Fenix are accessible from view `org_mozilla_fenix.baseline`
 
-All fields in the incoming pings are accessible in these views, and (where possible) match the nested data structures of the original JSON. Field names are converted from `camelCase` form to `snake_case` for consistency and SQL compatibility. 
+All fields in the incoming pings are accessible in these views, and (where possible) match the nested data structures of the original JSON. Field names are converted from `camelCase` form to `snake_case` for consistency and SQL compatibility.
 
 Any fields not present in the ping schemas are present in an `additional_properties` field containing leftover JSON. BigQuery provides [functions for parsing and manipulating JSON data via SQL](https://cloud.google.com/bigquery/docs/reference/standard-sql/json_functions).
 

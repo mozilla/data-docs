@@ -46,9 +46,9 @@ it's easier to read when explicit.
 **Good**
 ```sql
 SELECT
-  substr(submission_date, 1, 6) AS month
+  date(submission_timestamp) AS day
 FROM
-  main_summary
+  telemetry.main
 LIMIT
   10
 ```
@@ -56,9 +56,9 @@ LIMIT
 **Bad**
 ```sql
 SELECT
-  substr(submission_date, 1, 6) month
+  date(submission_timestamp) day
 FROM
-  main_summary
+  telemetry.main
 LIMIT
   10
 ```
@@ -139,7 +139,7 @@ FROM
   telemetry.clients_daily
 WHERE
   submission_date > '20190701'
-GROUP BY 
+GROUP BY
   1, 2 -- Implicit grouping avoids repeating expressions
 ```
 

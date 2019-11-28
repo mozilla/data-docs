@@ -23,6 +23,7 @@ Below are a number of trailheads that lead into the projects and code that compr
 
 | Name and repo                   | Description                           |
 |---------------------------------|---------------------------------------|
+| [`bigquery-etl`][bqe]           | SQL ETL code for building derived datasets in BigQuery
 | [`telemetry-batch-view`][tbv]   | Scala ETL code for derived datasets
 | [`python_mozetl`][pyetl]        | Python ETL code for derived datasets
 | [`telemetry-airflow`][airflow]  | Airflow configuration and DAGs for scheduled jobs
@@ -31,6 +32,7 @@ Below are a number of trailheads that lead into the projects and code that compr
 
 See also [`firefox-data-docs`][docs] for documentation on datasets.
 
+[bqe]: https://github.com/mozilla/bigquery-etl
 [tbv]: https://github.com/mozilla/telemetry-batch-view
 [pyetl]: https://github.com/mozilla/python_mozetl
 [airflow]: https://github.com/mozilla/telemetry-airflow
@@ -43,6 +45,9 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 | Name and repo                         | Description                             |
 |---------------------------------------|-----------------------------------------|
 | [`mozilla-pipeline-schemas`][schemas] | JSON and Parquet Schemas for Mozilla Telemetry and other structured data
+| [`gcp-ingestion`][gcp-ingestion]      | Documentation and implementation of the Mozilla telemetry ingestion system on Google Cloud Platform
+| [`jsonschema-transpiler`][transpiler] | Convert JSON Schema into BigQuery table definitions
+| [`mozilla-schema-generator`][msg]     | Incorporate probe metadata to generate BigQuery table schemas
 | [`hindsight`][hs]                     | Real-time data processing
 | [`lua_sandbox`][lsb]                  | Generic sandbox for safe data analysis
 | [`lua_sandbox_extensions`][lsbx]      | Modules and packages that extend the Lua sandbox
@@ -50,9 +55,12 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 | [`puppet-config`][puppet]             | Cloud services puppet config for deploying infrastructure
 | [`parquet2hive`][p2h]                 | Hive import statement generator for Parquet datasets
 | [`edge-validator`][edge-validator]    | A service endpoint for validating incoming data
-| [`gcp-ingestion`][gcp-ingestion]      | Documentation and implementation of the Mozilla telemetry ingestion system on Google Cloud Platform
+
 
 [schemas]: https://github.com/mozilla-services/mozilla-pipeline-schemas
+[gcp-ingestion]: https://github.com/mozilla/gcp-ingestion
+[transpiler]: https://github.com/mozilla/jsonschema-transpiler
+[msg]: https://github.com/mozilla/mozilla-schema-generator
 [hs]: https://github.com/mozilla-services/hindsight
 [lsb]: https://github.com/mozilla-services/lua_sandbox
 [lsbx]: https://github.com/mozilla-services/lua_sandbox_extensions
@@ -60,23 +68,15 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 [puppet]: https://github.com/mozilla-services/puppet-config/tree/master/pipeline
 [p2h]: https://github.com/mozilla/parquet2hive
 [edge-validator]: https://github.com/mozilla-services/edge-validator
-[gcp-ingestion]: https://github.com/mozilla/gcp-ingestion
-
-### EMR Bootstrap scripts
-
-| Name and repo                       | Description                             |
-|-------------------------------------|-----------------------------------------|
-| [`emr-bootstrap-spark`][eb_spark]   | AWS bootstrap scripts for Spark.
-| [`emr-bootstrap-presto`][eb_presto] | AWS bootstrap scripts for Presto.
-
-[eb_spark]: https://github.com/mozilla/emr-bootstrap-spark
-[eb_presto]: https://github.com/mozilla/emr-bootstrap-presto
 
 ## Data applications
 
 | Name and repo                     | Description                             |
 |-----------------------------------|-----------------------------------------|
 | [`telemetry.mozilla.org`][tmo_gh] | Main entry point for viewing [aggregate Telemetry data][tmo]
+| [Growth & Usage dashboard][gud]   | Dashboard for questions about product growth and usage
+| [Glean Aggregate Metrics][glam]   | Aggregate info about probes and measures
+| [Glean Debug View][gdv]           | Tag and view Glean submissions with low latency
 | [Cerberus][cer] & [Medusa][med]   | Automatic alert system for telemetry aggregates
 | [Mission Control][mc]             | Low latency dashboard for stability and health metrics
 | [Re:dash][redash]                 | Mozilla's fork of the [data query / visualization system][stmo]
@@ -90,8 +90,12 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 | [test-tube]                       | Compare data across branches in experiments
 | [experimenter]                    | A web application for managing experiments
 | [St. Moab][stmoab]                | Automatically generate Re:dash dashboard for A/B experiments
+| [Iodide] ([code][iodide_gh])      | Literate scientific computing and communication for the web
 
 [tmo_gh]: https://github.com/mozilla/telemetry-dashboard
+[gud]: https://growth-stage.bespoke.nonprod.dataops.mozgcp.net
+[glam]: https://github.com/mozilla/glam
+[gdv]: https://debug-ping-preview.firebaseapp.com
 [cer]: https://github.com/mozilla/cerberus
 [med]: https://github.com/mozilla/medusa
 [mc]: https://github.com/mozilla/missioncontrol
@@ -110,6 +114,8 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 [test-tube]: https://github.com/mozilla/firefox-test-tube
 [experimenter]: https://github.com/mozilla/experimenter
 [stmoab]: https://github.com/mozilla/stmoab
+[Iodide]: http://iodide.telemetry.mozilla.org/
+[iodide_gh]: https://github.com/iodide-project/iodide
 
 ## Legacy projects
 
@@ -117,10 +123,14 @@ Projects in this section are less active, but may not be officially
 deprecated. Please check with the `fx-data-dev` mailing list before
 starting a new project using anything in this section.
 
-| Name and repo                      | Description |
-|------------------------------------|-------------|
-| [`telemetry-next-node`][tnn]       | A `node.js` package for accessing Telemetry Aggregates data
+| Name and repo                       | Description |
+|-------------------------------------|-------------|
+| [`telemetry-next-node`][tnn]        | A `node.js` package for accessing Telemetry Aggregates data
+| [`emr-bootstrap-spark`][eb_spark]   | AWS bootstrap scripts for Spark.
+| [`emr-bootstrap-presto`][eb_presto] | AWS bootstrap scripts for Presto.
 
+[eb_spark]: https://github.com/mozilla/emr-bootstrap-spark
+[eb_presto]: https://github.com/mozilla/emr-bootstrap-presto
 [tnn]: https://github.com/mozilla/telemetry-next-node
 
 ## Reference materials
