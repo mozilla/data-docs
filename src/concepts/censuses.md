@@ -56,8 +56,7 @@ Failures are ignored.
 
 A visualization of real and detrended ADI is available at
 [Desktop API Details: Long-term trend and decomposition][adi_graph].
-ADI is also plotted in the [Mozilla Data Collective][adi_mdc]
-and the raw data is available in BigQuery (see an example [ADI query in Redash](https://sql.telemetry.mozilla.org/queries/66481)).
+The raw data is available in BigQuery (see an example [ADI query in Redash](https://sql.telemetry.mozilla.org/queries/66481)).
 
 Telemetry only reports whether blocklist checking is enabled or disabled
 on the client; there is no data in telemetry about blocklist fetches,
@@ -66,7 +65,6 @@ age, or update failures.
 [manifest]: https://searchfox.org/mozilla-central/rev/b36e97fc776635655e84f2048ff59f38fa8a4626/toolkit/mozapps/extensions/extensions.manifest#1
 [bl_notify]: https://searchfox.org/mozilla-central/rev/b36e97fc776635655e84f2048ff59f38fa8a4626/toolkit/mozapps/extensions/Blocklist.jsm#569
 [adi_graph]: https://strategy-and-insights.mozilla.com/dailyUsageSignals/adiDetails.html
-[adi_mdc]: BROKEN:https://www.mozdatacollective.com/report/index/index/element/877/segment/0
 
 ### DAU / Daily Active Users
 

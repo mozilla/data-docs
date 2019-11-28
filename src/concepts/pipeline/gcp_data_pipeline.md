@@ -190,5 +190,5 @@ Data analysis is most commonly done using [SQL queries][stmo] or using [Spark].
 [Spark]: ../../tools/spark.md
 [Accessing BigQuery]: ../../cookbooks/bigquery.md
 [taar]: https://github.com/mozilla/taar
-[MC]: https://data-missioncontrol.dev.mozaws.net
+[MC]: https://missioncontrol.telemetry.mozilla.org
 [data products]: ../../tools/projects.md#data-applications
