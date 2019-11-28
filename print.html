@@ -253,7 +253,7 @@ They could be technical or non-technical: engineer, PM, or data scientist.</p>
 <p>Firefox clients out in the wild send us data as <em>pings</em>. <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html">Main pings</a> contain some combination of <em>environment</em> data (e.g. operating system, hardware, Firefox version), <a href="https://telemetry.mozilla.org/probe-dictionary/"><em>measurements</em></a> (e.g. max number of open tabs, time spent running in JavaScript garbage collection), and <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html"><em>events</em></a>. We have quite a few different pings, but most of our data for Firefox Desktop comes in from main pings.</p>
 <h2><a class="header" href="#measurement-types" id="measurement-types">Measurement Types</a></h2>
 <p>When we need to measure specific things about clients, we use probes. A single ping will send in many different probes. There are two types of probes that we are interested in here: <em>Histograms</em> and <em>Scalars</em>.</p>
-<p>You can search for and find more details about probes using the <a href="https://telemetry.mozilla.org/probe-dictionary/">Probe Dictionary</a>. It shows things like probe descriptions, when a probe started being collected, and whether it is collected on the release channel.</p>
+<p>You can search for and find more details about probes using the <a href="https://probes.telemetry.mozilla.org/">Probe Dictionary</a>. It shows things like probe descriptions, when a probe started being collected, and whether it is collected on the release channel.</p>
 <p>Histograms are bucketed counts. The <a href="https://github.com/mozilla/gecko-dev/blob/master/toolkit/components/telemetry/Histograms.json"><code>Histograms.json</code></a> file has the definitions for all histograms, which includes the minimum, maximum, and number of buckets. Any recorded value instead just increments its associated bucket. We have four main types of histograms:</p>
 <ol>
 <li>Boolean - Only two buckets, associated with true and false.</li>
@@ -2909,7 +2909,7 @@ LIMIT 10
 <p>Changes to the style guide should be reviewed by at least one member of
 both the Data Engineering team and the Data Science team.</p>
 <h1><a class="header" href="#glean---product-analytics--telemetry" id="glean---product-analytics--telemetry">Glean - product analytics &amp; telemetry</a></h1>
-<p>For Mozilla, getting reliable data from our products is critical to inform our decision making. Glean is our new product analytics &amp; telemetry solution that provides that data for our mobile products.
+<p>For Mozilla, getting reliable data from our products is critical to inform our decision making. Glean is our new product analytics &amp; telemetry solution that provides that data for our products.
 It aims to be easy to integrate, reliable and transparent by providing an SDK and integrated tools.</p>
 <p>It currently supports Android products, while iOS support is planned.
 Note that this is different from Telemetry for Firefox Desktop (<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/index.html">library</a>, <a href="concepts/glean/../choosing_a_dataset.html">datasets</a>), although it provides similar capabilities.</p>
@@ -2957,7 +2957,7 @@ To make it easier to understand the general semantics of our data, the Glean SDK
 <li><em>(Work in progress)</em> Use events and <a href="https://sso.mozilla.com/amplitude">Amplitude</a> for product analytics.</li>
 <li><a href="https://sso.mozilla.com/databricks">Use Databricks</a> for deep-dive analysis.</li>
 <li><a href="concepts/glean/debug_ping_view.html">Use the Glean debug ping viewer</a> for QA &amp; development.</li>
-<li><em>(Work in progress)</em> For experimentation, you will be able to use our <a href="https://github.com/mozilla-mobile/android-components/blob/master/components/service/experiments/README.md">Android experiments library</a>, which integrates with Glean.</li>
+<li>For experimentation, you will be able to use <a href="https://github.com/mozilla-mobile/android-components/blob/master/components/service/experiments/README.md">Android experiments library</a>, which integrates with Glean.</li>
 </ul>
 <h1><a class="header" href="#contact" id="contact">Contact</a></h1>
 <ul>
