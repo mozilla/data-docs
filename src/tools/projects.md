@@ -69,16 +69,6 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 [p2h]: https://github.com/mozilla/parquet2hive
 [edge-validator]: https://github.com/mozilla-services/edge-validator
 
-### EMR Bootstrap scripts
-
-| Name and repo                       | Description                             |
-|-------------------------------------|-----------------------------------------|
-| [`emr-bootstrap-spark`][eb_spark]   | AWS bootstrap scripts for Spark.
-| [`emr-bootstrap-presto`][eb_presto] | AWS bootstrap scripts for Presto.
-
-[eb_spark]: https://github.com/mozilla/emr-bootstrap-spark
-[eb_presto]: https://github.com/mozilla/emr-bootstrap-presto
-
 ## Data applications
 
 | Name and repo                     | Description                             |
@@ -100,6 +90,7 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 | [test-tube]                       | Compare data across branches in experiments
 | [experimenter]                    | A web application for managing experiments
 | [St. Moab][stmoab]                | Automatically generate Re:dash dashboard for A/B experiments
+| [Iodide] ([code][iodide_gh])      | Literate scientific computing and communication for the web
 
 [tmo_gh]: https://github.com/mozilla/telemetry-dashboard
 [gud]: https://growth-stage.bespoke.nonprod.dataops.mozgcp.net
@@ -123,6 +114,8 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 [test-tube]: https://github.com/mozilla/firefox-test-tube
 [experimenter]: https://github.com/mozilla/experimenter
 [stmoab]: https://github.com/mozilla/stmoab
+[Iodide]: http://iodide.telemetry.mozilla.org/
+[iodide_gh]: https://github.com/iodide-project/iodide
 
 ## Legacy projects
 
@@ -130,10 +123,14 @@ Projects in this section are less active, but may not be officially
 deprecated. Please check with the `fx-data-dev` mailing list before
 starting a new project using anything in this section.
 
-| Name and repo                      | Description |
-|------------------------------------|-------------|
-| [`telemetry-next-node`][tnn]       | A `node.js` package for accessing Telemetry Aggregates data
+| Name and repo                       | Description |
+|-------------------------------------|-------------|
+| [`telemetry-next-node`][tnn]        | A `node.js` package for accessing Telemetry Aggregates data
+| [`emr-bootstrap-spark`][eb_spark]   | AWS bootstrap scripts for Spark.
+| [`emr-bootstrap-presto`][eb_presto] | AWS bootstrap scripts for Presto.
 
+[eb_spark]: https://github.com/mozilla/emr-bootstrap-spark
+[eb_presto]: https://github.com/mozilla/emr-bootstrap-presto
 [tnn]: https://github.com/mozilla/telemetry-next-node
 
 ## Reference materials
