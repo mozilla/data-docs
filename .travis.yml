@@ -36,3 +36,5 @@ deploy:
   fqdn: docs-origin.telemetry.mozilla.org
   on:
     branch: master
+    condition:
+      - $TRAVIS_JOB_NAME == build
