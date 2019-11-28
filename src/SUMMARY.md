@@ -50,7 +50,6 @@
     * [Addons Daily](datasets/other/addons_daily/reference.md)
     * [Clients Daily](datasets/batch_view/clients_daily/reference.md)
     * [Clients Last Seen](datasets/bigquery/clients_last_seen/reference.md)
-    * [Cross Sectional](datasets/batch_view/cross_sectional/reference.md)
     * [Events](datasets/batch_view/events/reference.md)
     * [Exact MAU](datasets/bigquery/exact_mau/reference.md)
     * [First Shutdown Summary](datasets/batch_view/first_shutdown_summary/reference.md)

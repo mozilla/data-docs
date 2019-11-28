@@ -11,13 +11,7 @@ characteristics X, Y, and Z do during the period S to E?" The
 
 #### Accessing the Data
 
-The data is stored as a parquet table in S3 at the following address.
-```
-s3://telemetry-parquet/clients_daily/v6/
-```
-
-The `clients_daily` table is accessible through re:dash using the `Athena`
-data source. It is also available via the `Presto` data source, though
-`Athena` should be preferred for performance and stability reasons.
+The `clients_daily` table is accessible through re:dash using the
+`Telemetry (BigQuery)` data source.
 
 Here's an [example query](https://sql.telemetry.mozilla.org/queries/23746#61771).
