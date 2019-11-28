@@ -7,7 +7,7 @@ is a data processing engine designed to be fast and easy to use.
 Spark can be used either from [Databricks][db_example] or Dataproc, and works
 with data stored in BigQuery.
 
-The [BigQuery article](../cookbooks/bigquery.md) covers how to access
+The [BigQuery cookbook](../cookbooks/bigquery.md#from-spark) covers how to access
 BigQuery data from Spark.
 
 [db_example]: https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/30598/command/30599
