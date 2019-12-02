@@ -9,10 +9,12 @@ Well follow these steps and we'll have you perusing your own data in no time.
 
 2. Go [STMO](https://sql.telemetry.mozilla.org).
 
-3. Enter the following query: ```sql
+3. Enter the following query:
+
+```sql
 SELECT
   submission_timestamp,
-  document_id --FIXME
+  document_id
 FROM
   telemetry_live.main_v4 -- or crash, event, core, etc
 WHERE
