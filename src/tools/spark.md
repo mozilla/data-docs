@@ -88,7 +88,7 @@ def get_table(view):
             continue
     else:
         raise ValueError("could not determine partition column")
-    assert len(job.referenced_tables) == 1
+    assert len(job.referenced_tables) == 1, "View combines multiple tables"
     table = job.referenced_tables[0]
     return f"{table.project}:{table.dataset_id}.{table.table_id}"
 
