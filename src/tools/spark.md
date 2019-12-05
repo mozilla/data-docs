@@ -70,9 +70,32 @@ Example of using the Storage API from Databricks:
 dbutils.library.installPyPI("google-cloud-bigquery", "1.16.0")
 dbutils.library.restartPython()
 
-# Read one day of pings and select a subset of columns.
+from google.cloud import bigquery
+
+
+def get_table(view):
+    bq = bigquery.Client()
+    view = view.replace(":", ".")
+    # partition filter is required, so try a couple options
+    for partition_column in ["DATE(submission_timestamp)", "submission_date"]:
+        try:
+            job = bq.query(
+                f"SELECT * FROM `{view}` WHERE {partition_column} = CURRENT_DATE",
+                bigquery.QueryJobConfig(dry_run=True),
+            )
+            break
+        except Exception:
+            continue
+    else:
+        raise ValueError("could not determine partition column")
+    assert len(job.referenced_tables) == 1
+    table = job.referenced_tables[0]
+    return f"{table.project}:{table.dataset_id}.{table.table_id}"
+
+
+# Read one day of main pings and select a subset of columns.
 core_pings_single_day = spark.read.format("bigquery") \
-    .option("table", "moz-fx-data-shared-prod.telemetry_stable.core_v10") \
+    .option("table", get_table("moz-fx-data-shared-prod.telemetry.main")) \
     .load() \
     .where("submission_timestamp >= to_date('2019-08-25') submission_timestamp < to_date('2019-08-26')") \
     .select("client_id", "experiments", "normalized_channel")
@@ -80,12 +103,10 @@ core_pings_single_day = spark.read.format("bigquery") \
 
 A couple of things are worth noting in the above example.
 
-* You must supply an actual _table_ name to read from here, fully qualified
-  with project name and dataset name.
+* `get_table` is necessary because an actual _table_ name is required to read
+  from BigQuery here, fully qualified with project name and dataset name.
   The Storage API does not support accessing `VIEW`s, so the convenience names
   such as `telemetry.core` are not available via this API.
-  You can find the table corresponding to a given view using the BigQuery
-  console or using Data Catalog.
 * You must supply a filter on the table's date partitioning column, in this
   case `submission_timestamp`.
   Additionally, you must use the `to_date` function to make sure that predicate
