@@ -164,6 +164,9 @@ Instead, it is about quirks and pitfalls specific to <a href="https://firefox-so
 <p>When looking at trends, it is helpful to be aware of events from the past
 that might impact comparisons with history. Here are a few to keep in mind:</p>
 <ul>
+<li><strong>December 4 2019</strong> - <a href="bug1598815">AWS Ingestion Pipeline decommissioned</a>.
+Specifically, the last ping relayed through the AWS machinery had a
+timestamp of <code>2019-12-04 22:04:45.912204 UTC</code>.</li>
 <li><strong>October 29 2019</strong> - Glean SDK Timing Distribution(s) are reporting buckets
 1 nanosecond apart. This is due to a potential rounding bug in Glean SDK
 versions less than <code>19.0.0</code>. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1591938">Bug 1591938</a>.</li>
