@@ -25,6 +25,13 @@ condition `scalar_parent_browser_engagement_total_uri_count_sum >= 5`. These
 columns can be used for user counts where a condition must be met on any day
 in a window instead of using the most recent values for each `client_id`.
 
+The `days_seen_bits` field stores the daily history of a client in the 28 day
+window. The daily history is converted into a sequence of bits, with a `1` for
+the days a client is in `clients_daily` and a `0` otherwise, and this sequence
+is converted to an integer. A tutorial on how to use these bit patterns to
+create filters in SQL can be found in
+[this notebook](https://colab.research.google.com/drive/13AwwORpOtRsq22op_3rMSwPssQkJU1ok).
+
 The rest of the columns use the most recent value in `clients_daily` where
 the `client_id` appeared.
 
