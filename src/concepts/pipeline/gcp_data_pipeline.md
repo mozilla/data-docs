@@ -12,8 +12,8 @@ Here is a simplified diagram of how data is ingested into the data warehouse.
 ```mermaid
 graph TD
 
-f1(fa:fa-firefox Firefox) -->|HTTP Post| k1(fa:fa-filter Ingestion Edge)
-k1 --> p1(fa:fa-stream Raw Topic)
+f1(fa:fa-firefox Firefox) -->|HTTP Post| d0(fa:fa-filter Ingestion Edge)
+d0 --> p1(fa:fa-stream Raw Topic)
 p1 --> d1(fa:fa-exchange-alt Landfill Sink)
 d1 --> b1(fa:fa-database Landfill BQ)
 p1 --> d2(fa:fa-exchange-alt Decoder)
@@ -25,13 +25,11 @@ d3 --> b2(fa:fa-database Live Tables BQ)
 d4 --> b3(fa:fa-database Error Tables BQ)
 
 classDef pubsub fill:#eff,stroke:#099;
-classDef dataflow fill:#efe,stroke:#090;
-classDef kube fill:#fef,stroke:#909;
+classDef exec fill:#efe,stroke:#090;
 classDef producers fill:#fee,stroke:#f90;
 classDef bq fill:#ececff,stroke:#9370db;
 class p1,p2,p3 pubsub
-class d1,d2,d3,d4 dataflow
-class k1 kube
+class d0,d1,d2,d3,d4 exec
 class f1 producers
 class b1,b2,b3 bq
 ```
@@ -76,7 +74,7 @@ message body of optionally-gzipped JSON.
 These messages are forwarded to a PubSub message queue with minimal processing,
 and made available in a **Raw** topic.
 
-A Dataflow job reads this topic and writes the raw messages to a BigQuery **Landfill** sink.
+A [Dataflow] job reads this topic and writes the raw messages to a BigQuery **Landfill** sink.
 This Landfill data is not used for analysis, but is stored in its raw form for
 recovery and backfill purposes.
 
@@ -129,17 +127,19 @@ and the [schema generator].
 The result are tables that contains SQL-friendly field names for all known
 measures, as implemented in the [probe scraper].
 
-A Dataflow job reads from the Decoded topic and writes out to **[live ping tables]**.
+A [Dataflow] job reads from the Decoded topic and writes out to
+**[live ping tables][table layout]**.
 These tables are updated frequently, and typically reflect data within a few
 minutes of it being ingested. They are optimized for accessing recent data,
 but are only guaranteed to contain a few days of history.
 
-Historical raw ping data is stored in **[historical ping tables]**, also known as **stable tables**.
+Historical raw ping data is stored in **[historical ping tables][table layout]**,
+also known as **stable tables**.
 These tables include only completed days of data, are populated once a day
 shortly after midnight UTC.
 Data in the Stable tables is partitioned by day, and optimized for accessing
 larger time periods. It is also optimized for limiting analysis to a fraction
-of the data using the `normalized_channel` and `sample_id` fields.
+of the data using the [`normalized_channel`][norm] and [`sample_id`][sample_id] fields.
 
 # Beyond the Data Warehouse
 
@@ -155,7 +155,7 @@ as well as many other derived datasets.
 
 The ETL code to create derived datasets is commonly implemented using queries in BigQuery.
 
-Many examples can be found in the [bigquery-etl] repository.
+Many examples can be found in the [bigquery-etl][bqe] repository.
 
 Data in BigQuery is also accessible via Spark, and several ETL jobs also run via Dataproc.
 
@@ -192,3 +192,13 @@ Data analysis is most commonly done using [SQL queries][stmo] or using [Spark].
 [taar]: https://github.com/mozilla/taar
 [MC]: https://missioncontrol.telemetry.mozilla.org
 [data products]: ../../tools/projects.md#data-applications
+[Dataflow]: https://cloud.google.com/dataflow/docs/
+[JSONSchema validation]: https://json-schema.org/understanding-json-schema/
+[weird behaviour]: https://chuttenblog.wordpress.com/2017/05/02/data-science-is-hard-anomalies-part-2/
+[schema transpiler]: https://github.com/mozilla/jsonschema-transpiler
+[schema generator]: https://github.com/mozilla/mozilla-schema-generator
+[probe scraper]: https://github.com/mozilla/probe-scraper
+[table layout]: ../../cookbooks/bigquery.md#table-layout-and-naming
+[sample_id]: ../sample_id.md
+[norm]: ../channels/channel_normalization.md
+[bqe]: https://github.com/mozilla/bigquery-etl
