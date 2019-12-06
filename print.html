@@ -1785,10 +1785,11 @@ which is used to collect Telemetry data from our products and logs from various 
 same tool-chain is used to collect, store, and analyze data coming from many
 sources.</p>
 <p>Here is a simplified diagram of how data is ingested into the data warehouse.</p>
+<p>The code for the ingestion pipeline lives in the <a href="https://github.com/mozilla/gcp-ingestion"><code>gcp-ingestion</code></a> repository.</p>
 <pre class="mermaid">graph TD
 
-f1(fa:fa-firefox Firefox) -->|HTTP Post| k1(fa:fa-filter Ingestion Edge)
-k1 --> p1(fa:fa-stream Raw Topic)
+f1(fa:fa-firefox Firefox) -->|HTTP Post| d0(fa:fa-filter Ingestion Edge)
+d0 --> p1(fa:fa-stream Raw Topic)
 p1 --> d1(fa:fa-exchange-alt Landfill Sink)
 d1 --> b1(fa:fa-database Landfill BQ)
 p1 --> d2(fa:fa-exchange-alt Decoder)
@@ -1800,13 +1801,11 @@ d3 --> b2(fa:fa-database Live Tables BQ)
 d4 --> b3(fa:fa-database Error Tables BQ)
 
 classDef pubsub fill:#eff,stroke:#099;
-classDef dataflow fill:#efe,stroke:#090;
-classDef kube fill:#fef,stroke:#909;
+classDef exec fill:#efe,stroke:#090;
 classDef producers fill:#fee,stroke:#f90;
 classDef bq fill:#ececff,stroke:#9370db;
 class p1,p2,p3 pubsub
-class d1,d2,d3,d4 dataflow
-class k1 kube
+class d0,d1,d2,d3,d4 exec
 class f1 producers
 class b1,b2,b3 bq
 </pre>
@@ -1843,19 +1842,19 @@ HTTP Server that <a href="concepts/pipeline/http_edge_spec.html">accepts POST re
 message body of optionally-gzipped JSON.</p>
 <p>These messages are forwarded to a PubSub message queue with minimal processing,
 and made available in a <strong>Raw</strong> topic.</p>
-<p>A Dataflow job reads this topic and writes the raw messages to a BigQuery <strong>Landfill</strong> sink.
+<p>A <a href="https://cloud.google.com/dataflow/docs/">Dataflow</a> job reads this topic and writes the raw messages to a BigQuery <strong>Landfill</strong> sink.
 This Landfill data is not used for analysis, but is stored in its raw form for
 recovery and backfill purposes.</p>
 <p>If there is a processing error or data-loss downstream in the pipeline, this is an important fail-safe.</p>
 <h2><a class="header" href="#decoding" id="decoding">Decoding</a></h2>
 <p>Once the raw data has been added to the PubSub queue, it's time to process it.</p>
-<p>The decoder is implemented as a [Dataflow] job, and is written in Java.</p>
+<p>The decoder is implemented as a <a href="https://cloud.google.com/dataflow/docs/">Dataflow</a> job, and is written in Java.</p>
 <p>The decoding process tackles decompression, parsing, validation, deduplication,
 and enrichment of incoming messages.</p>
-<p>After a message is decompressed and parsed as JSON, we apply [JSONSchema validation]
+<p>After a message is decompressed and parsed as JSON, we apply <a href="https://json-schema.org/understanding-json-schema/">JSONSchema validation</a>
 to ensure that submissions are well-formed.</p>
 <p>Sometimes duplicate submissions are sent to the pipeline, either due to normal
-networking failures or [weird behaviour] out there in the world.
+networking failures or <a href="https://chuttenblog.wordpress.com/2017/05/02/data-science-is-hard-anomalies-part-2/">weird behaviour</a> out there in the world.
 We watch for duplicate submissions, and discard any subsequent occurrences of
 already-seen records.</p>
 <p>Submissions are also enriched with some metadata about the request itself,
@@ -1877,20 +1876,22 @@ One important transformation here is to convert all incoming fields from
 <code>UPPER CASE</code> or <code>camelCase</code> to <code>snake_case</code>.
 Another important transformation is to incorporate metadata about known probes
 and metrics to generate more complete schemas.</p>
-<p>This is handled by a combination of the decoder above, the [schema transpiler]
-and the [schema generator].
+<p>This is handled by a combination of the decoder above, the <a href="https://github.com/mozilla/jsonschema-transpiler">schema transpiler</a>
+and the <a href="https://github.com/mozilla/mozilla-schema-generator">schema generator</a>.
 The result are tables that contains SQL-friendly field names for all known
-measures, as implemented in the [probe scraper].</p>
-<p>A Dataflow job reads from the Decoded topic and writes out to <strong>[live ping tables]</strong>.
+measures, as implemented in the <a href="https://github.com/mozilla/probe-scraper">probe scraper</a>.</p>
+<p>A <a href="https://cloud.google.com/dataflow/docs/">Dataflow</a> job reads from the Decoded topic and writes out to
+<strong><a href="concepts/pipeline/../../cookbooks/bigquery.html#table-layout-and-naming">live ping tables</a></strong>.
 These tables are updated frequently, and typically reflect data within a few
 minutes of it being ingested. They are optimized for accessing recent data,
 but are only guaranteed to contain a few days of history.</p>
-<p>Historical raw ping data is stored in <strong>[historical ping tables]</strong>, also known as <strong>stable tables</strong>.
+<p>Historical raw ping data is stored in <strong><a href="concepts/pipeline/../../cookbooks/bigquery.html#table-layout-and-naming">historical ping tables</a></strong>,
+also known as <strong>stable tables</strong>.
 These tables include only completed days of data, are populated once a day
 shortly after midnight UTC.
 Data in the Stable tables is partitioned by day, and optimized for accessing
 larger time periods. It is also optimized for limiting analysis to a fraction
-of the data using the <code>normalized_channel</code> and <code>sample_id</code> fields.</p>
+of the data using the <a href="concepts/pipeline/../channels/channel_normalization.html"><code>normalized_channel</code></a> and <a href="concepts/pipeline/../sample_id.html"><code>sample_id</code></a> fields.</p>
 <h1><a class="header" href="#beyond-the-data-warehouse" id="beyond-the-data-warehouse">Beyond the Data Warehouse</a></h1>
 <p>The diagram above shows the path data takes to get into the data warehouse.
 After that, we have to start using it!</p>
@@ -1899,7 +1900,7 @@ After that, we have to start using it!</p>
 <p>It orchestrates the daily creation of the Stable tables described above,
 as well as many other derived datasets.</p>
 <p>The ETL code to create derived datasets is commonly implemented using queries in BigQuery.</p>
-<p>Many examples can be found in the [bigquery-etl] repository.</p>
+<p>Many examples can be found in the <a href="https://github.com/mozilla/bigquery-etl">bigquery-etl</a> repository.</p>
 <p>Data in BigQuery is also accessible via Spark, and several ETL jobs also run via Dataproc.</p>
 <p>These jobs produce data sets that are used for downstream analysis and data
 applications (such as <a href="https://telemetry.mozilla.org/">measurement</a> and <a href="https://missioncontrol.telemetry.mozilla.org">stability</a> dashboards,
