@@ -9,6 +9,8 @@ sources.
 
 Here is a simplified diagram of how data is ingested into the data warehouse.
 
+The code for the ingestion pipeline lives in the [gcp-ingestion] repository.
+
 ```mermaid
 graph TD
 
@@ -202,3 +204,4 @@ Data analysis is most commonly done using [SQL queries][stmo] or using [Spark].
 [sample_id]: ../sample_id.md
 [norm]: ../channels/channel_normalization.md
 [bqe]: https://github.com/mozilla/bigquery-etl
+[gcp-ingestion]: https://github.com/mozilla/gcp-ingestion
