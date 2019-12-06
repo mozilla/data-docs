@@ -16,6 +16,9 @@ Instead, it is about quirks and pitfalls specific to [Telemetry][telem].
 When looking at trends, it is helpful to be aware of events from the past
 that might impact comparisons with history. Here are a few to keep in mind:
 
+- **December 4 2019** - [AWS Ingestion Pipeline decommissioned](bug1598815).
+  Specifically, the last ping relayed through the AWS machinery had a
+  timestamp of `2019-12-04 22:04:45.912204 UTC`.
 - **October 29 2019** - Glean SDK Timing Distribution(s) are reporting buckets
   1 nanosecond apart. This is due to a potential rounding bug in Glean SDK
   versions less than `19.0.0`. See [Bug 1591938].
@@ -50,6 +53,7 @@ that might impact comparisons with history. Here are a few to keep in mind:
 [reset_cid_retro]: https://docs.google.com/document/d/1r1PDQnqhsrPkft0pB46v9uhXGxR_FzK4laKJLGttXdA
 [Bug 1501329]: https://bugzilla.mozilla.org/show_bug.cgi?id=1501329
 [bug1482509]: https://bugzilla.mozilla.org/show_bug.cgi?id=1482509
+[bug1598815]: https://bugzilla.mozilla.org/show_bug.cgi?id=1598815
 
 ### Pseudo-replication
 
