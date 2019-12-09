@@ -198,21 +198,43 @@ supports basic column and partitioning filters.</p>
 <pre><code class="language-python">dbutils.library.installPyPI(&quot;google-cloud-bigquery&quot;, &quot;1.16.0&quot;)
 dbutils.library.restartPython()
 
-# Read one day of pings and select a subset of columns.
+from google.cloud import bigquery
+
+
+def get_table(view):
+    &quot;&quot;&quot;Helper for determining what table underlies a user-facing view, since the Storage API can't read views.&quot;&quot;&quot;
+    bq = bigquery.Client()
+    view = view.replace(&quot;:&quot;, &quot;.&quot;)
+    # partition filter is required, so try a couple options
+    for partition_column in [&quot;DATE(submission_timestamp)&quot;, &quot;submission_date&quot;]:
+        try:
+            job = bq.query(
+                f&quot;SELECT * FROM `{view}` WHERE {partition_column} = CURRENT_DATE&quot;,
+                bigquery.QueryJobConfig(dry_run=True),
+            )
+            break
+        except Exception:
+            continue
+    else:
+        raise ValueError(&quot;could not determine partition column&quot;)
+    assert len(job.referenced_tables) == 1, &quot;View combines multiple tables&quot;
+    table = job.referenced_tables[0]
+    return f&quot;{table.project}:{table.dataset_id}.{table.table_id}&quot;
+
+
+# Read one day of main pings and select a subset of columns.
 core_pings_single_day = spark.read.format(&quot;bigquery&quot;) \
-    .option(&quot;table&quot;, &quot;moz-fx-data-shared-prod.telemetry_stable.core_v10&quot;) \
+    .option(&quot;table&quot;, get_table(&quot;moz-fx-data-shared-prod.telemetry.main&quot;)) \
     .load() \
     .where(&quot;submission_timestamp &gt;= to_date('2019-08-25') submission_timestamp &lt; to_date('2019-08-26')&quot;) \
     .select(&quot;client_id&quot;, &quot;experiments&quot;, &quot;normalized_channel&quot;)
 </code></pre>
 <p>A couple of things are worth noting in the above example.</p>
 <ul>
-<li>You must supply an actual <em>table</em> name to read from here, fully qualified
-with project name and dataset name.
+<li><code>get_table</code> is necessary because an actual <em>table</em> name is required to read
+from BigQuery here, fully qualified with project name and dataset name.
 The Storage API does not support accessing <code>VIEW</code>s, so the convenience names
-such as <code>telemetry.core</code> are not available via this API.
-You can find the table corresponding to a given view using the BigQuery
-console or using Data Catalog.</li>
+such as <code>telemetry.core</code> are not available via this API.</li>
 <li>You must supply a filter on the table's date partitioning column, in this
 case <code>submission_timestamp</code>.
 Additionally, you must use the <code>to_date</code> function to make sure that predicate
