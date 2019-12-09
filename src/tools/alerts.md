@@ -1,9 +1,9 @@
 Telemetry Alerts
 ================
 
-_Note: This article describes the AWS-based pipeline which has been retired;
+*Note: This article describes the AWS-based pipeline which has been retired;
 A new mechanism for alerting on probe expiry is tracked in
-[Bug 1511035](https://bugzilla.mozilla.org/show_bug.cgi?id=1511035)._
+[Bug 1511035](https://bugzilla.mozilla.org/show_bug.cgi?id=1511035).*
 
 Many Telemetry probes were created to show performance trends over time.
 Sudden changes happening in Nightly could be the sign of an
