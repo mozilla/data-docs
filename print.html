@@ -612,6 +612,12 @@ a 28 day window <code>NULL</code> is used. For example <code>days_since_visited_
 condition <code>scalar_parent_browser_engagement_total_uri_count_sum &gt;= 5</code>. These
 columns can be used for user counts where a condition must be met on any day
 in a window instead of using the most recent values for each <code>client_id</code>.</p>
+<p>The <code>days_seen_bits</code> field stores the daily history of a client in the 28 day
+window. The daily history is converted into a sequence of bits, with a <code>1</code> for
+the days a client is in <code>clients_daily</code> and a <code>0</code> otherwise, and this sequence
+is converted to an integer. A tutorial on how to use these bit patterns to
+create filters in SQL can be found in
+<a href="https://colab.research.google.com/drive/13AwwORpOtRsq22op_3rMSwPssQkJU1ok">this notebook</a>.</p>
 <p>The rest of the columns use the most recent value in <code>clients_daily</code> where
 the <code>client_id</code> appeared.</p>
 <h4><a class="header" href="#background-and-caveats" id="background-and-caveats">Background and Caveats</a></h4>
@@ -5622,6 +5628,12 @@ a 28 day window <code>NULL</code> is used. For example <code>days_since_visited_
 condition <code>scalar_parent_browser_engagement_total_uri_count_sum &gt;= 5</code>. These
 columns can be used for user counts where a condition must be met on any day
 in a window instead of using the most recent values for each <code>client_id</code>.</p>
+<p>The <code>days_seen_bits</code> field stores the daily history of a client in the 28 day
+window. The daily history is converted into a sequence of bits, with a <code>1</code> for
+the days a client is in <code>clients_daily</code> and a <code>0</code> otherwise, and this sequence
+is converted to an integer. A tutorial on how to use these bit patterns to
+create filters in SQL can be found in
+<a href="https://colab.research.google.com/drive/13AwwORpOtRsq22op_3rMSwPssQkJU1ok">this notebook</a>.</p>
 <p>The rest of the columns use the most recent value in <code>clients_daily</code> where
 the <code>client_id</code> appeared.</p>
 <h4><a class="header" href="#background-and-caveats-7" id="background-and-caveats-7">Background and Caveats</a></h4>
