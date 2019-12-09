@@ -74,6 +74,7 @@ from google.cloud import bigquery
 
 
 def get_table(view):
+    """Helper for determining what table underlies a user-facing view, since the Storage API can't read views."""
     bq = bigquery.Client()
     view = view.replace(":", ".")
     # partition filter is required, so try a couple options
