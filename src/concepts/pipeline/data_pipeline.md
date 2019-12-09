@@ -1,6 +1,7 @@
 # An overview of Mozilla’s Data Pipeline
 
-_Note: This article describes the AWS-based pipeline which has been retired;
+_Note: This article describes the AWS-based pipeline which
+[has been retired](https://bugzilla.mozilla.org/show_bug.cgi?id=1598815);
 the client-side concepts here still apply, but this article has been updated
 to reflect the [new GCP pipeline](gcp_data_pipeline.md)._
 
