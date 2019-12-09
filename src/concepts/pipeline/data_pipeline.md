@@ -1,8 +1,8 @@
 # An overview of Mozilla’s Data Pipeline
 
-_Note: This article describes the AWS-based pipeline which is being retired;
-the client-side concepts here still apply, but this article will be updated
-to reflect the new GCP pipeline._
+_Note: This article describes the AWS-based pipeline which has been retired;
+the client-side concepts here still apply, but this article has been updated
+to reflect the [new GCP pipeline](gcp_data_pipeline.md)._
 
 This post describes the architecture of Mozilla’s data pipeline, which is used to collect Telemetry data from our users and logs from various services. One of the cool perks of working at Mozilla is that most of what we do is out in the open and because of that I can do more than just show you some diagram with arrows of our architecture; I can point you to the code, script & configuration that underlies it!
 
@@ -187,7 +187,7 @@ There is a vast ecosystem of tools for processing data at scale, each with their
 [Heka]: https://github.com/mozilla-services/heka
 [plugins]: https://github.com/mozilla-services/hindsight/blob/9593668e84a642aff9dd95ccc648b6585948abfe/docs/index.md
 [UI]: https://github.com/mozilla-services/hindsight_admin
-[access the UI]: https://pipeline-cep.prod.mozaws.net/
+[access the UI]: BROKEN:https://pipeline-cep.prod.mozaws.net/
 [reads pings from Kafka]: https://github.com/mozilla-services/lua_sandbox_extensions/blob/0895238e32d25241ef46f561e43039beb201c7cd/kafka/sandboxes/heka/input/kafka.lua
 [pre-processes]: https://github.com/mozilla-services/lua_sandbox_extensions/blob/5d8907ee9f1a20e3a02bfe5b57d4312b173487a3/moz_telemetry/io_modules/decoders/moz_telemetry/ping.lua
 [sends batches to S3]: https://github.com/mozilla-services/lua_sandbox_extensions/blob/5d8907ee9f1a20e3a02bfe5b57d4312b173487a3/moz_telemetry/sandboxes/heka/output/moz_telemetry_s3.lua

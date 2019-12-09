@@ -29,8 +29,6 @@
     * [Working with Normandy events](cookbooks/normandy_events.md)
   * [Real-time](cookbooks/realtime.md)
     * [Seeing Your Own Pings](cookbooks/view_pings_cep.md)
-    * [CEP Matcher](tools/cep_matcher.md)
-    * [Creating a Real-time Analysis Plugin](cookbooks/realtime_analysis_plugin.md)
   * [Metrics](cookbooks/metrics.md)
     * [Daily Active Users (DAU)](cookbooks/dau.md)
     * [Active DAU (aDAU)](cookbooks/active_dau.md)

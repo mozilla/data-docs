@@ -178,7 +178,7 @@ Analysis outputs can also be made public using the **Public Outputs** bucket. Th
 
 Stream processing is done using [Hindsight] and [Spark Streaming].
 
-Hindsight allows you to run [plugins written in Lua inside a sandbox][lua_sandbox]. This gives a safe, performant way to do self-serve streaming analysis. See [this article](../../cookbooks/realtime_analysis_plugin.md) for an introduction. Hindsight plugins do the initial data validation and decoding, as well as writing out to long-term storage in both [Heka-framed protobuf][heka_protobuf] and [parquet][direct2parquet] forms.
+Hindsight allows you to run [plugins written in Lua inside a sandbox][lua_sandbox]. This gives a safe, performant way to do self-serve streaming analysis. Hindsight plugins do the initial data validation and decoding, as well as writing out to long-term storage in both [Heka-framed protobuf][heka_protobuf] and [parquet][direct2parquet] forms.
 
 Spark Streaming is used to read from Kafka and perform [low-latency ETL and aggregation tasks][telemetry-streaming]. These aggregates are currently used by [Mission Control] and are also available for querying via [Re:dash].
 
@@ -393,7 +393,7 @@ graph LR
 [Databricks docs]: https://docs.databricks.com/user-guide/notebooks/index.html
 [tmo]: https://telemetry.mozilla.org
 [measurement dashboard]: https://telemetry.mozilla.org/new-pipeline/dist.html
-[cep]: http://pipeline-cep.prod.mozaws.net/
+[cep]: BROKEN:http://pipeline-cep.prod.mozaws.net/
 [Mission Control]: https://data-missioncontrol.dev.mozaws.net
 [Metrics Graphics]: http://metricsgraphicsjs.org/
 [parquet]: http://parquet.apache.org/
