@@ -1,6 +1,10 @@
 Telemetry Alerts
 ================
 
+*Note: This article describes the AWS-based pipeline which has been retired;
+A new mechanism for alerting on probe expiry is tracked in
+[Bug 1511035](https://bugzilla.mozilla.org/show_bug.cgi?id=1511035).*
+
 Many Telemetry probes were created to show performance trends over time.
 Sudden changes happening in Nightly could be the sign of an
 unintentional performance regression, so we introduced a system to
@@ -29,7 +33,7 @@ It places all detected changes in a file for ingestion by Medusa.
 ### Medusa
 
 Medusa is in charge of emailing people when distributions change and for
-displaying the website <https://alerts.telemetry.mozilla.org> which
+displaying the [Telemetry Alerts] website which
 contains pertinent information about each detected regression.
 
 Medusa also checks for expiring histograms and sends emails notifying of
@@ -70,7 +74,7 @@ One of the main ways humans interact with Telemetry Alerts is through
 the emails sent by Medusa.
 
 At present the email contains a link to the alert's page on
-<https://alerts.telemetry.mozilla.org> and a link to a pushlog on
+[Telemetry Alerts] and a link to a pushlog on
 <https://hg.mozilla.org> detailing the changes newly-present in the
 Nightly build that exhibited the change.
 
@@ -179,3 +183,5 @@ probe again, that is. File a bug in that bug's component to update the
 Alerting probe to have a valid, monitored `alert_emails` field so that
 the next time it misbehaves *they* can be the ones to explain themselves
 without you having to spend all this time tracking them down.
+
+[Telemetry Alerts]: BROKEN:https://alerts.telemetry.mozilla.org
