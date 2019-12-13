@@ -1,225 +1,91 @@
-*Authored by the Product Data Science Team. Please direct questions/concerns to Ben Miroglio (`bmiroglio`).*
+*Authored by the Data Science Team. Please direct questions/concerns to Jesse McCrosky (`jmccrosky@mozilla.com`).*
 
 # Retention
 
-Retention measures the rate at which users are *continuing* to use Firefox, making it one of the more important metrics we track. We commonly measure retention between releases, experiment cohorts, and various Firefox subpopulations to better understand how a change to the user experience or use of a specific feature affect behavior.
+Retention measures the proportion of users that are *continuing* to use Firefox, making it one of the more important metrics we track - we generally expect that the more value our users receive from the product, the more likely they are to be retained. We commonly measure retention between releases, experiment cohorts, and various Firefox subpopulations to better understand how a change to the user experience or use of a specific feature affects retention behavior.
 
-## N Week Retention
+## State of Retention
 
-Time is an embedded component of retention. Most retention analysis starts with some anchor, or action that is associated with a date (experiment enrollment date, profile creation date, button clicked on date *d*, etc.). We then look 1, 2, …, N weeks beyond the anchor to see what percent of users have submitted a ping (signaling their continued use of Firefox).
+There is currently active research into retention metrics and we expect our conceptual and data model around retention to evolve in the coming months.  This page will be updated.  However, in the meantime, we want to be clear about our standard retention metrics for use right now.
 
-For example, let’s say we are calculating retention for new Firefox users. Each user can then be anchored by their `profile_creation_date`, and we can count the number of users who submitted a ping between 7-13 days after profile creation (1 Week retention), 14-20 days after profile creation (2 Week Retention), etc.
+You can also see [this document](https://docs.google.com/document/d/1VtqNFQFB9eJNr57h3Mz-lldMcpSYQKHVn2jzMMjPFYY/) for a summary of our conceptual thinking about retention metrics.
 
-### Example Methodology
+## Standard Retention metrics
 
+Note that the definitions below refer to "usage criterion".  See the [GUD Data Model documentation](https://docs.google.com/document/d/1sIHCCaJhtfxj-dnbInfuIjlMRhCFbEhFiBESaezIRwM/edit#heading=h.ysqpvceb7pgt) for more information.  For normal Firefox Desktop retention, the usage criteria referes to simply sending any main ping.
 
+### 1-Week Retention
 
-Given a dataset in Spark, we can construct a field `retention_period` that uses `submission_date` to determine the period to which a ping belongs (i.e. if a user created their profile on April 1st, all pings submitted between April 8th and April 14th are assigned to week 1). 1-week retention can then be simplified to the percent of users with a 1 value for `retention_period`, 2-week retention simplifies to the percent of users with a 2 value for `retention_period`, ..., etc. Note that each retention period is independent of the others, so it is possible to have higher 2-week retention than 1-week retention (especially during holidays).
+Among profiles that were active in the specified usage criterion at least once in the week starting on the specified day, what proportion (out of 1) meet the usage criterion during the following week.
 
-First let's map 1, 2, ..., N week retention the the amount of days elapsed after the anchor point:
+### 1-Week New Profile Retention
 
-```python
-PERIODS = {}
-N_WEEKS = 6
-for i in range(1, N_WEEKS + 1):
-    PERIODS[i] = {
-        'start': i * 7,
-        'end': i * 7 + 6
-    }
-```
-Which gives us
+Among new profiles created on the day specified, what proportion (out of 1) meet the usage criterion during the week beginning one week after the day specified.
 
-```python
-{1: {'end': 13, 'start': 7},
- 2: {'end': 20, 'start': 14},
- 3: {'end': 27, 'start': 21},
- 4: {'end': 34, 'start': 28},
- 5: {'end': 41, 'start': 35},
- 6: {'end': 48, 'start': 42}}
+Note that we use a new profile definition that relies on the `profile_creation_date` and requires that a main ping be sent within one week of the `profile_creation_date`.  This differs from analysis using new profile pings, but allows valid comparison over time, which new profile pings do not due to the increase adoption of versions of the browser recent enough to send new profile pings.
 
-```
+## Accessing Retention Metrics
 
-Next, let's define some helper functions:
+There are three standard methods for accessing retention metrics.  These methods trade off between simplicity and flexibility.
 
-```python
-import datetime as dt
-import pandas as pd
-import pyspark.sql.types as st
-import pyspark.sql.functions as F
+### Mozilla Growth & Usage Dashboard (GUD)
 
-udf = F.udf
+The [GUD](https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/) provides plots and exportable tables of both retention metrics over time.  Metrics are available for most products and can be sliced by OS, language, country, and channel.
 
-def date_diff(d1, d2, fmt='%Y-%m-%d'):
-    """
-    Returns days elapsed from d2 to d1 as an integer
+### Querying Smoot Usage Tables
 
-    Params:
-    d1 (str)
-    d2 (str)
-    fmt (str): format of d1 and d2 (must be the same)
+For programatic access, the tables underlying GUD can be queried directly.  For example:
 
-    >>> date_diff('2017-02-05', '2017-02-01')
-    4
-
-    >>> date_diff('2017-02-01', '2017-02-05)
-    -4
-    """
-    try:
-        return (pd.to_datetime(d1, format=fmt) -
-                pd.to_datetime(d2, format=fmt)).days
-    except:
-        return None
-
-
-@udf(returnType=st.IntegerType())
-def get_period(anchor, submission_date):
-    """
-    Given an anchor and a submission_date,
-    returns what period a ping belongs to. This
-    is a spark UDF.
-
-    Params:
-    anchor (col): anchor date
-    submission_date (col): a ping's submission_date
-
-    Global:
-    PERIODS (dict): defined globally based on n-week method
-
-    Returns an integer indicating the retention period
-    """
-    if anchor is not None:
-        diff = date_diff(submission_date, anchor)
-        if diff >= 7: # exclude first 7 days
-            for period in sorted(PERIODS):
-                if diff <= PERIODS[period]['end']:
-                    return period
-
-@udf(returnType=st.StringType())
-def from_unixtime_handler(ut):
-    """
-    Converts unix time (in days) to a string in %Y-%m-%d format.
-    This is a spark UDF.
-
-    Params:
-    ut (int): unix time in days
-
-    Returns a date as a string if it is parsable by datetime, otherwise None
-    """
-    if ut is not None:
-        try:
-            return (dt.datetime.fromtimestamp(ut * 24 * 60 * 60).strftime("%Y-%m-%d"))
-        except:
-            return None
-
+```sql
+SELECT
+  `date`,
+  SAFE_DIVIDE(SUM(new_profile_active_in_week_1), SUM(new_profiles)) AS one_week_new_profile_retention,
+  SAFE_DIVIDE(SUM(active_in_weeks_0_and_1), SUM(active_in_week_0)) AS one_week_retention
+FROM `moz-fx-data-shared-prod.telemetry.smoot_usage_day_13`
+WHERE
+  usage = 'Any Firefox Desktop Activity'
+  AND country IN ('US', 'GB', 'CA', 'FR', 'DE')
+  AND `date` BETWEEN "2019-11-01" AND "2019-11-07"
+GROUP BY `date` ORDER BY `date`
 ```
 
-Now we can load in a subset of `main_summary` and construct the necessary fields for retention calculations:
+### Querying Clients Daily Tables
 
-```python
-ms = spark.read.format("bigquery") \
-    .option("table", "moz-fx-data-derived-datasets.telemetry_derived.main_summary_v4") \
-    .load() \
-    .where("submission_date >= to_date('2018-04-01') AND submission_date <= to_date('2018-06-03')") \
-    .where("sample_id = 42") \
-    .where("app_name = 'Firefox'") \
-    .where("normalized_channel = 'release'") \
-    .where("os in ('Darwin', 'Windows_NT', 'Linux')") \
-    .select("client_id", "submission_date", "profile_creation_date", "os")
+For more custom access, you use the clients_last_seen tables.  You can restrict to an arbitrary population of users by joining the `base` table below against a table containing the `client_id`s of interest.
 
-PCD_CUTS = ('2018-04-01', '2018-04-15')
+```sql
+CREATE TEMP FUNCTION
+  udf_active_n_weeks_ago(x INT64, n INT64)
+  RETURNS BOOLEAN
+  AS (
+    BIT_COUNT(x >> (7 * n) & (0x7F)) > 0
+  );
+CREATE TEMP FUNCTION
+  udf_bitpos( bits INT64 ) AS ( CAST(SAFE.LOG(bits & -bits, 2) AS INT64));
 
-ms = (
-    ms.withColumn("pcd", from_unixtime_handler("profile_creation_date")) # i.e. 17500 -> '20171130'
-      .filter("pcd >= '{}'".format(PCD_CUTS[0]))
-      .filter("pcd <= '{}'".format(PCD_CUTS[1]))
-      .withColumn("period", get_period("pcd", "submission_date"))
-)
-```
-
-Note that we filter to profiles that were created in the first half of April so that we have sufficient time to observe 6 weeks of behavior. Now we can calculate retention!
-
-```python
-os_counts = (
-    ms
-    .groupby("os")
-    .agg(F.countDistinct("client_id").alias("total_clients"))
+WITH base AS (
+  SELECT
+    client_id,
+    submission_date,
+    COUNTIF(udf_bitpos(days_created_profile_bits) = 13) AS new_profiles,
+          COUNTIF(udf_active_n_weeks_ago(days_seen_bits, 1)) AS active_in_week_0,
+          COUNTIF(udf_active_n_weeks_ago(days_seen_bits, 1)
+            AND udf_active_n_weeks_ago(days_seen_bits, 0))
+            AS active_in_weeks_0_and_1,
+          COUNTIF(udf_bitpos(days_created_profile_bits) = 13 AND udf_active_n_weeks_ago(days_seen_bits, 0)) AS new_profile_active_in_week_1
+  FROM
+    telemetry.clients_last_seen
+GROUP BY client_id, submission_date
 )
 
-weekly_counts = (
-    ms
-    .groupby("period", "os")
-    .agg(F.countDistinct("client_id").alias("n_week_clients"))
-)
-
-retention_by_os = (
-    weekly_counts
-    .join(os_counts, on='os')
-    .withColumn("retention", F.col("n_week_clients") / F.col("total_clients"))
-    # Add a 95% confidence interval based on the normal approximation for a binomial distribution,
-    # p ± z * sqrt(p*(1-p)/n).
-    # The 95% CI spans the range `retention ± ci_95_semi_interval`.
-    .withColumn(
-      "ci_95_semi_interval",
-      F.lit(1.96) * F.sqrt(F.col("retention") * (F.lit(1) - F.col("retention")) / F.col("total_clients"))
-    )
-)
+SELECT
+  SAFE_DIVIDE(SUM(new_profile_active_in_week_1), SUM(new_profiles)) AS one_week_new_profile_retention,
+  SAFE_DIVIDE(SUM(active_in_weeks_0_and_1), SUM(active_in_week_0)) AS one_week_retention
+FROM
+  base
+WHERE submission_date = "2019-12-01"
 ```
 
-Peeking at 6-Week Retention
+## Confounding Factors
 
-```python
-retention_by_os.filter("period = 6").show()
-```
-
-```
-+----------+------+--------------+-------------+-------------------+--------------------+
-|        os|period|n_week_clients|total_clients| retention         | ci_95_semi_interval|
-+----------+------+--------------+-------------+-------------------+--------------------+
-|     Linux|     6|          1495|        22422|0.06667558647756668|0.003265266498407...|
-|    Darwin|     6|          1288|         4734|0.27207435572454586|0.012677372722376635|
-|Windows_NT|     6|         29024|       124872|0.23243000832852842|0.002342764476746...|
-+----------+------+--------------+-------------+-------------------+--------------------+
-
-
-```
-
-we observe that 6.7% ± 0.3% of Linux users whose profile was created in the first half of April submitted a ping 6 weeks later, and so forth. The example code snippets are consolidated in [this notebook](https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/61351/command/61352).
-
-
-### New vs. Existing User Retention
-
-The above example calculates **New User Retention**, which is distinct from **Existing User Retention**. This distinction is important when understanding retention baselines (i.e. does this number make sense?). Existing users typically have much higher retention numbers than new users.
-
-Note that is more common in industry to refer to Existing User Retention as "Churn" (Churn = 1 - Retention), however, we use retention across the board for the sake of consistency and interpretability.
-
-**Please be sure to specify whether or not your retention analysis is for new or existing users.**
-
-
-### What If There's No Anchor Point?
-
-Sometimes there isn't a clear anchor point like `profile_creation_date` or `enrollment_date`.
-
-For example, imagine you are tasked with reporting retention numbers for users that enabled sync (`sync_configured`) compared to users that haven't. Being a boolean pref, there is no straightforward way to determine *when* `sync_enabled` flipped from `false` to `true` aside from looking at a client's entire history (which is not recommended!). What now?
-
-We can construct an artificial anchor point using fixed weekly periods; the retention concepts then remain unchanged. The process can be summarized by the following steps:
-
-* Define a baseline week cohort
-    * For this example let's define the baseline as users that submitted pings between 2018-01-01 and 2018-01-07
-* Count all users with/without sync enabled in this period
-* Assign these users to an anchor point of 2018-01-01 (the **beginning** of the baseline week)
-* Count the number of users in the baseline week that submitted a ping between 7-13 days after 2018-01-01 (1 Week retention), 14-20 days after 2018-01-01 (2 Week Retention), etc.
-* Shift the baseline week up 7 days (and all other dates) and repeat as necessary
-
-
-This method is also valid in the presence of an anchor point, however, it is recommended the anchor point method is employed when possible.
-
-
-### Confounding Factors
-
-When performing retention analysis between two or more groups, it is important to look at other usage metrics to get an understanding of other influential factors.
-
-For example (borrowing the sync example from the previous section) you find that users with and without sync have a 1 week retention of 0.80 and 0.40, respectively. Wow--we should really be be promoting sync as it could double retention numbers!
-
-*Not quite*. Turns out you next look at `active_ticks` and `total_uri_count` and find that sync users report much higher numbers for these measures as well. Now how can we explain this difference in retention?
-
-There could be an entirely separate cookbook devoted to answering this question, however this contrived example is meant to demonstrate that simply comparing retention numbers between two groups isn't capturing the full story. Sans an experiment or model-based approach, all we can say is "enabling sync is **associated** with higher retention numbers." There is still value in this assertion, however it should be stressed that **association/correlation != causation!**
+When performing retention analysis it is important to understand that there are many reasons for retention differences between groups.  Unless you are comparing two arms of a controlled experiment, in which case you can probably attribute any difference to the experimental treatment, it is impossible to make causal arguments about retention differences.  For example, if you observe the users that save a large number of bookmarks tend to have higher retention than those who do not,  it is more likely that the retention difference is simply a property of *the types of people* that save bookmarks, and an intervention to encourage saving more bookmarks is not necessarily likely to improve retention.
