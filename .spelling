@@ -135,6 +135,7 @@ Lua
 matcher
 matchers
 MAU
+MacOS
 McCrosky
 mdbook
 mdbook-toc
@@ -157,6 +158,7 @@ nginx
 ni
 non-e10s
 NoSQL
+nullable
 npm
 NSIS
 NumPy

@@ -1,4 +1,4 @@
-# Normalized OS Names and Versions
+# Normalized OS
 
 The OS names and versions received in telemetry is not necessarily the accepted common name.
 The `normalized_os_name` and `normalized_os_version` tables in the `static` dataset serve as a
