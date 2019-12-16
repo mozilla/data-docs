@@ -8,21 +8,21 @@ Retention measures the proportion of users that are *continuing* to use Firefox,
 
 There is currently active research into retention metrics and we expect our conceptual and data model around retention to evolve in the coming months.  This page will be updated.  However, in the meantime, we want to be clear about our standard retention metrics for use right now.
 
-You can also see [this document](https://docs.google.com/document/d/1VtqNFQFB9eJNr57h3Mz-lldMcpSYQKHVn2jzMMjPFYY/) for a summary of our conceptual thinking about retention metrics.
+You can also see the [_Proposed Metric Definition: Retention_ Google Doc](https://docs.google.com/document/d/1VtqNFQFB9eJNr57h3Mz-lldMcpSYQKHVn2jzMMjPFYY/) for a summary of our conceptual thinking about retention metrics.
 
 ## Standard Retention metrics
 
-Note that the definitions below refer to "usage criterion".  See the [GUD Data Model documentation](https://docs.google.com/document/d/1sIHCCaJhtfxj-dnbInfuIjlMRhCFbEhFiBESaezIRwM/edit#heading=h.ysqpvceb7pgt) for more information.  For normal Firefox Desktop retention, the usage criteria referes to simply sending any main ping.
+Note that the definitions below refer to "usage criterion".  See the [GUD Data Model documentation](https://docs.google.com/document/d/1sIHCCaJhtfxj-dnbInfuIjlMRhCFbEhFiBESaezIRwM/edit#heading=h.ysqpvceb7pgt) for more information.  For normal Firefox Desktop retention, the usage criterion refers to simply sending any main ping.
 
 ### 1-Week Retention
 
-Among profiles that were active in the specified usage criterion at least once in the week starting on the specified day, what proportion (out of 1) meet the usage criterion during the following week.
+Among profiles that were active in the specified usage criterion at least once in the week starting on the specified day (day 0), what proportion (out of 1) meet the usage criterion during the following week (days 7 through 13).
 
 ### 1-Week New Profile Retention
 
 Among new profiles created on the day specified, what proportion (out of 1) meet the usage criterion during the week beginning one week after the day specified.
 
-Note that we use a new profile definition that relies on the `profile_creation_date` and requires that a main ping be sent within one week of the `profile_creation_date`.  This differs from analysis using new profile pings, but allows valid comparison over time, which new profile pings do not due to the increase adoption of versions of the browser recent enough to send new profile pings.
+Note that we use a new profile definition that relies on the `profile_creation_date` and requires that a main ping be sent within one week of the `profile_creation_date`.  This differs from analysis using new profile pings, but allows valid comparison over time. New profile pings do not allow comparison over time due to the increased adoption of versions of the browser recent enough to send new profile pings.
 
 ## Accessing Retention Metrics
 
@@ -66,7 +66,7 @@ CREATE TEMP FUNCTION
 WITH base AS (
   SELECT
     client_id,
-    submission_date,
+    DATE_SUB(submission_date, INTERVAL 13 DAY) AS date,
     COUNTIF(udf_bitpos(days_created_profile_bits) = 13) AS new_profiles,
           COUNTIF(udf_active_n_weeks_ago(days_seen_bits, 1)) AS active_in_week_0,
           COUNTIF(udf_active_n_weeks_ago(days_seen_bits, 1)
