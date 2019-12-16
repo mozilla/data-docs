@@ -1,14 +1,14 @@
 # Static Datasets
 
 Tables containing static data exist in the `static` dataset in BigQuery.
-These tables are generated from CSV's named `data.csv` in the `templates` 
+These tables are generated from CSV files named `data.csv` in subdirectories of the `templates/static/` 
 directory in [`bigquery-etl`](https://github.com/mozilla/bigquery-etl/tree/master/templates/static).
 
 ## Creating a Static Table
 
-Static tables can be created in any dataset in bigquery-etl.  To create a new table,
-create a directory in the target dataset.  This directory should be named whatever you 
-wish the table to be named.  Then, put a CSV file named `data.csv` in the directory.
+To create a new table, create a directory in `templates/static/`.
+This directory should be named whatever you wish the table to be named.
+Then, put a CSV file named `data.csv` in the directory.
 It is expected that the first line of `data.csv` is a header row containing the column 
 names of the data.
 
@@ -27,3 +27,8 @@ that all fields are nullable strings.
 See [`country_names_v1`](https://github.com/mozilla/bigquery-etl/tree/50932354ce/templates/static/country_names_v1) for an example.
 
 To create the table in BigQuery, run [`script/publish_static`](https://github.com/mozilla/bigquery-etl/blob/master/script/publish_static).
+
+### Notes
+
+Static tables can be created in any dataset in bigquery-etl.  However, it is recommended for consistency and 
+organization to keep them in the `static` dataset.
