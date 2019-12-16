@@ -83,7 +83,7 @@ SELECT
   SAFE_DIVIDE(SUM(active_in_weeks_0_and_1), SUM(active_in_week_0)) AS one_week_retention
 FROM
   base
-WHERE submission_date = "2019-12-01"
+WHERE date = "2019-12-01"
 ```
 
 ## Confounding Factors
