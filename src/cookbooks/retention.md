@@ -34,7 +34,7 @@ The [GUD](https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/) provides plo
 
 ### Querying Smoot Usage Tables
 
-For programatic access, the tables underlying GUD can be queried directly.  For example:
+For programmatic access, the tables underlying GUD can be queried directly.  For example:
 
 ```sql
 SELECT
@@ -51,7 +51,7 @@ GROUP BY `date` ORDER BY `date`
 
 ### Querying Clients Daily Tables
 
-For more custom access, you use the clients_last_seen tables.  You can restrict to an arbitrary population of users by joining the `base` table below against a table containing the `client_id`s of interest.
+For more custom access, use the `clients_last_seen tables`.  You can restrict to an arbitrary population of users by joining the `base` table below against a table containing the `client_id`s of interest.
 
 ```sql
 CREATE TEMP FUNCTION
