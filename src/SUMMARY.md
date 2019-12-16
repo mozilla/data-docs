@@ -82,7 +82,8 @@
     * [Firefox Account Attribution](datasets/fxa_metrics/attribution.md)
     * [Firefox Account Funnel Metrics](datasets/fxa_metrics/funnels.md)
     * [Firefox Account Email Metrics](datasets/fxa_metrics/emails.md)
-
+  * [Static Datasets](datasets/static.md)
+    * [Normalized OS Names And Versions](datasets/static/normalized_os.md)
 
 ---
 
