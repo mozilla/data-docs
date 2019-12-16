@@ -170,7 +170,7 @@
 <h3><a class="header" href="#mozilla-growth--usage-dashboard-gud" id="mozilla-growth--usage-dashboard-gud">Mozilla Growth &amp; Usage Dashboard (GUD)</a></h3>
 <p>The <a href="https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/">GUD</a> provides plots and exportable tables of both retention metrics over time.  Metrics are available for most products and can be sliced by OS, language, country, and channel.</p>
 <h3><a class="header" href="#querying-smoot-usage-tables" id="querying-smoot-usage-tables">Querying Smoot Usage Tables</a></h3>
-<p>For programatic access, the tables underlying GUD can be queried directly.  For example:</p>
+<p>For programmatic access, the tables underlying GUD can be queried directly.  For example:</p>
 <pre><code class="language-sql">SELECT
   `date`,
   SAFE_DIVIDE(SUM(new_profile_active_in_week_1), SUM(new_profiles)) AS one_week_new_profile_retention,
@@ -183,7 +183,7 @@ WHERE
 GROUP BY `date` ORDER BY `date`
 </code></pre>
 <h3><a class="header" href="#querying-clients-daily-tables" id="querying-clients-daily-tables">Querying Clients Daily Tables</a></h3>
-<p>For more custom access, you use the clients_last_seen tables.  You can restrict to an arbitrary population of users by joining the <code>base</code> table below against a table containing the <code>client_id</code>s of interest.</p>
+<p>For more custom access, use the <code>clients_last_seen tables</code>.  You can restrict to an arbitrary population of users by joining the <code>base</code> table below against a table containing the <code>client_id</code>s of interest.</p>
 <pre><code class="language-sql">CREATE TEMP FUNCTION
   udf_active_n_weeks_ago(x INT64, n INT64)
   RETURNS BOOLEAN
