@@ -89,3 +89,86 @@ WHERE date = "2019-12-01"
 ## Confounding Factors
 
 When performing retention analysis it is important to understand that there are many reasons for retention differences between groups.  Unless you are comparing two arms of a controlled experiment, in which case you can probably attribute any difference to the experimental treatment, it is impossible to make causal arguments about retention differences.  For example, if you observe the users that save a large number of bookmarks tend to have higher retention than those who do not,  it is more likely that the retention difference is simply a property of *the types of people* that save bookmarks, and an intervention to encourage saving more bookmarks is not necessarily likely to improve retention.
+
+## Confidence Intervals
+
+It is good practice to always compute confidence intervals for retention metrics, especially when looking at specific slices of users or when making comparisons between different groups.
+
+The [GUD](https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/) provides confidence intervals automatically using a jackknife resampling method over `client_id` buckets.  This confidence intervals generated using this method should be considered the "standard".  We show below how to compute them using the data sources described above.
+
+We also note that it is fairly simple to calculate a confidence interval using any statistical method appropriate for proportions.  The queries given above provide both numerators and denominators, so feel free to calculate confidence intervals in the manner you prefer.  However, if you want to replicate the standard confidence intervals, please work from the example queries below.
+
+### Querying Smoot Usage Tables
+
+```sql
+WITH bucketed AS (
+  SELECT
+    `date`,
+    id_bucket,
+    SUM(new_profile_active_in_week_1) AS new_profile_active_in_week_1,
+    SUM(new_profiles) AS new_profiles
+  FROM `moz-fx-data-shared-prod.telemetry.smoot_usage_day_13`
+  WHERE
+    usage = 'Any Firefox Desktop Activity'
+    AND country IN ('US', 'GB', 'CA', 'FR', 'DE')
+    AND `date` BETWEEN "2019-11-01" AND "2019-11-07"
+  GROUP BY `date`, id_bucket
+)
+
+SELECT
+  `date`,
+  udf_js.jackknife_ratio_ci(20, ARRAY_AGG(STRUCT(CAST(new_profile_active_in_week_1 AS float64), CAST(new_profiles as FLOAT64)))) AS one_week_new_profile_retention
+FROM bucketed
+GROUP BY `date` ORDER BY `date`
+```
+
+### Querying Clients Daily Tables
+
+```sql
+CREATE TEMP FUNCTION
+  udf_active_n_weeks_ago(x INT64, n INT64)
+  RETURNS BOOLEAN
+  AS (
+    BIT_COUNT(x >> (7 * n) & (0x7F)) > 0
+  );
+CREATE TEMP FUNCTION
+  udf_bitpos( bits INT64 ) AS ( CAST(SAFE.LOG(bits & -bits, 2) AS INT64));
+
+WITH base AS (
+  SELECT
+    client_id,
+    MOD(ABS(FARM_FINGERPRINT(MD5(client_id))), 20) AS id_bucket,
+    DATE_SUB(submission_date, INTERVAL 13 DAY) AS date,
+    COUNTIF(udf_bitpos(days_created_profile_bits) = 13) AS new_profiles,
+          COUNTIF(udf_active_n_weeks_ago(days_seen_bits, 1)) AS active_in_week_0,
+          COUNTIF(udf_active_n_weeks_ago(days_seen_bits, 1)
+            AND udf_active_n_weeks_ago(days_seen_bits, 0))
+            AS active_in_weeks_0_and_1,
+          COUNTIF(udf_bitpos(days_created_profile_bits) = 13 AND udf_active_n_weeks_ago(days_seen_bits, 0)) AS new_profile_active_in_week_1
+  FROM
+    telemetry.clients_last_seen
+  WHERE DATE_SUB(submission_date, INTERVAL 13 DAY) = "2019-10-01"
+  GROUP BY client_id, submission_date
+),
+
+bucketed AS (
+  SELECT
+    date,
+    id_bucket,
+    SUM(active_in_weeks_0_and_1) AS active_in_weeks_0_and_1,
+    SUM(active_in_week_0) AS active_in_week_0
+  FROM
+    base
+  WHERE
+    id_bucket IS NOT NULL
+  GROUP BY
+    date,
+    id_bucket
+)
+
+SELECT
+  `date`,
+  udf_js.jackknife_ratio_ci(20, ARRAY_AGG(STRUCT(CAST(active_in_weeks_0_and_1 AS float64), CAST(active_in_week_0 as FLOAT64)))) AS one_week_retention
+FROM bucketed
+GROUP BY `date` ORDER BY `date`
+```
