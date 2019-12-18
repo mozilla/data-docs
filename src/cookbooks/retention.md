@@ -94,7 +94,7 @@ When performing retention analysis it is important to understand that there are 
 
 It is good practice to always compute confidence intervals for retention metrics, especially when looking at specific slices of users or when making comparisons between different groups.
 
-The [GUD](https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/) provides confidence intervals automatically using a jackknife resampling method over `client_id` buckets.  This confidence intervals generated using this method should be considered the "standard".  We show below how to compute them using the data sources described above.
+The [Growth and Usage Dashboard](https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/) provides confidence intervals automatically using a jackknife resampling method over `client_id` buckets.  This confidence intervals generated using this method should be considered the "standard".  We show below how to compute them using the data sources described above.
 
 We also note that it is fairly simple to calculate a confidence interval using any statistical method appropriate for proportions.  The queries given above provide both numerators and denominators, so feel free to calculate confidence intervals in the manner you prefer.  However, if you want to replicate the standard confidence intervals, please work from the example queries below.
 
@@ -139,7 +139,7 @@ WITH base AS (
     client_id,
     MOD(ABS(FARM_FINGERPRINT(MD5(client_id))), 20) AS id_bucket,
     DATE_SUB(submission_date, INTERVAL 13 DAY) AS date,
-    COUNTIF(udf_bitpos(days_created_profile_bits) = 13) AS new_profiles,
+    COUNTIF(udf.bitpos(days_created_profile_bits) = 13) AS new_profiles,
           COUNTIF(udf_active_n_weeks_ago(days_seen_bits, 1)) AS active_in_week_0,
           COUNTIF(udf_active_n_weeks_ago(days_seen_bits, 1)
             AND udf_active_n_weeks_ago(days_seen_bits, 0))
@@ -147,6 +147,8 @@ WITH base AS (
           COUNTIF(udf_bitpos(days_created_profile_bits) = 13 AND udf_active_n_weeks_ago(days_seen_bits, 0)) AS new_profile_active_in_week_1
   FROM
     telemetry.clients_last_seen
+  -- We need to "rewind" 13 days since retention is forward-looking;
+  -- we calculate retention for "day 0" based on clients_last_seen data from "day 13".
   WHERE DATE_SUB(submission_date, INTERVAL 13 DAY) = "2019-10-01"
   GROUP BY client_id, submission_date
 ),
@@ -154,7 +156,10 @@ WITH base AS (
 bucketed AS (
   SELECT
     date,
-    id_bucket,
+    -- There are many options for hashing client_ids into buckets; 
+    -- the below is an easy option using native BigQuery SQL functions;
+    -- see discussion in https://github.com/mozilla/bigquery-etl/issues/36
+    MOD(ABS(FARM_FINGERPRINT(client_id)), 20) AS id_bucket
     SUM(active_in_weeks_0_and_1) AS active_in_weeks_0_and_1,
     SUM(active_in_week_0) AS active_in_week_0
   FROM
