@@ -54,25 +54,16 @@ GROUP BY `date` ORDER BY `date`
 For more custom access, use the `clients_last_seen tables`.  You can restrict to an arbitrary population of users by joining the `base` table below against a table containing the `client_id`s of interest.
 
 ```sql
-CREATE TEMP FUNCTION
-  udf_active_n_weeks_ago(x INT64, n INT64)
-  RETURNS BOOLEAN
-  AS (
-    BIT_COUNT(x >> (7 * n) & (0x7F)) > 0
-  );
-CREATE TEMP FUNCTION
-  udf_bitpos( bits INT64 ) AS ( CAST(SAFE.LOG(bits & -bits, 2) AS INT64));
-
 WITH base AS (
   SELECT
     client_id,
     DATE_SUB(submission_date, INTERVAL 13 DAY) AS date,
-    COUNTIF(udf_bitpos(days_created_profile_bits) = 13) AS new_profiles,
-          COUNTIF(udf_active_n_weeks_ago(days_seen_bits, 1)) AS active_in_week_0,
-          COUNTIF(udf_active_n_weeks_ago(days_seen_bits, 1)
-            AND udf_active_n_weeks_ago(days_seen_bits, 0))
+    COUNTIF(udf.bitpos(days_created_profile_bits) = 13) AS new_profiles,
+          COUNTIF(udf.active_n_weeks_ago(days_seen_bits, 1)) AS active_in_week_0,
+          COUNTIF(udf.active_n_weeks_ago(days_seen_bits, 1)
+            AND udf.active_n_weeks_ago(days_seen_bits, 0))
             AS active_in_weeks_0_and_1,
-          COUNTIF(udf_bitpos(days_created_profile_bits) = 13 AND udf_active_n_weeks_ago(days_seen_bits, 0)) AS new_profile_active_in_week_1
+          COUNTIF(udf.bitpos(days_created_profile_bits) = 13 AND udf.active_n_weeks_ago(days_seen_bits, 0)) AS new_profile_active_in_week_1
   FROM
     telemetry.clients_last_seen
 GROUP BY client_id, submission_date
@@ -94,7 +85,7 @@ When performing retention analysis it is important to understand that there are 
 
 It is good practice to always compute confidence intervals for retention metrics, especially when looking at specific slices of users or when making comparisons between different groups.
 
-The [Growth and Usage Dashboard](https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/) provides confidence intervals automatically using a jackknife resampling method over `client_id` buckets.  This confidence intervals generated using this method should be considered the "standard".  We show below how to compute them using the data sources described above.
+The [Growth and Usage Dashboard](https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/) provides confidence intervals automatically using a jackknife resampling method over `client_id` buckets.  This confidence intervals generated using this method should be considered the "standard".  We show below how to compute them using the data sources described above.  These methods use UDFs [defined in bigquery-etl](https://github.com/mozilla/bigquery-etl/blob/master/udf_js/jackknife_ratio_ci.sql).
 
 We also note that it is fairly simple to calculate a confidence interval using any statistical method appropriate for proportions.  The queries given above provide both numerators and denominators, so feel free to calculate confidence intervals in the manner you prefer.  However, if you want to replicate the standard confidence intervals, please work from the example queries below.
 
@@ -125,26 +116,17 @@ GROUP BY `date` ORDER BY `date`
 ### Querying Clients Daily Tables
 
 ```sql
-CREATE TEMP FUNCTION
-  udf_active_n_weeks_ago(x INT64, n INT64)
-  RETURNS BOOLEAN
-  AS (
-    BIT_COUNT(x >> (7 * n) & (0x7F)) > 0
-  );
-CREATE TEMP FUNCTION
-  udf_bitpos( bits INT64 ) AS ( CAST(SAFE.LOG(bits & -bits, 2) AS INT64));
-
 WITH base AS (
   SELECT
     client_id,
     MOD(ABS(FARM_FINGERPRINT(MD5(client_id))), 20) AS id_bucket,
     DATE_SUB(submission_date, INTERVAL 13 DAY) AS date,
     COUNTIF(udf.bitpos(days_created_profile_bits) = 13) AS new_profiles,
-          COUNTIF(udf_active_n_weeks_ago(days_seen_bits, 1)) AS active_in_week_0,
-          COUNTIF(udf_active_n_weeks_ago(days_seen_bits, 1)
-            AND udf_active_n_weeks_ago(days_seen_bits, 0))
+          COUNTIF(udf.active_n_weeks_ago(days_seen_bits, 1)) AS active_in_week_0,
+          COUNTIF(udf.active_n_weeks_ago(days_seen_bits, 1)
+            AND udf.active_n_weeks_ago(days_seen_bits, 0))
             AS active_in_weeks_0_and_1,
-          COUNTIF(udf_bitpos(days_created_profile_bits) = 13 AND udf_active_n_weeks_ago(days_seen_bits, 0)) AS new_profile_active_in_week_1
+          COUNTIF(udf.bitpos(days_created_profile_bits) = 13 AND udf.active_n_weeks_ago(days_seen_bits, 0)) AS new_profile_active_in_week_1
   FROM
     telemetry.clients_last_seen
   -- We need to "rewind" 13 days since retention is forward-looking;
@@ -156,10 +138,10 @@ WITH base AS (
 bucketed AS (
   SELECT
     date,
-    -- There are many options for hashing client_ids into buckets; 
+    -- There are many options for hashing client_ids into buckets;
     -- the below is an easy option using native BigQuery SQL functions;
     -- see discussion in https://github.com/mozilla/bigquery-etl/issues/36
-    MOD(ABS(FARM_FINGERPRINT(client_id)), 20) AS id_bucket
+    MOD(ABS(FARM_FINGERPRINT(client_id)), 20) AS id_bucket,
     SUM(active_in_weeks_0_and_1) AS active_in_weeks_0_and_1,
     SUM(active_in_week_0) AS active_in_week_0
   FROM
