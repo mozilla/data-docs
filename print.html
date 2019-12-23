@@ -3041,6 +3041,8 @@ Note that this is different from Telemetry for Firefox Desktop (<a href="https:/
 <li><a href="concepts/glean/glean.html#overview">Overview</a></li>
 <li><a href="concepts/glean/glean.html#what-does-it-offer">What does it offer</a></li>
 <li><a href="concepts/glean/glean.html#how-to-use-glean">How to use Glean</a></li>
+<li><a href="concepts/glean/glean.html#contact">Contact</a></li>
+<li><a href="concepts/glean/glean.html#references">References</a></li>
 </ul>
 <h1><a class="header" href="#overview-1" id="overview-1">Overview</a></h1>
 <p>Glean consists of different pieces:</p>
@@ -3066,42 +3068,63 @@ To make the choice easier for which metric type to use, we are introducing highe
 To make it easier to understand the general semantics of our data, the Glean SDK will define and document when which kind of data will get sent. This gives data analysis common basic semantics.</p>
 <h1><a class="header" href="#how-to-use-glean" id="how-to-use-glean">How to use Glean</a></h1>
 <ul>
-<li><a href="https://mozilla.github.io/glean/book/user/adding-glean-to-your-project.html">Integrate the Glean SDK / library</a> into your product.</li>
-<li><a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&amp;component=General&amp;short_desc=Glean:%20Enable%20application%20id%20org.mozilla.myProduct">File a data engineering bug</a> to enable your products application id.</li>
-<li><a href="https://sql.telemetry.mozilla.org/">Use Redash</a> to write SQL queries &amp; build dashboards using your products datasets, e.g.:
+<li>
+<p><a href="https://mozilla.github.io/glean/book/user/adding-glean-to-your-project.html">Integrate the Glean SDK / library</a> into your product.</p>
+</li>
+<li>
+<p><a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&amp;component=General&amp;short_desc=Glean:%20Enable%20application%20id%20org.mozilla.myProduct">File a data engineering bug</a> to enable your products application id.</p>
+</li>
+<li>
+<p><a href="https://sql.telemetry.mozilla.org/">Use Redash</a> to write SQL queries &amp; build dashboards using your products datasets, e.g.:</p>
 <ul>
-<li><code>org_mozilla_fenix.baseline</code></li>
-<li><code>org_mozilla_fenix.events</code></li>
-<li><code>org_mozilla_fenix.metrics</code></li>
-<li>Example query: ```
--- Count unique Client IDs observed on a given day
+<li>
+<p><code>org_mozilla_fenix.baseline</code></p>
+</li>
+<li>
+<p><code>org_mozilla_fenix.events</code></p>
+</li>
+<li>
+<p><code>org_mozilla_fenix.metrics</code></p>
+</li>
+<li>
+<p>Example query:</p>
+<pre><code class="language-sql">-- Count unique Client IDs observed on a given day
 SELECT
-count(distinct client_info.client_id)
+  count(distinct client_info.client_id)
 FROM
-org_mozilla_fenix.baseline
+  org_mozilla_fenix.baseline
 WHERE
-date(submission_timestamp) = '2019-11-11'</li>
-</ul>
+  date(submission_timestamp) = '2019-11-11'
+</code></pre>
 </li>
 </ul>
-<pre><code>*   _(Work in progress)_ Use events and [Amplitude](https://sso.mozilla.com/amplitude) for product analytics.
-*   [Use Databricks](https://sso.mozilla.com/databricks) for deep-dive analysis.
-*   [Use the Glean debug ping viewer](debug_ping_view.md) for QA &amp; development.
-*   For experimentation, you will be able to use [Android experiments library](https://github.com/mozilla-mobile/android-components/blob/master/components/service/experiments/README.md), which integrates with Glean.
-
-# Contact
-
-*   `#glean` &amp; `#fx-metrics` on slack
-*   [`glean-team@mozilla.com`](mailto:glean-team@mozilla.com) to reach out
-*   [`fx-data-dev@mozilla.com`](mailto:fx-data-dev@mozilla.com) for announcements etc.
-
-# References
-
-* The [Glean SDK](https://github.com/mozilla/glean/) implementation.
-* [Reporting issues &amp; bugs for the Glean SDK](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&amp;component=Glean%3A%20SDK).
-* Datasets documentation (TBD)
-* [Glean Debug pings viewer](https://debug-ping-preview.firebaseapp.com/)
-</code></pre>
+</li>
+<li>
+<p><em>(Work in progress)</em> Use events and <a href="https://sso.mozilla.com/amplitude">Amplitude</a> for product analytics.</p>
+</li>
+<li>
+<p><a href="https://sso.mozilla.com/databricks">Use Databricks</a> for deep-dive analysis.</p>
+</li>
+<li>
+<p><a href="concepts/glean/debug_ping_view.html">Use the Glean debug ping viewer</a> for QA &amp; development.</p>
+</li>
+<li>
+<p>For experimentation, you will be able to use <a href="https://github.com/mozilla-mobile/android-components/blob/master/components/service/experiments/README.md">Android experiments library</a>, which integrates with Glean.</p>
+</li>
+</ul>
+<h1><a class="header" href="#contact" id="contact">Contact</a></h1>
+<ul>
+<li><code>#glean</code> &amp; <code>#fx-metrics</code> on slack</li>
+<li><a href="mailto:glean-team@mozilla.com"><code>glean-team@mozilla.com</code></a> to reach out</li>
+<li><a href="mailto:fx-data-dev@mozilla.com"><code>fx-data-dev@mozilla.com</code></a> for announcements etc.</li>
+</ul>
+<h1><a class="header" href="#references" id="references">References</a></h1>
+<ul>
+<li>The <a href="https://github.com/mozilla/glean/">Glean SDK</a> implementation.</li>
+<li><a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&amp;component=Glean%3A%20SDK">Reporting issues &amp; bugs for the Glean SDK</a>.</li>
+<li>Datasets documentation (TBD)</li>
+<li><a href="https://debug-ping-preview.firebaseapp.com/">Glean Debug pings viewer</a></li>
+</ul>
 <h1><a class="header" href="#using-the-glean-debug-ping-view" id="using-the-glean-debug-ping-view">Using the Glean debug ping view</a></h1>
 <ul>
 <li><a href="concepts/glean/debug_ping_view.html#what-is-this-good-for">What is this good for?</a></li>
@@ -3226,7 +3249,7 @@ You could override this in local builds.</li>
 <p>Reach out to Alessio Placitelli (<code>:dexter</code>) or
 Arkadiusz Komarzewski (<code>:akomar</code>) in <a href="https://mozilla.slack.com/messages/CEE12R4E8/">#glean on slack</a> or send an email
 to <a href="mailto:glean-team@mozilla.com"><code>glean-team@mozilla.com</code></a>.</p>
-<h2><a class="header" href="#references" id="references">References</a></h2>
+<h2><a class="header" href="#references-1" id="references-1">References</a></h2>
 <ul>
 <li><a href="https://mozilla.github.io/glean/book/user/debugging.html">Glean debug commands in Glean documentation.</a></li>
 <li><a href="https://debug-ping-preview.firebaseapp.com/">Glean Debug ping view web interface.</a></li>
