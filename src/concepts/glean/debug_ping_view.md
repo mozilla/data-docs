@@ -33,7 +33,7 @@ The debug commands are documented in more detail
 [in the Glean documentation][glean_debug].
 
 [appid]: https://developer.android.com/studio/build/application-id
-[glean_debug]: https://mozilla.github.io/glean/book/user/debugging.html
+[glean_debug]: https://mozilla.github.io/glean/book/user/debugging/index.html
 
 ### Supported applications
 
@@ -143,5 +143,5 @@ to [`glean-team@mozilla.com`](mailto:glean-team@mozilla.com).
 
 ## References
 
-*   [Glean debug commands in Glean documentation.](https://mozilla.github.io/glean/book/user/debugging.html)
+*   [Glean debug commands in Glean documentation.](https://mozilla.github.io/glean/book/user/debugging/index.html)
 *   [Glean Debug ping view web interface.](https://debug-ping-preview.firebaseapp.com/)
