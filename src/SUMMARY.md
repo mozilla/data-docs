@@ -11,6 +11,7 @@
   * [Getting Help](concepts/getting_help.md)
 * [Tools](tools/index.md)
   * [Project Glossary](tools/projects.md)
+  * [Guiding Principles for Data Infrastructure](tools/guiding_principles.md)
   * [Overview of Mozilla's Data Pipeline](concepts/pipeline/gcp_data_pipeline.md)
     * [HTTP Edge Server Specification](concepts/pipeline/http_edge_spec.md)
     * [Event Pipeline Detail](concepts/pipeline/event_pipeline.md)
