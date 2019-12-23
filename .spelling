@@ -32,6 +32,7 @@ AsciiDoc
 ATMO
 autofill
 autoscaling
+Avro
 Awesomebar
 AWS
 Arkadiusz
@@ -50,6 +51,8 @@ CamelCase
 CEP
 CFR
 changesets
+checkpointed
+checkpointing
 chromehangs
 CircleCI
 Colaboratory
@@ -70,6 +73,9 @@ Dataflow
 dataset
 datasets
 de-anonymise
+deduplicate
+deduplicated
+deduplicates
 deduplicating
 deduplication
 detrended
@@ -83,6 +89,7 @@ e.g.
 E10s
 ElasticSearch
 EMR
+end-to-end
 entrypoint
 entrypoints
 ETL
@@ -90,7 +97,7 @@ Fenix
 Fennec
 FHR
 filename
-Filesystem
+filesystem
 FirefoxReality
 FireTV
 funnelcake
@@ -100,7 +107,9 @@ geo-country
 FxA
 GCS
 geoip
+GeoIP
 Github
+GKE
 GoFaster
 GUD
 gzip
@@ -204,6 +213,7 @@ RDBMS
 RDD
 Redash
 README
+reimagines
 reprocessing
 resampling
 rustc
@@ -228,6 +238,7 @@ Smoot
 SMS
 Sonatype
 SSL
+Stackdriver
 STMO
 struct
 structs
@@ -266,6 +277,7 @@ un-publish
 unenroll
 unenrollment
 unmanaged
+unnesting
 unsuffixed
 up-to-date
 uri
