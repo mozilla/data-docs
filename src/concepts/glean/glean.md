@@ -61,6 +61,7 @@ To make it easier to understand the general semantics of our data, the Glean SDK
     WHERE
       date(submission_timestamp) = '2019-11-11'
     ```
+  * There is [more documentation about accessing Glean data](accessing_glean_data.md).
 
 * _(Work in progress)_ Use events and [Amplitude](https://sso.mozilla.com/amplitude) for product analytics.
 * [Use Databricks](https://sso.mozilla.com/databricks) for deep-dive analysis.
