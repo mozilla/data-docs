@@ -9,8 +9,8 @@ For example, for Fenix, the application id is `org_mozilla_fenix`, so its `metri
 
 ## Selecting columns
 
-Columns of data are named using dot notation to organize them into groups.
-For example, columns containing Glean's built-in client information all begin with the `client_info.` prefix.
+Fields are nested inside BigQuery STRUCTs to organize them into groups, and we can use dot notation to specify individual subfields in a query.
+For example, columns containing Glean's built-in client information are in the `client_info` struct, so accessing its columns involves using a `client_info.` prefix.
 
 The top-level groups are:
 
@@ -48,18 +48,20 @@ metrics:
     description: >
       Is this application the default browser?
     send_in_pings:
-    - metrics
+      - metrics
 ```
 
-It would be availabe in the column `metrics.boolean.metrics_default_browser`.
+It would be available in the column `metrics.boolean.metrics_default_browser`.
 
 ```sql
 -- Count number of pings where Fenix is the default browser
 SELECT
   COUNT(*),
-  COUNTIF(metrics.metrics.boolean.metrics_default_browser)
+  COUNTIF(metrics.boolean.metrics_default_browser)
 FROM
-  org_mozilla_fenix.metrics
+  -- We give the table an alias so that the table name `metrics` and field name 
+  -- `metrics` don't conflict.
+  org_mozilla_fenix.metrics AS m
 WHERE
   date(submission_timestamp) = '2019-11-11'
 ```
