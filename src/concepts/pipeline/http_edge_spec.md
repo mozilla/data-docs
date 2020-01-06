@@ -11,7 +11,7 @@ The original implementation of the HTTP Edge Server was tracked in
 HTTP submissions come in from the wild, hit a load balancer,
 then the HTTP Edge Server described in this document.
 Data is accepted via a POST/PUT request from clients,
-and forwarded to the [Data Pipeline](data_pipeline.md), where
+and forwarded to the [Data Pipeline](gcp_data_pipeline.md), where
 any further processing, analysis, and storage will be handled.
 
 Submission payloads are expected to be optionally-gzipped JSON
