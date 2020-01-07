@@ -70,4 +70,4 @@ WHERE
 
 Custom events in the `events` section have a different structure.
 
-Documentation TBD.
+Documentation TBD.  [See bug 1606836](https://bugzilla.mozilla.org/show_bug.cgi?id=1606836)
