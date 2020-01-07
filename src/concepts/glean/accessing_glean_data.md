@@ -42,8 +42,8 @@ Custom metrics in the `metrics` section have two additional levels of indirectio
 For example, suppose you had the following `boolean` metric defined in a `metrics.yaml` file (abridged for clarity):
 
 ```yaml
-metrics:
-  default_browser:
+browser:
+  is_default:
     type: boolean
     description: >
       Is this application the default browser?
@@ -51,13 +51,13 @@ metrics:
       - metrics
 ```
 
-It would be available in the column `metrics.boolean.metrics_default_browser`.
+It would be available in the column `metrics.boolean.browser_is_default`.
 
 ```sql
 -- Count number of pings where Fenix is the default browser
 SELECT
   COUNT(*),
-  COUNTIF(metrics.boolean.metrics_default_browser)
+  COUNTIF(metrics.boolean.browser_is_default)
 FROM
   -- We give the table an alias so that the table name `metrics` and field name 
   -- `metrics` don't conflict.
