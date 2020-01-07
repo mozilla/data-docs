@@ -5,7 +5,7 @@ This document describes how to access Glean data from an SQL query, such as in [
 ## Selecting the correct table
 
 Each ping type is recorded in its own table, and these tables are named using `{application_id}.{ping_type}`.
-For example, for Fenix, the application id is `org_mozilla_fenix`, so its `metrics` pings are available in the table `org_mozilla_fenix.metrics`.
+For example, for Fenix, the application id is `org.mozilla.fenix`, so its `metrics` pings are available in the table `org_mozilla_fenix.metrics`.
 
 ## Selecting columns
 
