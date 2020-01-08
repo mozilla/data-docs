@@ -294,14 +294,14 @@ use case, <a href="https://docs.telemetry.mozilla.org/concepts/getting_help.html
 team</a> and we can
 consult on current and planned features for the pipeline.</p>
 <h2><a class="header" href="#bigquery" id="bigquery">BigQuery</a></h2>
-<p>BigQuery is the standard choice within Mozilla's environment for storing
-structured data for non-real time analysis. It is especially well suited to
-large and diverse organizations because of its access controls and full
-separation between storage and compute infrastructure. Different teams within
-Mozilla can provision BigQuery tables in separate GCP projects, retaining full
-control over how they ingest data and how they grant access to other teams. Once
-access is granted, though, it becomes trivial to write queries that join data
-across projects.</p>
+<p><a href="https://cloud.google.com/bigquery/docs/">BigQuery</a> is the standard choice within
+Mozilla's environment for storing structured data for non-real time analysis. It
+is especially well suited to large and diverse organizations because of its access
+controls and full separation between storage and compute infrastructure. Different
+teams within Mozilla can provision BigQuery tables in separate GCP projects,
+retaining full control over how they ingest data and how they grant access to
+other teams. Once access is granted, though, it becomes trivial to write queries
+that join data across projects.</p>
 <p>The per-GB pricing for storing data in BigQuery is identical to pricing for GCS,
 so BigQuery can in some ways be treated as an advanced filesystem that has deep
 knowledge of and control over data structure. Be aware that while BigQuery
@@ -428,11 +428,11 @@ run queries who would not normally be allowed to read the underlying tables.
 This allows view authors to provide finer-grained controls and to hide specific
 columns or rows.</p>
 <h2><a class="header" href="#pubsub" id="pubsub">Pub/Sub</a></h2>
-<p>Google Cloud Pub/Sub is the standard choice within Mozilla's environment for
-transferring data between systems in real-time. It shares many of the same
-benefits as BigQuery in terms of being fully hosted, scalable, and
-well-integrated with the rest of the GCP environment, particularly when it comes
-to access controls.</p>
+<p><a href="https://cloud.google.com/pubsub/docs/">Google Cloud Pub/Sub</a> is the standard
+choice within Mozilla's environment for transferring data between systems in
+real-time. It shares many of the same benefits as BigQuery in terms of being
+fully hosted, scalable, and well-integrated with the rest of the GCP environment,
+particularly when it comes to access controls.</p>
 <p>We use Pub/Sub as the messaging backbone for the telemetry ingestion system and
 we can easily provision new Pub/Sub topics containing republished subsets of the
 telemetry data for other systems to hook into. We have support for either
@@ -448,11 +448,12 @@ cadence or as they arrive via streaming inserts to BigQuery. Please contact us
 if there's a subset of data you'd like us to consider opting in for streaming
 inserts.</p>
 <h2><a class="header" href="#dataflow" id="dataflow">Dataflow</a></h2>
-<p>Google Cloud Dataflow is a service for running data processing applications
-using the Apache Beam SDKs in both batch and streaming modes. Understanding the
-Beam programming model requires a certain amount of developer investment, but
-Beam provides powerful abstractions for data transformations like windowed joins
-that are difficult to implement reliably by hand.</p>
+<p><a href="https://cloud.google.com/dataflow/docs/">Google Cloud Dataflow</a> is a service
+for running data processing applications using the Apache Beam SDKs in both
+batch and streaming modes. Understanding the Beam programming model requires
+a certain amount of developer investment, but Beam provides powerful abstractions
+for data transformations like windowed joins that are difficult to implement
+reliably by hand.</p>
 <p>The Dataflow jobs in use by the data platform actually don't require complex
 joins or windowing features, but we have found Beam's I/O abstractions useful
 for being able to adapt a single code base to handle reading from and writing to
@@ -467,7 +468,7 @@ or BigQuery. </p>
 checkpointing the intermediate state to local disk. This incurs expense for
 provisioning local solid state drives to handle the checkpointing throughput and
 introduces the possibility of data loss on unclean shutdown since messages have
-to be acknowledge back to Pub/Sub at the time data is first checkpointed rather
+to be acknowledged back to Pub/Sub at the time data is first checkpointed rather
 than when it is finally written to BigQuery. We were able to achieve lower cost
 and more straight-forward delivery guarantees by writing a custom application
 using the Google Cloud Java SDK. We still use a streaming Dataflow job for the
