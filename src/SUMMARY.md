@@ -68,6 +68,7 @@
     * [hgpush](datasets/other/hgpush/reference.md)
     * [Stub installer ping](datasets/other/stub_installer/reference.md)
     * [Activity Stream](datasets/other/activity-stream/reference.md)
+    * [bmobugs](datasets/other/bmobugs/reference.md)
   * [Obsolete Datasets](datasets/obsolete.md)
     * [Churn](datasets/obsolete/churn/reference.md)
     * [Client Count](datasets/obsolete/client_count/reference.md)
