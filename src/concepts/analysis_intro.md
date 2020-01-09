@@ -11,7 +11,8 @@ Firefox clients out in the wild send us data as *pings*.
 [`Main` pings][main_ping] contain some combination of *environment* data
 (e.g. operating system, hardware, Firefox version), [*measurements*][probe_dict]
 (e.g. max number of open tabs, time spent running in JavaScript garbage collection),
-and [*events*][events].
+and [*events*][events] (note, though, that desktop events have largely been migrated
+to a separate `event` ping).
 We have quite a few different pings, but most of our data for Firefox Desktop
 comes in from `main` pings.
 

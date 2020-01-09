@@ -87,7 +87,7 @@ contains a Telemetry Environment, [Crash Annotations][crash_annotations], and
 
 It was introduced in Firefox 40.
 
-### "deletion request" ping
+### "deletion-request" ping
 
 In the event a user opts out of Telemetry, we send one final
 ["deletion-request" ping][deletion_request_ping] to let us know. It contains

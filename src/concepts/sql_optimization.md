@@ -15,6 +15,10 @@ take advantage of those two pieces.
 
 † Partitioned columns can be identified in the Schema Explorer in [re:dash](https://sql.telemetry.mozilla.org).
   They are the first few columns under a table name, and their name is preceded by a `[P]`.
+  For BigQuery, the terminology is a bit different, but many tables are partitioned on
+  `submission_timestamp` or `submission_date` fields and _clustered_ on `normalized_channel`
+  and `sample_id`; you can get query efficiency gains by filtering on any of those fields.
+  See the [BigQuery-specific Query Optimization](../cookbooks/bigquery.html#query-optimizations) section.
 
 ## Some Explanations
 
