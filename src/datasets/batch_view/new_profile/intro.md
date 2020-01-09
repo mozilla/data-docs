@@ -1,5 +1,3 @@
-The `telemetry_new_profile_parquet` table is the most direct representation of a new-profile ping.
-
 #### Contents
 
 The table contains one row for each ping. Each column represents one field from the new-profile ping payload, though only a subset of all fields are included.
