@@ -13,12 +13,13 @@ take advantage of those two pieces.
 - Select only the columns you want explicitly (Don't use `SELECT *`)
 - Use approximate algorithms: e.g. `approx_distinct(...)` instead of `COUNT(DISTINCT ...)`
 
-† Partitioned columns can be identified in the Schema Explorer in [re:dash](https://sql.telemetry.mozilla.org).
-  They are the first few columns under a table name, and their name is preceded by a `[P]`.
-  For BigQuery, the terminology is a bit different, but many tables are partitioned on
-  `submission_timestamp` or `submission_date` fields and _clustered_ on `normalized_channel`
-  and `sample_id`; you can get query efficiency gains by filtering on any of those fields.
-  See the [BigQuery-specific Query Optimization](../cookbooks/bigquery.html#query-optimizations) section.
+† For legacy Parquet datasets, partitioned columns could be identified in the Schema Explorer in [re:dash](https://sql.telemetry.mozilla.org);
+  they were the first few columns under a table name, preceded by a `[P]`.
+  For BigQuery, the terminology is a bit different and re:dash does not yet show partitioning information in the Schema Explorer,
+  but many tables are partitioned on `submission_timestamp` or `submission_date` fields
+  and _clustered_ on `normalized_channel` and `sample_id`;
+  you can usually get query efficiency gains by filtering on any of those fields as discussed in
+  another article about [BigQuery-specific Query Optimization](../cookbooks/bigquery.html#query-optimizations).
 
 ## Some Explanations
 
