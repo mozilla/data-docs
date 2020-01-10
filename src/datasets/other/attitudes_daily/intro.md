@@ -10,6 +10,6 @@ The DAS is completed by ~300 Firefox users every day, allowing us to measure lon
 
 The `attitudes_daily` table is accessible through re:dash using the
 `Telemetry (BigQuery)` data source.
-The full table name is `moz-fx-data-shared-prod.telemetry_derived.attitudes_daily_v1`.
+The full table name is `moz-fx-data-shared-prod.telemetry.attitudes_daily`.
 
 Here's an [example query](https://sql.telemetry.mozilla.org/queries/63937/source#163424).
