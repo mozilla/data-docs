@@ -156,15 +156,14 @@
 <ul>
 <li><strong>Analyst</strong>: Someone performing analysis.
 This is more general than <strong>data scientist</strong>.</li>
-<li><strong>Ping</strong>: A message sent from the Firefox browser to our telemetry servers containing information on browser state, user actions, etc...
-(<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/common-ping.html">more details</a>)</li>
-<li><strong>Dataset</strong>: A set of data, includes ping data, derived datasets, etc...</li>
+<li><strong>Ping</strong>: A message sent to our telemetry servers. Most commonly, a ping comes from Firefox and contains information on browser state, user actions, etc.
+(<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/common-ping.html">more details</a>), but can also come from other Mozilla products or services</li>
+<li><strong>Dataset</strong>: A set of data, includes ping data, derived datasets, etc. Can also refer more specifically to a <a href="https://cloud.google.com/bigquery/docs/datasets-intro">BigQuery dataset</a> which is a container for tables.</li>
 <li><strong>Derived Dataset</strong>: A processed dataset, such as <code>main_summary</code> or the
 <code>clients_daily</code> dataset</li>
 <li><strong>Session</strong>: The time from when a Firefox browser starts until it shuts down</li>
 <li><strong>Subsession</strong>: <code>Sessions</code> are split into <code>subsessions</code> when a 24 hour threshold is crossed or an environment change occurs
 (<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/sessions.html?highlight=subsession">more details</a>)</li>
-<li>...</li>
 </ul>
 
                     </main>

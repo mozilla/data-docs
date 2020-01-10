@@ -165,8 +165,13 @@ population (without sampling).</li>
 <li>Select only the columns you want explicitly (Don't use <code>SELECT *</code>)</li>
 <li>Use approximate algorithms: e.g. <code>approx_distinct(...)</code> instead of <code>COUNT(DISTINCT ...)</code></li>
 </ul>
-<p>† Partitioned columns can be identified in the Schema Explorer in <a href="https://sql.telemetry.mozilla.org">re:dash</a>.
-They are the first few columns under a table name, and their name is preceded by a <code>[P]</code>.</p>
+<p>† For legacy Parquet datasets, partitioned columns could be identified in the Schema Explorer in <a href="https://sql.telemetry.mozilla.org">re:dash</a>;
+they were the first few columns under a table name, preceded by a <code>[P]</code>.
+For BigQuery, the terminology is a bit different and re:dash does not yet show partitioning information in the Schema Explorer,
+but many tables are partitioned on <code>submission_timestamp</code> or <code>submission_date</code> fields
+and <em>clustered</em> on <code>normalized_channel</code> and <code>sample_id</code>;
+you can usually get query efficiency gains by filtering on any of those fields as discussed in
+another article about <a href="../cookbooks/bigquery.html#query-optimizations">BigQuery-specific Query Optimization</a>.</p>
 <h2><a class="header" href="#some-explanations" id="some-explanations">Some Explanations</a></h2>
 <p>There are a few key things to understand about our data storage and these databases to
 learn how to properly optimize queries.</p>

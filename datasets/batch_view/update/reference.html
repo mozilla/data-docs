@@ -158,7 +158,6 @@
 <ul>
 <li><a href="#contents">Contents</a></li>
 <li><a href="#accessing-the-data">Accessing the Data</a></li>
-<li><a href="#further-reading">Further Reading</a></li>
 </ul>
 </li>
 <li><a href="#data-reference">Data Reference</a>
@@ -171,18 +170,11 @@
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/update-ping.html">update ping</a>
 is sent from Firefox Desktop when a browser update is ready to be applied and after it was correctly applied.
 It contains the build information and the update blob information, in addition to some information about the
-user environment.
-The <code>telemetry_update_parquet</code> table is the most direct representation of an update ping.</p>
+user environment.</p>
 <h4><a class="header" href="#contents" id="contents">Contents</a></h4>
 <p>The table contains one row for each ping. Each column represents one field from the update ping payload, though only a subset of all fields are included.</p>
 <h4><a class="header" href="#accessing-the-data" id="accessing-the-data">Accessing the Data</a></h4>
-<p>The data is stored as a parquet table in S3 at the following address.</p>
-<pre><code>s3://net-mozaws-prod-us-west-2-pipeline-data/telemetry-update-parquet/v1/
-</code></pre>
-<p>The <code>telemetry_update_parquet</code> is accessible through re:dash.
-Here's an <a href="https://sql.telemetry.mozilla.org/queries/31267#table">example query</a>.</p>
-<h4><a class="header" href="#further-reading" id="further-reading">Further Reading</a></h4>
-<p>This dataset is generated automatically using direct to parquet. The configuration responsible for generating this dataset was introduced in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1384861">bug 1384861</a>.</p>
+<p>Query the <code>telemetry.update</code> view in BigQuery as in the <a href="https://sql.telemetry.mozilla.org/queries/31267#table">example query in re:dash</a>.</p>
 <h1><a class="header" href="#data-reference" id="data-reference">Data Reference</a></h1>
 <h2><a class="header" href="#schema" id="schema">Schema</a></h2>
 <p>As of 2017-09-07, the current version of the <code>telemetry_update_parquet</code> dataset is <code>v1</code>, and has a schema as follows:</p>
