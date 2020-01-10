@@ -30,7 +30,7 @@ SELECT
     submission_date,
     value,
     count(DISTINCT client_id) as n
-FROM `moz-fx-data-shared-prod.telemetry_derived.attitudes_daily_v1`
+FROM `moz-fx-data-shared-prod.telemetry.attitudes_daily`
 WHERE 
     question_key = 'internet_accessible'
     AND value IS NOT NULL
@@ -52,7 +52,7 @@ SELECT
     END AS search_engine,
    count(*) AS n
 FROM 
-    `moz-fx-data-shared-prod.telemetry_derived.attitudes_daily_v1`
+    `moz-fx-data-shared-prod.telemetry.attitudes_daily`
 WHERE
     question_key = 'met_goals'
     AND value IS NOT NULL
