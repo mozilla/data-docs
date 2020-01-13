@@ -19,7 +19,7 @@ take advantage of those two pieces.
   but many tables are partitioned on `submission_timestamp` or `submission_date` fields
   and _clustered_ on `normalized_channel` and `sample_id`;
   you can usually get query efficiency gains by filtering on any of those fields as discussed in
-  another article about [BigQuery-specific Query Optimization](../cookbooks/bigquery.html#query-optimizations).
+  another article about [BigQuery-specific Query Optimization](../cookbooks/bigquery.md#query-optimizations).
 
 ## Some Explanations
 
