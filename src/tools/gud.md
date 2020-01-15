@@ -18,7 +18,7 @@ To visualize a particular metric (such as `MAU` or `Retention`) for a particular
 
 2. Choose the product of interest from the `PRODUCT / USAGE CRITERIA` selector on the left.  Some products may have multiple possible usage criteria, corresponding to different types of use of the product.
 
-    * New profile creation is considered one of these usage criteria; thus, to determine the rate of new profile creation for a product, select that product’s “`Profile Created`” usage criteria and look at the `DAU` metric.
+    * New profile creation is considered one of these usage criteria; thus, to determine the rate of new profile creation for a product, select that product’s "`Profile Created`" usage criterion and look at the `DAU` metric.
 
 You may also restrict to particular slices (for example, country) and to a particular date range using the additional selectors on the left.
 
@@ -111,6 +111,7 @@ The profile has sent a telemetry ping from Fennec Android on the day in question
 #### Any Fennec iOS Activity
 
 The profile has sent a telemetry ping from Fennec iOS on the day in question.
+
 ### Focus
 
 #### Any Focus Android Activity
@@ -149,7 +150,7 @@ The language (as extracted from the locale) of the profile’s pings.
 
 ### Country
 
-The country (as extracted through IPGeo) of the profile’s pings.
+The country (as extracted through GeoIP lookup) of the profile’s pings.
 
 ### Channel
 
@@ -157,7 +158,7 @@ The channel of the profile’s pings.
 
 # Bug reports / Feature Requests
 
-Please direct all feedback to ``#gud` on slack.
+Please direct all feedback to `#gud` on slack.
 
 # Other References
 
