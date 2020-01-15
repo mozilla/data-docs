@@ -21,6 +21,7 @@
   * [Custom analysis with Spark](tools/spark.md)
   * [SQL Style Guide](concepts/sql_style.md)
   * [Glean overview](concepts/glean/glean.md)
+    * [Accessing Glean data](concepts/glean/accessing_glean_data.md)
     * [Glean Debug ping viewer](concepts/glean/debug_ping_view.md)
   * [Alerts](tools/alerts.md)
 * [Analysis cookbooks](cookbooks/index.md)
