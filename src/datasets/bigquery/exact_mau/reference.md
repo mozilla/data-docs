@@ -18,6 +18,8 @@ aggregates across arbitrary slices of those dimensions.
 The tables follow a consistent methodology which is intended as a standard
 across Mozilla for MAU analysis going forward.
 
+Note that this data model is used in the [Growth & Usage Dashboard (GUD)](https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/) and that some of this documentation is replicated in the [GUD documentation](https://docs.telemetry.mozilla.org/tools/gud.html).
+
 ## Table of Contents
 
 <!-- toc -->
@@ -26,8 +28,8 @@ across Mozilla for MAU analysis going forward.
 
 ## Metric
 
-A metric is anything want to (and can) measure.  In order for a metric to be 
-calculated, a _usage criterion_ and a _slice_ must be specified. The metric 
+A metric is anything want to (and can) measure.  In order for a metric to be
+calculated, a _usage criterion_ and a _slice_ must be specified. The metric
 will produce a single value per day, summarizing data:
 
 - for one day or more days (i.e. the metric value for a particular day may depend on data from other days as well)
@@ -59,7 +61,7 @@ and "Firefox Version".
 Thus an example slice may be "Country = US; Firefox Version = 60|61", which
 restricts to profiles that report usage in the US on Firefox versions 60 or 61.
 There is implicitly no restriction on any other dimensions.
-Thus, the empty slice - "All" - is also a valid slice and simply places no 
+Thus, the empty slice - "All" - is also a valid slice and simply places no
 restrictions on any dimension.
 Note there are some complexities here:
 
@@ -163,7 +165,7 @@ and non-desktop data use the "Country" dimension to determine tier 1 membership.
 ## Inclusive Tier 1 Calculation for FxA
 
 The 2019 Key Performance Indicator definition for Relationships relies on a MAU calculation restricted
-to a specific set of "Tier 1" countries. 
+to a specific set of "Tier 1" countries.
 In the Exact MAU datasets, country is a dimension that would normally be specified
 in a slice definition.
 Indeed, for desktop and non-desktop clients, the definition of "Tier 1 MAU" looks like:
@@ -210,8 +212,8 @@ ORDER BY
 
 The Exact MAU tables enable tracking of MAU for potentially very small
 subpopulations of users where statistical variation can often overwhelm
-real trends in the data. 
-In order to support statistical inference (confidence intervals and hypothesis tests), 
+real trends in the data.
+In order to support statistical inference (confidence intervals and hypothesis tests),
 these tables include a "pseudo-dimension" we call `id_bucket`. We assign
 each client (or user, in the case of FxA data) to one of 20 buckets based on a
 hash of their `client_id` (or `user_id`), with the effect that each user is
