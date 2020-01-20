@@ -1,5 +1,5 @@
 # Mozilla Growth & Usage Dashboard
-#### *overall: jmccrosky@ | data: jklukas@ | frontend: hulmer@ (updated 2020-1-15)*
+#### *overall: jmccrosky@ | data: jklukas@ | front end: hulmer@ (updated 2020-01-15)*
 ___
 
 **The Mozilla Growth & Usage Dashboard is in general release and can be found [here](https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/).**
@@ -26,7 +26,7 @@ You may also restrict to particular slices (for example, country) and to a parti
 
 The key to understanding how to use GUD is to understand the GUD data model.  The key concepts are `usage criteria`, `slicing dimensions`, and `metrics`.
 
-The data model and terminology used here is nearly identical to the Exact MAU tables as described [here](https://docs.telemetry.mozilla.org/datasets/bigquery/exact_mau/reference.html).
+The data model and terminology used here is nearly identical to the [Exact MAU tables].
 
 * A `usage criterion` defines what a metric is measuring.  It generally specifies a product and what specific use of that product qualifies as active.  For example, “Any Fenix Activity” measures activity for all Fenix profiles that send a telemetry pings.  Similarly, “Opened DevTools” means that we measure activity for all Firefox profiles that send a telemetry ping indicating that DevTools was opened.
 
@@ -82,7 +82,7 @@ The profile has sent a telemetry ping from Firefox Desktop on the day in questio
 
 #### New Firefox Desktop Profile Created
 
-The count of the number of new profiles created on the day in question.  Note this uses a main ping methodology for support for our entire history, rather than the newer profile_creation_ping.
+The count of the number of new profiles created on the day in question.  Note this uses a main ping methodology for support for our entire history, rather than the newer `new-profile` ping.
 
 #### Visited 5 URIs
 
@@ -91,7 +91,8 @@ The profile sent a main ping on the day in question that indicates that the prof
 #### Opened DevTools
 
 The profile sent a main ping on the day in question that indicates that the developer tools feature was activated at least once.
-Fenix
+
+### Fenix
 
 #### Any Fenix Activity
 
@@ -132,13 +133,13 @@ The profile has sent a telemetry ping from Firefox Lite on the day in question.
 
 The profile has sent a telemetry ping from Firefox for FireTV on the day in question.
 
-#### Any FirefoxConnect Activity
+#### Any `FirefoxConnect` Activity
 
-The profile has sent a telemetry ping from FirefoxConnect on the day in question.
+The profile has sent a telemetry ping from `FirefoxConnect` on the day in question.
 
 ## Dimensions
 
-During a period of time, a particular profile may take on more than one value within a dimension.  For example, a profile may use release channel and beta channel browsers in a single day, resulting in two pings for the day with different values of channel.  Similarly, a profile may be used in one country one day and another country the next day, resulting in two pings for two consecutive days that have different values of country.  Generally, for a metric, we need to assign a profile to one particular value for each dimension.  As such we define the value for each dimension within a day by taking the most frequent value seen in that day, breaking ties by taking the value that occurs last.  We then use the values from the last day within the data that the metric examines.  This is documented in more detail [here](https://docs.telemetry.mozilla.org/datasets/bigquery/exact_mau/reference.html#slice).
+During a period of time, a particular profile may take on more than one value within a dimension.  For example, a profile may use release channel and beta channel browsers in a single day, resulting in two pings for the day with different values of channel.  Similarly, a profile may be used in one country one day and another country the next day, resulting in two pings for two consecutive days that have different values of country.  Generally, for a metric, we need to assign a profile to one particular value for each dimension.  As such we define the value for each dimension within a day by taking the most frequent value seen in that day, breaking ties by taking the value that occurs last.  We then use the values from the last day within the data that the metric examines.  This is documented in more detail [here](../datasets/bigquery/exact_mau/reference.md#slice).
 
 ### OS
 
@@ -164,8 +165,10 @@ Please direct all feedback to `#gud` on slack.
 
 * There is more information on the design, definitions and data model in the [Engineering Design Doc](https://docs.google.com/document/d/1L8tWDUjccutGGAldhpypRtPCaw3kkXboPUTtTZb02OA/), although some information there may be out of date.
 
-* The underlying tables are closely related to the [Exact MAU tables](https://docs.telemetry.mozilla.org/datasets/bigquery/exact_mau/reference.html).
+* The underlying tables are closely related to the [Exact MAU tables].
 
-* There is a [prototype tool](https://github.com/mozilla/dscontrib/tree/master/src/dscontrib/jmccrosky/gudnightly) in DataBricks on which GUD was based.  It still exists and has been branded “gudnightly” as it has many features that do not yet exist in GUD, including smoothing, year-over-year comparisons, plotting multiple slices on a single axis, etc.   However, it is very slow, less user-friendly, and as of this writing only supports desktop data.
+* There is a [prototype tool](https://github.com/mozilla/dscontrib/tree/master/src/dscontrib/jmccrosky/gudnightly) in Databricks on which GUD was based.  It still exists and has been branded `“gudnightly”` as it has many features that do not yet exist in GUD, including smoothing, year-over-year comparisons, plotting multiple slices on a single axis, etc.   However, it is very slow, less user-friendly, and as of this writing only supports desktop data.
 
 * Tables can be queried directly from BigQuery for programmatic access; see an example in [https://sql.telemetry.mozilla.org/queries/65337/source](https://sql.telemetry.mozilla.org/queries/65337/source).
+
+[Exact MAU tables]: ../datasets/bigquery/exact_mau/reference.md
