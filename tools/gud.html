@@ -153,7 +153,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#mozilla-growth--usage-dashboard" id="mozilla-growth--usage-dashboard">Mozilla Growth &amp; Usage Dashboard</a></h1>
-<h4><a class="header" href="#overall-jmccrosky--data-jklukas--frontend-hulmer-updated-2020-1-15" id="overall-jmccrosky--data-jklukas--frontend-hulmer-updated-2020-1-15"><em>overall: jmccrosky@ | data: jklukas@ | frontend: hulmer@ (updated 2020-1-15)</em></a></h4>
+<h4><a class="header" href="#overall-jmccrosky--data-jklukas--front-end-hulmer-updated-2020-01-15" id="overall-jmccrosky--data-jklukas--front-end-hulmer-updated-2020-01-15"><em>overall: jmccrosky@ | data: jklukas@ | front end: hulmer@ (updated 2020-01-15)</em></a></h4>
 <hr />
 <p><strong>The Mozilla Growth &amp; Usage Dashboard is in general release and can be found <a href="https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/">here</a>.</strong></p>
 <hr />
@@ -175,7 +175,7 @@
 <p>You may also restrict to particular slices (for example, country) and to a particular date range using the additional selectors on the left.</p>
 <h1><a class="header" href="#data-model" id="data-model">Data Model</a></h1>
 <p>The key to understanding how to use GUD is to understand the GUD data model.  The key concepts are <code>usage criteria</code>, <code>slicing dimensions</code>, and <code>metrics</code>.</p>
-<p>The data model and terminology used here is nearly identical to the Exact MAU tables as described <a href="https://docs.telemetry.mozilla.org/datasets/bigquery/exact_mau/reference.html">here</a>.</p>
+<p>The data model and terminology used here is nearly identical to the <a href="../datasets/bigquery/exact_mau/reference.html">Exact MAU tables</a>.</p>
 <ul>
 <li>
 <p>A <code>usage criterion</code> defines what a metric is measuring.  It generally specifies a product and what specific use of that product qualifies as active.  For example, “Any Fenix Activity” measures activity for all Fenix profiles that send a telemetry pings.  Similarly, “Opened DevTools” means that we measure activity for all Firefox profiles that send a telemetry ping indicating that DevTools was opened.</p>
@@ -211,12 +211,12 @@
 <h4><a class="header" href="#any-firefox-activity" id="any-firefox-activity">Any Firefox Activity</a></h4>
 <p>The profile has sent a telemetry ping from Firefox Desktop on the day in question.</p>
 <h4><a class="header" href="#new-firefox-desktop-profile-created" id="new-firefox-desktop-profile-created">New Firefox Desktop Profile Created</a></h4>
-<p>The count of the number of new profiles created on the day in question.  Note this uses a main ping methodology for support for our entire history, rather than the newer profile_creation_ping.</p>
+<p>The count of the number of new profiles created on the day in question.  Note this uses a main ping methodology for support for our entire history, rather than the newer <code>new-profile</code> ping.</p>
 <h4><a class="header" href="#visited-5-uris" id="visited-5-uris">Visited 5 URIs</a></h4>
 <p>The profile sent a main ping on the day in question that indicates that the profile opened at least 5 URIs.</p>
 <h4><a class="header" href="#opened-devtools" id="opened-devtools">Opened DevTools</a></h4>
-<p>The profile sent a main ping on the day in question that indicates that the developer tools feature was activated at least once.
-Fenix</p>
+<p>The profile sent a main ping on the day in question that indicates that the developer tools feature was activated at least once.</p>
+<h3><a class="header" href="#fenix" id="fenix">Fenix</a></h3>
 <h4><a class="header" href="#any-fenix-activity" id="any-fenix-activity">Any Fenix Activity</a></h4>
 <p>The profile has sent a telemetry ping from Fenix on the day in question.
 Firefox Accounts</p>
@@ -237,10 +237,10 @@ Firefox Accounts</p>
 <p>The profile has sent a telemetry ping from Firefox Lite on the day in question.</p>
 <h4><a class="header" href="#any-firefox-for-firetv-activity" id="any-firefox-for-firetv-activity">Any Firefox for FireTV Activity</a></h4>
 <p>The profile has sent a telemetry ping from Firefox for FireTV on the day in question.</p>
-<h4><a class="header" href="#any-firefoxconnect-activity" id="any-firefoxconnect-activity">Any FirefoxConnect Activity</a></h4>
-<p>The profile has sent a telemetry ping from FirefoxConnect on the day in question.</p>
+<h4><a class="header" href="#any-firefoxconnect-activity" id="any-firefoxconnect-activity">Any <code>FirefoxConnect</code> Activity</a></h4>
+<p>The profile has sent a telemetry ping from <code>FirefoxConnect</code> on the day in question.</p>
 <h2><a class="header" href="#dimensions" id="dimensions">Dimensions</a></h2>
-<p>During a period of time, a particular profile may take on more than one value within a dimension.  For example, a profile may use release channel and beta channel browsers in a single day, resulting in two pings for the day with different values of channel.  Similarly, a profile may be used in one country one day and another country the next day, resulting in two pings for two consecutive days that have different values of country.  Generally, for a metric, we need to assign a profile to one particular value for each dimension.  As such we define the value for each dimension within a day by taking the most frequent value seen in that day, breaking ties by taking the value that occurs last.  We then use the values from the last day within the data that the metric examines.  This is documented in more detail <a href="https://docs.telemetry.mozilla.org/datasets/bigquery/exact_mau/reference.html#slice">here</a>.</p>
+<p>During a period of time, a particular profile may take on more than one value within a dimension.  For example, a profile may use release channel and beta channel browsers in a single day, resulting in two pings for the day with different values of channel.  Similarly, a profile may be used in one country one day and another country the next day, resulting in two pings for two consecutive days that have different values of country.  Generally, for a metric, we need to assign a profile to one particular value for each dimension.  As such we define the value for each dimension within a day by taking the most frequent value seen in that day, breaking ties by taking the value that occurs last.  We then use the values from the last day within the data that the metric examines.  This is documented in more detail <a href="../datasets/bigquery/exact_mau/reference.html#slice">here</a>.</p>
 <h3><a class="header" href="#os" id="os">OS</a></h3>
 <p>Whether the profile’s pings were sent from Mac OS, Windows, or Linux.</p>
 <h3><a class="header" href="#language" id="language">Language</a></h3>
@@ -257,10 +257,10 @@ Firefox Accounts</p>
 <p>There is more information on the design, definitions and data model in the <a href="https://docs.google.com/document/d/1L8tWDUjccutGGAldhpypRtPCaw3kkXboPUTtTZb02OA/">Engineering Design Doc</a>, although some information there may be out of date.</p>
 </li>
 <li>
-<p>The underlying tables are closely related to the <a href="https://docs.telemetry.mozilla.org/datasets/bigquery/exact_mau/reference.html">Exact MAU tables</a>.</p>
+<p>The underlying tables are closely related to the <a href="../datasets/bigquery/exact_mau/reference.html">Exact MAU tables</a>.</p>
 </li>
 <li>
-<p>There is a <a href="https://github.com/mozilla/dscontrib/tree/master/src/dscontrib/jmccrosky/gudnightly">prototype tool</a> in DataBricks on which GUD was based.  It still exists and has been branded “gudnightly” as it has many features that do not yet exist in GUD, including smoothing, year-over-year comparisons, plotting multiple slices on a single axis, etc.   However, it is very slow, less user-friendly, and as of this writing only supports desktop data.</p>
+<p>There is a <a href="https://github.com/mozilla/dscontrib/tree/master/src/dscontrib/jmccrosky/gudnightly">prototype tool</a> in Databricks on which GUD was based.  It still exists and has been branded <code>“gudnightly”</code> as it has many features that do not yet exist in GUD, including smoothing, year-over-year comparisons, plotting multiple slices on a single axis, etc.   However, it is very slow, less user-friendly, and as of this writing only supports desktop data.</p>
 </li>
 <li>
 <p>Tables can be queried directly from BigQuery for programmatic access; see an example in <a href="https://sql.telemetry.mozilla.org/queries/65337/source">https://sql.telemetry.mozilla.org/queries/65337/source</a>.</p>
