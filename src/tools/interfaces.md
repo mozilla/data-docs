@@ -15,11 +15,6 @@ construction. Requires (surprise!) familiarity with SQL, and for your data to
 be explicitly exposed as an STMO data source. Bugs or feature requests can be
 reported in our [issue tracker](https://github.com/mozilla/redash/issues).
 
-#### [`analysis.telemetry.mozilla.org`](spark.md) (ATMO)
-
-**As of 2019-11-08, ATMO is obsolete and has been decommissioned. Instead,
-use STMO or Databricks for analysis.**
-
 #### [Databricks](https://dbc-caf9527b-e073.cloud.databricks.com/)
 
 Offers notebook interface with shared, always-on, autoscaling cluster

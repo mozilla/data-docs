@@ -34,8 +34,6 @@ The data is available in Re:dash.
 Take a look at this
 [example query](https://sql.telemetry.mozilla.org/queries/81/source#129).
 
-I don't recommend accessing this data from ATMO.
-
 #### Further Reading
 
 [client_count_daily_view.sh]: https://github.com/mozilla/telemetry-airflow/blob/adfce4a30895faa607ccf586b292b61ad68d8f75/jobs/client_count_daily_view.sh
