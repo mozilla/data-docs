@@ -7,14 +7,7 @@ BigQuery uses a columnar data storage format called [Capacitor](https://cloud.go
 
 There is a cost associated with using BigQuery based on operations. As of right now we pay an on-demand pricing for queries based on how much data a query scans. To minimize costs see [_Query Optimizations_](bigquery.md#query-optimizations). More detailed pricing information can be found [here](https://cloud.google.com/bigquery/pricing).
 
-With the transition to [GCP](https://cloud.google.com) in 2019, BigQuery has become our primary data warehouse and
-SQL Query engine.
-Our previous SQL Query Engines, Presto and Athena, and our Parquet data lake will no longer be accessible
-by the end of 2019.
-Specific guidance for transitioning off of the AWS data
-infrastructure, including up-to-date timelines of data availability, is
-maintained in the [Data Access Continuity Guide](https://docs.google.com/document/d/1nlzhRGGwAaClwbotd0oWnnkB5GcvpodIxN3Dk5vWvNI/edit#) Google Doc.
-
+With the transition to [GCP](https://cloud.google.com) in 2019, BigQuery has become our primary data warehouse and SQL Query engine.
 
 ## Table of Contents
 <!-- toc -->
