@@ -15,6 +15,7 @@
   * [Overview of Mozilla's Data Pipeline](concepts/pipeline/gcp_data_pipeline.md)
     * [HTTP Edge Server Specification](concepts/pipeline/http_edge_spec.md)
     * [Event Pipeline Detail](concepts/pipeline/event_pipeline.md)
+    * [Schemas](concepts/pipeline/schemas.md)
   * [Analysis Interfaces](tools/interfaces.md)
   * [Custom analysis with Spark](tools/spark.md)
   * [SQL Style Guide](concepts/sql_style.md)
