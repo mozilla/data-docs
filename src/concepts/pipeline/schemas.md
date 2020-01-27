@@ -87,6 +87,31 @@ This is done by the `jsonschema-transpiler`, a Rust application for translating 
 [Data normalization as part of decoding](#decoding) is required before inserting into BigQuery e.g. snake casing and type casting.
 These workarounds are based transformations that are done when importing Avro into BigQuery.
 
+```mermaid
+graph LR
+
+%% nodes
+subgraph input
+  json(JSON Schemas)
+end
+subgraph output
+  avro(Avro schemas)
+  bigquery(BigQuery schemas)
+end
+transpiler[jsonschema-transpiler]
+
+%% hyperlinks
+click json "https://json-schema.org/"
+click avro "https://avro.apache.org/docs/current/spec.html"
+click bigquery "https://cloud.google.com/bigquery/docs/schemas"
+click transpiler "https://github.com/mozilla/jsonschema-transpiler"
+
+%% edges
+json --> transpiler
+transpiler --> avro
+transpiler --> bigquery
+```
+
 ### Mozilla Schema Generator
 
 The schema generator will populate schemas with metadata and insert generated sub-schemas at certain paths.
@@ -253,3 +278,26 @@ It may also change when the `master` branch contains new or updated schemas unde
 
 To manually trigger a new push, clear the state of a single task in the workflow admin ui.
 To update the schedule and dependencies, update the DAG definition.
+
+### Modifying state of the pipeline
+
+```mermaid
+graph TD
+subgraph mozilla-pipeline-schemas
+  schemas(generated-schemas)
+end
+artifact
+subgraph moz-fx-data-shar-nonprod-efed
+  bigquery
+  ingestion
+end
+status{status ok}
+
+schemas --> |labeled and archived| artifact
+artifact --> |run terraform| bigquery
+artifact --> |drain and submit dataflow| ingestion
+ingestion --> |writes into| bigquery
+
+bigquery --> |tables updated| status
+ingestion --> |scales to capacity| status
+```
