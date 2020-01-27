@@ -80,9 +80,22 @@ the Mozilla Schema Generator is run to generate BigQuery schemas._
 Refer to [Sending a Custom Ping](../../cookbooks/new_pings.md) for an in-depth guide for adding new
 schemas to the repository.
 
+### Schema Transpiler
+
+The structure validated in JSON Schema can be mapped to BigQuery columns.
+This is done by the `jsonschema-transpiler`, a Rust application for translating between schema formats.
+[Data normalization as part of decoding](#decoding) is required before inserting into BigQuery e.g. snake casing and type casting.
+These workarounds are based transformations that are done when importing Avro into BigQuery.
+
 ### Mozilla Schema Generator
 
-### Airflow
+The schema generator will populate schemas with metadata and insert generated sub-schemas at certain paths.
+It uses the probe information service to enumerate map-type fields.
+These fields are converted into a structured column that can be accessed in BigQuery with [Standard SQL](https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators).
+Metadata includes fields added during [data ingestion](#data-ingestion) including fields like `submission_timestamp` and `sample_id`.
+
+The main entrypoint is a script that merges and generates `*.schema.json` under the `schemas` directory, then transpiles these to `*.bq`.
+It commits the schema to the `generated-schemas` branch, with a changelog referencing commits in the `master` branch.
 
 ## Data Ingestion
 
@@ -203,5 +216,40 @@ $ bq ls --max_results=3 moz-fx-data-shared-prod:org_mozilla_fenix_stable
   bookmarks_sync_v1   TABLE   schema_id:glean_ping_1                  DAY (field: submission_timestamp)   normalized_channel, sample_id
 ```
 
-The `schemas_build_id` label contains an identifier that includes the timestamp of the generated
-schema. This label may be used to trace the last deployed commit from `generated-schemas`.
+The `schema_id` is derived from the value of the `$schema` property of each JSON Schema.
+The `schemas_build_id` label contains an identifier that includes the timestamp of the generated schema.
+This label may be used to trace the last deployed commit from `generated-schemas`.
+
+### Triggering `generated-schemas` push with Airflow
+
+```mermaid
+graph TD
+
+subgraph workflow.tmo
+  manual
+  scheduled
+end
+
+subgraph mozilla-pipeline-schemas
+  master
+  schemas(generated-schemas)
+end
+
+generator(mozilla-schema-generator)
+
+%%
+
+manual --> |run now| generator
+scheduled --> |run at midnight UTC| generator
+
+master -->|git pull| generator
+generator --> |git push| schemas
+```
+
+A new push to the `generated-schemas` branch is made every time the [`probe-scraper.schema_generator`](TODO) task is run by Airflow.
+`mozilla-schema-generator` runs in a container that commits snapshots of generated schemas to the remote repository.
+Generated schemas may change when `probe-scraper` finds new probes in defined repositories e.g. `hg.mozilla.org` or [`glean`](https://github.com/mozilla/probe-scraper/blob/master/repositories.yaml).
+It may also change when the `master` branch contains new or updated schemas under the `schemas/` directory.
+
+To manually trigger a new push, clear the state of a single task in the workflow admin ui.
+To update the schedule and dependencies, update the DAG definition.
