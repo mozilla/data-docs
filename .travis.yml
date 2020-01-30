@@ -6,6 +6,7 @@ matrix:
         - curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git rust-lang/mdBook
         - curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-toc
         - curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-mermaid
+        - curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-open-on-gh
         - mdbook --version
         - mdbook-toc --version
         - mdbook-mermaid --version
