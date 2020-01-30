@@ -15,10 +15,6 @@ in various components of the data pipeline.
 graph TD
 
 %% Nodes
-subgraph GCP
-  bigquery
-end
-
 subgraph mozilla-pipeline-schemas
   master
   schemas(generated-schemas)
@@ -27,9 +23,9 @@ end
 generator(mozilla-schema-generator)
 transpiler(jsonschema-transpiler)
 probe-info(probe-scraper)
-ingestion(gcp-ingestion)
 airflow(telemetry-airflow)
-
+ingestion(gcp-ingestion)
+bigquery(BigQuery)
 
 %% Node hyperlinks
 click bigquery "../../cookbooks/bigquery.html"
@@ -276,7 +272,7 @@ A new push to the `generated-schemas` branch is made every time the [`probe-scra
 Generated schemas may change when `probe-scraper` finds new probes in defined repositories e.g. `hg.mozilla.org` or [`glean`](https://github.com/mozilla/probe-scraper/blob/master/repositories.yaml).
 It may also change when the `master` branch contains new or updated schemas under the `schemas/` directory.
 
-To manually trigger a new push, clear the state of a single task in the workflow admin ui.
+To manually trigger a new push, clear the state of a single task in the workflow admin UI.
 To update the schedule and dependencies, update the DAG definition.
 
 ### Modifying state of the pipeline
@@ -286,18 +282,26 @@ graph TD
 subgraph mozilla-pipeline-schemas
   schemas(generated-schemas)
 end
-artifact
+artifact[Generate schema artifact]
 subgraph moz-fx-data-shar-nonprod-efed
-  bigquery
-  ingestion
+  bigquery[Update BigQuery tables]
+  views[Update BigQuery views]
+  ingestion[Redeploy Dataflow ingestion]
 end
-status{status ok}
+status{Deploy prod}
 
 schemas --> |labeled and archived| artifact
 artifact --> |run terraform| bigquery
-artifact --> |drain and submit dataflow| ingestion
-ingestion --> |writes into| bigquery
+bigquery --> |run terraform| views
+views --> |drain and submit| ingestion
 
-bigquery --> |tables updated| status
-ingestion --> |scales to capacity| status
+ingestion --> status
 ```
+
+Jenkins is used to automate deploys of the pipeline in the `nonprod` and `prod` projects.
+Jenkins polls the `generated-schemas` branch for new commits.
+The tip of the branch will be labeled and archived into an artifaact that is used during deploys.
+The artifact is first used update the table schemas in the `nonprod` project.
+This staging step will stop on schema incompatible changes, such as removing a schema or a column in a schema.
+Once the tables are up to date, the Dataflow job will be drained and redeployed so it is writing to the updated tables.
+Once schemas have successfully deployed to the `nonprod` project, then it may be manually promoted to production by an operator.
