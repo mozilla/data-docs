@@ -3,7 +3,7 @@
 ## Overview
 
 Schemas describe the structure of ingested data. They are used in the pipeline to validate the types
-and values of data, or to define a table schema in a data store. We use a repository of JSON Schemas
+and values of data, and to define a table schema in a data store. We use a repository of JSON Schemas
 to sort incoming data into [`decoded` and `error`
 datasets](../../cookbooks/bigquery.md#projects-with-bigquery-datasets). We also generate BigQuery
 table schemas nightly from the JSON Schemas.
@@ -162,9 +162,9 @@ accessed using the dot operator. Some data must be transformed before insertion,
 not be specified in the schema, and instead placed into a specially constructed column named
 `additional_properties`.
 
-#### Column Name Normalization
+#### Name Normalization
 
-The reference [Python
+A reference [Python
 implementation](https://github.com/acmiyaguchi/test-casing/blob/master/src/main.py) of the snake
 casing algorithm been implemented in the decoder and transpiler using [a shared
 test-suite](https://github.com/acmiyaguchi/test-casing/tree/master/test-cases). To illustrate the
@@ -188,9 +188,9 @@ WHERE date(submission_timestamp) = date_sub(current_date, interval 1 day)
 LIMIT 1
 ```
 
-#### Data Normalization
+#### Data Structure Normalization
 
-Along with column name normalization, the decoder is also responsible for transforming the data to
+Thee decoder is also responsible for transforming the data to
 accommodate BigQuery limitations in data representation. All transformations are defined in
 [`ingestion-beam` under
 `com.mozilla.telemtry.transforms.PubsubMessageToTableRow`](https://github.com/mozilla/gcp-ingestion/blob/master/ingestion-beam/src/main/java/com/mozilla/telemetry/transforms/PubsubMessageToTableRow.java).
@@ -216,7 +216,7 @@ In this section, we discuss deployment of generated schemas to BigQuery. Refer t
 Naming](../../cookbooks/bigquery.md#table-layout-and-naming) for details about the resulting
 structure of the projects.
 
-The generated schemas are applied to each of the tables on changes. The schemas must be backwards
+Tables are updated on every push to `generated-schemas`. The schemas must be backwards
 compatible, otherwise the checks in the staging Dataflow and BigQuery instances will fail. This must
 be resolved by pushing a new tip to the `generated-schemas` branch in the schema repository. [Valid
 changes to schemas](https://cloud.google.com/bigquery/docs/managing-table-schemas) include relaxing
@@ -267,7 +267,7 @@ master -->|git pull| generator
 generator --> |git push| schemas
 ```
 
-A new push to the `generated-schemas` branch is made every time the [`probe-scraper.schema_generator`](TODO) task is run by Airflow.
+A new push to the `generated-schemas` branch is made every time the [`probe-scraper.schema_generator`](https://github.com/mozilla/telemetry-airflow/blob/master/dags/probe_scraper.py) task is run by Airflow.
 `mozilla-schema-generator` runs in a container that commits snapshots of generated schemas to the remote repository.
 Generated schemas may change when `probe-scraper` finds new probes in defined repositories e.g. `hg.mozilla.org` or [`glean`](https://github.com/mozilla/probe-scraper/blob/master/repositories.yaml).
 It may also change when the `master` branch contains new or updated schemas under the `schemas/` directory.
