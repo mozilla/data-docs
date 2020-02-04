@@ -166,7 +166,7 @@ not be specified in the schema, and instead placed into a specially constructed 
 
 A reference [Python
 implementation](https://github.com/acmiyaguchi/test-casing/blob/master/src/main.py) of the snake
-casing algorithm been implemented in the decoder and transpiler using [a shared
+casing algorithm is ensured to be compatible with the implementations in the decoder and transpiler using [a shared
 test-suite](https://github.com/acmiyaguchi/test-casing/tree/master/test-cases). To illustrate the
 transformation, consider the [`a11y.theme` keyed
 scalar](https://probes.telemetry.mozilla.org/?view=detail&probeId=scalar%2Fa11y.theme) in the [main
