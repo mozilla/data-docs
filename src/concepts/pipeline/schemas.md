@@ -223,7 +223,7 @@ changes to schemas](https://cloud.google.com/bigquery/docs/managing-table-schema
 a column mode from `REQUIRED` to `NULLABLE` or adding new columns.
 
 Each table is tagged with the revision of schema repository attached. Consider the
-`org_mozilla_fenix` namespace.
+`org_mozilla_fenix` namespace:
 
 ```bash
 $ bq ls --max_results=3 moz-fx-data-shared-prod:org_mozilla_fenix_stable
