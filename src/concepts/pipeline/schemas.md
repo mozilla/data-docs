@@ -73,7 +73,7 @@ end
 **Figure**: _Template schemas are built locally to generate static JSON Schema. On a regular basis,
 the Mozilla Schema Generator is run to generate BigQuery schemas._
 
-Refer to [Sending a Custom Ping](../../cookbooks/new_pings.md) for an in-depth guide for adding new
+Refer to [Sending a Custom Ping](../../cookbooks/new_ping.md) for an in-depth guide for adding new
 schemas to the repository.
 
 ### Schema Transpiler
