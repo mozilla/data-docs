@@ -8,7 +8,7 @@ to sort incoming data into [`decoded` and `error`
 datasets](../../cookbooks/bigquery.md#projects-with-bigquery-datasets). We also generate BigQuery
 table schemas nightly from the JSON Schemas.
 
-This section is intended for those who want modify the process of generating and applying schemas
+This section is intended for those who want to modify the process of generating and applying schemas
 in various components of the data pipeline.
 
 ```mermaid
