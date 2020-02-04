@@ -396,7 +396,7 @@ graph LR
 [cep]: BROKEN:http://pipeline-cep.prod.mozaws.net/
 [Mission Control]: https://data-missioncontrol.dev.mozaws.net
 [Metrics Graphics]: http://metricsgraphicsjs.org/
-[parquet]: http://parquet.apache.org/
+[parquet]: https://parquet.apache.org/
 [Hive]: https://cwiki.apache.org/confluence/display/Hive/Home
 [Presto]: http://prestosql.io/
 [Telemetry Aggregates]: https://github.com/mozilla/python_mozaggregator/#api
