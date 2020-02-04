@@ -110,7 +110,7 @@ can follow the event data format and potentially connect to the existing tooling
 
 ## Mobile event collection
 
-Mobile events data primarily flows through the mobile events ping ([ping schema](https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/dev/schemas/telemetry/mobile-event)), from e.g. [Firefox iOS](https://github.com/mozilla-mobile/firefox-ios/wiki/Event-Tracking-with-Mozilla's-Telemetry-Service#event-ping), Firefox for Fire TV and Rocket.
+Mobile events data primarily flows through the mobile events ping ([ping schema](https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/master/schemas/telemetry/mobile-event)), from e.g. [Firefox iOS](https://github.com/mozilla-mobile/firefox-ios/wiki/Event-Tracking-with-Mozilla's-Telemetry-Service#event-ping), Firefox for Fire TV and Rocket.
 
 Currently we also collect event data from Firefox Focus through the [`focus-events` ping](https://github.com/mozilla-mobile/focus-ios/wiki/Event-Tracking-with-Mozilla%27s-Telemetry-Service#event-ping),
 using the [`telemetry-ios`](https://github.com/mozilla-mobile/telemetry-ios) and
