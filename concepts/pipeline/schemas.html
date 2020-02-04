@@ -1,0 +1,488 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Schemas - Firefox Data Documentation</title>
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../../dtmo.css">
+        
+        <link rel="stylesheet" href="../../mermaid.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div id="sidebar-scrollbox" class="sidebar-scrollbox">
+                <ol class="chapter"><li class="expanded affix "><a href="../../introduction.html">Firefox Data Documentation</a></li><li class="expanded "><a href="../../concepts/reporting_a_problem.html"><strong aria-hidden="true">1.</strong> Reporting a problem</a></li><li class="expanded "><a href="../../concepts/terminology.html"><strong aria-hidden="true">2.</strong> Terminology</a></li><li class="expanded "><a href="../../concepts/getting_started.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="../../concepts/analysis_intro.html"><strong aria-hidden="true">3.1.</strong> Analysis Quick Start</a></li><li class="expanded "><a href="../../concepts/choosing_a_dataset.html"><strong aria-hidden="true">3.2.</strong> Choosing a Desktop Dataset</a></li><li class="expanded "><a href="../../concepts/choosing_a_dataset_mobile.html"><strong aria-hidden="true">3.3.</strong> Choosing a Mobile Dataset</a></li><li class="expanded "><a href="../../tools/stmo.html"><strong aria-hidden="true">3.4.</strong> Intro to STMO</a></li><li class="expanded "><a href="../../concepts/analysis_gotchas.html"><strong aria-hidden="true">3.5.</strong> Common Analysis Gotchas</a></li><li class="expanded "><a href="../../concepts/sql_optimization.html"><strong aria-hidden="true">3.6.</strong> Optimizing Queries</a></li><li class="expanded "><a href="../../concepts/getting_help.html"><strong aria-hidden="true">3.7.</strong> Getting Help</a></li></ol></li><li class="expanded "><a href="../../tools/index.html"><strong aria-hidden="true">4.</strong> Tools</a></li><li><ol class="section"><li class="expanded "><a href="../../tools/projects.html"><strong aria-hidden="true">4.1.</strong> Project Glossary</a></li><li class="expanded "><a href="../../tools/guiding_principles.html"><strong aria-hidden="true">4.2.</strong> Guiding Principles for Data Infrastructure</a></li><li class="expanded "><a href="../../concepts/pipeline/gcp_data_pipeline.html"><strong aria-hidden="true">4.3.</strong> Overview of Mozilla's Data Pipeline</a></li><li><ol class="section"><li class="expanded "><a href="../../concepts/pipeline/http_edge_spec.html"><strong aria-hidden="true">4.3.1.</strong> HTTP Edge Server Specification</a></li><li class="expanded "><a href="../../concepts/pipeline/event_pipeline.html"><strong aria-hidden="true">4.3.2.</strong> Event Pipeline Detail</a></li><li class="expanded "><a href="../../concepts/pipeline/schemas.html" class="active"><strong aria-hidden="true">4.3.3.</strong> Schemas</a></li></ol></li><li class="expanded "><a href="../../tools/interfaces.html"><strong aria-hidden="true">4.4.</strong> Analysis Interfaces</a></li><li class="expanded "><a href="../../tools/spark.html"><strong aria-hidden="true">4.5.</strong> Custom analysis with Spark</a></li><li class="expanded "><a href="../../concepts/sql_style.html"><strong aria-hidden="true">4.6.</strong> SQL Style Guide</a></li><li class="expanded "><a href="../../concepts/glean/glean.html"><strong aria-hidden="true">4.7.</strong> Glean overview</a></li><li><ol class="section"><li class="expanded "><a href="../../concepts/glean/accessing_glean_data.html"><strong aria-hidden="true">4.7.1.</strong> Accessing Glean data</a></li><li class="expanded "><a href="../../concepts/glean/debug_ping_view.html"><strong aria-hidden="true">4.7.2.</strong> Glean Debug ping viewer</a></li></ol></li><li class="expanded "><a href="../../tools/alerts.html"><strong aria-hidden="true">4.8.</strong> Alerts</a></li><li class="expanded "><a href="../../tools/gud.html"><strong aria-hidden="true">4.9.</strong> Growth &amp; Usage Dashboard (GUD)</a></li></ol></li><li class="expanded "><a href="../../cookbooks/index.html"><strong aria-hidden="true">5.</strong> Analysis cookbooks</a></li><li><ol class="section"><li class="expanded "><a href="../../cookbooks/bigquery.html"><strong aria-hidden="true">5.1.</strong> Accessing and working with BigQuery</a></li><li><ol class="section"><li class="expanded "><a href="../../cookbooks/bigquery-airflow.html"><strong aria-hidden="true">5.1.1.</strong> Scheduling BigQuery Queries in Airflow</a></li></ol></li><li class="expanded "><a href="../../cookbooks/dataset_specific.html"><strong aria-hidden="true">5.2.</strong> Dataset Specific</a></li><li><ol class="section"><li class="expanded "><a href="../../cookbooks/normandy_events.html"><strong aria-hidden="true">5.2.1.</strong> Working with Normandy events</a></li><li class="expanded "><a href="../../cookbooks/crash_pings.html"><strong aria-hidden="true">5.2.2.</strong> Working with Crash Pings</a></li></ol></li><li class="expanded "><a href="../../cookbooks/realtime.html"><strong aria-hidden="true">5.3.</strong> Real-time</a></li><li><ol class="section"><li class="expanded "><a href="../../cookbooks/view_pings_cep.html"><strong aria-hidden="true">5.3.1.</strong> Seeing Your Own Pings</a></li></ol></li><li class="expanded "><a href="../../cookbooks/metrics.html"><strong aria-hidden="true">5.4.</strong> Metrics</a></li><li><ol class="section"><li class="expanded "><a href="../../cookbooks/dau.html"><strong aria-hidden="true">5.4.1.</strong> Daily Active Users (DAU)</a></li><li class="expanded "><a href="../../cookbooks/active_dau.html"><strong aria-hidden="true">5.4.2.</strong> Active DAU (aDAU)</a></li><li class="expanded "><a href="../../cookbooks/retention.html"><strong aria-hidden="true">5.4.3.</strong> Retention</a></li></ol></li></ol></li><li class="expanded "><a href="../../datasets/new_data.html"><strong aria-hidden="true">6.</strong> Sending telemetry</a></li><li><ol class="section"><li class="expanded "><a href="../../cookbooks/client_guidelines.html"><strong aria-hidden="true">6.1.</strong> Implementing Experiments</a></li><li class="expanded "><a href="../../cookbooks/events_best_practices.html"><strong aria-hidden="true">6.2.</strong> Sending Events</a></li><li class="expanded "><a href="../../cookbooks/new_ping.html"><strong aria-hidden="true">6.3.</strong> Sending a Custom Ping</a></li><li class="spacer"></li></ol></li><li class="expanded "><a href="../../datasets/reference.html"><strong aria-hidden="true">7.</strong> Dataset Reference</a></li><li><ol class="section"><li class="expanded "><a href="../../datasets/pings.html"><strong aria-hidden="true">7.1.</strong> Pings</a></li><li class="expanded "><a href="../../datasets/derived.html"><strong aria-hidden="true">7.2.</strong> Derived Datasets</a></li><li><ol class="section"><li class="expanded "><a href="../../datasets/active_profiles.html"><strong aria-hidden="true">7.2.1.</strong> Active Profiles</a></li><li class="expanded "><a href="../../datasets/batch_view/addons/reference.html"><strong aria-hidden="true">7.2.2.</strong> Addons</a></li><li class="expanded "><a href="../../datasets/other/addons_daily/reference.html"><strong aria-hidden="true">7.2.3.</strong> Addons Daily</a></li><li class="expanded "><a href="../../datasets/other/attitudes_daily/reference.html"><strong aria-hidden="true">7.2.4.</strong> Attitudes Daily</a></li><li class="expanded "><a href="../../datasets/batch_view/clients_daily/reference.html"><strong aria-hidden="true">7.2.5.</strong> Clients Daily</a></li><li class="expanded "><a href="../../datasets/bigquery/clients_last_seen/reference.html"><strong aria-hidden="true">7.2.6.</strong> Clients Last Seen</a></li><li class="expanded "><a href="../../datasets/batch_view/events/reference.html"><strong aria-hidden="true">7.2.7.</strong> Events</a></li><li class="expanded "><a href="../../datasets/bigquery/exact_mau/reference.html"><strong aria-hidden="true">7.2.8.</strong> Exact MAU</a></li><li class="expanded "><a href="../../datasets/batch_view/first_shutdown_summary/reference.html"><strong aria-hidden="true">7.2.9.</strong> First Shutdown Summary</a></li><li class="expanded "><a href="../../datasets/batch_view/main_summary/reference.html"><strong aria-hidden="true">7.2.10.</strong> Main Summary</a></li><li class="expanded "><a href="../../datasets/batch_view/new_profile/reference.html"><strong aria-hidden="true">7.2.11.</strong> New Profile</a></li><li class="expanded "><a href="../../datasets/other/socorro_crash/reference.html"><strong aria-hidden="true">7.2.12.</strong> Socorro Crash Reports</a></li><li class="expanded "><a href="../../datasets/other/ssl/reference.html"><strong aria-hidden="true">7.2.13.</strong> SSL Ratios (public)</a></li><li class="expanded "><a href="../../datasets/batch_view/telemetry_aggregates/reference.html"><strong aria-hidden="true">7.2.14.</strong> Telemetry Aggregates</a></li><li class="expanded "><a href="../../datasets/batch_view/update/reference.html"><strong aria-hidden="true">7.2.15.</strong> Update</a></li></ol></li><li class="expanded "><a href="../../tools/experiments.html"><strong aria-hidden="true">7.3.</strong> Experimental Datasets</a></li><li><ol class="section"><li class="expanded "><a href="../../datasets/heartbeat.html"><strong aria-hidden="true">7.3.1.</strong> Accessing Heartbeat data</a></li><li class="expanded "><a href="../../datasets/shield.html"><strong aria-hidden="true">7.3.2.</strong> Accessing Shield Study data</a></li></ol></li><li class="expanded "><a href="../../datasets/search.html"><strong aria-hidden="true">7.4.</strong> Search Datasets</a></li><li><ol class="section"><li class="expanded "><a href="../../datasets/search/search_aggregates/reference.html"><strong aria-hidden="true">7.4.1.</strong> Search Aggregates</a></li><li class="expanded "><a href="../../datasets/search/search_clients_daily/reference.html"><strong aria-hidden="true">7.4.2.</strong> Search Clients Daily</a></li></ol></li><li class="expanded "><a href="../../datasets/other.html"><strong aria-hidden="true">7.5.</strong> Other Datasets</a></li><li><ol class="section"><li class="expanded "><a href="../../datasets/other/hgpush/reference.html"><strong aria-hidden="true">7.5.1.</strong> hgpush</a></li><li class="expanded "><a href="../../datasets/other/stub_installer/reference.html"><strong aria-hidden="true">7.5.2.</strong> Stub installer ping</a></li><li class="expanded "><a href="../../datasets/other/activity-stream/reference.html"><strong aria-hidden="true">7.5.3.</strong> Activity Stream</a></li><li class="expanded "><a href="../../datasets/other/bmobugs/reference.html"><strong aria-hidden="true">7.5.4.</strong> bmobugs</a></li></ol></li><li class="expanded "><a href="../../datasets/fxa.html"><strong aria-hidden="true">7.6.</strong> Firefox Accounts Datasets</a></li><li><ol class="section"><li class="expanded "><a href="../../datasets/fxa_metrics/attribution.html"><strong aria-hidden="true">7.6.1.</strong> Firefox Account Attribution</a></li><li class="expanded "><a href="../../datasets/fxa_metrics/funnels.html"><strong aria-hidden="true">7.6.2.</strong> Firefox Account Funnel Metrics</a></li><li class="expanded "><a href="../../datasets/fxa_metrics/emails.html"><strong aria-hidden="true">7.6.3.</strong> Firefox Account Email Metrics</a></li></ol></li><li class="expanded "><a href="../../datasets/static.html"><strong aria-hidden="true">7.7.</strong> Static Datasets</a></li><li><ol class="section"><li class="expanded "><a href="../../datasets/static/normalized_os.html"><strong aria-hidden="true">7.7.1.</strong> Normalized OS Names And Versions</a></li><li class="spacer"></li></ol></li></ol></li><li class="expanded "><a href="../../concepts/index.html"><strong aria-hidden="true">8.</strong> Telemetry Behavior Reference</a></li><li><ol class="section"><li class="expanded "><a href="../../concepts/history.html"><strong aria-hidden="true">8.1.</strong> History of Telemetry</a></li><li class="expanded "><a href="../../concepts/profile/index.html"><strong aria-hidden="true">8.2.</strong> Profile Behavior</a></li><li><ol class="section"><li class="expanded "><a href="../../concepts/profile/profile_creation.html"><strong aria-hidden="true">8.2.1.</strong> Profile Creation</a></li><li class="expanded "><a href="../../concepts/profile/realworldusage.html"><strong aria-hidden="true">8.2.2.</strong> Real World Usage</a></li><li class="expanded "><a href="../../concepts/profile/profilehistory.html"><strong aria-hidden="true">8.2.3.</strong> Profile History</a></li></ol></li><li class="expanded "><a href="../../concepts/channels/index.html"><strong aria-hidden="true">8.3.</strong> Channel Behavior</a></li><li><ol class="section"><li class="expanded "><a href="../../concepts/channels/channel_normalization.html"><strong aria-hidden="true">8.3.1.</strong> Channel Normalization and Querying</a></li></ol></li><li class="expanded "><a href="../../concepts/censuses.html"><strong aria-hidden="true">8.4.</strong> Census metrics</a></li><li class="expanded "><a href="../../concepts/engagement.html"><strong aria-hidden="true">8.5.</strong> Engagement metrics</a></li><li class="expanded "><a href="../../concepts/sample_id.html"><strong aria-hidden="true">8.6.</strong> Sampling</a></li><li class="spacer"></li></ol></li><li class="expanded "><a href="../../historical/index.html"><strong aria-hidden="true">9.</strong> Historical Reference</a></li><li><ol class="section"><li class="expanded "><a href="../../concepts/pipeline/data_pipeline.html"><strong aria-hidden="true">9.1.</strong> Previous AWS Pipeline Overview</a></li><li class="expanded "><a href="../../concepts/pipeline/data_pipeline_detail.html"><strong aria-hidden="true">9.2.</strong> In-depth AWS Data Pipeline Detail</a></li><li class="expanded "><a href="../../datasets/obsolete.html"><strong aria-hidden="true">9.3.</strong> Obsolete Datasets</a></li><li><ol class="section"><li class="expanded "><a href="../../datasets/obsolete/churn/reference.html"><strong aria-hidden="true">9.3.1.</strong> Churn</a></li><li class="expanded "><a href="../../datasets/obsolete/client_count/reference.html"><strong aria-hidden="true">9.3.2.</strong> Client Count</a></li><li class="expanded "><a href="../../datasets/obsolete/client_count_daily/reference.html"><strong aria-hidden="true">9.3.3.</strong> Client Count Daily</a></li><li class="expanded "><a href="../../datasets/obsolete/crash_aggregates/reference.html"><strong aria-hidden="true">9.3.4.</strong> Crash Aggregates</a></li><li class="expanded "><a href="../../datasets/obsolete/crash_summary/reference.html"><strong aria-hidden="true">9.3.5.</strong> Crash Summary</a></li><li class="expanded "><a href="../../datasets/obsolete/error_aggregates/reference.html"><strong aria-hidden="true">9.3.6.</strong> Error Aggregates</a></li><li class="expanded "><a href="../../datasets/obsolete/heavy_users/reference.html"><strong aria-hidden="true">9.3.7.</strong> Heavy Users</a></li><li class="expanded "><a href="../../datasets/obsolete/longitudinal/reference.html"><strong aria-hidden="true">9.3.8.</strong> Longitudinal</a></li><li class="expanded "><a href="../../datasets/obsolete/retention/reference.html"><strong aria-hidden="true">9.3.9.</strong> Retention</a></li><li class="expanded "><a href="../../datasets/obsolete/sync_summary/reference.html"><strong aria-hidden="true">9.3.10.</strong> Sync Summary</a></li><li class="spacer"></li></ol></li></ol></li><li class="expanded "><a href="../../meta/index.html"><strong aria-hidden="true">10.</strong> About this Documentation</a></li><li><ol class="section"><li class="expanded "><a href="../../meta/contributing.html"><strong aria-hidden="true">10.1.</strong> Contributing</a></li><li class="expanded "><a href="../../meta/structure.html"><strong aria-hidden="true">10.2.</strong> Structure</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Firefox Data Documentation</h1>
+
+                        <div class="right-buttons">
+                            <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                            <a href="https://github.com/mozilla/firefox-data-docs" title="Git repository" aria-label="Git repository">
+                                <i id="git-repository-button" class="fa fa-github"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#generated-schemas" id="generated-schemas">Generated Schemas</a></h1>
+<h2><a class="header" href="#overview" id="overview">Overview</a></h2>
+<p>Schemas describe the structure of ingested data. They are used in the pipeline to validate the types
+and values of data, and to define a table schema in a data store. We use a repository of JSON Schemas
+to sort incoming data into <a href="../../cookbooks/bigquery.html#projects-with-bigquery-datasets"><code>decoded</code> and <code>error</code>
+datasets</a>. We also generate BigQuery
+table schemas nightly from the JSON Schemas.</p>
+<p>This section is intended for those who want to modify the process of generating and applying schemas
+in various components of the data pipeline.</p>
+<pre class="mermaid">graph TD
+
+%% Nodes
+subgraph mozilla-pipeline-schemas
+  master
+  schemas(generated-schemas)
+end
+
+generator(mozilla-schema-generator)
+transpiler(jsonschema-transpiler)
+probe-info(probe-scraper)
+airflow(telemetry-airflow)
+ingestion(gcp-ingestion)
+bigquery(BigQuery)
+
+%% Node hyperlinks
+click bigquery "../../cookbooks/bigquery.html"
+click master "https://github.com/mozilla-services/mozilla-pipeline-schemas"
+click schemas "https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/generated-schemas"
+click generator "https://github.com/mozilla/mozilla-schema-generator"
+click transpiler "https://github.com/mozilla/jsonschema-transpiler"
+click probe-info "https://github.com/mozilla/probe-scraper"
+click ingestion "https://mozilla.github.io/gcp-ingestion/ingestion-beam/"
+click airflow "https://github.com/mozilla/telemetry-airflow"
+
+
+%% Edges
+master --> |git clone| generator
+transpiler --> |used by| generator
+probe-info --> |used by| generator
+generator --> |scheduled by| airflow
+airflow --> |run nightly| schemas
+
+schemas --> |defines table| bigquery
+schemas --> |defines is valid| ingestion
+schemas --> |defines normalization| ingestion
+ingestion --> |inserts into| bigquery
+</pre>
+<p><strong>Figure</strong>: <em>An overview of generated schemas. Click on a node to navigate to the relevant
+repository or documentation.</em></p>
+<h2><a class="header" href="#schema-repository" id="schema-repository">Schema Repository</a></h2>
+<pre class="mermaid">graph LR
+
+subgraph mozilla-pipeline-schemas
+  subgraph origin/master
+    templates -->|cmake| schemas
+  end
+
+  subgraph origin/generated-schemas
+    schemas -->|mozilla-schema-generator| artifact(schemas)
+  end
+end
+</pre>
+<p><strong>Figure</strong>: <em>Template schemas are built locally to generate static JSON Schema. On a regular basis,
+the Mozilla Schema Generator is run to generate BigQuery schemas.</em></p>
+<p>Refer to <a href="../../cookbooks/new_ping.html">Sending a Custom Ping</a> for an in-depth guide for adding new
+schemas to the repository.</p>
+<h3><a class="header" href="#schema-transpiler" id="schema-transpiler">Schema Transpiler</a></h3>
+<p>The structure validated in JSON Schema can be mapped to BigQuery columns.
+This is done by the <code>jsonschema-transpiler</code>, a Rust application for translating between schema formats.
+<a href="#decoding">Data normalization as part of decoding</a> is required before inserting into BigQuery e.g. snake casing and type casting.
+These workarounds are based transformations that are done when importing Avro into BigQuery.</p>
+<pre class="mermaid">graph LR
+
+%% nodes
+subgraph input
+  json(JSON Schemas)
+end
+subgraph output
+  avro(Avro schemas)
+  bigquery(BigQuery schemas)
+end
+transpiler[jsonschema-transpiler]
+
+%% hyperlinks
+click json "https://json-schema.org/"
+click avro "https://avro.apache.org/docs/current/spec.html"
+click bigquery "https://cloud.google.com/bigquery/docs/schemas"
+click transpiler "https://github.com/mozilla/jsonschema-transpiler"
+
+%% edges
+json --> transpiler
+transpiler --> avro
+transpiler --> bigquery
+</pre>
+<h3><a class="header" href="#mozilla-schema-generator" id="mozilla-schema-generator">Mozilla Schema Generator</a></h3>
+<p>The schema generator will populate schemas with metadata and insert generated sub-schemas at certain paths.
+It generates JSON Schemas that are translated into BigQuery schemas, but <em>not</em> used for validation.
+It uses the probe information service to enumerate map-type fields.
+These fields are converted into a structured column that can be accessed in BigQuery with <a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators">Standard SQL</a>.
+Metadata includes fields added during <a href="#data-ingestion">data ingestion</a> including fields like <code>submission_timestamp</code> and <code>sample_id</code>.</p>
+<p>In addition to generating BigQuery schemas, schemas are aliased in several locations.
+For example, the <code>first_shutdown</code> ping is a copy of the <code>main_ping</code>.
+Schemas are also altered in the generator to accommodate various edge-cases in the data.
+For example, a field that validates both boolean and integer types may be altered to assume a boolean type.</p>
+<p>The main entry-point is a script that merges and generates <code>*.schema.json</code> under the <code>schemas</code> directory, then translates these to <code>*.bq</code>.
+It commits the schema to the <code>generated-schemas</code> branch, with a change-log referencing commits in the <code>master</code> branch.</p>
+<h2><a class="header" href="#data-ingestion" id="data-ingestion">Data Ingestion</a></h2>
+<h3><a class="header" href="#validation" id="validation">Validation</a></h3>
+<p>Data that fails validation is sent to the <code>payload_bytes_error</code> table. Each row contains an
+information about the error that caused it, as well as the name of the job associated with it.</p>
+<pre><code class="language-sql">SELECT
+  document_namespace,
+  document_type,
+  document_version,
+  error_message,
+  error_type,
+  exception_class,
+  job_name
+FROM
+  `moz-fx-data-shared-prod`.payload_bytes_error.telemetry
+WHERE
+  submission_timestamp &gt; TIMESTAMP_SUB(current_timestamp, INTERVAL 1 hour)
+  AND exception_class = 'org.everit.json.schema.ValidationException'
+LIMIT 5
+</code></pre>
+<table><thead><tr><th>Column</th><th>Example Value</th><th>Notes</th></tr></thead><tbody>
+<tr><td><code>document_namespace</code></td><td>telemetry</td><td></td></tr>
+<tr><td><code>document_type</code></td><td>main</td><td></td></tr>
+<tr><td><code>document_version</code></td><td>null</td><td>The version in the <code>telemetry</code> namespace is generated after validation</td></tr>
+<tr><td><code>error_message</code></td><td><code>org.everit.json.schema.ValidationException: #/environment/system/os/version: #: no subschema matched out of the total 1 subschemas</code></td><td></td></tr>
+<tr><td><code>error_type</code></td><td><code>ParsePayload</code></td><td>The <code>ParsePayload</code> type is associated with schema validation or corrupt data</td></tr>
+<tr><td><code>exception_class</code></td><td><code>org.everit.json.schema.ValidationException </code></td><td>Java <a href="https://github.com/everit-org/json-schema">JSON Schema Validator</a> library</td></tr>
+<tr><td><code>job_name</code></td><td><code>decoder-0-0121192636-9c56ac6a</code></td><td>Name of the Dataflow job that can be used to determine the version of the schema artifact</td></tr>
+</tbody></table>
+<h3><a class="header" href="#decoding" id="decoding">Decoding</a></h3>
+<p>The BigQuery schemas are used to normalize relevant payload data and determine additional
+properties. Normalization involves renaming field names and transforming certain types of data.
+Snake casing is employed across all schemas and ensures a consistent querying experience.  Some data
+must be transformed before insertion, such as map-types (a.k.a. dictionaries in Python), due to
+limitations in BigQuery data representation. Other data may not be specified in the schema, and
+instead placed into a specially constructed column named <code>additional_properties</code>.</p>
+<h4><a class="header" href="#name-normalization" id="name-normalization">Name Normalization</a></h4>
+<p>A reference <a href="https://github.com/acmiyaguchi/test-casing/blob/master/src/main.py">Python
+implementation</a> of the snake
+casing algorithm is ensured to be compatible with the implementations in the decoder and transpiler using <a href="https://github.com/acmiyaguchi/test-casing/tree/master/test-cases">a shared
+test-suite</a>. To illustrate the
+transformation, consider the <a href="https://probes.telemetry.mozilla.org/?view=detail&amp;probeId=scalar%2Fa11y.theme"><code>a11y.theme</code> keyed
+scalar</a> in the <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/data/main-ping.html">main
+ping</a>. In
+the JSON document, as seen in <code>about:telemetry</code>, it is accessed as follows:</p>
+<pre><code class="language-python"># Python/Javascript syntax
+ping[&quot;payload&quot;][&quot;processes&quot;][&quot;parent&quot;][&quot;keyedScalars&quot;][&quot;a11y.theme&quot;]
+</code></pre>
+<p>The decoder will normalize the path with snake casing in BigQuery:</p>
+<pre><code class="language-sql">SELECT
+  payload.processes.parent.keyed_scalars.a11y_theme
+FROM `moz-fx-data-shared-prod`.telemetry.main
+WHERE date(submission_timestamp) = date_sub(current_date, interval 1 day)
+LIMIT 1
+</code></pre>
+<h4><a class="header" href="#data-structure-normalization" id="data-structure-normalization">Data Structure Normalization</a></h4>
+<p>Thee decoder is also responsible for transforming the data to
+accommodate BigQuery limitations in data representation. All transformations are defined in
+<a href="https://github.com/mozilla/gcp-ingestion/blob/master/ingestion-beam/src/main/java/com/mozilla/telemetry/transforms/PubsubMessageToTableRow.java"><code>ingestion-beam</code> under
+<code>com.mozilla.telemtry.transforms.PubsubMessageToTableRow</code></a>.</p>
+<p>The following transformations are currently applied:</p>
+<table><thead><tr><th>Transformation</th><th>Description</th></tr></thead><tbody>
+<tr><td>Map Types</td><td>JSON objects that contain an unbounded number of keys with a shared value type are represented as a <a href="../../cookbooks/bigquery.html#accessing-map-like-fields">repeated structure containing a <code>key</code> and <code>value</code> column</a>.</td></tr>
+<tr><td>Nested Arrays</td><td>Nested lists are represented using a structure containing a repeated <code>list</code> column.</td></tr>
+<tr><td>Tuples to Anonymous Structures</td><td>A <a href="https://json-schema.org/understanding-json-schema/reference/array.html#tuple-validation">tuple of items</a> is represented as an anonymous structure with column names starting at <code>_0</code> up to <code>_{n}</code> where <code>n</code> is the length of the tuple.</td></tr>
+<tr><td>JSON to String coercion</td><td>A sub-tree in a JSON document will be coerced to string if specified in the BigQuery schema. One example is of transformation is to <a href="../../cookbooks/bigquery.html#accessing-histograms">represent histograms in the main ping</a>.</td></tr>
+<tr><td>Boolean to Integer coercion</td><td>A boolean may be cast into an integer type.</td></tr>
+</tbody></table>
+<p>Additional properties are fields within the ingested JSON document that are not found in the schema.
+When all transformations are completed, any fields that were not traversed in the schema will be
+reconstituted into the <a href="../../cookbooks/bigquery.html#structure-of-ping-tables-in-bigquery">top-level <code>additional_properties</code>
+field</a>.</p>
+<h2><a class="header" href="#deploying-to-bigquery" id="deploying-to-bigquery">Deploying to BigQuery</a></h2>
+<p>In this section, we discuss deployment of generated schemas to BigQuery. Refer to <a href="../../cookbooks/bigquery.html#table-layout-and-naming">Table Layout and
+Naming</a> for details about the resulting
+structure of the projects.</p>
+<p>Tables are updated on every push to <code>generated-schemas</code>. The schemas must be backwards
+compatible, otherwise the checks in the staging Dataflow and BigQuery instances will fail. This must
+be resolved by pushing a new tip to the <code>generated-schemas</code> branch in the schema repository. <a href="https://cloud.google.com/bigquery/docs/managing-table-schemas">Valid
+changes to schemas</a> include relaxing
+a column mode from <code>REQUIRED</code> to <code>NULLABLE</code> or adding new columns.</p>
+<p>Each table is tagged with the revision of schema repository attached. Consider the
+<code>org_mozilla_fenix</code> namespace:</p>
+<pre><code class="language-bash">$ bq ls --max_results=3 moz-fx-data-shared-prod:org_mozilla_fenix_stable
+
+       tableId        Type                   Labels                           Time Partitioning                 Clustered Fields
+ ------------------- ------- --------------------------------------- ----------------------------------- -------------------------------
+  activation_v1       TABLE   schema_id:glean_ping_1                  DAY (field: submission_timestamp)   normalized_channel, sample_id
+                              schemas_build_id:202001230145_be1f11e
+  baseline_v1         TABLE   schema_id:glean_ping_1                  DAY (field: submission_timestamp)   normalized_channel, sample_id
+                              schemas_build_id:202001230145_be1f11e
+  bookmarks_sync_v1   TABLE   schema_id:glean_ping_1                  DAY (field: submission_timestamp)   normalized_channel, sample_id
+</code></pre>
+<p>The <code>schema_id</code> is derived from the value of the <code>$schema</code> property of each JSON Schema.
+The <code>schemas_build_id</code> label contains an identifier that includes the timestamp of the generated schema.
+This label may be used to trace the last deployed commit from <code>generated-schemas</code>.</p>
+<h3><a class="header" href="#triggering-generated-schemas-push-with-airflow" id="triggering-generated-schemas-push-with-airflow">Triggering <code>generated-schemas</code> push with Airflow</a></h3>
+<pre class="mermaid">graph TD
+
+subgraph workflow.tmo
+  manual
+  scheduled
+end
+
+subgraph mozilla-pipeline-schemas
+  master
+  schemas(generated-schemas)
+end
+
+generator(mozilla-schema-generator)
+
+%%
+
+manual --> |run now| generator
+scheduled --> |run at midnight UTC| generator
+
+master -->|git pull| generator
+generator --> |git push| schemas
+</pre>
+<p>A new push to the <code>generated-schemas</code> branch is made every time the <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/probe_scraper.py"><code>probe-scraper.schema_generator</code></a> task is run by Airflow.
+<code>mozilla-schema-generator</code> runs in a container that commits snapshots of generated schemas to the remote repository.
+Generated schemas may change when <code>probe-scraper</code> finds new probes in defined repositories e.g. <code>hg.mozilla.org</code> or <a href="https://github.com/mozilla/probe-scraper/blob/master/repositories.yaml"><code>glean</code></a>.
+It may also change when the <code>master</code> branch contains new or updated schemas under the <code>schemas/</code> directory.</p>
+<p>To manually trigger a new push, clear the state of a single task in the workflow admin UI.
+To update the schedule and dependencies, update the DAG definition.</p>
+<h3><a class="header" href="#modifying-state-of-the-pipeline" id="modifying-state-of-the-pipeline">Modifying state of the pipeline</a></h3>
+<pre class="mermaid">graph TD
+subgraph mozilla-pipeline-schemas
+  schemas(generated-schemas)
+end
+artifact[Generate schema artifact]
+subgraph moz-fx-data-shar-nonprod-efed
+  bigquery[Update BigQuery tables]
+  views[Update BigQuery views]
+  ingestion[Redeploy Dataflow ingestion]
+end
+status{Deploy prod}
+
+schemas --> |labeled and archived| artifact
+artifact --> |run terraform| bigquery
+bigquery --> |run terraform| views
+views --> |drain and submit| ingestion
+
+ingestion --> status
+</pre>
+<p>Jenkins is used to automate deploys of the pipeline in the <code>nonprod</code> and <code>prod</code> projects.
+Jenkins polls the <code>generated-schemas</code> branch for new commits.
+The tip of the branch will be labeled and archived into an artifact that is used during deploys.
+The artifact is first used update the table schemas in the <code>nonprod</code> project.
+This staging step will stop on schema incompatible changes, such as removing a schema or a column in a schema.
+Once the tables are up to date, the Dataflow job will be drained and redeployed so it is writing to the updated tables.
+Once schemas have successfully deployed to the <code>nonprod</code> project, then it may be manually promoted to production by an operator.</p>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/pipeline/schemas.md">Edit this file on GitHub.</a></footer>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../concepts/pipeline/event_pipeline.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../tools/interfaces.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../../concepts/pipeline/event_pipeline.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../../tools/interfaces.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+        
+        
+        <script type="text/javascript">
+            window.playpen_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../../mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="../../mermaid-init.js"></script>
+        
+
+        
+
+    </body>
+</html>
