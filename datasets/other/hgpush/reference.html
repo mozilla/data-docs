@@ -161,11 +161,11 @@ code repository.</p>
 Use the <code>eng_workflow_hgpush_parquet_v1</code> table with the <code>Athena</code> data source.
 (The <code>Presto</code> data source is also available, but much slower.)</p>
 <h2><a class="header" href="#field-types-and-descriptions" id="field-types-and-descriptions">Field Types and Descriptions</a></h2>
-<p>See the <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/dev/schemas/eng-workflow/hgpush/hgpush.1.schema.json"><code>hgpush</code> ping schema</a>
+<p>See the <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/master/schemas/eng-workflow/hgpush/hgpush.1.schema.json"><code>hgpush</code> ping schema</a>
 for a description of available fields.</p>
 <p>Be careful to:</p>
 <ul>
-<li>Use the latest schema version.  e.g. <code>v1</code>.  Browse the <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/dev/schemas/eng-workflow/hgpush"><code>hgpush</code> schema directory</a> in the GitHub repo to be sure.</li>
+<li>Use the latest schema version.  e.g. <code>v1</code>.  Browse the <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/master/schemas/eng-workflow/hgpush"><code>hgpush</code> schema directory</a> in the GitHub repo to be sure.</li>
 <li>Change dataset field names from <code>camelCaseNames</code> to <code>under_score_names</code> in STMO. e.g. <code>reviewSystemUsed</code> in the ping schema becomes <code>review_system_used</code> in STMO.</li>
 </ul>
 <h2><a class="header" href="#example-queries" id="example-queries">Example Queries</a></h2>

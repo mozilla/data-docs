@@ -2432,7 +2432,7 @@ From Firefox 61, all events recorded through these APIs are <a href="https://bug
 <p>Finally, <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html"><em>custom pings</em></a>
 can follow the event data format and potentially connect to the existing tooling with some integration work.</p>
 <h2><a class="header" href="#mobile-event-collection" id="mobile-event-collection">Mobile event collection</a></h2>
-<p>Mobile events data primarily flows through the mobile events ping (<a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/dev/schemas/telemetry/mobile-event">ping schema</a>), from e.g. <a href="https://github.com/mozilla-mobile/firefox-ios/wiki/Event-Tracking-with-Mozilla&#x27;s-Telemetry-Service#event-ping">Firefox iOS</a>, Firefox for Fire TV and Rocket.</p>
+<p>Mobile events data primarily flows through the mobile events ping (<a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/master/schemas/telemetry/mobile-event">ping schema</a>), from e.g. <a href="https://github.com/mozilla-mobile/firefox-ios/wiki/Event-Tracking-with-Mozilla&#x27;s-Telemetry-Service#event-ping">Firefox iOS</a>, Firefox for Fire TV and Rocket.</p>
 <p>Currently we also collect event data from Firefox Focus through the <a href="https://github.com/mozilla-mobile/focus-ios/wiki/Event-Tracking-with-Mozilla%27s-Telemetry-Service#event-ping"><code>focus-events</code> ping</a>,
 using the <a href="https://github.com/mozilla-mobile/telemetry-ios"><code>telemetry-ios</code></a> and
 <a href="https://github.com/mozilla-mobile/telemetry-android"><code>telemetry-android</code></a> libraries.</p>
@@ -7028,11 +7028,11 @@ code repository.</p>
 Use the <code>eng_workflow_hgpush_parquet_v1</code> table with the <code>Athena</code> data source.
 (The <code>Presto</code> data source is also available, but much slower.)</p>
 <h2><a class="header" href="#field-types-and-descriptions" id="field-types-and-descriptions">Field Types and Descriptions</a></h2>
-<p>See the <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/dev/schemas/eng-workflow/hgpush/hgpush.1.schema.json"><code>hgpush</code> ping schema</a>
+<p>See the <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/master/schemas/eng-workflow/hgpush/hgpush.1.schema.json"><code>hgpush</code> ping schema</a>
 for a description of available fields.</p>
 <p>Be careful to:</p>
 <ul>
-<li>Use the latest schema version.  e.g. <code>v1</code>.  Browse the <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/dev/schemas/eng-workflow/hgpush"><code>hgpush</code> schema directory</a> in the GitHub repo to be sure.</li>
+<li>Use the latest schema version.  e.g. <code>v1</code>.  Browse the <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/master/schemas/eng-workflow/hgpush"><code>hgpush</code> schema directory</a> in the GitHub repo to be sure.</li>
 <li>Change dataset field names from <code>camelCaseNames</code> to <code>under_score_names</code> in STMO. e.g. <code>reviewSystemUsed</code> in the ping schema becomes <code>review_system_used</code> in STMO.</li>
 </ul>
 <h2><a class="header" href="#example-queries-10" id="example-queries-10">Example Queries</a></h2>
@@ -8640,7 +8640,7 @@ style evo fill:lightgrey
 
   s3_parquet -.- Hive
 </pre>
-<p><a href="https://aws.amazon.com/s3/">Amazon S3</a> forms the backbone of the platform storage layer. The primary format used in the Data Lake is <a href="http://parquet.apache.org/">parquet</a>, which is a strongly typed columnar storage format that can easily be read and written by <a href="https://spark.apache.org/docs/latest/index.html">Spark</a>, as well as being compatible with SQL interfaces such as <a href="https://cwiki.apache.org/confluence/display/Hive/Home">Hive</a> and <a href="http://prestosql.io/">Presto</a>. Some data is also stored in <a href="https://hekad.readthedocs.io/en/dev/message/index.html#stream-framing">Heka-framed protobuf</a> format. This custom format is usually reserved for data where we do not have a complete <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas">JSONSchema specification</a>.</p>
+<p><a href="https://aws.amazon.com/s3/">Amazon S3</a> forms the backbone of the platform storage layer. The primary format used in the Data Lake is <a href="https://parquet.apache.org/">parquet</a>, which is a strongly typed columnar storage format that can easily be read and written by <a href="https://spark.apache.org/docs/latest/index.html">Spark</a>, as well as being compatible with SQL interfaces such as <a href="https://cwiki.apache.org/confluence/display/Hive/Home">Hive</a> and <a href="http://prestosql.io/">Presto</a>. Some data is also stored in <a href="https://hekad.readthedocs.io/en/dev/message/index.html#stream-framing">Heka-framed protobuf</a> format. This custom format is usually reserved for data where we do not have a complete <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas">JSONSchema specification</a>.</p>
 <p>Using S3 for storage avoids the need for an always-on cluster, which means that data at rest is inexpensive. S3 also makes it very easy to automatically expire (delete) objects after a certain period of time, which is helpful for implementing data retention policies.</p>
 <p>Once written to S3, the data is typically treated as immutable - data is not appended to existing files, nor is data normally updated in place. The exception here is when data is back-filled, in which case previous data may be overwritten.</p>
 <p>There are a number of other types of storage used for more specialized applications, including relational databases (such as PostgreSQL for the <a href="https://github.com/mozilla/python_mozaggregator/#api">Telemetry Aggregates</a>) and NoSQL databases (DynamoDB is used for a backing store for the <a href="https://github.com/mozilla/python_mozetl/blob/master/mozetl/taar/taar_dynamo.py">TAAR project</a>). Reading data from a variety of RDBMS sources is also supported via Re:dash.</p>
