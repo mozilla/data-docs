@@ -220,7 +220,7 @@ Tables are updated on every push to `generated-schemas`. The schemas must be bac
 compatible, otherwise the checks in the staging Dataflow and BigQuery instances will fail. This must
 be resolved by pushing a new tip to the `generated-schemas` branch in the schema repository. [Valid
 changes to schemas](https://cloud.google.com/bigquery/docs/managing-table-schemas) include relaxing
-the column mode `REQUIRED` to `NULLABLE` or by adding new columns.
+a column mode from `REQUIRED` to `NULLABLE` or adding new columns.
 
 Each table is tagged with the revision of schema repository attached. Consider the
 `org_mozilla_fenix` namespace.
