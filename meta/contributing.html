@@ -124,6 +124,10 @@
                                 <i id="print-button" class="fa fa-print"></i>
                             </a>
                             
+                            <a href="https://github.com/mozilla/firefox-data-docs" title="Git repository" aria-label="Git repository">
+                                <i id="git-repository-button" class="fa fa-github"></i>
+                            </a>
+                            
                         </div>
                     </div>
                 </div>
@@ -172,17 +176,20 @@ To begin contributing to the docs, fork the <code>firefox-data-docs</code> repo.
 <ul>
 <li><a href="https://github.com/badboy/mdbook-toc/releases">mdbook-toc</a></li>
 <li><a href="https://github.com/badboy/mdbook-mermaid/releases">mdbook-mermaid</a></li>
+<li><a href="https://github.com/badboy/mdbook-open-on-gh/releases">mdbook-open-on-gh</a></li>
 </ul>
 <p>Download releases for your system, unpack it and place the binary in a directory of your <code>$PATH</code>.</p>
 <p>If you have <a href="https://www.rust-lang.org/">rustc</a> already installed, you can install a pre-compiled binary directly:</p>
 <pre><code class="language-bash">curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-toc
 curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-mermaid
+curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-open-on-gh
 </code></pre>
 <p>This will place <code>mdbook-toc</code> and <code>mdbook-mermaid</code> into <code>~/.cargo/bin</code>.
 Make sure this directory is in your <code>$PATH</code> or copy it to a directory of your <code>$PATH</code>.</p>
 <p>You can also build and install the preprocessors:</p>
 <pre><code class="language-bash">cargo install mdbook-toc
 cargo install mdbook-mermaid
+cargo install mdbook-open-on-gh
 </code></pre>
 <p>You can then serve the documentation locally with:</p>
 <pre><code>mdbook serve
@@ -263,7 +270,7 @@ If you're working from a fork (which you should be),
 <a href="https://docs.djangoproject.com/en/1.11/internals/contributing/writing-documentation/">Django's Documentation Style Guide</a>.</p>
 <p>You can find more context for this document in
 <a href="http://blog.harterrt.com/lit-review.html">this blog post</a>.</p>
-
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/meta/contributing.md">Edit this file on GitHub.</a></footer>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

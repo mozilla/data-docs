@@ -126,6 +126,10 @@
                                 <i id="print-button" class="fa fa-print"></i>
                             </a>
                             
+                            <a href="https://github.com/mozilla/firefox-data-docs" title="Git repository" aria-label="Git repository">
+                                <i id="git-repository-button" class="fa fa-github"></i>
+                            </a>
+                            
                         </div>
                     </div>
                 </div>
@@ -183,7 +187,7 @@ and how you can change or augment the dataset.
 You do not need to read this section end-to-end.</p>
 <p>You can find the <a href="https://mozilla.github.io/firefox-data-docs/">fully-rendered documentation here</a>,
 rendered with <a href="https://github.com/rust-lang/mdBook">mdBook</a>, and hosted on Github pages.</p>
-<h1><a class="header" href="#reporting-a-problem" id="reporting-a-problem">Reporting a problem</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/introduction.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#reporting-a-problem" id="reporting-a-problem">Reporting a problem</a></h1>
 <p>If you have a problem with data tools, datasets, or other pieces of infrastructure,
 please help us out by reporting it.</p>
 <p>Most of our work is tracked in Bugzilla in the <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools">Data Platform and Tools</a> product.</p>
@@ -224,7 +228,7 @@ tool in question.</p>
 the component for the service itself or in the <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&amp;component=Operations">Operations component</a>.</p>
 <h3><a class="header" href="#other-problems" id="other-problems">Other problems</a></h3>
 <p>When in doubt, please file issues in the <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&amp;component=General">General component</a>.</p>
-<h1><a class="header" href="#terminology" id="terminology">Terminology</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/reporting_a_problem.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#terminology" id="terminology">Terminology</a></h1>
 <ul>
 <li><strong>Analyst</strong>: Someone performing analysis.
 This is more general than <strong>data scientist</strong>.</li>
@@ -237,7 +241,7 @@ This is more general than <strong>data scientist</strong>.</li>
 <li><strong>Subsession</strong>: <code>Sessions</code> are split into <code>subsessions</code> when a 24 hour threshold is crossed or an environment change occurs
 (<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/sessions.html?highlight=subsession">more details</a>)</li>
 </ul>
-<h1><a class="header" href="#getting-started" id="getting-started">Getting Started</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/terminology.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#getting-started" id="getting-started">Getting Started</a></h1>
 <p>This document is meant to be a complete guide to using Firefox Data,
 so it can look overwhelming at first.
 These readings will <strong>get you up and running quickly</strong>
@@ -248,7 +252,7 @@ I consider a &quot;new analyst&quot; to be an employee
 who is interested in working with our data
 but doesn't have previous experience with our tools/data.
 They could be technical or non-technical: engineer, PM, or data scientist.</p>
-<h1><a class="header" href="#getting-started-with-firefox-desktop-data" id="getting-started-with-firefox-desktop-data">Getting Started with Firefox Desktop Data</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/getting_started.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#getting-started-with-firefox-desktop-data" id="getting-started-with-firefox-desktop-data">Getting Started with Firefox Desktop Data</a></h1>
 <p>The remainder of this section section describes Firefox Desktop Telemetry
 which goes back in various forms for many years.
 Modern data collection is based on the <a href="concepts/glean/glean.html">Glean platform</a>.
@@ -337,7 +341,7 @@ We're looking into ways of doing this correctly in the near future.</li>
 <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Adding_a_new_Telemetry_probe">Adding probes, collecting more data</a></li>
 <li><a href="concepts/../datasets/derived.html">Augmenting the derived datasets</a></li>
 </ul>
-<h1><a class="header" href="#choosing-a-desktop-product-dataset" id="choosing-a-desktop-product-dataset">Choosing a Desktop Product Dataset</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/analysis_intro.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#choosing-a-desktop-product-dataset" id="choosing-a-desktop-product-dataset">Choosing a Desktop Product Dataset</a></h1>
 <p>This document will help you find the best data source for a given analysis.</p>
 <p>This guide focuses on descriptive datasets and does not cover experimentation.
 For example, this guide will help if you need to answer questions like:</p>
@@ -903,7 +907,7 @@ filter for <code>experiment_id is null</code> and <code>experiment_branch is nul
 <li><code>android_addons</code></li>
 <li><code>mobile_clients</code></li>
 </ul>
-<h1><a class="header" href="#choosing-a-mobile-product-dataset" id="choosing-a-mobile-product-dataset">Choosing a Mobile Product Dataset</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/choosing_a_dataset.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#choosing-a-mobile-product-dataset" id="choosing-a-mobile-product-dataset">Choosing a Mobile Product Dataset</a></h1>
 <h2><a class="header" href="#products-overview" id="products-overview">Products Overview</a></h2>
 <p>Before doing an analysis, it is important to know which products you want to include.
 Here is a quick overview of Mozilla's mobile products.</p>
@@ -1027,7 +1031,7 @@ Instead of <code>core</code> and <code>event</code> pings, Glean will send <code
 and <code>events</code> pings.
 For more information on Glean visit the <a href="https://github.com/mozilla-mobile/android-components/tree/master/components/service/glean/#contact">Glean GitHub page</a>
 or <code>#Glean</code> on Slack.</p>
-<h2><a class="header" href="#introduction" id="introduction">Introduction</a></h2>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/choosing_a_dataset_mobile.md">Edit this file on GitHub.</a></footer><h2><a class="header" href="#introduction" id="introduction">Introduction</a></h2>
 <p>STMO is shorthand for
 <a href="https://sql.telemetry.mozilla.org"><code>sql.telemetry.mozilla.org</code></a>, an installation
 of the excellent <a href="https://redash.io/">Re:dash</a> data analysis and dashboarding
@@ -1381,7 +1385,7 @@ SELECT cast(split(v, '.') AS array&lt;bigint&gt;) FROM foo ORDER BY 1
 )
 SELECT b, try(cast(b AS boolean)) from bar
 </code></pre>
-<h1><a class="header" href="#analysis-gotchas" id="analysis-gotchas">Analysis Gotchas</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/tools/stmo.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#analysis-gotchas" id="analysis-gotchas">Analysis Gotchas</a></h1>
 <p>When performing analysis on any data there are some mistakes that are easy to
 make and details that are easy to overlook.
 Do you know exactly what question you hope to answer?
@@ -1532,7 +1536,7 @@ to standardize on <code>submission_date</code>.</p>
 <li>good for daily processing</li>
 <li>and usually good enough</li>
 </ul>
-<h1><a class="header" href="#optimizing-sql-queries" id="optimizing-sql-queries">Optimizing SQL Queries</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/analysis_gotchas.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#optimizing-sql-queries" id="optimizing-sql-queries">Optimizing SQL Queries</a></h1>
 <p>After you write a query in <a href="https://sql.telemetry.mozilla.org">STMO</a>, you can make big steps to improve performance by
 understanding how data is stored, what databases are doing under the covers, and what you can change about your query to
 take advantage of those two pieces.</p>
@@ -1655,7 +1659,7 @@ nothing of interest.</p>
 <li>Limit queries to a specific few columns you need, to reduce the amount of data that has to be read</li>
 <li>Filter on partitions to prune down the data you need</li>
 </ul>
-<h1><a class="header" href="#getting-help" id="getting-help">Getting Help</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/sql_optimization.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#getting-help" id="getting-help">Getting Help</a></h1>
 <h3><a class="header" href="#mailing-lists" id="mailing-lists">Mailing lists</a></h3>
 <p>Telemetry-related announcements including new datasets, outages, feature
 releases, etc are sent to <a href="mailto:fx-data-dev@mozilla.org"><code>fx-data-dev@mozilla.org</code></a>, a public
@@ -1670,9 +1674,9 @@ Please speak to your manager if you believe you should be on the list.</p>
 For pipeline-specific issues, you can also find us in <code>#datapipeline</code>.</p>
 <h3><a class="header" href="#slack" id="slack">Slack</a></h3>
 <p>The Mozilla data org is reachable at <code>#fx-metrics</code> in the internal Mozilla Slack.</p>
-<h1><a class="header" href="#tools" id="tools">Tools</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/getting_help.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#tools" id="tools">Tools</a></h1>
 <p>This section describes tools we recommend using to analyze Firefox data.</p>
-<h1><a class="header" href="#projects" id="projects">Projects</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/tools/index.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#projects" id="projects">Projects</a></h1>
 <p>Below are a number of trailheads that lead into the projects and code that comprise the Firefox Data Platform.</p>
 <h2><a class="header" href="#telemetry-apis" id="telemetry-apis">Telemetry APIs</a></h2>
 <table><thead><tr><th>Name and repo</th><th>Description</th></tr></thead><tbody>
@@ -1747,7 +1751,7 @@ starting a new project using anything in this section.</p>
 <table><thead><tr><th>Name and repo</th><th>Description</th></tr></thead><tbody>
 <tr><td><a href="https://github.com/mozilla/Fx-Data-Planning"><code>Fx-Data-Planning</code></a></td><td>Quarterly goals and internal documentation</td></tr>
 </tbody></table>
-<h1><a class="header" href="#guiding-principles-for-data-infrastructure" id="guiding-principles-for-data-infrastructure">Guiding Principles for Data Infrastructure</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/tools/projects.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#guiding-principles-for-data-infrastructure" id="guiding-principles-for-data-infrastructure">Guiding Principles for Data Infrastructure</a></h1>
 <p>So you want to build a data lake... Where do you start? What building blocks are
 available? How can you integrate your data with the rest of the organization?</p>
 <p>This document is intended for a few different audiences. Data consumers within
@@ -2120,7 +2124,7 @@ but the more we can standardize architectural approaches across the company, the
 better prepared we will be to collaborate across product teams and ultimately
 the better positioned we will be to realize our mission. Let's work together to
 keep individuals empowered, safe, and independent on the Internet.</p>
-<h1><a class="header" href="#an-overview-of-mozillas-data-pipeline" id="an-overview-of-mozillas-data-pipeline">An overview of Mozilla’s Data Pipeline</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/tools/guiding_principles.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#an-overview-of-mozillas-data-pipeline" id="an-overview-of-mozillas-data-pipeline">An overview of Mozilla’s Data Pipeline</a></h1>
 <p>This post describes the architecture of Mozilla’s data pipeline,
 which is used to collect Telemetry data from our products and logs from various services.</p>
 <p>The bulk of the data handled by this pipeline is Firefox Telemetry data, but the
@@ -2251,7 +2255,7 @@ applications (such as <a href="https://telemetry.mozilla.org/">measurement</a> a
 <p>Once the data reaches our data warehouse in BigQuery it can be processed
 in a number of ways as described in the <a href="concepts/pipeline/../../cookbooks/bigquery.html">Accessing BigQuery</a> article.</p>
 <p>Data analysis is most commonly done using <a href="https://sql.telemetry.mozilla.org/">SQL queries</a> or using <a href="concepts/pipeline/../../tools/spark.html">Spark</a>.</p>
-<h1><a class="header" href="#http-edge-server-specification" id="http-edge-server-specification">HTTP Edge Server Specification</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/pipeline/gcp_data_pipeline.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#http-edge-server-specification" id="http-edge-server-specification">HTTP Edge Server Specification</a></h1>
 <p>This document specifies the behavior of the server that accepts submissions from
 any HTTP client e.g. Firefox telemetry.</p>
 <p>The original implementation of the HTTP Edge Server was tracked in
@@ -2340,7 +2344,7 @@ PubSub, spilling to local disk in the case of a PubSub outage.</p>
 In the case of errors writing to PubSub, data is retained until the service
 is restored and messages can be flushed to the queue.
 Based on <a href="https://status.cloud.google.com/incident/cloud-pubsub">past outages</a>, this is typically a few hours or less.</p>
-<h1><a class="header" href="#event-data-pipeline" id="event-data-pipeline">Event Data Pipeline</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/pipeline/http_edge_spec.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#event-data-pipeline" id="event-data-pipeline">Event Data Pipeline</a></h1>
 <p>We collect event-oriented data from different sources. This data is collected and processed in a
 specific path through our data pipeline, which we will detail here.</p>
 <pre class="mermaid">graph TD
@@ -2451,7 +2455,7 @@ its event payload for Firefox versions before 62.</li>
 (hosted by the IT data team). We can connect our event data sources data to Amplitude.
 We have an active connector to Amplitude for mobile events, which can push event data over
 daily. For Firefox Desktop events this will be available soon.</p>
-<h2><a class="header" href="#mozilla-firefox-data-analysis-tools" id="mozilla-firefox-data-analysis-tools">Mozilla Firefox Data Analysis Tools</a></h2>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/pipeline/event_pipeline.md">Edit this file on GitHub.</a></footer><h2><a class="header" href="#mozilla-firefox-data-analysis-tools" id="mozilla-firefox-data-analysis-tools">Mozilla Firefox Data Analysis Tools</a></h2>
 <p>This is a starting point for making sense of (and gaining access to) all of the
 Firefox-related data analysis tools. There are a number of different tools
 available, all with their own strengths, tailored to a variety of use cases and
@@ -2481,7 +2485,7 @@ examining at the individual client level. It provides a powerful UI that allows
 for sophisticated ad-hoc analysis without the need for any specialized
 programming skills, but with so many options the UI can be a bit intimidating
 for novice users.</p>
-<h2><a class="header" href="#introduction-1" id="introduction-1">Introduction</a></h2>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/tools/interfaces.md">Edit this file on GitHub.</a></footer><h2><a class="header" href="#introduction-1" id="introduction-1">Introduction</a></h2>
 <p><a href="https://spark.apache.org/">Apache Spark</a>
 is a data processing engine designed to be fast and easy to use.</p>
 <p>Spark can be used either from <a href="https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/30598/command/30599">Databricks</a> or Dataproc, and works
@@ -2657,7 +2661,7 @@ sc.addPyFile('mylibrary.egg')`
 </code></pre>
 <p>You will want to do this <strong>before</strong> you load the library. If the library
 is already loaded, restart the kernel in the Jupyter notebook.</p>
-<h1><a class="header" href="#sql-style-guide" id="sql-style-guide">SQL Style Guide</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/tools/spark.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#sql-style-guide" id="sql-style-guide">SQL Style Guide</a></h1>
 <h2><a class="header" href="#table-of-contents-1" id="table-of-contents-1">Table of Contents</a></h2>
 <ul>
 <li><a href="concepts/sql_style.html#consistency">Consistency</a></li>
@@ -2961,7 +2965,7 @@ LIMIT 10
 <p>This document was heavily influenced by https://www.sqlstyle.guide/</p>
 <p>Changes to the style guide should be reviewed by at least one member of
 both the Data Engineering team and the Data Science team.</p>
-<h1><a class="header" href="#glean---product-analytics--telemetry" id="glean---product-analytics--telemetry">Glean - product analytics &amp; telemetry</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/sql_style.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#glean---product-analytics--telemetry" id="glean---product-analytics--telemetry">Glean - product analytics &amp; telemetry</a></h1>
 <p>For Mozilla, getting reliable data from our products is critical to inform our decision making. Glean is our new product analytics &amp; telemetry solution that provides that data for our products.
 It aims to be easy to integrate, reliable and transparent by providing an SDK and integrated tools.</p>
 <p>It currently supports Android products, while iOS support is planned.
@@ -3058,7 +3062,7 @@ WHERE
 <li>Datasets documentation (TBD)</li>
 <li><a href="https://debug-ping-preview.firebaseapp.com/">Glean Debug pings viewer</a></li>
 </ul>
-<h1><a class="header" href="#accessing-glean-data" id="accessing-glean-data">Accessing Glean data</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/glean/glean.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#accessing-glean-data" id="accessing-glean-data">Accessing Glean data</a></h1>
 <p>This document describes how to access Glean data from an SQL query, such as in <a href="https://sql.telemetry.mozilla.org">Redash</a>.</p>
 <h2><a class="header" href="#selecting-the-correct-table" id="selecting-the-correct-table">Selecting the correct table</a></h2>
 <p>Each ping type is recorded in its own table, and these tables are named using <code>{application_id}.{ping_type}</code>.
@@ -3110,7 +3114,7 @@ WHERE
 <h3><a class="header" href="#the-events-group" id="the-events-group">The <code>events</code> group</a></h3>
 <p>Custom events in the <code>events</code> section have a different structure.</p>
 <p>Documentation TBD.  <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1606836">See bug 1606836</a></p>
-<h1><a class="header" href="#using-the-glean-debug-ping-view" id="using-the-glean-debug-ping-view">Using the Glean debug ping view</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/glean/accessing_glean_data.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#using-the-glean-debug-ping-view" id="using-the-glean-debug-ping-view">Using the Glean debug ping view</a></h1>
 <ul>
 <li><a href="concepts/glean/debug_ping_view.html#what-is-this-good-for">What is this good for?</a></li>
 <li><a href="concepts/glean/debug_ping_view.html#what-setup-is-needed-for-applications">What setup is needed for applications?</a>
@@ -3239,7 +3243,7 @@ to <a href="mailto:glean-team@mozilla.com"><code>glean-team@mozilla.com</code></
 <li><a href="https://mozilla.github.io/glean/book/user/debugging/index.html">Glean debug commands in Glean documentation.</a></li>
 <li><a href="https://debug-ping-preview.firebaseapp.com/">Glean Debug ping view web interface.</a></li>
 </ul>
-<h1><a class="header" href="#telemetry-alerts" id="telemetry-alerts">Telemetry Alerts</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/glean/debug_ping_view.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#telemetry-alerts" id="telemetry-alerts">Telemetry Alerts</a></h1>
 <p><em>Note: This article describes the AWS-based pipeline which has been retired;
 A new mechanism for alerting on probe expiry is tracked in
 <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1511035">Bug 1511035</a>.</em></p>
@@ -3400,7 +3404,7 @@ probe again, that is. File a bug in that bug's component to update the
 Alerting probe to have a valid, monitored <code>alert_emails</code> field so that
 the next time it misbehaves <em>they</em> can be the ones to explain themselves
 without you having to spend all this time tracking them down.</p>
-<h1><a class="header" href="#mozilla-growth--usage-dashboard" id="mozilla-growth--usage-dashboard">Mozilla Growth &amp; Usage Dashboard</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/tools/alerts.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#mozilla-growth--usage-dashboard" id="mozilla-growth--usage-dashboard">Mozilla Growth &amp; Usage Dashboard</a></h1>
 <h4><a class="header" href="#overall-jmccrosky--data-jklukas--front-end-hulmer-updated-2020-01-15" id="overall-jmccrosky--data-jklukas--front-end-hulmer-updated-2020-01-15"><em>overall: jmccrosky@ | data: jklukas@ | front end: hulmer@ (updated 2020-01-15)</em></a></h4>
 <hr />
 <p><strong>The Mozilla Growth &amp; Usage Dashboard is in general release and can be found <a href="https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/">here</a>.</strong></p>
@@ -3514,7 +3518,7 @@ Firefox Accounts</p>
 <p>Tables can be queried directly from BigQuery for programmatic access; see an example in <a href="https://sql.telemetry.mozilla.org/queries/65337/source">https://sql.telemetry.mozilla.org/queries/65337/source</a>.</p>
 </li>
 </ul>
-<h1><a class="header" href="#cookbooks" id="cookbooks">Cookbooks</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/tools/gud.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#cookbooks" id="cookbooks">Cookbooks</a></h1>
 <p>A Cookbook is a focused tutorial to guide you through a focused task.
 For example, a Cookbook could:</p>
 <ul>
@@ -3522,7 +3526,7 @@ For example, a Cookbook could:</p>
 <li>Guide you through an example analysis to demonstrate
 the basic principles behind a new statistical technique</li>
 </ul>
-<h1><a class="header" href="#accessing-and-working-with-bigquery" id="accessing-and-working-with-bigquery">Accessing and working with BigQuery</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/index.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#accessing-and-working-with-bigquery" id="accessing-and-working-with-bigquery">Accessing and working with BigQuery</a></h1>
 <p>This guide will give you a quick introduction to working with data stored
 in <a href="https://cloud.google.com/bigquery/">BigQuery</a></p>
 <p>BigQuery uses a columnar data storage format called <a href="https://cloud.google.com/blog/products/gcp/inside-capacitor-bigquerys-next-generation-columnar-storage-format">Capacitor</a> which supports semi-structured data.</p>
@@ -3938,7 +3942,7 @@ LIMIT
 <li>Reference the data size prediction (&quot;This query will process X bytes&quot;) in STMO and the BigQuery UI to help gauge the efficiency of your queries. You should see this number go down as you limit the range of <code>submission_date</code>s or include fewer fields in your <code>SELECT</code> statement. For clustered tables, this estimate won't take into account benefits from <code>LIMIT</code>s and <code>WHERE</code> clauses on clustering fields, so you'll need to compare to the actual &quot;Data Scanned&quot; after the query is run. <a href="https://cloud.google.com/bigquery/pricing#on_demand_pricing">Queries are charged by data scanned at $5/TB</a> so each 200 GB of data scanned will cost $1; it can be useful to keep the data estimate below 200 GB while developing and testing a query to limit cost and query time, then open up to the full range of data you need when you have confidence in the results.</li>
 </ul>
 <p>A complete list of optimizations can be found <a href="https://cloud.google.com/bigquery/docs/best-practices-performance-overview">here</a> and cost optimizations <a href="https://cloud.google.com/bigquery/docs/best-practices-costs">here</a></p>
-<h1><a class="header" href="#scheduling-bigquery-queries-in-airflow" id="scheduling-bigquery-queries-in-airflow">Scheduling BigQuery Queries in Airflow</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/bigquery.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#scheduling-bigquery-queries-in-airflow" id="scheduling-bigquery-queries-in-airflow">Scheduling BigQuery Queries in Airflow</a></h1>
 <p>Queries in <a href="https://github.com/mozilla/bigquery-etl"><code>bigquery-etl</code></a> can be scheduled in 
 <a href="https://github.com/mozilla/telemetry-airflow">Airflow</a> to be run regularly with the results written to a table.</p>
 <ul>
@@ -4009,8 +4013,8 @@ writing results to the <code>client_ids</code> table in the <code>example</code>
 </ul>
 </li>
 </ul>
-<h1><a class="header" href="#dataset-specific" id="dataset-specific">Dataset Specific</a></h1>
-<h1><a class="header" href="#working-with-normandy-events" id="working-with-normandy-events">Working with Normandy events</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/bigquery-airflow.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#dataset-specific" id="dataset-specific">Dataset Specific</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/dataset_specific.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#working-with-normandy-events" id="working-with-normandy-events">Working with Normandy events</a></h1>
 <p>A common request is to count the number of users who have
 enrolled or unenrolled from a SHIELD experiment.</p>
 <p>The <a href="cookbooks/../datasets/batch_view/events/intro.html"><code>events</code> table</a>
@@ -4083,7 +4087,7 @@ Normal unenroll events at the termination of a study will occur for the reason <
 )
 
 </code></pre>
-<h1><a class="header" href="#working-with-crash-pings" id="working-with-crash-pings">Working with Crash Pings</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/normandy_events.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#working-with-crash-pings" id="working-with-crash-pings">Working with Crash Pings</a></h1>
 <p>Here are some snippets to get you started querying <a href="cookbooks/../datasets/pings.html#crash-ping">crash pings</a> with <a href="cookbooks/../tools/stmo.html">STMO</a> and 
 <a href="cookbooks/../cookbooks/bigquery.html">BigQuery</a>. Using these tools, you can quickly get counts 
 and other information on the nature of crash pings submitted day-to-day.</p>
@@ -4113,8 +4117,8 @@ GROUP BY normalized_os,
 a telemetry crash ping, which can give you useful information about the crashes themselves. You can see a summary of the available fields in the STMO schema
 browser, referring to <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/data/crash-ping.html">the documentation on the Firefox crash ping</a>
 for more information where necessary.</p>
-<h1><a class="header" href="#real-time" id="real-time">Real-time</a></h1>
-<h1><a class="header" href="#see-my-pings" id="see-my-pings">See My Pings</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/crash_pings.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#real-time" id="real-time">Real-time</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/realtime.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#see-my-pings" id="see-my-pings">See My Pings</a></h1>
 <p>So you want to see what you're sending the telemetry pipeline, huh?
 Well follow these steps and we'll have you perusing your own data in no time.</p>
 <h2><a class="header" href="#steps-to-viewing-your-pings" id="steps-to-viewing-your-pings">Steps to Viewing Your Pings</a></h2>
@@ -4151,8 +4155,8 @@ with minimal additional waiting.</p>
 run the same query several times in a row, it may fetch results from
 its cache. You can make any change at all (such as adding a comment)
 to force the query to run again and fetch updated results.</p>
-<h1><a class="header" href="#metrics-1" id="metrics-1">Metrics</a></h1>
-<h1><a class="header" href="#daily-and-monthly-active-users-dau-and-mau" id="daily-and-monthly-active-users-dau-and-mau">Daily and Monthly Active Users (DAU and MAU)</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/view_pings_cep.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#metrics-1" id="metrics-1">Metrics</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/metrics.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#daily-and-monthly-active-users-dau-and-mau" id="daily-and-monthly-active-users-dau-and-mau">Daily and Monthly Active Users (DAU and MAU)</a></h1>
 <p>For the purposes of DAU, a profile is considered active if it sends any main ping.</p>
 <ul>
 <li>Dates are defined by <code>submission_date_s3</code> or <code>submission_date</code>.</li>
@@ -4232,7 +4236,7 @@ GROUP BY
 ORDER BY
   submission_date_s3
 </code></pre>
-<h1><a class="header" href="#active-dau-and-active-mau" id="active-dau-and-active-mau">Active DAU and Active MAU</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/dau.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#active-dau-and-active-mau" id="active-dau-and-active-mau">Active DAU and Active MAU</a></h1>
 <p>An <strong>Active User</strong> is defined as a client who has <code>total_daily_uri</code> &gt;= 5 URI for a given date.</p>
 <ul>
 <li>Dates are defined by <code>submission_date</code> (<em>not</em> by <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1422892">client activity date</a>).</li>
@@ -4324,7 +4328,7 @@ ORDER BY
   submission_date_s3
 </code></pre>
 <p><span id="total_uri_count"><strong>1</strong></span>: Note, the probe measuring <code>scalar_parent_browser_engagement_total_uri_count</code> only exists in clients with Firefox 50 and up. Clients on earlier versions of Firefox won't be counted as an Active User (regardless of their use). Similarly, <code>scalar_parent_browser_engagement_total_uri_count</code> doesn't increment when a client is in Private Browsing mode, so that won't be included as well.</p>
-<p><em>Authored by the Data Science Team. Please direct questions/concerns to Jesse McCrosky (<code>jmccrosky@mozilla.com</code>).</em></p>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/active_dau.md">Edit this file on GitHub.</a></footer><p><em>Authored by the Data Science Team. Please direct questions/concerns to Jesse McCrosky (<code>jmccrosky@mozilla.com</code>).</em></p>
 <h1><a class="header" href="#retention-1" id="retention-1">Retention</a></h1>
 <p>Retention measures the proportion of users that are <em>continuing</em> to use Firefox, making it one of the more important metrics we track - we generally expect that the more value our users receive from the product, the more likely they are to be retained. We commonly measure retention between releases, experiment cohorts, and various Firefox subpopulations to better understand how a change to the user experience or use of a specific feature affects retention behavior.</p>
 <h2><a class="header" href="#state-of-retention" id="state-of-retention">State of Retention</a></h2>
@@ -4449,7 +4453,7 @@ SELECT
 FROM bucketed
 GROUP BY `date` ORDER BY `date`
 </code></pre>
-<h1><a class="header" href="#collecting-new-data" id="collecting-new-data">Collecting New Data</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/retention.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#collecting-new-data" id="collecting-new-data">Collecting New Data</a></h1>
 <h2><a class="header" href="#guidelines" id="guidelines">Guidelines</a></h2>
 <p>For information about what sorts of data may be collected,
 and for information on getting a data collection request reviewed,
@@ -4460,7 +4464,7 @@ please read the <a href="https://wiki.mozilla.org/Firefox/Data_Collection">Data 
 <p>For non-Telemetry data collection, we have a mechanism for streamlining
 ingestion of structured (JSON) data that utilizes the same underlying
 infrastructure. See <a href="datasets/../cookbooks/new_ping.html">this cookbook</a> for details on using it.</p>
-<h1><a class="header" href="#client-implementation-guidelines-for-experiments" id="client-implementation-guidelines-for-experiments">Client Implementation Guidelines for Experiments</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/new_data.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#client-implementation-guidelines-for-experiments" id="client-implementation-guidelines-for-experiments">Client Implementation Guidelines for Experiments</a></h1>
 <p>There are three supported approaches for enabling experimental features for Firefox:</p>
 <ul>
 <li><a href="cookbooks/client_guidelines.html#prefs">Firefox Prefs</a>
@@ -4569,7 +4573,7 @@ hg commit -m &quot;Bug nnn - Testing my extension&quot; testing/profiles/common/
 <p>This will run Mozilla CI tests on all platforms</p>
 <p>Note that you must have Level 1 commit access to use tryserver. If you are interested in interacting with Mozilla CI from Github (which only requires users to be in the Mozilla GitHub org), check out the <a href="https://github.com/biancadanforth/taskcluster-integration-poc/">Taskcluster Integration proof-of-concept</a>.</p>
 <p>Also note that this requires an investment time to set up just as CircleCI or Travis-CI would, so it's not really appropriate for short-term projects. Use tryserver directly instead.</p>
-<h1><a class="header" href="#telemetry-events-best-practices" id="telemetry-events-best-practices">Telemetry Events Best Practices</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/client_guidelines.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#telemetry-events-best-practices" id="telemetry-events-best-practices">Telemetry Events Best Practices</a></h1>
 <h2><a class="header" href="#overview-3" id="overview-3">Overview:</a></h2>
 <p><a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html">The Telemetry Events API</a> allows users to define and record events in the browser.</p>
 <p>Events are defined in <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html#the-yaml-definition-file"><code>Events.yaml</code></a> and each events creates records with the following properties:</p>
@@ -4649,7 +4653,7 @@ AND object in [...,]
 <li>Events can be controlled more easily. The category field is what we use to &quot;turn on&quot; and &quot;turn off&quot; events. By creating a 1 to 1 mapping between categories and events, we can control events on an individual level.</li>
 <li>By having the category field act as the event identifier, it makes it easier to pass on events to Amplitude and other platforms.</li>
 </ol>
-<h1><a class="header" href="#sending-a-custom-ping" id="sending-a-custom-ping">Sending a Custom Ping</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/events_best_practices.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#sending-a-custom-ping" id="sending-a-custom-ping">Sending a Custom Ping</a></h1>
 <p>Got some new data you want to send to us? How in the world do you send a new ping? Follow this guide
 to find out.</p>
 <p><strong>Note</strong>: Most new data collection in Firefox via Telemetry or Glean does not require creating a new
@@ -4851,7 +4855,7 @@ day, regardless of how long it takes for the table to appear.</p>
 via Spark.</p>
 <h2><a class="header" href="#build-dashboards-using-spark-or-stmo" id="build-dashboards-using-spark-or-stmo">Build Dashboards Using Spark or STMO</a></h2>
 <p>Last steps! What are you using this data for anyway?</p>
-<h1><a class="header" href="#dataset-reference" id="dataset-reference">Dataset Reference</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/new_ping.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#dataset-reference" id="dataset-reference">Dataset Reference</a></h1>
 <p>After completing <a href="datasets/../concepts/choosing_a_dataset.html">Choosing a Dataset</a>
 you should have a high level understanding of what questions each dataset is able to answer.
 This section contains references that focus on a single dataset each.
@@ -4880,7 +4884,7 @@ and how it is meant to be used</li>
 </ul>
 </li>
 </ul>
-<h1><a class="header" href="#raw-ping-data" id="raw-ping-data">Raw Ping Data</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#raw-ping-data" id="raw-ping-data">Raw Ping Data</a></h1>
 <ul>
 <li><a href="datasets/pings.html#introduction">Introduction</a>
 <ul>
@@ -5047,10 +5051,10 @@ these fields are documented here, instead of in the source tree docs.</p>
 <tr><td><code>metadata.geo.subdivision1</code></td><td>First major country subdivision, typically a state, province, or county</td></tr>
 <tr><td><code>metadata.geo.subdivision2</code></td><td>Second major country subdivision; not applicable for most countries</td></tr>
 </tbody></table>
-<h1><a class="header" href="#derived-datasets" id="derived-datasets">Derived Datasets</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/pings.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#derived-datasets" id="derived-datasets">Derived Datasets</a></h1>
 <p>See <a href="datasets/../concepts/choosing_a_dataset.html">Choosing a Dataset</a>
 for a discussion on the differences between pings and derived datasets.</p>
-<h1><a class="header" href="#intro" id="intro">Intro</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/derived.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#intro" id="intro">Intro</a></h1>
 <p>The <code>active_profiles</code> dataset gives client-level estimates of whether a profile
 is still an active user of the browser at a given point in time, as well as probabilistic forecasts
 of the client's future activity. These quantities are estimated by a model that attempts to infer
@@ -5166,7 +5170,7 @@ ORDER BY
 or on <a href="https://pypi.org/project/bgbb/">PyPI</a>. The airflow job is defined in the
 <a href="https://github.com/wcbeard/bgbb_airflow"><code>bgbb_airflow</code> repo</a>.</p>
 <p>The model to fit the parameters is run weekly, and the table is updated daily.</p>
-<h1><a class="header" href="#addons-datasets" id="addons-datasets">Addons Datasets</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/active_profiles.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#addons-datasets" id="addons-datasets">Addons Datasets</a></h1>
 <ul>
 <li><a href="datasets/batch_view/addons/reference.html#introduction">Introduction</a></li>
 <li><a href="datasets/batch_view/addons/reference.html#data-reference">Data Reference</a>
@@ -5228,7 +5232,7 @@ and has a schema as follows:</p>
 please look
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/GRAVEYARD.md#main-summary-clients-daily-and-addons">in the <code>AddonsView</code> code</a>.</p>
 <p>The fields are all simple scalar values.</p>
-<h1><a class="header" href="#addons_daily-derived-dataset" id="addons_daily-derived-dataset"><code>addons_daily</code> Derived Dataset</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/batch_view/addons/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#addons_daily-derived-dataset" id="addons_daily-derived-dataset"><code>addons_daily</code> Derived Dataset</a></h1>
 <h2><a class="header" href="#introduction-4" id="introduction-4">Introduction:</a></h2>
 <p>The <code>addons_daily</code> dataset serves as the central hub for all Firefox extension related questions.
 This includes questions regarding browser performance, user engagement, click through rates, etc.
@@ -5337,7 +5341,7 @@ As of 2019-06-05, the current version of the <code>addons_daily</code> dataset i
 <h2><a class="header" href="#code-reference" id="code-reference">Code Reference</a></h2>
 <p>All code can be found <a href="https://github.com/mozilla/addons_daily">here</a>.
 Refer to this repository for information on how to run or augment the dataset.</p>
-<h1><a class="header" href="#attitudes-daily" id="attitudes-daily">Attitudes Daily</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/other/addons_daily/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#attitudes-daily" id="attitudes-daily">Attitudes Daily</a></h1>
 <ul>
 <li><a href="datasets/other/attitudes_daily/reference.html#introduction">Introduction</a>
 <ul>
@@ -5423,7 +5427,7 @@ The job runs as part of the <a href="https://github.com/mozilla/telemetry-airflo
 <p>This dataset is generated by
 <a href="https://github.com/mozilla/bigquery-etl/blob/master/templates/telemetry_derived/attitudes_daily_v1/query.sql"><code>bigquery-etl</code></a>.
 Refer to this repository for information on how to run or augment the dataset. You can view the task run status in airflow <a href="https://workflow.telemetry.mozilla.org/tree?dag_id=attitudes_daily">here</a>.</p>
-<h1><a class="header" href="#clients-daily" id="clients-daily">Clients Daily</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/other/attitudes_daily/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#clients-daily" id="clients-daily">Clients Daily</a></h1>
 <ul>
 <li><a href="datasets/batch_view/clients_daily/reference.html#introduction">Introduction</a>
 <ul>
@@ -5503,7 +5507,7 @@ The job runs as part of the <a href="https://github.com/mozilla/telemetry-airflo
 <p>This dataset is generated by
 <a href="https://github.com/mozilla/bigquery-etl/blob/25b702d0824b96ec1342d653296adfbe1302027d/sql/telemetry_derived/clients_daily_v6/query.sql"><code>bigquery-etl</code></a>.
 Refer to this repository for information on how to run or augment the dataset.</p>
-<h1><a class="header" href="#clients-last-seen-reference" id="clients-last-seen-reference">Clients Last Seen Reference</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/batch_view/clients_daily/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#clients-last-seen-reference" id="clients-last-seen-reference">Clients Last Seen Reference</a></h1>
 <ul>
 <li><a href="datasets/bigquery/clients_last_seen/reference.html#introduction">Introduction</a>
 <ul>
@@ -5629,7 +5633,7 @@ infrastructure. The job runs as part of the
 <p>This dataset is generated by
 <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/telemetry_derived/clients_last_seen_v1/query.sql"><code>bigquery-etl</code></a>.
 Refer to this repository for information on how to run or augment the dataset.</p>
-<h1><a class="header" href="#introduction-8" id="introduction-8">Introduction</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/bigquery/clients_last_seen/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#introduction-8" id="introduction-8">Introduction</a></h1>
 <p>This is a work in progress.
 The work is being tracked
 <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1364170">here</a>.</p>
@@ -5682,7 +5686,7 @@ The format and mechanism of event collection in Firefox is documented <a href="h
  |-- submission_date_s3: string (nullable = true)
  |-- doc_type: string (nullable = true)
 </code></pre>
-<h1><a class="header" href="#exact-mau-data" id="exact-mau-data">Exact MAU Data</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/batch_view/events/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#exact-mau-data" id="exact-mau-data">Exact MAU Data</a></h1>
 <h2><a class="header" href="#introduction-9" id="introduction-9">Introduction</a></h2>
 <p>This article introduces the usage of and methodology behind the &quot;exact MAU&quot;
 tables in BigQuery:</p>
@@ -5901,7 +5905,7 @@ infrastructure in the following DAGs:</p>
 <p>The data is partitioned by <code>submission_date</code>.</p>
 <p>As of 2019-03-29, the current version for all Exact MAU tables is <code>v1</code>,
 and the schemas are visible via the <code>telemetry</code> dataset in <a href="https://console.cloud.google.com/bigquery?project=moz-fx-data-derived-datasets&amp;folder&amp;organizationId=442341870013&amp;p=moz-fx-data-derived-datasets&amp;d=telemetry&amp;page=dataset">the BigQuery console</a>.</p>
-<h1><a class="header" href="#first-shutdown-summary" id="first-shutdown-summary">First Shutdown Summary</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/bigquery/exact_mau/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#first-shutdown-summary" id="first-shutdown-summary">First Shutdown Summary</a></h1>
 <ul>
 <li><a href="datasets/batch_view/first_shutdown_summary/reference.html#introduction">Introduction</a>
 <ul>
@@ -5929,7 +5933,7 @@ separate first-shutdown ping was created to evaluate first-shutdown behavior whi
 <h4><a class="header" href="#accessing-the-data-16" id="accessing-the-data-16">Accessing the Data</a></h4>
 <p>The data can be accessed as <code>first_shutdown_summary</code>.</p>
 <p>The data is backfilled to 2017-09-22, the date of its first nightly appearance. This data should be available to all releases on and after Firefox 57.</p>
-<h1><a class="header" href="#main-summary" id="main-summary">Main Summary</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/batch_view/first_shutdown_summary/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#main-summary" id="main-summary">Main Summary</a></h1>
 <ul>
 <li><a href="datasets/batch_view/main_summary/reference.html#introduction">Introduction</a>
 <ul>
@@ -6076,7 +6080,7 @@ or key-&gt;(key-&gt;value) nested maps for keyed histograms.</li>
 <h1><a class="header" href="#code-reference-4" id="code-reference-4">Code Reference</a></h1>
 <p>This dataset is generated by <a href="https://github.com/mozilla/bigquery-etl/tree/25b702d0824b96ec1342d653296adfbe1302027d/sql/telemetry_derived/main_summary_v4">bigquery-etl</a>.
 Refer to this repository for information on how to run or augment the dataset.</p>
-<h1><a class="header" href="#new-profile" id="new-profile">New Profile</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/batch_view/main_summary/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#new-profile" id="new-profile">New Profile</a></h1>
 <ul>
 <li><a href="datasets/batch_view/new_profile/reference.html#introduction">Introduction</a>
 <ul>
@@ -6166,7 +6170,7 @@ Here's an <a href="https://sql.telemetry.mozilla.org/queries/5888#table">example
 </code></pre>
 <p>For more detail on the raw ping these fields come from, see the
 <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/new-profile-ping.html">raw data</a>.</p>
-<h1><a class="header" href="#socorro-crash-reports" id="socorro-crash-reports">Socorro Crash Reports</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/batch_view/new_profile/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#socorro-crash-reports" id="socorro-crash-reports">Socorro Crash Reports</a></h1>
 <ul>
 <li><a href="datasets/other/socorro_crash/reference.html#introduction">Introduction</a>
 <ul>
@@ -6218,7 +6222,7 @@ The dag is available under <a href="https://github.com/mozilla/telemetry-airflow
 This schema is transformed into a Spark-SQL structure and serialized to parquet after transforming column names from <code>camelCase</code> to <code>snake_case</code>.</p>
 <h3><a class="header" href="#code-reference-5" id="code-reference-5">Code Reference</a></h3>
 <p>The code is <a href="https://github.com/mozilla-services/data-pipeline/blob/master/reports/socorro_import/ImportCrashData.ipynb">a notebook in the <code>mozilla-services/data-pipeline</code> repository</a>.</p>
-<h1><a class="header" href="#ssl-ratios" id="ssl-ratios">SSL Ratios</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/other/socorro_crash/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#ssl-ratios" id="ssl-ratios">SSL Ratios</a></h1>
 <ul>
 <li><a href="datasets/other/ssl/reference.html#introduction">Introduction</a>
 <ul>
@@ -6316,7 +6320,7 @@ let ratioForDateInQuestion = rows
 <h2><a class="header" href="#code-reference-6" id="code-reference-6">Code Reference</a></h2>
 <p>You can find the query that generates the SSL dataset
 <a href="https://sql.telemetry.mozilla.org/queries/49323/source#table">here</a>.</p>
-<h1><a class="header" href="#telemetry-aggregates-reference" id="telemetry-aggregates-reference">Telemetry Aggregates Reference</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/other/ssl/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#telemetry-aggregates-reference" id="telemetry-aggregates-reference">Telemetry Aggregates Reference</a></h1>
 <ul>
 <li><a href="datasets/batch_view/telemetry_aggregates/reference.html#introduction">Introduction</a>
 <ul>
@@ -6419,7 +6423,7 @@ or <code>parent</code>.</li>
 <li><code>sum</code> is the aggregate sum of the histogram values per dimensions.</li>
 <li><code>histogram</code> is the aggregated histogram per dimensions.</li>
 </ul>
-<h1><a class="header" href="#update" id="update">Update</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/batch_view/telemetry_aggregates/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#update" id="update">Update</a></h1>
 <ul>
 <li><a href="datasets/batch_view/update/reference.html#introduction">Introduction</a>
 <ul>
@@ -6501,7 +6505,7 @@ user environment.</p>
 </code></pre>
 <p>For more detail on the raw ping these fields come from, see the
 <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/update-ping.html">raw data</a>.</p>
-<h1><a class="header" href="#work-in-progress" id="work-in-progress">Work in Progress</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/batch_view/update/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#work-in-progress" id="work-in-progress">Work in Progress</a></h1>
 <p>This article is a work in progress.
 The work is being tracked in
 <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1341812">this bug</a>.</p>
@@ -6533,7 +6537,7 @@ The work is being tracked in
 <a href="tools/BROKEN:https://gecko.readthedocs.io/en/latest/browser/experiments/experiments/index.html">https://gecko.readthedocs.io/en/latest/browser/experiments/experiments/index.html</a></p>
 <h2><a class="header" href="#funnelcake" id="funnelcake">Funnelcake</a></h2>
 <p>Custom builds of Firefox that are served to some percentage of the direct download population</p>
-<h1><a class="header" href="#accessing-heartbeat-data" id="accessing-heartbeat-data">Accessing Heartbeat data</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/tools/experiments.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#accessing-heartbeat-data" id="accessing-heartbeat-data">Accessing Heartbeat data</a></h1>
 <p><a href="https://docs.telemetry.mozilla.org/tools/experiments.html#heartbeat">Heartbeat</a> survey studies return telemetry on user engagement with the survey prompt.
 The heartbeat pings do not contain the survey responses themselves,
 which are stored by SurveyGizmo.</p>
@@ -6560,7 +6564,7 @@ containing both the telemetry <code>client_id</code> and the Normandy <code>user
 <h2><a class="header" href="#data-reference-14" id="data-reference-14">Data reference</a></h2>
 <p>Heartbeat data is available in the <code>telemetry.heartbeat</code> table in BigQuery.</p>
 <p>Its structure matches the <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/8b0641ebb8aad570b79e811ae10fd81c718af48f/schemas/telemetry/heartbeat/heartbeat.4.schema.json">heartbeat ping schema</a>.</p>
-<h1><a class="header" href="#analyzing-data-from-shield-studies" id="analyzing-data-from-shield-studies">Analyzing data from SHIELD studies</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/heartbeat.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#analyzing-data-from-shield-studies" id="analyzing-data-from-shield-studies">Analyzing data from SHIELD studies</a></h1>
 <p>This article introduces the datasets that are useful for analyzing SHIELD studies.
 After reading this article,
 you should understand how to answer questions about
@@ -6668,7 +6672,7 @@ which are available in the <code>events</code> table.</p>
 If you need access to data with lower latency, you can use the &quot;live&quot; table
 <code>telemetry_live.shield_study_v4</code> which should have latency significantly
 less than 1 hour.</p>
-<h1><a class="header" href="#search-data" id="search-data">Search Data</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/shield.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#search-data" id="search-data">Search Data</a></h1>
 <h2><a class="header" href="#introduction-17" id="introduction-17">Introduction</a></h2>
 <p>This article introduces the datasets we maintain for search analyses:
 <code>search_aggregates</code> and <code>search_clients_daily</code>. After reading this article,
@@ -6805,7 +6809,7 @@ for a notable example.</p>
 <p>The <a href="https://github.com/mozilla/followonsearch"><code>followonsearch</code> addon</a> was first deployed in 2017-06.
 There is no <code>tagged-*</code> search data available before this.</p>
 <p><code>default_private_search_engine</code> is only available starting 2019-11-19.</p>
-<h1><a class="header" href="#search-aggregates" id="search-aggregates">Search Aggregates</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/search.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#search-aggregates" id="search-aggregates">Search Aggregates</a></h1>
 <ul>
 <li><a href="datasets/search/search_aggregates/reference.html#introduction">Introduction</a>
 <ul>
@@ -6904,7 +6908,7 @@ The dataset is backfilled through 2016-03-11</p>
 <h1><a class="header" href="#code-reference-7" id="code-reference-7">Code Reference</a></h1>
 <p>The <code>search_aggregates</code> job is
 <a href="https://github.com/mozilla/bigquery-etl/blob/master/templates/search_derived/search_aggregates_v8/query.sql">defined in <code>bigquery-etl</code></a></p>
-<h1><a class="header" href="#search-clients-daily" id="search-clients-daily">Search Clients Daily</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/search/search_aggregates/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#search-clients-daily" id="search-clients-daily">Search Clients Daily</a></h1>
 <ul>
 <li><a href="datasets/search/search_clients_daily/reference.html#introduction">Introduction</a>
 <ul>
@@ -7017,9 +7021,9 @@ It's backfilled through 2016-03-12</p>
 <h1><a class="header" href="#code-reference-8" id="code-reference-8">Code Reference</a></h1>
 <p>The <code>search_clients_daily</code> job is
 <a href="https://github.com/mozilla/bigquery-etl/blob/master/templates/search_derived/search_clients_daily_v8/query.sql">defined in <code>bigquery-etl</code></a></p>
-<h1><a class="header" href="#other-datasets-1" id="other-datasets-1">Other Datasets</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/search/search_clients_daily/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#other-datasets-1" id="other-datasets-1">Other Datasets</a></h1>
 <p>These datasets are for projects outside of the Firefox telemetry domain.</p>
-<h1><a class="header" href="#hgpush" id="hgpush">hgpush</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/other.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#hgpush" id="hgpush">hgpush</a></h1>
 <p>This dataset records facts about individual commits to the Firefox source tree 
 in the <a href="https://hg.mozilla.org/mozilla-central/"><code>mozilla-central</code></a> source
 code repository.</p>
@@ -7047,7 +7051,7 @@ where
 </code></pre>
 <h1><a class="header" href="#code-reference-9" id="code-reference-9">Code Reference</a></h1>
 <p>The dataset is populated via the <a href="https://github.com/mozilla-conduit/commit-telemetry-service">Commit Telemetry Service</a>.</p>
-<h1><a class="header" href="#what-is-the-stub-installer-ping" id="what-is-the-stub-installer-ping">What is the Stub Installer ping?</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/other/hgpush/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#what-is-the-stub-installer-ping" id="what-is-the-stub-installer-ping">What is the Stub Installer ping?</a></h1>
 <p>When the stub installer completes with almost any result, it generates a ping containing some data about the system and about how the installation went. This ping isn't part of Firefox unified telemetry, it's a bespoke system; we can't use the telemetry client code when it isn't installed yet.</p>
 <p>No ping is sent if the installer exits early because initial system requirements checks fail.</p>
 <h2><a class="header" href="#how-its-processed" id="how-its-processed">How it’s processed</a></h2>
@@ -7065,7 +7069,7 @@ where
 <p>The funnelcake tables aggregate funnelcake builds, which have additional metadata for tracking distribution experiments. <a href="https://wiki.mozilla.org/Funnelcake">More on Funnelcake</a>.</p>
 <p><code>download_stats</code> (without the date appended) and <code>download_stats_year</code> are views that union all (or a year's worth) of the per-day tables together, which makes e.g. <code>SELECT * LIMIT 10</code> operations on them quite slow.</p>
 <p>Note about <code>os_version</code>: Previous versions of Windows have used a very small set of build numbers through their entire life cycle. However, Windows 10 gets a new build number with every major update (about every 6 months), and many more builds have been released on its insider channels. So, to prevent a huge amount of noise, queries using this field should generally filter out the build number and only use the major and minor version numbers to differentiate Windows versions, unless the build number is specifically needed.</p>
-<h1><a class="header" href="#what-is-activity-stream" id="what-is-activity-stream">What is Activity Stream?</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/other/stub_installer/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#what-is-activity-stream" id="what-is-activity-stream">What is Activity Stream?</a></h1>
 <p>Activity Stream is the Firefox module which manages the in product content pages for Firefox: </p>
 <ul>
 <li><code>about:home</code></li>
@@ -7173,7 +7177,7 @@ WHERE
 	source = 'snippets_user_event'
   	AND date = '20190601'
 </code></pre>
-<h1><a class="header" href="#bmobugs" id="bmobugs"><code>bmobugs</code></a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/other/activity-stream/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#bmobugs" id="bmobugs"><code>bmobugs</code></a></h1>
 <p>This dataset mirrors bugs (defects, enhancements, tasks) reported in the 
 <a href="https://bugzilla.mozilla.org/"><code>Bugzilla</code></a> bug tracker.</p>
 <h1><a class="header" href="#data-reference-18" id="data-reference-18">Data Reference</a></h1>
@@ -7260,7 +7264,7 @@ WHERE
 <h1><a class="header" href="#code-reference-10" id="code-reference-10">Code Reference</a></h1>
 <p>The dataset is populated via the 
 <a href="https://github.com/mozilla-bteam/bmo/blob/master/Bugzilla/Report/Ping/Simple.pm">simple ping service on Bugzilla</a>.</p>
-<h1><a class="header" href="#firefox-accounts-data" id="firefox-accounts-data">Firefox Accounts Data</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/other/bmobugs/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#firefox-accounts-data" id="firefox-accounts-data">Firefox Accounts Data</a></h1>
 <h2><a class="header" href="#table-of-contents-6" id="table-of-contents-6">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/fxa.html#introduction">Introduction</a></li>
@@ -7335,7 +7339,7 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 <li>Querying redshift is (generally) slower.</li>
 </ol>
 <p>It is also possible to query the FxA server logs directly through BigQuery (ask an FxA team member for access), though virtually all analytics-related questions are more easily answered using the data sources described above.</p>
-<h1><a class="header" href="#attribution-of-firefox-accounts" id="attribution-of-firefox-accounts">Attribution of Firefox Accounts</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/fxa.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#attribution-of-firefox-accounts" id="attribution-of-firefox-accounts">Attribution of Firefox Accounts</a></h1>
 <h2><a class="header" href="#table-of-contents-7" id="table-of-contents-7">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/fxa_metrics/attribution.html#introduction">Introduction</a></li>
@@ -7387,7 +7391,7 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 <tr><td><code>lockbox-addon</code></td><td>NA</td><td>The &quot;sign into sync&quot; button found within the the Lockwise desktop extension. This is likely to change once Lockwise becomes fully integrated into the browser.</td></tr>
 </tbody></table>
 <p>Example amplitude charts: <a href="https://analytics.amplitude.com/mozilla-corp/chart/1ush8xd">registrations by <code>entrypoint</code></a>, <a href="https://analytics.amplitude.com/mozilla-corp/chart/y8t2k1z">logins by <code>entrypoint</code></a>, <a href="https://analytics.amplitude.com/mozilla-corp/chart/jjbkusl">registrations by <code>utm_source</code></a>.</p>
-<h1><a class="header" href="#firefox-account-funnels" id="firefox-account-funnels">Firefox Account Funnels</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/fxa_metrics/attribution.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#firefox-account-funnels" id="firefox-account-funnels">Firefox Account Funnels</a></h1>
 <h2><a class="header" href="#table-of-contents-8" id="table-of-contents-8">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/fxa_metrics/funnels.html#introduction">Introduction</a></li>
@@ -7572,7 +7576,7 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 <tr><td>Not Implemented</td><td><code>flow.settings.clients.engage</code></td><td>User clicked somewhere the list of clients connected to their account.</td></tr>
 <tr><td>Not Implemented</td><td><code>flow.settings.clients.disconnect.view</code></td><td>User viewed the dialog asking to confirm disconnection of a device.</td></tr>
 </tbody></table>
-<h1><a class="header" href="#fxa-email-metrics" id="fxa-email-metrics">FxA Email Metrics</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/fxa_metrics/funnels.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#fxa-email-metrics" id="fxa-email-metrics">FxA Email Metrics</a></h1>
 <h2><a class="header" href="#table-of-contents-9" id="table-of-contents-9">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/fxa_metrics/emails.html#introduction">Introduction</a></li>
@@ -7622,7 +7626,7 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 <tr><td><code>postNewRecoveryCodesEmail</code></td><td><code>2fa</code></td><td>Sent to users after they successfully generate a new set of 2FA recovery codes.</td></tr>
 <tr><td><code>lowRecoveryCodesEmail</code></td><td><code>2fa</code></td><td>Sent when a user is running low on 2FA recovery codes.</td></tr>
 </tbody></table>
-<h1><a class="header" href="#static-datasets" id="static-datasets">Static Datasets</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/fxa_metrics/emails.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#static-datasets" id="static-datasets">Static Datasets</a></h1>
 <p>Tables containing static data exist in the <code>static</code> dataset in BigQuery.
 These tables are generated from CSV files named <code>data.csv</code> in subdirectories of the <code>templates/static/</code> 
 directory in <a href="https://github.com/mozilla/bigquery-etl/tree/master/templates/static"><code>bigquery-etl</code></a>.</p>
@@ -7646,7 +7650,7 @@ that all fields are nullable strings.</p>
 <h3><a class="header" href="#notes-1" id="notes-1">Notes</a></h3>
 <p>Static tables can be created in any dataset in bigquery-etl.  However, it is recommended for consistency and 
 organization to keep them in the <code>static</code> dataset.</p>
-<h1><a class="header" href="#normalized-os" id="normalized-os">Normalized OS</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/static.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#normalized-os" id="normalized-os">Normalized OS</a></h1>
 <p>The OS names and versions received in telemetry is not necessarily the accepted common name.
 The <code>normalized_os_name</code> and <code>normalized_os_version</code> tables in the <code>static</code> dataset serve as a
 lookup table for mapping the telemetry name to the common name.</p>
@@ -7675,8 +7679,8 @@ The <code>normalized_os_version</code> table can be used to map the sent version
 of the OS.</p>
 <p>The table uses a regular expression to look up the OS version so <code>REGEXP_CONTAINS</code> should be used.
 An example query can be found here: <a href="https://sql.telemetry.mozilla.org/queries/67040/source">https://sql.telemetry.mozilla.org/queries/67040/source</a></p>
-<h1><a class="header" href="#telemetry-reference" id="telemetry-reference">Telemetry Reference</a></h1>
-<h1><a class="header" href="#a-brief-history-of-firefox-data-collection" id="a-brief-history-of-firefox-data-collection">A brief history of Firefox data collection</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/static/normalized_os.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#telemetry-reference" id="telemetry-reference">Telemetry Reference</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/index.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#a-brief-history-of-firefox-data-collection" id="a-brief-history-of-firefox-data-collection">A brief history of Firefox data collection</a></h1>
 <blockquote>
 <p>This section was originally included in the <a href="https://mozilla-private.report/smoot-existing-metrics/book/05_overview.html">Project Smoot existing metrics report</a>
 (Mozilla internal link).</p>
@@ -7797,11 +7801,11 @@ documentation.</p>
 using <a href="concepts/glean/glean.html">Glean</a>.</p>
 <p>This effort is known as &quot;Firefox on Glean&quot; or FOG. This effort is expected to
 begin in late 2019 / early 2020.</p>
-<h1><a class="header" href="#profile-behavior" id="profile-behavior">Profile behavior</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/history.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#profile-behavior" id="profile-behavior">Profile behavior</a></h1>
 <h2><a class="header" href="#a-hrefconceptsprofileprofile_creationhtmlprofile-creationa" id="a-hrefconceptsprofileprofile_creationhtmlprofile-creationa"><a href="concepts/profile/profile_creation.html">Profile Creation</a></a></h2>
 <h2><a class="header" href="#a-hrefconceptsprofilerealworldusagehtmlreal-world-usagea" id="a-hrefconceptsprofilerealworldusagehtmlreal-world-usagea"><a href="concepts/profile/realworldusage.html">Real World Usage</a></a></h2>
 <h2><a class="header" href="#a-hrefconceptsprofileprofilehistoryhtmlprofile-historya" id="a-hrefconceptsprofileprofilehistoryhtmlprofile-historya"><a href="concepts/profile/profilehistory.html">Profile History</a></a></h2>
-<h1><a class="header" href="#profile-creation---the-technical-part" id="profile-creation---the-technical-part">Profile Creation - The technical part</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/profile/index.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#profile-creation---the-technical-part" id="profile-creation---the-technical-part">Profile Creation - The technical part</a></h1>
 <ul>
 <li><a href="concepts/profile/profile_creation.html#what-is-a-profile">What is a profile?</a></li>
 <li><a href="concepts/profile/profile_creation.html#profile-behaviors">Profile Behaviors</a>
@@ -7925,7 +7929,7 @@ Q --> S[Return creation date]
 <div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
 <p>Relevant part in the code: <a href="https://searchfox.org/mozilla-central/rev/292d295d6b084b43b70de26a42e68513bb7b36a3/toolkit/xre/nsAppRunner.cpp#2357-2363"><code>nsAppRunner::SelectProfile</code></a> creating the directory.</p>
 </div>
-<h1><a class="header" href="#real-world-usage" id="real-world-usage">Real World Usage</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/profile/profile_creation.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#real-world-usage" id="real-world-usage">Real World Usage</a></h1>
 <p>This page backs away from our profile-focused data view and examines what Firefox Desktop usage looks like in the real world. There are many components and layers that exist between a user acquiring and running Firefox, and this documentation will illuminate what those are and how they can affect the meaning of a profile.</p>
 <h2><a class="header" href="#real-life-components-of-firefox-desktop-usage" id="real-life-components-of-firefox-desktop-usage">Real Life Components of Firefox Desktop Usage</a></h2>
 <p><img src="concepts/profile/images/real-life-usage-components.png" alt="" /></p>
@@ -8030,7 +8034,7 @@ For instance, we will see another ping with the <code>profile_subsession_count</
 <p>In this case, since the Firefox profile is being copied over, both the new and the old machine will have profiles with the same client ID. Again, the profile on the new computer will revert back to the point in its history where it was copied.
 And since the profile contains any unsent Telemetry pings, we may receive duplicated submissions of pings from the same client ID.</p>
 <p>If the Firefox binary / installer was downloaded, there will be a download and install event. If it was migrated via USB stick, it will only have an install event.</p>
-<h1><a class="header" href="#profile-history" id="profile-history">Profile History</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/profile/realworldusage.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#profile-history" id="profile-history">Profile History</a></h1>
 <p>A profile's history is simply the progression of that profile's subsessions over its lifetime. We can see this in our main pings by checking:</p>
 <ul>
 <li><code>profile_subsession_counter</code>
@@ -8117,8 +8121,8 @@ It is very hard to distinguish between the different branches of the same profil
 <p><a href="https://github.com/mozilla/firefox-data-docs/issues/169">(Work in Progress)</a></p>
 <h2><a class="header" href="#how-to-order-history" id="how-to-order-history">How to Order History</a></h2>
 <p><a href="https://github.com/mozilla/firefox-data-docs/issues/170">(Work in Progress)</a></p>
-<h1><a class="header" href="#channel-behavior" id="channel-behavior">Channel Behavior</a></h1>
-<h1><a class="header" href="#telemetry-channel-behavior" id="telemetry-channel-behavior">Telemetry Channel Behavior</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/profile/profilehistory.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#channel-behavior" id="channel-behavior">Channel Behavior</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/channels/index.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#telemetry-channel-behavior" id="telemetry-channel-behavior">Telemetry Channel Behavior</a></h1>
 <p>In every ping there are two channels:</p>
 <ul>
 <li>App Update Channel</li>
@@ -8164,7 +8168,7 @@ WHERE
 LIMIT
   10
 </code></pre>
-<h2><a class="header" href="#censuses" id="censuses">Censuses</a></h2>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/channels/channel_normalization.md">Edit this file on GitHub.</a></footer><h2><a class="header" href="#censuses" id="censuses">Censuses</a></h2>
 <blockquote>
 <p>This section was originally included in the <a href="https://mozilla-private.report/smoot-existing-metrics/book/05_overview.html">Project Smoot existing metrics report</a>
 (Mozilla internal link).</p>
@@ -8273,7 +8277,7 @@ is a periodic census intended to estimate telemetry opt-out rates.</p>
 <p>We estimate that <a href="https://metrics.mozilla.com/%7Erharter/reports/coverage/index.html">93% of release channel
 profiles</a>
 have telemetry enabled (and are therefore included in DAU).</p>
-<h1><a class="header" href="#engagement-metrics" id="engagement-metrics">Engagement metrics</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/censuses.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#engagement-metrics" id="engagement-metrics">Engagement metrics</a></h1>
 <blockquote>
 <p>This section was originally included in the <a href="https://mozilla-private.report/smoot-existing-metrics/book/05_overview.html">Project Smoot existing metrics report</a>
 (Mozilla internal link).</p>
@@ -8350,7 +8354,7 @@ e.g. <code>about:config</code> and <code>about:telemetry</code> are included.</
 <li>Ping <code>reason</code> for <code>main</code> pings <a href="https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/82297/revision/1554433978453">observed</a>
 from Firefox 65 <code>release</code> channel users on February 21, 2019.</li>
 </ol>
-<h1><a class="header" href="#sampling-in-telemetry-data" id="sampling-in-telemetry-data">Sampling in Telemetry data</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/engagement.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#sampling-in-telemetry-data" id="sampling-in-telemetry-data">Sampling in Telemetry data</a></h1>
 <p>Since the early days of Telemetry, it has been desirable to have a quick and
 simple way to do analysis on a sample of the full population of Firefox
 clients.</p>
@@ -8376,9 +8380,9 @@ crc = binascii.crc32(clientid)
 sampleid = (crc &amp; 0xFFFFFFFF) % 100
 print(&quot;Client ID {} =&gt; Sample ID {}&quot;.format(clientid, sampleid))
 </code></pre>
-<h1><a class="header" href="#historical-reference" id="historical-reference">Historical Reference</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/sample_id.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#historical-reference" id="historical-reference">Historical Reference</a></h1>
 <p>This section contains some documentation of things we used to we used to use or support. You can generally safely ignore this section, it is intended only to help provide some context in case it explains something in the present.</p>
-<h1><a class="header" href="#an-overview-of-mozillas-data-pipeline-1" id="an-overview-of-mozillas-data-pipeline-1">An overview of Mozilla’s Data Pipeline</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/historical/index.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#an-overview-of-mozillas-data-pipeline-1" id="an-overview-of-mozillas-data-pipeline-1">An overview of Mozilla’s Data Pipeline</a></h1>
 <p><em>Note: This article describes the AWS-based pipeline which
 <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1598815">has been retired</a>;
 the client-side concepts here still apply, but this article has been updated
@@ -8513,7 +8517,7 @@ style evo fill:lightgrey
 <h1><a class="header" href="#is-that-it" id="is-that-it">Is that it?</a></h1>
 <p>No, not really. If you want to read more, check out <a href="concepts/pipeline/data_pipeline_detail.html">this article</a>. For example, the DWL pushes some of the Telemetry data to Redshift and other tools that satisfy more niche needs. The pipeline ingests logs from services as well and there are many specialized dashboards out there I haven’t mentioned.</p>
 <p>There is a vast ecosystem of tools for processing data at scale, each with their pros &amp; cons. The pipeline grew organically and we added new tools as new use-cases came up that we couldn’t solve with our existing stack. There are still scars left from that growth though which require some effort to get rid of, like ingesting data from schema-less format.</p>
-<h1><a class="header" href="#a-detailed-look-at-the-data-platform" id="a-detailed-look-at-the-data-platform">A Detailed Look at the Data Platform</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/pipeline/data_pipeline.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#a-detailed-look-at-the-data-platform" id="a-detailed-look-at-the-data-platform">A Detailed Look at the Data Platform</a></h1>
 <p>For a more gentle introduction to the data platform, please read the <a href="concepts/pipeline/data_pipeline.html">Pipeline Overview</a> article.</p>
 <p>This article goes into more depth about the architecture and flow of data in the platform.</p>
 <h2><a class="header" href="#the-entire-platform" id="the-entire-platform">The Entire Platform</a></h2>
@@ -8784,10 +8788,10 @@ style evo fill:lightgrey
  end
  Schemas -.->|validation| dwl
 </pre>
-<h1><a class="header" href="#obsolete-datasets-1" id="obsolete-datasets-1">Obsolete Datasets</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/pipeline/data_pipeline_detail.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#obsolete-datasets-1" id="obsolete-datasets-1">Obsolete Datasets</a></h1>
 <p>These datasets are no longer updated or maintained. Please reach out to the Data Platform team
 if you think your needs are best met by an obsolete dataset.</p>
-<h1><a class="header" href="#churn-1" id="churn-1">Churn</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/obsolete.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#churn-1" id="churn-1">Churn</a></h1>
 <p><em><strong>As of 2019-08-21, this dataset has been deprecated and is no longer
 maintained. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1561048">Bug
 1561048</a> for historical
@@ -9008,9 +9012,9 @@ for more examples.</p>
 <a href="https://github.com/mozilla/python_mozetl/tree/9217335652cad46940a51c7c2784cc5c6d3a00f4"><code>mozilla/python_mozetl</code></a>. The job can
 be found in
 <a href="https://github.com/mozilla/python_mozetl/blob/9217335652cad46940a51c7c2784cc5c6d3a00f4/mozetl/engagement/churn/job.py#L1-L27"><code>mozetl/engagement/churn</code></a>.</p>
-<p><em><strong>As of 2019-10-23, this dataset has been deprecated and is no longer
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/obsolete/churn/reference.md">Edit this file on GitHub.</a></footer><p><em><strong>As of 2019-10-23, this dataset has been deprecated and is no longer
 maintained. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1585539">Bug 1585539</a>.</strong></em></p>
-<h1><a class="header" href="#client-count-daily-reference" id="client-count-daily-reference">Client Count Daily Reference</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/obsolete/client_count/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#client-count-daily-reference" id="client-count-daily-reference">Client Count Daily Reference</a></h1>
 <p><em><strong>As of 2019-04-10, this dataset has been deprecated and is no longer maintained. Please use <a href="datasets/obsolete/client_count_daily//datasets/bigquery/clients_last_seen/reference.html"><code>clients_last_seen</code></a> instead. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1543518">Bug 1543518</a> for more information.</strong></em></p>
 <ul>
 <li><a href="datasets/obsolete/client_count_daily/reference.html#replacement">Replacement</a></li>
@@ -9167,7 +9171,7 @@ is <code>v2</code>, and has a schema as follows:</p>
  |-- top_distribution_id: string (nullable = true)
  |-- total_uri_count_threshold: integer (nullable = true)
 </code></pre>
-<h1><a class="header" href="#crash-aggregates" id="crash-aggregates">Crash Aggregates</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/obsolete/client_count_daily/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#crash-aggregates" id="crash-aggregates">Crash Aggregates</a></h1>
 <p><em><strong>As of 2018-04-02, this dataset has been deprecated and is no longer maintained. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1388025">Bug 1388025</a> for more information.</strong></em></p>
 <ul>
 <li><a href="datasets/obsolete/crash_aggregates/reference.html#introduction">Introduction</a>
@@ -9299,7 +9303,7 @@ The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/d50b938/da
 </li>
 </ul>
 <p><code>TODO(harter)</code>: https://bugzilla.mozilla.org/show_bug.cgi?id=1361862</p>
-<h1><a class="header" href="#crash-summary-reference" id="crash-summary-reference">Crash Summary Reference</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/obsolete/crash_aggregates/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#crash-summary-reference" id="crash-summary-reference">Crash Summary Reference</a></h1>
 <ul>
 <li><a href="datasets/obsolete/crash_summary/reference.html#introduction">Introduction</a>
 <ul>
@@ -9388,7 +9392,7 @@ The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/166e0a555e
 <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html">raw data</a>,
 please look at the case classes
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/GRAVEYARD.md#crash-summary">in the <code>CrashSummaryView</code> code</a>.</p>
-<h1><a class="header" href="#error-aggregates-reference" id="error-aggregates-reference">Error Aggregates Reference</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/obsolete/crash_summary/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#error-aggregates-reference" id="error-aggregates-reference">Error Aggregates Reference</a></h1>
 <p><em><strong>As of 2019-11-21, this dataset has been deprecated and is no longer maintained. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1594112">Bug 1594112</a> for more information.</strong></em></p>
 <ul>
 <li><a href="datasets/obsolete/error_aggregates/reference.html#introduction">Introduction</a>
@@ -9519,7 +9523,7 @@ people are not actively using the browser or their computer is asleep)</li>
 <li><code>slow_script_notice_count</code>: number of times the slow script notice count was shown (beta/nightly only)</li>
 <li><code>slow_script_page_count</code>: number of pages that trigger slow script notices (beta/nightly only)</li>
 </ul>
-<h1><a class="header" href="#heavy-users" id="heavy-users">Heavy Users</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/obsolete/error_aggregates/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#heavy-users" id="heavy-users">Heavy Users</a></h1>
 <p><em><strong>As of 2018-05-18, this dataset has been deprecated and is no longer maintained. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1455314">Bug 1455314</a></strong></em></p>
 <ul>
 <li><a href="datasets/obsolete/heavy_users/reference.html#replacement">Replacement</a></li>
@@ -9623,7 +9627,7 @@ You can find the job definition
 <p>This dataset is generated by
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/GRAVEYARD.md#heavy-users">telemetry-batch-view</a>.
 Refer to this repository for information on how to run or augment the dataset.</p>
-<h1><a class="header" href="#longitudinal-reference" id="longitudinal-reference">Longitudinal Reference</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/obsolete/heavy_users/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#longitudinal-reference" id="longitudinal-reference">Longitudinal Reference</a></h1>
 <ul>
 <li><a href="datasets/obsolete/longitudinal/reference.html#introduction">Introduction</a>
 <ul>
@@ -9712,7 +9716,7 @@ The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/54cffc42a2
 <p>This dataset is generated by
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/GRAVEYARD.md#longitudinal">telemetry-batch-view</a>.
 Refer to this repository for information on how to run or augment the dataset.</p>
-<h1><a class="header" href="#1-day-retention" id="1-day-retention">1 Day Retention</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/obsolete/longitudinal/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#1-day-retention" id="1-day-retention">1 Day Retention</a></h1>
 <p><em><strong>As of 2019-08-13, this dataset has been deprecated and is no longer
 maintained. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1571565">Bug
 1571565</a> for historical
@@ -9833,7 +9837,7 @@ as follows:</p>
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/9428b1951545dcd7517a3e72c81e7891a6dfa1fa/src/main/scala/com/mozilla/telemetry/views/RetentionView.scala">telemetry-batch-view</a> as the <code>RetentionView</code>.</p>
 <p>The <a href="https://github.com/acmiyaguchi/telemetry-airflow/blob/1b4b11d23cdd1191ed2d2be905f116d7c3c67533/jobs/retention.sh">runner script</a> performs all the necessary setup to run on
 EMR. This script can be used to perform backfill.</p>
-<h1><a class="header" href="#sync-summary-and-sync-flat-summary-reference" id="sync-summary-and-sync-flat-summary-reference">Sync Summary and Sync Flat Summary Reference</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/obsolete/retention/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#sync-summary-and-sync-flat-summary-reference" id="sync-summary-and-sync-flat-summary-reference">Sync Summary and Sync Flat Summary Reference</a></h1>
 <ul>
 <li><a href="datasets/obsolete/sync_summary/reference.html#introduction">Introduction</a>
 <ul>
@@ -10019,10 +10023,10 @@ The DAG was <a href="https://github.com/mozilla/telemetry-airflow/blob/27d34a73d
 |-- engine_outgoing_batch_total_failed: integer (nullable = true)
 |-- submission_date_s3: string
 </code></pre>
-<h1><a class="header" href="#about-this-documentation" id="about-this-documentation">About this documentation</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/obsolete/sync_summary/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#about-this-documentation" id="about-this-documentation">About this documentation</a></h1>
 <h2><a class="header" href="#a-hrefmetacontributinghtmlcontributinga" id="a-hrefmetacontributinghtmlcontributinga"><a href="meta/contributing.html">Contributing</a></a></h2>
 <h2><a class="header" href="#a-hrefmetastructurehtmlstructurea" id="a-hrefmetastructurehtmlstructurea"><a href="meta/structure.html">Structure</a></a></h2>
-<h1><a class="header" href="#contributing" id="contributing">Contributing</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/meta/index.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#contributing" id="contributing">Contributing</a></h1>
 <p>Documentation is critical to making a usable data platform.
 When surveying our users,
 their most common complaint has been our lack of documentation.
@@ -10042,17 +10046,20 @@ To begin contributing to the docs, fork the <code>firefox-data-docs</code> repo.
 <ul>
 <li><a href="https://github.com/badboy/mdbook-toc/releases">mdbook-toc</a></li>
 <li><a href="https://github.com/badboy/mdbook-mermaid/releases">mdbook-mermaid</a></li>
+<li><a href="https://github.com/badboy/mdbook-open-on-gh/releases">mdbook-open-on-gh</a></li>
 </ul>
 <p>Download releases for your system, unpack it and place the binary in a directory of your <code>$PATH</code>.</p>
 <p>If you have <a href="https://www.rust-lang.org/">rustc</a> already installed, you can install a pre-compiled binary directly:</p>
 <pre><code class="language-bash">curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-toc
 curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-mermaid
+curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-open-on-gh
 </code></pre>
 <p>This will place <code>mdbook-toc</code> and <code>mdbook-mermaid</code> into <code>~/.cargo/bin</code>.
 Make sure this directory is in your <code>$PATH</code> or copy it to a directory of your <code>$PATH</code>.</p>
 <p>You can also build and install the preprocessors:</p>
 <pre><code class="language-bash">cargo install mdbook-toc
 cargo install mdbook-mermaid
+cargo install mdbook-open-on-gh
 </code></pre>
 <p>You can then serve the documentation locally with:</p>
 <pre><code>mdbook serve
@@ -10133,7 +10140,7 @@ If you're working from a fork (which you should be),
 <a href="https://docs.djangoproject.com/en/1.11/internals/contributing/writing-documentation/">Django's Documentation Style Guide</a>.</p>
 <p>You can find more context for this document in
 <a href="http://blog.harterrt.com/lit-review.html">this blog post</a>.</p>
-<h1><a class="header" href="#documentation-structure" id="documentation-structure">Documentation Structure</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/meta/contributing.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#documentation-structure" id="documentation-structure">Documentation Structure</a></h1>
 <p>The directory structure is meant to feel comfortable for those
 familiar with the data platform:</p>
 <pre><code>.
@@ -10161,7 +10168,7 @@ analysis best practice.</li>
 <li>Cookbooks</li>
 <li>Reference material - TBD</li>
 </ul>
-
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/meta/structure.md">Edit this file on GitHub.</a></footer>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

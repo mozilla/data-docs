@@ -124,6 +124,10 @@
                                 <i id="print-button" class="fa fa-print"></i>
                             </a>
                             
+                            <a href="https://github.com/mozilla/firefox-data-docs" title="Git repository" aria-label="Git repository">
+                                <i id="git-repository-button" class="fa fa-github"></i>
+                            </a>
+                            
                         </div>
                     </div>
                 </div>
@@ -568,7 +572,7 @@ LIMIT
 <li>Reference the data size prediction (&quot;This query will process X bytes&quot;) in STMO and the BigQuery UI to help gauge the efficiency of your queries. You should see this number go down as you limit the range of <code>submission_date</code>s or include fewer fields in your <code>SELECT</code> statement. For clustered tables, this estimate won't take into account benefits from <code>LIMIT</code>s and <code>WHERE</code> clauses on clustering fields, so you'll need to compare to the actual &quot;Data Scanned&quot; after the query is run. <a href="https://cloud.google.com/bigquery/pricing#on_demand_pricing">Queries are charged by data scanned at $5/TB</a> so each 200 GB of data scanned will cost $1; it can be useful to keep the data estimate below 200 GB while developing and testing a query to limit cost and query time, then open up to the full range of data you need when you have confidence in the results.</li>
 </ul>
 <p>A complete list of optimizations can be found <a href="https://cloud.google.com/bigquery/docs/best-practices-performance-overview">here</a> and cost optimizations <a href="https://cloud.google.com/bigquery/docs/best-practices-costs">here</a></p>
-
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/bigquery.md">Edit this file on GitHub.</a></footer>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
