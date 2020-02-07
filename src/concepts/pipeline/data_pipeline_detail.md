@@ -241,10 +241,6 @@ Our [Databricks instance] (see [Databricks docs]) offers another notebook interf
 
 Databricks provides an always-on shared server which is nice for quick data investigations.
 
-##### ATMO (deprecated): Spark Analysis
-
-[ATMO] was a service for managing Spark clusters for data analysis on AWS. It was deprecated in Q3 2019 and removed in Q4.
-
 ##### TMO: Aggregate Graphs
 
 [TMO] provides easy visualizations of histogram and scalar measures over time. Time can be in terms of either builds or submission dates. This is the most convenient interface to the Telemetry data, as it does not require any custom code.
@@ -385,7 +381,6 @@ graph LR
 [histogram measures]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/histograms.html
 [Airflow]: https://github.com/mozilla/telemetry-airflow
 [Re:dash]: https://sql.telemetry.mozilla.org
-[ATMO]: BROKEN:https://analysis.telemetry.mozilla.org
 [STMO]: ../../tools/stmo.md
 [Jupyter]: https://jupyter.org/
 [Zeppelin]: https://zeppelin.apache.org/
