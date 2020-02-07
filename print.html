@@ -694,11 +694,10 @@ Finally, Roberto has a relevant write-up
 <p>The data is available in Re:dash.
 Take a look at this
 <a href="https://sql.telemetry.mozilla.org/queries/81/source#129">example query</a>.</p>
-<p>I don't recommend accessing this data from ATMO.</p>
 <h4><a class="header" href="#further-reading-1" id="further-reading-1">Further Reading</a></h4>
 <h1><a class="header" href="#other-datasets" id="other-datasets">Other Datasets</a></h1>
 <p>Public crash statistics for Firefox are available through the Data Platform in a <code>socorro_crash</code> dataset.
-The crash data in <a href="https://wiki.mozilla.org/Socorro">Socorro</a> is sanitized and made available to ATMO and STMO.
+The crash data in <a href="https://wiki.mozilla.org/Socorro">Socorro</a> is sanitized and made available to STMO.
 A nightly import job converts batches of JSON documents into a columnar format using the associated JSON Schema. </p>
 <h3><a class="header" href="#contents-3" id="contents-3">Contents</a></h3>
 <h4><a class="header" href="#accessing-the-data-6" id="accessing-the-data-6">Accessing the Data</a></h4>
@@ -2724,9 +2723,6 @@ for SQL-based exploratory analysis and visualization / dashboard
 construction. Requires (surprise!) familiarity with SQL, and for your data to
 be explicitly exposed as an STMO data source. Bugs or feature requests can be
 reported in our <a href="https://github.com/mozilla/redash/issues">issue tracker</a>.</p>
-<h4><a class="header" href="#a-hreftoolssparkhtmlanalysistelemetrymozillaorga-atmo" id="a-hreftoolssparkhtmlanalysistelemetrymozillaorga-atmo"><a href="tools/spark.html"><code>analysis.telemetry.mozilla.org</code></a> (ATMO)</a></h4>
-<p><strong>As of 2019-11-08, ATMO is obsolete and has been decommissioned. Instead,
-use STMO or Databricks for analysis.</strong></p>
 <h4><a class="header" href="#a-hrefhttpsdbc-caf9527b-e073clouddatabrickscomdatabricksa" id="a-hrefhttpsdbc-caf9527b-e073clouddatabrickscomdatabricksa"><a href="https://dbc-caf9527b-e073.cloud.databricks.com/">Databricks</a></a></h4>
 <p>Offers notebook interface with shared, always-on, autoscaling cluster
 (attaching your notebooks to <code>shared_serverless_python3</code> is the best way to start).
@@ -6446,7 +6442,7 @@ Here's an <a href="https://sql.telemetry.mozilla.org/queries/5888#table">example
 </ul>
 <h2><a class="header" href="#introduction-13" id="introduction-13">Introduction</a></h2>
 <p>Public crash statistics for Firefox are available through the Data Platform in a <code>socorro_crash</code> dataset.
-The crash data in <a href="https://wiki.mozilla.org/Socorro">Socorro</a> is sanitized and made available to ATMO and STMO.
+The crash data in <a href="https://wiki.mozilla.org/Socorro">Socorro</a> is sanitized and made available to STMO.
 A nightly import job converts batches of JSON documents into a columnar format using the associated JSON Schema. </p>
 <h3><a class="header" href="#contents-13" id="contents-13">Contents</a></h3>
 <h4><a class="header" href="#accessing-the-data-19" id="accessing-the-data-19">Accessing the Data</a></h4>
@@ -8949,8 +8945,6 @@ style evo fill:lightgrey
 <h5><a class="header" href="#databricks-managed-spark-analysis" id="databricks-managed-spark-analysis">Databricks: Managed Spark Analysis</a></h5>
 <p>Our <a href="https://dbc-caf9527b-e073.cloud.databricks.com">Databricks instance</a> (see <a href="https://docs.databricks.com/user-guide/notebooks/index.html">Databricks docs</a>) offers another notebook interface for doing analysis in Scala, SQL, Python and R.</p>
 <p>Databricks provides an always-on shared server which is nice for quick data investigations.</p>
-<h5><a class="header" href="#atmo-deprecated-spark-analysis" id="atmo-deprecated-spark-analysis">ATMO (deprecated): Spark Analysis</a></h5>
-<p><a href="concepts/pipeline/BROKEN:https://analysis.telemetry.mozilla.org">ATMO</a> was a service for managing Spark clusters for data analysis on AWS. It was deprecated in Q3 2019 and removed in Q4.</p>
 <h5><a class="header" href="#tmo-aggregate-graphs" id="tmo-aggregate-graphs">TMO: Aggregate Graphs</a></h5>
 <p><a href="https://telemetry.mozilla.org">TMO</a> provides easy visualizations of histogram and scalar measures over time. Time can be in terms of either builds or submission dates. This is the most convenient interface to the Telemetry data, as it does not require any custom code.</p>
 <h2><a class="header" href="#visualization" id="visualization">Visualization</a></h2>
@@ -9328,7 +9322,6 @@ Finally, Roberto has a relevant write-up
 <p>The data is available in Re:dash.
 Take a look at this
 <a href="https://sql.telemetry.mozilla.org/queries/81/source#129">example query</a>.</p>
-<p>I don't recommend accessing this data from ATMO.</p>
 <h4><a class="header" href="#further-reading-6" id="further-reading-6">Further Reading</a></h4>
 <h1><a class="header" href="#data-reference-20" id="data-reference-20">Data Reference</a></h1>
 <h2><a class="header" href="#example-queries-13" id="example-queries-13">Example Queries</a></h2>
