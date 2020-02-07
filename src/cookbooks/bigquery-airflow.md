@@ -7,14 +7,14 @@ Queries in [`bigquery-etl`](https://github.com/mozilla/bigquery-etl) can be sche
 
 ## In bigquery-etl
 
-In the [`bigquery-etl`](https://github.com/mozilla/bigquery-etl) project, queries are written in `/templates`.
-The directory structure is based on the destination table: `/templates/{dataset_id}/{table_name}`.
-For example, [`/templates/telemetry/core_clients_last_seen_raw_v1/query.sql`](https://github.com/mozilla/bigquery-etl/blob/8822b522aad4a5199a56f5b6143804a91228ad86/templates/telemetry/core_clients_last_seen_raw_v1/query.sql)
-is a query that will write results to the `core_clients_last_seen_raw_v1` table in the `telemetry` dataset.
+In the [`bigquery-etl`](https://github.com/mozilla/bigquery-etl) project, queries are written in `/sql`.
+The directory structure is based on the destination table: `/sql/{dataset_id}/{table_name}`.
+For example, [`/sql/telemetry_derived/core_clients_last_seen_v1/query.sql`](https://github.com/mozilla/bigquery-etl/blob/master/sql/telemetry_derived/core_clients_last_seen_v1/query.sql)
+is a query that will write results to the `core_clients_last_seen_v1` table in the `telemetry_derived` dataset.
 This can be overridden in Airflow.
 
 If we want to create a new table of just `client_id`'s each day called `client_ids` in the `example` dataset, 
-we should create `/templates/example/client_ids/query.sql`:
+we should create `/sql/example/client_ids/query.sql`:
 ```sql
 SELECT
   DISTINCT(client_id),
@@ -27,11 +27,7 @@ WHERE
 
 `@submission_date` is a parameter that will be filled in by Airflow.
 
-After `/templates/example/client_ids/query.sql` is created, 
-`/script/generate_sql` can be run to generate the associated query in `/sql/examples/client_ids/query.sql`
-which is the query that will be run by the Airflow task.
-
-Commit both changes in `templates/` and `/sql`. 
+Commit changes in `/sql`. 
 When a commit is made to master in `bigquery-etl`, the Docker image is pushed and available to Airflow.
 
 ## In telemetry-airflow
