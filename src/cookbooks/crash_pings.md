@@ -18,8 +18,8 @@ GROUP BY crash_date
 You can see an example of this query, along with a simple graph in [this STMO query](https://sql.telemetry.mozilla.org/queries/67925/).
 
 Normally, looking at total crash counts isn't so useful: you usually want to restrict
-a query to a channel or some other dimensions, and also facet the results. This usually
-entails adding a few more fields to our SQL:
+a query to a channel or some other dimensions, and also facet the results. This can
+be done by adding a few more fields to our SQL:
 
 ```sql
 SELECT date(submission_timestamp) AS crash_date,
