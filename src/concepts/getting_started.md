@@ -8,6 +8,6 @@ but you should definitely get your analyses reviewed.
 
 This section is meant to introduce new analysts to our data.
 I consider a "new analyst" to be an employee
-who is interested in working with our data
+or contributor who is interested in working with our data
 but doesn't have previous experience with our tools/data.
 They could be technical or non-technical: engineer, PM, or data scientist.

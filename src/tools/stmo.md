@@ -10,6 +10,10 @@ this tool requires familiarity with
 [SQL](https://en.wikipedia.org/wiki/SQL), with which all of the
 tool's data extraction and analysis are performed.
 
+Access to STMO is limited to Mozilla employees and specific contributors,
+please see the [gaining access](../concepts/gaining_access.md) document
+for more information.
+
 Concepts
 --------
 
