@@ -4351,8 +4351,8 @@ GROUP BY crash_date
 </code></pre>
 <p>You can see an example of this query, along with a simple graph in <a href="https://sql.telemetry.mozilla.org/queries/67925/">this STMO query</a>.</p>
 <p>Normally, looking at total crash counts isn't so useful: you usually want to restrict
-a query to a channel or some other dimensions, and also facet the results. This usually
-entails adding a few more fields to our SQL:</p>
+a query to a channel or some other dimensions, and also facet the results. This can
+be done by adding a few more fields to our SQL:</p>
 <pre><code class="language-sql">SELECT date(submission_timestamp) AS crash_date,
        normalized_os AS os,
        count(*) AS crash_count
