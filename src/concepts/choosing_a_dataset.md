@@ -52,33 +52,5 @@ This section describes the derived datasets we provide to make analyzing this da
 
 {{#include ../datasets/other/socorro_crash/intro.md}}
 
-# Obsolete Datasets
-
-## `heavy_users`
-
-{{#include ../datasets/obsolete/heavy_users/intro.md}}
-
-## `retention`
-
-{{#include ../datasets/obsolete/retention/intro.md}}
-
-## `churn`
-
-{{#include ../datasets/obsolete/churn/intro.md}}
-
-## `error_aggregates`
-
-{{#include ../datasets/obsolete/error_aggregates/intro.md}}
-
-# Appendix
-
-## Mobile Metrics
-
-There are several tables owned by the mobile team documented
-[here](https://wiki.mozilla.org/Mobile/Metrics/Redash):
-
-* `android_addons`
-* `mobile_clients`
-
 [main ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html
 [crash ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html
