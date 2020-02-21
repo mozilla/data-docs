@@ -20,8 +20,14 @@ field | description
 `metadata.header.dnt` | DNT (Do Not Track) HTTP header
 `metadata.header.x_debug_id` | X-Debug-Id HTTP header
 `metadata.header.x_pingsender_version` | X-PingSender-Version HTTP header
-`metadata.geo.city` | N/A
+`metadata.geo.city` | City name
 `metadata.geo.country` | An ISO 3166-1 alpha-2 country code
-`metadata.geo.db_version` | The specific geo database version used for this lookup
+`metadata.geo.db_version` | The specific [Geo database] version used for this lookup
 `metadata.geo.subdivision1` | First major country subdivision, typically a state, province, or county
 `metadata.geo.subdivision2` | Second major country subdivision; not applicable for most countries
+`metadata.isp.db_version` | The specific [ISP database] version used for this lookup
+`metadata.isp.name` | The name of the Internet Service Provider
+`metadata.isp.organization` | The name of a specific business entity when available; otherwise the ISP name
+
+[Geo database]: https://dev.maxmind.com/geoip/geoip2/geoip2-city-country-csv-databases/
+[ISP database]: https://dev.maxmind.com/geoip/geoip2/geoip2-isp-csv-database/
