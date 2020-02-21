@@ -25,7 +25,6 @@ matrix:
       script:
         - npm install markdown-link-check -g
         - bash scripts/link_check.sh
-jobs:
   allow_failures:
   - name: link-check
 deploy:
