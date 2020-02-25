@@ -163,7 +163,7 @@ Attribution is currently available for Firefox Desktop only.  It allows metrics 
 
 Attribution has been available on the Windows stub installer since 2017.  The light funnel DAU/WAU/MAU has been increasing since then as the proportion of our Windows users that have used an attributed installer increases.  The apparent growth in the light funnel is not necessarily “real growth” - it is probably an artifactual effect of the adoption of attributed installers over time.
 
-We have experimented with attribution for Mac OS, but it has never functioned properly.
+We have experimented with attribution for MacOS, but as of early 2020 it has never functioned properly.
 
 # Bug reports / Feature Requests
 
