@@ -71,7 +71,7 @@ To make it easier to understand the general semantics of our data, the Glean SDK
 # Contact
 
 *   `#glean` & `#fx-metrics` on slack
-*   `#glean:mozilla.org` on matrix
+*   [#glean:mozilla.org](https://chat.mozilla.org/#/room/#glean:mozilla.org) on matrix
 *   [`glean-team@mozilla.com`](mailto:glean-team@mozilla.com) to reach out
 *   [`fx-data-dev@mozilla.com`](mailto:fx-data-dev@mozilla.com) for announcements etc.
 

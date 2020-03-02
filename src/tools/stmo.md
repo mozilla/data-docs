@@ -71,8 +71,7 @@ own Re:dash database. You can learn more about the available data sets and how
 to find the one that's right for you on the [Choosing a
 dataset](../concepts/choosing_a_dataset.md) page. If you have data set
 questions, or would like to know if specific data is or can be made available
-in STMO, please inquire in the `#datapipeline` or `#datatools` channels on
-`irc.mozilla.org`; or in `#fx-metrics` on Slack.
+in STMO, please see the [getting help](../concepts/getting_help.md) section for information on how to get in touch.
 
 Creating an Example Dashboard
 -----------------------------
@@ -108,8 +107,7 @@ which is generated from Firefox telemetry pings.
 
   Again, there are many different data sources connected to STMO, so if the
   one you want is not in the Telemetry source, we should check other sources.
-  If you're having trouble finding the data you need, feel free to ask in
-  `#fx-metrics` on Slack
+  If you're having trouble finding the data you need, see the [getting help](../concepts/getting_help.md) section.
 
 * Introspect the available columns
 

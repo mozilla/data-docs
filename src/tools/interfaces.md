@@ -19,8 +19,7 @@ reported in our [issue tracker](https://github.com/mozilla/redash/issues).
 
 Offers notebook interface with shared, always-on, autoscaling cluster
 (attaching your notebooks to `shared_serverless_python3` is the best way to start).
-Convenient for quick data investigations. Users can get help on `#databricks`
-channel on IRC and are advised to join the
+Convenient for quick data investigations. Users are advised to join the
 [`databricks-discuss@mozilla.com`](https://groups.google.com/a/mozilla.com/forum/#!forum/databricks-discuss) group.
 
 #### [`telemetry.mozilla.org`](../concepts/analysis_intro.md) (TMO)
