@@ -60,8 +60,8 @@ root
  |-- tab_open_event_count_sum: long (nullable = true)
  |-- active_hours_sum: double (nullable = true)
  |-- total_uri_count: long (nullable = true)
- |-- tagged-sap: long (nullable = true)
- |-- tagged-follow-on: long (nullable = true)
+ |-- tagged_sap: long (nullable = true)
+ |-- tagged_follow_on: long (nullable = true)
  |-- sap: long (nullable = true)
  |-- tagged_sap: long (nullable = true)
  |-- tagged_follow_on: long (nullable = true)
@@ -69,6 +69,12 @@ root
  |-- search_with_ads: long (nullable = true)
  |-- ad_click: long (nullable = true)
  |-- unknown: long (nullable = true)
+ |-- normalized_engine: string (nullable = true)
+ |-- user_pref_browser_search_region: string (nullable = true)
+ |-- is_default_browser: boolean (nullable = true)
+ |-- experiments: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: string
 ```
 
 # Code Reference
