@@ -16,7 +16,7 @@ The following cookbook describes how to set up automated build and deployment fo
 
 ### On GCP
 
-* Create your GCP sandbox project and enable Container Registry (https://console.cloud.google.com/gcr/images/\<your-project-id\>)
+* Make sure "Container Registry" (https://console.cloud.google.com/gcr/images/\<your-project-id\>) is enabled for your GCP project
 * Create a service account, give it the “Storage Admin” role and create a key
 	* Console Link: [Google Cloud Platform](https://console.cloud.google.com/iam-admin/serviceaccounts)
 	* Additional documentation: [Configuring access control  |  Container Registry Documentation](https://cloud.google.com/container-registry/docs/access-control?hl=en_US)
