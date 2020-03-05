@@ -32,7 +32,7 @@ The following cookbook describes how to set up automated build and deployment fo
 	* `GOOGLE_PROJECT_ID`: the project ID that you created in step 1
 	* `GOOGLE_COMPUTE_ZONE`: any compute zone will do, apparently -- try `us-west1` if you're agnostic
 	* `GCLOUD_SERVICE_KEY`: paste in the entire text of the service account key that you generated in step 2
-	* See https://circleci.com/orbs/registry/orb/circleci/gcp-gcr for other environment variables that that you may set
+   * See https://circleci.com/orbs/registry/orb/circleci/gcp-gcr for other environment variables that you may set
 
 
 ### In your GitHub Repo
