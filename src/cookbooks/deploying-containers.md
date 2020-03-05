@@ -46,4 +46,4 @@ The following cookbook describes how to set up automated build and deployment fo
 
 ### Optional
 
-* If your repository is public, you may want to make its container registry publicly readable as well. Go to the GCP container registry’s Settings tab and in the “Public access” section change the visibility for `gcr.io` (the default host if you followed these instructions) to `Public`
+If your repository is public, you may want to make its container registry publicly readable as well. Go to the GCP container registry’s Settings tab and in the “Public access” section change the visibility for `gcr.io` (the default host if you followed these instructions) to `Public`.
