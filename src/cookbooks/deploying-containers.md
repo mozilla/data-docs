@@ -8,7 +8,7 @@ The following cookbook describes how to set up automated build and deployment fo
 
 * Your GitHub project's repository has a working Dockerfile at its root
     * If your file is not named `Dockerfile` or not located in the repo root, see the docs for the [CircleCI GCP-GCR orb](https://circleci.com/orbs/registry/orb/circleci/gcp-gcr) for additional configuration
-* The repository is in the `mozilla` GitHub org (or another org with a paid CircleCI account)
+* The repository is in the [`mozilla` GitHub org](https://github.com/mozilla) (or another org with a paid CircleCI account)
 
 
 ## Steps
