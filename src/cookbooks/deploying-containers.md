@@ -25,7 +25,7 @@ The following cookbook describes how to set up automated build and deployment fo
 ### On CircleCI
 
 * **IMPORTANT SECURITY STEP**
-    * Go to your project’s CircleCI Advanced Settings Page (e.g. https://circleci.com/gh/mozilla/pensieve/edit#advanced-settings) and TURN OFF “*Pass secrets to builds from forked pull requests*”
+    * Go to your project’s CircleCI Advanced Settings Page (e.g. https://circleci.com/gh/mozilla/pensieve/edit#advanced-settings) and make sure that the "*Pass secrets to builds from forked pull requests*" option is TURNED OFF
         * This prevents a bad actor from creating a PR with a CI job that spits out your environment variables to the console, for instance
 	* If you can't access your project settings page, make sure you’re logged into CircleCI via your Mozilla GitHub account and that you are a project administrator
 * On the CircleCI Environment Variables page (e.g. https://circleci.com/gh/mozilla/pensieve/edit#env-vars), add:
