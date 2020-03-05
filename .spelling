@@ -51,6 +51,7 @@ bugzilla
 CamelCase
 CEP
 CFR
+changeset
 changesets
 checkpointed
 checkpointing
@@ -85,6 +86,7 @@ DevTools
 discoverability
 Django's
 DLLs
+Dockerfile
 DWL
 DXR
 DynamoDB
@@ -105,6 +107,8 @@ FirefoxReality
 FireTV
 funnelcake
 GCP
+GCP-GCR
+GCR
 geo-city
 geo-country
 FxA
@@ -139,6 +143,7 @@ Jupyter
 Klar
 KPI
 Komarzewski
+Kubernetes
 lifecycle
 Lockbox
 Lockwise

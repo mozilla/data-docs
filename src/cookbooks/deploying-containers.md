@@ -1,6 +1,6 @@
 # Building and Deploying Containers to Google Container Registry (GCR) with CircleCI
 
-The following cookbook describes how to set up automated build and deployment for containers with CircleCI, a useful pattern for scheduling custom jobs in Google Kubernetnes Engine.
+The following cookbook describes how to set up automated build and deployment for containers with CircleCI, a useful pattern for scheduling custom jobs in Google Kubernetes Engine.
 
 <!-- toc -->
 
@@ -28,9 +28,9 @@ The following cookbook describes how to set up automated build and deployment fo
     * Go to your project’s CircleCI Advanced Settings Page (e.g. https://circleci.com/gh/mozilla/pensieve/edit#advanced-settings) and TURN OFF “*Pass secrets to builds from forked pull requests*”
         * This prevents a bad actor from creating a PR with a CI job that spits out your environment variables to the console, for instance
 	* If you can't access your project settings page, make sure you’re logged into CircleCI via your Mozilla GitHub account and that you are a project administrator
-* On the CirlceCI Environment Variables page (e.g. https://circleci.com/gh/mozilla/pensieve/edit#env-vars), add:
+* On the CircleCI Environment Variables page (e.g. https://circleci.com/gh/mozilla/pensieve/edit#env-vars), add:
 	* `GOOGLE_PROJECT_ID`: the project ID that you created in step 1
-	* `GOOGLE_COMPUTE_ZONE`: any compute zone will do, apparently -- try "us-west1" if you're agnostic
+	* `GOOGLE_COMPUTE_ZONE`: any compute zone will do, apparently -- try `us-west1` if you're agnostic
 	* `GCLOUD_SERVICE_KEY`: paste in the entire text of the service account key that you generated in step 2
 	* See https://circleci.com/orbs/registry/orb/circleci/gcp-gcr for other environment variables that that you may set
 
@@ -38,7 +38,7 @@ The following cookbook describes how to set up automated build and deployment fo
 ### In your GitHub Repo
 
 * In your CircleCI config file add a changeset like this:
-	* [Add automated deployment of docker image to google container registry… · mozilla/pensieve@b56f6f7 · GitHub](https://github.com/mozilla/pensieve/commit/b56f6f78b16d5893ff1cbf1ba895fa5bc85266c0)
+	* [Add automated deployment of docker image to google container registry…](https://github.com/mozilla/pensieve/commit/b56f6f78b16d5893ff1cbf1ba895fa5bc85266c0)
     * The `orb` directive allows the use of the [CircleCI GCP-GCR orb](https://circleci.com/orbs/registry/orb/circleci/gcp-gcr) build-and-push-image job
 	* In your `workflows` section, add `gcp-gcr/build-and-push-image` as a job and require any dependencies you’d like to pass before pushing a new image. Assuming you only want this deployment to occur on new commits to master, add a filter for only the master branch (as in the changeset above)
 * Merge in that PR and your newly built image should be in your project’s container registry in a few moments!
