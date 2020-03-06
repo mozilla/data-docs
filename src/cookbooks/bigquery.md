@@ -176,7 +176,7 @@ but it has changed from `YYYYMMDD` string form to a proper `DATE` type that acce
 - Unqualified queries can become very costly very easily. We've placed restrictions on large tables from accidentally querying "all data for all time",
 namely that you must make use of the date partition fields for large tables (like `main_summary` or `clients_daily`).
 - Please read [_Query Optimizations_](bigquery.md#query-optimizations) section that contains advice on how to reduce cost and improve query performance.
-- re:dash BigQuery data sources will have a 10 TB data scanned limit per query. Please let us know in `#fx-metrics` on Slack if you run into issues!
+- re:dash BigQuery data sources will have a 10 TB data scanned limit per query. Please [let us know](../concepts/getting_help.md) if this becomes an issue.
 - There is no native map support in BigQuery. Instead, we are using structs with fields [key, value]. We have provided convenience functions to access these like key-value maps (described [below](bigquery.md#accessing-map-like-fields).)
 
 ### Projects with BigQuery datasets

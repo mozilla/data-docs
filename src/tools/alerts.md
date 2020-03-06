@@ -143,7 +143,7 @@ clicking on the plot's title. Open another tab to the Evolution View.
 
 5\. If you _still_ don't know what's going on
 
--   find a domain expert on IRC and bother them to help you out. Domain
+-   find a domain expert and ask them to help you out (see [getting help](../concepts/getting_help.md)). Domain
     knowledge is awesome.
 
 From pursuing these steps or sub-steps you should now have two things: a

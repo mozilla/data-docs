@@ -90,7 +90,7 @@ that probe (Metric Count).
   [And yes, that does happen.][problem_client]
 * Sometimes it looks like no data is there, but you think there should be.
   Check under advanced settings and check "Don't Sanitize" and "Don't Trim Buckets".
-  If it's still not there, let us know in IRC on #telemetry.
+  If it's still not there, see [getting help](getting_help.md).
 * TMO Measurement Dashboards do not currently show release-channel data.
   Release-channel data [ceased being aggregated][prefs] as of Firefox 58.
   We're looking into ways of doing this correctly in the near future.
