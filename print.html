@@ -197,8 +197,7 @@ in the <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platfo
 <p>Components are triaged at least weekly by the component owner(s). For issues needing
 urgent attention, it is recommended that you use the <code>needinfo</code> flag to attract attention
 from a specific person. If an issue doesn't receive the appropriate attention within a
-week, you can send email to the <code>fx-data-dev</code> mailing list, reach out on IRC
-in <code>#datapipeline</code>, or on Slack in <code>#fx-metrics</code>.</p>
+week (or it's urgent), you can find out how to reach us in the <a href="concepts/getting_help.html">getting help</a> section.</p>
 <p>When a bug is triaged, it will be assigned a <strong>priority</strong> and <strong>points</strong>. <strong>Priorities</strong> have the
 following meanings:</p>
 <ul>
@@ -341,7 +340,7 @@ the pings we see.
 <a href="https://mozilla.report/post/projects%2Fproblematic_client.kp">And yes, that does happen.</a></li>
 <li>Sometimes it looks like no data is there, but you think there should be.
 Check under advanced settings and check &quot;Don't Sanitize&quot; and &quot;Don't Trim Buckets&quot;.
-If it's still not there, let us know in IRC on #telemetry.</li>
+If it's still not there, see <a href="concepts/getting_help.html">getting help</a>.</li>
 <li>TMO Measurement Dashboards do not currently show release-channel data.
 Release-channel data <a href="https://medium.com/georg-fritzsche/data-preference-changes-in-firefox-58-2d5df9c428b5">ceased being aggregated</a> as of Firefox 58.
 We're looking into ways of doing this correctly in the near future.</li>
@@ -855,8 +854,7 @@ own Re:dash database. You can learn more about the available data sets and how
 to find the one that's right for you on the <a href="tools/../concepts/choosing_a_dataset.html">Choosing a
 dataset</a> page. If you have data set
 questions, or would like to know if specific data is or can be made available
-in STMO, please inquire in the <code>#datapipeline</code> or <code>#datatools</code> channels on
-<code>irc.mozilla.org</code>; or in <code>#fx-metrics</code> on Slack.</p>
+in STMO, please see the <a href="tools/../concepts/getting_help.html">getting help</a> section for information on how to get in touch.</p>
 <h2><a class="header" href="#creating-an-example-dashboard" id="creating-an-example-dashboard">Creating an Example Dashboard</a></h2>
 <p>The rest of this document will take you through the process of creating a
 simple dashboard using STMO.</p>
@@ -885,8 +883,7 @@ sets (showing up as <code>telemetry.clients_last_seen_v&lt;VERSION&gt;</code>).<
 <p>If the table you want is not found</p>
 <p>Again, there are many different data sources connected to STMO, so if the
 one you want is not in the Telemetry source, we should check other sources.
-If you're having trouble finding the data you need, feel free to ask in
-<code>#fx-metrics</code> on Slack</p>
+If you're having trouble finding the data you need, see the <a href="tools/../concepts/getting_help.html">getting help</a> section.</p>
 </li>
 <li>
 <p>Introspect the available columns</p>
@@ -1433,16 +1430,14 @@ nothing of interest.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/sql_optimization.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#getting-help" id="getting-help">Getting Help</a></h1>
 <h3><a class="header" href="#mailing-lists" id="mailing-lists">Mailing lists</a></h3>
 <p>Telemetry-related announcements including new datasets, outages, feature
-releases, etc are sent to <a href="mailto:fx-data-dev@mozilla.org"><code>fx-data-dev@mozilla.org</code></a>, a public
-mailing list.
-Please subscribe to the <a href="https://mail.mozilla.org/listinfo/fx-data-dev">mailing list here</a>.</p>
+releases, etc are sent to <a href="https://mail.mozilla.org/listinfo/fx-data-dev"><code>fx-data-dev@mozilla.org</code></a>, a public
+mailing list (follow the link for archives and information on how to subscribe).</p>
 <p>There's also an internal mailing list,
 <a href="mailto:fx-data-platform@mozilla.com"><code>fx-data-platform@mozilla.com</code></a>,
 meant for internal data platform team communications.
 Please speak to your manager if you believe you should be on the list.</p>
-<h3><a class="header" href="#irc" id="irc">IRC</a></h3>
-<p>The data platform team is available in <code>#telemetry</code> on <code>irc.mozilla.org</code>.
-For pipeline-specific issues, you can also find us in <code>#datapipeline</code>.</p>
+<h3><a class="header" href="#matrix" id="matrix">Matrix</a></h3>
+<p>You can find us in the <a href="https://chat.mozilla.org/#/room/#telemetry:mozilla.org">#telemetry:mozilla.org</a> channel on <a href="https://wiki.mozilla.org/Matrix">Mozilla's instance of matrix</a>.</p>
 <h3><a class="header" href="#slack" id="slack">Slack</a></h3>
 <p>The Mozilla data org is reachable at <code>#fx-metrics</code> in the internal Mozilla Slack.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/getting_help.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#tools" id="tools">Tools</a></h1>
@@ -2498,8 +2493,7 @@ reported in our <a href="https://github.com/mozilla/redash/issues">issue tracker
 <h4><a class="header" href="#a-hrefhttpsdbc-caf9527b-e073clouddatabrickscomdatabricksa" id="a-hrefhttpsdbc-caf9527b-e073clouddatabrickscomdatabricksa"><a href="https://dbc-caf9527b-e073.cloud.databricks.com/">Databricks</a></a></h4>
 <p>Offers notebook interface with shared, always-on, autoscaling cluster
 (attaching your notebooks to <code>shared_serverless_python3</code> is the best way to start).
-Convenient for quick data investigations. Users can get help on <code>#databricks</code>
-channel on IRC and are advised to join the
+Convenient for quick data investigations. Users are advised to join the
 <a href="https://groups.google.com/a/mozilla.com/forum/#!forum/databricks-discuss"><code>databricks-discuss@mozilla.com</code></a> group.</p>
 <h4><a class="header" href="#a-hreftoolsconceptsanalysis_introhtmltelemetrymozillaorga-tmo" id="a-hreftoolsconceptsanalysis_introhtmltelemetrymozillaorga-tmo"><a href="tools/../concepts/analysis_intro.html"><code>telemetry.mozilla.org</code></a> (TMO)</a></h4>
 <p>Our <a href="https://telemetry.mozilla.org"><code>telemetry.mozilla.org</code></a> (TMO) site is the
@@ -3077,7 +3071,7 @@ WHERE
 <h1><a class="header" href="#contact" id="contact">Contact</a></h1>
 <ul>
 <li><code>#glean</code> &amp; <code>#fx-metrics</code> on slack</li>
-<li><code>#glean:mozilla.org</code> on matrix</li>
+<li><a href="https://chat.mozilla.org/#/room/#glean:mozilla.org">#glean:mozilla.org</a> on matrix</li>
 <li><a href="mailto:glean-team@mozilla.com"><code>glean-team@mozilla.com</code></a> to reach out</li>
 <li><a href="mailto:fx-data-dev@mozilla.com"><code>fx-data-dev@mozilla.com</code></a> for announcements etc.</li>
 </ul>
@@ -3395,7 +3389,7 @@ in the build we received the Alert for?</li>
 <li>If you <em>still</em> don't know what's going on</li>
 </ol>
 <ul>
-<li>find a domain expert on IRC and bother them to help you out. Domain
+<li>find a domain expert and ask them to help you out (see <a href="tools/../concepts/getting_help.html">getting help</a>). Domain
 knowledge is awesome.</li>
 </ul>
 <p>From pursuing these steps or sub-steps you should now have two things: a
@@ -3761,7 +3755,7 @@ but it has changed from <code>YYYYMMDD</code> string form to a proper <code>DATE
 <li>Unqualified queries can become very costly very easily. We've placed restrictions on large tables from accidentally querying &quot;all data for all time&quot;,
 namely that you must make use of the date partition fields for large tables (like <code>main_summary</code> or <code>clients_daily</code>).</li>
 <li>Please read <a href="cookbooks/bigquery.html#query-optimizations"><em>Query Optimizations</em></a> section that contains advice on how to reduce cost and improve query performance.</li>
-<li>re:dash BigQuery data sources will have a 10 TB data scanned limit per query. Please let us know in <code>#fx-metrics</code> on Slack if you run into issues!</li>
+<li>re:dash BigQuery data sources will have a 10 TB data scanned limit per query. Please <a href="cookbooks/../concepts/getting_help.html">let us know</a> if this becomes an issue.</li>
 <li>There is no native map support in BigQuery. Instead, we are using structs with fields [key, value]. We have provided convenience functions to access these like key-value maps (described <a href="cookbooks/bigquery.html#accessing-map-like-fields">below</a>.)</li>
 </ul>
 <h3><a class="header" href="#projects-with-bigquery-datasets" id="projects-with-bigquery-datasets">Projects with BigQuery datasets</a></h3>

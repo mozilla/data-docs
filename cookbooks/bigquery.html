@@ -361,7 +361,7 @@ but it has changed from <code>YYYYMMDD</code> string form to a proper <code>DATE
 <li>Unqualified queries can become very costly very easily. We've placed restrictions on large tables from accidentally querying &quot;all data for all time&quot;,
 namely that you must make use of the date partition fields for large tables (like <code>main_summary</code> or <code>clients_daily</code>).</li>
 <li>Please read <a href="bigquery.html#query-optimizations"><em>Query Optimizations</em></a> section that contains advice on how to reduce cost and improve query performance.</li>
-<li>re:dash BigQuery data sources will have a 10 TB data scanned limit per query. Please let us know in <code>#fx-metrics</code> on Slack if you run into issues!</li>
+<li>re:dash BigQuery data sources will have a 10 TB data scanned limit per query. Please <a href="../concepts/getting_help.html">let us know</a> if this becomes an issue.</li>
 <li>There is no native map support in BigQuery. Instead, we are using structs with fields [key, value]. We have provided convenience functions to access these like key-value maps (described <a href="bigquery.html#accessing-map-like-fields">below</a>.)</li>
 </ul>
 <h3><a class="header" href="#projects-with-bigquery-datasets" id="projects-with-bigquery-datasets">Projects with BigQuery datasets</a></h3>
