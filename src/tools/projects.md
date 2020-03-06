@@ -74,7 +74,7 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 | Name and repo                     | Description                             |
 |-----------------------------------|-----------------------------------------|
 | [`telemetry.mozilla.org`][tmo_gh] | Main entry point for viewing [aggregate Telemetry data][tmo]
-| [Growth & Usage dashboard][gud]   | Dashboard for questions about product growth and usage
+| [Growth & Usage dashboard][gud_gh]   | Dashboard for questions about [product growth and usage][gud])
 | [Glean Aggregate Metrics][glam]   | Aggregate info about probes and measures
 | [Glean Debug View][gdv]           | Tag and view Glean submissions with low latency
 | [Cerberus][cer] & [Medusa][med]   | Automatic alert system for telemetry aggregates
@@ -94,6 +94,7 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 
 [tmo_gh]: https://github.com/mozilla/telemetry-dashboard
 [gud]: https://growth-stage.bespoke.nonprod.dataops.mozgcp.net
+[gud_gh]: https://github.com/mozilla/GUD
 [glam]: https://github.com/mozilla/glam
 [gdv]: https://debug-ping-preview.firebaseapp.com
 [cer]: https://github.com/mozilla/cerberus
