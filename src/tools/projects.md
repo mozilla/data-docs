@@ -94,7 +94,7 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 
 [tmo_gh]: https://github.com/mozilla/telemetry-dashboard
 [gud]: https://growth-stage.bespoke.nonprod.dataops.mozgcp.net
-[gud_source]: https://github.com/mozilla/GUD
+[gud_gh]: https://github.com/mozilla/GUD
 [glam]: https://github.com/mozilla/glam
 [gdv]: https://debug-ping-preview.firebaseapp.com
 [cer]: https://github.com/mozilla/cerberus
