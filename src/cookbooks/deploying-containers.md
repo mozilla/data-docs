@@ -2,6 +2,11 @@
 
 The following cookbook describes how to set up automated build and deployment for containers with CircleCI, a useful pattern for scheduling custom jobs in Google Kubernetes Engine.
 
+Note that this method intended for rapid prototyping rather than for production workloads.
+If you need to transition a prototype to a production deployment,
+[file a Data Platform and Tools > Operations bug](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data+Platform+and+Tools&component=Operations)
+to start the conversation.
+
 <!-- toc -->
 
 ## Assumptions
