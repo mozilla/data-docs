@@ -3,6 +3,7 @@
         { "pattern": "^http(s)?://localhost" },
         { "pattern": "^/datasets" },
         { "pattern": "^BROKEN:" },
+        { "pattern": "^https://circleci.com/gh/mozilla/pensieve/edit" },
         { "pattern": "^https://github.com/mozilla-services/puppet-config" },
         { "pattern": "^https://github.com/mozilla-services/spark-parquet-to-bigquery" },
         { "pattern": "^https://github.com/mozilla/Fx-Data-Planning" },
