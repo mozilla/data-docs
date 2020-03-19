@@ -94,6 +94,7 @@
         * [Channel Normalization and Querying](concepts/channels/channel_normalization.md)
     * [Census metrics](concepts/censuses.md)
     * [Engagement metrics](concepts/engagement.md)
+    * [Segments](concepts/segments.md)
     * [Sampling](concepts/sample_id.md)
 
 ---
