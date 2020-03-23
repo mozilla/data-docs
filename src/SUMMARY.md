@@ -1,4 +1,4 @@
-* [Firefox Data Documentation](introduction.md)
+[Firefox Data Documentation](introduction.md)
 * [Standard Metrics](metrics/index.md)
 * [Getting Started](concepts/getting_started.md)
   * [Reporting a problem](concepts/reporting_a_problem.md)
