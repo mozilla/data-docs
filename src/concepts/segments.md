@@ -30,20 +30,20 @@ On a given day, every client falls into exactly one of these segments.
 Each client's segment is stored in `telemetry.clients_last_seen.segment_regular_users_v1`.
 (FIXME: or it will be if the [PR](https://github.com/mozilla/bigquery-etl/pull/825) is accepted in a form similar to its current state)
 
-Regular users v1 is defined as 
+*Regular users v1* is defined as 
 clients who have at least two days where they browsed >=5 URIs, 
-in *all four* of the last weeks. 
+in *all* of the last four weeks. 
 Observationally, on any given day this segment seems to contain a large fraction of our users 
 and has exceptionally high retention.
 
-Semi-regular users v1 is defined as 
-clients who browsed >=5 URIs on at least two days in each of *one, two or three* of the last four weeks. 
-This seems to be a smaller segment of our users, and has relatively high retention.
-
-New/irregular users v1 is defined as 
+*New/irregular users v1* is defined as 
 clients who browsed >=5 URIS on at least two days in *none* of the last four weeks. 
 This is a smaller segment of our users and has low retention 
 (though "activation" is likely a more relevant word than "retention" for many of these clients).
+
+*Semi-regular users v1* is the other users: the segment is defined as 
+clients who browsed >=5 URIs on at least two days in *some but not all* of the last four weeks. 
+This seems to be a smaller segment of our users, and has relatively high retention.
 
 In each of these definitions, 
 "the last four weeks" refer to 7 day periods that end on the day of week 
