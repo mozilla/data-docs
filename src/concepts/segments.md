@@ -11,14 +11,14 @@ For example, "In this experiment, how do new users react to this feature,
 and how does this differ from established users?". 
 Or "DAU moved dramatically - 
 is this restricted to users in this particular country (i.e. a segment) 
-where there's an event happening, 
+where there's an event happening, which would raise our suspicions,
 or is it global and therefore not solely due to that event?"
 
 ## Versioning
 
 We are building out our library of segments, 
 and we want room to iterate to improve them in the future. 
-So please quote segments' versions with their names, 
+So please quote segments' versions with their names, e.g. "regular users v1"
 so that your communication is forwards compatible.
 
 ## Current segments
