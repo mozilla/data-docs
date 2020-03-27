@@ -30,7 +30,7 @@ GROUP BY 1,
 
 ### Scheduling
 The job is schedule on a nightly basis on airflow.
-The dag is available under [`mozilla/telemetry-airflow:/dags/socorro_import.py`](https://github.com/mozilla/telemetry-airflow/blob/930790116d8d5c924cd61a07311fc8a34340f3d6/dags/socorro_import.py).
+The dag is available under [`mozilla/telemetry-airflow:/dags/socorro_import.py`](https://github.com/mozilla/telemetry-airflow/blob/master/dags/socorro_import.py).
 
 ### Schema 
 The source schema is available on the [`mozilla-services/socorro` GitHub repository](https://raw.githubusercontent.com/mozilla-services/socorro/master/socorro/schemas/crash_report.json).
