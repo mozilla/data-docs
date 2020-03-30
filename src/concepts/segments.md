@@ -28,27 +28,20 @@ so that your communication is forwards compatible.
 This is a set of three segments. 
 On a given day, every client falls into exactly one of these segments.
 Each client's segment is stored in `telemetry.clients_last_seen.segment_regular_users_v1`.
-(FIXME: or it will be if the [PR](https://github.com/mozilla/bigquery-etl/pull/825) is accepted in a form similar to its current state)
+
 
 *Regular users v1* is defined as 
-clients who have at least two days where they browsed >=5 URIs, 
-in *all* of the last four weeks. 
+clients who browsed >=5 URIs on at least _one_ of the previous 6 days, and browsed >=5 URIs on _at least two_ days in each of the three weeks before that. 
 Observationally, on any given day this segment seems to contain a large fraction of our users 
 and has exceptionally high retention.
 
 *New/irregular users v1* is defined as 
-clients who browsed >=5 URIS on at least two days in *none* of the last four weeks. 
+clients who did not browse >=5 URIs on any of the previous 6 days, and browsed >=5 URIs on _less than two_ days in each of the three weeks before that.
 This is a smaller segment of our users and has low retention 
 (though "activation" is likely a more relevant word than "retention" for many of these clients).
 
-*Semi-regular users v1* is the other users: the segment is defined as 
-clients who browsed >=5 URIs on at least two days in *some but not all* of the last four weeks. 
+*Semi-regular users v1* contains the other clients.  
 This seems to be a smaller segment of our users, and has relatively high retention.
-
-In each of these definitions, 
-"the last four weeks" refer to 7 day periods that end on the day of week 
-before the first day for which we want to study the user. 
-They do not necessarily run Monday through Sunday.
 
 ## Obsolete segments
 
@@ -75,11 +68,10 @@ Segments are found as columns in the `clients_last_seen` dataset: the segment li
 ### WAU and MAU
 
 Users can change segments part way through a week or a month. 
-When computing MAU for a segment, 
-include all clients that fit that segment for at least one day they were active in the month, 
-regardless of whether they fit a contradictory segment on another active day. 
-This means that the sum of MAU for each non-overlapping segment can be larger than MAU.
-(FIXME: This point needs special attention in the review process - it appears to be the best option)
+At present, 
+we have not settled the questions of whether and how to split MAU by segment,
+and whether and how to measure MAU for each segment.
+So stick to DAU for now.
 
 
 ### Example queries
@@ -88,7 +80,7 @@ DAU for regular users v1:
 ```lang=sql
 SELECT
     submission_date,
-    COUNT(DISTINCT client_id) AS dau_regular_v1
+    COUNT(*) AS dau_regular_v1
 FROM moz-fx-data-shared-prod.telemetry.clients_last_seen
 WHERE
     submission_date BETWEEN '2020-01-01' AND '2020-03-01'
@@ -97,38 +89,17 @@ WHERE
 GROUP BY submission_date
 ```
 
-MAU for regular users v1:
+DAU for regular users v1, but joining from a different table:
 ```lang=sql
 SELECT
     cd.submission_date,
-    COUNT(DISTINCT cd.client_id) AS mau_regular_v1
-FROM moz-fx-data-shared-prod.telemetry.clients_daily cd
-INNER JOIN moz-fx-data-shared-prod.telemetry.clients_last_seen cls
+    COUNT(*) AS dau_regular_v1
+FROM clients_daily cd
+INNER JOIN clients_last_seen cls
     ON cls.client_id = cd.client_id
-    AND DATE_DIFF(cd.submission_date, cls.submission_date, DAY) BETWEEN 0 and 27
+    AND cls.submission_date = cd.submission_date
+    AND cls.submission_date BETWEEN '2020-01-01' AND '2020-03-01'
+WHERE
+    cd.submission_date BETWEEN '2020-01-01' AND '2020-03-01'
     AND cls.segment_regular_users_v1 = 'regular_v1'
-    AND cls.submission_date BETWEEN
-        DATE_SUB('2020-01-01', INTERVAL 27 DAY) AND '2020-03-01'
-WHERE
-    cd.submission_date BETWEEN '2020-01-01' AND '2020-03-01'
-GROUP BY cd.submission_date
-```
-
-The "new/irregular users v1" segment has a subtlety: its users don't necessarily have a 28-day-old entry in `clients_last_seen`, so we must use a `LEFT JOIN` and manually handle `NULL`s. MAU for new/irregular users v1:
-```lang=sql
-SELECT
-    cd.submission_date,
-    COUNT(DISTINCT cd.client_id) AS mau_new_irregular_v1
-FROM moz-fx-data-shared-prod.telemetry.clients_daily cd
-LEFT JOIN moz-fx-data-shared-prod.telemetry.clients_last_seen cls
-    ON cls.client_id = cd.client_id
-    AND cls.submission_date BETWEEN
-        DATE_SUB('2020-01-01', INTERVAL 27 DAY) AND '2020-03-01'
-WHERE
-    cd.submission_date BETWEEN '2020-01-01' AND '2020-03-01'
-    AND (
-        cls.segment_regular_users_v1 IS NULL
-        OR cls.segment_regular_users_v1 = 'new_irregular_v1'
-    )
-GROUP BY cd.submission_date
 ```
