@@ -146,7 +146,7 @@ Returns:
   Focus iOS
   Lockwise Android
   FirefoxConnect
-/**
+*/
 ```
 
 
