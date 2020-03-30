@@ -33,7 +33,7 @@
   * [Real-time](cookbooks/realtime.md)
     * [Seeing Your Own Pings](cookbooks/view_pings_cep.md)
   * [Metrics](cookbooks/metrics.md)
-    * [Daily Active Users (DAU)](cookbooks/dau.md)
+    * [Daily Active Users (DAU and MAU)](cookbooks/dau.md)
     * [Active DAU (aDAU)](cookbooks/active_dau.md)
     * [Retention](cookbooks/retention.md)
 * [Operational cookbooks](cookbooks/index.md)

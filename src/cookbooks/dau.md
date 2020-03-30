@@ -1,7 +1,8 @@
 # Daily and Monthly Active Users (DAU and MAU)
 
-For the purposes of DAU, a profile is considered active if it sends any main ping.
-* Dates are defined by `submission_date_s3` or `submission_date`.
+For the purposes of DAU, a desktop profile is considered active if it sends any main ping.
+See the next section for analogous definitions on top of mobile products.
+* Dates are defined by `submission_date`.
 
 **DAU** is the number of clients sending a main ping on a given day.
 
@@ -93,3 +94,49 @@ GROUP BY
 ORDER BY
   submission_date_s3
 ```
+
+## Mobile Products
+
+The concept of usage is slightly different for mobile products compared to desktop Firefox.
+A single session of desktop Firefox is likely to span multiple days and we
+rely on a process to send a `main` ping once per day.
+A single session of a mobile application is likely to last only a few minutes and
+we have generally instrumented mobile applications to send a separate ping for
+each user session:
+
+* `core` pings are the canonical measure for usage on legacy mobile products
+* `baseline` pings are the canonical measure for usage on mobile products using the Glean SDK
+
+A given client is considered "active" for a given mobile product on a given day if we receive at
+least one of the above pings. Otherwise, the definitions of DAU and MAU for individual mobile products
+are identical to those used for desktop Firefox.
+
+_Note:_ As of March 2020, Fenix (the new Firefox for Android) is using a modified definition of usage
+which considers a user active for a given day based on any `baseline` _or_ `metrics` ping
+being submitted on the given day. There is an open
+[proposal for Fenix KPI reporting changes](https://docs.google.com/document/d/1Ym4eZyS0WngEP6WdwJjmCoxtoQbJSvORxlQwZpuSV2I/edit?ts=5e6f894f#) to move Fenix reporting to consider only `baseline` pings.
+
+For quick analysis, use the `firefox_nondesktop_exact_mau28_by_dimensions`.
+This table has a `product` dimension used to differentiate different applications
+such as `"Fennec Android"` and `"Fenix"`.
+
+### Combining metrics from multiple products
+
+Telemetry is collected independently for each Mozilla product.
+To protect user privacy, we intentionally do not include any identifiers
+that can be used to link a given client or user across multiple products.
+As a result, when we consider overall "mobile MAU", we are taking a simple sum of
+MAU as measured independently for each product. Analyses should keep in mind
+that any given user could be contributing multiple points to MAU by sending
+telemetry from multiple applications. Forecasts should also generally only be
+prepared per-product for this reason.
+
+This causes some particularly interesting effects for the case of migrating users
+from one application to another as is the case with Firefox for Android in 2020.
+A highly active user who migrates will go from sending multiple Fennec `core` pings per
+day to sending multiple Fenix `baseline` pings per day.
+On the day of migration, they will have sent pings from both applications and thus
+will count towards Fennec metrics _and_ Fenix metrics. It will take a full 28 days
+for the client to finally fall out of the MAU window for Fennec, so we should
+expect to see inflation in the overall "mobile MAU" sum during periods of heavy
+migration.
