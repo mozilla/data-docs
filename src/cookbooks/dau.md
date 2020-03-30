@@ -109,16 +109,46 @@ each user session:
 
 A given client is considered "active" for a given mobile product on a given day if we receive at
 least one of the above pings. Otherwise, the definitions of DAU and MAU for individual mobile products
-are identical to those used for desktop Firefox.
+are identical to those used for desktop Firefox. See
+[Choosing a Mobile Product Dataset](../concepts/choosing_a_dataset_mobile.md) for an
+overview of the various products and which telemetry approach they use.
 
 _Note:_ As of March 2020, Fenix (the new Firefox for Android) is using a modified definition of usage
 which considers a user active for a given day based on any `baseline` or `metrics` ping
 being submitted on the given day. There is an open
 [proposal for Fenix KPI reporting changes](https://docs.google.com/document/d/1Ym4eZyS0WngEP6WdwJjmCoxtoQbJSvORxlQwZpuSV2I/edit?ts=5e6f894f#) to move Fenix reporting to consider only `baseline` pings.
 
-For quick analysis, use the `firefox_nondesktop_exact_mau28_by_dimensions`.
-This table has a `product` dimension used to differentiate different applications
-such as `"Fennec Android"` and `"Fenix"`.
+For quick analysis, use `firefox_nondesktop_exact_mau28_by_dimensions`.
+This table has a `product` dimension used to differentiate different applications.
+Not that exact naming for applications and channels is sometimes different
+between analyses. You can retrieve the list of names used here via query:
+
+```
+SELECT
+  product
+FROM
+  `moz-fx-data-shared-prod.telemetry.firefox_nondesktop_exact_mau28_by_dimensions`
+WHERE
+  submission_date = '2020-03-01'
+GROUP BY
+  product
+ORDER BY
+  COUNT(*) DESC
+
+/*
+Returns:
+  Fennec Android
+  Fennec iOS
+  Focus Android
+  Fenix
+  FirefoxForFireTV
+  Firefox Lite
+  Focus iOS
+  Lockwise Android
+  FirefoxConnect
+/**
+```
+
 
 ### Combining metrics from multiple products
 
