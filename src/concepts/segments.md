@@ -80,11 +80,11 @@ DAU for _regular users v1_:
 ```lang=sql
 SELECT
     submission_date,
-    COUNT(*) AS dau_regular_v1
+    COUNT(*) AS dau_regular_users_v1
 FROM moz-fx-data-shared-prod.telemetry.clients_last_seen
 WHERE
     submission_date BETWEEN '2020-01-01' AND '2020-03-01'
-    AND segment_usage_regularity_v1 = 'regular_v1'
+    AND segment_usage_regularity_v1 = 'regular_users_v1'
     AND days_since_seen = 0  -- Get DAU from clients_last_seen
 GROUP BY submission_date
 ```
@@ -93,7 +93,7 @@ DAU for _regular users v1_, but joining from a different table:
 ```lang=sql
 SELECT
     cd.submission_date,
-    COUNT(*) AS dau_regular_v1
+    COUNT(*) AS dau_regular_users_v1
 FROM clients_daily cd
 INNER JOIN clients_last_seen cls
     ON cls.client_id = cd.client_id
@@ -101,5 +101,5 @@ INNER JOIN clients_last_seen cls
     AND cls.submission_date BETWEEN '2020-01-01' AND '2020-03-01'
 WHERE
     cd.submission_date BETWEEN '2020-01-01' AND '2020-03-01'
-    AND cls.segment_usage_regularity_v1 = 'regular_v1'
+    AND cls.segment_usage_regularity_v1 = 'regular_users_v1'
 ```
