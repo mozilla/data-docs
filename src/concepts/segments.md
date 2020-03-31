@@ -23,11 +23,11 @@ so that your communication is forwards compatible.
 
 ## Current segments
 
-### Regular users v1, Semi-regular users v1, New/irregular users v1
+### Usage regularity v1
 
 This is a set of three segments. 
 On a given day, every client falls into exactly one of these segments.
-Each client's segment is stored in `telemetry.clients_last_seen.segment_regular_users_v1`.
+Each client's segment is stored in `telemetry.clients_last_seen.segment_usage_regularity_v1`.
 
 
 *Regular users v1* is defined as 
@@ -59,7 +59,7 @@ like "heavy users go on to continue using the product heavily".
 
 So, when writing queries, 
 be sure to compute users' segments using only 
-data collected before the time period you're analysing their behavior. 
+data collected before the time period you're analyzing their behavior.
 For example, we should compute DAU for the "regular users v1" segment on 2020-03-18 
 by checking the usage criterion with data up to and including 2020-03-17.
 
@@ -76,7 +76,7 @@ So stick to DAU for now.
 
 ### Example queries
 
-DAU for regular users v1:
+DAU for _regular users v1_:
 ```lang=sql
 SELECT
     submission_date,
@@ -84,12 +84,12 @@ SELECT
 FROM moz-fx-data-shared-prod.telemetry.clients_last_seen
 WHERE
     submission_date BETWEEN '2020-01-01' AND '2020-03-01'
-    AND segment_regular_users_v1 = 'regular_v1'
+    AND segment_usage_regularity_v1 = 'regular_v1'
     AND days_since_seen = 0  -- Get DAU from clients_last_seen
 GROUP BY submission_date
 ```
 
-DAU for regular users v1, but joining from a different table:
+DAU for _regular users v1_, but joining from a different table:
 ```lang=sql
 SELECT
     cd.submission_date,
@@ -101,5 +101,5 @@ INNER JOIN clients_last_seen cls
     AND cls.submission_date BETWEEN '2020-01-01' AND '2020-03-01'
 WHERE
     cd.submission_date BETWEEN '2020-01-01' AND '2020-03-01'
-    AND cls.segment_regular_users_v1 = 'regular_v1'
+    AND cls.segment_usage_regularity_v1 = 'regular_v1'
 ```
