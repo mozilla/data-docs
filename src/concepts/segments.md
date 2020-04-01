@@ -31,17 +31,20 @@ Each client's segment is stored in `telemetry.clients_last_seen.segment_usage_re
 
 
 *Regular users v1* is defined as 
-clients who browsed >=5 URIs on at least _one_ of the previous 6 days, and browsed >=5 URIs on _at least two_ days in each of the three weeks before that. 
+clients who browsed >=5 URIs on at least _at least eight_ of the previous 27 days.
 Observationally, on any given day this segment seems to contain a large fraction of our users 
 and has exceptionally high retention.
 
 *New/irregular users v1* is defined as 
-clients who did not browse >=5 URIs on any of the previous 6 days, and browsed >=5 URIs on _less than two_ days in each of the three weeks before that.
-This is a smaller segment of our users and has low retention 
+clients who browsed >=5 URIs on _none_ of the previous 27 days.
+This is a small segment of our daily users and has low retention
 (though "activation" is likely a more relevant word than "retention" for many of these clients).
 
-*Semi-regular users v1* contains the other clients.  
-This seems to be a smaller segment of our users, and has relatively high retention.
+*Semi-regular users v1* is defined as
+clients who browsed >=5 URIs on _between one and seven_ of the previous 27 days,
+i.e. it contains users who do not fit the other two segments at this time.
+This seems to be a small segment of our daily users, and has moderate retention.
+We do not yet know what proportion of users in this segment stay in this segment for an extended period, and what proportion are in transition between other segments.
 
 ## Obsolete segments
 
@@ -57,11 +60,9 @@ Else we run the risk of making trivial discoveries
 like "heavy users use the product heavily" instead of more meaningful ones 
 like "heavy users go on to continue using the product heavily".
 
-So, when writing queries, 
+So, when writing queries to compute segments directly from their definition, 
 be sure to compute users' segments using only 
 data collected before the time period you're analyzing their behavior.
-For example, we should compute DAU for the "regular users v1" segment on 2020-03-18 
-by checking the usage criterion with data up to and including 2020-03-17.
 
 Segments are found as columns in the `clients_last_seen` dataset: the segment listed for a client on a `submission_date` is valid for that `submission_date` because it is computed only using behavioral data collected _before_ the `submission_date`.
 
