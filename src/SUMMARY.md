@@ -23,7 +23,6 @@
   * [Glean overview](concepts/glean/glean.md)
     * [Accessing Glean data](concepts/glean/accessing_glean_data.md)
     * [Glean Debug ping viewer](concepts/glean/debug_ping_view.md)
-  * [Alerts](tools/alerts.md)
   * [Growth & Usage Dashboard (GUD)](tools/gud.md)
 * [Analysis cookbooks](cookbooks/index.md)
   * [Accessing and working with BigQuery](cookbooks/bigquery.md)
