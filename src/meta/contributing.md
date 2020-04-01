@@ -20,39 +20,7 @@ To begin contributing to the docs, fork the `firefox-data-docs` repo.
 
 ## Building the Documentation
 
-The documentation is rendered with [mdBook](https://github.com/rust-lang/mdBook).
-We use a fork named [mdbook-dtmo] that includes a number of custom additions to mdbook for our environment
-(for example, a plugin to automatically generate a table-of-contents).
-
-You can download [mdbook-dtmo] on the [GitHub releases page](https://github.com/badboy/mdbook-dtmo/releases).
-Please use the latest version.
-Unpack it and place the binary in a directory of your `$PATH`.
-
-[mdbook-dtmo]: https://github.com/badboy/mdbook-dtmo
-
-If you have [rustc](https://www.rust-lang.org/) already installed, you can install a pre-compiled binary directly:
-
-```bash
-curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-dtmo
-```
-
-Make sure this directory is in your `$PATH` or copy it to a directory of your `$PATH`.
-
-You can also build and install the preprocessors:
-
-```bash
-cargo install mdbook-dtmo
-```
-
-You can then serve the documentation locally with:
-
-```
-mdbook-dtmo serve
-```
-
-The complete documentation for the mdBook toolchain is available online at <https://rust-lang.github.io/mdBook/>.
-If you run into any technical limitations, let `@harterrt` or `@badboy` know.
-We are happy to change the tooling to make it as much fun as possible to write.
+Please [see the README](https://github.com/mozilla/firefox-data-docs/blob/master/README.md#building-the-documentation) in the GitHub repository for up-to-date information on how to build the documentation.
 
 ## Adding a new article
 
@@ -117,6 +85,7 @@ To run the link checker locally, [install the `markdown-link-check` library](htt
 ### Mermaid
 
 You may use [`mermaid.js`](https://mermaidjs.github.io/) diagrams in code blocks:
+
 ```
 graph LR
   you -->|write|docs
@@ -131,11 +100,10 @@ graph LR
   docs --> profit!
 ```
 
-
 ## Review
 
 Once you're happy with your contribution, please open a PR and flag `@harterrt` for review.
-Please squash your changes  into meaningful commits  and follow these
+Please squash your changes into meaningful commits and follow these
 [commit message guidelines](https://chris.beams.io/posts/git-commit/).
 
 ## Publishing
