@@ -2,7 +2,7 @@
 
 For Mozilla, getting reliable data from our products is critical to inform our decision making. Glean is our new product analytics & telemetry solution that will provide consistent data behavior and development experience across all of our products.
 
-It currently supports Android, iOS products, and Python based tools, while support for Desktop Firefox is in development.
+The list of supported platforms and implementations is [available in the Glean SDK Book](https://mozilla.github.io/glean/book/dev/core/internal/implementations.html).
 
 > Note that this is different from Telemetry for Firefox Desktop ([library](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/index.html), [datasets](../choosing_a_dataset.md)), although it provides similar capabilities.
 
@@ -36,7 +36,7 @@ Because Glean knows more about the individual data, such as its type and the ran
   
   Metrics that are common to all products, such as the operating system and architecture, are provided automatically in a consistent way.
   
-  Any issues found with these base metrics only need be fixed in Glean to benefit all Glean-using products.
+  Any issues found with these base metrics only need be fixed in Glean to benefit all SDK-using products.
   
 **Encourage specificity**
 
@@ -50,7 +50,7 @@ Because Glean knows more about the individual data, such as its type and the ran
 
 **Follow [lean data practices](https://leandatapractices.com/)**
 
-  The Glean system enforces that all measurements received data review, and it is impossible to collect measurements that haven't been declared.
+  The Glean system enforces that all measurements received [data review](https://wiki.mozilla.org/Firefox/Data_Collection), and it is impossible to collect measurements that haven't been declared.
   It also makes it easy to limit data collection to only what's necessary:
   
   - Enforced expiration dates for every metric
