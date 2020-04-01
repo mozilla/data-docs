@@ -1,6 +1,6 @@
 # Glean
 
-For Mozilla, getting reliable data from our products is critical to inform our decision making. Glean is our new product analytics & telemetry solution that will provide consistent data behavior and development experience across all of our products.
+For Mozilla, getting reliable data from our products is critical to inform our decision making. Glean is our new product analytics & telemetry solution that provide a consistent behavior and experience across all of our products.
 
 The list of supported platforms and implementations is [available in the Glean SDK Book](https://mozilla.github.io/glean/book/dev/core/internal/implementations.html).
 
@@ -32,7 +32,7 @@ Because Glean knows more about the individual data, such as its type and the ran
 
 **Provide a consistent base of telemetry**
 
-  A baseline of analysis is important for all our products, from counting active users to retention and session times. This is supported out-of-the-box by the SDK, and funnels directly into visualization tools like GUD.
+  A baseline of analysis is important for all our products, from counting active users to retention and session times. This is supported out-of-the-box by the SDK, and funnels directly into visualization tools like the [Growth and Usage Dashboard (GUD)](../tools/gud.html).
   
   Metrics that are common to all products, such as the operating system and architecture, are provided automatically in a consistent way.
   
