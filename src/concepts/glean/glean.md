@@ -1,6 +1,6 @@
 # Glean
 
-For Mozilla, getting reliable data from our products is critical to inform our decision making. Glean is our new product analytics & telemetry solution that provide a consistent behavior and experience across all of our products.
+For Mozilla, getting reliable data from our products is critical to inform our decision making. Glean is our new product analytics & telemetry solution that provides a consistent experience and behavior across all of our products.
 
 The list of supported platforms and implementations is [available in the Glean SDK Book](https://mozilla.github.io/glean/book/dev/core/internal/implementations.html).
 
@@ -20,7 +20,7 @@ Metrics are then rolled up into **[pings](https://mozilla.github.io/glean/user/p
 There are a number of built-in pings that are sent on predefined schedules, but it also possible to send custom pings at any desired cadence.
 
 The **Data Platform** validates and stores these pings in database tables.
-A fault tolerant design allows data to be retain in the event of problems such as traffic spikes or invalid data.
+A fault tolerant design allows data to be retained in the event of problems such as traffic spikes or invalid data.
 Derived and cleaned data can also be automatically created at this stage.
 
 The **Analysis Tools** are used to query and visualize the data.
