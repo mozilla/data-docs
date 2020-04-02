@@ -1,4 +1,4 @@
-# Segments
+# Segments (beta)
 
 A segment is a group of clients who fit a set of criteria at a point in time. 
 The set of criteria itself can also be referred to as a "segment".
@@ -18,29 +18,29 @@ or is it global and therefore not solely due to that event?"
 
 We are building out our library of segments, 
 and we want room to iterate to improve them in the future. 
-So please quote segments' versions with their names, e.g. "regular users v1"
+So please quote segments' versions with their names, e.g. "regular users v2"
 so that your communication is forwards compatible.
 
 ## Current segments
 
-### Usage regularity v1
+### Usage regularity v2
 
 This is a set of three segments. 
 On a given day, every client falls into exactly one of these segments.
-Each client's segment is stored in `telemetry.clients_last_seen.segment_usage_regularity_v1`.
+Each client's segment is stored in `telemetry.clients_last_seen.segment_usage_regularity_v2`.
 
 
-*Regular users v1* is defined as 
+*Regular users v2* is defined as 
 clients who browsed >=5 URIs on at least _at least eight_ of the previous 27 days.
 Observationally, on any given day this segment seems to contain a large fraction of our users 
 and has exceptionally high retention.
 
-*New/irregular users v1* is defined as 
+*New/irregular users v2* is defined as 
 clients who browsed >=5 URIs on _none_ of the previous 27 days.
 This is a small segment of our daily users and has low retention
 (though "activation" is likely a more relevant word than "retention" for many of these clients).
 
-*Semi-regular users v1* is defined as
+*Semi-regular users v2* is defined as
 clients who browsed >=5 URIs on _between one and seven_ of the previous 27 days,
 i.e. it contains users who do not fit the other two segments at this time.
 This seems to be a small segment of our daily users, and has moderate retention.
@@ -77,24 +77,24 @@ So stick to DAU for now.
 
 ### Example queries
 
-DAU for _regular users v1_:
+DAU for _regular users v2_:
 ```lang=sql
 SELECT
     submission_date,
-    COUNT(*) AS dau_regular_users_v1
+    COUNT(*) AS dau_regular_users_v2
 FROM moz-fx-data-shared-prod.telemetry.clients_last_seen
 WHERE
     submission_date BETWEEN '2020-01-01' AND '2020-03-01'
-    AND segment_usage_regularity_v1 = 'regular_users_v1'
+    AND segment_usage_regularity_v2 = 'regular_users_v2'
     AND days_since_seen = 0  -- Get DAU from clients_last_seen
 GROUP BY submission_date
 ```
 
-DAU for _regular users v1_, but joining from a different table:
+DAU for _regular users v2_, but joining from a different table:
 ```lang=sql
 SELECT
     cd.submission_date,
-    COUNT(*) AS dau_regular_users_v1
+    COUNT(*) AS dau_regular_users_v2
 FROM clients_daily cd
 INNER JOIN clients_last_seen cls
     ON cls.client_id = cd.client_id
@@ -102,5 +102,5 @@ INNER JOIN clients_last_seen cls
     AND cls.submission_date BETWEEN '2020-01-01' AND '2020-03-01'
 WHERE
     cd.submission_date BETWEEN '2020-01-01' AND '2020-03-01'
-    AND cls.segment_usage_regularity_v1 = 'regular_users_v1'
+    AND cls.segment_usage_regularity_v2 = 'regular_users_v2'
 ```
