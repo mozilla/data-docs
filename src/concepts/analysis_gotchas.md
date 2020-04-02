@@ -11,6 +11,14 @@ Instead, it is about quirks and pitfalls specific to [Telemetry][telem].
 
 [telem]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/index.html
 
+### Intermittent issues
+
+Sometimes, despite our efforts, there are problems with the ingestion of data or the faithful creation of datasets.
+
+Ongoing issues of this kind are marked with the `[data-quality]` whiteboard tag in Bugzilla. See [currently open issues](https://bugzilla.mozilla.org/buglist.cgi?bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&classification=Client%20Software&classification=Developer%20Infrastructure&classification=Components&classification=Server%20Software&classification=Other&priority=P1&priority=P2&priority=P3&priority=--&product=Data%20Platform%20and%20Tools&resolution=---&status_whiteboard=%5Bdata-quality%5D&status_whiteboard_type=allwordssubstr&list_id=15179084).
+
+Especially severe problems with production data should be announced on our `fx-data-dev` mailing list (see [getting help](getting_help.md)): please consider subscribing to it if you are a current or aspiring data practioner.
+
 ### Notable historic events
 
 When looking at trends, it is helpful to be aware of events from the past
