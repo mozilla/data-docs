@@ -31,7 +31,7 @@ Each client's segment is stored in `telemetry.clients_last_seen.segment_usage_re
 
 
 *Regular users v2* is defined as 
-clients who browsed >=5 URIs on at least _at least eight_ of the previous 27 days.
+clients who browsed >=5 URIs on _at least eight_ of the previous 27 days.
 As of February 2020 this segment contained approximately 2/3 of DAU
 and its users had a 1-week retention of approximately 95%.
 
