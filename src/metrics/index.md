@@ -5,7 +5,7 @@ Here you'll find the definitions and descriptions for each.
 
 For a deep dive into these metrics, see [the GUD documentation](../tools/gud.md).
 
-The [Telemetry Behavior Reference][../concepts/index.md] section also provides
+The [Telemetry Behavior Reference](../concepts/index.md) section also provides
 information related to the definitions below.
 
 ## Activity
