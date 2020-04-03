@@ -48,6 +48,10 @@ For the statisticians, we’ll note that it’s not actually a necessary conditi
 
 ## Metrics
 
+These are the [standard metrics], defined in terms of **usage criteria** as described above.
+
+[standard metrics]: ../metrics/index.md
+
 ### DAU
 
 The number of unique profiles that meet the usage criterion on each day.

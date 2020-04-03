@@ -23,6 +23,10 @@ This documentation is divided into four main sections:
   After reading these articles, you will be able to confidently perform analysis
   over telemetry data.
 
+### [Standard Metrics](metrics/index.md)
+  This section provides an overview of standard metrics used at Mozilla. Here you'll
+  find the definitions and descriptions for each.
+
 ### [Tools](tools/index.md)
   Describes the tools we maintain to access and analyze product data.
 
