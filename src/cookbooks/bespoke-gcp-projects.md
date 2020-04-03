@@ -1,13 +1,13 @@
 # Bespoke GCP Projects for development
 
-If you are working on a more complex project (as opposed to adhoc or one-off analysis), it may be worthwhile provisioning a bespoke project for it with access to our datasets. From the [Google Cloud Console](https://console.cloud.google.com/), you may then:
+If you are working on a more complex project (as opposed to ad-hoc or one-off analysis), it may be worthwhile provisioning a separate GCP project for it with access to our datasets. From the [Google Cloud Console](https://console.cloud.google.com/), you may then:
 
 - Provision service accounts for querying BigQuery (including our production tables) or accessing other GCP resources from the command-line or inside Docker containers.
 - Write and query data to private BigQuery tables, without worrying about interfering with what we have in production.
 - Make Docker images available via the Google Container Registry (see [the cookbook on deploying containers](deploying-containers.md))
 - Creating [Google Cloud Storage](https://cloud.google.com/storage/) buckets for storing temporary data
 - Creating [Google Compute Instances](https://cloud.google.com/compute/docs/instances) for test-running software in the cloud.
-- Create a temporary kubernetes cluster for test-running a scheduled job with [telemetry-airflow](https://github.com/mozilla/telemetry-airflow)
+- Create a temporary Kubernetes cluster for test-running a scheduled job with [telemetry-airflow](https://github.com/mozilla/telemetry-airflow)
 - Track the costs for all of the above using the Google Cost Dashboard feature of the GCP console.
 
 This has a number of advantages over our traditional approach of creating bulk "sandbox" projects for larger teams:
