@@ -1,5 +1,8 @@
 # Standard Metrics
-
+ This section provides an overview of standard metrics used at Mozilla. 
+ Here you'll find the definitions and descriptions for each.
+ 
+ For a deep dive into these metrics, see [the GUD documentation](../tools/gud.md).
 ## Activity
 
 ### DAU
