@@ -1,8 +1,13 @@
 # Standard Metrics
- This section provides an overview of standard metrics used at Mozilla. 
- Here you'll find the definitions and descriptions for each.
- 
- For a deep dive into these metrics, see [the GUD documentation](../tools/gud.md).
+
+This section provides an overview of standard metrics used at Mozilla.
+Here you'll find the definitions and descriptions for each.
+
+For a deep dive into these metrics, see [the GUD documentation](../tools/gud.md).
+
+The [Telemetry Behavior Reference][../concepts/index.md] section also provides
+information related to the definitions below.
+
 ## Activity
 
 ### DAU
@@ -48,9 +53,10 @@ specified day, what proportion (out of 1) are active during the following week.
 - What dates are used to determine activity for things like MAU and DAU?
   - [Submission dates] are used for determining when activity happened (_not_
     client-side activity dates).
-- What pings are used as a signal of activity?
+- What [pings] are used as a signal of activity?
   - For Firefox Desktop, we use the `main` ping to determine activity.
   - For products instrumented using Glean, we use the `baseline` ping.
 
 [usage criterion]: ../tools/gud.md#data-model
 [Submission dates]: https://bugzilla.mozilla.org/show_bug.cgi?id=1422892
+[pings]: ../datasets/ping_intro.md
