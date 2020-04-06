@@ -3,14 +3,9 @@ matrix:
     - name: build
       language: rust
       script:
-        - curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git rust-lang/mdBook
-        - curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-toc
-        - curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-mermaid
-        - curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-open-on-gh
-        - mdbook --version
-        - mdbook-toc --version
-        - mdbook-mermaid --version
-        - mdbook build .
+        - curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-dtmo
+        - mdbook-dtmo --version
+        - mdbook-dtmo build .
     - name: spell-check
       language: node_js
       node_js:
