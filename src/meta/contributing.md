@@ -21,17 +21,16 @@ To begin contributing to the docs, fork the `firefox-data-docs` repo.
 ## Building the Documentation
 
 The documentation is rendered with [mdBook](https://github.com/rust-lang/mdBook).
-We use a fork named [mdbook-dtmo][] that includes multiple different preprocessors:
+We use a fork named [mdbook-dtmo] that includes a number of custom additions to mdbook for our environment (for example, a plugin to automatically generate a table-of-contents).
 
 * [mdbook-toc](https://github.com/badboy/mdbook-toc/releases)
 * [mdbook-mermaid](https://github.com/badboy/mdbook-mermaid/releases)
 * [mdbook-open-on-gh](https://github.com/badboy/mdbook-open-on-gh/releases)
 
-You can download [mdbook-dtmo][] on the [Releases page][releases] for your system.
+You can download [mdbook-dtmo] on the [github releases page](https://github.com/badboy/mdbook-dtmo/releases). Please use the latest version.
 Unpack it and place the binary in a directory of your `$PATH`.
 
 [mdbook-dtmo]: https://github.com/badboy/mdbook-dtmo
-[releases]: https://github.com/badboy/mdbook-dtmo/releases
 
 If you have [rustc](https://www.rust-lang.org/) already installed, you can install a pre-compiled binary directly:
 
