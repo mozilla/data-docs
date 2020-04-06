@@ -170,28 +170,21 @@ However, we store the documentation in raw text files in the
 <a href="https://github.com/mozilla/firefox-data-docs"><code>firefox-data-docs</code> repo</a>.
 To begin contributing to the docs, fork the <code>firefox-data-docs</code> repo.</p>
 <h2><a class="header" href="#building-the-documentation" id="building-the-documentation">Building the Documentation</a></h2>
-<p>The documentation is rendered with <a href="https://github.com/rust-lang/mdBook">mdBook</a>.</p>
-<p>To build the documentation locally, you'll need additional preprocessors:</p>
-<ul>
-<li><a href="https://github.com/badboy/mdbook-toc/releases">mdbook-toc</a></li>
-<li><a href="https://github.com/badboy/mdbook-mermaid/releases">mdbook-mermaid</a></li>
-<li><a href="https://github.com/badboy/mdbook-open-on-gh/releases">mdbook-open-on-gh</a></li>
-</ul>
-<p>Download releases for your system, unpack it and place the binary in a directory of your <code>$PATH</code>.</p>
+<p>The documentation is rendered with <a href="https://github.com/rust-lang/mdBook">mdBook</a>.
+We use a fork named <a href="https://github.com/badboy/mdbook-dtmo">mdbook-dtmo</a> that includes a number of custom additions to mdbook for our environment
+(for example, a plugin to automatically generate a table-of-contents).</p>
+<p>You can download <a href="https://github.com/badboy/mdbook-dtmo">mdbook-dtmo</a> on the <a href="https://github.com/badboy/mdbook-dtmo/releases">GitHub releases page</a>.
+Please use the latest version.
+Unpack it and place the binary in a directory of your <code>$PATH</code>.</p>
 <p>If you have <a href="https://www.rust-lang.org/">rustc</a> already installed, you can install a pre-compiled binary directly:</p>
-<pre><code class="language-bash">curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-toc
-curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-mermaid
-curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-open-on-gh
+<pre><code class="language-bash">curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-dtmo
 </code></pre>
-<p>This will place <code>mdbook-toc</code> and <code>mdbook-mermaid</code> into <code>~/.cargo/bin</code>.
-Make sure this directory is in your <code>$PATH</code> or copy it to a directory of your <code>$PATH</code>.</p>
+<p>Make sure this directory is in your <code>$PATH</code> or copy it to a directory of your <code>$PATH</code>.</p>
 <p>You can also build and install the preprocessors:</p>
-<pre><code class="language-bash">cargo install mdbook-toc
-cargo install mdbook-mermaid
-cargo install mdbook-open-on-gh
+<pre><code class="language-bash">cargo install mdbook-dtmo
 </code></pre>
 <p>You can then serve the documentation locally with:</p>
-<pre><code>mdbook serve
+<pre><code>mdbook-dtmo serve
 </code></pre>
 <p>The complete documentation for the mdBook toolchain is available online at <a href="https://rust-lang.github.io/mdBook/">https://rust-lang.github.io/mdBook/</a>.
 If you run into any technical limitations, let <code>@harterrt</code> or <code>@badboy</code> know.

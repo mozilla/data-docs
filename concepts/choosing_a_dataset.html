@@ -251,12 +251,12 @@ behaviour (Environment, New Profiles, Updates, Crashes).</p>
 It delivers the Telemetry Environment as well as Histograms and Scalars for all
 process types that collect data in Firefox. It has several variants each with
 specific delivery characteristics:</p>
-<table><thead><tr><th>Reason</th><th>Sent when</th><th>Notes</th></tr></thead><tbody>
-<tr><td>shutdown</td><td>Firefox session ends cleanly</td><td>Accounts for about <a href="https://sql.telemetry.mozilla.org/queries/3434">80%</a> of all &quot;main&quot; pings. Sent by Pingsender immediately after Firefox shuts down, subject to conditions: Firefox 55+, if the OS isn't also shutting down, and if this isn't the client's first session. If Pingsender fails or isn't used, the ping is sent by Firefox at the beginning of the next Firefox session.</td></tr>
-<tr><td>daily</td><td>It has been more than 24 hours since the last &quot;main&quot; ping, and it is around local midnight</td><td>In long-lived Firefox sessions we might go days without receiving a &quot;shutdown&quot; ping. Thus the &quot;daily&quot; ping is sent to ensure we occasionally hear from long-lived sessions.</td></tr>
-<tr><td>environment-change</td><td>Telemetry Environment changes</td><td>Is sent immediately when triggered by Firefox (Installing or removing an addon or changing a monitored user preference are common ways for the Telemetry Environment to change)</td></tr>
-<tr><td>aborted-session</td><td>Firefox session doesn't end cleanly</td><td>Sent by Firefox at the beginning of the next Firefox session.</td></tr>
-</tbody></table>
+<p>| Reason             | Sent when                | Notes                         |
+| ------------------ | ------------------------ | ------------------------------|
+| shutdown           | Firefox session ends cleanly | Accounts for about <a href="https://sql.telemetry.mozilla.org/queries/3434">80%</a> of all &quot;main&quot; pings. Sent by Pingsender immediately after Firefox shuts down, subject to conditions: Firefox 55+, if the OS isn't also shutting down, and if this isn't the client's first session. If Pingsender fails or isn't used, the ping is sent by Firefox at the beginning of the next Firefox session.|
+| daily              | It has been more than 24 hours since the last &quot;main&quot; ping, and it is around local midnight | In long-lived Firefox sessions we might go days without receiving a &quot;shutdown&quot; ping. Thus the &quot;daily&quot; ping is sent to ensure we occasionally hear from long-lived sessions.|
+| environment-change | Telemetry Environment changes | Is sent immediately when triggered by Firefox (Installing or removing an addon or changing a monitored user preference are common ways for the Telemetry Environment to change)|
+| aborted-session    | Firefox session doesn't end cleanly | Sent by Firefox at the beginning of the next Firefox session.|</p>
 <p>It was introduced in Firefox 38.</p>
 <h3><a class="header" href="#first-shutdown-ping" id="first-shutdown-ping">&quot;first-shutdown&quot; ping</a></h3>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/first-shutdown-ping.html">&quot;first-shutdown&quot; ping</a> is identical to the &quot;main&quot;

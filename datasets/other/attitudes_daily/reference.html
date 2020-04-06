@@ -158,20 +158,15 @@
                         <h1><a class="header" href="#attitudes-daily" id="attitudes-daily">Attitudes Daily</a></h1>
 <ul>
 <li><a href="#introduction">Introduction</a>
-<ul>
-<li><a href="#contents">Contents</a></li>
-<li><a href="#accessing-the-data">Accessing the Data</a></li>
-</ul>
-</li>
+* <a href="#contents">Contents</a>
+* <a href="#accessing-the-data">Accessing the Data</a></li>
 <li><a href="#data-reference">Data Reference</a>
 <ul>
 <li><a href="#example-queries">Example Queries</a>
 <ul>
 <li><a href="#distribution-of-user-responses-to-the-internet-is-open-and-accessible-to-all-over-time">Distribution of user responses to &quot;The internet is open and accessible to all&quot; over time</a></li>
-<li><a href="#distribution-of-responses-to-i-was-able-to-get-what-i-wanted-from-using-the-internet-today-by-default-search-engine">Distribution of responses to &quot;I was able to get what I wanted from using the Internet today&quot; by default search engine.</a></li>
 </ul>
 </li>
-<li><a href="#scheduling">Scheduling</a></li>
 <li><a href="#schema">Schema</a></li>
 </ul>
 </li>
@@ -211,8 +206,9 @@ WHERE
 GROUP BY 1, 2
 </code></pre>
 <iframe src="https://sql.telemetry.mozilla.org/embed/query/65079/visualization/165757?api_key=oSjO27fGmpCsnBXBEhaysRVrLZpX1SKMCpYcxA5h&" width="100%" height="530" frameborder="0" scrolling="no"></iframe> 
-<h4><a class="header" href="#distribution-of-responses-to-i-was-able-to-get-what-i-wanted-from-using-the-internet-today-by-default-search-engine" id="distribution-of-responses-to-i-was-able-to-get-what-i-wanted-from-using-the-internet-today-by-default-search-engine">Distribution of responses to &quot;I was able to get what I wanted from using the Internet today&quot; by default search engine.</a></h4>
-<pre><code class="language-sql">SELECT 
+#### Distribution of responses to "I was able to get what I wanted from using the Internet today" by default search engine.
+````sql
+SELECT 
     value,
     CASE
       WHEN STARTS_WITH(default_search_engine, 'google') THEN 'Google'
@@ -226,14 +222,14 @@ FROM
 WHERE
     question_key = 'met_goals'
     AND value IS NOT NULL
-    AND submission_date &gt; DATE_SUB(CURRENT_DATE, INTERVAL '7' DAY)
+    AND submission_date > DATE_SUB(CURRENT_DATE, INTERVAL '7' DAY)
 GROUP BY 1, 2
-</code></pre>
+````
 <iframe src="https://sql.telemetry.mozilla.org/embed/query/63957/visualization/163467?api_key=gzCopzybDta4t3JGkx2urB9MQa67akAehJUybVdW&" width="100%" height="570" frameborder="0" scrolling="no"></iframe>
-<h2><a class="header" href="#scheduling" id="scheduling">Scheduling</a></h2>
-<p>This dataset is updated daily via the
-<a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a> infrastructure.
-The job runs as part of the <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/attitudes_daily.py"><code>attitudes_daily</code> DAG</a>.</p>
+## Scheduling
+This dataset is updated daily via the
+[telemetry-airflow](https://github.com/mozilla/telemetry-airflow) infrastructure.
+The job runs as part of the [`attitudes_daily` DAG](https://github.com/mozilla/telemetry-airflow/blob/master/dags/attitudes_daily.py).
 <h2><a class="header" href="#schema" id="schema">Schema</a></h2>
 <p>The data is partitioned by <code>submission_date</code>.</p>
 <p>As of 2019-09-15, the current version of the <code>attitudes_daily</code> dataset is <code>v1</code>.</p>

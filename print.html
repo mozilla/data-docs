@@ -604,12 +604,12 @@ behaviour (Environment, New Profiles, Updates, Crashes).</p>
 It delivers the Telemetry Environment as well as Histograms and Scalars for all
 process types that collect data in Firefox. It has several variants each with
 specific delivery characteristics:</p>
-<table><thead><tr><th>Reason</th><th>Sent when</th><th>Notes</th></tr></thead><tbody>
-<tr><td>shutdown</td><td>Firefox session ends cleanly</td><td>Accounts for about <a href="https://sql.telemetry.mozilla.org/queries/3434">80%</a> of all &quot;main&quot; pings. Sent by Pingsender immediately after Firefox shuts down, subject to conditions: Firefox 55+, if the OS isn't also shutting down, and if this isn't the client's first session. If Pingsender fails or isn't used, the ping is sent by Firefox at the beginning of the next Firefox session.</td></tr>
-<tr><td>daily</td><td>It has been more than 24 hours since the last &quot;main&quot; ping, and it is around local midnight</td><td>In long-lived Firefox sessions we might go days without receiving a &quot;shutdown&quot; ping. Thus the &quot;daily&quot; ping is sent to ensure we occasionally hear from long-lived sessions.</td></tr>
-<tr><td>environment-change</td><td>Telemetry Environment changes</td><td>Is sent immediately when triggered by Firefox (Installing or removing an addon or changing a monitored user preference are common ways for the Telemetry Environment to change)</td></tr>
-<tr><td>aborted-session</td><td>Firefox session doesn't end cleanly</td><td>Sent by Firefox at the beginning of the next Firefox session.</td></tr>
-</tbody></table>
+<p>| Reason             | Sent when                | Notes                         |
+| ------------------ | ------------------------ | ------------------------------|
+| shutdown           | Firefox session ends cleanly | Accounts for about <a href="https://sql.telemetry.mozilla.org/queries/3434">80%</a> of all &quot;main&quot; pings. Sent by Pingsender immediately after Firefox shuts down, subject to conditions: Firefox 55+, if the OS isn't also shutting down, and if this isn't the client's first session. If Pingsender fails or isn't used, the ping is sent by Firefox at the beginning of the next Firefox session.|
+| daily              | It has been more than 24 hours since the last &quot;main&quot; ping, and it is around local midnight | In long-lived Firefox sessions we might go days without receiving a &quot;shutdown&quot; ping. Thus the &quot;daily&quot; ping is sent to ensure we occasionally hear from long-lived sessions.|
+| environment-change | Telemetry Environment changes | Is sent immediately when triggered by Firefox (Installing or removing an addon or changing a monitored user preference are common ways for the Telemetry Environment to change)|
+| aborted-session    | Firefox session doesn't end cleanly | Sent by Firefox at the beginning of the next Firefox session.|</p>
 <p>It was introduced in Firefox 38.</p>
 <h3><a class="header" href="#first-shutdown-ping" id="first-shutdown-ping">&quot;first-shutdown&quot; ping</a></h3>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/first-shutdown-ping.html">&quot;first-shutdown&quot; ping</a> is identical to the &quot;main&quot;
@@ -833,17 +833,17 @@ It is also indexed with Athena and Presto with the table name <code>socorro_cras
 <h2><a class="header" href="#products-overview" id="products-overview">Products Overview</a></h2>
 <p>Before doing an analysis, it is important to know which products you want to include.
 Here is a quick overview of Mozilla's mobile products.</p>
-<table><thead><tr><th>Product Name</th><th>App Name</th><th>OS</th><th>Notes</th></tr></thead><tbody>
-<tr><td>Firefox Android</td><td><code>Fennec</code></td><td>Android</td><td></td></tr>
-<tr><td>Firefox iOS</td><td><code>Fennec</code></td><td>iOS</td><td></td></tr>
-<tr><td>Focus Android</td><td><code>Focus</code></td><td>Android</td><td>Privacy browser</td></tr>
-<tr><td>Focus iOS</td><td><code>Focus</code></td><td>iOS</td><td>Privacy browser</td></tr>
-<tr><td>Klar</td><td><code>Klar</code></td><td>Android</td><td>German Focus release</td></tr>
-<tr><td>Firefox for Fire TV</td><td><code>FirefoxForFireTV</code></td><td>Android</td><td></td></tr>
-<tr><td>Firefox for Echo Show</td><td><code>FirefoxConnect</code></td><td>Android</td><td></td></tr>
-<tr><td>Firefox Lite</td><td><code>Zerda</code></td><td>Android</td><td>Formerly Rocket (See below)</td></tr>
-<tr><td>Fenix (Firefox Preview)</td><td><code>org_mozilla_fenix</code></td><td>Android</td><td>Uses Glean (see below)</td></tr>
-</tbody></table>
+<p>| Product Name           | App Name            | OS      | Notes                            |
+| ---------------------- | ------------------- | ------- | -------------------------------- |
+| Firefox Android        | <code>Fennec</code>            | Android |                                  |
+| Firefox iOS            | <code>Fennec</code>            | iOS     |                                  |
+| Focus Android          | <code>Focus</code>             | Android | Privacy browser                  |
+| Focus iOS              | <code>Focus</code>             | iOS     | Privacy browser                  |
+| Klar                   | <code>Klar</code>              | Android | German Focus release             |
+| Firefox for Fire TV    | <code>FirefoxForFireTV</code>  | Android |                                  |
+| Firefox for Echo Show  | <code>FirefoxConnect</code>    | Android |                                  |
+| Firefox Lite           | <code>Zerda</code>             | Android | Formerly Rocket (See below)      |
+| Fenix (Firefox Preview)| <code>org_mozilla_fenix</code> | Android | Uses Glean (see below)           |</p>
 <p>Firefox Lite was formerly known as Rocket.
 It is only available in certain countries in Asia Pacific - for more
 information on Firefox Lite data please see the <a href="https://github.com/mozilla-tw/FirefoxLite/blob/master/docs/telemetry.md">telemetry documentation</a>.</p>
@@ -1502,78 +1502,78 @@ the component for the service itself or in the <a href="https://bugzilla.mozilla
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/tools/index.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#projects" id="projects">Projects</a></h1>
 <p>Below are a number of trailheads that lead into the projects and code that comprise the Firefox Data Platform.</p>
 <h2><a class="header" href="#telemetry-apis" id="telemetry-apis">Telemetry APIs</a></h2>
-<table><thead><tr><th>Name and repo</th><th>Description</th></tr></thead><tbody>
-<tr><td><a href="https://github.com/mozilla/python_moztelemetry"><code>python_moztelemetry</code></a></td><td>Python APIs for Mozilla Telemetry</td></tr>
-<tr><td><a href="https://github.com/mozilla/moztelemetry"><code>moztelemetry</code></a></td><td>Scala APIs for Mozilla Telemetry</td></tr>
-<tr><td><a href="https://github.com/mozilla/spark-hyperloglog"><code>spark-hyperloglog</code></a></td><td>Algebird's HyperLogLog support for Apache Spark</td></tr>
-<tr><td><a href="https://github.com/mozilla/mozanalysis"><code>mozanalysis</code></a></td><td>A library for Mozilla experiments analysis</td></tr>
-<tr><td><a href="https://github.com/mozilla-mobile/android-components/tree/master/components/service/glean"><code>glean</code></a></td><td>A client-side mobile Telemetry SDK for collecting metrics and sending them to Mozilla's Telemetry service</td></tr>
-</tbody></table>
+<p>| Name and repo                      | Description                       |
+|------------------------------------|-----------------------------------|
+| <a href="https://github.com/mozilla/python_moztelemetry"><code>python_moztelemetry</code></a>      | Python APIs for Mozilla Telemetry
+| <a href="https://github.com/mozilla/moztelemetry"><code>moztelemetry</code></a>               | Scala APIs for Mozilla Telemetry
+| <a href="https://github.com/mozilla/spark-hyperloglog"><code>spark-hyperloglog</code></a>   | Algebird's HyperLogLog support for Apache Spark
+| <a href="https://github.com/mozilla/mozanalysis"><code>mozanalysis</code></a>                | A library for Mozilla experiments analysis
+| <a href="https://github.com/mozilla-mobile/android-components/tree/master/components/service/glean"><code>glean</code></a>                   | A client-side mobile Telemetry SDK for collecting metrics and sending them to Mozilla's Telemetry service</p>
 <h2><a class="header" href="#etl-code-and-datasets" id="etl-code-and-datasets">ETL code and Datasets</a></h2>
-<table><thead><tr><th>Name and repo</th><th>Description</th></tr></thead><tbody>
-<tr><td><a href="https://github.com/mozilla/bigquery-etl"><code>bigquery-etl</code></a></td><td>SQL ETL code for building derived datasets in BigQuery</td></tr>
-<tr><td><a href="https://github.com/mozilla/telemetry-batch-view"><code>telemetry-batch-view</code></a></td><td>Scala ETL code for derived datasets</td></tr>
-<tr><td><a href="https://github.com/mozilla/python_mozetl"><code>python_mozetl</code></a></td><td>Python ETL code for derived datasets</td></tr>
-<tr><td><a href="https://github.com/mozilla/telemetry-airflow"><code>telemetry-airflow</code></a></td><td>Airflow configuration and DAGs for scheduled jobs</td></tr>
-<tr><td><a href="https://github.com/mozilla/python_mozaggregator"><code>python_mozaggregator</code></a></td><td>Aggregation job for <code>telemetry.mozilla.org</code> aggregates</td></tr>
-<tr><td><a href="https://github.com/mozilla/telemetry-streaming"><code>telemetry-streaming</code></a></td><td>Spark Streaming ETL jobs for Mozilla Telemetry</td></tr>
-</tbody></table>
+<p>| Name and repo                   | Description                           |
+|---------------------------------|---------------------------------------|
+| <a href="https://github.com/mozilla/bigquery-etl"><code>bigquery-etl</code></a>           | SQL ETL code for building derived datasets in BigQuery
+| <a href="https://github.com/mozilla/telemetry-batch-view"><code>telemetry-batch-view</code></a>   | Scala ETL code for derived datasets
+| <a href="https://github.com/mozilla/python_mozetl"><code>python_mozetl</code></a>        | Python ETL code for derived datasets
+| <a href="https://github.com/mozilla/telemetry-airflow"><code>telemetry-airflow</code></a>  | Airflow configuration and DAGs for scheduled jobs
+| <a href="https://github.com/mozilla/python_mozaggregator"><code>python_mozaggregator</code></a> | Aggregation job for <code>telemetry.mozilla.org</code> aggregates
+| <a href="https://github.com/mozilla/telemetry-streaming"><code>telemetry-streaming</code></a> | Spark Streaming ETL jobs for Mozilla Telemetry</p>
 <p>See also <a href="https://docs.telemetry.mozilla.org"><code>firefox-data-docs</code></a> for documentation on datasets.</p>
 <h2><a class="header" href="#infrastructure" id="infrastructure">Infrastructure</a></h2>
-<table><thead><tr><th>Name and repo</th><th>Description</th></tr></thead><tbody>
-<tr><td><a href="https://github.com/mozilla-services/mozilla-pipeline-schemas"><code>mozilla-pipeline-schemas</code></a></td><td>JSON and Parquet Schemas for Mozilla Telemetry and other structured data</td></tr>
-<tr><td><a href="https://github.com/mozilla/gcp-ingestion"><code>gcp-ingestion</code></a></td><td>Documentation and implementation of the Mozilla telemetry ingestion system on Google Cloud Platform</td></tr>
-<tr><td><a href="https://github.com/mozilla/jsonschema-transpiler"><code>jsonschema-transpiler</code></a></td><td>Convert JSON Schema into BigQuery table definitions</td></tr>
-<tr><td><a href="https://github.com/mozilla/mozilla-schema-generator"><code>mozilla-schema-generator</code></a></td><td>Incorporate probe metadata to generate BigQuery table schemas</td></tr>
-<tr><td><a href="https://github.com/mozilla-services/hindsight"><code>hindsight</code></a></td><td>Real-time data processing</td></tr>
-<tr><td><a href="https://github.com/mozilla-services/lua_sandbox"><code>lua_sandbox</code></a></td><td>Generic sandbox for safe data analysis</td></tr>
-<tr><td><a href="https://github.com/mozilla-services/lua_sandbox_extensions"><code>lua_sandbox_extensions</code></a></td><td>Modules and packages that extend the Lua sandbox</td></tr>
-<tr><td><a href="https://github.com/mozilla-services/nginx_moz_ingest"><code>nginx_moz_ingest</code></a></td><td>Nginx module for Telemetry data ingestion</td></tr>
-<tr><td><a href="https://github.com/mozilla-services/puppet-config/tree/master/pipeline"><code>puppet-config</code></a></td><td>Cloud services puppet config for deploying infrastructure</td></tr>
-<tr><td><a href="https://github.com/mozilla/parquet2hive"><code>parquet2hive</code></a></td><td>Hive import statement generator for Parquet datasets</td></tr>
-<tr><td><a href="https://github.com/mozilla-services/edge-validator"><code>edge-validator</code></a></td><td>A service endpoint for validating incoming data</td></tr>
-</tbody></table>
+<p>| Name and repo                         | Description                             |
+|---------------------------------------|-----------------------------------------|
+| <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas"><code>mozilla-pipeline-schemas</code></a> | JSON and Parquet Schemas for Mozilla Telemetry and other structured data
+| <a href="https://github.com/mozilla/gcp-ingestion"><code>gcp-ingestion</code></a>      | Documentation and implementation of the Mozilla telemetry ingestion system on Google Cloud Platform
+| <a href="https://github.com/mozilla/jsonschema-transpiler"><code>jsonschema-transpiler</code></a> | Convert JSON Schema into BigQuery table definitions
+| <a href="https://github.com/mozilla/mozilla-schema-generator"><code>mozilla-schema-generator</code></a>     | Incorporate probe metadata to generate BigQuery table schemas
+| <a href="https://github.com/mozilla-services/hindsight"><code>hindsight</code></a>                     | Real-time data processing
+| <a href="https://github.com/mozilla-services/lua_sandbox"><code>lua_sandbox</code></a>                  | Generic sandbox for safe data analysis
+| <a href="https://github.com/mozilla-services/lua_sandbox_extensions"><code>lua_sandbox_extensions</code></a>      | Modules and packages that extend the Lua sandbox
+| <a href="https://github.com/mozilla-services/nginx_moz_ingest"><code>nginx_moz_ingest</code></a>             | Nginx module for Telemetry data ingestion
+| <a href="https://github.com/mozilla-services/puppet-config/tree/master/pipeline"><code>puppet-config</code></a>             | Cloud services puppet config for deploying infrastructure
+| <a href="https://github.com/mozilla/parquet2hive"><code>parquet2hive</code></a>                 | Hive import statement generator for Parquet datasets
+| <a href="https://github.com/mozilla-services/edge-validator"><code>edge-validator</code></a>    | A service endpoint for validating incoming data</p>
 <h2><a class="header" href="#data-applications" id="data-applications">Data applications</a></h2>
-<table><thead><tr><th>Name and repo</th><th>Description</th></tr></thead><tbody>
-<tr><td><a href="https://github.com/mozilla/telemetry-dashboard"><code>telemetry.mozilla.org</code></a></td><td>Main entry point for viewing <a href="https://telemetry.mozilla.org">aggregate Telemetry data</a></td></tr>
-<tr><td><a href="https://github.com/mozilla/GUD">Growth &amp; Usage dashboard</a></td><td>Dashboard for questions about <a href="https://growth-stage.bespoke.nonprod.dataops.mozgcp.net">product growth and usage</a>)</td></tr>
-<tr><td><a href="https://github.com/mozilla/glam">Glean Aggregate Metrics</a></td><td>Aggregate info about probes and measures</td></tr>
-<tr><td><a href="https://debug-ping-preview.firebaseapp.com">Glean Debug View</a></td><td>Tag and view Glean submissions with low latency</td></tr>
-<tr><td><a href="https://github.com/mozilla/cerberus">Cerberus</a> &amp; <a href="https://github.com/mozilla/medusa">Medusa</a></td><td>Automatic alert system for telemetry aggregates</td></tr>
-<tr><td><a href="https://github.com/mozilla/missioncontrol">Mission Control</a></td><td>Low latency dashboard for stability and health metrics</td></tr>
-<tr><td><a href="https://github.com/mozilla/redash">Re:dash</a></td><td>Mozilla's fork of the <a href="https://sql.telemetry.mozilla.org">data query / visualization system</a></td></tr>
-<tr><td><a href="https://github.com/mozilla/redash-stmo"><code>redash-stmo</code></a></td><td>Mozilla's extensions to Re:dash</td></tr>
-<tr><td><a href="https://github.com/mozilla/taar">TAAR</a></td><td>Telemetry-aware addon recommender</td></tr>
-<tr><td><a href="https://github.com/mozilla/ensemble">Ensemble</a></td><td>A minimalist platform for publishing data</td></tr>
-<tr><td><a href="https://github.com/mozilla/firefox-hardware-report">Hardware Report</a></td><td>Firefox Hardware Report, <a href="https://hardware.metrics.mozilla.com/">available here</a></td></tr>
-<tr><td><a href="https://github.com/mozilla/python-zeppelin"><code>python-zeppelin</code></a></td><td>Convert Zeppelin notebooks to Markdown</td></tr>
-<tr><td><a href="https://github.com/mozilla/stmocli">St. Mocli</a></td><td>A command-line interface to <a href="https://sql.telemetry.mozilla.org">STMO</a></td></tr>
-<tr><td><a href="https://github.com/mozilla/probe-scraper">probe-scraper</a></td><td>Scrape and publish Telemetry probe data from Firefox</td></tr>
-<tr><td><a href="https://github.com/mozilla/firefox-test-tube">test-tube</a></td><td>Compare data across branches in experiments</td></tr>
-<tr><td><a href="https://github.com/mozilla/experimenter">experimenter</a></td><td>A web application for managing experiments</td></tr>
-<tr><td><a href="https://github.com/mozilla/stmoab">St. Moab</a></td><td>Automatically generate Re:dash dashboard for A/B experiments</td></tr>
-<tr><td><a href="http://iodide.telemetry.mozilla.org/">Iodide</a> (<a href="https://github.com/iodide-project/iodide">code</a>)</td><td>Literate scientific computing and communication for the web</td></tr>
-</tbody></table>
+<p>| Name and repo                     | Description                             |
+|-----------------------------------|-----------------------------------------|
+| <a href="https://github.com/mozilla/telemetry-dashboard"><code>telemetry.mozilla.org</code></a> | Main entry point for viewing <a href="https://telemetry.mozilla.org">aggregate Telemetry data</a>
+| <a href="https://github.com/mozilla/GUD">Growth &amp; Usage dashboard</a>   | Dashboard for questions about <a href="https://growth-stage.bespoke.nonprod.dataops.mozgcp.net">product growth and usage</a>)
+| <a href="https://github.com/mozilla/glam">Glean Aggregate Metrics</a>   | Aggregate info about probes and measures
+| <a href="https://debug-ping-preview.firebaseapp.com">Glean Debug View</a>           | Tag and view Glean submissions with low latency
+| <a href="https://github.com/mozilla/cerberus">Cerberus</a> &amp; <a href="https://github.com/mozilla/medusa">Medusa</a>   | Automatic alert system for telemetry aggregates
+| <a href="https://github.com/mozilla/missioncontrol">Mission Control</a>             | Low latency dashboard for stability and health metrics
+| <a href="https://github.com/mozilla/redash">Re:dash</a>                 | Mozilla's fork of the <a href="https://sql.telemetry.mozilla.org">data query / visualization system</a>
+| <a href="https://github.com/mozilla/redash-stmo"><code>redash-stmo</code></a>       | Mozilla's extensions to Re:dash
+| <a href="https://github.com/mozilla/taar">TAAR</a>                      | Telemetry-aware addon recommender
+| <a href="https://github.com/mozilla/ensemble">Ensemble</a>              | A minimalist platform for publishing data
+| <a href="https://github.com/mozilla/firefox-hardware-report">Hardware Report</a>    | Firefox Hardware Report, <a href="https://hardware.metrics.mozilla.com/">available here</a>
+| <a href="https://github.com/mozilla/python-zeppelin"><code>python-zeppelin</code></a>        | Convert Zeppelin notebooks to Markdown
+| <a href="https://github.com/mozilla/stmocli">St. Mocli</a>              | A command-line interface to <a href="https://sql.telemetry.mozilla.org">STMO</a>
+| <a href="https://github.com/mozilla/probe-scraper">probe-scraper</a>                   | Scrape and publish Telemetry probe data from Firefox
+| <a href="https://github.com/mozilla/firefox-test-tube">test-tube</a>                       | Compare data across branches in experiments
+| <a href="https://github.com/mozilla/experimenter">experimenter</a>                    | A web application for managing experiments
+| <a href="https://github.com/mozilla/stmoab">St. Moab</a>                | Automatically generate Re:dash dashboard for A/B experiments
+| <a href="http://iodide.telemetry.mozilla.org/">Iodide</a> (<a href="https://github.com/iodide-project/iodide">code</a>)      | Literate scientific computing and communication for the web</p>
 <h2><a class="header" href="#legacy-projects" id="legacy-projects">Legacy projects</a></h2>
 <p>Projects in this section are less active, but may not be officially
 deprecated. Please check with the <code>fx-data-dev</code> mailing list before
 starting a new project using anything in this section.</p>
-<table><thead><tr><th>Name and repo</th><th>Description</th></tr></thead><tbody>
-<tr><td><a href="https://github.com/mozilla/telemetry-next-node"><code>telemetry-next-node</code></a></td><td>A <code>node.js</code> package for accessing Telemetry Aggregates data</td></tr>
-<tr><td><a href="https://github.com/mozilla/emr-bootstrap-spark"><code>emr-bootstrap-spark</code></a></td><td>AWS bootstrap scripts for Spark.</td></tr>
-<tr><td><a href="https://github.com/mozilla/emr-bootstrap-presto"><code>emr-bootstrap-presto</code></a></td><td>AWS bootstrap scripts for Presto.</td></tr>
-</tbody></table>
+<p>| Name and repo                       | Description |
+|-------------------------------------|-------------|
+| <a href="https://github.com/mozilla/telemetry-next-node"><code>telemetry-next-node</code></a>        | A <code>node.js</code> package for accessing Telemetry Aggregates data
+| <a href="https://github.com/mozilla/emr-bootstrap-spark"><code>emr-bootstrap-spark</code></a>   | AWS bootstrap scripts for Spark.
+| <a href="https://github.com/mozilla/emr-bootstrap-presto"><code>emr-bootstrap-presto</code></a> | AWS bootstrap scripts for Presto.</p>
 <h2><a class="header" href="#reference-materials" id="reference-materials">Reference materials</a></h2>
 <h3><a class="header" href="#public" id="public">Public</a></h3>
-<table><thead><tr><th>Name and repo</th><th>Description</th></tr></thead><tbody>
-<tr><td><a href="https://github.com/mozilla/firefox-data-docs"><code>firefox-data-docs</code></a></td><td>All the info you need to <a href="https://docs.telemetry.mozilla.org">answer questions about Firefox users with data</a></td></tr>
-<tr><td>Firefox source docs</td><td><a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/">Mozilla Source Tree Docs - Telemetry section</a></td></tr>
-<tr><td><a href="https://github.com/mozilla/mozilla-reports"><code>reports.t.m.o</code></a></td><td>Knowledge repository for <a href="https://mozilla.report">public reports</a></td></tr>
-</tbody></table>
+<p>| Name and repo                  | Description                             |
+|--------------------------------|-----------------------------------------|
+| <a href="https://github.com/mozilla/firefox-data-docs"><code>firefox-data-docs</code></a> | All the info you need to <a href="https://docs.telemetry.mozilla.org">answer questions about Firefox users with data</a>
+| Firefox source docs            | <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/">Mozilla Source Tree Docs - Telemetry section</a>
+| <a href="https://github.com/mozilla/mozilla-reports"><code>reports.t.m.o</code></a>     | Knowledge repository for <a href="https://mozilla.report">public reports</a></p>
 <h3><a class="header" href="#non-public" id="non-public">Non-public</a></h3>
-<table><thead><tr><th>Name and repo</th><th>Description</th></tr></thead><tbody>
-<tr><td><a href="https://github.com/mozilla/Fx-Data-Planning"><code>Fx-Data-Planning</code></a></td><td>Quarterly goals and internal documentation</td></tr>
-</tbody></table>
+<p>| Name and repo                  | Description                             |
+|--------------------------------|-----------------------------------------|
+| <a href="https://github.com/mozilla/Fx-Data-Planning"><code>Fx-Data-Planning</code></a> | Quarterly goals and internal documentation</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/tools/projects.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#guiding-principles-for-data-infrastructure" id="guiding-principles-for-data-infrastructure">Guiding Principles for Data Infrastructure</a></h1>
 <p>So you want to build a data lake... Where do you start? What building blocks are
 available? How can you integrate your data with the rest of the organization?</p>
@@ -2409,7 +2409,7 @@ LIMIT 5
 <tr><td><code>document_version</code></td><td>null</td><td>The version in the <code>telemetry</code> namespace is generated after validation</td></tr>
 <tr><td><code>error_message</code></td><td><code>org.everit.json.schema.ValidationException: #/environment/system/os/version: #: no subschema matched out of the total 1 subschemas</code></td><td></td></tr>
 <tr><td><code>error_type</code></td><td><code>ParsePayload</code></td><td>The <code>ParsePayload</code> type is associated with schema validation or corrupt data</td></tr>
-<tr><td><code>exception_class</code></td><td><code>org.everit.json.schema.ValidationException </code></td><td>Java <a href="https://github.com/everit-org/json-schema">JSON Schema Validator</a> library</td></tr>
+<tr><td><code>exception_class</code></td><td><code>org.everit.json.schema.ValidationException </code>| Java <a href="https://github.com/everit-org/json-schema">JSON Schema Validator</a> library</td><td></td></tr>
 <tr><td><code>job_name</code></td><td><code>decoder-0-0121192636-9c56ac6a</code></td><td>Name of the Dataflow job that can be used to determine the version of the schema artifact</td></tr>
 </tbody></table>
 <h3><a class="header" href="#decoding-1" id="decoding-1">Decoding</a></h3>
@@ -2707,7 +2707,7 @@ Unfortunately the best way to recover from this for the moment seems to
 be spinning up a new cluster.</li>
 <li>Cancelling execution of a notebook cell doesn't cancel any spark jobs
 that might be running in the background. If your spark commands seem to
-be hanging, try running <code>sc.cancelAllJobs()</code>.</li>
+be hanging, try running `sc.cancelAllJobs()`.</li>
 </ol>
 <h3><a class="header" href="#how-can-i-keep-running-after-closing-the-notebook" id="how-can-i-keep-running-after-closing-the-notebook">How can I keep running after closing the notebook?</a></h3>
 <p>For long-running computation, it might be nice to close the notebook
@@ -3817,28 +3817,28 @@ namely that you must make use of the date partition fields for large tables (lik
 <li>There is no native map support in BigQuery. Instead, we are using structs with fields [key, value]. We have provided convenience functions to access these like key-value maps (described <a href="cookbooks/bigquery.html#accessing-map-like-fields">below</a>.)</li>
 </ul>
 <h3><a class="header" href="#projects-with-bigquery-datasets" id="projects-with-bigquery-datasets">Projects with BigQuery datasets</a></h3>
-<table><thead><tr><th>Project</th><th>Dataset</th><th>Purpose</th></tr></thead><tbody>
-<tr><td><code>moz-fx-data-shared-prod</code></td><td></td><td>All production data including full pings, imported parquet data, <a href="https://github.com/mozilla/bigquery-etl">BigQuery ETL</a>, and ad-hoc analysis</td></tr>
-<tr><td></td><td><code>&lt;namespace&gt;_live</code></td><td>See <em>live datasets</em> below</td></tr>
-<tr><td></td><td><code>&lt;namespace&gt;_stable</code></td><td>See <em>stable datasets</em> below</td></tr>
-<tr><td></td><td><code>&lt;namespace&gt;_derived</code></td><td>See <em>derived datasets</em> below</td></tr>
-<tr><td></td><td><code>&lt;namespace&gt;</code></td><td>See <em>user-facing (unsuffixed) datasets</em> below</td></tr>
-<tr><td></td><td><code>analysis</code></td><td>User generated tables for analysis</td></tr>
-<tr><td></td><td><code>backfill</code></td><td>Temporary staging area for back-fills</td></tr>
-<tr><td></td><td><code>blpadi</code></td><td>Blocklist ping derived data(<em>restricted</em>)</td></tr>
-<tr><td></td><td><code>payload_bytes_raw</code></td><td>Raw JSON payloads as received from clients, used for reprocessing scenarios, a.k.a. &quot;landfill&quot; (<em>restricted</em>)</td></tr>
-<tr><td></td><td><code>payload_bytes_decoded</code></td><td><code>gzip</code>-compressed decoded JSON payloads, used for reprocessing scenarios</td></tr>
-<tr><td></td><td><code>payload_bytes_error</code></td><td><code>gzip</code>-compressed JSON payloads that were rejected in some phase of the pipeline; particularly useful for investigating schema validation errors</td></tr>
-<tr><td></td><td><code>search</code></td><td>Search data imported from parquet (<em>restricted</em>)</td></tr>
-<tr><td></td><td><code>static</code></td><td>Static tables, often useful for data-enriching joins</td></tr>
-<tr><td></td><td><code>tmp</code></td><td>Temporary staging area for parquet data loads</td></tr>
-<tr><td></td><td><code>udf</code></td><td>Persistent user-defined functions defined in SQL; see <a href="cookbooks/bigquery.html#using-udfs">Using UDFs</a></td></tr>
-<tr><td></td><td><code>udf_js</code></td><td>Persistent user-defined functions defined in JavaScript; see <a href="cookbooks/bigquery.html#using-udfs">Using UDFs</a></td></tr>
-<tr><td></td><td><code>validation</code></td><td>Temporary staging area for validation</td></tr>
-<tr><td><code>moz-fx-data-derived-datasets</code></td><td></td><td>Legacy project that contains mostly views to data in <code>moz-fx-data-shared-prod</code> during a transition period; STMO currently points at this project but we will announce a transition to <code>moz-fx-data-shared-prod</code> by end of 2019</td></tr>
-<tr><td></td><td><code>analysis</code></td><td>User generated tables for analysis; note that this dataset is separate from <code>moz-fx-data-shared-prod:analysis</code> and users are responsible for migrating or cloning data during the transition period</td></tr>
-<tr><td><code>moz-fx-data-shar-nonprod-efed</code></td><td></td><td>Non-production data produced by stage ingestion infrastructure</td></tr>
-</tbody></table>
+<p>|Project|Dataset|Purpose|
+|---|---|---|
+|<code>moz-fx-data-shared-prod</code> |    |All production data including full pings, imported parquet data, <a href="https://github.com/mozilla/bigquery-etl">BigQuery ETL</a>, and ad-hoc analysis |
+|   |<code>&lt;namespace&gt;_live</code>    |See <em>live datasets</em> below|
+|   |<code>&lt;namespace&gt;_stable</code>  |See <em>stable datasets</em> below|
+|   |<code>&lt;namespace&gt;_derived</code> |See <em>derived datasets</em> below|
+|   |<code>&lt;namespace&gt;</code>         |See <em>user-facing (unsuffixed) datasets</em> below|
+|   |<code>analysis</code>|User generated tables for analysis|
+|   |<code>backfill</code>|Temporary staging area for back-fills|
+|   |<code>blpadi</code>|Blocklist ping derived data(<em>restricted</em>)|
+|   |<code>payload_bytes_raw</code> |Raw JSON payloads as received from clients, used for reprocessing scenarios, a.k.a. &quot;landfill&quot; (<em>restricted</em>) |
+|   |<code>payload_bytes_decoded</code> |<code>gzip</code>-compressed decoded JSON payloads, used for reprocessing scenarios  |
+|   |<code>payload_bytes_error</code> |<code>gzip</code>-compressed JSON payloads that were rejected in some phase of the pipeline; particularly useful for investigating schema validation errors|
+|   |<code>search</code>|Search data imported from parquet (<em>restricted</em>) |
+|   |<code>static</code>|Static tables, often useful for data-enriching joins|
+|   |<code>tmp</code>|Temporary staging area for parquet data loads|
+|   |<code>udf</code> |Persistent user-defined functions defined in SQL; see <a href="cookbooks/bigquery.html#using-udfs">Using UDFs</a>|
+|   |<code>udf_js</code> |Persistent user-defined functions defined in JavaScript; see <a href="cookbooks/bigquery.html#using-udfs">Using UDFs</a>|
+|   |<code>validation</code>|Temporary staging area for validation|
+|<code>moz-fx-data-derived-datasets</code>|    |Legacy project that contains mostly views to data in <code>moz-fx-data-shared-prod</code> during a transition period; STMO currently points at this project but we will announce a transition to <code>moz-fx-data-shared-prod</code> by end of 2019|
+|   |<code>analysis</code>|User generated tables for analysis; note that this dataset is separate from <code>moz-fx-data-shared-prod:analysis</code> and users are responsible for migrating or cloning data during the transition period|
+|<code>moz-fx-data-shar-nonprod-efed</code>| |Non-production data produced by stage ingestion infrastructure |</p>
 <h3><a class="header" href="#table-layout-and-naming" id="table-layout-and-naming">Table Layout and Naming</a></h3>
 <p>Under the single <code>moz-fx-data-shared-prod</code> project,
 each document namespace (corresponding to folders underneath the <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/master/schemas">schemas directory of <code>mozilla-pipeline-schemas</code></a>) has four BigQuery datasets provisioned with the following properties:</p>
@@ -4636,7 +4636,7 @@ to start the conversation.</p>
 <h2><a class="header" href="#steps" id="steps">Steps</a></h2>
 <h3><a class="header" href="#on-gcp" id="on-gcp">On GCP</a></h3>
 <ul>
-<li>Make sure &quot;Container Registry&quot; (https://console.cloud.google.com/gcr/images/<your-project-id>) is enabled for your GCP project</li>
+<li>Make sure &quot;Container Registry&quot; (https://console.cloud.google.com/gcr/images/&lt;your-project-id&gt;) is enabled for your GCP project</li>
 <li>Create a service account, give it the &quot;Storage Admin&quot; role and create a key
 <ul>
 <li>Console Link: <a href="https://console.cloud.google.com/iam-admin/serviceaccounts">Google Cloud Platform</a></li>
@@ -4836,11 +4836,11 @@ event in the <code>addonsManager</code> category.</p>
     release_channel_collection: ...
 </code></pre>
 <p>This event will produce records that look like:</p>
-<table><thead><tr><th>timestamp</th><th>category</th><th>method</th><th>object</th><th>value</th><th>extra</th></tr></thead><tbody>
-<tr><td>...</td><td><code>addonsManager</code></td><td><code>install</code></td><td><code>extension</code></td><td></td><td>...</td></tr>
-<tr><td>...</td><td><code>addonsManager</code></td><td><code>update</code></td><td><code>locale</code></td><td></td><td>...</td></tr>
-<tr><td>...</td><td><code>addonsManager</code></td><td><code>sideload_prompt</code></td><td><code>other</code></td><td></td><td>...</td></tr>
-</tbody></table>
+<p>|timestamp| category | method  | object  | value | extra |
+|-| -------- |---------| --------|-------|-------|
+|...|<code>addonsManager</code>|<code>install</code>|<code>extension</code>|        |...|
+|...|<code>addonsManager</code>|<code>update</code>|<code>locale</code>|        |...|
+|...|<code>addonsManager</code>|<code>sideload_prompt</code>|<code>other</code>|       |...|</p>
 <p>But none of these records will indicate that it was produced by the <code>manage</code> event. To find all records produced by <code>manage</code>, one would have to query all records where</p>
 <pre><code>category = ...
 AND method in [...,]
@@ -4848,18 +4848,18 @@ AND object in [...,]
 </code></pre>
 <p>which is not ideal.</p>
 <p>Furthermore, if one encounters this data without knowledge of how the <code>manage</code> event works, they need to look up the event based on the category, method, and object values in order to find the event, and then query the data again to find all the related events. It's not immediately clear from the data if this record:</p>
-<table><thead><tr><th>timestamp</th><th>category</th><th>method</th><th>object</th><th>value</th><th>extra</th></tr></thead><tbody>
-<tr><td>...</td><td><code>addonsManager</code></td><td><code>update</code></td><td><code>locale</code></td><td></td><td>...</td></tr>
-</tbody></table>
+<p>|timestamp| category | method  | object  | value | extra |
+|-| -------- |---------| --------|-------|-------|
+|...|<code>addonsManager</code>|<code>update</code>|<code>locale</code>|        |...|</p>
 <p>and and this record:</p>
-<table><thead><tr><th>timestamp</th><th>category</th><th>method</th><th>object</th><th>value</th><th>extra</th></tr></thead><tbody>
-<tr><td>...</td><td><code>addonsManager</code></td><td><code>install</code></td><td><code>extension</code></td><td></td><td>...</td></tr>
-</tbody></table>
+<p>|timestamp| category | method  | object  | value | extra |
+|-| -------- |---------| --------|-------|-------|
+|...|<code>addonsManager</code>|<code>install</code>|<code>extension</code>|        |...|</p>
 <p>are related or not.</p>
 <p>Another factor that can add to confusion is the fact that other events can share similar values for methods or objects (or even the combination of method and object). For example:</p>
-<table><thead><tr><th>timestamp</th><th>category</th><th>method</th><th>object</th><th>value</th><th>extra</th></tr></thead><tbody>
-<tr><td>...</td><td><code>normandy</code></td><td><code>update</code></td><td><code>preference_rollout</code></td><td></td><td>...</td></tr>
-</tbody></table>
+<p>|timestamp| category | method  | object  | value | extra |
+|-| -------- |---------| --------|-------|-------|
+|...|<code>normandy</code>|<code>update</code>|<code>preference_rollout</code>|        |...|</p>
 <p>which can further confuser users.</p>
 <p>[1]: Events do have name fields, but they aren't included in the event records and thus are not present in the resulting dataset. Also, If a user defines an event in <code>Events.yaml</code> without specifying a list of acceptable methods, the method will default to the name of the event for records created by that event.</p>
 <h4><a class="header" href="#suggested-convention" id="suggested-convention">Suggested Convention:</a></h4>
@@ -5152,12 +5152,12 @@ behaviour (Environment, New Profiles, Updates, Crashes).</p>
 It delivers the Telemetry Environment as well as Histograms and Scalars for all
 process types that collect data in Firefox. It has several variants each with
 specific delivery characteristics:</p>
-<table><thead><tr><th>Reason</th><th>Sent when</th><th>Notes</th></tr></thead><tbody>
-<tr><td>shutdown</td><td>Firefox session ends cleanly</td><td>Accounts for about <a href="https://sql.telemetry.mozilla.org/queries/3434">80%</a> of all &quot;main&quot; pings. Sent by Pingsender immediately after Firefox shuts down, subject to conditions: Firefox 55+, if the OS isn't also shutting down, and if this isn't the client's first session. If Pingsender fails or isn't used, the ping is sent by Firefox at the beginning of the next Firefox session.</td></tr>
-<tr><td>daily</td><td>It has been more than 24 hours since the last &quot;main&quot; ping, and it is around local midnight</td><td>In long-lived Firefox sessions we might go days without receiving a &quot;shutdown&quot; ping. Thus the &quot;daily&quot; ping is sent to ensure we occasionally hear from long-lived sessions.</td></tr>
-<tr><td>environment-change</td><td>Telemetry Environment changes</td><td>Is sent immediately when triggered by Firefox (Installing or removing an addon or changing a monitored user preference are common ways for the Telemetry Environment to change)</td></tr>
-<tr><td>aborted-session</td><td>Firefox session doesn't end cleanly</td><td>Sent by Firefox at the beginning of the next Firefox session.</td></tr>
-</tbody></table>
+<p>| Reason             | Sent when                | Notes                         |
+| ------------------ | ------------------------ | ------------------------------|
+| shutdown           | Firefox session ends cleanly | Accounts for about <a href="https://sql.telemetry.mozilla.org/queries/3434">80%</a> of all &quot;main&quot; pings. Sent by Pingsender immediately after Firefox shuts down, subject to conditions: Firefox 55+, if the OS isn't also shutting down, and if this isn't the client's first session. If Pingsender fails or isn't used, the ping is sent by Firefox at the beginning of the next Firefox session.|
+| daily              | It has been more than 24 hours since the last &quot;main&quot; ping, and it is around local midnight | In long-lived Firefox sessions we might go days without receiving a &quot;shutdown&quot; ping. Thus the &quot;daily&quot; ping is sent to ensure we occasionally hear from long-lived sessions.|
+| environment-change | Telemetry Environment changes | Is sent immediately when triggered by Firefox (Installing or removing an addon or changing a monitored user preference are common ways for the Telemetry Environment to change)|
+| aborted-session    | Firefox session doesn't end cleanly | Sent by Firefox at the beginning of the next Firefox session.|</p>
 <p>It was introduced in Firefox 38.</p>
 <h3><a class="header" href="#first-shutdown-ping-1" id="first-shutdown-ping-1">&quot;first-shutdown&quot; ping</a></h3>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/first-shutdown-ping.html">&quot;first-shutdown&quot; ping</a> is identical to the &quot;main&quot;
@@ -5575,20 +5575,15 @@ Refer to this repository for information on how to run or augment the dataset.</
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/other/addons_daily/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#attitudes-daily" id="attitudes-daily">Attitudes Daily</a></h1>
 <ul>
 <li><a href="datasets/other/attitudes_daily/reference.html#introduction">Introduction</a>
-<ul>
-<li><a href="datasets/other/attitudes_daily/reference.html#contents">Contents</a></li>
-<li><a href="datasets/other/attitudes_daily/reference.html#accessing-the-data">Accessing the Data</a></li>
-</ul>
-</li>
+* <a href="datasets/other/attitudes_daily/reference.html#contents">Contents</a>
+* <a href="datasets/other/attitudes_daily/reference.html#accessing-the-data">Accessing the Data</a></li>
 <li><a href="datasets/other/attitudes_daily/reference.html#data-reference">Data Reference</a>
 <ul>
 <li><a href="datasets/other/attitudes_daily/reference.html#example-queries">Example Queries</a>
 <ul>
 <li><a href="datasets/other/attitudes_daily/reference.html#distribution-of-user-responses-to-the-internet-is-open-and-accessible-to-all-over-time">Distribution of user responses to &quot;The internet is open and accessible to all&quot; over time</a></li>
-<li><a href="datasets/other/attitudes_daily/reference.html#distribution-of-responses-to-i-was-able-to-get-what-i-wanted-from-using-the-internet-today-by-default-search-engine">Distribution of responses to &quot;I was able to get what I wanted from using the Internet today&quot; by default search engine.</a></li>
 </ul>
 </li>
-<li><a href="datasets/other/attitudes_daily/reference.html#scheduling">Scheduling</a></li>
 <li><a href="datasets/other/attitudes_daily/reference.html#schema">Schema</a></li>
 </ul>
 </li>
@@ -5628,8 +5623,9 @@ WHERE
 GROUP BY 1, 2
 </code></pre>
 <iframe src="https://sql.telemetry.mozilla.org/embed/query/65079/visualization/165757?api_key=oSjO27fGmpCsnBXBEhaysRVrLZpX1SKMCpYcxA5h&" width="100%" height="530" frameborder="0" scrolling="no"></iframe> 
-<h4><a class="header" href="#distribution-of-responses-to-i-was-able-to-get-what-i-wanted-from-using-the-internet-today-by-default-search-engine" id="distribution-of-responses-to-i-was-able-to-get-what-i-wanted-from-using-the-internet-today-by-default-search-engine">Distribution of responses to &quot;I was able to get what I wanted from using the Internet today&quot; by default search engine.</a></h4>
-<pre><code class="language-sql">SELECT 
+#### Distribution of responses to "I was able to get what I wanted from using the Internet today" by default search engine.
+````sql
+SELECT 
     value,
     CASE
       WHEN STARTS_WITH(default_search_engine, 'google') THEN 'Google'
@@ -5643,14 +5639,14 @@ FROM
 WHERE
     question_key = 'met_goals'
     AND value IS NOT NULL
-    AND submission_date &gt; DATE_SUB(CURRENT_DATE, INTERVAL '7' DAY)
+    AND submission_date > DATE_SUB(CURRENT_DATE, INTERVAL '7' DAY)
 GROUP BY 1, 2
-</code></pre>
+````
 <iframe src="https://sql.telemetry.mozilla.org/embed/query/63957/visualization/163467?api_key=gzCopzybDta4t3JGkx2urB9MQa67akAehJUybVdW&" width="100%" height="570" frameborder="0" scrolling="no"></iframe>
-<h2><a class="header" href="#scheduling-3" id="scheduling-3">Scheduling</a></h2>
-<p>This dataset is updated daily via the
-<a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a> infrastructure.
-The job runs as part of the <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/attitudes_daily.py"><code>attitudes_daily</code> DAG</a>.</p>
+## Scheduling
+This dataset is updated daily via the
+[telemetry-airflow](https://github.com/mozilla/telemetry-airflow) infrastructure.
+The job runs as part of the [`attitudes_daily` DAG](https://github.com/mozilla/telemetry-airflow/blob/master/dags/attitudes_daily.py).
 <h2><a class="header" href="#schema-2" id="schema-2">Schema</a></h2>
 <p>The data is partitioned by <code>submission_date</code>.</p>
 <p>As of 2019-09-15, the current version of the <code>attitudes_daily</code> dataset is <code>v1</code>.</p>
@@ -5661,11 +5657,8 @@ Refer to this repository for information on how to run or augment the dataset. Y
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/other/attitudes_daily/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#clients-daily" id="clients-daily">Clients Daily</a></h1>
 <ul>
 <li><a href="datasets/batch_view/clients_daily/reference.html#introduction">Introduction</a>
-<ul>
-<li><a href="datasets/batch_view/clients_daily/reference.html#contents">Contents</a></li>
-<li><a href="datasets/batch_view/clients_daily/reference.html#accessing-the-data">Accessing the Data</a></li>
-</ul>
-</li>
+* <a href="datasets/batch_view/clients_daily/reference.html#contents">Contents</a>
+* <a href="datasets/batch_view/clients_daily/reference.html#accessing-the-data">Accessing the Data</a></li>
 <li><a href="datasets/batch_view/clients_daily/reference.html#data-reference">Data Reference</a>
 <ul>
 <li><a href="datasets/batch_view/clients_daily/reference.html#example-queries">Example Queries</a>
@@ -5727,7 +5720,7 @@ ORDER BY
   pings_per_day,
   normalized_channel
 </code></pre>
-<h2><a class="header" href="#scheduling-4" id="scheduling-4">Scheduling</a></h2>
+<h2><a class="header" href="#scheduling-3" id="scheduling-3">Scheduling</a></h2>
 <p>This dataset is updated daily via the
 <a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a> infrastructure.
 The job runs as part of the <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py"><code>main_summary</code> DAG</a>.</p>
@@ -5741,12 +5734,9 @@ Refer to this repository for information on how to run or augment the dataset.</
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/batch_view/clients_daily/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#clients-last-seen-reference" id="clients-last-seen-reference">Clients Last Seen Reference</a></h1>
 <ul>
 <li><a href="datasets/bigquery/clients_last_seen/reference.html#introduction">Introduction</a>
-<ul>
-<li><a href="datasets/bigquery/clients_last_seen/reference.html#content">Content</a></li>
-<li><a href="datasets/bigquery/clients_last_seen/reference.html#background-and-caveats">Background and Caveats</a></li>
-<li><a href="datasets/bigquery/clients_last_seen/reference.html#accessing-the-data">Accessing the Data</a></li>
-</ul>
-</li>
+* <a href="datasets/bigquery/clients_last_seen/reference.html#content">Content</a>
+* <a href="datasets/bigquery/clients_last_seen/reference.html#background-and-caveats">Background and Caveats</a>
+* <a href="datasets/bigquery/clients_last_seen/reference.html#accessing-the-data">Accessing the Data</a></li>
 <li><a href="datasets/bigquery/clients_last_seen/reference.html#data-reference">Data Reference</a>
 <ul>
 <li><a href="datasets/bigquery/clients_last_seen/reference.html#example-queries">Example Queries</a>
@@ -5850,7 +5840,7 @@ ORDER BY
     normalized_channel,
     submission_date DESC
 </code></pre>
-<h2><a class="header" href="#scheduling-5" id="scheduling-5">Scheduling</a></h2>
+<h2><a class="header" href="#scheduling-4" id="scheduling-4">Scheduling</a></h2>
 <p>This dataset is updated daily via the
 <a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a>
 infrastructure. The job runs as part of the
@@ -5878,7 +5868,7 @@ The work is being tracked
 This dataset is derived from <a href="datasets/batch_view/events/../main_summary/reference.html"><code>main_summary</code></a>
 so any of <code>main_summary</code>'s filters affect this dataset as well.</p>
 <p>Data is currently available from 2017-01-05 on.</p>
-<h2><a class="header" href="#scheduling-6" id="scheduling-6">Scheduling</a></h2>
+<h2><a class="header" href="#scheduling-5" id="scheduling-5">Scheduling</a></h2>
 <p>The events dataset is updated daily, shortly after
 <a href="datasets/batch_view/events/../main_summary/reference.html"><code>main_summary</code></a> is updated.
 The job is scheduled on <a href="https://github.com/mozilla/telemetry-airflow">Airflow</a>.
@@ -6123,7 +6113,7 @@ of variation and assign a confidence interval to our sums.</p>
 <a href="https://sql.telemetry.mozilla.org/queries/61957/source">Desktop MAU KPI query in STMO</a>
 which uses a jackknife resampling technique implemented as a BigQuery UDF.</p>
 <h1><a class="header" href="#data-reference-7" id="data-reference-7">Data Reference</a></h1>
-<h2><a class="header" href="#scheduling-7" id="scheduling-7">Scheduling</a></h2>
+<h2><a class="header" href="#scheduling-6" id="scheduling-6">Scheduling</a></h2>
 <p>These tables are updated daily via the
 <a href="https://github.com/mozilla-services/spark-parquet-to-bigquery">parquet to BigQuery</a>
 infrastructure in the following DAGs:</p>
@@ -6139,12 +6129,9 @@ and the schemas are visible via the <code>telemetry</code> dataset in <a href="h
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/bigquery/exact_mau/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#first-shutdown-summary" id="first-shutdown-summary">First Shutdown Summary</a></h1>
 <ul>
 <li><a href="datasets/batch_view/first_shutdown_summary/reference.html#introduction">Introduction</a>
-<ul>
-<li><a href="datasets/batch_view/first_shutdown_summary/reference.html#contents">Contents</a></li>
-<li><a href="datasets/batch_view/first_shutdown_summary/reference.html#background-and-caveats">Background and Caveats</a></li>
-<li><a href="datasets/batch_view/first_shutdown_summary/reference.html#accessing-the-data">Accessing the Data</a></li>
-</ul>
-</li>
+* <a href="datasets/batch_view/first_shutdown_summary/reference.html#contents">Contents</a>
+* <a href="datasets/batch_view/first_shutdown_summary/reference.html#background-and-caveats">Background and Caveats</a>
+* <a href="datasets/batch_view/first_shutdown_summary/reference.html#accessing-the-data">Accessing the Data</a></li>
 </ul>
 <h1><a class="header" href="#introduction-10" id="introduction-10">Introduction</a></h1>
 <p>The <code>first_shutdown_summary</code> table is a summary of the <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/first-shutdown-ping.html"><code>first-shutdown</code>
@@ -6167,12 +6154,9 @@ separate first-shutdown ping was created to evaluate first-shutdown behavior whi
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/batch_view/first_shutdown_summary/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#main-summary" id="main-summary">Main Summary</a></h1>
 <ul>
 <li><a href="datasets/batch_view/main_summary/reference.html#introduction">Introduction</a>
-<ul>
-<li><a href="datasets/batch_view/main_summary/reference.html#contents">Contents</a></li>
-<li><a href="datasets/batch_view/main_summary/reference.html#background-and-caveats">Background and Caveats</a></li>
-<li><a href="datasets/batch_view/main_summary/reference.html#accessing-the-data">Accessing the Data</a></li>
-</ul>
-</li>
+* <a href="datasets/batch_view/main_summary/reference.html#contents">Contents</a>
+* <a href="datasets/batch_view/main_summary/reference.html#background-and-caveats">Background and Caveats</a>
+* <a href="datasets/batch_view/main_summary/reference.html#accessing-the-data">Accessing the Data</a></li>
 <li><a href="datasets/batch_view/main_summary/reference.html#adding-new-fields">Adding New Fields</a>
 <ul>
 <li><a href="datasets/batch_view/main_summary/reference.html#user-preferences">User Preferences</a></li>
@@ -6248,7 +6232,7 @@ ORDER BY sum(search_count) DESC
 as long as the record contains a non-null value for
 <code>documentId</code>, <code>submissionDate</code>, and <code>Timestamp</code>.
 We do not ever expect nulls for these fields.</p>
-<h2><a class="header" href="#scheduling-8" id="scheduling-8">Scheduling</a></h2>
+<h2><a class="header" href="#scheduling-7" id="scheduling-7">Scheduling</a></h2>
 <p>This dataset is updated daily via the <a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a> infrastructure.
 The job DAG runs every day shortly after midnight UTC.
 You can find the job definition
@@ -6314,12 +6298,9 @@ Refer to this repository for information on how to run or augment the dataset.</
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/batch_view/main_summary/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#new-profile" id="new-profile">New Profile</a></h1>
 <ul>
 <li><a href="datasets/batch_view/new_profile/reference.html#introduction">Introduction</a>
-<ul>
-<li><a href="datasets/batch_view/new_profile/reference.html#contents">Contents</a></li>
-<li><a href="datasets/batch_view/new_profile/reference.html#accessing-the-data">Accessing the Data</a></li>
-<li><a href="datasets/batch_view/new_profile/reference.html#further-reading">Further Reading</a></li>
-</ul>
-</li>
+* <a href="datasets/batch_view/new_profile/reference.html#contents">Contents</a>
+* <a href="datasets/batch_view/new_profile/reference.html#accessing-the-data">Accessing the Data</a>
+* <a href="datasets/batch_view/new_profile/reference.html#further-reading">Further Reading</a></li>
 <li><a href="datasets/batch_view/new_profile/reference.html#data-reference">Data Reference</a>
 <ul>
 <li><a href="datasets/batch_view/new_profile/reference.html#schema">Schema</a></li>
@@ -6445,7 +6426,7 @@ GROUP BY 1,
          2
 </code></pre>
 <p><a href="https://sql.telemetry.mozilla.org/queries/53884/source">STMO Source</a></p>
-<h3><a class="header" href="#scheduling-9" id="scheduling-9">Scheduling</a></h3>
+<h3><a class="header" href="#scheduling-8" id="scheduling-8">Scheduling</a></h3>
 <p>The job is schedule on a nightly basis on airflow.
 The dag is available under <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/socorro_import.py"><code>mozilla/telemetry-airflow:/dags/socorro_import.py</code></a>.</p>
 <h3><a class="header" href="#schema-9" id="schema-9">Schema</a></h3>
@@ -6456,12 +6437,9 @@ This schema is transformed into a Spark-SQL structure and serialized to parquet 
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/other/socorro_crash/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#ssl-ratios" id="ssl-ratios">SSL Ratios</a></h1>
 <ul>
 <li><a href="datasets/other/ssl/reference.html#introduction">Introduction</a>
-<ul>
-<li><a href="datasets/other/ssl/reference.html#content">Content</a></li>
-<li><a href="datasets/other/ssl/reference.html#background-and-caveats">Background and Caveats</a></li>
-<li><a href="datasets/other/ssl/reference.html#accessing-the-data">Accessing the Data</a></li>
-</ul>
-</li>
+* <a href="datasets/other/ssl/reference.html#content">Content</a>
+* <a href="datasets/other/ssl/reference.html#background-and-caveats">Background and Caveats</a>
+* <a href="datasets/other/ssl/reference.html#accessing-the-data">Accessing the Data</a></li>
 <li><a href="datasets/other/ssl/reference.html#data-reference">Data Reference</a>
 <ul>
 <li><a href="datasets/other/ssl/reference.html#combining-rows">Combining Rows</a></li>
@@ -6546,7 +6524,7 @@ let ratioForDateInQuestion = rows
   }
 }
 </code></pre>
-<h2><a class="header" href="#scheduling-10" id="scheduling-10">Scheduling</a></h2>
+<h2><a class="header" href="#scheduling-9" id="scheduling-9">Scheduling</a></h2>
 <p>The dataset updates every 24 hours.</p>
 <h2><a class="header" href="#code-reference-6" id="code-reference-6">Code Reference</a></h2>
 <p>You can find the query that generates the SSL dataset
@@ -6554,11 +6532,8 @@ let ratioForDateInQuestion = rows
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/other/ssl/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#telemetry-aggregates-reference" id="telemetry-aggregates-reference">Telemetry Aggregates Reference</a></h1>
 <ul>
 <li><a href="datasets/batch_view/telemetry_aggregates/reference.html#introduction">Introduction</a>
-<ul>
-<li><a href="datasets/batch_view/telemetry_aggregates/reference.html#rows-and-columns">Rows and Columns</a></li>
-<li><a href="datasets/batch_view/telemetry_aggregates/reference.html#accessing-the-data">Accessing the Data</a></li>
-</ul>
-</li>
+* <a href="datasets/batch_view/telemetry_aggregates/reference.html#rows-and-columns">Rows and Columns</a>
+* <a href="datasets/batch_view/telemetry_aggregates/reference.html#accessing-the-data">Accessing the Data</a></li>
 <li><a href="datasets/batch_view/telemetry_aggregates/reference.html#data-reference">Data Reference</a>
 <ul>
 <li><a href="datasets/batch_view/telemetry_aggregates/reference.html#example-queries">Example Queries</a></li>
@@ -6614,7 +6589,7 @@ ORDER BY
 (See the <code>BUILD_ID_CUTOFFS</code> variable in the
 <a href="https://github.com/mozilla/python_mozaggregator/">code</a> for the max days per channel)</li>
 </ul>
-<h2><a class="header" href="#scheduling-11" id="scheduling-11">Scheduling</a></h2>
+<h2><a class="header" href="#scheduling-10" id="scheduling-10">Scheduling</a></h2>
 <p>The <code>telemetry_aggregates</code> job is run daily, at midnight UTC.
 The job is scheduled on <a href="https://github.com/mozilla/telemetry-airflow">Airflow</a>.
 The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/831fe84a36347f440ede4f5a90e0bf83d4fa1e1e/dags/mozaggregator_parquet.py">here</a></p>
@@ -6657,11 +6632,8 @@ or <code>parent</code>.</li>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/batch_view/telemetry_aggregates/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#update" id="update">Update</a></h1>
 <ul>
 <li><a href="datasets/batch_view/update/reference.html#introduction">Introduction</a>
-<ul>
-<li><a href="datasets/batch_view/update/reference.html#contents">Contents</a></li>
-<li><a href="datasets/batch_view/update/reference.html#accessing-the-data">Accessing the Data</a></li>
-</ul>
-</li>
+* <a href="datasets/batch_view/update/reference.html#contents">Contents</a>
+* <a href="datasets/batch_view/update/reference.html#accessing-the-data">Accessing the Data</a></li>
 <li><a href="datasets/batch_view/update/reference.html#data-reference">Data Reference</a>
 <ul>
 <li><a href="datasets/batch_view/update/reference.html#schema">Schema</a></li>
@@ -7043,11 +7015,8 @@ There is no <code>tagged-*</code> search data available before this.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/search.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#search-aggregates" id="search-aggregates">Search Aggregates</a></h1>
 <ul>
 <li><a href="datasets/search/search_aggregates/reference.html#introduction">Introduction</a>
-<ul>
-<li><a href="datasets/search/search_aggregates/reference.html#contents">Contents</a></li>
-<li><a href="datasets/search/search_aggregates/reference.html#accessing-the-data">Accessing the Data</a></li>
-</ul>
-</li>
+* <a href="datasets/search/search_aggregates/reference.html#contents">Contents</a>
+* <a href="datasets/search/search_aggregates/reference.html#accessing-the-data">Accessing the Data</a></li>
 <li><a href="datasets/search/search_aggregates/reference.html#data-reference">Data Reference</a>
 <ul>
 <li><a href="datasets/search/search_aggregates/reference.html#example-queries">Example Queries</a></li>
@@ -7102,7 +7071,7 @@ calculates daily US searches.
 If you have trouble viewing this query,
 it's likely you don't have the proper permissions.
 For more details see the <a href="datasets/search/search_aggregates/../../search.html">search data documentation</a>.</p>
-<h2><a class="header" href="#scheduling-12" id="scheduling-12">Scheduling</a></h2>
+<h2><a class="header" href="#scheduling-11" id="scheduling-11">Scheduling</a></h2>
 <p>This job is
 <a href="https://github.com/mozilla/telemetry-airflow/blob/9af06204f7073d7fd5b0240db9091b57a7454a74/dags/main_summary.py#L597">scheduled on airflow</a>
 to run daily.</p>
@@ -7142,12 +7111,9 @@ The dataset is backfilled through 2016-03-11</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/search/search_aggregates/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#search-clients-daily" id="search-clients-daily">Search Clients Daily</a></h1>
 <ul>
 <li><a href="datasets/search/search_clients_daily/reference.html#introduction">Introduction</a>
-<ul>
-<li><a href="datasets/search/search_clients_daily/reference.html#contents">Contents</a></li>
-<li><a href="datasets/search/search_clients_daily/reference.html#background-and-caveats">Background and Caveats</a></li>
-<li><a href="datasets/search/search_clients_daily/reference.html#accessing-the-data">Accessing the Data</a></li>
-</ul>
-</li>
+* <a href="datasets/search/search_clients_daily/reference.html#contents">Contents</a>
+* <a href="datasets/search/search_clients_daily/reference.html#background-and-caveats">Background and Caveats</a>
+* <a href="datasets/search/search_clients_daily/reference.html#accessing-the-data">Accessing the Data</a></li>
 <li><a href="datasets/search/search_clients_daily/reference.html#data-reference">Data Reference</a>
 <ul>
 <li><a href="datasets/search/search_clients_daily/reference.html#example-queries">Example Queries</a></li>
@@ -7201,7 +7167,7 @@ calculates searches per <code>normalized_channel</code> for US clients on an arb
 If you have trouble viewing this query,
 it's likely you don't have the proper permissions.
 For more details see the <a href="datasets/search/search_clients_daily/../../search.html">search data documentation</a>.</p>
-<h2><a class="header" href="#scheduling-13" id="scheduling-13">Scheduling</a></h2>
+<h2><a class="header" href="#scheduling-12" id="scheduling-12">Scheduling</a></h2>
 <p>This dataset is scheduled on Airflow
 (<a href="https://github.com/mozilla/telemetry-airflow/blob/9af06204f7073d7fd5b0240db9091b57a7454a74/dags/main_summary.py#L588">source</a>).</p>
 <h2><a class="header" href="#schema-14" id="schema-14">Schema</a></h2>
@@ -7593,40 +7559,40 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 <p>We can attribute accounts to the <strong>service</strong> that they sign up for, as well as the <strong>entrypoint</strong> that they use to begin the authentication flow. Each service typically has many entrypoints; sync, for example, has web-based entrypoints and browser-based entrypoints (see below).</p>
 <h3><a class="header" href="#service-attribution" id="service-attribution">Service Attribution</a></h3>
 <p>There is a variable called <code>service</code> that we use to (1) attribute users to the relying services of FxA that they have authenticated with and (2) attribute individual events to the services they are associated with. <strong>Except in the case of sync</strong>, <code>service</code> is a mapping from the oauth <code>client_id</code> of the relying service/product to a human readable string. Note that this mapping is currently maintained by hand, and is done after the events have been logged by the server. Currently, mapping to the human-readable <code>service</code> variable is only done for amplitude metrics, where it is treated as a user property. There is also a <code>service</code> variable in the <code>activity_events</code> and <code>flow_metadata</code> re:dash tables (FxA Activity Metrics data source), however it only contains the opaque oauth <code>client_id</code>, not the human-readable string. A table of some of the most common oauth <code>client_id</code>s along with their corresponding <code>service</code> mapping is shown below. This is not a complete list.</p>
-<table><thead><tr><th><code>service</code></th><th>oauth <code>client_id</code></th><th>Description</th></tr></thead><tbody>
-<tr><td><code>lockbox</code></td><td><code>e7ce535d93522896</code></td><td>Lockwise App for Android</td></tr>
-<tr><td><code>lockbox</code></td><td><code>98adfa37698f255b</code></td><td>Lockwise App for iOS</td></tr>
-<tr><td><code>fenix</code></td><td><code>a2270f727f45f648</code></td><td>Sync implementation for Fenix</td></tr>
-<tr><td><code>fx-monitor</code></td><td><code>802d56ef2a9af9fa</code></td><td>Firefox Monitor (<a href="https://monitor.firefox.com/">website</a>)</td></tr>
-<tr><td><code>send</code></td><td><code>1f30e32975ae5112</code></td><td>Firefox Send (<a href="https://send.firefox.com/">website</a>)</td></tr>
-<tr><td><code>send</code></td><td><code>20f7931c9054d833</code></td><td>Firefox Send (android app)</td></tr>
-<tr><td><code>pocket-mobile</code></td><td><code>7377719276ad44ee</code></td><td>Pocket Mobile App</td></tr>
-<tr><td><code>pocket-web</code></td><td><code>749818d3f2e7857f</code></td><td>Pocket Website</td></tr>
-<tr><td><code>firefox-addons</code></td><td><code>3a1f53aabe17ba32</code></td><td><code>addons.mozilla.org</code></td></tr>
-<tr><td><code>amo-web</code></td><td><code>a4907de5fa9d78fc</code></td><td><code>addons.mozilla.org</code> (still unsure how this differs from <code>firefox-addons</code>)</td></tr>
-<tr><td><code>screenshots</code></td><td><code>5e75409a5a3f096d</code></td><td>Firefox Screenshots (<a href="https://screenshots.firefox.com/">website</a>, no longer supported)</td></tr>
-<tr><td><code>notes</code></td><td><code>a3dbd8c5a6fd93e2</code></td><td>Firefox Notes (desktop extension)</td></tr>
-<tr><td><code>notes</code></td><td><code>7f368c6886429f19</code></td><td>Firefox Notes (android app)</td></tr>
-<tr><td><code>fxa-content</code></td><td><code>ea3ca969f8c6bb0d</code></td><td>Oauth ID used when a user is signing in with cached credentials (i.e. does not have to re-enter username/password) and when the user is logging into the FxA settings page.</td></tr>
-<tr><td><code>mozilla-email-preferences</code></td><td><code>c40f32fd2938f0b6</code></td><td>Oauth ID used when a user is signing in to modify their marketing email preferences (e.g., to opt-out.)</td></tr>
-</tbody></table>
+<p>|<code>service</code>|oauth <code>client_id</code>|Description|
+|---|---|---|
+|<code>lockbox</code>|<code>e7ce535d93522896</code>|Lockwise App for Android|
+|<code>lockbox</code>|<code>98adfa37698f255b</code>|Lockwise App for iOS|
+|<code>fenix</code>|<code>a2270f727f45f648</code>|Sync implementation for Fenix|
+|<code>fx-monitor</code>|<code>802d56ef2a9af9fa</code>|Firefox Monitor (<a href="https://monitor.firefox.com/">website</a>)|
+|<code>send</code>|<code>1f30e32975ae5112</code>|Firefox Send (<a href="https://send.firefox.com/">website</a>)|
+|<code>send</code>|<code>20f7931c9054d833</code>|Firefox Send (android app)|
+|<code>pocket-mobile</code>|<code>7377719276ad44ee</code>|Pocket Mobile App|
+|<code>pocket-web</code>|<code>749818d3f2e7857f</code>|Pocket Website|
+|<code>firefox-addons</code>|<code>3a1f53aabe17ba32</code>|<code>addons.mozilla.org</code>|
+|<code>amo-web</code>|<code>a4907de5fa9d78fc</code>|<code>addons.mozilla.org</code> (still unsure how this differs from <code>firefox-addons</code>)|
+|<code>screenshots</code>|<code>5e75409a5a3f096d</code>|Firefox Screenshots (<a href="https://screenshots.firefox.com/">website</a>, no longer supported)|
+|<code>notes</code>|<code>a3dbd8c5a6fd93e2</code>|Firefox Notes (desktop extension)|
+|<code>notes</code>|<code>7f368c6886429f19</code>|Firefox Notes (android app)|
+|<code>fxa-content</code>|<code>ea3ca969f8c6bb0d</code>|Oauth ID used when a user is signing in with cached credentials (i.e. does not have to re-enter username/password) and when the user is logging into the FxA settings page.|
+|<code>mozilla-email-preferences</code>|<code>c40f32fd2938f0b6</code>|Oauth ID used when a user is signing in to modify their marketing email preferences (e.g., to opt-out.)|</p>
 <p>In amplitude, there is also a <code>fxa_services_used</code> user property which maintains an array of all the services a user has authenticated with.</p>
 <p>Some amplitude charts segmenting by service can be found <a href="https://analytics.amplitude.com/mozilla-corp/notebook/detelo9">here</a>.</p>
 <h3><a class="header" href="#funnel-attribution-entrypoint-and-utm-parameters" id="funnel-attribution-entrypoint-and-utm-parameters">Funnel Attribution (entrypoint and utm parameters)</a></h3>
 <p>We can also attribute users to where they began the authentication process, be it from a website or an application. Attribution is done through query parameters appended to links that point at <code>accounts.firefox.com</code> (which hosts the actual authentication process). These parameters are logged along with with any metrics events that the user generates during the authentication flow. The table below lists the query parameters that are currently in use, along with the values associated with some of the most common funnels. Note that only <code>entrypoint</code> is typically logged for flows beginning within the browser. Web-based entrypoints are listed first, followed by entrypoints that are found within the browser chrome itself.</p>
 <p>See <a href="https://mozilla.github.io/application-services/docs/accounts/metrics.html">this documentation</a> for more implementational detail on utm/entrypoint parameters.</p>
-<table><thead><tr><th><code>entrypoint</code></th><th>utm parameters</th><th>Description &amp; Notes</th></tr></thead><tbody>
-<tr><td><code>activity-stream-firstrun</code></td><td><strong><code>utm_source</code></strong> = <code>activity-stream</code>, <strong><code>utm_campaign</code></strong> = <code>firstrun</code>, <strong><code>utm_medium</code></strong> = <code>referral</code> or <code>email</code></td><td>The <a href="about:welcome">about:welcome</a> page that is shown to new profiles on browser <code>firstrun</code>. <code>utm_term</code> is sometimes used to track variations for experiments.</td></tr>
-<tr><td><code>firstrun</code> (not supported for current versions)</td><td><strong><code>utm_source</code></strong> = <code>firstrun</code></td><td>This is the old version of the <code>firstrun</code> page that was hosted on the web as part of mozilla.org (<a href="https://www.mozilla.org/en-US/firefox/62.0/firstrun/">example</a>). Starting with Firefox version 62, it was replaced by an in-browser version (see row above). Although it is not used for newer versions, it is still hosted for the sake of e.g. profiles coming through the dark funnel on older versions.</td></tr>
-<tr><td><code>mozilla.org-whatsnewXX</code></td><td><strong><code>utm_source</code></strong> = <code>whatsnewXX</code>, <strong><code>utm_campaign</code></strong> = <code>fxa-embedded-form</code>, <strong><code>utm_content</code></strong> = <code>whatsnew</code>, <strong><code>utm_medium</code></strong> = <code>referral</code> or <code>email</code></td><td>Where <code>XX</code> = the browser version, e.g. 67 (<a href="https://www.mozilla.org/en-US/firefox/67.0.1/whatsnew/">example</a>). The &quot;what's new&quot; page that is shown to users after they upgrade browser versions. Important notes: <strong>(1)</strong> Users who are signed into a Firefox account have a different experience than those that are signed out. Signed-in users typically see a promotion of FxA-relying services, while signed-out users see a Call to Action to create an account. <strong>(2)</strong> The attribution parameters for this page were standardized starting on version 66. <strong>Previous values for entrypoint</strong> include <code>whatsnew</code> and <code>mozilla.org-wnp64</code> - these values should be used when doing historical analysis of versions prior to 66.</td></tr>
-<tr><td><code>new-install-page</code> (current), <code>firefox-new</code> (previously)</td><td>varies (can contain values passed through by referrals)</td><td><a href="https://www.mozilla.org/en-US/firefox/new/">example</a>. The &quot;install Firefox&quot; page. This page doesn't always promote FxA and it will often only promote it to a certain % of traffic or to certain segments.</td></tr>
-<tr><td><code>fxa-discoverability-native</code></td><td>NA</td><td>The in-browser toolbar icon. This was introduced with version 67.0</td></tr>
-<tr><td><code>menupanel</code></td><td>NA</td><td>The in-browser account item in the &quot;hamburger&quot; menu on desktop (three-line menu in the upper right corner) as well as the sync/FxA menu item on android and iOS.</td></tr>
-<tr><td><code>preferences</code></td><td>NA</td><td>The &quot;sign into sync&quot; button found in the sync section in desktop preferences.</td></tr>
-<tr><td><code>synced-tabs</code></td><td>NA</td><td>The &quot;sign into sync&quot; button found in synced-tabs section under the library menu.</td></tr>
-<tr><td><code>sendtab</code></td><td>NA</td><td>The &quot;sign into sync&quot; button found in the &quot;send tab to device&quot; menu accessible by right-clicking on a tab.</td></tr>
-<tr><td><code>lockbox-addon</code></td><td>NA</td><td>The &quot;sign into sync&quot; button found within the the Lockwise desktop extension. This is likely to change once Lockwise becomes fully integrated into the browser.</td></tr>
-</tbody></table>
+<p>|<code>entrypoint</code>|utm parameters|Description &amp; Notes|
+|---|---|---|
+|<code>activity-stream-firstrun</code>|<strong><code>utm_source</code></strong> = <code>activity-stream</code>, <strong><code>utm_campaign</code></strong> = <code>firstrun</code>, <strong><code>utm_medium</code></strong> = <code>referral</code> or <code>email</code>|The <a href="about:welcome">about:welcome</a> page that is shown to new profiles on browser <code>firstrun</code>. <code>utm_term</code> is sometimes used to track variations for experiments.|
+|<code>firstrun</code> (not supported for current versions)|<strong><code>utm_source</code></strong> = <code>firstrun</code>|This is the old version of the <code>firstrun</code> page that was hosted on the web as part of mozilla.org (<a href="https://www.mozilla.org/en-US/firefox/62.0/firstrun/">example</a>). Starting with Firefox version 62, it was replaced by an in-browser version (see row above). Although it is not used for newer versions, it is still hosted for the sake of e.g. profiles coming through the dark funnel on older versions.|
+|<code>mozilla.org-whatsnewXX</code>|<strong><code>utm_source</code></strong> = <code>whatsnewXX</code>, <strong><code>utm_campaign</code></strong> = <code>fxa-embedded-form</code>, <strong><code>utm_content</code></strong> = <code>whatsnew</code>, <strong><code>utm_medium</code></strong> = <code>referral</code> or <code>email</code> |Where <code>XX</code> = the browser version, e.g. 67 (<a href="https://www.mozilla.org/en-US/firefox/67.0.1/whatsnew/">example</a>). The &quot;what's new&quot; page that is shown to users after they upgrade browser versions. Important notes: <strong>(1)</strong> Users who are signed into a Firefox account have a different experience than those that are signed out. Signed-in users typically see a promotion of FxA-relying services, while signed-out users see a Call to Action to create an account. <strong>(2)</strong> The attribution parameters for this page were standardized starting on version 66. <strong>Previous values for entrypoint</strong> include <code>whatsnew</code> and <code>mozilla.org-wnp64</code> - these values should be used when doing historical analysis of versions prior to 66.|
+|<code>new-install-page</code> (current), <code>firefox-new</code> (previously)|varies (can contain values passed through by referrals)|<a href="https://www.mozilla.org/en-US/firefox/new/">example</a>. The &quot;install Firefox&quot; page. This page doesn't always promote FxA and it will often only promote it to a certain % of traffic or to certain segments.|
+|<code>fxa-discoverability-native</code>|NA|The in-browser toolbar icon. This was introduced with version 67.0|
+|<code>menupanel</code>|NA|The in-browser account item in the &quot;hamburger&quot; menu on desktop (three-line menu in the upper right corner) as well as the sync/FxA menu item on android and iOS.|
+|<code>preferences</code>|NA|The &quot;sign into sync&quot; button found in the sync section in desktop preferences.|
+|<code>synced-tabs</code>|NA|The &quot;sign into sync&quot; button found in synced-tabs section under the library menu.|
+|<code>sendtab</code>|NA|The &quot;sign into sync&quot; button found in the &quot;send tab to device&quot; menu accessible by right-clicking on a tab.|
+|<code>lockbox-addon</code>|NA|The &quot;sign into sync&quot; button found within the the Lockwise desktop extension. This is likely to change once Lockwise becomes fully integrated into the browser.|</p>
 <p>Example amplitude charts: <a href="https://analytics.amplitude.com/mozilla-corp/chart/1ush8xd">registrations by <code>entrypoint</code></a>, <a href="https://analytics.amplitude.com/mozilla-corp/chart/y8t2k1z">logins by <code>entrypoint</code></a>, <a href="https://analytics.amplitude.com/mozilla-corp/chart/jjbkusl">registrations by <code>utm_source</code></a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/fxa_metrics/attribution.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#firefox-account-funnels" id="firefox-account-funnels">Firefox Account Funnels</a></h1>
 <h2><a class="header" href="#table-of-contents-8" id="table-of-contents-8">Table of Contents</a></h2>
@@ -7663,20 +7629,20 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 <p>We are also in the process of developing funnels for paying subscribers. We will add documentation on that once the work is is closer to complete.</p>
 <h2><a class="header" href="#registration-funnel" id="registration-funnel">Registration Funnel</a></h2>
 <p>While there are some variations, the typical registration funnel is comprised of the steps described in the chart below. Except where noted, these events are emitted by the FxA content server.</p>
-<table><thead><tr><th>Step</th><th>Amplitude Event</th><th>Flow Event</th><th>Description</th></tr></thead><tbody>
-<tr><td>1</td><td><code>fxa_email_first - view</code></td><td><code>flow.enter-email.view</code></td><td>View (impression) of the form that the user enters their email address into to start the process. Note that this form can be hosted by FxA, or hosted by the relying party. In the latter case, the relier is responsible for handing the user's email address off to the FxA funnel. See &quot;counting top of funnel events&quot; below.</td></tr>
-<tr><td>2</td><td><code>fxa_reg - view</code></td><td><code>flow.signup.view</code></td><td>View of the registration form. If the user got to this step via step 1, FxA has detected that their email address is not present in the DB, and thus a new account can be created. The user creates their password and enters their age.</td></tr>
-<tr><td>3</td><td><code>fxa_reg - engage</code></td><td><code>flow.signup.engage</code></td><td>A user focuses/clicks on one of the registration form fields.</td></tr>
-<tr><td>4</td><td><code>fxa_reg - submit</code></td><td><code>flow.signup.submit</code></td><td>A user submits the registration form (could be unsuccessfully).</td></tr>
-<tr><td>5</td><td><code>fxa_reg - created</code></td><td><code>account.created</code></td><td>This event is emitted by the auth server. It indicates that user has entered a valid email address and password, and that their account has been created and added to the DB. However, the account is still &quot;unverified&quot; at this point and therefore not accessible by the user.</td></tr>
-<tr><td>6</td><td><code>fxa_email - sent</code> (<code>email_type</code> = <code>registration</code>)</td><td><code>email.verification.sent</code></td><td>An email is sent to the user to verify their new account. Depending on the service, it either contains a verification link or a verification code that the user enters into the registration form to verify their email address.</td></tr>
-<tr><td>7</td><td><code>fxa_reg - cwts_view</code></td><td><code>flow.signup.choose-what-to-sync.view</code></td><td>User views the &quot;choose what to sync&quot; screen which allows the users to select what types of browser data they want to synchronize. <strong>Note that the user is not required to submit this page</strong> - if they do not take any action then all the data types will be synced by default. Thus you may not want to include this (and the following two events) in your funnel analysis if you do not care about the user's actions here.</td></tr>
-<tr><td>8</td><td><code>fxa_reg - cwts_engage</code></td><td>Not Implemented</td><td>User clicks on the &quot;choose what to sync&quot; screen.</td></tr>
-<tr><td>9</td><td><code>fxa_reg - cwts_submit</code></td><td>Not Implemented</td><td>User submits the &quot;choose what to sync&quot; screen. See also the amplitude user property <code>sync_engines</code> which stores which data types the user selected.</td></tr>
-<tr><td>10</td><td><code>fxa_email - click</code></td><td><code>email.verify_code.clicked</code></td><td>A user has clicked on the verification link contained in the email sent in step 6. Note this only applies to cases where a clickable link is sent; for reliers that use activation codes, this event will not be emitted (so be aware of this when constructing your funnels).</td></tr>
-<tr><td>11</td><td><code>fxa_reg - email_confirmed</code></td><td><code>account.verified</code></td><td>This event is emitted by the auth server. A user has successfully verified their account. They should now be able to use it.</td></tr>
-<tr><td>12</td><td><code>fxa_reg - complete</code></td><td><code>flow.complete</code></td><td>The account registration process is complete. Note there are NO actions required of the user to advance from step 8 to step 9; there should be virtually no drop-off there. The flow event is identical for registration and login.</td></tr>
-</tbody></table>
+<p>|Step|Amplitude Event|Flow Event|Description|
+|---|---|---|---|
+|1|<code>fxa_email_first - view</code>|<code>flow.enter-email.view</code>|View (impression) of the form that the user enters their email address into to start the process. Note that this form can be hosted by FxA, or hosted by the relying party. In the latter case, the relier is responsible for handing the user's email address off to the FxA funnel. See &quot;counting top of funnel events&quot; below.|
+|2|<code>fxa_reg - view</code>|<code>flow.signup.view</code>|View of the registration form. If the user got to this step via step 1, FxA has detected that their email address is not present in the DB, and thus a new account can be created. The user creates their password and enters their age.|
+|3|<code>fxa_reg - engage</code>|<code>flow.signup.engage</code>|A user focuses/clicks on one of the registration form fields.|
+|4|<code>fxa_reg - submit</code>|<code>flow.signup.submit</code>|A user submits the registration form (could be unsuccessfully).|
+|5|<code>fxa_reg - created</code>|<code>account.created</code>|This event is emitted by the auth server. It indicates that user has entered a valid email address and password, and that their account has been created and added to the DB. However, the account is still &quot;unverified&quot; at this point and therefore not accessible by the user.|
+|6|<code>fxa_email - sent</code> (<code>email_type</code> = <code>registration</code>)|<code>email.verification.sent</code>|An email is sent to the user to verify their new account. Depending on the service, it either contains a verification link or a verification code that the user enters into the registration form to verify their email address.|
+|7|<code>fxa_reg - cwts_view</code>|<code>flow.signup.choose-what-to-sync.view</code>|User views the &quot;choose what to sync&quot; screen which allows the users to select what types of browser data they want to synchronize. <strong>Note that the user is not required to submit this page</strong> - if they do not take any action then all the data types will be synced by default. Thus you may not want to include this (and the following two events) in your funnel analysis if you do not care about the user's actions here. |
+|8|<code>fxa_reg - cwts_engage</code>|Not Implemented|User clicks on the &quot;choose what to sync&quot; screen.|
+|9|<code>fxa_reg - cwts_submit</code>|Not Implemented|User submits the &quot;choose what to sync&quot; screen. See also the amplitude user property <code>sync_engines</code> which stores which data types the user selected.|
+|10|<code>fxa_email - click</code>| <code>email.verify_code.clicked</code>  |A user has clicked on the verification link contained in the email sent in step 6. Note this only applies to cases where a clickable link is sent; for reliers that use activation codes, this event will not be emitted (so be aware of this when constructing your funnels).|
+|11|<code>fxa_reg - email_confirmed</code>|<code>account.verified</code>|This event is emitted by the auth server. A user has successfully verified their account. They should now be able to use it.|
+|12|<code>fxa_reg - complete</code>|<code>flow.complete</code>|The account registration process is complete. Note there are NO actions required of the user to advance from step 8 to step 9; there should be virtually no drop-off there. The flow event is identical for registration and login.|</p>
 <p>See <a href="https://analytics.amplitude.com/mozilla-corp/chart/a9yjkzf">this chart</a> for an example of how this funnel can be constructed for the <code>firstrun</code> (about:welcome) page in amplitude. <a href="https://sql.telemetry.mozilla.org/queries/62595#160701">Here</a> is a version in re:dash using the flow events.</p>
 <p>The chart above provides the most detailed version of the registration funnel that can currently be constructed. However, it should not be considered the &quot;canonical&quot; version of the funnel - depending on the question it may make sense to omit some of the steps. For example, at the time of writing some browser entrypoints (e.g. <code>menupanel</code>) link directly to step 2 and skip the initial email form. Having both steps 7 and 8 may also be redundant in some cases, etc. Also, as noted above, you may want to omit the &quot;choose what to sync&quot; steps if you do not care about the users' actions there.</p>
 <h2><a class="header" href="#login-funnel" id="login-funnel">Login Funnel</a></h2>
@@ -7686,17 +7652,17 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 <li>A user is logging into sync with an account that is more than 4 hours old.</li>
 <li>A user is logging into an oauth relier that uses encryption keys (e.g., Firefox send), if the user had not logged into their account in the previous 72? (check this) hours.</li>
 </ol>
-<table><thead><tr><th>Step</th><th>Amplitude Event</th><th>Flow Event</th><th>Description</th></tr></thead><tbody>
-<tr><td>1</td><td><code>fxa_email_first - view</code></td><td><code>flow.enter-email.view</code></td><td>Similar to the registration funnel, a view (impression) of the form that the user enters their email address into to start the process. Note that this form can be hosted by FxA, or hosted by the relying party. In the latter case, the relier is responsible for handing the user's email address off to the FxA funnel. See &quot;counting top of funnel events&quot; below.</td></tr>
-<tr><td>2</td><td><code>fxa_login - view</code></td><td><code>flow.signin.view</code></td><td>View of the login form. If the user got to this step via step 1, FxA has detected that their email address IS present in the DB, and thus an existing account can be logged into. The user enters their password on this form.</td></tr>
-<tr><td>3</td><td><code>fxa_login - engage</code></td><td><code>flow.signup.engage</code></td><td>A user focuses/clicks on the login form field</td></tr>
-<tr><td>4</td><td><code>fxa_login - submit</code></td><td><code>flow.signup.submit</code></td><td>A user submits the login form (could be unsuccessfully).</td></tr>
-<tr><td>5</td><td><code>fxa_login - success</code></td><td><code>account.login</code></td><td>This event is emitted by the auth server. It indicates that user has submitted the correct password. However, in some cases the user may still have to confirm their login via email (see above).</td></tr>
-<tr><td>6</td><td><code>fxa_email - sent</code> (<code>email_type</code> = <code>login</code>)</td><td><code>email.confirmation.sent</code></td><td>An email is sent to the user to confirm the login. Depending on the service, it either contains a confirmation link or a verification code that the user enters into the login form.</td></tr>
-<tr><td>7</td><td><code>fxa_email - click</code></td><td><code>email.verify_code.clicked</code></td><td>A user has clicked on the confirmation link contained in the email sent in step 6. Note this only applies to cases where a clickable link is sent; for reliers that use confirmation codes, this event will not be emitted (so be aware of this when constructing your funnels). Note that this event is identical to its counterpart in the registration funnel.</td></tr>
-<tr><td>8</td><td><code>fxa_login - email_confirmed</code></td><td><code>account.confirmed</code></td><td>This event is emitted by the auth server. A user has successfully confirmed the login via email.</td></tr>
-<tr><td>9</td><td><code>fxa_login - complete</code></td><td><code>flow.complete</code></td><td>The account registration process is complete. Note there are NO actions required of the user to advance from step 8 to step 9; there should be virtually no drop-off there. The flow event is identical for registration and login.</td></tr>
-</tbody></table>
+<p>|Step|Amplitude Event|Flow Event|Description|
+|---|---|---|---|
+|1|<code>fxa_email_first - view</code>|<code>flow.enter-email.view</code>|Similar to the registration funnel, a view (impression) of the form that the user enters their email address into to start the process. Note that this form can be hosted by FxA, or hosted by the relying party. In the latter case, the relier is responsible for handing the user's email address off to the FxA funnel. See &quot;counting top of funnel events&quot; below.|
+|2|<code>fxa_login - view</code>|<code>flow.signin.view</code>|View of the login form. If the user got to this step via step 1, FxA has detected that their email address IS present in the DB, and thus an existing account can be logged into. The user enters their password on this form.|
+|3|<code>fxa_login - engage</code>|<code>flow.signup.engage</code>|A user focuses/clicks on the login form field|
+|4|<code>fxa_login - submit</code>|<code>flow.signup.submit</code>|A user submits the login form (could be unsuccessfully).|
+|5|<code>fxa_login - success</code>|<code>account.login</code>|This event is emitted by the auth server. It indicates that user has submitted the correct password. However, in some cases the user may still have to confirm their login via email (see above).|
+|6|<code>fxa_email - sent</code> (<code>email_type</code> = <code>login</code>)|<code>email.confirmation.sent</code>|An email is sent to the user to confirm the login. Depending on the service, it either contains a confirmation link or a verification code that the user enters into the login form.|
+|7|<code>fxa_email - click</code>| <code>email.verify_code.clicked</code>  |A user has clicked on the confirmation link contained in the email sent in step 6. Note this only applies to cases where a clickable link is sent; for reliers that use confirmation codes, this event will not be emitted (so be aware of this when constructing your funnels). Note that this event is identical to its counterpart in the registration funnel.|
+|8|<code>fxa_login - email_confirmed</code>|<code>account.confirmed</code>|This event is emitted by the auth server. A user has successfully confirmed the login via email.|
+|9|<code>fxa_login - complete</code>|<code>flow.complete</code>|The account registration process is complete. Note there are NO actions required of the user to advance from step 8 to step 9; there should be virtually no drop-off there. The flow event is identical for registration and login.|</p>
 <p>See <a href="https://analytics.amplitude.com/mozilla-corp/chart/53dqtlo">this chart</a> for an example of how this funnel can be constructed for the <code>firstrun</code> (about:welcome) page. <a href="https://sql.telemetry.mozilla.org/queries/63048#161676">Here</a> is a version in re:dash using the flow events.</p>
 <p>Note again that you may want to check whether the service you are analyzing requires email confirmation on login.</p>
 <h2><a class="header" href="#branches-off-the-login-funnel-password-reset-account-recovery-2fa" id="branches-off-the-login-funnel-password-reset-account-recovery-2fa">Branches off the Login Funnel: Password Reset, Account Recovery, 2FA.</a></h2>
@@ -7719,100 +7685,100 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 <p>Thus the recovery codes. If a user (1) sets up recovery codes via settings (and stores them somewhere accessible) (2) tries to reset their password and (3) enters a valid recovery code during the password reset process, sync data can be restored without risking the &quot;bad scenario&quot; above.</p>
 <h4><a class="header" href="#password-reset-funnel-without-recovery-key" id="password-reset-funnel-without-recovery-key">Password Reset Funnel Without Recovery Key</a></h4>
 <p><em>Note: There may be other places where a user can initiate the password reset process, but I think that its most common during login. In any case, the steps starting at 2 should all be the same.</em></p>
-<table><thead><tr><th>Step</th><th>Amplitude Event</th><th>Flow Event</th><th>Description</th></tr></thead><tbody>
-<tr><td>1</td><td><code>fxa_login - view</code></td><td><code>flow.signin.view</code></td><td>View of the login form, which contains the &quot;Forgot Password&quot; Link.</td></tr>
-<tr><td>2</td><td><code>fxa_login - forgot_password</code></td><td><code>flow.signin.forgot-password</code></td><td>User clicks on the &quot;Forgot Password&quot; Link.</td></tr>
-<tr><td>3</td><td>Not Implemented</td><td><code>flow.reset-password.view</code></td><td>View of the form asking the user to confirm that they want to reset.</td></tr>
-<tr><td>4</td><td><code>fxa_login - forgot_submit</code></td><td><code>flow.reset-password.engage</code>, <code>flow.reset-password.submit</code></td><td>User clicks on the button confirming that they want to reset.</td></tr>
-<tr><td>5</td><td><code>fxa_email - delivered</code> (<code>email_template</code> = <code>recoveryEmail</code>)</td><td><code>email.recoveryEmail.delivered</code></td><td>Delivery of the PW reset link to the user via email.</td></tr>
-<tr><td>5-a</td><td>Not Implemented</td><td><code>flow.confirm-reset-password.view</code></td><td>View of the screen telling the user to confirm the reset via email.</td></tr>
-<tr><td>6</td><td>Not Implemented</td><td><code>flow.complete-reset-password.view</code></td><td>User views the form to create a new password. (viewable after clicking the link in the email above)</td></tr>
-<tr><td>7</td><td>Not Implemented</td><td><code>flow.complete-reset-password.engage</code></td><td>User clicks on the form to create a new password.</td></tr>
-<tr><td>8</td><td>Not Implemented</td><td><code>flow.complete-reset-password.submit</code></td><td>User submits the form to create a new password.</td></tr>
-<tr><td>9</td><td><code>fxa_login - forgot_complete</code></td><td><code>flow.complete</code> (the auth server also emits <code>account.reset</code>)</td><td>User has completed the password reset funnel.</td></tr>
-</tbody></table>
+<p>|Step|Amplitude Event|Flow Event|Description|
+|---|---|---|---|
+|1|<code>fxa_login - view</code>|<code>flow.signin.view</code>|View of the login form, which contains the &quot;Forgot Password&quot; Link.|
+|2|<code>fxa_login - forgot_password</code>|<code>flow.signin.forgot-password</code>|User clicks on the &quot;Forgot Password&quot; Link.|
+|3|Not Implemented|<code>flow.reset-password.view</code>|View of the form asking the user to confirm that they want to reset.|
+|4|<code>fxa_login - forgot_submit</code>|<code>flow.reset-password.engage</code>, <code>flow.reset-password.submit</code>|User clicks on the button confirming that they want to reset.|
+|5|<code>fxa_email - delivered</code> (<code>email_template</code> = <code>recoveryEmail</code>)|<code>email.recoveryEmail.delivered</code>|Delivery of the PW reset link to the user via email.|
+|5-a|Not Implemented|<code>flow.confirm-reset-password.view</code>|View of the screen telling the user to confirm the reset via email.|
+|6|Not Implemented|<code>flow.complete-reset-password.view</code>|User views the form to create a new password. (viewable after clicking the link in the email above)|
+|7|Not Implemented|<code>flow.complete-reset-password.engage</code>|User clicks on the form to create a new password.|
+|8|Not Implemented|<code>flow.complete-reset-password.submit</code>|User submits the form to create a new password.|
+|9|<code>fxa_login - forgot_complete</code>|<code>flow.complete</code> (the auth server also emits <code>account.reset</code>)|User has completed the password reset funnel.|</p>
 <h4><a class="header" href="#password-reset-funnel-with-recovery-key" id="password-reset-funnel-with-recovery-key">Password Reset Funnel With Recovery Key</a></h4>
 <p><em>Note we still need to implement amplitude events for the recovery code part of this funnel. The funnel is identical to the one above up until step 6.</em></p>
-<table><thead><tr><th>Step</th><th>Amplitude Event</th><th>Flow Event</th><th>Description</th></tr></thead><tbody>
-<tr><td>1</td><td><code>fxa_login - view</code></td><td><code>flow.signin.view</code></td><td>View of the login form, which contains the &quot;Forgot Password&quot; Link.</td></tr>
-<tr><td>2</td><td><code>fxa_login - forgot_password</code></td><td><code>flow.signin.forgot-password</code></td><td>User clicks on the &quot;Forgot Password&quot; Link.</td></tr>
-<tr><td>3</td><td>Not Implemented</td><td><code>flow.reset-password.view</code></td><td>View of the form asking the user to confirm that they want to reset.</td></tr>
-<tr><td>4</td><td><code>fxa_login - forgot_submit</code></td><td><code>flow.reset-password.engage</code>, <code>flow.reset-password.submit</code></td><td>User clicks on the button confirming that they want to reset.</td></tr>
-<tr><td>5</td><td><code>fxa_email - delivered</code> (<code>email_template</code> = <code>recoveryEmail</code>)</td><td><code>email.recoveryEmail.delivered</code></td><td>Delivery of the PW reset link to the user via email.</td></tr>
-<tr><td>5-a</td><td>Not Implemented</td><td><code>flow.confirm-reset-password.view</code></td><td>View of the screen telling the user to confirm the reset via email.</td></tr>
-<tr><td>6</td><td>Not Implemented</td><td><code>flow.account-recovery-confirm-key.view</code></td><td>User views the form to enter their account recovery key. (viewable after clicking the link in the email above)</td></tr>
-<tr><td>7</td><td>Not Implemented</td><td><code>flow.account-recovery-confirm-key.engage</code></td><td>User clicks on the form to enter their account recovery key.</td></tr>
-<tr><td>8</td><td>Not Implemented</td><td><code>flow.account-recovery-confirm-key.submit</code></td><td>User submits the form to enter their account recovery key.</td></tr>
-<tr><td>9</td><td>Not Implemented</td><td><code>flow.account-recovery-confirm-key.success</code> or <code>flow.account-recovery-confirm-key.invalidRecoveryKey</code></td><td>User submitted a valid (success) or invalid recovery key.</td></tr>
-<tr><td>10</td><td>Not Implemented</td><td><code>flow.account-recovery-reset-password.view</code></td><td>User views the form to change their password after submitting a valid recovery key.</td></tr>
-<tr><td>11</td><td>Not Implemented</td><td><code>flow.account-recovery-reset-password.view</code></td><td>User clicks on the form to change their password after submitting a valid recovery key.</td></tr>
-<tr><td>12</td><td>Not Implemented</td><td><code>flow.account-recovery-reset-password.view</code></td><td>User submits the form to change their password after submitting a valid recovery key.</td></tr>
-<tr><td>13</td><td><code>fxa_login - forgot_complete</code></td><td><code>flow.complete</code> (the auth server also emits <code>account.reset</code>)</td><td>User has completed the password reset funnel.</td></tr>
-</tbody></table>
+<p>|Step|Amplitude Event|Flow Event|Description|
+|---|---|---|---|
+|1|<code>fxa_login - view</code>|<code>flow.signin.view</code>|View of the login form, which contains the &quot;Forgot Password&quot; Link.|
+|2|<code>fxa_login - forgot_password</code>|<code>flow.signin.forgot-password</code>|User clicks on the &quot;Forgot Password&quot; Link.|
+|3|Not Implemented|<code>flow.reset-password.view</code>|View of the form asking the user to confirm that they want to reset.|
+|4|<code>fxa_login - forgot_submit</code>|<code>flow.reset-password.engage</code>, <code>flow.reset-password.submit</code>|User clicks on the button confirming that they want to reset.|
+|5|<code>fxa_email - delivered</code> (<code>email_template</code> = <code>recoveryEmail</code>)|<code>email.recoveryEmail.delivered</code>|Delivery of the PW reset link to the user via email.|
+|5-a|Not Implemented|<code>flow.confirm-reset-password.view</code>|View of the screen telling the user to confirm the reset via email.|
+|6|Not Implemented|<code>flow.account-recovery-confirm-key.view</code>|User views the form to enter their account recovery key. (viewable after clicking the link in the email above)|
+|7|Not Implemented|<code>flow.account-recovery-confirm-key.engage</code>|User clicks on the form to enter their account recovery key.|
+|8|Not Implemented|<code>flow.account-recovery-confirm-key.submit</code>|User submits the form to enter their account recovery key.|
+|9|Not Implemented|<code>flow.account-recovery-confirm-key.success</code> or <code>flow.account-recovery-confirm-key.invalidRecoveryKey</code>|User submitted a valid (success) or invalid recovery key.|
+|10|Not Implemented|<code>flow.account-recovery-reset-password.view</code>|User views the form to change their password after submitting a valid recovery key.|
+|11|Not Implemented|<code>flow.account-recovery-reset-password.view</code>|User clicks on the form to change their password after submitting a valid recovery key.|
+|12|Not Implemented|<code>flow.account-recovery-reset-password.view</code>|User submits the form to change their password after submitting a valid recovery key.|
+|13|<code>fxa_login - forgot_complete</code>|<code>flow.complete</code> (the auth server also emits <code>account.reset</code>)|User has completed the password reset funnel.|</p>
 <h3><a class="header" href="#login-with-2fa-totp" id="login-with-2fa-totp">Login with 2FA (TOTP)</a></h3>
 <p>Users can setup two factor authentication (2FA) on account login. 2FA is implemented via time-based one-time password (TOTP). If a user has set up 2FA (via settings), they will be required to enter a pass code generated by their second factor whenever they login to their account.</p>
 <p>Users are also provisioned a set of recovery codes as part of the 2FA setup process. These are one-time use codes that can be used to login to an account if a user loses access to their second factor. <strong>Note that these 2FA recovery codes are different than the account recovery keys described above</strong>.</p>
 <h4><a class="header" href="#login-with-2fatotp-funnel-no-recovery-code" id="login-with-2fatotp-funnel-no-recovery-code">Login with 2FA/TOTP Funnel (No Recovery Code)</a></h4>
 <p><em>This funnel starts after the <code>fxa_login - success</code> / <code>account.login</code> step of the login funnel</em></p>
-<table><thead><tr><th>Step</th><th>Amplitude Event</th><th>Flow Event</th><th>Description</th></tr></thead><tbody>
-<tr><td>1</td><td><code>fxa_login - totp_code_view</code></td><td><code>flow.signin-totp-code.view</code></td><td>View of the TOTP form.</td></tr>
-<tr><td>2</td><td><code>fxa_login - totp_code_engage</code></td><td><code>flow.signin-totp-code.engage</code></td><td>Click on the TOTP form.</td></tr>
-<tr><td>3</td><td><code>fxa_login - totp_code_submit</code></td><td><code>flow.signin-totp-code.submit</code></td><td>Submission of the TOTP form.</td></tr>
-<tr><td>4</td><td><code>fxa_login - totp_code_success</code></td><td><code>flow.signin-totp-code.success</code></td><td>Successful submission of the TOTP form. Auth server also emits <code>totpToken.verified</code></td></tr>
-</tbody></table>
+<p>|Step|Amplitude Event|Flow Event|Description|
+|---|---|---|---|
+|1|<code>fxa_login - totp_code_view</code>|<code>flow.signin-totp-code.view</code>|View of the TOTP form.|
+|2|<code>fxa_login - totp_code_engage</code>|<code>flow.signin-totp-code.engage</code>|Click on the TOTP form.|
+|3|<code>fxa_login - totp_code_submit</code>|<code>flow.signin-totp-code.submit</code>|Submission of the TOTP form.|
+|4|<code>fxa_login - totp_code_success</code>|<code>flow.signin-totp-code.success</code>|Successful submission of the TOTP form. Auth server also emits <code>totpToken.verified</code>|</p>
 <h4><a class="header" href="#login-with-2fatotp-funnel-w-recovery-code" id="login-with-2fatotp-funnel-w-recovery-code">Login with 2FA/TOTP Funnel w/ Recovery Code</a></h4>
 <p><em>This funnel starts after user clicks to use a recovery code during the TOTP funnel.</em></p>
-<table><thead><tr><th>Step</th><th>Amplitude Event</th><th>Flow Event</th><th>Description</th></tr></thead><tbody>
-<tr><td>1</td><td><code>fxa_login - totp_code_view</code></td><td><code>flow.signin-totp-code.view</code></td><td>View of the TOTP form.</td></tr>
-<tr><td>2</td><td>Not Implemented</td><td><code>flow.sign_in_recovery_code.view</code></td><td>View of the TOTP recovery code form.</td></tr>
-<tr><td>3</td><td>Not Implemented</td><td><code>recoveryCode.verified</code> (auth server)</td><td>User submitted a valid recovery code.</td></tr>
-</tbody></table>
+<p>|Step|Amplitude Event|Flow Event|Description|
+|---|---|---|---|
+|1|<code>fxa_login - totp_code_view</code>|<code>flow.signin-totp-code.view</code>|View of the TOTP form.|
+|2|Not Implemented|<code>flow.sign_in_recovery_code.view</code>|View of the TOTP recovery code form.|
+|3|Not Implemented|<code>recoveryCode.verified</code> (auth server)|User submitted a valid recovery code.|</p>
 <h2><a class="header" href="#connect-another-device--sms" id="connect-another-device--sms">Connect Another Device / SMS</a></h2>
 <p>Sync is most valuable to users who have multiple devices connected to their account. Thus after a user completes a sync login or registration funnel, they are shown the &quot;connect another device&quot; form. This Call to Action contains a form for a phone number, as well as links to the Google Play and Apple stores where users can download mobile versions of Firefox. If a user submits a valid phone number (associated with a country that our service supports), then we send them an SMS message with links to their mobile phone's app store.</p>
 <p>At one point, at least for iOS, the SMS message contained a deep link that pre-filled the user's email address on the sign-in form once they installed the mobile browser. There is some uncertainty about whether this still works...</p>
 <h3><a class="header" href="#sms-funnel" id="sms-funnel">SMS Funnel</a></h3>
 <p><em>This funnel begins either (1) after a user has completed the login or registration funnel, or (2) if they click on &quot;connect another device&quot; from the FxA toolbar menu within the desktop browser (provided they are signed in). In the latter case the <code>signin</code> segment of the flow event will be omitted.</em></p>
-<table><thead><tr><th>Step</th><th>Amplitude Event</th><th>Flow Event</th><th>Description</th></tr></thead><tbody>
-<tr><td>1</td><td><code>fxa_connect_device - view</code> (<code>connect_device_flow</code> = <code>sms</code>)</td><td><code>flow.signin.sms.view</code></td><td>User viewed the SMS form.</td></tr>
-<tr><td>2</td><td><code>fxa_connect_device - engage</code> (<code>connect_device_flow</code> = <code>sms</code>)</td><td><code>flow.signin.sms.engage</code></td><td>User clicked somewhere on the SMS form.</td></tr>
-<tr><td>3</td><td><code>fxa_connect_device - submit</code> (<code>connect_device_flow</code> = <code>sms</code>)</td><td><code>flow.signin.sms.submit</code></td><td>User submitted the SMS form.</td></tr>
-<tr><td>4</td><td>Not Implemented</td><td><code>sms.region.{country_code}</code></td><td>An SMS was sent to a number with the two letter <code>country_code</code>.</td></tr>
-<tr><td>5</td><td>Not Implemented</td><td><code>flow.sms.sent.view</code></td><td>User views the message confirming that the SMS has been sent.</td></tr>
-</tbody></table>
+<p>|Step|Amplitude Event|Flow Event|Description|
+|---|---|---|---|
+|1|<code>fxa_connect_device - view</code> (<code>connect_device_flow</code> = <code>sms</code>)|<code>flow.signin.sms.view</code>|User viewed the SMS form.|
+|2|<code>fxa_connect_device - engage</code> (<code>connect_device_flow</code> = <code>sms</code>)|<code>flow.signin.sms.engage</code>|User clicked somewhere on the SMS form.|
+|3|<code>fxa_connect_device - submit</code> (<code>connect_device_flow</code> = <code>sms</code>)|<code>flow.signin.sms.submit</code>|User submitted the SMS form.|
+|4|Not Implemented|<code>sms.region.{country_code}</code>|An SMS was sent to a number with the two letter <code>country_code</code>.|
+|5|Not Implemented|<code>flow.sms.sent.view</code>|User views the message confirming that the SMS has been sent.|</p>
 <p>The SMS form also contains app store links. If they are clicked, flow events <code>flow.signin.sms.link.app-store.android</code> or <code>flow.signin.sms.link.app-store.ios</code> will be logged.</p>
 <h3><a class="header" href="#connect-another-device-funnel-non-sms" id="connect-another-device-funnel-non-sms">Connect Another Device Funnel (Non-SMS)</a></h3>
-<table><thead><tr><th>Step</th><th>Amplitude Event</th><th>Flow Event</th><th>Description</th></tr></thead><tbody>
-<tr><td>1</td><td><code>fxa_connect_device - view</code> (<code>connect_device_flow</code> = <code>cad</code>)</td><td><code>flow.signin.connect-another-device.view</code></td><td>User viewed the CAD form.</td></tr>
-<tr><td>2</td><td><code>fxa_connect_device - view</code> (<code>connect_device_flow</code> = <code>cad</code>)</td><td><code>flow.signin.connect-another-device.link.app-store.(android\|ios)</code></td><td>User clicked on either the android or iOS app store button. In amplitude, use the event property <code>connect_device_os</code> to disambiguate which link was clicked.</td></tr>
-</tbody></table>
+<p>|Step|Amplitude Event|Flow Event|Description|
+|---|---|---|---|
+|1|<code>fxa_connect_device - view</code> (<code>connect_device_flow</code> = <code>cad</code>)|<code>flow.signin.connect-another-device.view</code>|User viewed the CAD form.|
+|2|<code>fxa_connect_device - view</code> (<code>connect_device_flow</code> = <code>cad</code>)|<code>flow.signin.connect-another-device.link.app-store.(android\|ios)</code>|User clicked on either the android or iOS app store button. In amplitude, use the event property <code>connect_device_os</code> to disambiguate which link was clicked.|</p>
 <h2><a class="header" href="#settings" id="settings">Settings</a></h2>
 <p>A variety of metrics are logged that reflect user interaction with the settings page (https://accounts.firefox.com/settings). The chart below outlines some of these events (this may not be an exhaustive list).</p>
-<table><thead><tr><th>Amplitude Event</th><th>Flow Event</th><th>Description</th></tr></thead><tbody>
-<tr><td><code>fxa_pref - view</code></td><td><code>flow.settings.view</code></td><td>User viewed the settings page.</td></tr>
-<tr><td><code>fxa_pref - engage</code></td><td><code>flow.settings.*.engage</code></td><td>User clicked somewhere on the settings page.</td></tr>
-<tr><td><code>fxa_pref - two_step_authentication_view</code></td><td><code>flow.settings.two-step-authentication.view</code></td><td>User viewed 2FA settings.</td></tr>
-<tr><td>Not Implemented</td><td><code>flow.settings.two-step-authentication.recovery-codes.view</code></td><td>User viewed their 2FA recovery codes. These are only viewable one time only, after a user sets up 2FA, or after they generate new codes.</td></tr>
-<tr><td>Not Implemented</td><td><code>flow.settings.two-step-authentication.recovery-codes.print-option</code></td><td>User clicks to print their 2FA recovery codes.</td></tr>
-<tr><td>Not Implemented</td><td><code>flow.settings.two-step-authentication.recovery-codes.download-option</code></td><td>User clicks to download their 2FA recovery codes.</td></tr>
-<tr><td>Not Implemented</td><td><code>flow.settings.two-step-authentication.recovery-codes.copy-option</code></td><td>User clicks to copy their 2FA recovery codes to the clipboard (this is fired only when they click the copy button, not if they copy using e.g. a keyboard shortcut).</td></tr>
-<tr><td>Not Implemented</td><td><code>flow.settings.change-password.view</code></td><td>User viewed the form to change their password.</td></tr>
-<tr><td><code>fxa_pref - password</code></td><td><code>settings.change-password.success</code></td><td>User changed their password via settings.</td></tr>
-<tr><td><code>fxa_pref - newsletter</code> (see also user property <code>newsletter_state</code>)</td><td><code>settings.communication-preferences.(optIn\|optOut).success</code></td><td>User changed their newsletter email preferences.</td></tr>
-<tr><td>Not Implemented</td><td><code>flow.settings.account_recovery.view</code></td><td>User viewed account recovery settings.</td></tr>
-<tr><td>Not Implemented</td><td><code>flow.settings.account_recovery.engage</code></td><td>User clicked somewhere in account recovery settings.</td></tr>
-<tr><td>Not Implemented</td><td><code>flow.settings.account-recovery.confirm-password.view</code></td><td>User viewed the password form prior to turning on account recovery. (user first has to verify their email address)</td></tr>
-<tr><td>Not Implemented</td><td><code>flow.settings.account-recovery.confirm-password.view</code></td><td>User clicked the password form prior to turning on account recovery.</td></tr>
-<tr><td>Not Implemented</td><td><code>flow.settings.account-recovery.confirm-password.submit</code></td><td>User submitted the password form prior to turning on account recovery.</td></tr>
-<tr><td>Not Implemented</td><td><code>flow.settings.account-recovery.confirm-password.success</code></td><td>User successfully submitted the password form prior to turning on account recovery.</td></tr>
-<tr><td>Not Implemented</td><td><code>flow.settings.account-recovery.recovery-key.view</code></td><td>User viewed their recovery key. This is viewable one time only, after a user sets up account recovery, or after they generate a new key.</td></tr>
-<tr><td>Not Implemented</td><td><code>flow.settings.account-recovery.recovery-key.print-option</code></td><td>User clicks to print their recovery key.</td></tr>
-<tr><td>Not Implemented</td><td><code>flow.settings.account-recovery.recovery-key.download-option</code></td><td>User clicks to download their recovery key.</td></tr>
-<tr><td>Not Implemented</td><td><code>flow.settings.account-recovery.recovery-key.copy-option</code></td><td>User clicks to copy their recovery key to the clipboard (this is fired only when they click the copy button, not if they copy using e.g. a keyboard shortcut).</td></tr>
-<tr><td>Not Implemented</td><td><code>flow.settings.account-recovery.refresh</code></td><td>User generated a new recovery key.</td></tr>
-<tr><td>Not Implemented</td><td><code>flow.settings.clients.view</code></td><td>User viewed the list of clients (&quot;Devices &amp; Apps&quot;) connected to their account. AKA the device manager.</td></tr>
-<tr><td>Not Implemented</td><td><code>flow.settings.clients.engage</code></td><td>User clicked somewhere the list of clients connected to their account.</td></tr>
-<tr><td>Not Implemented</td><td><code>flow.settings.clients.disconnect.view</code></td><td>User viewed the dialog asking to confirm disconnection of a device.</td></tr>
-</tbody></table>
+<p>|Amplitude Event|Flow Event|Description|
+|---|---|---|
+|<code>fxa_pref - view</code>|<code>flow.settings.view</code>|User viewed the settings page.|
+|<code>fxa_pref - engage</code>|<code>flow.settings.*.engage</code>|User clicked somewhere on the settings page.|
+|<code>fxa_pref - two_step_authentication_view</code>|<code>flow.settings.two-step-authentication.view</code>|User viewed 2FA settings.|
+|Not Implemented|<code>flow.settings.two-step-authentication.recovery-codes.view</code>|User viewed their 2FA recovery codes. These are only viewable one time only, after a user sets up 2FA, or after they generate new codes.|
+|Not Implemented|<code>flow.settings.two-step-authentication.recovery-codes.print-option</code>|User clicks to print their 2FA recovery codes.|
+|Not Implemented|<code>flow.settings.two-step-authentication.recovery-codes.download-option</code>|User clicks to download their 2FA recovery codes.|
+|Not Implemented|<code>flow.settings.two-step-authentication.recovery-codes.copy-option</code>|User clicks to copy their 2FA recovery codes to the clipboard (this is fired only when they click the copy button, not if they copy using e.g. a keyboard shortcut).|
+|Not Implemented|<code>flow.settings.change-password.view</code>|User viewed the form to change their password.|
+|<code>fxa_pref - password</code>|<code>settings.change-password.success</code>|User changed their password via settings.|
+|<code>fxa_pref - newsletter</code> (see also user property <code>newsletter_state</code>)|<code>settings.communication-preferences.(optIn\|optOut).success</code>|User changed their newsletter email preferences.|
+|Not Implemented|<code>flow.settings.account_recovery.view</code>|User viewed account recovery settings.|
+|Not Implemented|<code>flow.settings.account_recovery.engage</code>|User clicked somewhere in account recovery settings.|
+|Not Implemented|<code>flow.settings.account-recovery.confirm-password.view</code>|User viewed the password form prior to turning on account recovery. (user first has to verify their email address)|
+|Not Implemented|<code>flow.settings.account-recovery.confirm-password.view</code>|User clicked the password form prior to turning on account recovery.|
+|Not Implemented|<code>flow.settings.account-recovery.confirm-password.submit</code>|User submitted the password form prior to turning on account recovery.|
+|Not Implemented|<code>flow.settings.account-recovery.confirm-password.success</code>|User successfully submitted the password form prior to turning on account recovery.|
+|Not Implemented|<code>flow.settings.account-recovery.recovery-key.view</code>|User viewed their recovery key. This is viewable one time only, after a user sets up account recovery, or after they generate a new key.|
+|Not Implemented|<code>flow.settings.account-recovery.recovery-key.print-option</code>|User clicks to print their recovery key.|
+|Not Implemented|<code>flow.settings.account-recovery.recovery-key.download-option</code>|User clicks to download their recovery key.|
+|Not Implemented|<code>flow.settings.account-recovery.recovery-key.copy-option</code>|User clicks to copy their recovery key to the clipboard (this is fired only when they click the copy button, not if they copy using e.g. a keyboard shortcut).|
+|Not Implemented|<code>flow.settings.account-recovery.refresh</code>|User generated a new recovery key.|
+|Not Implemented|<code>flow.settings.clients.view</code>|User viewed the list of clients (&quot;Devices &amp; Apps&quot;) connected to their account. AKA the device manager.|
+|Not Implemented|<code>flow.settings.clients.engage</code>|User clicked somewhere the list of clients connected to their account.|
+|Not Implemented|<code>flow.settings.clients.disconnect.view</code>|User viewed the dialog asking to confirm disconnection of a device.|</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/fxa_metrics/funnels.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#fxa-email-metrics" id="fxa-email-metrics">FxA Email Metrics</a></h1>
 <h2><a class="header" href="#table-of-contents-9" id="table-of-contents-9">Table of Contents</a></h2>
 <ul>
@@ -7835,34 +7801,34 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 </ol>
 <h2><a class="header" href="#email-templates-and-email-types" id="email-templates-and-email-types">Email Templates and Email Types</a></h2>
 <p>Only emails sent by the FxA auth server are represented in the table below. TBD on marketing emails.</p>
-<table><thead><tr><th><code>email_template</code></th><th><code>email_type</code></th><th>Description &amp; Notes</th></tr></thead><tbody>
-<tr><td><code>verifySyncEmail</code></td><td><code>registration</code></td><td>Sent to users setting up a new sync account. Contains a verification link (user must click it for their account to become functional).</td></tr>
-<tr><td><code>verifyEmail</code></td><td><code>registration</code></td><td>Sent to users setting up a new NON-sync account. Contains a verification link (user must click it for their account to become functional).</td></tr>
-<tr><td><code>postVerifyEmail</code></td><td><code>registration</code></td><td>Sent after users confirm their email. Contains instructions for how to connect another device to sync.</td></tr>
-<tr><td><code>verifyTrailheadEmail</code></td><td><code>registration</code></td><td>Updated version of <code>verifySyncEmail</code> for the trailhead promotion.</td></tr>
-<tr><td><code>postVerifyTrailheadEmail</code></td><td><code>registration</code></td><td>Updated version of <code>postVerifyEmail</code> for the trailhead promotion.</td></tr>
-<tr><td><code>verificationReminderFirstEmail</code></td><td><code>registration</code></td><td>If a users does not verify their account within 24 hours, they receive this email with an additional verification link.</td></tr>
-<tr><td><code>verificationReminderSecondEmail</code></td><td><code>registration</code></td><td>If a users does not verify their account within 48 hours, they receive this email with an additional verification link.</td></tr>
-<tr><td><code>verifyLoginEmail</code></td><td><code>login</code></td><td>Sent to existing accounts when they try to login to sync. User must click the verification link before the logged-in device can begin syncing.</td></tr>
-<tr><td><code>newDeviceLoginEmail</code></td><td><code>login</code></td><td>Sent to existing accounts after they have logged into a device that FxA has not previously recognized.</td></tr>
-<tr><td><code>verifyLoginCodeEmail</code></td><td><code>login</code></td><td>Sent to existing accounts when they try to login to sync, containing a code (rather than a link) the user must enter into the login form. Note that currently the use of confirmation codes is limited to some login contexts only - they are never used for registration.</td></tr>
-<tr><td><code>recoveryEmail</code></td><td><code>reset_password</code></td><td>After a user opts to reset their password (during login, because they clicked &quot;forgot password&quot;), they receive this email with a link to reset their password (without using a recovery key).</td></tr>
-<tr><td><code>passwordResetEmail</code></td><td><code>reset_password</code></td><td>Sent to users after they reset their password (without using a recovery key).</td></tr>
-<tr><td><code>postAddAccountRecoveryEmail</code></td><td><code>account_recovery</code></td><td>Sent to users after they successfully add account recovery capabilities to their account (i.e. after generating recovery codes).</td></tr>
-<tr><td><code>postRemoveAccountRecoveryEmail</code></td><td><code>account_recovery</code></td><td>Sent to users after they successfully REMOVE account recovery capabilities from their account.</td></tr>
-<tr><td><code>passwordResetAccountRecoveryEmail</code></td><td><code>account_recovery</code></td><td>After a user resets their password using a recovery key, they receive this email telling them to generate a new recovery key.</td></tr>
-<tr><td><code>passwordChangedEmail</code></td><td><code>change_password</code></td><td>Sent to users after they change their password via FxA settings (NOT during password reset; they must be logged in to do this).</td></tr>
-<tr><td><code>verifyPrimaryEmail</code></td><td><code>verify</code></td><td>Sent to users when they request to change their primary email address via settings (is sent to their new email).</td></tr>
-<tr><td><code>postChangePrimaryEmail</code></td><td><code>change_email</code></td><td>Sent to users after they successfully change their primary email address (is sent to their new email).</td></tr>
-<tr><td><code>verifySecondaryEmail</code></td><td><code>secondary_email</code></td><td>Sent to users when they add a secondary email address via account settings. Contains a verification link (sent to the secondary email address).</td></tr>
-<tr><td><code>postVerifySecondaryEmail</code></td><td><code>secondary_email</code></td><td>Sent to users after they successfully verified a secondary email address (sent to the secondary email address).</td></tr>
-<tr><td><code>postRemoveSecondaryEmail</code></td><td><code>secondary_email</code></td><td>Sent to users after they successfully remove a secondary email address (sent to the secondary email address).</td></tr>
-<tr><td><code>postAddTwoStepAuthenticationEmail</code></td><td><code>2fa</code></td><td>Sent to users after they successfully add 2 factor authentication to their account (TOTP)</td></tr>
-<tr><td><code>postRemoveTwoStepAuthenticationEmail</code></td><td><code>2fa</code></td><td>Sent to users after they successfully REMOVE 2 factor authentication from their account (TOTP)</td></tr>
-<tr><td><code>postConsumeRecoveryCodeEmail</code></td><td><code>2fa</code></td><td>Sent to users after they successfully use a recovery code to login to their account after not being able to use their second factor.</td></tr>
-<tr><td><code>postNewRecoveryCodesEmail</code></td><td><code>2fa</code></td><td>Sent to users after they successfully generate a new set of 2FA recovery codes.</td></tr>
-<tr><td><code>lowRecoveryCodesEmail</code></td><td><code>2fa</code></td><td>Sent when a user is running low on 2FA recovery codes.</td></tr>
-</tbody></table>
+<p>|<code>email_template</code>|<code>email_type</code>|Description &amp; Notes|
+|---|---|---|
+|<code>verifySyncEmail</code>|<code>registration</code>|Sent to users setting up a new sync account. Contains a verification link (user must click it for their account to become functional).|
+|<code>verifyEmail</code>|<code>registration</code>|Sent to users setting up a new NON-sync account. Contains a verification link (user must click it for their account to become functional).|
+|<code>postVerifyEmail</code>|<code>registration</code>|Sent after users confirm their email. Contains instructions for how to connect another device to sync.|
+|<code>verifyTrailheadEmail</code>|<code>registration</code>|Updated version of <code>verifySyncEmail</code> for the trailhead promotion.|
+|<code>postVerifyTrailheadEmail</code>|<code>registration</code>|Updated version of <code>postVerifyEmail</code> for the trailhead promotion.|
+|<code>verificationReminderFirstEmail</code>|<code>registration</code>|If a users does not verify their account within 24 hours, they receive this email with an additional verification link.|
+|<code>verificationReminderSecondEmail</code>|<code>registration</code>|If a users does not verify their account within 48 hours, they receive this email with an additional verification link.|
+|<code>verifyLoginEmail</code>|<code>login</code>|Sent to existing accounts when they try to login to sync. User must click the verification link before the logged-in device can begin syncing.|
+|<code>newDeviceLoginEmail</code>|<code>login</code>|Sent to existing accounts after they have logged into a device that FxA has not previously recognized.|
+|<code>verifyLoginCodeEmail</code>|<code>login</code>|Sent to existing accounts when they try to login to sync, containing a code (rather than a link) the user must enter into the login form. Note that currently the use of confirmation codes is limited to some login contexts only - they are never used for registration.|
+|<code>recoveryEmail</code>|<code>reset_password</code>|After a user opts to reset their password (during login, because they clicked &quot;forgot password&quot;), they receive this email with a link to reset their password (without using a recovery key).|
+|<code>passwordResetEmail</code>|<code>reset_password</code>|Sent to users after they reset their password (without using a recovery key).|
+|<code>postAddAccountRecoveryEmail</code>|<code>account_recovery</code>|Sent to users after they successfully add account recovery capabilities to their account (i.e. after generating recovery codes).|
+|<code>postRemoveAccountRecoveryEmail</code>|<code>account_recovery</code>|Sent to users after they successfully REMOVE account recovery capabilities from their account.|
+|<code>passwordResetAccountRecoveryEmail</code>|<code>account_recovery</code>|After a user resets their password using a recovery key, they receive this email telling them to generate a new recovery key.|
+|<code>passwordChangedEmail</code>|<code>change_password</code>|Sent to users after they change their password via FxA settings (NOT during password reset; they must be logged in to do this).|
+|<code>verifyPrimaryEmail</code>|<code>verify</code>|Sent to users when they request to change their primary email address via settings (is sent to their new email).|
+|<code>postChangePrimaryEmail</code>|<code>change_email</code>|Sent to users after they successfully change their primary email address (is sent to their new email).|
+|<code>verifySecondaryEmail</code>|<code>secondary_email</code>|Sent to users when they add a secondary email address via account settings. Contains a verification link (sent to the secondary email address).|
+|<code>postVerifySecondaryEmail</code>|<code>secondary_email</code>|Sent to users after they successfully verified a secondary email address (sent to the secondary email address).|
+|<code>postRemoveSecondaryEmail</code>|<code>secondary_email</code>|Sent to users after they successfully remove a secondary email address (sent to the secondary email address).|
+|<code>postAddTwoStepAuthenticationEmail</code>|<code>2fa</code>|Sent to users after they successfully add 2 factor authentication to their account (TOTP)|
+|<code>postRemoveTwoStepAuthenticationEmail</code>|<code>2fa</code>|Sent to users after they successfully REMOVE 2 factor authentication from their account (TOTP)|
+|<code>postConsumeRecoveryCodeEmail</code>|<code>2fa</code>|Sent to users after they successfully use a recovery code to login to their account after not being able to use their second factor.|
+|<code>postNewRecoveryCodesEmail</code>|<code>2fa</code>|Sent to users after they successfully generate a new set of 2FA recovery codes.|
+|<code>lowRecoveryCodesEmail</code>|<code>2fa</code>|Sent when a user is running low on 2FA recovery codes.|</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/fxa_metrics/emails.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#static-datasets" id="static-datasets">Static Datasets</a></h1>
 <p>Tables containing static data exist in the <code>static</code> dataset in BigQuery.
 These tables are generated from CSV files named <code>data.csv</code> in subdirectories of the <code>sql/static/</code> 
@@ -8165,8 +8131,8 @@ Q --> S[Return creation date]
 </pre>
 <div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
 <p>Relevant part in the code: <a href="https://searchfox.org/mozilla-central/rev/292d295d6b084b43b70de26a42e68513bb7b36a3/toolkit/xre/nsAppRunner.cpp#2357-2363"><code>nsAppRunner::SelectProfile</code></a> creating the directory.</p>
-</div>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/profile/profile_creation.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#real-world-usage" id="real-world-usage">Real World Usage</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/profile/profile_creation.md">Edit this file on GitHub.</a></footer></div>
+<h1><a class="header" href="#real-world-usage" id="real-world-usage">Real World Usage</a></h1>
 <p>This page backs away from our profile-focused data view and examines what Firefox Desktop usage looks like in the real world. There are many components and layers that exist between a user acquiring and running Firefox, and this documentation will illuminate what those are and how they can affect the meaning of a profile.</p>
 <h2><a class="header" href="#real-life-components-of-firefox-desktop-usage" id="real-life-components-of-firefox-desktop-usage">Real Life Components of Firefox Desktop Usage</a></h2>
 <p><img src="concepts/profile/images/real-life-usage-components.png" alt="" /></p>
@@ -8507,10 +8473,10 @@ excludes users who have <a href="https://support.mozilla.org/en-US/kb/share-data
 </tbody>
 </table>
 </div>
-<h3><a class="header" href="#coverage-pings" id="coverage-pings">Coverage pings</a></h3>
-<p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/coverage-ping.html">coverage ping</a>
-(<a href="https://blog.mozilla.org/data/2018/08/20/effectively-measuring-search-in-firefox/">announcement</a>)
-is a periodic census intended to estimate telemetry opt-out rates.</p>
+### Coverage pings
+The [coverage ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/coverage-ping.html)
+([announcement](https://blog.mozilla.org/data/2018/08/20/effectively-measuring-search-in-firefox/))
+is a periodic census intended to estimate telemetry opt-out rates.
 <p>We estimate that <a href="https://metrics.mozilla.com/%7Erharter/reports/coverage/index.html">93% of release channel
 profiles</a>
 have telemetry enabled (and are therefore included in DAU).</p>
@@ -9117,12 +9083,9 @@ sources. See the <a href="datasets/obsolete/churn/../../../cookbooks/retention.h
 current best practices.</strong></em></p>
 <ul>
 <li><a href="datasets/obsolete/churn/reference.html#introduction">Introduction</a>
-<ul>
-<li><a href="datasets/obsolete/churn/reference.html#content">Content</a></li>
-<li><a href="datasets/obsolete/churn/reference.html#background-and-caveats">Background and Caveats</a></li>
-<li><a href="datasets/obsolete/churn/reference.html#accessing-the-data">Accessing the Data</a></li>
-</ul>
-</li>
+* <a href="datasets/obsolete/churn/reference.html#content">Content</a>
+* <a href="datasets/obsolete/churn/reference.html#background-and-caveats">Background and Caveats</a>
+* <a href="datasets/obsolete/churn/reference.html#accessing-the-data">Accessing the Data</a></li>
 <li><a href="datasets/obsolete/churn/reference.html#data-reference">Data Reference</a>
 <ul>
 <li><a href="datasets/obsolete/churn/reference.html#example-queries">Example Queries</a></li>
@@ -9143,11 +9106,11 @@ every week and can be tracked over time using the <code>acquisition_date</code> 
 weeks since acquisition or <code>current_week</code>.</p>
 <p>The following example demonstrates the current logic for generating this
 dataset. Each column represents the days since some arbitrary starting date.</p>
-<table><thead><tr><th>client</th><th>00</th><th>01</th><th>02</th><th>03</th><th>04</th><th>05</th><th>06</th><th>07</th><th>08</th><th>09</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th></tr></thead><tbody>
-<tr><td>A</td><td>X</td><td></td><td></td><td></td><td></td><td></td><td></td><td>X</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>B</td><td></td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>C</td><td>X</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>X</td></tr>
-</tbody></table>
+<p>|   client | 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 | 12 | 13 | 14 |
+|----------|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
+| A        | X  |    |    |    |    |    |    | X  |    |    |    |    |    |    |    |
+| B        |    | X  | X  | X  | X  | X  | X  |    |    |    |    |    |    |    |    |
+| C        | X  |    |    |    |    |    |    |    |    |    |    |    |    |    | X  |</p>
 <p>All three clients are part of the same cohort. Client A is retained for weeks 0
 and 1 since there is activity in both periods. A client only needs to show up
 once in the period to be counted as retained. Client B is acquired in week 0 and
@@ -9156,11 +9119,11 @@ considered churned on week 1. However, a client that is churned can become
 retained again. Client C is considered churned on week 1 but retained on week 2.</p>
 <p>The following table summarizes the above daily activity into the following view
 where every column represents the current week since acquisition date..</p>
-<table><thead><tr><th>client</th><th>0</th><th>1</th><th>2</th></tr></thead><tbody>
-<tr><td>A</td><td>X</td><td>X</td><td></td></tr>
-<tr><td>B</td><td>X</td><td></td><td></td></tr>
-<tr><td>C</td><td>X</td><td></td><td>X</td></tr>
-</tbody></table>
+<p>|   client | 0 | 1 |  2 |
+|----------|---|---|----|
+| A        | X | X |    |
+| B        | X |   |    |
+| C        | X |   | X  |</p>
 <p>The clients are then grouped into cohorts by attributes. An attribute describes
 a property about the cohort such as the country of origin or the binary
 distribution channel. Each group also contains descriptive aggregates of
@@ -9208,13 +9171,13 @@ available in parquet for consumption by columnar data engines at
 <h2><a class="header" href="#example-queries-13" id="example-queries-13">Example Queries</a></h2>
 <p>This section walks through a typical query to generate data suitable for
 visualization.</p>
-<table><thead><tr><th>field</th><th>type</th><th>description</th></tr></thead><tbody>
-<tr><td><code>cohort_date</code></td><td>common, attribute</td><td>The start date bucket of the cohort. This is week the client was acquired.</td></tr>
-<tr><td><code>elapsed_periods</code></td><td>common, attribute</td><td>The number of periods that have elapsed since the cohort date. In this dataset, the retention period is 7 days.</td></tr>
-<tr><td><code>channel</code></td><td>attribute</td><td>Part of the release train model. An attribute that distinguishes cohorts.</td></tr>
-<tr><td><code>geo</code></td><td>filter attribute</td><td>Country code. Used to filter out all countries other than the 'US'</td></tr>
-<tr><td><code>n_profiles</code></td><td>metric</td><td>Count of users in a cohort. Use sum to aggregate.</td></tr>
-</tbody></table>
+<p>| field | type | description |
+|-------|------|-------------|
+| <code>cohort_date</code> | common, attribute |  The start date bucket of the cohort. This is week the client was acquired.
+| <code>elapsed_periods</code> | common, attribute | The number of periods that have elapsed since the cohort date. In this dataset, the retention period is 7 days.
+| <code>channel</code> | attribute | Part of the release train model. An attribute that distinguishes cohorts.
+| <code>geo</code> | filter attribute | Country code. Used to filter out all countries other than the 'US'
+| <code>n_profiles</code> | metric | Count of users in a cohort. Use sum to aggregate.</p>
 <p>First the fields are extracted and aliased for consistency. <code>cohort_date</code> and
 <code>elapsed_periods</code> are common to most retention queries and are useful concepts
 for building on other datasets.</p>
@@ -9259,13 +9222,13 @@ analysis.</p>
 ),
 </code></pre>
 <p>The table will have the following structure. The table is sorted by the first three columns for demonstration.</p>
-<table><thead><tr><th><code>channel</code></th><th><code>cohort_date</code></th><th><code>elapsed_periods</code></th><th><code>n_profiles</code></th></tr></thead><tbody>
-<tr><td>release</td><td>20170101</td><td>0</td><td>100</td></tr>
-<tr><td>release</td><td>20170101</td><td>1</td><td>90</td></tr>
-<tr><td>release</td><td>20170101</td><td>2</td><td>80</td></tr>
-<tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-<tr><td>beta</td><td>20170128</td><td>10</td><td>25</td></tr>
-</tbody></table>
+<p>| <code>channel</code> | <code>cohort_date</code> | <code>elapsed_periods</code> | <code>n_profiles</code> |
+|-----------|---------------|-------------------|--------------|
+| release | 20170101 | 0 | 100 |
+| release | 20170101 | 1 | 90 |
+| release | 20170101 | 2 | 80 |
+| ... | ... | ... | ... |
+| beta | 20170128 | 10 | 25 |</p>
 <p>Finally, retention is calculated through the number of profiles at the time of
 the <code>elapsed_period</code> relative to the initial period. This data can be imported
 into a pivot table for further analysis.</p>
@@ -9284,13 +9247,13 @@ into a pivot table for further analysis.</p>
     )
 )
 </code></pre>
-<table><thead><tr><th><code>channel</code></th><th><code>cohort_date</code></th><th><code>elapsed_periods</code></th><th><code>n_profiles</code></th><th><code>total_n_profiles</code></th><th><code>percentage_n_profiles</code></th></tr></thead><tbody>
-<tr><td>release</td><td>20170101</td><td>0</td><td>100</td><td>100</td><td>1.0</td></tr>
-<tr><td>release</td><td>20170101</td><td>1</td><td>90</td><td>100</td><td>0.9</td></tr>
-<tr><td>release</td><td>20170101</td><td>2</td><td>80</td><td>100</td><td>0.8</td></tr>
-<tr><td>...</td><td>....</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-<tr><td>beta</td><td>20170128</td><td>10</td><td>25</td><td>50</td><td>0.5</td></tr>
-</tbody></table>
+<p>| <code>channel</code> | <code>cohort_date</code> | <code>elapsed_periods</code> | <code>n_profiles</code> | <code>total_n_profiles</code> | <code>percentage_n_profiles</code> |
+|-----------|---------------|-------------------|--------------|--------------------|-------------------------|
+| release   | 20170101      | 0                 | 100          | 100                | 1.0                     |
+| release   | 20170101      | 1                 | 90           | 100                | 0.9                     |
+| release   | 20170101      | 2                 | 80           | 100                | 0.8                     |
+| ...       | ....          | ...               | ...          | ...                | ...                     |
+| beta      | 20170128      | 10                | 25           | 50                 | 0.5                     |</p>
 <p>Obtain the results.</p>
 <pre><code class="language-SQL">SELECT *
 FROM results
@@ -9298,7 +9261,7 @@ FROM results
 <p>You may consider visualizing using cohort graphs, line charts, or a pivot
 tables. See <a href="https://sql.telemetry.mozilla.org/dashboard/firefox-telemetry-retention-dataset-example-usage">Firefox Telemetry Retention: Dataset Example Usage</a>
 for more examples.</p>
-<h2><a class="header" href="#scheduling-14" id="scheduling-14">Scheduling</a></h2>
+<h2><a class="header" href="#scheduling-13" id="scheduling-13">Scheduling</a></h2>
 <p>The aggregated churn data is updated weekly on Wednesday.</p>
 <h2><a class="header" href="#schema-15" id="schema-15">Schema</a></h2>
 <p>As of 2017-10-15, the current version of <code>churn</code> is <code>v3</code> and has a schema as follows:</p>
@@ -9337,13 +9300,10 @@ maintained. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1585539">B
 <ul>
 <li><a href="datasets/obsolete/client_count_daily/reference.html#replacement">Replacement</a></li>
 <li><a href="datasets/obsolete/client_count_daily/reference.html#introduction">Introduction</a>
-<ul>
-<li><a href="datasets/obsolete/client_count_daily/reference.html#content">Content</a></li>
-<li><a href="datasets/obsolete/client_count_daily/reference.html#background-and-caveats">Background and Caveats</a></li>
-<li><a href="datasets/obsolete/client_count_daily/reference.html#accessing-the-data">Accessing the Data</a></li>
-<li><a href="datasets/obsolete/client_count_daily/reference.html#further-reading">Further Reading</a></li>
-</ul>
-</li>
+* <a href="datasets/obsolete/client_count_daily/reference.html#content">Content</a>
+* <a href="datasets/obsolete/client_count_daily/reference.html#background-and-caveats">Background and Caveats</a>
+* <a href="datasets/obsolete/client_count_daily/reference.html#accessing-the-data">Accessing the Data</a>
+* <a href="datasets/obsolete/client_count_daily/reference.html#further-reading">Further Reading</a></li>
 <li><a href="datasets/obsolete/client_count_daily/reference.html#data-reference">Data Reference</a>
 <ul>
 <li><a href="datasets/obsolete/client_count_daily/reference.html#example-queries">Example Queries</a>
@@ -9465,7 +9425,7 @@ than a simple counting structure.</p>
 <p>When count is calculated over a column that may change over time, such as
 <code>total_uri_count_threshold</code>, then a client would be counted in every group
 where they appear. Over longer windows, like MAU, this is more likely to occur.</p>
-<h2><a class="header" href="#scheduling-15" id="scheduling-15">Scheduling</a></h2>
+<h2><a class="header" href="#scheduling-14" id="scheduling-14">Scheduling</a></h2>
 <p>This dataset is updated daily via the
 <a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a> infrastructure.
 The job runs as part of the <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py"><code>main_summary</code> DAG</a>.</p>
@@ -9492,12 +9452,9 @@ is <code>v2</code>, and has a schema as follows:</p>
 <p><em><strong>As of 2018-04-02, this dataset has been deprecated and is no longer maintained. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1388025">Bug 1388025</a> for more information.</strong></em></p>
 <ul>
 <li><a href="datasets/obsolete/crash_aggregates/reference.html#introduction">Introduction</a>
-<ul>
-<li><a href="datasets/obsolete/crash_aggregates/reference.html#rows-and-columns">Rows and Columns</a></li>
-<li><a href="datasets/obsolete/crash_aggregates/reference.html#accessing-the-data">Accessing the Data</a></li>
-<li><a href="datasets/obsolete/crash_aggregates/reference.html#further-reading">Further Reading</a></li>
-</ul>
-</li>
+* <a href="datasets/obsolete/crash_aggregates/reference.html#rows-and-columns">Rows and Columns</a>
+* <a href="datasets/obsolete/crash_aggregates/reference.html#accessing-the-data">Accessing the Data</a>
+* <a href="datasets/obsolete/crash_aggregates/reference.html#further-reading">Further Reading</a></li>
 <li><a href="datasets/obsolete/crash_aggregates/reference.html#data-reference">Data Reference</a>
 <ul>
 <li><a href="datasets/obsolete/crash_aggregates/reference.html#example-queries">Example Queries</a></li>
@@ -9570,7 +9527,7 @@ ORDER BY build_id ASC
 <li>The <code>docType</code> field is missing or unknown.</li>
 <li>The ping is a main ping without usage hours or a crash ping with usage hours.</li>
 </ul>
-<h2><a class="header" href="#scheduling-16" id="scheduling-16">Scheduling</a></h2>
+<h2><a class="header" href="#scheduling-15" id="scheduling-15">Scheduling</a></h2>
 <p>The <code>crash_aggregates</code> job is run daily, at midnight UTC.
 The job is scheduled on <a href="https://github.com/mozilla/telemetry-airflow">Airflow</a>.
 The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/d50b938/dags/crash_aggregates.py">here</a></p>
@@ -9623,12 +9580,9 @@ The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/d50b938/da
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/obsolete/crash_aggregates/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#crash-summary-reference" id="crash-summary-reference">Crash Summary Reference</a></h1>
 <ul>
 <li><a href="datasets/obsolete/crash_summary/reference.html#introduction">Introduction</a>
-<ul>
-<li><a href="datasets/obsolete/crash_summary/reference.html#contents">Contents</a></li>
-<li><a href="datasets/obsolete/crash_summary/reference.html#accessing-the-data">Accessing the Data</a></li>
-<li><a href="datasets/obsolete/crash_summary/reference.html#further-reading">Further Reading</a></li>
-</ul>
-</li>
+* <a href="datasets/obsolete/crash_summary/reference.html#contents">Contents</a>
+* <a href="datasets/obsolete/crash_summary/reference.html#accessing-the-data">Accessing the Data</a>
+* <a href="datasets/obsolete/crash_summary/reference.html#further-reading">Further Reading</a></li>
 <li><a href="datasets/obsolete/crash_summary/reference.html#data-reference">Data Reference</a>
 <ul>
 <li><a href="datasets/obsolete/crash_summary/reference.html#example-queries">Example Queries</a></li>
@@ -9669,7 +9623,7 @@ group by gfx_compositor
 <p><code>CrashSummary</code> contains one record for every
 <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html">crash ping</a>
 submitted by Firefox.</p>
-<h2><a class="header" href="#scheduling-17" id="scheduling-17">Scheduling</a></h2>
+<h2><a class="header" href="#scheduling-16" id="scheduling-16">Scheduling</a></h2>
 <p>This dataset is updated daily, shortly after midnight UTC.
 The job is scheduled on
 <a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a>.
@@ -9713,12 +9667,9 @@ please look at the case classes
 <p><em><strong>As of 2019-11-21, this dataset has been deprecated and is no longer maintained. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1594112">Bug 1594112</a> for more information.</strong></em></p>
 <ul>
 <li><a href="datasets/obsolete/error_aggregates/reference.html#introduction">Introduction</a>
-<ul>
-<li><a href="datasets/obsolete/error_aggregates/reference.html#contents">Contents</a></li>
-<li><a href="datasets/obsolete/error_aggregates/reference.html#accessing-the-data">Accessing the data</a></li>
-<li><a href="datasets/obsolete/error_aggregates/reference.html#further-reading">Further Reading</a></li>
-</ul>
-</li>
+* <a href="datasets/obsolete/error_aggregates/reference.html#contents">Contents</a>
+* <a href="datasets/obsolete/error_aggregates/reference.html#accessing-the-data">Accessing the data</a>
+* <a href="datasets/obsolete/error_aggregates/reference.html#further-reading">Further Reading</a></li>
 <li><a href="datasets/obsolete/error_aggregates/reference.html#data-reference">Data Reference</a>
 <ul>
 <li><a href="datasets/obsolete/error_aggregates/reference.html#example-queries">Example Queries</a></li>
@@ -9801,7 +9752,7 @@ GROUP BY window_start
 <li>crash pings are used to count/gather main and content crash events, all other errors from desktop clients (including all other crashes) are gathered from main pings</li>
 <li>core pings are used to count usage hours, first subsession and unique client counts.</li>
 </ul>
-<h2><a class="header" href="#scheduling-18" id="scheduling-18">Scheduling</a></h2>
+<h2><a class="header" href="#scheduling-17" id="scheduling-17">Scheduling</a></h2>
 <p>The <code>error_aggregates</code> job is run continuously, using the Spark Streaming infrastructure</p>
 <h2><a class="header" href="#schema-19" id="schema-19">Schema</a></h2>
 <p>The <code>error_aggregates_v2</code> table has the following columns which define its dimensions:</p>
@@ -9845,13 +9796,10 @@ people are not actively using the browser or their computer is asleep)</li>
 <ul>
 <li><a href="datasets/obsolete/heavy_users/reference.html#replacement">Replacement</a></li>
 <li><a href="datasets/obsolete/heavy_users/reference.html#introduction">Introduction</a>
-<ul>
-<li><a href="datasets/obsolete/heavy_users/reference.html#contents">Contents</a></li>
-<li><a href="datasets/obsolete/heavy_users/reference.html#background-and-caveats">Background and Caveats</a></li>
-<li><a href="datasets/obsolete/heavy_users/reference.html#accessing-the-data">Accessing the Data</a></li>
-<li><a href="datasets/obsolete/heavy_users/reference.html#further-reading">Further Reading</a></li>
-</ul>
-</li>
+* <a href="datasets/obsolete/heavy_users/reference.html#contents">Contents</a>
+* <a href="datasets/obsolete/heavy_users/reference.html#background-and-caveats">Background and Caveats</a>
+* <a href="datasets/obsolete/heavy_users/reference.html#accessing-the-data">Accessing the Data</a>
+* <a href="datasets/obsolete/heavy_users/reference.html#further-reading">Further Reading</a></li>
 <li><a href="datasets/obsolete/heavy_users/reference.html#data-reference">Data Reference</a>
 <ul>
 <li><a href="datasets/obsolete/heavy_users/reference.html#example-queries">Example Queries</a></li>
@@ -9923,7 +9871,7 @@ into account.</li>
 <li><a href="https://sql.telemetry.mozilla.org/queries/47041/source#127382">Join <code>heavy_users</code> with <code>main_summary</code> to get distribution of <code>max_concurrent_tab_count</code> for heavy vs. non-heavy users</a></li>
 <li><a href="https://sql.telemetry.mozilla.org/queries/47044/source#127385">Join <code>heavy_users</code> with <code>longitudinal</code> to get crash rates for heavy vs. non-heavy users</a></li>
 </ul>
-<h2><a class="header" href="#scheduling-19" id="scheduling-19">Scheduling</a></h2>
+<h2><a class="header" href="#scheduling-18" id="scheduling-18">Scheduling</a></h2>
 <p>This dataset is updated daily via the <a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a> infrastructure.
 The job DAG runs every day after <code>main_summary</code> is complete.
 You can find the job definition
@@ -9947,12 +9895,9 @@ Refer to this repository for information on how to run or augment the dataset.</
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/obsolete/heavy_users/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#longitudinal-reference" id="longitudinal-reference">Longitudinal Reference</a></h1>
 <ul>
 <li><a href="datasets/obsolete/longitudinal/reference.html#introduction">Introduction</a>
-<ul>
-<li><a href="datasets/obsolete/longitudinal/reference.html#contents">Contents</a></li>
-<li><a href="datasets/obsolete/longitudinal/reference.html#background-and-caveats">Background and Caveats</a></li>
-<li><a href="datasets/obsolete/longitudinal/reference.html#accessing-the-data">Accessing the Data</a></li>
-</ul>
-</li>
+* <a href="datasets/obsolete/longitudinal/reference.html#contents">Contents</a>
+* <a href="datasets/obsolete/longitudinal/reference.html#background-and-caveats">Background and Caveats</a>
+* <a href="datasets/obsolete/longitudinal/reference.html#accessing-the-data">Accessing the Data</a></li>
 <li><a href="datasets/obsolete/longitudinal/reference.html#data-reference">Data Reference</a>
 <ul>
 <li><a href="datasets/obsolete/longitudinal/reference.html#sampling">Sampling</a>
@@ -10023,7 +9968,7 @@ or clients without a ping in the last 180 days.</li>
 the sample is created by filtering to pings with <code>main_summary.sample_id == 42</code>.
 If you're working with <code>main_summary</code>,
 you can recreate this sample by doing this filter manually.</p>
-<h2><a class="header" href="#scheduling-20" id="scheduling-20">Scheduling</a></h2>
+<h2><a class="header" href="#scheduling-19" id="scheduling-19">Scheduling</a></h2>
 <p>The <code>longitudinal</code> job is run weekly, early on Sunday morning UTC.
 The job is scheduled on <a href="https://github.com/mozilla/telemetry-airflow">Airflow</a>.
 The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/54cffc42a2ca24e46056b7030735f0d4d093c0c7/dags/longitudinal.py">here</a>.</p>
@@ -10121,7 +10066,7 @@ configured STMO environment, <a href="https://github.com/mozilla/spark-hyperlogl
 <h2><a class="header" href="#example-queries-19" id="example-queries-19">Example Queries</a></h2>
 <p>See the <a href="https://sql.telemetry.mozilla.org/dashboard/firefox-telemetry-retention-dataset-example-usage">Example Usage Dashboard</a> for more usages of datasets of
 the same shape.</p>
-<h2><a class="header" href="#scheduling-21" id="scheduling-21">Scheduling</a></h2>
+<h2><a class="header" href="#scheduling-20" id="scheduling-20">Scheduling</a></h2>
 <p>The job is scheduled on Airflow on a daily basis after <code>main_summary</code> is run
 for the day. This job requires both <code>mozetl</code> and <code>telemetry-batch-view</code> as
 dependencies.</p>
@@ -10241,7 +10186,7 @@ SELECT * FROM rates
 </code></pre>
 <h2><a class="header" href="#sampling-8" id="sampling-8">Sampling</a></h2>
 <p>Sadly, these datasets are not sampled. It should be possible to derive a <code>sample_id</code> on <code>uid</code>, however. Someone should do that because querying these datasets for long time horizons is very expensive.</p>
-<h2><a class="header" href="#scheduling-22" id="scheduling-22">Scheduling</a></h2>
+<h2><a class="header" href="#scheduling-21" id="scheduling-21">Scheduling</a></h2>
 <p>This dataset was updated daily, shortly after midnight UTC.
 The job was scheduled on <a href="https://github.com/mozilla/telemetry-airflow">Airflow</a>.
 The DAG was <a href="https://github.com/mozilla/telemetry-airflow/blob/27d34a73db02131a39f469f3950c1da747bc8a95/dags/sync_view.py">here</a>.</p>
@@ -10358,28 +10303,21 @@ However, we store the documentation in raw text files in the
 <a href="https://github.com/mozilla/firefox-data-docs"><code>firefox-data-docs</code> repo</a>.
 To begin contributing to the docs, fork the <code>firefox-data-docs</code> repo.</p>
 <h2><a class="header" href="#building-the-documentation" id="building-the-documentation">Building the Documentation</a></h2>
-<p>The documentation is rendered with <a href="https://github.com/rust-lang/mdBook">mdBook</a>.</p>
-<p>To build the documentation locally, you'll need additional preprocessors:</p>
-<ul>
-<li><a href="https://github.com/badboy/mdbook-toc/releases">mdbook-toc</a></li>
-<li><a href="https://github.com/badboy/mdbook-mermaid/releases">mdbook-mermaid</a></li>
-<li><a href="https://github.com/badboy/mdbook-open-on-gh/releases">mdbook-open-on-gh</a></li>
-</ul>
-<p>Download releases for your system, unpack it and place the binary in a directory of your <code>$PATH</code>.</p>
+<p>The documentation is rendered with <a href="https://github.com/rust-lang/mdBook">mdBook</a>.
+We use a fork named <a href="https://github.com/badboy/mdbook-dtmo">mdbook-dtmo</a> that includes a number of custom additions to mdbook for our environment
+(for example, a plugin to automatically generate a table-of-contents).</p>
+<p>You can download <a href="https://github.com/badboy/mdbook-dtmo">mdbook-dtmo</a> on the <a href="https://github.com/badboy/mdbook-dtmo/releases">GitHub releases page</a>.
+Please use the latest version.
+Unpack it and place the binary in a directory of your <code>$PATH</code>.</p>
 <p>If you have <a href="https://www.rust-lang.org/">rustc</a> already installed, you can install a pre-compiled binary directly:</p>
-<pre><code class="language-bash">curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-toc
-curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-mermaid
-curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-open-on-gh
+<pre><code class="language-bash">curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-dtmo
 </code></pre>
-<p>This will place <code>mdbook-toc</code> and <code>mdbook-mermaid</code> into <code>~/.cargo/bin</code>.
-Make sure this directory is in your <code>$PATH</code> or copy it to a directory of your <code>$PATH</code>.</p>
+<p>Make sure this directory is in your <code>$PATH</code> or copy it to a directory of your <code>$PATH</code>.</p>
 <p>You can also build and install the preprocessors:</p>
-<pre><code class="language-bash">cargo install mdbook-toc
-cargo install mdbook-mermaid
-cargo install mdbook-open-on-gh
+<pre><code class="language-bash">cargo install mdbook-dtmo
 </code></pre>
 <p>You can then serve the documentation locally with:</p>
-<pre><code>mdbook serve
+<pre><code>mdbook-dtmo serve
 </code></pre>
 <p>The complete documentation for the mdBook toolchain is available online at <a href="https://rust-lang.github.io/mdBook/">https://rust-lang.github.io/mdBook/</a>.
 If you run into any technical limitations, let <code>@harterrt</code> or <code>@badboy</code> know.
