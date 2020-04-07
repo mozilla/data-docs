@@ -13,15 +13,14 @@ If you are working on a more complex project (as opposed to ad-hoc or one-off an
 This has a number of advantages over our traditional approach of creating bulk "sandbox" projects for larger teams:
 
 - Easy to track costs of individual components
-- People can self-serve short-lived administrative credentials which can
-  exist only for the lifespan of the project.
+- Can self-serve short-lived administrative credentials which exist only for the lifespan of the project.
 - Can easily spin down projects and resources which have run their course
 
 Note that these bespoke GCP projects are not intended to be used for projects which are already in _production_-- those should be maintained on operations-supported projects, presumably after a prototype/development phase.
 
 Each sandbox project has a data engineering contact associated with it, this is meant to be a resource you can freely ask for advice on how to query or use GCP, especially pertaining to projects which you expect to be supported in production at some future date.
 
-If you are sure, [file a ticket] in bugzilla using the provided template.
+To request the creation of such a project, [file a ticket] in bugzilla using the provided template.
 Not sure if you need a project like this? Don't know who to specify as a Data Engineering contact? Not sure what your project budget might be? [Get in touch with us](../concepts/getting_help.md) and we'll help you figure it out.
 
 We are currently [tracking these projects on mana](https://mana.mozilla.org/wiki/display/DENG/Active+GCP+Prototype+Projects) (link requires Mozilla LDAP)
