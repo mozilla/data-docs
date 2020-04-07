@@ -38,6 +38,7 @@
     * [Active DAU (aDAU)](cookbooks/active_dau.md)
     * [Retention](cookbooks/retention.md)
 * [Operational cookbooks](cookbooks/index.md)
+    * [Creating a new Data Project on Google Cloud Platform](cookbooks/gcp-projects.md)
     * [Scheduling BigQuery Queries in Airflow](cookbooks/bigquery-airflow.md)
     * [Building and Deploying Containers to GCR with CircleCI](cookbooks/deploying-containers.md)
 * [Sending telemetry](datasets/new_data.md)
