@@ -177,34 +177,34 @@
 </ol>
 <h2><a class="header" href="#email-templates-and-email-types" id="email-templates-and-email-types">Email Templates and Email Types</a></h2>
 <p>Only emails sent by the FxA auth server are represented in the table below. TBD on marketing emails.</p>
-<p>|<code>email_template</code>|<code>email_type</code>|Description &amp; Notes|
-|---|---|---|
-|<code>verifySyncEmail</code>|<code>registration</code>|Sent to users setting up a new sync account. Contains a verification link (user must click it for their account to become functional).|
-|<code>verifyEmail</code>|<code>registration</code>|Sent to users setting up a new NON-sync account. Contains a verification link (user must click it for their account to become functional).|
-|<code>postVerifyEmail</code>|<code>registration</code>|Sent after users confirm their email. Contains instructions for how to connect another device to sync.|
-|<code>verifyTrailheadEmail</code>|<code>registration</code>|Updated version of <code>verifySyncEmail</code> for the trailhead promotion.|
-|<code>postVerifyTrailheadEmail</code>|<code>registration</code>|Updated version of <code>postVerifyEmail</code> for the trailhead promotion.|
-|<code>verificationReminderFirstEmail</code>|<code>registration</code>|If a users does not verify their account within 24 hours, they receive this email with an additional verification link.|
-|<code>verificationReminderSecondEmail</code>|<code>registration</code>|If a users does not verify their account within 48 hours, they receive this email with an additional verification link.|
-|<code>verifyLoginEmail</code>|<code>login</code>|Sent to existing accounts when they try to login to sync. User must click the verification link before the logged-in device can begin syncing.|
-|<code>newDeviceLoginEmail</code>|<code>login</code>|Sent to existing accounts after they have logged into a device that FxA has not previously recognized.|
-|<code>verifyLoginCodeEmail</code>|<code>login</code>|Sent to existing accounts when they try to login to sync, containing a code (rather than a link) the user must enter into the login form. Note that currently the use of confirmation codes is limited to some login contexts only - they are never used for registration.|
-|<code>recoveryEmail</code>|<code>reset_password</code>|After a user opts to reset their password (during login, because they clicked &quot;forgot password&quot;), they receive this email with a link to reset their password (without using a recovery key).|
-|<code>passwordResetEmail</code>|<code>reset_password</code>|Sent to users after they reset their password (without using a recovery key).|
-|<code>postAddAccountRecoveryEmail</code>|<code>account_recovery</code>|Sent to users after they successfully add account recovery capabilities to their account (i.e. after generating recovery codes).|
-|<code>postRemoveAccountRecoveryEmail</code>|<code>account_recovery</code>|Sent to users after they successfully REMOVE account recovery capabilities from their account.|
-|<code>passwordResetAccountRecoveryEmail</code>|<code>account_recovery</code>|After a user resets their password using a recovery key, they receive this email telling them to generate a new recovery key.|
-|<code>passwordChangedEmail</code>|<code>change_password</code>|Sent to users after they change their password via FxA settings (NOT during password reset; they must be logged in to do this).|
-|<code>verifyPrimaryEmail</code>|<code>verify</code>|Sent to users when they request to change their primary email address via settings (is sent to their new email).|
-|<code>postChangePrimaryEmail</code>|<code>change_email</code>|Sent to users after they successfully change their primary email address (is sent to their new email).|
-|<code>verifySecondaryEmail</code>|<code>secondary_email</code>|Sent to users when they add a secondary email address via account settings. Contains a verification link (sent to the secondary email address).|
-|<code>postVerifySecondaryEmail</code>|<code>secondary_email</code>|Sent to users after they successfully verified a secondary email address (sent to the secondary email address).|
-|<code>postRemoveSecondaryEmail</code>|<code>secondary_email</code>|Sent to users after they successfully remove a secondary email address (sent to the secondary email address).|
-|<code>postAddTwoStepAuthenticationEmail</code>|<code>2fa</code>|Sent to users after they successfully add 2 factor authentication to their account (TOTP)|
-|<code>postRemoveTwoStepAuthenticationEmail</code>|<code>2fa</code>|Sent to users after they successfully REMOVE 2 factor authentication from their account (TOTP)|
-|<code>postConsumeRecoveryCodeEmail</code>|<code>2fa</code>|Sent to users after they successfully use a recovery code to login to their account after not being able to use their second factor.|
-|<code>postNewRecoveryCodesEmail</code>|<code>2fa</code>|Sent to users after they successfully generate a new set of 2FA recovery codes.|
-|<code>lowRecoveryCodesEmail</code>|<code>2fa</code>|Sent when a user is running low on 2FA recovery codes.|</p>
+<table><thead><tr><th><code>email_template</code></th><th><code>email_type</code></th><th>Description &amp; Notes</th></tr></thead><tbody>
+<tr><td><code>verifySyncEmail</code></td><td><code>registration</code></td><td>Sent to users setting up a new sync account. Contains a verification link (user must click it for their account to become functional).</td></tr>
+<tr><td><code>verifyEmail</code></td><td><code>registration</code></td><td>Sent to users setting up a new NON-sync account. Contains a verification link (user must click it for their account to become functional).</td></tr>
+<tr><td><code>postVerifyEmail</code></td><td><code>registration</code></td><td>Sent after users confirm their email. Contains instructions for how to connect another device to sync.</td></tr>
+<tr><td><code>verifyTrailheadEmail</code></td><td><code>registration</code></td><td>Updated version of <code>verifySyncEmail</code> for the trailhead promotion.</td></tr>
+<tr><td><code>postVerifyTrailheadEmail</code></td><td><code>registration</code></td><td>Updated version of <code>postVerifyEmail</code> for the trailhead promotion.</td></tr>
+<tr><td><code>verificationReminderFirstEmail</code></td><td><code>registration</code></td><td>If a users does not verify their account within 24 hours, they receive this email with an additional verification link.</td></tr>
+<tr><td><code>verificationReminderSecondEmail</code></td><td><code>registration</code></td><td>If a users does not verify their account within 48 hours, they receive this email with an additional verification link.</td></tr>
+<tr><td><code>verifyLoginEmail</code></td><td><code>login</code></td><td>Sent to existing accounts when they try to login to sync. User must click the verification link before the logged-in device can begin syncing.</td></tr>
+<tr><td><code>newDeviceLoginEmail</code></td><td><code>login</code></td><td>Sent to existing accounts after they have logged into a device that FxA has not previously recognized.</td></tr>
+<tr><td><code>verifyLoginCodeEmail</code></td><td><code>login</code></td><td>Sent to existing accounts when they try to login to sync, containing a code (rather than a link) the user must enter into the login form. Note that currently the use of confirmation codes is limited to some login contexts only - they are never used for registration.</td></tr>
+<tr><td><code>recoveryEmail</code></td><td><code>reset_password</code></td><td>After a user opts to reset their password (during login, because they clicked &quot;forgot password&quot;), they receive this email with a link to reset their password (without using a recovery key).</td></tr>
+<tr><td><code>passwordResetEmail</code></td><td><code>reset_password</code></td><td>Sent to users after they reset their password (without using a recovery key).</td></tr>
+<tr><td><code>postAddAccountRecoveryEmail</code></td><td><code>account_recovery</code></td><td>Sent to users after they successfully add account recovery capabilities to their account (i.e. after generating recovery codes).</td></tr>
+<tr><td><code>postRemoveAccountRecoveryEmail</code></td><td><code>account_recovery</code></td><td>Sent to users after they successfully REMOVE account recovery capabilities from their account.</td></tr>
+<tr><td><code>passwordResetAccountRecoveryEmail</code></td><td><code>account_recovery</code></td><td>After a user resets their password using a recovery key, they receive this email telling them to generate a new recovery key.</td></tr>
+<tr><td><code>passwordChangedEmail</code></td><td><code>change_password</code></td><td>Sent to users after they change their password via FxA settings (NOT during password reset; they must be logged in to do this).</td></tr>
+<tr><td><code>verifyPrimaryEmail</code></td><td><code>verify</code></td><td>Sent to users when they request to change their primary email address via settings (is sent to their new email).</td></tr>
+<tr><td><code>postChangePrimaryEmail</code></td><td><code>change_email</code></td><td>Sent to users after they successfully change their primary email address (is sent to their new email).</td></tr>
+<tr><td><code>verifySecondaryEmail</code></td><td><code>secondary_email</code></td><td>Sent to users when they add a secondary email address via account settings. Contains a verification link (sent to the secondary email address).</td></tr>
+<tr><td><code>postVerifySecondaryEmail</code></td><td><code>secondary_email</code></td><td>Sent to users after they successfully verified a secondary email address (sent to the secondary email address).</td></tr>
+<tr><td><code>postRemoveSecondaryEmail</code></td><td><code>secondary_email</code></td><td>Sent to users after they successfully remove a secondary email address (sent to the secondary email address).</td></tr>
+<tr><td><code>postAddTwoStepAuthenticationEmail</code></td><td><code>2fa</code></td><td>Sent to users after they successfully add 2 factor authentication to their account (TOTP)</td></tr>
+<tr><td><code>postRemoveTwoStepAuthenticationEmail</code></td><td><code>2fa</code></td><td>Sent to users after they successfully REMOVE 2 factor authentication from their account (TOTP)</td></tr>
+<tr><td><code>postConsumeRecoveryCodeEmail</code></td><td><code>2fa</code></td><td>Sent to users after they successfully use a recovery code to login to their account after not being able to use their second factor.</td></tr>
+<tr><td><code>postNewRecoveryCodesEmail</code></td><td><code>2fa</code></td><td>Sent to users after they successfully generate a new set of 2FA recovery codes.</td></tr>
+<tr><td><code>lowRecoveryCodesEmail</code></td><td><code>2fa</code></td><td>Sent when a user is running low on 2FA recovery codes.</td></tr>
+</tbody></table>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/fxa_metrics/emails.md">Edit this file on GitHub.</a></footer>
                     </main>
 

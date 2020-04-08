@@ -193,11 +193,11 @@ event in the <code>addonsManager</code> category.</p>
     release_channel_collection: ...
 </code></pre>
 <p>This event will produce records that look like:</p>
-<p>|timestamp| category | method  | object  | value | extra |
-|-| -------- |---------| --------|-------|-------|
-|...|<code>addonsManager</code>|<code>install</code>|<code>extension</code>|        |...|
-|...|<code>addonsManager</code>|<code>update</code>|<code>locale</code>|        |...|
-|...|<code>addonsManager</code>|<code>sideload_prompt</code>|<code>other</code>|       |...|</p>
+<table><thead><tr><th>timestamp</th><th>category</th><th>method</th><th>object</th><th>value</th><th>extra</th></tr></thead><tbody>
+<tr><td>...</td><td><code>addonsManager</code></td><td><code>install</code></td><td><code>extension</code></td><td></td><td>...</td></tr>
+<tr><td>...</td><td><code>addonsManager</code></td><td><code>update</code></td><td><code>locale</code></td><td></td><td>...</td></tr>
+<tr><td>...</td><td><code>addonsManager</code></td><td><code>sideload_prompt</code></td><td><code>other</code></td><td></td><td>...</td></tr>
+</tbody></table>
 <p>But none of these records will indicate that it was produced by the <code>manage</code> event. To find all records produced by <code>manage</code>, one would have to query all records where</p>
 <pre><code>category = ...
 AND method in [...,]
@@ -205,18 +205,18 @@ AND object in [...,]
 </code></pre>
 <p>which is not ideal.</p>
 <p>Furthermore, if one encounters this data without knowledge of how the <code>manage</code> event works, they need to look up the event based on the category, method, and object values in order to find the event, and then query the data again to find all the related events. It's not immediately clear from the data if this record:</p>
-<p>|timestamp| category | method  | object  | value | extra |
-|-| -------- |---------| --------|-------|-------|
-|...|<code>addonsManager</code>|<code>update</code>|<code>locale</code>|        |...|</p>
+<table><thead><tr><th>timestamp</th><th>category</th><th>method</th><th>object</th><th>value</th><th>extra</th></tr></thead><tbody>
+<tr><td>...</td><td><code>addonsManager</code></td><td><code>update</code></td><td><code>locale</code></td><td></td><td>...</td></tr>
+</tbody></table>
 <p>and and this record:</p>
-<p>|timestamp| category | method  | object  | value | extra |
-|-| -------- |---------| --------|-------|-------|
-|...|<code>addonsManager</code>|<code>install</code>|<code>extension</code>|        |...|</p>
+<table><thead><tr><th>timestamp</th><th>category</th><th>method</th><th>object</th><th>value</th><th>extra</th></tr></thead><tbody>
+<tr><td>...</td><td><code>addonsManager</code></td><td><code>install</code></td><td><code>extension</code></td><td></td><td>...</td></tr>
+</tbody></table>
 <p>are related or not.</p>
 <p>Another factor that can add to confusion is the fact that other events can share similar values for methods or objects (or even the combination of method and object). For example:</p>
-<p>|timestamp| category | method  | object  | value | extra |
-|-| -------- |---------| --------|-------|-------|
-|...|<code>normandy</code>|<code>update</code>|<code>preference_rollout</code>|        |...|</p>
+<table><thead><tr><th>timestamp</th><th>category</th><th>method</th><th>object</th><th>value</th><th>extra</th></tr></thead><tbody>
+<tr><td>...</td><td><code>normandy</code></td><td><code>update</code></td><td><code>preference_rollout</code></td><td></td><td>...</td></tr>
+</tbody></table>
 <p>which can further confuser users.</p>
 <p>[1]: Events do have name fields, but they aren't included in the event records and thus are not present in the resulting dataset. Also, If a user defines an event in <code>Events.yaml</code> without specifying a list of acceptable methods, the method will default to the name of the event for records created by that event.</p>
 <h4><a class="header" href="#suggested-convention" id="suggested-convention">Suggested Convention:</a></h4>

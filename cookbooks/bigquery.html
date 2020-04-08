@@ -364,28 +364,28 @@ namely that you must make use of the date partition fields for large tables (lik
 <li>There is no native map support in BigQuery. Instead, we are using structs with fields [key, value]. We have provided convenience functions to access these like key-value maps (described <a href="bigquery.html#accessing-map-like-fields">below</a>.)</li>
 </ul>
 <h3><a class="header" href="#projects-with-bigquery-datasets" id="projects-with-bigquery-datasets">Projects with BigQuery datasets</a></h3>
-<p>|Project|Dataset|Purpose|
-|---|---|---|
-|<code>moz-fx-data-shared-prod</code> |    |All production data including full pings, imported parquet data, <a href="https://github.com/mozilla/bigquery-etl">BigQuery ETL</a>, and ad-hoc analysis |
-|   |<code>&lt;namespace&gt;_live</code>    |See <em>live datasets</em> below|
-|   |<code>&lt;namespace&gt;_stable</code>  |See <em>stable datasets</em> below|
-|   |<code>&lt;namespace&gt;_derived</code> |See <em>derived datasets</em> below|
-|   |<code>&lt;namespace&gt;</code>         |See <em>user-facing (unsuffixed) datasets</em> below|
-|   |<code>analysis</code>|User generated tables for analysis|
-|   |<code>backfill</code>|Temporary staging area for back-fills|
-|   |<code>blpadi</code>|Blocklist ping derived data(<em>restricted</em>)|
-|   |<code>payload_bytes_raw</code> |Raw JSON payloads as received from clients, used for reprocessing scenarios, a.k.a. &quot;landfill&quot; (<em>restricted</em>) |
-|   |<code>payload_bytes_decoded</code> |<code>gzip</code>-compressed decoded JSON payloads, used for reprocessing scenarios  |
-|   |<code>payload_bytes_error</code> |<code>gzip</code>-compressed JSON payloads that were rejected in some phase of the pipeline; particularly useful for investigating schema validation errors|
-|   |<code>search</code>|Search data imported from parquet (<em>restricted</em>) |
-|   |<code>static</code>|Static tables, often useful for data-enriching joins|
-|   |<code>tmp</code>|Temporary staging area for parquet data loads|
-|   |<code>udf</code> |Persistent user-defined functions defined in SQL; see <a href="#using-udfs">Using UDFs</a>|
-|   |<code>udf_js</code> |Persistent user-defined functions defined in JavaScript; see <a href="#using-udfs">Using UDFs</a>|
-|   |<code>validation</code>|Temporary staging area for validation|
-|<code>moz-fx-data-derived-datasets</code>|    |Legacy project that contains mostly views to data in <code>moz-fx-data-shared-prod</code> during a transition period; STMO currently points at this project but we will announce a transition to <code>moz-fx-data-shared-prod</code> by end of 2019|
-|   |<code>analysis</code>|User generated tables for analysis; note that this dataset is separate from <code>moz-fx-data-shared-prod:analysis</code> and users are responsible for migrating or cloning data during the transition period|
-|<code>moz-fx-data-shar-nonprod-efed</code>| |Non-production data produced by stage ingestion infrastructure |</p>
+<table><thead><tr><th>Project</th><th>Dataset</th><th>Purpose</th></tr></thead><tbody>
+<tr><td><code>moz-fx-data-shared-prod</code></td><td></td><td>All production data including full pings, imported parquet data, <a href="https://github.com/mozilla/bigquery-etl">BigQuery ETL</a>, and ad-hoc analysis</td></tr>
+<tr><td></td><td><code>&lt;namespace&gt;_live</code></td><td>See <em>live datasets</em> below</td></tr>
+<tr><td></td><td><code>&lt;namespace&gt;_stable</code></td><td>See <em>stable datasets</em> below</td></tr>
+<tr><td></td><td><code>&lt;namespace&gt;_derived</code></td><td>See <em>derived datasets</em> below</td></tr>
+<tr><td></td><td><code>&lt;namespace&gt;</code></td><td>See <em>user-facing (unsuffixed) datasets</em> below</td></tr>
+<tr><td></td><td><code>analysis</code></td><td>User generated tables for analysis</td></tr>
+<tr><td></td><td><code>backfill</code></td><td>Temporary staging area for back-fills</td></tr>
+<tr><td></td><td><code>blpadi</code></td><td>Blocklist ping derived data(<em>restricted</em>)</td></tr>
+<tr><td></td><td><code>payload_bytes_raw</code></td><td>Raw JSON payloads as received from clients, used for reprocessing scenarios, a.k.a. &quot;landfill&quot; (<em>restricted</em>)</td></tr>
+<tr><td></td><td><code>payload_bytes_decoded</code></td><td><code>gzip</code>-compressed decoded JSON payloads, used for reprocessing scenarios</td></tr>
+<tr><td></td><td><code>payload_bytes_error</code></td><td><code>gzip</code>-compressed JSON payloads that were rejected in some phase of the pipeline; particularly useful for investigating schema validation errors</td></tr>
+<tr><td></td><td><code>search</code></td><td>Search data imported from parquet (<em>restricted</em>)</td></tr>
+<tr><td></td><td><code>static</code></td><td>Static tables, often useful for data-enriching joins</td></tr>
+<tr><td></td><td><code>tmp</code></td><td>Temporary staging area for parquet data loads</td></tr>
+<tr><td></td><td><code>udf</code></td><td>Persistent user-defined functions defined in SQL; see <a href="#using-udfs">Using UDFs</a></td></tr>
+<tr><td></td><td><code>udf_js</code></td><td>Persistent user-defined functions defined in JavaScript; see <a href="#using-udfs">Using UDFs</a></td></tr>
+<tr><td></td><td><code>validation</code></td><td>Temporary staging area for validation</td></tr>
+<tr><td><code>moz-fx-data-derived-datasets</code></td><td></td><td>Legacy project that contains mostly views to data in <code>moz-fx-data-shared-prod</code> during a transition period; STMO currently points at this project but we will announce a transition to <code>moz-fx-data-shared-prod</code> by end of 2019</td></tr>
+<tr><td></td><td><code>analysis</code></td><td>User generated tables for analysis; note that this dataset is separate from <code>moz-fx-data-shared-prod:analysis</code> and users are responsible for migrating or cloning data during the transition period</td></tr>
+<tr><td><code>moz-fx-data-shar-nonprod-efed</code></td><td></td><td>Non-production data produced by stage ingestion infrastructure</td></tr>
+</tbody></table>
 <h3><a class="header" href="#table-layout-and-naming" id="table-layout-and-naming">Table Layout and Naming</a></h3>
 <p>Under the single <code>moz-fx-data-shared-prod</code> project,
 each document namespace (corresponding to folders underneath the <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/master/schemas">schemas directory of <code>mozilla-pipeline-schemas</code></a>) has four BigQuery datasets provisioned with the following properties:</p>
