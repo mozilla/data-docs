@@ -21,7 +21,7 @@ This article provides an overview of Firefox Accounts metrics: what is measured 
     * For developer accounts; not required by end-users to use or download addons.
 * [Pocket](https://getpocket.com/login/?ep=1)
     * FxA is an optional authentication method among others.
-* [Monitor](http://monitor.firefox.com/)
+* [Monitor](https://monitor.firefox.com)
     * Required to receive email alerts. Not required for email scans.
 * [Mozilla IAM](https://wiki.mozilla.org/IAM/Frequently_asked_questions)
     * Optional authentication method among others.
