@@ -18,7 +18,7 @@ There is a variable called `service` that we use to (1) attribute users to the r
 |`lockbox`|`e7ce535d93522896`|Lockwise App for Android|
 |`lockbox`|`98adfa37698f255b`|Lockwise App for iOS|
 |`fenix`|`a2270f727f45f648`|Sync implementation for Fenix|
-|`fx-monitor`|`802d56ef2a9af9fa`|Firefox Monitor ([website](https://monitor.firefox.com/))|
+|`fx-monitor`|`802d56ef2a9af9fa`|Firefox Monitor ([website](https://monitor.firefox.com))|
 |`send`|`1f30e32975ae5112`|Firefox Send ([website](https://send.firefox.com/))|
 |`send`|`20f7931c9054d833`|Firefox Send (android app)|
 |`pocket-mobile`|`7377719276ad44ee`|Pocket Mobile App|
