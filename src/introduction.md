@@ -1,6 +1,6 @@
 # Firefox Data Documentation
 
-This documentation is intended to help Mozilla's developers and data scientists analyze and interpret the data gathered
+This documentation helps Mozilla's developers and data scientists analyze and interpret the data gathered
 by the Firefox Telemetry system.
 
 At [Mozilla](https://www.mozilla.org), our data-gathering and data-handling practices are anchored in our
