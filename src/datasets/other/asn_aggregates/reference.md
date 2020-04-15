@@ -11,6 +11,19 @@ this dataset computes some aggregates from the telemetry data
 before the IP address information is discarded.
 The dataset is computed each day from the pings received the prior day.
 
+The motivating question for this dataset was to understand
+which network operators are using the
+[`use-application-dns.net`](https://use-application-dns.net)
+canary domain to disable DNS over HTTPS (DoH) by default for clients using their networks.
+If a user has not specifically turned DoH on or off,
+Firefox checks for indications that DoH should not be enabled.
+One of these checks is to perform a lookup for the canary domain
+using the client's default DNS resolver.
+If the lookup returns a `NXDOMAIN` error code indicating the canary domain does not exist,
+DoH will not be enabled by default.
+Network operators control this behavior
+by configuring the resolvers they provision for their clients.
+
 An [autonomous system](https://en.wikipedia.org/wiki/Autonomous_system_(Internet))
 represents a network with a common routing policy,
 often because it is controlled by a single entity.
