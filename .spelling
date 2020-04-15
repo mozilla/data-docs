@@ -86,6 +86,7 @@ DevTools
 discoverability
 Django's
 DLLs
+DNS
 Dockerfile
 DWL
 DXR
@@ -129,6 +130,8 @@ hostnames
 https
 HyperLogLog
 IAM
+IPv4
+IPv6
 ISO8601
 i.e.
 implementational
@@ -154,6 +157,7 @@ matcher
 matchers
 MAU
 MacOS
+MaxMind
 McCrosky
 mdbook
 mdbook-dtmo
