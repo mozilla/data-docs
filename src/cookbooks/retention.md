@@ -77,6 +77,25 @@ FROM
 WHERE date = "2019-12-01"
 ```
 
+### Simplified View for 1-week Retention
+
+You can also use the simplified `desktop_retention_1_week` view.  This still supports restriction to an arbitrary population of users by joining against a table containing the `client_id`s of interest.
+
+```sql
+SELECT
+  AVG(IF(retained, 1, 0)) AS retention
+FROM
+  `moz-fx-data-shared-prod.telemetry.desktop_retention_1_week`
+RIGHT JOIN
+  my_cohort_t
+USING
+  (client_id)
+WHERE
+  date BETWEEN "2020-03-01" AND "2020-03-07"
+GROUP BY
+  date
+```
+
 ## Confounding Factors
 
 When performing retention analysis it is important to understand that there are many reasons for retention differences between groups.  Unless you are comparing two arms of a controlled experiment, in which case you can probably attribute any difference to the experimental treatment, it is impossible to make causal arguments about retention differences.  For example, if you observe the users that save a large number of bookmarks tend to have higher retention than those who do not,  it is more likely that the retention difference is simply a property of *the types of people* that save bookmarks, and an intervention to encourage saving more bookmarks is not necessarily likely to improve retention.
