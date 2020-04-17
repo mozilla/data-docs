@@ -32,7 +32,7 @@ The following options define how data is published:
     * tables will get published in the `mozilla-public-data` GCP project which is accessible
     by everyone, also external users
 * `incremental_export`: determines how data gets split up
-	* `true`: data for each `submission_date` gets exported into separate directories (e.g.
+  * `true`: data for each `submission_date` gets exported into separate directories (e.g.
     `files/2020-04-15`, `files/2020-04-16`, ...)
     * `false`: all data gets exported into one `files/` directory
 * `incremental`: indicates how data gets updated based on the query and Airflow configuration
