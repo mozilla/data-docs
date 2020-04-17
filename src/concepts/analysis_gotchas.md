@@ -173,7 +173,7 @@ for the day the build was released.
 
 **Tip:** To parse `metadata/Date` to a usable date in SQL:
 `SAFE.PARSE_TIMESTAMP('%a, %d %b %Y %T %Z', REPLACE(metadata.header.date, 'GMT+00:00', 'GMT'))`
-or better yet use the pre-parsed version available in user-facing views `metatdata.header.parsed_date`
+or better yet use the already parsed version available in user-facing views (`metatdata.header.parsed_date`)
 
 [ISO 8601]: https://en.wikipedia.org/wiki/ISO_8601
 [msref]: ../datasets/batch_view/main_summary/reference.md#time-formats
