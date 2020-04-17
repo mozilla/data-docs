@@ -242,18 +242,19 @@ opts into sending us this information by installing any pre-release version of F
 <p>If you want to encourage users to collect good information for us,
 ask them to install Beta.</p>
 <h3><a class="header" href="#trusting-dates" id="trusting-dates">Trusting Dates</a></h3>
-<p>Don't trust client times.</p>
+<p>Don't trust desktop client times. The situation is somewhat better on mobile devices
+and is being investigated.</p>
 <p>Any timestamp recorded by the user is subject to &quot;clock skew.&quot;
 The user's clock can be set (purposefully or accidentally) to any time at all.
 The nature of SSL certificates tends to keep this within a certain relatively-accurate window,
 because a user who's clock is too far in the past or too far in the future
 might confuse certain expiration-date-checking code.</p>
-<p>Examples of client times: <code>crashDate</code>, <code>crashTime</code>, <code>meta/Date</code>, <code>sessionStartDate</code>,
+<p>Examples of client times from Firefox desktop pings: <code>crashDate</code>, <code>crashTime</code>, <code>meta/Date</code>, <code>sessionStartDate</code>,
 <code>subsessionStartDate</code>, <code>profile/creationDate</code></p>
+<p>Examples of client times from Glean pings: <a href="https://mozilla.github.io/glean/book/user/pings/index.html#the-ping_info-section"><code>ping_info.end_time</code></a></p>
 <p>Examples of server times you can trust: <code>submission_timestamp</code>, <code>submission_date</code></p>
 <p><em>Note that <code>submission_date</code> does not appear in the <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/common-ping.html">ping documentation</a>
-because it is added in post-processing.
-It can be found in the <code>meta</code> field of the ping as in the <a href="https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/30598/">Databricks Example</a>.</em></p>
+because it is added in post-processing.</em></p>
 <h3><a class="header" href="#date-formats" id="date-formats">Date Formats</a></h3>
 <p>Not all dates and times are created equal.
 Most of the dates and times in Telemetry pings are <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a>.
@@ -261,7 +262,7 @@ Most are full timestamps, though their resolution may differ from being per-seco
 <p>Then there's <code>profile/creationDate</code> which is just a number of days since epoch (January 1, 1970).
 Like <code>17177</code> for the date 2017-01-11.</p>
 <p><strong>Tip:</strong> To convert <code>profile/creationDate</code> to a usable date in SQL:
-<code>DATE_ADD('day', profile_created, DATE '1970-01-01')</code></p>
+<code>DATE_FROM_UNIX_DATE(SAFE_CAST(environment.profile.creation_date AS INT64))</code></p>
 <p>In derived datasets ISO dates are sometimes converted to strings in one of
 two formats: <code>%Y-%m-%d</code> or <code>%Y%m%d</code>.</p>
 <p>The date formats for different rows in <code>main_summary</code> are described on the
@@ -269,9 +270,10 @@ two formats: <code>%Y-%m-%d</code> or <code>%Y%m%d</code>.</p>
 <p>Build ids look like dates but aren't.
 If you take the first eight characters you can use that as a proxy
 for the day the build was released.</p>
-<p><code>metadata/Date</code> is an HTTP Date header in a <a href="http://tools.ietf.org/html/rfc7231#section-7.1.1.1">RFC 7231</a>-compatible format.</p>
+<p><code>metadata.header.date</code> is an HTTP Date header in a <a href="http://tools.ietf.org/html/rfc7231#section-7.1.1.1">RFC 7231</a>-compatible format.</p>
 <p><strong>Tip:</strong> To parse <code>metadata/Date</code> to a usable date in SQL:
-<code>DATE_PARSE(SUBSTR(client_submission_date, 1, 25), '%a, %d %b %Y %H:%i:%s')</code></p>
+<code>SAFE.PARSE_TIMESTAMP('%a, %d %b %Y %T %Z', REPLACE(metadata.header.date, 'GMT+00:00', 'GMT'))</code>
+or better yet use the already parsed version available in user-facing views (<code>metatdata.header.parsed_date</code>)</p>
 <h3><a class="header" href="#delays" id="delays">Delays</a></h3>
 <p>Telemetry data takes a while to get into our hands.
 The largest data mule in Telemetry is the main-ping.
