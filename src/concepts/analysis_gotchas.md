@@ -24,6 +24,10 @@ Especially severe problems with production data should be announced on our `fx-d
 When looking at trends, it is helpful to be aware of events from the past
 that might impact comparisons with history. Here are a few to keep in mind:
 
+- **April 14, 2020** - [Telemetry edge server rejects pings for an hour][bug1630096].
+  Clients generally retry periodically until they get success, so most of these messages
+  were eventually ingested; submission timestamps will be later than normal. A small number of pings
+  are attributed to a later day or were never sent due to the client never being reopened.
 - **December 4 2019** - [AWS Ingestion Pipeline decommissioned][bug1598815].
   Specifically, the last ping relayed through the AWS machinery had a
   timestamp of `2019-12-04 22:04:45.912204 UTC`.
@@ -62,6 +66,7 @@ that might impact comparisons with history. Here are a few to keep in mind:
 [Bug 1501329]: https://bugzilla.mozilla.org/show_bug.cgi?id=1501329
 [bug1482509]: https://bugzilla.mozilla.org/show_bug.cgi?id=1482509
 [bug1598815]: https://bugzilla.mozilla.org/show_bug.cgi?id=1598815
+[bug1630096]: https://bugzilla.mozilla.org/show_bug.cgi?id=1630096
 
 ### Pseudo-replication
 
