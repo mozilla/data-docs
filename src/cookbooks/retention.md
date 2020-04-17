@@ -86,7 +86,7 @@ SELECT
   AVG(IF(retained, 1, 0)) AS retention
 FROM
   `moz-fx-data-shared-prod.telemetry.desktop_retention_1_week`
-INNER JOIN
+RIGHT JOIN
   my_cohort_t
 USING
   (client_id)
