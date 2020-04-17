@@ -76,6 +76,11 @@ The data is output in re:dash API format:
 
 The dataset updates every 24 hours.
 
+## Public Data
+
+The data is publicly available on BigQuery: `mozilla-public-data.telemetry_derived.ssl_ratios_v1`.
+Data can also be accessed through the public HTTP endpoint: [https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/ssl_ratios/v1/files/metadata.json](https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/ssl_ratios/v1/files/metadata.json)
+
 ## Code Reference
 
 You can find the query that generates the SSL dataset
