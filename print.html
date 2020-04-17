@@ -369,6 +369,10 @@ Instead, it is about quirks and pitfalls specific to <a href="https://firefox-so
 <p>When looking at trends, it is helpful to be aware of events from the past
 that might impact comparisons with history. Here are a few to keep in mind:</p>
 <ul>
+<li><strong>April 14, 2020</strong> - <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1630096">Telemetry edge server rejects pings for an hour</a>.
+Clients generally retry periodically until they get success, so most of these messages
+were eventually ingested; submission timestamps will be later than normal. A small number of pings
+are attributed to a later day or were never sent due to the client never being reopened.</li>
 <li><strong>December 4 2019</strong> - <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1598815">AWS Ingestion Pipeline decommissioned</a>.
 Specifically, the last ping relayed through the AWS machinery had a
 timestamp of <code>2019-12-04 22:04:45.912204 UTC</code>.</li>
