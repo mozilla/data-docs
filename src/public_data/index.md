@@ -5,7 +5,7 @@ in BigQuery or through our [public HTTP endpoint][public_data_endpoint].
 
 ## Accessing Public Data in BigQuery
 
-To access public datasets in BigQuery, a [Google Cloud Platform][gcp](GCP) account is required. 
+To access public datasets in BigQuery, a [Google Cloud Platform][gcp] (GCP) account is required. 
 GCP also offers [a free tier][gcp_free] which offers free credits to use and run queries in BigQuery.
 
 To get started, log into the [BigQuery console][bigquery_console] or use the 
@@ -24,7 +24,7 @@ WHERE submission_date = "2020-04-16"
 Some BigQuery datasets are also published as gzipped JSON files through the public HTTP endpoint:
 [https://public-data.telemetry.mozilla.org][public_data_endpoint].
 
-A list of available public datasets is available at: https://public-data.telemetry.mozilla.org/all-datasets.json
+A list of available public datasets is available at: [https://public-data.telemetry.mozilla.org/all-datasets.json](https://public-data.telemetry.mozilla.org/all-datasets.json)
 This list contains the names of available datasets, additional metadata and links to the
 storage locations of the files containing the data.
 
@@ -76,17 +76,16 @@ For example:
 * `last_updated`: the `last_updated` file contains the timestamp for when the data files were 
   last updated
 
-
-Data files are gzipped and up to 1GB in size. If the data exceeds 1GB, then it gets split up into multiple
+Data files are gzipped and up to 1 GB in size. If the data exceeds 1 GB, then it gets split up into multiple
 files named `000000000000.json.gz`, `000000000001.json.gz`, ...
-For example: https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/ssl_ratios/v1/files/000000000000.json.gz
+For example: [https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/ssl_ratios/v1/files/000000000000.json.gz](https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/ssl_ratios/v1/files/000000000000.json.gz)
 
 
-[bigquery]: [https://cloud.google.com/bigquery]
-[bigquery_console]: [https://console.cloud.google.com/bigquery]
-[bigquery_command_line]: [https://cloud.google.com/bigquery/docs/bq-command-line-tool]
-[bigquery_new_project]: [https://cloud.google.com/appengine/docs/standard/nodejs/building-app/creating-project]
-[gcp]: [https://cloud.google.com]
-[gcp_free]: [https://cloud.google.com/free]
+[bigquery]: https://cloud.google.com/bigquery
+[bigquery_console]: https://console.cloud.google.com/bigquery
+[bigquery_command_line]: https://cloud.google.com/bigquery/docs/bq-command-line-tool
+[bigquery_new_project]: https://cloud.google.com/appengine/docs/standard/nodejs/building-app/creating-project
+[gcp]: https://cloud.google.com
+[gcp_free]: https://cloud.google.com/free
 [public_data_endpoint]: https://public-data.telemetry.mozilla.org
 [public_data_datasets]: https://public-data.telemetry.mozilla.org/all-datasets.json
