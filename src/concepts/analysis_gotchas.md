@@ -113,15 +113,11 @@ This includes:
   `"releaseChannelCollection": "opt-out"`
 
 Most probes are "opt-in": we do not get information from them unless the user
-opts into sending us this information.
-Users can opt-in in two ways:
-1. Using Firefox's Options UI to tick the box that gives us permission
-2. Installing any pre-release version of Firefox
+opts into sending us this information by installing any pre-release version of Firefox
+(Beta or Nightly or Developer Edition (which is also kinda/sorta Beta)).
 
-The nature of selection bias is such that the population in #1 is useless for analysis.
 If you want to encourage users to collect good information for us,
-ask them to install Beta:
-it's only slightly harder than finding and checking the opt-in check-box in Firefox.
+ask them to install Beta.
 
 [Environment]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/environment.html
 [Histograms]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/histograms.html
