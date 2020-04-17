@@ -6,7 +6,7 @@ in BigQuery or through our [public HTTP endpoint][public_data_endpoint].
 ## Accessing Public Data in BigQuery
 
 To access public datasets in BigQuery, a [Google Cloud Platform][gcp] (GCP) account is required. 
-GCP also offers [a free tier][gcp_free] which offers free credits to use and run queries in BigQuery.
+GCP also offers [a free tier][gcp_free] which offers free credits to use and run queries in BigQuery. [BigQuery sandbox][bigquery_sandbox] enables users to use BigQuery for free without requiring payment information. 
 
 To get started, log into the [BigQuery console][bigquery_console] or use the 
 [BigQuery command line tools][bigquery_command_line] to [create a new project][bigquery_new_project].
@@ -62,6 +62,8 @@ For example:
 }
 ```
 
+The keys within each dataset have the following meanings:
+
 * `incremental`: 
     * `true`: data gets incrementally updated which means that new data gets added periodically 
     (for most datasets on a daily basis)
@@ -73,7 +75,7 @@ For example:
 * `review_link`: links to the Bugzilla bug for the data review
 * `files_metadata`: `metadata.json` contains a list of links to all available data files
 * `files_uri`: location of data files
-* `last_updated`: the `last_updated` file contains the timestamp for when the data files were 
+* `last_updated`: link to a `last_updated` file containing the timestamp for when the data files were
   last updated
 
 Data files are gzipped and up to 1 GB in size. If the data exceeds 1 GB, then it gets split up into multiple
@@ -87,5 +89,6 @@ For example: [https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_
 [bigquery_new_project]: https://cloud.google.com/appengine/docs/standard/nodejs/building-app/creating-project
 [gcp]: https://cloud.google.com
 [gcp_free]: https://cloud.google.com/free
+[bigquery_sandbox]: https://cloud.google.com/blog/products/data-analytics/query-without-a-credit-card-introducing-bigquery-sandbox
 [public_data_endpoint]: https://public-data.telemetry.mozilla.org
 [public_data_datasets]: https://public-data.telemetry.mozilla.org/all-datasets.json
