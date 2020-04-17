@@ -44,6 +44,8 @@
   * [Implementing Experiments](cookbooks/client_guidelines.md)
   * [Sending Events](cookbooks/events_best_practices.md)
   * [Sending a Custom Ping](cookbooks/new_ping.md)
+* [Public data](public_data/index.md)
+  * [Publishing Datasets](public_data/publishing_datasets.md)
 
 ---
 
