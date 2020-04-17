@@ -1,136 +1,67 @@
-# `addons_daily` Derived Dataset
+# Addons Daily
 
-## Introduction:
+<!-- toc -->
 
-The `addons_daily` dataset serves as the central hub for all Firefox extension related questions.
-This includes questions regarding browser performance, user engagement, click through rates, etc.
-Each row in the table represents a unique add-on, and each column is a unique metric.
+# Introduction
 
-### Contents
-Prior to construction of this dataset, extension related data lived in several different sources.
-`Addons_daily` has combined metrics aggregated from several sources,
-including raw pings, telemetry data, and google analytics data.
-Note that the data is a 1% sample of Release Firefox, so metrics like `DAU`, `WAU`, etc are approximate.
+{{#include ./intro.md}}
 
-### Accessing the Data
-The data is stored as a parquet table in S3 `s3://telemetry-parquet/addons_daily/v1/`
+# Data Reference
 
+## Example Queries
 
-***The `addons_daily` table is accessible through re:dash using the Athena data source.
-It is also available via the Presto data source,
-though Athena should be preferred for performance and stability reasons.***
-
-## Data Reference
-
-### Example Queries
-
-
-#### Query 1
-
-Select average daily, weekly, monthly active users,
-as well as the proportion of total daily active users per  for all non system `add-ons`.
+#### DAU, WAU and MAU for uBlock Origin
 
 ```sql
-SELECT addon_id,
-       arbitrary(name) as name,
-       avg(dau) as "Average DAU",
-       avg(wau) as "Average WAU",
-       avg(mau) as "Average MAU",
-       avg(dau_prop) as "Average % of Total DAU"
-FROM addons_daily
+SELECT
+    submission_date,
+    dau,
+    wau,
+    mau
+FROM
+    `moz-fx-data-shared-prod.telemetry.addons_daily`
 WHERE
-  is_system = false
-  and addon_id not like '%mozilla%'
-GROUP BY 1
-ORDER BY 3 DESC
+    submission_date >= DATE_SUB(CURRENT_DATE, INTERVAL 28 DAY)
+    AND addon_id = 'uBlock0@raymondhill.net'
+  
 ```
 
-This query can be seen and ran in STMO [here](https://sql.telemetry.mozilla.org/queries/63294/source).
-
-#### Query 2
-
-Select average daily active users for the `uBlock add-on` for all dates.
+#### Add-ons with Highest Organic:SAP search ratio
 
 ```sql
-SELECT DATE_PARSE(submission_date_s3, '%Y%m%d') as "Date",
-       dau as "DAU"
-FROM addons_daily
+SELECT
+    addon_id,
+    ANY_VALUE(name) as name,
+    AVG(dau) as avg_dau,
+    SAFE_DIVIDE(SUM(organic_searches.total), SUM(sap_searches.total)) as organic_sap_ratio
+FROM
+    telemetry.addons_daily
 WHERE
-    addon_id = 'uBlock0@raymondhill.net'
+    submission_date >= DATE_SUB(CURRENT_DATE, INTERVAL 7 DAY)
+    AND is_system = false
+GROUP BY
+    1
+HAVING
+    avg(dau) > 1000
+ORDER BY
+    4 DESC
+    
 ```
 
-This query can be seen and ran in STMO [here](https://sql.telemetry.mozilla.org/queries/63293/source#162153)
+## Scheduling
 
-### Scheduling
+This dataset is updated daily via the
+[telemetry-airflow](https://github.com/mozilla/telemetry-airflow) infrastructure.
+The job runs as part of the [`addons_daily` DAG](https://github.com/mozilla/telemetry-airflow/blob/master/dags/addons_daily.py).
 
-This dataset is updated daily via the telemetry-airflow infrastructure.
-The job runs as part of the `main_summary` DAG.
+## Schema
 
-### Schema
+The data is partitioned by `submission_date`.
 
-The data is partitioned by `submission_date_s3` which is formatted as `%Y%m%d`, like `20180130`.
-As of 2019-06-05, the current version of the `addons_daily` dataset is `v1`, and has a schema as follows:
+As of 2020-04-17, the current version of the `addons_daily` dataset is `v1`.
 
-```
-root
-|-- addon_id: string (nullable = true)
- |-- name: string (nullable = true)
- |-- os_pct: map (nullable = true)
- |    |-- key: string
- |    |-- value: double (valueContainsNull = false)
- |-- country_pct: map (nullable = true)
- |    |-- key: string
- |    |-- value: double (valueContainsNull = false)
- |-- avg_time_total: double (nullable = true)
- |-- active_hours: double (nullable = true)
- |-- disabled: long (nullable = true)
- |-- avg_tabs: double (nullable = true)
- |-- avg_bookmarks: double (nullable = true)
- |-- avg_toolbox_opened_count: double (nullable = true)
- |-- avg_uri: double (nullable = true)
- |-- pct_w_tracking_prot_enabled: double (nullable = true)
- |-- mau: long (nullable = true)
- |-- wau: long (nullable = true)
- |-- dau: long (nullable = true)
- |-- dau_prop: double (nullable = true)
- |-- search_with_ads: map (nullable = true)
- |    |-- key: string
- |    |-- value: long (valueContainsNull = true)
- |-- ad_click: map (nullable = true)
- |    |-- key: string
- |    |-- value: long (valueContainsNull = true)
- |-- organic_searches: map (nullable = true)
- |    |-- key: string
- |    |-- value: long (valueContainsNull = true)
- |-- sap_searches: map (nullable = true)
- |    |-- key: string
- |    |-- value: long (valueContainsNull = true)
- |-- tagged_sap_searches: map (nullable = true)
- |    |-- key: string
- |    |-- value: long (valueContainsNull = true)
- |-- installs: map (nullable = true)
- |    |-- key: string
- |    |-- value: long (valueContainsNull = true)
- |-- download_times: map (nullable = true)
- |    |-- key: string
- |    |-- value: double (valueContainsNull = false)
- |-- uninstalls: map (nullable = true)
- |    |-- key: string
- |    |-- value: long (valueContainsNull = true)
- |-- is_system: boolean (nullable = true)
- |-- avg_webext_storage_local_get_ms_: double (nullable = true)
- |-- avg_webext_storage_local_set_ms_: double (nullable = true)
- |-- avg_webext_extension_startup_ms_: double (nullable = true)
- |-- top_10_coinstalls: map (nullable = true)
- |    |-- key: string
- |    |-- value: string (valueContainsNull = true)
- |-- avg_webext_background_page_load_ms_: double (nullable = true)
- |-- avg_webext_browseraction_popup_open_ms_: double (nullable = true)
- |-- avg_webext_pageaction_popup_open_ms_: double (nullable = true)
- |-- avg_webext_content_script_injection_ms_: double (nullable = true)
-```
+# Code Reference
 
-## Code Reference
-
-All code can be found [here](https://github.com/mozilla/addons_daily).
+This dataset is generated by
+[`bigquery-etl`](https://github.com/mozilla/bigquery-etl/blob/master/sql/telemetry_derived/addons_daily_v1/query.sql).
 Refer to this repository for information on how to run or augment the dataset.
