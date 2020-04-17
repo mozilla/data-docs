@@ -1,10 +1,10 @@
-# Glean - product analytics & telemetry
+# Glean
 
-For Mozilla, getting reliable data from our products is critical to inform our decision making. Glean is our new product analytics & telemetry solution that provides that data for our products.
-It aims to be easy to integrate, reliable and transparent by providing an SDK and integrated tools.
+For Mozilla, getting reliable data from our products is critical to inform our decision making. Glean is our new product analytics & telemetry solution that provides a consistent experience and behavior across all of our products.
 
-It currently supports Android and iOS products, while Desktop support is planned.
-Note that this is different from Telemetry for Firefox Desktop ([library](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/index.html), [datasets](../choosing_a_dataset.md)), although it provides similar capabilities.
+The list of supported platforms and implementations is [available in the Glean SDK Book](https://mozilla.github.io/glean/book/dev/core/internal/implementations.html).
+
+> Note that this is different from Telemetry for Firefox Desktop ([library](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/index.html), [datasets](../choosing_a_dataset.md)), although it provides similar capabilities.
 
 Contents:
 
@@ -12,35 +12,58 @@ Contents:
 
 # Overview
 
-Glean consists of different pieces:
-
-*   Product-side tools - [the Glean SDK](https://mozilla.github.io/glean/) is what products integrate and record data into.
-*   Services - this is where the data is stored and made available for analysis in our data platform.
-*   Data Tools - these are used to look at the data, performing analysis and setting up dashboards.
-
 ![drawing](../../assets/Glean_overview.jpg)
 
-# What does it offer
+The **Glean SDK** performs measurements and sends data from our products.
+It provides a set of **[metric types](https://mozilla.github.io/glean/user/metrics)** for individual measurements that are carefully designed to avoid common pitfalls with measurement.
+Metrics are then rolled up into **[pings](https://mozilla.github.io/glean/user/pings)** to send over the network.
+There are a number of built-in pings that are sent on predefined schedules, but it also possible to send custom pings at any desired cadence.
 
-Glean is designed to support typical product analytics use-cases and encourage best practices by requiring clearly defined metrics through the following:
+The **Data Platform** validates and stores these pings in database tables.
+A fault tolerant design allows data to be retained in the event of problems such as traffic spikes or invalid data.
+Derived and cleaned data can also be automatically created at this stage.
 
-**Basic product analytics are collected out-of-the-box in a standardized way.**
-A baseline of analysis is important for all our mobile applications, from counting active users to retention and session times. This is supported out-of-the-box by the library and works consistently across our mobile products.
+The **Analysis Tools** are used to query and visualize the data.
+Because Glean knows more about the individual data, such as its type and the ranges of acceptable values, it can in many cases provide the most appropriate visualization automatically.
 
-**No custom code is required for adding new metrics to a product.**
-To make engineers more productive, the SDK keeps the amount of instrumentation code required for metrics as small as possible. Engineers only need to specify what they want to instrument, with which semantics and then record the data using the Glean SDK. The SDK takes care of storing & sending that data reliably.
+<!-- TODO: Link to GLAM -->
 
-**Following [lean data practices](https://leandatapractices.com/) through SDK design choices.**
-It's easy to limit data collection to what's necessary and documentation can be generated easily, aiding both transparency & understanding for analysis.
+# The Glean design principles
 
-**Better data tooling integration due to standardized data types & registering them in machine-readable files.**
-By having collected data described in machine-readable files, our various data tools can read them and support metrics automatically, without manual work.
+**Provide a consistent base of telemetry**
 
-**Due to common high-level concepts for metrics, APIs & data tools can better match the use-cases.**
-To make the choice easier for which metric type to use, we are introducing higher-level data types that offer clear and understandable semantics - for example, when you want to count something, you use the _"count"_ type. This also gives us opportunities to offer better tooling for the data, both on the client and for data tooling.
+  A baseline of analysis is important for all our products, from counting active users to retention and session times. This is supported out-of-the-box by the SDK, and funnels directly into visualization tools like the [Growth and Usage Dashboard (GUD)](../tools/gud.html).
+  
+  Metrics that are common to all products, such as the operating system and architecture, are provided automatically in a consistent way.
+  
+  Any issues found with these base metrics only need be fixed in Glean to benefit all SDK-using products.
+  
+**Encourage specificity**
 
-**Basic semantics on how the data is collected are clearly defined by the library.**
-To make it easier to understand the general semantics of our data, the Glean SDK will define and document when which kind of data will get sent. This gives data analysis common basic semantics.
+  Rather than just treating metrics as generic data points, Glean wants to know as much as possible about the things being measured.
+  From this information, it can:
+  
+  - Provide a well-designed API to perform specific types of measurements, which is consistent and avoids common pitfalls
+  - Reject invalid data, and report them as errors
+  - Store the data in a consistent way, rather than custom, ad hoc data structures
+  - Provide the most appropriate visualization and analysis automatically
+
+**Follow [lean data practices](https://leandatapractices.com/)**
+
+  The Glean system enforces that all measurements received [data review](https://wiki.mozilla.org/Firefox/Data_Collection), and it is impossible to collect measurements that haven't been declared.
+  It also makes it easy to limit data collection to only what's necessary:
+  
+  - Enforced expiration dates for every metric
+  - Some metric types can automatically limit resolution
+  - It's easy to send data that isn't associated with the client id
+  
+  Glean also supports data transparency by automatically generating documentation for all of the metrics sent by an application.
+  
+**Provide a self-serve experience**
+
+  Adding new metric is designed to be as easy as possible. 
+  Simply by adding a few lines of configuration, everything to make them work across the entire suite of tools happens automatically.
+  This includes previously manual and error-prone steps such as updating the ping payload and database schemas.
 
 # How to use Glean
 
@@ -50,23 +73,12 @@ To make it easier to understand the general semantics of our data, the Glean SDK
   * `org_mozilla_fenix.baseline`
   * `org_mozilla_fenix.events`
   * `org_mozilla_fenix.metrics`
-  * Example query:
-
-    ```sql
-    -- Count unique Client IDs observed on a given day
-    SELECT
-      count(distinct client_info.client_id)
-    FROM
-      org_mozilla_fenix.baseline
-    WHERE
-      date(submission_timestamp) = '2019-11-11'
-    ```
   * There is [more documentation about accessing Glean data](accessing_glean_data.md).
 
 * _(Work in progress)_ Use events and [Amplitude](https://sso.mozilla.com/amplitude) for product analytics.
 * [Use Databricks](https://sso.mozilla.com/databricks) for deep-dive analysis.
 * [Use the Glean debug ping viewer](debug_ping_view.md) for QA & development.
-* For experimentation, you will be able to use [Android experiments library](https://github.com/mozilla-mobile/android-components/blob/master/components/service/experiments/README.md), which integrates with Glean.
+* For experimentation, you can use [Android experiments library](https://github.com/mozilla-mobile/android-components/blob/master/components/service/experiments/README.md), which integrates with Glean.
 
 # Contact
 
