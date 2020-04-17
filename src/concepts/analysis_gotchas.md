@@ -127,7 +127,7 @@ ask them to install Beta.
 ### Trusting Dates
 
 Don't trust desktop client times. The situation is somewhat better on mobile devices
-and being investigated.
+and is being investigated.
 
 Any timestamp recorded by the user is subject to "clock skew."
 The user's clock can be set (purposefully or accidentally) to any time at all.
@@ -138,7 +138,7 @@ might confuse certain expiration-date-checking code.
 Examples of client times from Firefox desktop pings: `crashDate`, `crashTime`, `meta/Date`, `sessionStartDate`,
 `subsessionStartDate`, `profile/creationDate`
 
-Examples of client times from Glean pings: `ping_info.end_time`
+Examples of client times from Glean pings: [`ping_info.end_time`](https://mozilla.github.io/glean/book/user/pings/index.html#the-ping_info-section)
 
 Examples of server times you can trust: `submission_timestamp`, `submission_date`
 
