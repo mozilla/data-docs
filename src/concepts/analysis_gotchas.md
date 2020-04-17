@@ -126,7 +126,8 @@ ask them to install Beta.
 
 ### Trusting Dates
 
-Don't trust client times.
+Don't trust desktop client times. The situation is somewhat better on mobile devices
+and being investigated.
 
 Any timestamp recorded by the user is subject to "clock skew."
 The user's clock can be set (purposefully or accidentally) to any time at all.
@@ -134,17 +135,17 @@ The nature of SSL certificates tends to keep this within a certain relatively-ac
 because a user who's clock is too far in the past or too far in the future
 might confuse certain expiration-date-checking code.
 
-Examples of client times: `crashDate`, `crashTime`, `meta/Date`, `sessionStartDate`,
+Examples of client times from Firefox desktop pings: `crashDate`, `crashTime`, `meta/Date`, `sessionStartDate`,
 `subsessionStartDate`, `profile/creationDate`
+
+Examples of client times from Glean pings: `ping_info.end_time`
 
 Examples of server times you can trust: `submission_timestamp`, `submission_date`
 
 *Note that `submission_date` does not appear in the [ping documentation]
-because it is added in post-processing.
-It can be found in the `meta` field of the ping as in the [Databricks Example].*
+because it is added in post-processing.*
 
 [ping documentation]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/common-ping.html
-[Databricks Example]: https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/30598/
 
 ### Date Formats
 
@@ -156,7 +157,7 @@ Then there's `profile/creationDate` which is just a number of days since epoch (
 Like `17177` for the date 2017-01-11.
 
 **Tip:** To convert `profile/creationDate` to a usable date in SQL:
-`DATE_ADD('day', profile_created, DATE '1970-01-01')`
+`DATE_FROM_UNIX_DATE(SAFE_CAST(environment.profile.creation_date AS INT64))`
 
 In derived datasets ISO dates are sometimes converted to strings in one of
 two formats: `%Y-%m-%d` or `%Y%m%d`.
@@ -168,10 +169,11 @@ Build ids look like dates but aren't.
 If you take the first eight characters you can use that as a proxy
 for the day the build was released.
 
-`metadata/Date` is an HTTP Date header in a [RFC 7231]-compatible format.
+`metadata.header.date` is an HTTP Date header in a [RFC 7231]-compatible format.
 
 **Tip:** To parse `metadata/Date` to a usable date in SQL:
-`DATE_PARSE(SUBSTR(client_submission_date, 1, 25), '%a, %d %b %Y %H:%i:%s')`
+`SAFE.PARSE_TIMESTAMP('%a, %d %b %Y %T %Z', REPLACE(metadata.header.date, 'GMT+00:00', 'GMT'))`
+or better yet use the pre-parsed version available in user-facing views `metatdata.header.parsed_date`
 
 [ISO 8601]: https://en.wikipedia.org/wiki/ISO_8601
 [msref]: ../datasets/batch_view/main_summary/reference.md#time-formats
