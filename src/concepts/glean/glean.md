@@ -15,8 +15,8 @@ Contents:
 ![drawing](../../assets/Glean_overview.jpg)
 
 The **Glean SDK** performs measurements and sends data from our products.
-It provides a set of **[metric types](https://mozilla.github.io/glean/user/metrics)** for individual measurements that are carefully designed to avoid common pitfalls with measurement.
-Metrics are then rolled up into **[pings](https://mozilla.github.io/glean/user/pings)** to send over the network.
+It provides a set of **[metric types](https://mozilla.github.io/glean/book/user/metrics)** for individual measurements that are carefully designed to avoid common pitfalls with measurement.
+Metrics are then rolled up into **[pings](https://mozilla.github.io/glean/book/user/pings)** to send over the network.
 There are a number of built-in pings that are sent on predefined schedules, but it also possible to send custom pings at any desired cadence.
 
 The **Data Platform** validates and stores these pings in database tables.
@@ -33,16 +33,16 @@ Because Glean knows more about the individual data, such as its type and the ran
 **Provide a consistent base of telemetry**
 
   A baseline of analysis is important for all our products, from counting active users to retention and session times. This is supported out-of-the-box by the SDK, and funnels directly into visualization tools like the [Growth and Usage Dashboard (GUD)](../tools/gud.html).
-  
+
   Metrics that are common to all products, such as the operating system and architecture, are provided automatically in a consistent way.
-  
+
   Any issues found with these base metrics only need be fixed in Glean to benefit all SDK-using products.
-  
+
 **Encourage specificity**
 
   Rather than just treating metrics as generic data points, Glean wants to know as much as possible about the things being measured.
   From this information, it can:
-  
+
   - Provide a well-designed API to perform specific types of measurements, which is consistent and avoids common pitfalls
   - Reject invalid data, and report them as errors
   - Store the data in a consistent way, rather than custom, ad hoc data structures
@@ -52,16 +52,16 @@ Because Glean knows more about the individual data, such as its type and the ran
 
   The Glean system enforces that all measurements received [data review](https://wiki.mozilla.org/Firefox/Data_Collection), and it is impossible to collect measurements that haven't been declared.
   It also makes it easy to limit data collection to only what's necessary:
-  
+
   - Enforced expiration dates for every metric
   - Some metric types can automatically limit resolution
   - It's easy to send data that isn't associated with the client id
-  
+
   Glean also supports data transparency by automatically generating documentation for all of the metrics sent by an application.
-  
+
 **Provide a self-serve experience**
 
-  Adding new metric is designed to be as easy as possible. 
+  Adding new metric is designed to be as easy as possible.
   Simply by adding a few lines of configuration, everything to make them work across the entire suite of tools happens automatically.
   This includes previously manual and error-prone steps such as updating the ping payload and database schemas.
 
