@@ -32,7 +32,7 @@ Because Glean knows more about the individual data, such as its type and the ran
 
 **Provide a consistent base of telemetry**
 
-  A baseline of analysis is important for all our products, from counting active users to retention and session times. This is supported out-of-the-box by the SDK, and funnels directly into visualization tools like the [Growth and Usage Dashboard (GUD)](../tools/gud.html).
+  A baseline of analysis is important for all our products, from counting active users to retention and session times. This is supported out-of-the-box by the SDK, and funnels directly into visualization tools like the [Growth and Usage Dashboard (GUD)](../../tools/gud.md).
 
   Metrics that are common to all products, such as the operating system and architecture, are provided automatically in a consistent way.
 
