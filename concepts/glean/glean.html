@@ -172,8 +172,8 @@
 <h1><a class="header" href="#overview" id="overview">Overview</a></h1>
 <p><img src="../../assets/Glean_overview.jpg" alt="drawing" /></p>
 <p>The <strong>Glean SDK</strong> performs measurements and sends data from our products.
-It provides a set of <strong><a href="https://mozilla.github.io/glean/user/metrics">metric types</a></strong> for individual measurements that are carefully designed to avoid common pitfalls with measurement.
-Metrics are then rolled up into <strong><a href="https://mozilla.github.io/glean/user/pings">pings</a></strong> to send over the network.
+It provides a set of <strong><a href="https://mozilla.github.io/glean/book/user/metrics">metric types</a></strong> for individual measurements that are carefully designed to avoid common pitfalls with measurement.
+Metrics are then rolled up into <strong><a href="https://mozilla.github.io/glean/book/user/pings">pings</a></strong> to send over the network.
 There are a number of built-in pings that are sent on predefined schedules, but it also possible to send custom pings at any desired cadence.</p>
 <p>The <strong>Data Platform</strong> validates and stores these pings in database tables.
 A fault tolerant design allows data to be retained in the event of problems such as traffic spikes or invalid data.
@@ -183,7 +183,7 @@ Because Glean knows more about the individual data, such as its type and the ran
 <!-- TODO: Link to GLAM -->
 <h1><a class="header" href="#the-glean-design-principles" id="the-glean-design-principles">The Glean design principles</a></h1>
 <p><strong>Provide a consistent base of telemetry</strong></p>
-<p>A baseline of analysis is important for all our products, from counting active users to retention and session times. This is supported out-of-the-box by the SDK, and funnels directly into visualization tools like the <a href="../tools/gud.html">Growth and Usage Dashboard (GUD)</a>.</p>
+<p>A baseline of analysis is important for all our products, from counting active users to retention and session times. This is supported out-of-the-box by the SDK, and funnels directly into visualization tools like the <a href="../../tools/gud.html">Growth and Usage Dashboard (GUD)</a>.</p>
 <p>Metrics that are common to all products, such as the operating system and architecture, are provided automatically in a consistent way.</p>
 <p>Any issues found with these base metrics only need be fixed in Glean to benefit all SDK-using products.</p>
 <p><strong>Encourage specificity</strong></p>
@@ -205,7 +205,7 @@ It also makes it easy to limit data collection to only what's necessary:</p>
 </ul>
 <p>Glean also supports data transparency by automatically generating documentation for all of the metrics sent by an application.</p>
 <p><strong>Provide a self-serve experience</strong></p>
-<p>Adding new metric is designed to be as easy as possible. 
+<p>Adding new metric is designed to be as easy as possible.
 Simply by adding a few lines of configuration, everything to make them work across the entire suite of tools happens automatically.
 This includes previously manual and error-prone steps such as updating the ping payload and database schemas.</p>
 <h1><a class="header" href="#how-to-use-glean" id="how-to-use-glean">How to use Glean</a></h1>
