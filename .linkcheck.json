@@ -10,7 +10,7 @@
         { "pattern": "^https://sql.telemetry.mozilla.org" },
         { "pattern": "^https://github.com/mozilla/stmo_core_product_metrics" },
         { "pattern": "^https://github.com/mozilla-services/cloudops-infra" },
-        { "pattern": "^https://docs.google.com" }
+        { "pattern": "^https://docs.google.com" },
         { "pattern": "^https://monitor.firefox.com$" }
     ]
 }
