@@ -75,6 +75,7 @@
   * [Search Datasets](datasets/search.md)
     * [Search Aggregates](datasets/search/search_aggregates/reference.md)
     * [Search Clients Daily](datasets/search/search_clients_daily/reference.md)
+    * [Search Clients Last Seen](datasets/search/search_clients_last_seen/reference.md)
   * [Other Datasets](datasets/other.md)
     * [hgpush](datasets/other/hgpush/reference.md)
     * [Stub installer ping](datasets/other/stub_installer/reference.md)
