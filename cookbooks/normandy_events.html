@@ -169,35 +169,15 @@ or name (for add-on experiments).</p>
 <a href="https://firefox-source-docs.mozilla.org/toolkit/components/normandy/normandy/data-collection.html#enrollment">Firefox source tree docs</a>.</p>
 <p>Note that addon studies do not have branch information in the events table,
 since addons, not Normandy, are responsible for branch assignment.
-For studies built with the <a href="https://github.com/mozilla/shield-studies-addon-utils">add-on utilities</a>,
+For studies built with the obsolete <a href="https://github.com/mozilla/shield-studies-addon-utils">add-on utilities</a>,
 branch assignments are published to the
-<a href="https://docs.telemetry.mozilla.org/datasets/shield.html#telemetry_shield_study_parquet"><code>telemetry_shield_study_parquet</code></a> dataset.</p>
+<a href="../datasets/shield.html#telemetryshield_study">shield_study</a> dataset.</p>
 <h2><a class="header" href="#counting-pref-flip-enrollment-events-by-branch" id="counting-pref-flip-enrollment-events-by-branch">Counting pref-flip enrollment events by branch</a></h2>
 <p>The <code>event_map_values</code> column of enroll events contains a <code>branch</code> key,
 describing which branch the user enrolled in.</p>
-<p>To fetch a count of events by branch in PySpark:</p>
-<pre><code class="language-python">import pyspark.sql.functions as f
-events = spark.table(&quot;events&quot;)
-
-# For example...
-EXPERIMENT_SLUG = &quot;prefflip-webrender-v1-2-1492568&quot;
-EXPERIMENT_START = &quot;20180920&quot;
-
-enrollments_by_day = (
-  events
-  .filter(events.event_category == &quot;normandy&quot;)
-  .filter(events.event_method == &quot;enroll&quot;)
-  .filter(events.event_string_value == EXPERIMENT_SLUG)
-  .filter(events.submission_date_s3 &gt;= EXPERIMENT_START)
-  .withColumn(&quot;branch&quot;, events.event_map_values.getItem(&quot;branch&quot;))
-  .groupBy(events.submission_date_s3, &quot;branch&quot;)
-  .agg(f.count(&quot;*&quot;).alias(&quot;n&quot;))
-  .toPandas()
-)
-</code></pre>
-<p>Equivalently, in BigQuery SQL:</p>
+<p>To fetch a count of events by branch in BigQuery SQL:</p>
 <pre><code class="language-sql">SELECT
-  submission_date_s3,
+  submission_date,
   udf.get_key(event_map_values, 'branch') AS branch,
   COUNT(*) AS n
 FROM telemetry.events
@@ -205,7 +185,7 @@ WHERE
   event_category = 'normandy'
   AND event_method = 'enroll'
   AND event_string_value = '{{experiment_slug}}'
-  AND submission_date_s3 &gt;= '{{experiment_start}}'
+  AND submission_date &gt;= '{{experiment_start}}'
 GROUP BY 1, 2
 ORDER BY 1, 2
 </code></pre>
@@ -213,20 +193,20 @@ ORDER BY 1, 2
 <p>The <code>event_map_values</code> column of unenroll events includes a <code>reason</code> key.
 Reasons are described in the <a href="https://firefox-source-docs.mozilla.org/toolkit/components/normandy/normandy/data-collection.html#enrollment">Normandy docs</a>.
 Normal unenroll events at the termination of a study will occur for the reason <code>recipe-not-seen</code>.</p>
-<p>To fetch a count of events by reason and branch in PySpark:</p>
-<pre><code class="language-python">unenrollments_by_reason = (
-  events
-  .filter(events.event_category == &quot;normandy&quot;)
-  .filter(events.event_method == &quot;unenroll&quot;)
-  .filter(events.event_string_value == EXPERIMENT_SLUG)
-  .filter(events.submission_date_s3 &gt;= EXPERIMENT_START)
-  .withColumn(&quot;branch&quot;, events.event_map_values.getItem(&quot;branch&quot;))
-  .withColumn(&quot;reason&quot;, events.event_map_values.getItem(&quot;reason&quot;))
-  .groupBy(events.submission_date_s3, &quot;branch&quot;, &quot;reason&quot;)
-  .agg(f.count(&quot;*&quot;).alias(&quot;n&quot;))
-  .toPandas()
-)
-
+<p>To fetch a count of events by reason and branch:</p>
+<pre><code class="language-sql">SELECT
+  submission_date,
+  udf.get_key(event_map_values, 'branch') AS branch,
+  udf.get_key(event_map_values, 'reason') AS reason,
+  COUNT(*) AS n
+FROM telemetry.events
+WHERE
+  event_category = 'normandy'
+  AND event_method = 'unenroll'
+  AND event_string_value = '{{experiment_slug}}'
+  AND submission_date &gt;= '{{experiment_start}}'
+GROUP BY 1, 2, 3
+ORDER BY 1, 2, 3
 </code></pre>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/normandy_events.md">Edit this file on GitHub.</a></footer>
                     </main>
