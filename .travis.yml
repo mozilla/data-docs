@@ -1,3 +1,6 @@
+addons:
+  apt:
+    - parallel
 matrix:
   include:
     - name: build
