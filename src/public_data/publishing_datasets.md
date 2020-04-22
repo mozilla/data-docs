@@ -26,7 +26,7 @@ labels:
   incremental_export: false  # non-incremental JSON export writes all data to a single location
 ```
 
-The following options define how data is published:
+The following *fake change* options define how data is published:
 * `public_json`: data is available through the [public HTTP endpoint][public_data_endpoint]
 * `public_bigquery`: data is publicly available on BigQuery
     * tables will get published in the `mozilla-public-data` GCP project which is accessible
