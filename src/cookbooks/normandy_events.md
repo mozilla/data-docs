@@ -19,7 +19,7 @@ Note that addon studies do not have branch information in the events table,
 since addons, not Normandy, are responsible for branch assignment.
 For studies built with the obsolete [add-on utilities][`addon-utils`],
 branch assignments are published to the
-[`shield_study`] dataset.
+[shield_study] dataset.
 
 
 ## Counting pref-flip enrollment events by branch
@@ -69,5 +69,5 @@ ORDER BY 1, 2, 3
 ```
 
 [normandy-doc]: https://firefox-source-docs.mozilla.org/toolkit/components/normandy/normandy/data-collection.html#enrollment
-[`shield_study`]: ../datasets/shield.md#telemetryshield_study
+[shield_study]: ../datasets/shield.md#telemetryshield_study
 [`addon-utils`]: https://github.com/mozilla/shield-studies-addon-utils
