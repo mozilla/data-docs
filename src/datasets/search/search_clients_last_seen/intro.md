@@ -47,11 +47,13 @@ to use. We have a few convenience functions for using them. For these functions,
 anytime we say "was active", we mean "within the usage criteria defined by that
 column"; for example, it could be days that clients searched with ads.:
 
-`udf.bits_to_days_seen` - The number of days the user was active
-`udf.bits_to_days_since_seen` - The number of days since the user was last active
+`udf.bits_to_days_seen` - The number of days the user was active.
+`udf.bits_to_days_since_seen` - The number of days since the user was last active.
 `udf.bits_to_days_since_first_seen` - The number of days since the user's _first_
 active day. Note that this will be at most 365 days, since that is the beginning
-of history.
+of history for this dataset.
+`udf.bits_to_active_n_weeks_ago` - Returns whether or not the user was active n weeks
+ago for the given activity type.
 
 #### Engine Searches
 Warning: This is a bit confusing and may not be good for what you're trying to do.
