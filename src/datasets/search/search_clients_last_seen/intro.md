@@ -15,7 +15,7 @@ ping"; so if they are present that does not mean they searched.
 The key pieces of this dataset are byte arrays that contain
 daily information about client activity over the past year.
 We have these for a variety of activity types:
-- `days_seen_bytes`: Days when we recieved a main ping from the client
+- `days_seen_bytes`: Days when we received a main ping from the client
 - `days_searched_bytes`: Days that the client searched in any form
 - `days_tagged_searched_bytes`: Days that the client performed a tagged search
 - `days_searched_with_ads_bytes`: Days that the client performed a search that contained ads
@@ -39,7 +39,7 @@ lays out all of the available dimensional fields.
 There are, finally, a few fields with daily activity data.
 These include `active_hours_sum`, `organic` for organic searches,
 and `total_searches`. Please note that these are just for the current day,
-and not over the entire year of history contained in the days_*_bytes columns.
+and not over the entire year of history contained in the `days_*_bytes` columns.
 
 #### Utilizing BYTE columns
 These are stored as BigQuery `BYTE` type, so they can be a bit confusing
