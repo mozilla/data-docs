@@ -44,7 +44,7 @@ provides a way to run functional code (e.g. map, reduce, etc.) on large,
 distributed data.
 
 Check out
-[Spark Best Practices](https://robertovitillo.com/2015/06/30/spark-best-practices/)
+[Spark Best Practices](https://ravitillo.wordpress.com/2015/06/30/spark-best-practices/)
 for tips on using Spark to its full capabilities.
 
 Other useful introductory materials:

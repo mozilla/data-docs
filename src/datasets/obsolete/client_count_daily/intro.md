@@ -26,7 +26,7 @@ To find the union of two HLL's over different dates, use `merge(cast(hll AS HLL)
 The [Firefox ER Reporting Query](https://sql.telemetry.mozilla.org/queries/81/source#129)
 is a good example to review.
 Finally, Roberto has a relevant write-up
-[here](https://robertovitillo.com/2016/04/12/measuring-product-engagment-at-scale/).
+[here](https://ravitillo.wordpress.com/2016/04/12/measuring-product-engagment-at-scale/).
 
 #### Accessing the Data
 
