@@ -129,7 +129,7 @@ the array to define our new "day 0" which corresponds to 2020-01-15:
                                               │  │  │  │  │  │  │  │  │  │  │  │  │  │
                                               │  1  │  3  │  5  │  7  │  9  │ 11  │ 13
                                               0     2     4     6     8    10    12                                     
-                                             └───────────────────┘
+                                            └────────────────────┘
                                                     Week 0       └───────────────────┘
                                                                         Week 1
 ```
@@ -171,11 +171,50 @@ SELECT
 FROM
   telemetry.clients_last_seen
 
--- submission_date | retention_date | active_in_week_0 | active_in_week_1
---      2020-01-28 |     2020-01-15 |             true |             true
+/*
+| submission_date | metric_date | active_on_day_0 | active_in_week_0 | active_in_week_1 |
+|      2020-01-28 |  2020-01-15 | true            | true             | true             |
+*/
 ```
 
 The `bits28_retention` struct also has `day_21` and `day_28` fields that can
 be used to calculate "2-Week Retention" and "3-Week Retention".
+
+## Retention Reference
+
+Here we describe how to calculate the retention metrics shown in GUD and
+some example variations.
+
+### 1-Week Retention and 1-Week New Profile Retention
+
+```
+WITH base AS (
+  SELECT
+    *,
+    udf.bits28_retention(days_seen_bits, submission_date) AS retention,
+    udf.bits28_days_since_seen(days_created_profile_bits) = 13 AS is_new_profile
+  FROM
+    telemetry.clients_last_seen )
+SELECT
+  retention.day_13.metric_date,
+  SAFE_DIVIDE(
+    COUNTIF(retention.day_13.active_in_week_1),
+    COUNTIF(retention.day_13.active_in_week_0)
+  ) AS retention_1_week,
+  SAFE_DIVIDE(
+    COUNTIF(is_new_profile AND retention.day_13.active_in_week_1),
+    COUNTIF(is_new_profile)
+  ) AS retention_1_week_new_profile,
+FROM
+  base
+GROUP BY
+  metric_date
+WHERE
+  submission_date = '2020-01-28'
+```
+
+### Considering only clients active on Day 0
+
+
 
 ## UDF Reference
