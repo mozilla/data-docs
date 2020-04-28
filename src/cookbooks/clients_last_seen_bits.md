@@ -1,6 +1,6 @@
 # Working with Bit Patterns in Clients Last Seen
 
-An powerful feature of the `clients_last_seen` methodology is that we can capture
+A powerful feature of the `clients_last_seen` methodology is that we can capture
 per-day usage information for the entire 28-day period that each row in the table
 describes. We encode usage information in "bit patterns" where the physical
 type of the field is a BigQuery 64-bit integer, but logically the integer
@@ -25,7 +25,7 @@ _ending_ on the given `submission_date`. We will call this anchor date "day 0"
 (2020-01-28 in this case) and count backwards to "day -27" (2020-01-01).
 
 Let's suppose this client was only active on two days in the past month:
-2020-01-22 (day -6) and 2020-01-15 (day -13). That client's`days_seen_bits`
+2020-01-22 (day -6) and 2020-01-15 (day -13). That client's `days_seen_bits`
 value would show up as an integer with value `8256` which is pretty inscrutable.
 Let's look at that value as a string representing each bit instead:
 
@@ -58,7 +58,6 @@ You may notice that the day 13 bit doesn't end up affecting these metrics.
 For DAU, WAU, and MAU, all that matters is the rightmost bit that's set,
 telling us about the most recent activity seen for that user. We provide
 a special function for that use case:
-
 
 ```
 SELECT udf.bits28_days_since_seen(8256)
@@ -115,12 +114,11 @@ was always the `submission_date`. When we define forward-looking windows, howeve
 we always choose an anchor date some time in the past. How we number the individual
 bits depends on what anchor date we choose.
 
-In GUD, we show a "Week 1 Retention" which considers a window of 14 days.
+In [GUD](../tools/gud.md), we show a "Week 1 Retention" which considers a window of 14 days.
 
 Let's consider the same user from before, grabbing the `days_seen_bits` value
 with `submission_date = 2020-01-28`. We'll still choose a window that _ends_
 on the submission date, but the anchor date (day 0) will now be 13 days earlier:
-
 
 ```
     0  0  0  0  0  0  0  0  0  0  0  0  0  0  1  0  0  0  0  0  0  1  0  0  0  0  0  0
