@@ -180,12 +180,7 @@ FROM
 The `bits28_retention` struct also has `day_21` and `day_28` fields that can
 be used to calculate "2-Week Retention" and "3-Week Retention".
 
-## Retention Reference
-
-Here we describe how to calculate the retention metrics shown in GUD and
-some example variations.
-
-### 1-Week Retention and 1-Week New Profile Retention
+### Full example query for 1-Week Retention variants
 
 ```
 WITH base AS (
@@ -197,14 +192,26 @@ WITH base AS (
     telemetry.clients_last_seen )
 SELECT
   retention.day_13.metric_date,
+
+  -- 1-Week Retention matching GUD.
   SAFE_DIVIDE(
     COUNTIF(retention.day_13.active_in_week_1),
     COUNTIF(retention.day_13.active_in_week_0)
   ) AS retention_1_week,
+
+  -- 1-Week New Profile Retention matching GUD.
   SAFE_DIVIDE(
     COUNTIF(is_new_profile AND retention.day_13.active_in_week_1),
     COUNTIF(is_new_profile)
   ) AS retention_1_week_new_profile,
+
+  -- A more restrictive 1-Week Retention definition that considers only clients
+  -- active on day 0 rather than clients active on any day in week 0.
+  SAFE_DIVIDE(
+    COUNTIF(retention.day_13.active_in_week_1),
+    COUNTIF(retention.day_13.active_on_metric_date)
+  ) AS retention_1_week_active_on_day_0,
+
 FROM
   base
 GROUP BY
@@ -213,8 +220,87 @@ WHERE
   submission_date = '2020-01-28'
 ```
 
-### Considering only clients active on Day 0
+### N-day Retention
 
+Let's define `n`-day retention as the fraction of clients active on a given day
+who are also active within the next `n` days. For example, 3-day retention would
+have a denominator of all clients active on day 0 and a numerator of all clients
+active on day 0 who were also active on days 1 or 2.
 
+To calculate `n`-day retention, we need to use the lower-level `bits28_range`
+function:
+
+```
+DECLARE n INT64;
+SET n = 3;
+
+WITH base AS (
+  SELECT
+    *,
+    udf.bits28_range(days_seen_bits, n, 0, 1) AS seen_on_day_0,
+    udf.bits28_range(days_seen_bits, n, 1, n - 1) AS seen_after_day_0
+  FROM
+    telemetry.clients_last_seen )
+SELECT
+  DATE_SUB(submission_date, INTERVAL n DAYS) AS metric_date,
+  SAFE_DIVIDE(
+    COUNTIF(seen_on_day_0 AND seen_after_day_0),
+    COUNTIF(seen_on_day_0)
+  ) AS retention_n_day
+FROM
+  base
+GROUP BY
+  metric_date
+WHERE
+  submission_date = '2020-01-28'
+```
+
+### Retention using activity date
+
+GUD's canonical retention definitions are all based on ping submission dates rather
+than logical activity dates taken from client-provided timestamps, but there is
+interest in using client timestamps particular for `n`-day retention calculations
+for mobile products.
+
+Let's consider Firefox Preview which sends telemetry via Glean. The
+`org_mozilla_fenix.baseline_clients_last_seen` table includes two bit patterns
+that encode client timestamps: `days_seen_session_start_bits` and
+`days_seen_session_end_bits`. This table is still populated once per day based
+on pings received over the previous day, but some of those pings will reflect
+sessions that started on previous days. This introduces some new complexity
+into retention calculations, because we'll always be undercounting clients
+if we have our retention window end on `submission_date`.
+
+When using activity date, it may be desirable to build in a few days of buffer
+to ensure we are considering late-arriving pings. For example, if we wanted
+to calculate 3-day retention but allow 2 days of cushion for late-arriving
+pings, we would need to use an offset of 5 days from `submission_date`:
+
+```
+DECLARE n, cushion_days, offset_to_day_0 INT64;
+SET n = 3;
+SET cushion_days = 2;
+SET offset_to_day_0 = n + cushion_days;
+
+WITH base AS (
+  SELECT
+    *,
+    udf.bits28_range(days_seen_session_start_bits, offset_to_day_0, 0, 1) AS seen_on_day_0,
+    udf.bits28_range(days_seen_session_start_bits, offset_to_day_0, 1, n - 1) AS seen_after_day_0
+  FROM
+    org_mozilla_fenix.baseline_clients_last_seen )
+SELECT
+  DATE_SUB(submission_date, INTERVAL offset_to_day_0 DAYS) AS metric_date,
+  SAFE_DIVIDE(
+    COUNTIF(seen_on_day_0 AND seen_after_day_0),
+    COUNTIF(seen_on_day_0)
+  ) AS retention_n_day
+FROM
+  base
+GROUP BY
+  metric_date
+WHERE
+  submission_date = '2020-01-28'
+```
 
 ## UDF Reference
