@@ -63,7 +63,7 @@
     * [Exact MAU](datasets/bigquery/exact_mau/reference.md)
     * [First Shutdown Summary](datasets/batch_view/first_shutdown_summary/reference.md)
     * [Main Summary](datasets/batch_view/main_summary/reference.md)
-    * [New Profile](datasets/batch_view/new_profile/reference.md)
+    * [New Profile](datasets/obsolete/new_profile/reference.md)
     * [Socorro Crash Reports](datasets/other/socorro_crash/reference.md)
     * [SSL Ratios (public)](datasets/other/ssl/reference.md)
     * [Telemetry Aggregates](datasets/batch_view/telemetry_aggregates/reference.md)
