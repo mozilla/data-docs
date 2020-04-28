@@ -30,7 +30,7 @@ value would show up as an integer with value `8256` which is pretty inscrutable.
 Let's look at that value as a string representing each bit instead:
 
 ```
-SELECT udf.bits28_to_bitstring(32768)
+SELECT udf.bits28_to_string(32768)
 -- 0000000000000010000001000000
 ```
 
@@ -304,3 +304,72 @@ WHERE
 ```
 
 ## UDF Reference
+
+### bits28_to_string
+
+Convert an INT64 field into a 28-character string representing the individual bits.
+
+```
+bits28_to_string(bits INT64)
+
+SELECT udf.bits28_to_string(18)
+>> 0000000000000000000000010010
+```
+
+### bits28_from_string
+
+Convert a string representing individual bits into an INT64.
+
+```
+bits28_from_string(bits STRING)
+
+SELECT udf.bits28_from_string('10010')
+>> 18
+```
+
+### bits28_to_dates
+
+Convert a bit pattern into an array of the dates is represents.
+
+```
+bits28_to_dates(bits INT64, end_date DATE)
+
+SELECT udf.bits28_to_dates(18, '2020-01-28')
+>> ['2020-01-24', '2020-01-27']
+```
+
+### bits28_days_since_seen
+
+Return the position of the rightmost set bit in an INT64 bit pattern.
+
+```
+bits28_days_since_seen(bits INT64)
+
+SELECT bits28_days_since_seen(18)
+>> 1
+```
+
+
+### bits28_range
+
+Return an INT64 representing a range of bits from a source bit pattern.
+
+```
+bits28_range(bits INT64, offset_to_day_0 INT64, start_bit INT64, number_of_bits INT64)
+
+SELECT udf.bits_to_string(udf.bits28_range(18, 5, 0, 6))
+>> '010010'
+SELECT udf.bits_to_string(udf.bits28_range(18, 5, 0, 2))
+>> '01'
+SELECT udf.bits_to_string(udf.bits28_range(18, 5, 2, 4))
+>> '0010'
+```
+
+### bits28_retention
+
+Return a nested struct providing numerator and denominator fields for
+the standard 1-Week, 2-Week, and 3-Week retention definitions.
+
+```
+bits28_retention(bits INT64, submission_date DATE)
+```
