@@ -104,7 +104,7 @@ SELECT udf.bits28_days_since_seen(16512)
 
 ## Retention: Forward-looking windows
 
-For retention calculations, we user forward-looking windows. This means that
+For retention calculations, we use forward-looking windows. This means that
 when we report a retention value for 2020-01-01, we're talking about what
 portion of clients active on 2020-01-01 are still active some number of days
 later.
