@@ -114,11 +114,14 @@ was always the `submission_date`. When we define forward-looking windows, howeve
 we always choose an anchor date some time in the past. How we number the individual
 bits depends on what anchor date we choose.
 
-In [GUD](../tools/gud.md), we show a "Week 1 Retention" which considers a window of 14 days.
+For example, in [GUD](../tools/gud.md), we show a "1-Week Retention" which considers a window of 14 days.
+For each client active in "week 0" (days 0 through 6), we determine retention by
+checking if they were also active in "week 1" (days 0 through 13).
 
-Let's consider the same user from before, grabbing the `days_seen_bits` value
-with `submission_date = 2020-01-28`. We'll still choose a window that _ends_
-on the submission date, but the anchor date (day 0) will now be 13 days earlier:
+To make "1-Week Retention" more concrete,
+let's consider the same client as before, grabbing the `days_seen_bits` value from
+`clients_last_seen` with `submission_date = 2020-01-28`. We count back 13 bits in
+the array to define our new "day 0" which corresponds to 2020-01-15:
 
 ```
     0  0  0  0  0  0  0  0  0  0  0  0  0  0  1  0  0  0  0  0  0  1  0  0  0  0  0  0
@@ -130,5 +133,49 @@ on the submission date, but the anchor date (day 0) will now be 13 days earlier:
                                                     Week 0       └───────────────────┘
                                                                         Week 1
 ```
+
+This client has a bit set in both week 0 and in week 1, so logically this client
+can be considered retained. They should be counted in both the denominator and
+in the numerator for the "1-Week Retention" value on 2020-01-15.
+
+Extracting the bits for a specific week can be achieved via UDF:
+
+```
+SELECT
+  -- Signature is bits28_range(offset_to_day_0, start_bit, number_of_bits)
+  udf.bits28_range(days_seen_bits, 13, 0, 7) AS week_0_bits,
+  udf.bits28_range(days_seen_bits, 13, 7, 7) AS week_1_bits
+FROM
+  telemetry.clients_last_seen
+```
+
+And then we can turn those bits into a boolean indicating whether the client
+was active or not as:
+
+```
+SELECT
+  BIT_COUNT(udf.bits28_range(days_seen_bits, 13, 0, 7)) > 0 AS active_in_week_0
+  BIT_COUNT(udf.bits28_range(days_seen_bits, 13, 7, 7)) > 0 AS active_in_week_1
+FROM
+  telemetry.clients_last_seen
+```
+
+The `bits28_range` function is powerful and flexible, but a bit cumbersome.
+We provide a `bits28_retention` convenience function that returns a nested
+structure with the standard retention definitions precalculated:
+
+```
+SELECT
+  submission_date,
+  udf.bits28_retention(days_seen_bits, submission_date).day_13.*
+FROM
+  telemetry.clients_last_seen
+
+-- submission_date | retention_date | active_in_week_0 | active_in_week_1
+--      2020-01-28 |     2020-01-15 |             true |             true
+```
+
+The `bits28_retention` struct also has `day_21` and `day_28` fields that can
+be used to calculate "2-Week Retention" and "3-Week Retention".
 
 ## UDF Reference
