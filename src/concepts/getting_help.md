@@ -17,9 +17,10 @@ You can find us in the [#telemetry:mozilla.org] channel on [Mozilla's instance o
 
 ### Slack
 
-The Mozilla data org is reachable at `#fx-metrics` in the internal Mozilla Slack.
+You can locate the Mozilla data org at [`#fx-metrics`] in Slack.
 
 [fx-data-dev]: https://mail.mozilla.org/listinfo/fx-data-dev
 [fx-data-platform]: mailto:fx-data-platform@mozilla.com
 [#telemetry:mozilla.org]: https://chat.mozilla.org/#/room/#telemetry:mozilla.org
 [Mozilla's instance of matrix]: https://wiki.mozilla.org/Matrix
+[`#fx-metrics`]: https://mozilla.slack.com/messages/fx-metrics
