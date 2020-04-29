@@ -357,11 +357,11 @@ Return an INT64 representing a range of bits from a source bit pattern.
 ```
 bits28_range(bits INT64, offset_to_day_0 INT64, start_bit INT64, number_of_bits INT64)
 
-SELECT udf.bits_to_string(udf.bits28_range(18, 5, 0, 6))
+SELECT udf.bits28_to_string(udf.bits28_range(18, 5, 0, 6))
 >> '010010'
-SELECT udf.bits_to_string(udf.bits28_range(18, 5, 0, 2))
+SELECT udf.bits28_to_string(udf.bits28_range(18, 5, 0, 2))
 >> '01'
-SELECT udf.bits_to_string(udf.bits28_range(18, 5, 2, 4))
+SELECT udf.bits28_to_string(udf.bits28_range(18, 5, 2, 4))
 >> '0010'
 ```
 
