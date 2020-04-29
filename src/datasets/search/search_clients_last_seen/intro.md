@@ -62,7 +62,7 @@ For each search engine, we store an array that contains the number of searches t
 completed each month for the past 12 months. This is across calendar months, so the number of
 days are not directly comparable.
 
-We have the same data for tagged searches, search with adds, and ad clicks.
+We have the same data for tagged searches, search with ads, and ad clicks.
 
 #### Background and Caveats
 
