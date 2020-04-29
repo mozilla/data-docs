@@ -56,7 +56,7 @@ of history for this dataset.
 ago for the given activity type.
 
 #### Engine Searches
-Warning: This is a bit confusing and may not be good for what you're trying to do.
+Warning: This column was designed specifically for use with the revenue data, and probably isn't good for other kinds of analysis.
 
 For each search engine, we store an array that contains the number of searches that user
 completed each month for the past 12 months. This is across calendar months, so the number of
