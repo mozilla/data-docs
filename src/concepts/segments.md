@@ -31,34 +31,6 @@ This segment contains clients who sent pings on _at least 14_ of the previous 27
 
 This segment contains clients who sent pings on _none_ of the previous 27 days. As of February 2020 this segment contained approximately 4% of DAU and its users had a 1-week retention of approximately 30%.
 
-## Obsolete segments
-
-### Usage regularity v2
-
-This is a set of three segments. 
-On a given day, every client falls into exactly one of these segments.
-Each client's segment can be computed from `telemetry.clients_last_seen.days_visited_5_uri_bits`.
-
-
-*Regular users v2* is defined as 
-clients who browsed >=5 URIs on _at least eight_ of the previous 27 days.
-As of February 2020 this segment contained approximately 2/3 of DAU
-and its users had a 1-week retention for a 5 URI day usage criterion of approximately 95%.
-
-*New/irregular users v2* is defined as 
-clients who browsed >=5 URIs on _none_ of the previous 27 days.
-As of February 2020 this segment contained approximately 15% of DAU,
-and had a retention for a 5 URI day usage criterion of about 10%
-(though "activation" is likely a more relevant word than "retention" for many of these clients).
-
-*Semi-regular users v2* is defined as
-clients who browsed >=5 URIs on _between one and seven_ of the previous 27 days,
-i.e. it contains users who do not fit the other two segments at this time.
-As of February 2020 this segment contained approximately 20% of DAU,
-and had a retention for a 5 URI day usage criterion of about 60%.
-We do not yet know what proportion of users in this segment stay in this segment for an extended period, and what proportion are in transition between other segments.
-
-
 ## Writing queries with segments
 
 When a segment is defined with respect to a user's _behavior_ (e.g. usage levels) 
@@ -111,3 +83,31 @@ INNER JOIN clients_last_seen cls
 WHERE
     cd.submission_date BETWEEN '2020-01-01' AND '2020-03-01'
 ```
+
+
+## Obsolete segments
+
+### Usage regularity v2
+
+This is a set of three segments. 
+On a given day, every client falls into exactly one of these segments.
+Each client's segment can be computed from `telemetry.clients_last_seen.days_visited_5_uri_bits`.
+
+
+*Regular users v2* is defined as 
+clients who browsed >=5 URIs on _at least eight_ of the previous 27 days.
+As of February 2020 this segment contained approximately 2/3 of DAU
+and its users had a 1-week retention for a 5 URI day usage criterion of approximately 95%.
+
+*New/irregular users v2* is defined as 
+clients who browsed >=5 URIs on _none_ of the previous 27 days.
+As of February 2020 this segment contained approximately 15% of DAU,
+and had a retention for a 5 URI day usage criterion of about 10%
+(though "activation" is likely a more relevant word than "retention" for many of these clients).
+
+*Semi-regular users v2* is defined as
+clients who browsed >=5 URIs on _between one and seven_ of the previous 27 days,
+i.e. it contains users who do not fit the other two segments at this time.
+As of February 2020 this segment contained approximately 20% of DAU,
+and had a retention for a 5 URI day usage criterion of about 60%.
+We do not yet know what proportion of users in this segment stay in this segment for an extended period, and what proportion are in transition between other segments.
