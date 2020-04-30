@@ -18,16 +18,18 @@ or is it global and therefore not solely due to that event?"
 
 We are building out our library of segments, 
 and we want room to iterate to improve them in the future. 
-So please quote segments' versions with their names, e.g. "regular users v2"
+So please quote segments' versions with their names, e.g. "regular users v3"
 so that your communication is forwards compatible.
 
 ## Current segments
 
 ### Regular users v3
 
-### New & Resurrected users v3
+This segment contains clients who sent pings on _at least 14_ of the previous 27 days. As of February 2020 this segment contained approximately 2/3 of DAU and its users had a 1-week retention of around 95%.
 
+### New or Revived v3
 
+This segment contains clients who sent pings on _none_ of the previous 27 days. As of February 2020 this segment contained approximately 4% of DAU and its users had a 1-week retention of approximately 30%.
 
 ## Obsolete segments
 
@@ -84,24 +86,23 @@ So stick to DAU for now.
 
 ### Example queries
 
-DAU for _regular users v2_:
+DAU for _regular users v3_:
 ```lang=sql
 SELECT
     submission_date,
-    COUNT(*) AS dau_regular_users_v2
+    COUNTIF(BIT_COUNT(days_seen_bits & 0x0FFFFFFE) >= 14) AS dau_regular_users_v3
 FROM moz-fx-data-shared-prod.telemetry.clients_last_seen
 WHERE
     submission_date BETWEEN '2020-01-01' AND '2020-03-01'
-    AND segment_usage_regularity_v2 = 'regular_users_v2'
     AND days_since_seen = 0  -- Get DAU from clients_last_seen
 GROUP BY submission_date
 ```
 
-DAU for _regular users v2_, but joining from a different table:
+DAU for _regular users v3_, but joining from a different table:
 ```lang=sql
 SELECT
     cd.submission_date,
-    COUNT(*) AS dau_regular_users_v2
+    COUNTIF(BIT_COUNT(cls.days_seen_bits & 0x0FFFFFFE) >= 14) AS dau_regular_users_v3
 FROM clients_daily cd
 INNER JOIN clients_last_seen cls
     ON cls.client_id = cd.client_id
@@ -109,5 +110,4 @@ INNER JOIN clients_last_seen cls
     AND cls.submission_date BETWEEN '2020-01-01' AND '2020-03-01'
 WHERE
     cd.submission_date BETWEEN '2020-01-01' AND '2020-03-01'
-    AND cls.segment_usage_regularity_v2 = 'regular_users_v2'
 ```
