@@ -27,7 +27,7 @@ so that your communication is forwards compatible.
 
 This segment contains clients who sent pings on _at least 14_ of the previous 27 days. As of February 2020 this segment contained approximately 2/3 of DAU and its users had a 1-week retention of around 95%.
 
-### New or Revived v3
+### New or Resurrected v3
 
 This segment contains clients who sent pings on _none_ of the previous 27 days. As of February 2020 this segment contained approximately 4% of DAU and its users had a 1-week retention of approximately 30%.
 
