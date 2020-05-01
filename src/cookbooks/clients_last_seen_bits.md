@@ -15,7 +15,7 @@ and how to build new metrics from them.
 
 If you look at the `days_seen_bits` field in `telemetry.clients_last_seen`,
 you'll see seemingly random whole numbers, some as large as nine digits.
-How can we interpret these.
+How should we interpret these?
 
 For very small numbers, it may be possible to interpret the value by eye.
 A value of `1` means the client was active on `submission_date` only
@@ -74,7 +74,12 @@ SELECT udf.bits28_from_string('10000001000000')
 
 BigQuery has only one integer type (`INT64`) which is composed of 64 bits,
 so we could technically store 64 days of history per bit pattern. Limiting
-to 28 bits is a practical concern related to reprocessing of data.
+to 28 bits is a practical concern related to storage costs and reprocessing concerns.
+
+Consider a client that is only active on a single day and then never shows up again.
+
+A client that becomes inactive will eventually fall outside the 28-day usage
+window and will thus not have a row in following days of `clients_last_seen`.
 
 Tables following the `clients_last_seen` methodology have to be populated
 incrementally. For each new day of data, we have to reference the previous
@@ -168,7 +173,8 @@ the most recent activity encoded in a bit pattern:
 
 ```
 SELECT udf.bits28_days_since_seen(8256)
--- 6
+
+>>> 6
 ```
 
 Indeed, this is so commonly used that we build this function into user-facing
@@ -184,6 +190,8 @@ SELECT
 FROM
   telemetry.clients_last_seen
 ```
+
+### How windows shift from day to day
 
 Note that this particular client is about to fall outside the WAU window.
 If the client doesn't send a main ping on 2020-01-29, the new `days_seen_bits`
@@ -211,7 +219,8 @@ The `days_seen_bits` value is now `16512` and the
 
 ```
 SELECT udf.bits28_days_since_seen(16512)
--- 7
+
+>>> 7
 ```
 
 ## Retention: Forward-looking windows
@@ -240,7 +249,7 @@ the array to define our new "day 0" which corresponds to 2020-01-15:
     ──────────────────────────────────────────────────────────────────────────────────
                                               │  │  │  │  │  │  │  │  │  │  │  │  │  │
                                               │  1  │  3  │  5  │  7  │  9  │ 11  │ 13
-                                              0     2     4     6     8    10    12                                     
+                                              0     2     4     6     8    10    12
                                             └────────────────────┘
                                                     Week 0       └───────────────────┘
                                                                         Week 1
@@ -255,8 +264,8 @@ Extracting the bits for a specific week can be achieved via UDF:
 ```
 SELECT
   -- Signature is bits28_range(offset_to_day_0, start_bit, number_of_bits)
-  udf.bits28_range(days_seen_bits, 13, 0, 7) AS week_0_bits,
-  udf.bits28_range(days_seen_bits, 13, 7, 7) AS week_1_bits
+  udf.bits28_range(days_seen_bits, -13 + 0, 7) AS week_0_bits,
+  udf.bits28_range(days_seen_bits, -13 + 7, 7) AS week_1_bits
 FROM
   telemetry.clients_last_seen
 ```
@@ -266,8 +275,20 @@ was active or not as:
 
 ```
 SELECT
-  BIT_COUNT(udf.bits28_range(days_seen_bits, 13, 0, 7)) > 0 AS active_in_week_0
-  BIT_COUNT(udf.bits28_range(days_seen_bits, 13, 7, 7)) > 0 AS active_in_week_1
+  BIT_COUNT(udf.bits28_range(days_seen_bits, -13 + 0, 7)) > 0 AS active_in_week_0
+  BIT_COUNT(udf.bits28_range(days_seen_bits, -13 + 7, 7)) > 0 AS active_in_week_1
+FROM
+  telemetry.clients_last_seen
+```
+
+This pattern of checking whether any bit is set within a given range is common
+enough that we provide short-hand for it in `bits28_active_in_range`.
+The above query can be made a bit cleaner as:
+
+```
+SELECT
+  udf.bits28_active_in_range(days_seen_bits, -13 + 0, 7) AS active_in_week_0
+  udf.bits28_active_in_range(days_seen_bits, -13 + 7, 7) AS active_in_week_1
 FROM
   telemetry.clients_last_seen
 ```
@@ -349,8 +370,8 @@ SET n = 3;
 WITH base AS (
   SELECT
     *,
-    udf.bits28_range(days_seen_bits, n, 0, 1) AS seen_on_day_0,
-    udf.bits28_range(days_seen_bits, n, 1, n - 1) AS seen_after_day_0
+    udf.bits28_range(days_seen_bits, -n + 0, 1) AS seen_on_day_0,
+    udf.bits28_range(days_seen_bits, -n + 1, n - 1) AS seen_after_day_0
   FROM
     telemetry.clients_last_seen )
 SELECT
@@ -392,13 +413,13 @@ pings, we would need to use an offset of 5 days from `submission_date`:
 DECLARE n, cushion_days, offset_to_day_0 INT64;
 SET n = 3;
 SET cushion_days = 2;
-SET offset_to_day_0 = n + cushion_days;
+SET offset_to_day_0 = -n - cushion_days;
 
 WITH base AS (
   SELECT
     *,
-    udf.bits28_range(days_seen_session_start_bits, offset_to_day_0, 0, 1) AS seen_on_day_0,
-    udf.bits28_range(days_seen_session_start_bits, offset_to_day_0, 1, n - 1) AS seen_after_day_0
+    udf.bits28_range(days_seen_session_start_bits, offset_to_day_0 + 0, 1) AS seen_on_day_0,
+    udf.bits28_range(days_seen_session_start_bits, offset_to_day_0 + 1, n - 1) AS seen_after_day_0
   FROM
     org_mozilla_fenix.baseline_clients_last_seen )
 SELECT
@@ -467,14 +488,22 @@ SELECT bits28_days_since_seen(18)
 Return an INT64 representing a range of bits from a source bit pattern.
 
 ```
-bits28_range(bits INT64, offset_to_day_0 INT64, start_bit INT64, number_of_bits INT64)
+bits28_range(bits INT64, offset INT64, n_bits INT64)
 
-SELECT udf.bits28_to_string(udf.bits28_range(18, 5, 0, 6))
+SELECT udf.bits28_to_string(udf.bits28_range(18, 5, 6))
 >> '010010'
-SELECT udf.bits28_to_string(udf.bits28_range(18, 5, 0, 2))
+SELECT udf.bits28_to_string(udf.bits28_range(18, 5, 2))
 >> '01'
-SELECT udf.bits28_to_string(udf.bits28_range(18, 5, 2, 4))
+SELECT udf.bits28_to_string(udf.bits28_range(18, 5 - 2, 4))
 >> '0010'
+```
+
+### bits28_active_in_range
+
+Return a boolean indicating if any bits are set in the specified range of a bit pattern.
+
+```
+bits28_active_in_range(bits INT64, offset INT64, n_bits INT64)
 ```
 
 ### bits28_retention
