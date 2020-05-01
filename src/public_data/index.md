@@ -79,8 +79,8 @@ The keys within each dataset have the following meanings:
   last updated
 
 Data files are gzipped and up to 1 GB in size. If the data exceeds 1 GB, then it gets split up into multiple
-files named `000000000000.json.gz`, `000000000001.json.gz`, ...
-For example: [https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/ssl_ratios/v1/files/000000000000.json.gz](https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/ssl_ratios/v1/files/000000000000.json.gz)
+files named `000000000000.json`, `000000000001.json`, ...
+For example: [https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/ssl_ratios/v1/files/000000000000.json](https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/ssl_ratios/v1/files/000000000000.json)
 
 
 [bigquery]: https://cloud.google.com/bigquery
