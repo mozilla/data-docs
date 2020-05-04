@@ -8798,30 +8798,13 @@ or is it global and therefore not solely due to that event?&quot;</p>
 <h2><a class="header" href="#versioning" id="versioning">Versioning</a></h2>
 <p>We are building out our library of segments, 
 and we want room to iterate to improve them in the future. 
-So please quote segments' versions with their names, e.g. &quot;regular users v2&quot;
+So please quote segments' versions with their names, e.g. &quot;regular users v3&quot;
 so that your communication is forwards compatible.</p>
 <h2><a class="header" href="#current-segments" id="current-segments">Current segments</a></h2>
-<h3><a class="header" href="#usage-regularity-v2" id="usage-regularity-v2">Usage regularity v2</a></h3>
-<p>This is a set of three segments. 
-On a given day, every client falls into exactly one of these segments.
-Each client's segment is stored in <code>telemetry.clients_last_seen.segment_usage_regularity_v2</code>.</p>
-<p><em>Regular users v2</em> is defined as 
-clients who browsed &gt;=5 URIs on <em>at least eight</em> of the previous 27 days.
-As of February 2020 this segment contained approximately 2/3 of DAU
-and its users had a 1-week retention of approximately 95%.</p>
-<p><em>New/irregular users v2</em> is defined as 
-clients who browsed &gt;=5 URIs on <em>none</em> of the previous 27 days.
-As of February 2020 this segment contained approximately 15% of DAU,
-and had a retention of about 10%
-(though &quot;activation&quot; is likely a more relevant word than &quot;retention&quot; for many of these clients).</p>
-<p><em>Semi-regular users v2</em> is defined as
-clients who browsed &gt;=5 URIs on <em>between one and seven</em> of the previous 27 days,
-i.e. it contains users who do not fit the other two segments at this time.
-As of February 2020 this segment contained approximately 20% of DAU,
-and had a retention of about 60%.
-We do not yet know what proportion of users in this segment stay in this segment for an extended period, and what proportion are in transition between other segments.</p>
-<h2><a class="header" href="#obsolete-segments" id="obsolete-segments">Obsolete segments</a></h2>
-<p>None yet.</p>
+<h3><a class="header" href="#regular-users-v3" id="regular-users-v3">Regular users v3</a></h3>
+<p>This segment contains clients who sent pings on <em>at least 14</em> of the previous 27 days. As of February 2020 this segment contained approximately 2/3 of DAU and its users had a 1-week retention of around 95%.</p>
+<h3><a class="header" href="#new-or-resurrected-v3" id="new-or-resurrected-v3">New or Resurrected v3</a></h3>
+<p>This segment contains clients who sent pings on <em>none</em> of the previous 27 days. As of February 2020 this segment contained approximately 4% of DAU and its users had a 1-week retention of approximately 30%.</p>
 <h2><a class="header" href="#writing-queries-with-segments" id="writing-queries-with-segments">Writing queries with segments</a></h2>
 <p>When a segment is defined with respect to a user's <em>behavior</em> (e.g. usage levels) 
 as opposed to more stable traits (e.g. country), 
@@ -8841,21 +8824,20 @@ we have not settled the questions of whether and how to split MAU by segment,
 and whether and how to measure MAU for each segment.
 So stick to DAU for now.</p>
 <h3><a class="header" href="#example-queries-13" id="example-queries-13">Example queries</a></h3>
-<p>DAU for <em>regular users v2</em>:</p>
+<p>DAU for <em>regular users v3</em>:</p>
 <pre><code class="language-lang=sql">SELECT
     submission_date,
-    COUNT(*) AS dau_regular_users_v2
+    COUNTIF(BIT_COUNT(days_seen_bits &amp; 0x0FFFFFFE) &gt;= 14) AS dau_regular_users_v3
 FROM moz-fx-data-shared-prod.telemetry.clients_last_seen
 WHERE
     submission_date BETWEEN '2020-01-01' AND '2020-03-01'
-    AND segment_usage_regularity_v2 = 'regular_users_v2'
     AND days_since_seen = 0  -- Get DAU from clients_last_seen
 GROUP BY submission_date
 </code></pre>
-<p>DAU for <em>regular users v2</em>, but joining from a different table:</p>
+<p>DAU for <em>regular users v3</em>, but joining from a different table:</p>
 <pre><code class="language-lang=sql">SELECT
     cd.submission_date,
-    COUNT(*) AS dau_regular_users_v2
+    COUNTIF(BIT_COUNT(cls.days_seen_bits &amp; 0x0FFFFFFE) &gt;= 14) AS dau_regular_users_v3
 FROM clients_daily cd
 INNER JOIN clients_last_seen cls
     ON cls.client_id = cd.client_id
@@ -8863,8 +8845,27 @@ INNER JOIN clients_last_seen cls
     AND cls.submission_date BETWEEN '2020-01-01' AND '2020-03-01'
 WHERE
     cd.submission_date BETWEEN '2020-01-01' AND '2020-03-01'
-    AND cls.segment_usage_regularity_v2 = 'regular_users_v2'
 </code></pre>
+<h2><a class="header" href="#obsolete-segments" id="obsolete-segments">Obsolete segments</a></h2>
+<h3><a class="header" href="#usage-regularity-v2" id="usage-regularity-v2">Usage regularity v2</a></h3>
+<p>This is a set of three segments. 
+On a given day, every client falls into exactly one of these segments.
+Each client's segment can be computed from <code>telemetry.clients_last_seen.days_visited_5_uri_bits</code>.</p>
+<p><em>Regular users v2</em> is defined as 
+clients who browsed &gt;=5 URIs on <em>at least eight</em> of the previous 27 days.
+As of February 2020 this segment contained approximately 2/3 of DAU
+and its users had a 1-week retention for a 5 URI day usage criterion of approximately 95%.</p>
+<p><em>New/irregular users v2</em> is defined as 
+clients who browsed &gt;=5 URIs on <em>none</em> of the previous 27 days.
+As of February 2020 this segment contained approximately 15% of DAU,
+and had a retention for a 5 URI day usage criterion of about 10%
+(though &quot;activation&quot; is likely a more relevant word than &quot;retention&quot; for many of these clients).</p>
+<p><em>Semi-regular users v2</em> is defined as
+clients who browsed &gt;=5 URIs on <em>between one and seven</em> of the previous 27 days,
+i.e. it contains users who do not fit the other two segments at this time.
+As of February 2020 this segment contained approximately 20% of DAU,
+and had a retention for a 5 URI day usage criterion of about 60%.
+We do not yet know what proportion of users in this segment stay in this segment for an extended period, and what proportion are in transition between other segments.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/segments.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#sampling-in-telemetry-data" id="sampling-in-telemetry-data">Sampling in Telemetry data</a></h1>
 <p>Since the early days of Telemetry, it has been desirable to have a quick and
 simple way to do analysis on a sample of the full population of Firefox
