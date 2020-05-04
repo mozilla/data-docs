@@ -1,6 +1,3 @@
-## Table of Contents
-<!-- toc -->
-
 # Query Optimizations
 
 If you want to improve query performance and minimize the cost that is associated with using BigQuery, familiarize yourself with the following query optimizations:

@@ -9,9 +9,4 @@ in [BigQuery](https://cloud.google.com/bigquery/):
 - [Writing BigQuery Queries](./bigquery/querying.md)
 - [Optimizing BigQuery Queries](./bigquery/optimization.md)
 
-BigQuery uses a columnar data storage format that is called [Capacitor](https://cloud.google.com/blog/products/gcp/inside-capacitor-bigquerys-next-generation-columnar-storage-format).It supports semi-structured data.
-
-There is a cost associated with using BigQuery based on operations. The on-demand pricing for queries is based on how much data a query scans. If you want to:
-
-- Minimize costs, see [_Query Optimizations_](bigquery/querying.md#optimizations). 
-- Familiarize yourself with the detailed information about pricing, see [pricing](https://cloud.google.com/bigquery/pricing).
+There is a [cost associated with using BigQuery](https://cloud.google.com/bigquery/pricing) based on operations. The on-demand pricing for queries is based on how much data a query scans. Please see the optimization documentation above for information on how to minimize costs.
