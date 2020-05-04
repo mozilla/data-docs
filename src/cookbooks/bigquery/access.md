@@ -62,7 +62,7 @@ Detailed REST reference can be found [here](https://cloud.google.com/bigquery/do
     - `gcloud config set project moz-fx-data-bq-<team-name>`
     - project name will be provided for you when your account is provisioned.
 
-#### `bq` Examples
+### `bq` Examples
 List tables and views in a BigQuery dataset
 ``` bash
 bq ls moz-fx-data-derived-datasets:telemetry
