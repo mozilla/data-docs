@@ -1,7 +1,8 @@
-## Table of Contents
-<!-- toc -->
+# Querying BigQuery Tables
 
-# Querying Tables
+## Table of Contents
+
+<!-- toc -->
 
 ## Projects, Datasets, and Tables in BigQuery
 
