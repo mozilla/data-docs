@@ -3,10 +3,6 @@
 ## Table of Contents
 <!-- toc -->
 
-# Access
-
-Although multiple methods are available to get access to BigQuery, you may want to select the primary interface, which uses [re:dash](https://sql.telemetry.mozilla.org/). You can use any of the following interfaces. However, all other interfaces require access to be provisioned.
-
 ## Interfaces
 
 You can access BigQuery datasets and tables by selecting any of the following methods:
