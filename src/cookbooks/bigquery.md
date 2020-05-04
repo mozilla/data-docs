@@ -14,5 +14,4 @@ BigQuery uses a columnar data storage format that is called [Capacitor](https://
 There is a cost associated with using BigQuery based on operations. The on-demand pricing for queries is based on how much data a query scans. If you want to:
 
 - Minimize costs, see [_Query Optimizations_](bigquery/querying.md#optimizations). 
-
 - Familiarize yourself with the detailed information about pricing, see [pricing](https://cloud.google.com/bigquery/pricing).
