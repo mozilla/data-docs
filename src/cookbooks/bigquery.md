@@ -5,9 +5,9 @@ With the transition to [GCP](https://cloud.google.com) in 2019 having been compl
 The following topics provide an introduction to working with data that is stored
 in [BigQuery](https://cloud.google.com/bigquery/):
 
-- [Access](firefox-data-docs/src/cookbooks/bigquery/access.md)
-- [Querying Tables](firefox-data-docs/src/cookbooks/bigquery/querying.md)
-- [Optimization](firefox-data-docs/src/cookbooks/bigquery/optimization.md
+- [Accessing BigQuery](./bigquery/access.md)
+- [Writing BigQuery Queries](./bigquery/querying.md)
+- [Optimizing BigQuery Queries](./bigquery/optimization.md)
 
 BigQuery uses a columnar data storage format that is called [Capacitor](https://cloud.google.com/blog/products/gcp/inside-capacitor-bigquerys-next-generation-columnar-storage-format).It supports semi-structured data.
 
