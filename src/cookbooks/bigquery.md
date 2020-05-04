@@ -9,4 +9,4 @@ in [BigQuery](https://cloud.google.com/bigquery/):
 - [Writing BigQuery Queries](./bigquery/querying.md)
 - [Optimizing BigQuery Queries](./bigquery/optimization.md)
 
-There is a [cost associated with using BigQuery](https://cloud.google.com/bigquery/pricing) based on operations. The on-demand pricing for queries is based on how much data a query scans. Please see the optimization documentation above for information on how to minimize costs.
+There is a [cost associated with using BigQuery](https://cloud.google.com/bigquery/pricing) based on operations. The on-demand pricing for queries is based on how much data a query scans. Please see the optimization documentation above for information on how to understand and minimize costs.

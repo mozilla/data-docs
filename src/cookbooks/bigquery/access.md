@@ -7,22 +7,22 @@
 
 You can access BigQuery datasets and tables by selecting any of the following methods:
 
-- [re:dash](bigquery/querying.md#from-redash)
-- [GCP BigQuery Console](bigquery/querying.md#gcp-bigquery-console)
+- [re:dash](./querying.md#from-redash)
+- [GCP BigQuery Console](./querying.md#gcp-bigquery-console)
     - For advanced use cases including managing query outputs, table management. Requires GCP access to be granted by Data Operations.
-- [GCP BigQuery API Access](bigquery/querying.md#gcp-bigquery-api-access)
+- [GCP BigQuery API Access](./querying.md#gcp-bigquery-api-access)
     - For advanced use cases including automated workloads, ETL, [BigQuery Storage API](https://cloud.google.com/bigquery/docs/reference/storage/). Requires GCP access to be granted by Data Operations.
     - Allows access to BigQuery via [`bq` command-line tool](https://cloud.google.com/bigquery/docs/bq-command-line-tool)
-- [Spark](bigquery/querying.md#from-spark)
-    - [Databricks](bigquery/querying.md#on-databricks)
-    - [Dataproc](bigquery/querying.md#on-dataproc)
-- [Colaboratory](bigquery/querying.md#from-colaboratory)
+- [Spark](./querying.md#from-spark)
+    - [Databricks](./querying.md#on-databricks)
+    - [Dataproc](./querying.md#on-dataproc)
+- [Colaboratory](./querying.md#from-colaboratory)
 
 Note that with the exception of Redash, all methods require access to be provisioned (see the next section).
 
 ## Access Request
 
-For access to BigQuery when using the GCP Console and API, file a bug [bug](https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=jthomas%40mozilla.com&bug_file_loc=https%3A%2F%2Fmana.mozilla.org%2Fwiki%2Fx%2FiIPeB&bug_ignored=0&bug_severity=normal&bug_status=NEW&bug_type=task&cf_fx_iteration=---&cf_fx_points=---&comment=Please%20grant%20me%20access%20to%20the%20BigQuery%20GCP%20console%20and%20API%20Access.%20I%20work%20on%20%3Cteam%3E.%0D%0A%0D%0AMy%20mozilla.com%20ldap%20login%20is%20%3Cyour%20ldap%20login%3E%40mozilla.com.&component=Operations&contenttypemethod=list&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-936=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Unspecified&priority=--&product=Data%20Platform%20and%20Tools&qa_contact=jthomas%40mozilla.com&rep_platform=Unspecified&short_desc=BigQuery%20GCP%20Console%20and%20API%20Access%20for%20%3Cyour%20ldap%20login%3E%40mozilla.com&target_milestone=---&version=unspecified). As part of this request you are added to the appropriate Google Groups and a GCP Service Account is provisioned.
+For access to BigQuery when using the GCP Console and API, [file a bug](https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=jthomas%40mozilla.com&bug_file_loc=https%3A%2F%2Fmana.mozilla.org%2Fwiki%2Fx%2FiIPeB&bug_ignored=0&bug_severity=normal&bug_status=NEW&bug_type=task&cf_fx_iteration=---&cf_fx_points=---&comment=Please%20grant%20me%20access%20to%20the%20BigQuery%20GCP%20console%20and%20API%20Access.%20I%20work%20on%20%3Cteam%3E.%0D%0A%0D%0AMy%20mozilla.com%20ldap%20login%20is%20%3Cyour%20ldap%20login%3E%40mozilla.com.&component=Operations&contenttypemethod=list&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-936=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Unspecified&priority=--&product=Data%20Platform%20and%20Tools&qa_contact=jthomas%40mozilla.com&rep_platform=Unspecified&short_desc=BigQuery%20GCP%20Console%20and%20API%20Access%20for%20%3Cyour%20ldap%20login%3E%40mozilla.com&target_milestone=---&version=unspecified). As part of this request we will add you to the appropriate Google Groups and provision a GCP Service Account.
 
 ## From re:dash
 
@@ -35,7 +35,7 @@ Access via re:dash is read-only. You cannot create views or tables using re:dash
 
 ## GCP BigQuery Console
 
-- File a [bug](bigquery/querying.md#access-request) with Data Operations for access to GCP Console.
+- File a [bug](#access-request) with Data Operations for access to GCP Console.
 - Visit [GCP BigQuery Console](https://console.cloud.google.com/bigquery)
 - Switch to the project provided to you during your access request e.g `moz-fx-data-bq-<team-name>`
 
@@ -43,7 +43,7 @@ See [Using the BigQuery web UI in the GCP Console](https://cloud.google.com/bigq
 
 ## GCP BigQuery API Access
 
-- File a [bug](bigquery/querying.md#access-request) with Data Operations for access to GCP BigQuery API Access.
+- File a [bug](#access-request) with Data Operations for access to GCP BigQuery API Access.
 
 You can locate a list of supported BigQuery client libraries [here](https://cloud.google.com/bigquery/docs/reference/libraries).
 
@@ -145,4 +145,4 @@ gcloud beta dataproc clusters delete cluster-name --region=us-west1 --project pr
 
 Colaboratory can be used to easily access BigQuery and perform interactive analyses. See [`Telemetry Hello World` notebook](https://colab.research.google.com/drive/1uXmrPnqzDATiCVH2RNJKD8obIZuofFHx).
 
-Note: this is very similar to [API Access](bigquery/querying.md#gcp-bigquery-api-access), so you will need access to your team's GCP project - file a request as described [above](bigquery/querying.md#access-request).
+Note: this is very similar to [API Access](#gcp-bigquery-api-access), so you will need access to your team's GCP project - file a request as described [above](#access-request).
