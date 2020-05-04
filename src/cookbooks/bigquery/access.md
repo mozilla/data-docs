@@ -53,7 +53,7 @@ You can locate a list of supported BigQuery client libraries [here](https://clou
 
 Detailed REST reference can be found [here](https://cloud.google.com/bigquery/docs/reference/rest/).
 
-### From `bq` Command-line Tool
+## From `bq` Command-line Tool
 
 - Install the [GCP SDK](https://cloud.google.com/sdk/)
 - Authorize `gcloud` with either your user account or provisioned service account. See documentation [here](https://cloud.google.com/sdk/docs/authorizing).
