@@ -18,7 +18,7 @@ You can access BigQuery datasets and tables by selecting any of the following me
     - [Dataproc](bigquery/querying.md#on-dataproc)
 - [Colaboratory](bigquery/querying.md#from-colaboratory)
 
-Note that with the exception of redash, all methods require access to be provisioned (see the next section).
+Note that with the exception of Redash, all methods require access to be provisioned (see the next section).
 
 ## Access Request
 
