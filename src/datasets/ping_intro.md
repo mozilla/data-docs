@@ -128,7 +128,7 @@ Try to limit the size of your data by controlling the date range, and start off 
 #### Accessing the Data
 
 Ping data lives in BigQuery and is accessible in [re:dash][stmo];
-see the [BigQuery intro](../cookbooks/bigquery.md) article.
+see the [BigQuery cookbook section](../cookbooks/bigquery.md) for more information.
 
 #### Further Reading
 

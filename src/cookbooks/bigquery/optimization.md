@@ -14,7 +14,7 @@ If you want to improve query performance and minimize the cost that is associate
     - Tables that are larger than 1 TB will require that you provide a date partition filter as part of the query.
     - You will receive an error if you attempt to query a table that requires a partition filter.
         - `Cannot query over table 'moz-fx-data-shared-prod.telemetry_derived.main_summary_v4' without a filter over column(s) 'submission_date' that can be used for partition elimination`
-    - See [_Writing Queries_](bigquery.md#writing-queries) for examples.
+    - See [_Writing Queries_](bigquery/querying.md#writing-queries) for examples.
 - Reduce data before using a JOIN
     - Trim the data as early in the query as possible, before the query performs a JOIN. If you reduce data early in the processing cycle, shuffling and other complex operations only execute on the data that you need.
     - Use sub queries with filters or intermediate tables or views as a way of decreasing sides of a join, prior to the join itself.

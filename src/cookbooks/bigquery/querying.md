@@ -19,9 +19,9 @@ control access to tables and views.
 - The date partition field (e.g., `submission_date_s3`, `submission_date`) is mostly used as a partitioning column.
 However, it has changed from using a `YYYYMMDD` string form to a  `DATE` type that uses string literals in the more standards-friendly `YYYY-MM-DD` form.
 - Unqualified queries can become very costly very easily. Restrictions have been placed on large tables to avoid accidental querying "all data for all time". You must use the date partition fields for large tables (like `main_summary` or `clients_daily`).
-- Read the [_Query Optimizations_](bigquery.md#query-optimizations) section that includes recommendations on how to reduce cost and improve query performance.
-- re:dash BigQuery data sources have a 10 TB data-scanned limit for each query. [Let us know](../concepts/getting_help.md) if this becomes an issue.
-- There is not any native map support available in BigQuery. Instead, structs are used with fields [key, value]. Convenience functions are available to access the like key-value maps, as described [below](bigquery.md#accessing-map-like-fields).
+- Read the [_Query Optimization Cookbook_](./optimization.md) that includes recommendations on how to reduce cost and improve query performance.
+- re:dash BigQuery data sources have a 10 TB data-scanned limit for each query. [Let us know](../../concepts/getting_help.md) if this becomes an issue.
+- There is not any native map support available in BigQuery. Instead, structs are used with fields [key, value]. Convenience functions are available to access the like key-value maps, as described [below](#accessing-map-like-fields).
 
 ### Projects with BigQuery datasets
 
@@ -85,7 +85,7 @@ functions that we have defined to allow ergonomic querying of
 [map-like fields](#accessing-map-like-fields) (which are represented as arrays of structs in BigQuery) and
 [histograms](#accessing-histograms) (which are encoded as raw JSON strings).
 
-### Writing Queries
+## Writing Queries
 
 To query a BigQuery table you will need to specify the dataset and table name. It is good practice to specify the project however depending on which project the query
 originates from this is optional.
@@ -100,7 +100,8 @@ WHERE
     -- data_partition_field will vary based on table
     date_partition_field >= DATE_SUB(CURRENT_DATE, INTERVAL 1 MONTH)
 ```
-An example query from [Clients Last Seen Reference](../datasets/bigquery/clients_last_seen/reference.md)
+
+An example query from [Clients Last Seen Reference](../../datasets/bigquery/clients_last_seen/reference.md)
 
 ``` sql
 SELECT
@@ -127,7 +128,7 @@ Check out the [BigQuery Standard SQL Functions & Operators](https://cloud.google
 
 ### Writing query results to a permanent table
 
-You can write query results to a BigQuery table you have access via [GCP BigQuery Console](bigquery.md#gcp-bigquery-console) or [GCP BigQuery API Access](bigquery.md#gcp-bigquery-api-access)
+You can write query results to a BigQuery table you have access via [GCP BigQuery Console](access.md#gcp-bigquery-console) or [GCP BigQuery API Access](access.md#gcp-bigquery-api-access)
 
 - Use `moz-fx-data-shared-prod.analysis` dataset.
     - Prefix your table with your username. If your username is `username@mozilla.com` create a table with `username_my_table`.
@@ -142,20 +143,20 @@ Spark jobs that will need to do this.
 - Use bucket `gs://moz-fx-data-prod-analysis/`
     - Prefix object paths with your username. If your username is `username@mozilla.com`, you might store a file to `gs://moz-fx-data-prod-analysis/username/myresults.json`.
 
-### Creating a View
-You can create views in BigQuery if you have access via [GCP BigQuery Console](bigquery.md#gcp-bigquery-console) or [GCP BigQuery API Access](bigquery.md#gcp-bigquery-api-access).
+## Creating a View
+You can create views in BigQuery if you have access via [GCP BigQuery Console](access.md#gcp-bigquery-console) or [GCP BigQuery API Access](access.md#gcp-bigquery-api-access).
 
 - Use `moz-fx-data-shared-prod.analysis` dataset.
     - Prefix your view with your username. If your username is `username@mozilla.com` create a table with `username_my_view`.
 - See [Creating Views](https://cloud.google.com/bigquery/docs/views) documentation for detailed steps.
 
-### Using UDFs
+## Using UDFs
 
 BigQuery offers [user-defined functions](https://cloud.google.com/bigquery/docs/reference/standard-sql/user-defined-functions) (UDFs) that can be defined in SQL or JavaScript as part of a query or as a persistent function stored in a dataset. We have defined a suite of persistent functions to enable transformations specific to our data formats, available in datasets `udf` (for functions defined in SQL) and `udf_js` (for functions defined in JavaScript). Note that JavaScript functions are potentially much slower than those defined in SQL, so use functions in `udf_js` with some caution, likely only after performing aggregation in your query.
 
 We document a few of the most broadly useful UDFs below, but you can see the full list of UDFs with source code in [`bigquery-etl/udf`](https://github.com/mozilla/bigquery-etl/tree/master/udf) and [`bigquery-etl/udf_js`](https://github.com/mozilla/bigquery-etl/tree/master/udf_js). Publishing a full reference page for our persistent UDFs is a planned improvement, tracked in [`bigquery-etl#228`](https://github.com/mozilla/bigquery-etl/issues/228).
 
-#### Accessing map-like fields
+## Accessing map-like fields
 
 BigQuery currently lacks native map support and our workaround is to use a STRUCT type with fields named [key, value]. We've created a UDF that provides key-based access with the signature: `udf.get_key(<struct>, <key>)`. The example below generates a count per `reason` key in the `event_map_values` field in the telemetry events table for Normandy unenrollment events from yesterday.
 ```sql
@@ -169,7 +170,7 @@ GROUP BY 1
 ORDER BY 2 DESC
 ```
 
-#### Accessing histograms
+## Accessing histograms
 
 We considered many potential ways to represent histograms as BigQuery fields
 and found the most efficient encoding was actually to leave them as raw JSON
