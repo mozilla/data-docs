@@ -5,7 +5,7 @@
 Schemas describe the structure of ingested data. They are used in the pipeline to validate the types
 and values of data, and to define a table schema in a data store. We use a repository of JSON Schemas
 to sort incoming data into [`decoded` and `error`
-datasets](../../cookbooks/bigquery.md#projects-with-bigquery-datasets). We also generate BigQuery
+datasets](../../cookbooks/bigquery/querying.md#projects-with-bigquery-datasets). We also generate BigQuery
 table schemas nightly from the JSON Schemas.
 
 This section is intended for those who want to modify the process of generating and applying schemas
@@ -204,21 +204,21 @@ The following transformations are currently applied:
 
 Transformation | Description
 -|-
-Map Types | JSON objects that contain an unbounded number of keys with a shared value type are represented as a [repeated structure containing a `key` and `value` column](../../cookbooks/bigquery.md#accessing-map-like-fields).
+Map Types | JSON objects that contain an unbounded number of keys with a shared value type are represented as a [repeated structure containing a `key` and `value` column](../../cookbooks/bigquery/querying.md#accessing-map-like-fields).
 Nested Arrays | Nested lists are represented using a structure containing a repeated `list` column.
 Tuples to Anonymous Structures | A [tuple of items](https://json-schema.org/understanding-json-schema/reference/array.html#tuple-validation) is represented as an anonymous structure with column names starting at `_0` up to `_{n}` where `n` is the length of the tuple.
-JSON to String coercion | A sub-tree in a JSON document will be coerced to string if specified in the BigQuery schema. One example is of transformation is to [represent histograms in the main ping](../../cookbooks/bigquery.md#accessing-histograms).
+JSON to String coercion | A sub-tree in a JSON document will be coerced to string if specified in the BigQuery schema. One example is of transformation is to [represent histograms in the main ping](../../cookbooks/bigquery/querying.md#accessing-histograms).
 Boolean to Integer coercion | A boolean may be cast into an integer type.
 
 Additional properties are fields within the ingested JSON document that are not found in the schema.
 When all transformations are completed, any fields that were not traversed in the schema will be
 reconstituted into the [top-level `additional_properties`
-field](../../cookbooks/bigquery.md#structure-of-ping-tables-in-bigquery).
+field](../../cookbooks/bigquery/querying.md#structure-of-ping-tables-in-bigquery).
 
 ## Deploying to BigQuery
 
 In this section, we discuss deployment of generated schemas to BigQuery. Refer to [Table Layout and
-Naming](../../cookbooks/bigquery.md#table-layout-and-naming) for details about the resulting
+Naming](../../cookbooks/bigquery/querying.md#table-layout-and-naming) for details about the resulting
 structure of the projects.
 
 Tables are updated on every push to `generated-schemas`. The schemas must be backwards

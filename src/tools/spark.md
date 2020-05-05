@@ -7,7 +7,7 @@ is a data processing engine designed to be fast and easy to use.
 Spark can be used either from [Databricks][db_example] or Dataproc, and works
 with data stored in BigQuery.
 
-The [BigQuery cookbook](../cookbooks/bigquery.md#from-spark) covers how to access
+The [BigQuery access cookbook](../cookbooks/bigquery/access.md#from-spark) covers how to access
 BigQuery data from Spark.
 
 [db_example]: https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/30598/command/30599
@@ -160,8 +160,8 @@ or to [Google Cloud Storage][persist_gcs].
 You can also save data to the [Databricks Filesystem][dbfs].
 
 [dbfs]: https://docs.databricks.com/user-guide/databricks-file-system.html#dbfs
-[persist_bq]: ../cookbooks/bigquery.md#writing-query-results-to-a-permanent-table
-[persist_gcs]: ../cookbooks/bigquery.md#writing-results-to-gcs-object-store
+[persist_bq]: ../cookbooks/bigquery/querying.md#writing-query-results-to-a-permanent-table
+[persist_gcs]: ../cookbooks/bigquery/querying.md#writing-results-to-gcs-object-store
 
 
 FAQ
