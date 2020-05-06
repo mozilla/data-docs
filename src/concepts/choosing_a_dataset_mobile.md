@@ -105,7 +105,7 @@ and Klar) the other contains event data for other apps.
 Both tables have the same format and columns.
 
 
-#### `telemetry,mobile_events`
+#### `telemetry.mobile_events`
 
 This table contains event data for Firefox for Fire TV, Firefox for Echo Show
 and Firefox Lite. There is a metadata column containing a list of metrics.
