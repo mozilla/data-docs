@@ -315,7 +315,7 @@ FROM
 
 The `bits28_range` function is powerful and flexible, but a bit cumbersome.
 We provide a `bits28_retention` convenience function that returns a nested
-structure with the standard retention definitions already calculated:
+structure with the standard activity windows for retention already calculated:
 
 ```
 SELECT
@@ -325,18 +325,24 @@ FROM
   telemetry.clients_last_seen
 
 /*
-| submission_date | metric_date | active_on_day_0 | active_in_week_0 | active_in_week_1 |
-|      2020-01-28 |  2020-01-15 | true            | true             | true             |
+                   submission_date = 2020-01-28
+                       metric_date = 2020-01-15
+                   active_on_day_0 = true
+                  active_in_week_0 = true
+active_in_week_0_after_metric_date = false
+                  active_in_week_1 = true
 */
 ```
+
+The next section showcases how these various fields are used to construct
+final retention calculations.
 
 The `bits28_retention` struct also has `day_21` and `day_28` fields that can
 be used to calculate "2-Week Retention" and "3-Week Retention".
 
 ### Full example query for 1-Week Retention variants
 
-Finally, we can put these UDFs to use by aggregating numerators and denominators
-to calculate real retention metrics:
+Let's put these functions to work in a full-scale retention query:
 
 ```
 WITH base AS (
@@ -368,12 +374,20 @@ SELECT
     COUNTIF(retention.day_13.active_on_metric_date)
   ) AS retention_1_week_active_on_day_0,
 
+  -- A more restrictive 0-and-1-Week Retention definition where again the denominator
+  -- is restricted to clients active on day 0 and the client must be active both in
+  -- week 0 after the metric date and in week 1.
+  SAFE_DIVIDE(
+    COUNTIF(retention.day_13.active_in_week_0_after_metric_date AND retention.day_13.active_in_week_1),
+    COUNTIF(retention.day_13.active_on_metric_date)
+  ) AS retention_0_and_1_week_active_on_day_0,
+
 FROM
   base
-GROUP BY
-  metric_date
 WHERE
   submission_date = '2020-01-28'
+GROUP BY
+  metric_date
 ```
 
 ### N-day Retention
