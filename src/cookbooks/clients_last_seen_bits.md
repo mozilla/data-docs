@@ -9,12 +9,12 @@ for desktop Firefox and similar datasets for other applications.
 A powerful feature of the `clients_last_seen` methodology is that it doesn't
 record specific metrics like MAU and WAU directly, but rather each row stores
 a history of the discrete days on which a client was active in the past 28 days.
-We could calculate active users in a 10-day or 25-day window just as efficiently
-as a 7-day (WAU) or 28-day (MAU) window. But we can also define completely new
+We could calculate active users in a 10 day or 25 day window just as efficiently
+as a 7 day (WAU) or 28 day (MAU) window. But we can also define completely new
 metrics based on these usage histories, such as various retention definitions.
 
 The usage history is encoded as a "bit pattern" where the physical
-type of the field is a BigQuery 64-bit integer, but logically the integer
+type of the field is a BigQuery INT64, but logically the integer
 represents an array of bits, with each 1 indicating a day where the given clients
 was active and each 0 indicating a day where the client was inactive. This
 article discusses the details of how we represent usage in bit patterns,
@@ -136,7 +136,7 @@ Be prepared for this to twist your mind a bit. What we call "1-Week Retention"
 depends on activity in a 2-week window. If we want to calculate a 1-week
 retention value for 2020-01-01, we need to consider activity from 2020-01-01
 through 2020-01-14, so we cannot know the retention value for a given day
-until we've fully processed data 13 days laster. In other words, the _metric date_
+until we've fully processed data 13 days later. In other words, the _metric date_
 for 1-week retention is always 13 days earlier than the `submission_date`
 on which it can be calculated.
 
@@ -277,7 +277,7 @@ the array to define our new "day 0" which corresponds to 2020-01-15:
 This client has a bit set in both week 0 and in week 1, so logically this client
 can be considered retained; they should be counted in both the denominator and
 in the numerator for the "1-Week Retention" value on 2020-01-15. But how can
-we extract this usage per week information programmatically?
+we extract this usage per week information in a query?
 
 Extracting the bits for a specific week can be achieved via UDF:
 
@@ -315,7 +315,7 @@ FROM
 
 The `bits28_range` function is powerful and flexible, but a bit cumbersome.
 We provide a `bits28_retention` convenience function that returns a nested
-structure with the standard retention definitions precalculated:
+structure with the standard retention definitions already calculated:
 
 ```
 SELECT
@@ -424,8 +424,8 @@ that encode client timestamps: `days_seen_session_start_bits` and
 `days_seen_session_end_bits`. This table is still populated once per day based
 on pings received over the previous day, but some of those pings will reflect
 sessions that started on previous days. This introduces some new complexity
-into retention calculations, because we'll always be undercounting clients
-if we have our retention window end on `submission_date`.
+into retention calculations because we'll always be underestimating client
+counts if we have our retention window end on `submission_date`.
 
 When using activity date, it may be desirable to build in a few days of buffer
 to ensure we are considering late-arriving pings. For example, if we wanted
@@ -461,9 +461,9 @@ WHERE
 
 ## UDF Reference
 
-### bits28_to_string
+### `bits28_to_string`
 
-Convert an INT64 field into a 28-character string representing the individual bits.
+Convert an INT64 field into a 28 character string representing the individual bits.
 
 ```
 bits28_to_string(bits INT64)
@@ -472,7 +472,7 @@ SELECT udf.bits28_to_string(18)
 >> 0000000000000000000000010010
 ```
 
-### bits28_from_string
+### `bits28_from_string`
 
 Convert a string representing individual bits into an INT64.
 
@@ -483,7 +483,7 @@ SELECT udf.bits28_from_string('10010')
 >> 18
 ```
 
-### bits28_to_dates
+### `bits28_to_dates`
 
 Convert a bit pattern into an array of the dates is represents.
 
@@ -494,7 +494,7 @@ SELECT udf.bits28_to_dates(18, '2020-01-28')
 >> ['2020-01-24', '2020-01-27']
 ```
 
-### bits28_days_since_seen
+### `bits28_days_since_seen`
 
 Return the position of the rightmost set bit in an INT64 bit pattern.
 
@@ -506,7 +506,7 @@ SELECT bits28_days_since_seen(18)
 ```
 
 
-### bits28_range
+### `bits28_range`
 
 Return an INT64 representing a range of bits from a source bit pattern.
 
@@ -521,7 +521,7 @@ SELECT udf.bits28_to_string(udf.bits28_range(18, 5 - 2, 4))
 >> '0010'
 ```
 
-### bits28_active_in_range
+### `bits28_active_in_range`
 
 Return a boolean indicating if any bits are set in the specified range of a bit pattern.
 
@@ -529,7 +529,7 @@ Return a boolean indicating if any bits are set in the specified range of a bit 
 bits28_active_in_range(bits INT64, offset INT64, n_bits INT64)
 ```
 
-### bits28_retention
+### `bits28_retention`
 
 Return a nested struct providing numerator and denominator fields for
 the standard 1-Week, 2-Week, and 3-Week retention definitions.
