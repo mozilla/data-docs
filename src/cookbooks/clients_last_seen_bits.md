@@ -1,9 +1,19 @@
 # Working with Bit Patterns in Clients Last Seen
 
+Monthly active users (MAU) is a windowed metric that requires joining data
+per client across 28 days. Calculating this from individual pings or daily
+aggregations can be computationally expensive, which motivated creation of the
+[`clients_last_seen` dataset](../datasets/bigquery/clients_last_seen/reference.md)
+for desktop Firefox and similar datasets for other applications.
+
 A powerful feature of the `clients_last_seen` methodology is that it doesn't
 record specific metrics like MAU and WAU directly, but rather each row stores
 a history of the discrete days on which a client was active in the past 28 days.
-This history is encoded as a "bit pattern" where the physical
+We could calculate active users in a 10-day or 25-day window just as efficiently
+as a 7-day (WAU) or 28-day (MAU) window. But we can also define completely new
+metrics based on these usage histories, such as various retention definitions.
+
+The usage history is encoded as a "bit pattern" where the physical
 type of the field is a BigQuery 64-bit integer, but logically the integer
 represents an array of bits, with each 1 indicating a day where the given clients
 was active and each 0 indicating a day where the client was inactive. This
@@ -23,8 +33,8 @@ and wasn't seen in any of the 27 days previous. A value of `2` means
 the client was seen 1 day ago, but not on `submission_date`. A value of `3`
 means that the client was seen on `submission_date` _and_ the day previous.
 
-It's much easier to reason about these bit patterns when we view them
-as strings of ones and zeros, so we've provided a UDF to convert these
+It's much easier to reason about these bit patterns, however, when we view them
+as strings of ones and zeros. We've provided a UDF to convert these
 values to "bit strings":
 
 ```
@@ -43,8 +53,8 @@ right to left in the string of bits, the "lowest" to bits are set (1) while
 the rest of the bits are unset (0).
 
 Let's consider a larger value `8256`. In terms of powers of two, this is equal
-to `2^13 + 2^6`, so we would expect its string representation to have two `1`
-values. If we label the rightmost bit as "offset 0", we would expect the set
+to `2^13 + 2^6` and its string representation should have two `1` values.
+If we label the rightmost bit as "offset 0", we would expect the set
 bits to be at offsets `-13` and `-6`:
 
 ```
@@ -62,12 +72,21 @@ SELECT udf.bits28_from_string('0000000000000010000001000000')
 >>> 8256
 ```
 
-The leading zeros are optional for this function:
+Note that the leading zeros are optional for this function:
 
 ```
 SELECT udf.bits28_from_string('10000001000000')
 
 >>> 8256
+```
+
+Finally, we can translate this into an array of concrete dates by passing
+a value for the date that corresponds to the rightmost bit:
+
+```
+SELECT udf.bits28_to_dates(8256, '2020-01-28')
+
+>>> ['2020-01-15', '2020-01-22']
 ```
 
 ### Why 28 bits instead of 64?
@@ -77,11 +96,11 @@ so we could technically store 64 days of history per bit pattern. Limiting
 to 28 bits is a practical concern related to storage costs and reprocessing concerns.
 
 Consider a client that is only active on a single day and then never shows up again.
-
 A client that becomes inactive will eventually fall outside the 28-day usage
-window and will thus not have a row in following days of `clients_last_seen`.
+window and will thus not have a row in following days of `clients_last_seen`
+and we no longer duplicate that client's data for those days.
 
-Tables following the `clients_last_seen` methodology have to be populated
+Also, tables following the `clients_last_seen` methodology have to be populated
 incrementally. For each new day of data, we have to reference the previous
 day's rows in `clients_last_seen`, take the trailing 27 bits of each pattern
 and appending a 0 or 1 to represent whether the client was active in the new
@@ -126,7 +145,7 @@ to be necessary for consistency in how we define various retention metrics.
 Consider if we wanted to compare 1-week, 2-week, and 3-week retention metrics on a
 single plot. If we use forward-looking windows, then the point labeled 2020-01-01
 describes the same set of users for all three metrics and how their activity
-differs over time. If we used backwards-looking windows, then each of these three
+differs over time. If we use backwards-looking windows, then each of these three
 metrics is considering a separate population of users.
 We'll discuss this in more detail later.
 
@@ -152,8 +171,8 @@ Let's dive more deeply into that bit string representation:
     0  0  0  0  0  0  0  0  0  0  0  0  0  0  1  0  0  0  0  0  0  1  0  0  0  0  0  0
     ──────────────────────────────────────────────────────────────────────────────────
     │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │
-    │ 26  │ 24  │ 22  │ 20  │ 18  │ 16  │ 14  │ 12  │ 10  │  8  │  6  │  4  │  2  │  0
-   27    25    23    21    19    17    15    13    11     9     7     5     3     1
+    │-26  │-24  │-22  │-20  │-18  │-16  │-14  │-12  │-10  │ -8  │ -6  │ -4  │ -2  │  0
+  -27   -25   -23   -21   -19   -17   -15   -13   -11    -9    -7    -5    -3    -1
    
   └──────────────────────────────────────────────────────────────────────────────────┘
   MAU                                                             └──────────────────┘
@@ -172,7 +191,7 @@ We provide a special function to tell us how many days have elapsed since
 the most recent activity encoded in a bit pattern:
 
 ```
-SELECT udf.bits28_days_since_seen(8256)
+SELECT udf.bits28_days_since_seen(udf.bits28_from_string('10000001000000'))
 
 >>> 6
 ```
@@ -201,8 +220,8 @@ pattern for this client will look like:
     0  0  0  0  0  0  0  0  0  0  0  0  0  1  0  0  0  0  0  0  1  0  0  0  0  0  0  0
     ──────────────────────────────────────────────────────────────────────────────────
     │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │
-    │ 26  │ 24  │ 22  │ 20  │ 18  │ 16  │ 14  │ 12  │ 10  │  8  │  6  │  4  │  2  │  0
-   27    25    23    21    19    17    15    13    11     9     7     5     3     1
+    │-26  │-24  │-22  │-20  │-18  │-16  │-14  │-12  │-10  │ -8  │ -6  │ -4  │ -2  │  0
+  -27   -25   -23   -21   -19   -17   -15   -13   -11    -9    -7    -5    -3    -1
    
   └──────────────────────────────────────────────────────────────────────────────────┘
   MAU                                                             └──────────────────┘
@@ -210,15 +229,14 @@ pattern for this client will look like:
                                                                                    DAU
 ```
 
-The entire pattern has simply shifted one offset to the right, with the leading zero
+The entire pattern has simply shifted one offset to the left, with the leading zero
 falling off (since it's now outside the 28-day range) and a trailing zero added
 on the right (this would be a `1` instead if the user had been active on 2020-01-29).
 
-The `days_seen_bits` value is now `16512` and the
-`days_since_seen` value is now `7`, which is outside the WAU window:
+The `days_since_seen` value is now `7`, which is outside the WAU window:
 
 ```
-SELECT udf.bits28_days_since_seen(16512)
+SELECT udf.bits28_days_since_seen(udf.bits28_from_string('100000010000000'))
 
 >>> 7
 ```
@@ -231,9 +249,10 @@ portion of clients active on 2020-01-01 are still active some number of days
 later.
 
 When we were talking about backward-looking windows, our anchor date or "day 0"
-was always the `submission_date`. When we define forward-looking windows, however,
-we always choose an anchor date some time in the past. How we number the individual
-bits depends on what anchor date we choose.
+was always the most recent day, corresponding to the rightmost bit.
+When we define forward-looking windows, however, we always choose an anchor date
+some time in the past. How we number the individual bits depends on what
+anchor date we choose.
 
 For example, in [GUD](../tools/gud.md), we show a "1-Week Retention" which considers a window of 14 days.
 For each client active in "week 0" (days 0 through 6), we determine retention by
@@ -256,8 +275,9 @@ the array to define our new "day 0" which corresponds to 2020-01-15:
 ```
 
 This client has a bit set in both week 0 and in week 1, so logically this client
-can be considered retained. They should be counted in both the denominator and
-in the numerator for the "1-Week Retention" value on 2020-01-15.
+can be considered retained; they should be counted in both the denominator and
+in the numerator for the "1-Week Retention" value on 2020-01-15. But how can
+we extract this usage per week information programmatically?
 
 Extracting the bits for a specific week can be achieved via UDF:
 
@@ -314,6 +334,9 @@ The `bits28_retention` struct also has `day_21` and `day_28` fields that can
 be used to calculate "2-Week Retention" and "3-Week Retention".
 
 ### Full example query for 1-Week Retention variants
+
+Finally, we can put these UDFs to use by aggregating numerators and denominators
+to calculate real retention metrics:
 
 ```
 WITH base AS (
