@@ -155,114 +155,78 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#addons_daily-derived-dataset" id="addons_daily-derived-dataset"><code>addons_daily</code> Derived Dataset</a></h1>
-<h2><a class="header" href="#introduction" id="introduction">Introduction:</a></h2>
-<p>The <code>addons_daily</code> dataset serves as the central hub for all Firefox extension related questions.
-This includes questions regarding browser performance, user engagement, click through rates, etc.
-Each row in the table represents a unique add-on, and each column is a unique metric.</p>
-<h3><a class="header" href="#contents" id="contents">Contents</a></h3>
-<p>Prior to construction of this dataset, extension related data lived in several different sources.
-<code>Addons_daily</code> has combined metrics aggregated from several sources,
-including raw pings, telemetry data, and google analytics data.
-Note that the data is a 1% sample of Release Firefox, so metrics like <code>DAU</code>, <code>WAU</code>, etc are approximate.</p>
-<h3><a class="header" href="#accessing-the-data" id="accessing-the-data">Accessing the Data</a></h3>
-<p>The data is stored as a parquet table in S3 <code>s3://telemetry-parquet/addons_daily/v1/</code></p>
-<p><em><strong>The <code>addons_daily</code> table is accessible through re:dash using the Athena data source.
-It is also available via the Presto data source,
-though Athena should be preferred for performance and stability reasons.</strong></em></p>
-<h2><a class="header" href="#data-reference" id="data-reference">Data Reference</a></h2>
-<h3><a class="header" href="#example-queries" id="example-queries">Example Queries</a></h3>
-<h4><a class="header" href="#query-1" id="query-1">Query 1</a></h4>
-<p>Select average daily, weekly, monthly active users,
-as well as the proportion of total daily active users per  for all non system <code>add-ons</code>.</p>
-<pre><code class="language-sql">SELECT addon_id,
-       arbitrary(name) as name,
-       avg(dau) as &quot;Average DAU&quot;,
-       avg(wau) as &quot;Average WAU&quot;,
-       avg(mau) as &quot;Average MAU&quot;,
-       avg(dau_prop) as &quot;Average % of Total DAU&quot;
-FROM addons_daily
+                        <h1><a class="header" href="#addons-daily" id="addons-daily">Addons Daily</a></h1>
+<ul>
+<li><a href="#introduction">Introduction</a>
+* <a href="#contents">Contents</a>
+* <a href="#accessing-the-data">Accessing the Data</a></li>
+<li><a href="#data-reference">Data Reference</a>
+<ul>
+<li><a href="#example-queries">Example Queries</a>
+<ul>
+<li><a href="#dau-wau-and-mau-for-ublock-origin">DAU, WAU and MAU for uBlock Origin</a></li>
+<li><a href="#add-ons-with-highest-organicsap-search-ratio">Add-ons with Highest Organic:SAP search ratio</a></li>
+</ul>
+</li>
+<li><a href="#scheduling">Scheduling</a></li>
+<li><a href="#schema">Schema</a></li>
+</ul>
+</li>
+<li><a href="#code-reference">Code Reference</a></li>
+</ul>
+<h1><a class="header" href="#introduction" id="introduction">Introduction</a></h1>
+<p>The <code>addons_daily</code> table is a small and fast dataset with data on specific add-ons, and the users who have them installed. It contains one row per <code>addon_id</code> and <code>submission_date</code>. </p>
+<h4><a class="header" href="#contents" id="contents">Contents</a></h4>
+<p>Many questions about add-ons are of the form: &quot;How many users have add-on A installed?&quot; or &quot;Are users with add-on Z more active than users with add-on Y?&quot; This dataset is aimed at answering these type of questions without having to do cumbersome joins or filters. </p>
+<p>This dataset also has detailed search aggregates by each add-on, broken out by our major search engines (<code>google</code>, <code>bing</code>, <code>ddg</code>, <code>amazon</code>, <code>yandex</code>, <code>other</code>), along with total aggregates (<code>total</code>). This allows us to identify strange search patterns for add-ons who change a user's search settings on their behalf, often siphoning away SAP searches and Mozilla revenue (see the second example query below).</p>
+<h4><a class="header" href="#accessing-the-data" id="accessing-the-data">Accessing the Data</a></h4>
+<p>The <code>addons_daily</code> table is accessible through re:dash using the
+<code>Telemetry (BigQuery)</code> data source.</p>
+<p>Here's an <a href="https://sql.telemetry.mozilla.org/queries/71007/source">example query</a>.</p>
+<h1><a class="header" href="#data-reference" id="data-reference">Data Reference</a></h1>
+<h2><a class="header" href="#example-queries" id="example-queries">Example Queries</a></h2>
+<h4><a class="header" href="#dau-wau-and-mau-for-ublock-origin" id="dau-wau-and-mau-for-ublock-origin">DAU, WAU and MAU for uBlock Origin</a></h4>
+<pre><code class="language-sql">SELECT
+    submission_date,
+    dau,
+    wau,
+    mau
+FROM
+    `moz-fx-data-shared-prod.telemetry.addons_daily`
 WHERE
-  is_system = false
-  and addon_id not like '%mozilla%'
-GROUP BY 1
-ORDER BY 3 DESC
+    submission_date &gt;= DATE_SUB(CURRENT_DATE, INTERVAL 28 DAY)
+    AND addon_id = 'uBlock0@raymondhill.net'
+  
 </code></pre>
-<p>This query can be seen and ran in STMO <a href="https://sql.telemetry.mozilla.org/queries/63294/source">here</a>.</p>
-<h4><a class="header" href="#query-2" id="query-2">Query 2</a></h4>
-<p>Select average daily active users for the <code>uBlock add-on</code> for all dates.</p>
-<pre><code class="language-sql">SELECT DATE_PARSE(submission_date_s3, '%Y%m%d') as &quot;Date&quot;,
-       dau as &quot;DAU&quot;
-FROM addons_daily
+<h4><a class="header" href="#add-ons-with-highest-organicsap-search-ratio" id="add-ons-with-highest-organicsap-search-ratio">Add-ons with Highest Organic:SAP search ratio</a></h4>
+<pre><code class="language-sql">SELECT
+    addon_id,
+    ANY_VALUE(name) as name,
+    AVG(dau) as avg_dau,
+    SAFE_DIVIDE(SUM(organic_searches.total), SUM(sap_searches.total)) as organic_sap_ratio
+FROM
+    telemetry.addons_daily
 WHERE
-    addon_id = 'uBlock0@raymondhill.net'
+    submission_date &gt;= DATE_SUB(CURRENT_DATE, INTERVAL 7 DAY)
+    AND is_system = false
+GROUP BY
+    1
+HAVING
+    avg(dau) &gt; 1000
+ORDER BY
+    4 DESC
+    
 </code></pre>
-<p>This query can be seen and ran in STMO <a href="https://sql.telemetry.mozilla.org/queries/63293/source#162153">here</a></p>
-<h3><a class="header" href="#scheduling" id="scheduling">Scheduling</a></h3>
-<p>This dataset is updated daily via the telemetry-airflow infrastructure.
-The job runs as part of the <code>main_summary</code> DAG.</p>
-<h3><a class="header" href="#schema" id="schema">Schema</a></h3>
-<p>The data is partitioned by <code>submission_date_s3</code> which is formatted as <code>%Y%m%d</code>, like <code>20180130</code>.
-As of 2019-06-05, the current version of the <code>addons_daily</code> dataset is <code>v1</code>, and has a schema as follows:</p>
-<pre><code>root
-|-- addon_id: string (nullable = true)
- |-- name: string (nullable = true)
- |-- os_pct: map (nullable = true)
- |    |-- key: string
- |    |-- value: double (valueContainsNull = false)
- |-- country_pct: map (nullable = true)
- |    |-- key: string
- |    |-- value: double (valueContainsNull = false)
- |-- avg_time_total: double (nullable = true)
- |-- active_hours: double (nullable = true)
- |-- disabled: long (nullable = true)
- |-- avg_tabs: double (nullable = true)
- |-- avg_bookmarks: double (nullable = true)
- |-- avg_toolbox_opened_count: double (nullable = true)
- |-- avg_uri: double (nullable = true)
- |-- pct_w_tracking_prot_enabled: double (nullable = true)
- |-- mau: long (nullable = true)
- |-- wau: long (nullable = true)
- |-- dau: long (nullable = true)
- |-- dau_prop: double (nullable = true)
- |-- search_with_ads: map (nullable = true)
- |    |-- key: string
- |    |-- value: long (valueContainsNull = true)
- |-- ad_click: map (nullable = true)
- |    |-- key: string
- |    |-- value: long (valueContainsNull = true)
- |-- organic_searches: map (nullable = true)
- |    |-- key: string
- |    |-- value: long (valueContainsNull = true)
- |-- sap_searches: map (nullable = true)
- |    |-- key: string
- |    |-- value: long (valueContainsNull = true)
- |-- tagged_sap_searches: map (nullable = true)
- |    |-- key: string
- |    |-- value: long (valueContainsNull = true)
- |-- installs: map (nullable = true)
- |    |-- key: string
- |    |-- value: long (valueContainsNull = true)
- |-- download_times: map (nullable = true)
- |    |-- key: string
- |    |-- value: double (valueContainsNull = false)
- |-- uninstalls: map (nullable = true)
- |    |-- key: string
- |    |-- value: long (valueContainsNull = true)
- |-- is_system: boolean (nullable = true)
- |-- avg_webext_storage_local_get_ms_: double (nullable = true)
- |-- avg_webext_storage_local_set_ms_: double (nullable = true)
- |-- avg_webext_extension_startup_ms_: double (nullable = true)
- |-- top_10_coinstalls: map (nullable = true)
- |    |-- key: string
- |    |-- value: string (valueContainsNull = true)
- |-- avg_webext_background_page_load_ms_: double (nullable = true)
- |-- avg_webext_browseraction_popup_open_ms_: double (nullable = true)
- |-- avg_webext_pageaction_popup_open_ms_: double (nullable = true)
- |-- avg_webext_content_script_injection_ms_: double (nullable = true)
-</code></pre>
-<h2><a class="header" href="#code-reference" id="code-reference">Code Reference</a></h2>
-<p>All code can be found <a href="https://github.com/mozilla/addons_daily">here</a>.
+<h2><a class="header" href="#scheduling" id="scheduling">Scheduling</a></h2>
+<p>This dataset is updated daily via the
+<a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a> infrastructure.
+The job runs as part of the <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/addons_daily.py"><code>addons_daily</code> DAG</a>.</p>
+<h2><a class="header" href="#schema" id="schema">Schema</a></h2>
+<p>The data is partitioned by <code>submission_date</code>.</p>
+<p>As of 2020-04-17, the current version of the <code>addons_daily</code> dataset is <code>v1</code>.</p>
+<h1><a class="header" href="#code-reference" id="code-reference">Code Reference</a></h1>
+<p>This dataset is generated by
+<a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/telemetry_derived/addons_daily_v1/query.sql"><code>bigquery-etl</code></a>.
 Refer to this repository for information on how to run or augment the dataset.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/other/addons_daily/reference.md">Edit this file on GitHub.</a></footer>
                     </main>
