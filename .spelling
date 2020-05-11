@@ -28,6 +28,7 @@ APIs
 APK
 app
 apps
+Armagaddon
 AsciiDoc
 ATMO
 autofill
@@ -81,6 +82,7 @@ deduplicated
 deduplicates
 deduplicating
 deduplication
+default_search
 detrended
 DevTools
 discoverability
@@ -104,6 +106,7 @@ Fennec
 FHR
 filename
 filesystem
+firefox-data-docs
 FirefoxReality
 FireTV
 funnelcake
@@ -250,6 +253,7 @@ searchfox
 SendPing
 SERP
 serverless
+shield_study
 Smoot
 SMS
 Sonatype
@@ -303,6 +307,7 @@ utm
 UUID
 v1
 v2
+v3
 v4
 versioned
 versioning

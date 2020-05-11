@@ -113,15 +113,11 @@ This includes:
   `"releaseChannelCollection": "opt-out"`
 
 Most probes are "opt-in": we do not get information from them unless the user
-opts into sending us this information.
-Users can opt-in in two ways:
-1. Using Firefox's Options UI to tick the box that gives us permission
-2. Installing any pre-release version of Firefox
+opts into sending us this information by installing any pre-release version of Firefox
+(Beta or Nightly or Developer Edition (which is also kinda/sorta Beta)).
 
-The nature of selection bias is such that the population in #1 is useless for analysis.
 If you want to encourage users to collect good information for us,
-ask them to install Beta:
-it's only slightly harder than finding and checking the opt-in check-box in Firefox.
+ask them to install Beta.
 
 [Environment]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/environment.html
 [Histograms]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/histograms.html
@@ -130,7 +126,8 @@ it's only slightly harder than finding and checking the opt-in check-box in Fire
 
 ### Trusting Dates
 
-Don't trust client times.
+Don't trust desktop client times. The situation is somewhat better on mobile devices
+and is being investigated.
 
 Any timestamp recorded by the user is subject to "clock skew."
 The user's clock can be set (purposefully or accidentally) to any time at all.
@@ -138,17 +135,17 @@ The nature of SSL certificates tends to keep this within a certain relatively-ac
 because a user who's clock is too far in the past or too far in the future
 might confuse certain expiration-date-checking code.
 
-Examples of client times: `crashDate`, `crashTime`, `meta/Date`, `sessionStartDate`,
+Examples of client times from Firefox desktop pings: `crashDate`, `crashTime`, `meta/Date`, `sessionStartDate`,
 `subsessionStartDate`, `profile/creationDate`
+
+Examples of client times from Glean pings: [`ping_info.end_time`](https://mozilla.github.io/glean/book/user/pings/index.html#the-ping_info-section)
 
 Examples of server times you can trust: `submission_timestamp`, `submission_date`
 
 *Note that `submission_date` does not appear in the [ping documentation]
-because it is added in post-processing.
-It can be found in the `meta` field of the ping as in the [Databricks Example].*
+because it is added in post-processing.*
 
 [ping documentation]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/common-ping.html
-[Databricks Example]: https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/30598/
 
 ### Date Formats
 
@@ -160,7 +157,7 @@ Then there's `profile/creationDate` which is just a number of days since epoch (
 Like `17177` for the date 2017-01-11.
 
 **Tip:** To convert `profile/creationDate` to a usable date in SQL:
-`DATE_ADD('day', profile_created, DATE '1970-01-01')`
+`DATE_FROM_UNIX_DATE(SAFE_CAST(environment.profile.creation_date AS INT64))`
 
 In derived datasets ISO dates are sometimes converted to strings in one of
 two formats: `%Y-%m-%d` or `%Y%m%d`.
@@ -172,10 +169,11 @@ Build ids look like dates but aren't.
 If you take the first eight characters you can use that as a proxy
 for the day the build was released.
 
-`metadata/Date` is an HTTP Date header in a [RFC 7231]-compatible format.
+`metadata.header.date` is an HTTP Date header in a [RFC 7231]-compatible format.
 
 **Tip:** To parse `metadata/Date` to a usable date in SQL:
-`DATE_PARSE(SUBSTR(client_submission_date, 1, 25), '%a, %d %b %Y %H:%i:%s')`
+`SAFE.PARSE_TIMESTAMP('%a, %d %b %Y %T %Z', REPLACE(metadata.header.date, 'GMT+00:00', 'GMT'))`
+or better yet use the already parsed version available in user-facing views (`metatdata.header.parsed_date`)
 
 [ISO 8601]: https://en.wikipedia.org/wiki/ISO_8601
 [msref]: ../datasets/batch_view/main_summary/reference.md#time-formats

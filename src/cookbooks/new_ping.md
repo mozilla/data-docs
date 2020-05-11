@@ -227,7 +227,7 @@ day, regardless of how long it takes for the table to appear.
 
 ### Spark
 
-Refer to the [Spark notes](../cookbooks/bigquery.md#from-spark) for details on accessing the data
+Refer to the [Spark notes](../cookbooks/bigquery/access.md#from-spark) for details on accessing the data
 via Spark.
 
 ## Build Dashboards Using Spark or STMO

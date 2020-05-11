@@ -12,7 +12,7 @@ collects and the choices you can make as a Firefox user in the
 If there's information missing from these docs, or if you'd like to contribute, see [this article on contributing](meta/contributing.md),
 and feel free to [file a bug here](https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&component=Documentation%20and%20Knowledge%20Repo%20%28RTMO%29&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=--&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&target_milestone=---&version=unspecified).
 
-The source for this documentation can be found in [this repo](https://github.com/mozilla/firefox-data-docs).
+You can locate the source for this documentation in the [firefox-data-docs repository](https://github.com/mozilla/firefox-data-docs) on GitHub.
 
 ## Using this document
 
@@ -42,5 +42,4 @@ This documentation is divided into four main sections:
 
 You can find the [fully-rendered documentation here](https://mozilla.github.io/firefox-data-docs/),
 rendered with [mdBook](https://github.com/rust-lang/mdBook), and hosted on Github pages.
-
 

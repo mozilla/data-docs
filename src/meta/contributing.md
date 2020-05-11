@@ -113,16 +113,7 @@ The documentation is hosted on [Github Pages](https://pages.github.com/).
 Updates to the documentation are automatically published to
 [`docs.telemetry.mozilla.org`][dtmo] when changes are merged.
 
-To publish to your own fork of this repo, changes need to be pushed manually.
-Use the [deploy script](https://github.com/mozilla/firefox-data-docs/blob/master/scripts/deploy.sh)
-to publish new changes.
-
-This script depends on
-[`ghp-import`](https://github.com/davisp/ghp-import).
-
-Keep in mind that this will deploy the docs to your `origin` repo.
-If you're working from a fork (which you should be),
-`deploy.sh` will update the docs hosted from your fork - not the production docs.
+To publish to your own fork of this repo, changes need to be pushed to GitHub Pages manually.
 
 # Colophon
 
