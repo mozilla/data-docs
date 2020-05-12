@@ -40,7 +40,6 @@ For example:
                 "incremental": true,
                 "incremental_export": false,
                 "review_link": "https://bugzilla.mozilla.org/show_bug.cgi?id=1624528",  
-                "files_metadata": "https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/deviations/v1/files/metadata.json",
                 "files_uri": "https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/deviations/v1/files",
                 "last_updated": "https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/deviations/v1/last_updated"
             }
@@ -52,7 +51,6 @@ For example:
                 "incremental": true,
                 "incremental_export": false,
                 "review_link": "https://bugzilla.mozilla.org/show_bug.cgi?id=1414839",
-                "files_metadata": "https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/ssl_ratios/v1/files/metadata.json",
                 "files_uri": "https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/ssl_ratios/v1/files",
                 "last_updated": "https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/ssl_ratios/v1/last_updated"
             }
@@ -73,8 +71,7 @@ The keys within each dataset have the following meanings:
     `files/2020-04-15`, `files/2020-04-16`, ...)
     * `false`: all data gets exported into one `files/` directory 
 * `review_link`: links to the Bugzilla bug for the data review
-* `files_metadata`: `metadata.json` contains a list of links to all available data files
-* `files_uri`: location of data files
+* `files_uri`: lists links to all available data files
 * `last_updated`: link to a `last_updated` file containing the timestamp for when the data files were
   last updated
 
