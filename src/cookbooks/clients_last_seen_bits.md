@@ -524,6 +524,11 @@ SELECT bits28_days_since_seen(18)
 
 Return an INT64 representing a range of bits from a source bit pattern.
 
+The start_offset must be zero or a negative number indicating an offset from
+the rightmost bit in the pattern.
+
+n_bits is the number of bits to consider, counting right from the bit at start_offset.
+
 ```
 bits28_range(bits INT64, offset INT64, n_bits INT64)
 
@@ -538,6 +543,11 @@ SELECT udf.bits28_to_string(udf.bits28_range(18, 5 - 2, 4))
 ### `bits28_active_in_range`
 
 Return a boolean indicating if any bits are set in the specified range of a bit pattern.
+
+The `start_offset` must be zero or a negative number indicating an offset from
+the rightmost bit in the pattern.
+
+`n_bits` is the number of bits to consider, counting right from the bit at start_offset.
 
 ```
 bits28_active_in_range(bits INT64, offset INT64, n_bits INT64)
