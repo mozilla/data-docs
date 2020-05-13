@@ -407,22 +407,22 @@ SET n = 3;
 WITH base AS (
   SELECT
     *,
-    udf.bits28_range(days_seen_bits, -n + 0, 1) AS seen_on_day_0,
-    udf.bits28_range(days_seen_bits, -n + 1, n - 1) AS seen_after_day_0
+    udf.bits28_active_in_range(days_seen_bits, -n + 0, 1) AS seen_on_day_0,
+    udf.bits28_active_in_range(days_seen_bits, -n + 1, n - 1) AS seen_after_day_0
   FROM
     telemetry.clients_last_seen )
 SELECT
-  DATE_SUB(submission_date, INTERVAL n DAYS) AS metric_date,
+  DATE_SUB(submission_date, INTERVAL n DAY) AS metric_date,
   SAFE_DIVIDE(
     COUNTIF(seen_on_day_0 AND seen_after_day_0),
     COUNTIF(seen_on_day_0)
   ) AS retention_n_day
 FROM
   base
-GROUP BY
-  metric_date
 WHERE
   submission_date = '2020-01-28'
+GROUP BY
+  metric_date
 ```
 
 ### Retention using activity date
@@ -455,22 +455,22 @@ SET offset_to_day_0 = -n - cushion_days;
 WITH base AS (
   SELECT
     *,
-    udf.bits28_range(days_seen_session_start_bits, offset_to_day_0 + 0, 1) AS seen_on_day_0,
-    udf.bits28_range(days_seen_session_start_bits, offset_to_day_0 + 1, n - 1) AS seen_after_day_0
+    udf.bits28_active_in_range(days_seen_session_start_bits, offset_to_day_0 + 0, 1) AS seen_on_day_0,
+    udf.bits28_active_in_range(days_seen_session_start_bits, offset_to_day_0 + 1, n - 1) AS seen_after_day_0
   FROM
     org_mozilla_fenix.baseline_clients_last_seen )
 SELECT
-  DATE_SUB(submission_date, INTERVAL offset_to_day_0 DAYS) AS metric_date,
+  DATE_SUB(submission_date, INTERVAL offset_to_day_0 DAY) AS metric_date,
   SAFE_DIVIDE(
     COUNTIF(seen_on_day_0 AND seen_after_day_0),
     COUNTIF(seen_on_day_0)
   ) AS retention_n_day
 FROM
   base
-GROUP BY
-  metric_date
 WHERE
   submission_date = '2020-01-28'
+GROUP BY
+  metric_date
 ```
 
 ## UDF Reference
