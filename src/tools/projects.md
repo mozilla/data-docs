@@ -154,6 +154,3 @@ starting a new project using anything in this section.
 
 | Name and repo                  | Description                             |
 |--------------------------------|-----------------------------------------|
-| [`Fx-Data-Planning`][planning] | Quarterly goals and internal documentation
-
-[planning]: https://github.com/mozilla/Fx-Data-Planning
