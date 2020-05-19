@@ -12,7 +12,7 @@ interface that is automatically updated when new data arrives.
 
 ## What setup is needed for applications?
 
-You can use the debug view for all applications that use Glean (and
+You can use the debug view for all applications that use the Glean SDK (and
 enable it), including mobile applications installed from the app stores.
 To enable this you need to run a command in adb that tags the outgoing data as
 "debug data".
