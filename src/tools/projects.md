@@ -108,7 +108,7 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 [tmo]: https://telemetry.mozilla.org
 [stmo]: https://sql.telemetry.mozilla.org
 [hwreport_gh]: https://github.com/mozilla/firefox-hardware-report
-[hwreport]: https://hardware.metrics.mozilla.com/
+[hwreport]: https://data.firefox.com/dashboard/hardware
 [pyzep]: https://github.com/mozilla/python-zeppelin
 [stmocli]: https://github.com/mozilla/stmocli
 [probe-scraper]: https://github.com/mozilla/probe-scraper
