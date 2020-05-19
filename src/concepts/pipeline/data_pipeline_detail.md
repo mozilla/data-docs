@@ -375,7 +375,7 @@ graph LR
 [cutover]: https://bugzilla.mozilla.org/show_bug.cgi?id=1302265
 [OpenResty]: http://openresty.org/en/
 [Amplitude]: https://amplitude.com/
-[Firefox Hardware Report]: https://hardware.metrics.mozilla.com/
+[Firefox Hardware Report]: https://data.firefox.com/dashboard/hardware
 [DataDog]: http://datadoghq.com/
 [Cerberus]: https://github.com/mozilla/cerberus
 [histogram measures]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/histograms.html
