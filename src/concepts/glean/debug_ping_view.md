@@ -12,8 +12,8 @@ interface that is automatically updated when new data arrives.
 
 ## What setup is needed for applications?
 
-You can use the debug view for all our mobile applications that use Glean (and
-enable it), including those installed from the app store.
+You can use the debug view for all applications that use the Glean SDK (and
+enable it), including mobile applications installed from the app stores.
 To enable this you need to run a command in adb that tags the outgoing data as
 "debug data".
 You will provide a debug tag, which makes it easier to identify your device in
@@ -35,24 +35,12 @@ The debug commands are documented in more detail
 [appid]: https://developer.android.com/studio/build/application-id
 [glean_debug]: https://mozilla.github.io/glean/book/user/debugging/index.html
 
-### Supported applications
-
-As for now, the following application ids are supported:
-
-* `org.mozilla.fenix`
-* `org.mozilla.reference.browser`
-* `org.mozilla.samples.glean`
-* `org.mozilla.tv.firefox`
-* ... and some debug versions of the above applications.
-
 ## Where can I see the data?
 
-The data is provided in [this web interface][debug_view].
-It lists all recently active devices and updates automatically.
-You can use your debug identifier to quickly identify your own testing data.
+The data is provided in [this web interface][debug_view], which lists all recently active clients.
 
-Any data sent from a mobile device usually shows up within 10 seconds,
-updating the pages automatically.
+Any data sent from a Glean SDK-instrumented application usually shows up within 10 seconds,
+updating the pages automatically. Pings are retained there for 3 weeks.
 
 [debug_view]: https://debug-ping-preview.firebaseapp.com/
 
