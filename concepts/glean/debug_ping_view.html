@@ -158,11 +158,7 @@
                         <h1><a class="header" href="#using-the-glean-debug-ping-view" id="using-the-glean-debug-ping-view">Using the Glean debug ping view</a></h1>
 <ul>
 <li><a href="#what-is-this-good-for">What is this good for?</a></li>
-<li><a href="#what-setup-is-needed-for-applications">What setup is needed for applications?</a>
-<ul>
-<li><a href="#supported-applications">Supported applications</a></li>
-</ul>
-</li>
+<li><a href="#what-setup-is-needed-for-applications">What setup is needed for applications?</a></li>
 <li><a href="#where-can-i-see-the-data">Where can I see the data?</a></li>
 <li><a href="#can-you-give-me-an-example">Can you give me an example?</a>
 <ul>
@@ -179,8 +175,8 @@ mobile application is sending through <a href="glean.html">Glean</a>.</p>
 <p>This data is what actually arrives in our data pipeline, shown in a web
 interface that is automatically updated when new data arrives.</p>
 <h2><a class="header" href="#what-setup-is-needed-for-applications" id="what-setup-is-needed-for-applications">What setup is needed for applications?</a></h2>
-<p>You can use the debug view for all our mobile applications that use Glean (and
-enable it), including those installed from the app store.
+<p>You can use the debug view for all applications that use the Glean SDK (and
+enable it), including mobile applications installed from the app stores.
 To enable this you need to run a command in adb that tags the outgoing data as
 &quot;debug data&quot;.
 You will provide a debug tag, which makes it easier to identify your device in
@@ -195,21 +191,10 @@ while <code>&lt;application-id&gt;</code>  is the application identifier as decl
 <a href="https://developer.android.com/studio/build/application-id">manifest</a> (e.g. <code>org.mozilla.reference.browser</code>).
 The debug commands are documented in more detail
 <a href="https://mozilla.github.io/glean/book/user/debugging/index.html">in the Glean documentation</a>.</p>
-<h3><a class="header" href="#supported-applications" id="supported-applications">Supported applications</a></h3>
-<p>As for now, the following application ids are supported:</p>
-<ul>
-<li><code>org.mozilla.fenix</code></li>
-<li><code>org.mozilla.reference.browser</code></li>
-<li><code>org.mozilla.samples.glean</code></li>
-<li><code>org.mozilla.tv.firefox</code></li>
-<li>... and some debug versions of the above applications.</li>
-</ul>
 <h2><a class="header" href="#where-can-i-see-the-data" id="where-can-i-see-the-data">Where can I see the data?</a></h2>
-<p>The data is provided in <a href="https://debug-ping-preview.firebaseapp.com/">this web interface</a>.
-It lists all recently active devices and updates automatically.
-You can use your debug identifier to quickly identify your own testing data.</p>
-<p>Any data sent from a mobile device usually shows up within 10 seconds,
-updating the pages automatically.</p>
+<p>The data is provided in <a href="https://debug-ping-preview.firebaseapp.com/">this web interface</a>, which lists all recently active clients.</p>
+<p>Any data sent from a Glean SDK-instrumented application usually shows up within 10 seconds,
+updating the pages automatically. Pings are retained there for 3 weeks.</p>
 <h2><a class="header" href="#can-you-give-me-an-example" id="can-you-give-me-an-example">Can you give me an example?</a></h2>
 <p>For example to send a baseline ping immediately from the Reference Browser,
 with a debug identifier of <code>johndoe-test1</code>:</p>
