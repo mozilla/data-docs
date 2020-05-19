@@ -39,7 +39,7 @@ The debug commands are documented in more detail
 
 The data is provided in [this web interface][debug_view], which lists all recently active clients.
 
-Any data sent from a Glean-instrumented application usually shows up within 10 seconds,
+Any data sent from a Glean SDK-instrumented application usually shows up within 10 seconds,
 updating the pages automatically. Pings are retained there for 3 weeks.
 
 [debug_view]: https://debug-ping-preview.firebaseapp.com/
