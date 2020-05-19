@@ -17,8 +17,8 @@ TL;DR: two sentence max.
   - Definitions of what user has to do to qualify
   - Definitions of what telemetry must be sent to qualify.
   - At least one working definition
-  - Link to a scheduled re:dash query (link with stmocli?)
-  - Possibly an api-linked graph from re:dash
+  - Link to a scheduled STMO query (link with `stmocli`?)
+  - Possibly an API-linked graph from STMO
  - Common Issues: Failures and Gotchas
  - Resources
   - Similar criteria
