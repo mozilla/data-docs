@@ -27,8 +27,23 @@ only be shared with others who also have BigQuery access provisioned.
 
 - Visit [GCP BigQuery Console](https://console.cloud.google.com/bigquery)
 - Switch to the project provided to you during your access request e.g `moz-fx-data-bq-<team-name>`
+- Write and run your queries
 
-See [Using the BigQuery web UI in the GCP Console](https://cloud.google.com/bigquery/docs/bigquery-web-ui) for more details.
+Note that if you are trying to query the telemetry dataset, you will need to explicitly specify
+the project (`moz-fx-data-shared-prod`) that it lives in, since you're querying from a different one. For example:
+
+```sql
+SELECT
+  client_id
+FROM
+  `moz-fx-data-shared-prod`.telemetry.main
+WHERE
+  DATE(submission_timestamp) = '2020-04-20'
+  AND sample_id = 42
+  AND application.channel='nightly'
+```
+
+For more details, see [Google's Documentation on the GCP Console](https://cloud.google.com/bigquery/docs/bigquery-web-ui).
 
 ### Using the `bq` Command-Line Tool
 
