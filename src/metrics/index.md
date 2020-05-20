@@ -8,6 +8,9 @@ For a deep dive into these metrics, see [the GUD documentation](../tools/gud.md)
 The [Telemetry Behavior Reference](../concepts/index.md) section also provides
 information related to the definitions below.
 
+We are now in the process of setting up the metrics top-level section here.  This information will be moved into the appropriate subsection and this page will be replaced with an overview.
+
+
 ## Activity
 
 ### DAU
