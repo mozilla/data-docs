@@ -13,10 +13,8 @@ and locate telemetry from add-on studies.
 
 ## Dashboards
 
-The [Shield Studies Viewer] and [Experimenter] dashboards
-are other places to find lists of live experiments.
+[Experimenter] is the place to find lists of live experiments.
 
-[Shield Studies Viewer]: BROKEN:https://strategy-and-insights.mozilla.com/shield-studies/index.html
 [Experimenter]: https://experimenter.services.mozilla.com/
 
 ## Experiment slugs
