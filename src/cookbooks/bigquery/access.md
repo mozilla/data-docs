@@ -7,16 +7,16 @@
 
 You can access BigQuery datasets and tables by selecting any of the following methods:
 
-- [re:dash](./querying.md#from-redash)
-- [GCP BigQuery Console](./querying.md#gcp-bigquery-console)
+- [re:dash](#from-redash)
+- [GCP BigQuery Console](#gcp-bigquery-console)
     - For advanced use cases including managing query outputs, table management. Requires GCP access to be granted by Data Operations.
-- [GCP BigQuery API Access](./querying.md#gcp-bigquery-api-access)
+- [GCP BigQuery API Access](#gcp-bigquery-api-access)
     - For advanced use cases including automated workloads, ETL, [BigQuery Storage API](https://cloud.google.com/bigquery/docs/reference/storage/). Requires GCP access to be granted by Data Operations.
     - Allows access to BigQuery via [`bq` command-line tool](https://cloud.google.com/bigquery/docs/bq-command-line-tool)
-- [Spark](./querying.md#from-spark)
-    - [Databricks](./querying.md#on-databricks)
-    - [Dataproc](./querying.md#on-dataproc)
-- [Colaboratory](./querying.md#from-colaboratory)
+- [Spark](#from-spark)
+    - [Databricks](#on-databricks)
+    - [Dataproc](#on-dataproc)
+- [Colaboratory](#from-colaboratory)
 
 Note that with the exception of Redash, all methods require access to be provisioned (see the next section).
 
