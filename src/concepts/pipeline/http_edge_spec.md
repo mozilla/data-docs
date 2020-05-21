@@ -17,6 +17,8 @@ any further processing, analysis, and storage will be handled.
 Submission payloads are expected to be optionally-gzipped JSON
 documents described by a [JSONSchema].
 
+[JSONSchema]: https://json-schema.org/
+
 ## Server Request/Response
 
 ### GET Request
