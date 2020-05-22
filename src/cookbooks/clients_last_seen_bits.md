@@ -76,7 +76,7 @@ ORDER BY
 ```
 
 Adding a new usage criterion is possible, but requires some work especially
-if backfilling historical data is necessary, so
+if a historical backfill is necessary, so
 [file a bug](../concepts/reporting_a_problem.md) to begin discussions on
 new usage criteria.
 
@@ -663,10 +663,10 @@ SELECT bits28_days_since_seen(18)
 
 Return an INT64 representing a range of bits from a source bit pattern.
 
-The start_offset must be zero or a negative number indicating an offset from
+The `start_offset` must be zero or a negative number indicating an offset from
 the rightmost bit in the pattern.
 
-n_bits is the number of bits to consider, counting right from the bit at start_offset.
+`n_bits` is the number of bits to consider, counting right from the bit at `start_offset`.
 
 ```
 bits28_range(bits INT64, offset INT64, n_bits INT64)
@@ -686,7 +686,7 @@ Return a boolean indicating if any bits are set in the specified range of a bit 
 The `start_offset` must be zero or a negative number indicating an offset from
 the rightmost bit in the pattern.
 
-`n_bits` is the number of bits to consider, counting right from the bit at start_offset.
+`n_bits` is the number of bits to consider, counting right from the bit at `start_offset`.
 
 ```
 bits28_active_in_range(bits INT64, offset INT64, n_bits INT64)
