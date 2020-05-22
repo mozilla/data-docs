@@ -57,7 +57,7 @@ Under the hood, `days_since_seen` is calculated using the `bits28_days_since_see
 UDF which is explained in more detail later in this article.
 
 Note that the desktop `clients_last_seen` table also has additional bit pattern
-fields corresponding to additional [usage criteria](../metrics/index.md),
+fields corresponding to other [usage criteria](../metrics/index.md),
 so other variants on MAU can be calculated like:
 
 ```
@@ -74,6 +74,11 @@ GROUP BY
 ORDER BY
   submission_date
 ```
+
+Adding a new usage criterion is possible, but requires some work especially
+if backfilling historical data is necessary, so
+[file a bug](../concepts/reporting_a_problem.md) to begin discussions on
+new usage criteria.
 
 Also note that non-desktop products also have derived tables following the
 `clients_last_seen` methodology. Per-product MAU could be calculated as:
