@@ -21,6 +21,172 @@ article discusses the details of how we represent usage in bit patterns,
 how to extract standard usage and retention metrics,
 and how to build new metrics from them.
 
+## Calculating DAU, WAU, and MAU
+
+The simplest application of usage bit patterns is for calculating metrics in
+backward-looking windows. This is what we do for our canonical _usage_ measures
+DAU, WAU, and MAU.
+
+To decide whether a given client should count towards DAU, WAU, and MAU, we
+need to know how recently that client was active. If the client was seen
+in the past 28 days, they count toward MAU. If they were active in the past 7
+days, the count toward WAU. And only if they were active today do they count
+toward DAU.
+
+The user-facing `clients_last_seen` views present fields like `days_since_seen`
+that extract this information for us from the underlying `days_seen_bits` field,
+allowing us to easily express DAU, WAU, and MAU aggregates like:
+
+```
+SELECT
+  submission_date,
+  COUNTIF(days_since_seen < 28) AS mau,
+  COUNTIF(days_since_seen <  7) AS wau,
+  COUNTIF(days_since_seen <  1) AS dau
+FROM
+  telemetry.clients_last_seen
+WHERE
+  submission_date = '2020-01-28'
+GROUP BY
+  submission_date
+ORDER BY
+  submission_date
+```
+
+Under the hood, `days_since_seen` is calculated using the `bits28_days_since_seen`
+UDF which is explained in more detail later in this article.
+
+Note that the desktop `clients_last_seen` table also has additional bit pattern
+fields corresponding to additional [usage criteria](../metrics/index.md),
+so other variants on MAU can be calculated like:
+
+```
+SELECT
+  submission_date,
+  COUNTIF(days_since_visited_5_uri < 28) AS visited_5_uri_mau,
+  COUNTIF(days_since_opened_dev_tools < 28) AS opened_dev_tools_mau
+FROM
+  telemetry.clients_last_seen
+WHERE
+  submission_date = '2020-01-28'
+GROUP BY
+  submission_date
+ORDER BY
+  submission_date
+```
+
+Also note that non-desktop products also have derived tables following the
+`clients_last_seen` methodology. Per-product MAU could be calculated as:
+
+```
+SELECT
+  submission_date,
+  app_name,
+  COUNTIF(days_since_seen < 28) AS mau,
+  COUNTIF(days_since_seen <  7) AS wau,
+  COUNTIF(days_since_seen <  1) AS dau
+FROM
+  telemetry.nondesktop_clients_last_seen
+WHERE
+  submission_date = '2020-01-28'
+GROUP BY
+  submission_date, app_name
+ORDER BY
+  submission_date, app_name
+```
+
+## Calculating retention
+
+For retention calculations, we use forward-looking windows. This means that
+when we report a retention value for 2020-01-01, we're talking about what
+portion of clients active on 2020-01-01 are still active some number of days
+later.
+
+In particular, let's consider the "1-Week Retention" measure shown in [GUD](../tools/gud.md)
+which considers a window of 14 days.
+For each client active in "week 0" (days 0 through 6), we determine retention by
+checking if they were also active in "week 1" (days 7 through 13).
+
+We provide a UDF called `bits28_retention` that returns a rich STRUCT
+type representing activity in various windows, with all the date and bit
+offsets handled for you. You pass in a bit pattern and the corresponding `submission_date`,
+and it returns fields like:
+
+- `day_13.metric_date`
+- `day_13.active_in_week_0`
+- `day_13.active_in_week_1`
+
+Calculating GUD's retention aggregates and some other variants looks like:
+
+```
+-- The struct returned by bits28_retention is nested.
+-- The first level of nesting defines the beginning of our window;
+-- in our case, we want day_13 to get retention in a 2-week window.
+-- This base query uses day_13.* to make all the day_13 fields available:
+--   - metric_date
+--   - active_in_week_0
+--   - active_in_week_1
+--   - ...
+--
+WITH base AS (
+  SELECT
+    *,
+    udf.bits28_retention(
+      days_seen_bits, submission_date
+      ).day_13.*,
+    udf.bits28_retention(
+      days_created_profile_bits, submission_date
+      ).day_13.active_on_metric_date AS is_new_profile
+  FROM
+    telemetry.clients_last_seen )
+
+SELECT
+  metric_date, -- 2020-01-15 (13 days earlier than submission_date)
+
+  -- 1-Week Retention matching GUD.
+  SAFE_DIVIDE(
+    COUNTIF(active_in_week_1),
+    COUNTIF(active_in_week_0)
+  ) AS retention_1_week,
+
+  -- 1-Week New Profile Retention matching GUD.
+  SAFE_DIVIDE(
+    COUNTIF(is_new_profile AND active_in_week_1),
+    COUNTIF(is_new_profile)
+  ) AS retention_1_week_new_profile,
+
+  -- NOT AN OFFICIAL METRIC
+  -- A more restrictive 1-Week Retention definition that considers only clients
+  -- active on day 0 rather than clients active on any day in week 0.
+  SAFE_DIVIDE(
+    COUNTIF(active_in_week_1),
+    COUNTIF(active_on_metric_date)
+  ) AS retention_1_week_active_on_day_0,
+
+  -- NOT AN OFFICIAL METRIC
+  -- A more restrictive 0-and-1-Week Retention definition where again the denominator
+  -- is restricted to clients active on day 0 and the client must be active both in
+  -- week 0 after the metric date and in week 1.
+  SAFE_DIVIDE(
+    COUNTIF(active_in_week_0_after_metric_date AND active_in_week_1),
+    COUNTIF(active_on_metric_date)
+  ) AS retention_0_and_1_week_active_on_day_0,
+
+FROM
+  base
+WHERE
+  submission_date = '2020-01-28'
+GROUP BY
+  metric_date
+```
+
+Under the hood, `bits28_retention` is using a series of calls to the lower-level
+`bits28_range` function, which is explained later in this article.
+`bits28_range` is very powerful and can be used to construct novel metrics,
+but it also introduces many opportunities for off-by-one errors and passing parameters
+in incorrect order, so please fully read through this documentation before
+attempting to use the lower-level functions.
+
 ## Understanding bit patterns
 
 If you look at the `days_seen_bits` field in `telemetry.clients_last_seen`,
@@ -157,7 +323,7 @@ DAU, WAU, and MAU.
 
 Let's imagine a single row from `clients_last_seen` with `submission_date = 2020-01-28`.
 The `days_seen_bits` field records usage for a single client over a period of 28 days
-_ending_ on the given `submission_date`. We will call this anchor date "day 0" 
+_ending_ on the given `submission_date`. We will call this metric date "day 0"
 (2020-01-28 in this case) and count backwards to "day -27" (2020-01-01).
 
 Let's suppose this client was only active on two days in the past month:
@@ -203,9 +369,9 @@ DAU generally looks like:
 
 ```
 SELECT
-  COUNT(days_since_seen < 28) AS mau,
-  COUNT(days_since_seen <  7) AS wau,
-  COUNT(days_since_seen <  1) AS dau
+  COUNTIF(days_since_seen < 28) AS mau,
+  COUNTIF(days_since_seen <  7) AS wau,
+  COUNTIF(days_since_seen <  1) AS dau
 FROM
   telemetry.clients_last_seen
 ```
@@ -248,11 +414,11 @@ when we report a retention value for 2020-01-01, we're talking about what
 portion of clients active on 2020-01-01 are still active some number of days
 later.
 
-When we were talking about backward-looking windows, our anchor date or "day 0"
+When we were talking about backward-looking windows, our metric date or "day 0"
 was always the most recent day, corresponding to the rightmost bit.
-When we define forward-looking windows, however, we always choose an anchor date
+When we define forward-looking windows, however, we always choose a metric date
 some time in the past. How we number the individual bits depends on what
-anchor date we choose.
+metric date we choose.
 
 For example, in [GUD](../tools/gud.md), we show a "1-Week Retention" which considers a window of 14 days.
 For each client active in "week 0" (days 0 through 6), we determine retention by
@@ -276,8 +442,24 @@ the array to define our new "day 0" which corresponds to 2020-01-15:
 
 This client has a bit set in both week 0 and in week 1, so logically this client
 can be considered retained; they should be counted in both the denominator and
-in the numerator for the "1-Week Retention" value on 2020-01-15. But how can
-we extract this usage per week information in a query?
+in the numerator for the "1-Week Retention" value on 2020-01-15.
+
+Also note there is some nuance in retention metrics as to what counts as "week 0"
+because sometimes we want to measure a user as active in week 0 excluding the metric
+date ("day 0") itself. The client shown above would not count as "active in week 0 after metric date":
+
+```
+    0  0  0  0  0  0  0  0  0  0  0  0  0  0  1  0  0  0  0  0  0  1  0  0  0  0  0  0
+    ──────────────────────────────────────────────────────────────────────────────────
+                                              │  │  │  │  │  │  │  │  │  │  │  │  │  │
+                                              │  1  │  3  │  5  │  7  │  9  │ 11  │ 13
+                                              0     2     4     6     8    10    12
+                             Metric Date    └──┘
+                Week 0 After Metric Date       └─────────────────┘
+                                  Week 0    └────────────────────┘
+```
+
+But how can we extract this usage per week information in a query?
 
 Extracting the bits for a specific week can be achieved via UDF:
 
@@ -313,9 +495,8 @@ FROM
   telemetry.clients_last_seen
 ```
 
-The `bits28_range` function is powerful and flexible, but a bit cumbersome.
-We provide a `bits28_retention` convenience function that returns a nested
-structure with the standard activity windows for retention already calculated:
+In terms of the higher-level `bits28_retention` function discussed earlier,
+here's how this client looks:
 
 ```
 SELECT
@@ -334,65 +515,10 @@ active_in_week_0_after_metric_date = false
 */
 ```
 
-The next section showcases how these various fields are used to construct
-final retention calculations.
-
-The `bits28_retention` struct also has `day_21` and `day_28` fields that can
-be used to calculate "2-Week Retention" and "3-Week Retention".
-
-### Full example query for 1-Week Retention variants
-
-Let's put these functions to work in a full-scale retention query:
-
-```
-WITH base AS (
-  SELECT
-    *,
-    udf.bits28_retention(days_seen_bits, submission_date) AS retention,
-    udf.bits28_days_since_seen(days_created_profile_bits) = 13 AS is_new_profile
-  FROM
-    telemetry.clients_last_seen )
-SELECT
-  retention.day_13.metric_date,
-
-  -- 1-Week Retention matching GUD.
-  SAFE_DIVIDE(
-    COUNTIF(retention.day_13.active_in_week_1),
-    COUNTIF(retention.day_13.active_in_week_0)
-  ) AS retention_1_week,
-
-  -- 1-Week New Profile Retention matching GUD.
-  SAFE_DIVIDE(
-    COUNTIF(is_new_profile AND retention.day_13.active_in_week_1),
-    COUNTIF(is_new_profile)
-  ) AS retention_1_week_new_profile,
-
-  -- A more restrictive 1-Week Retention definition that considers only clients
-  -- active on day 0 rather than clients active on any day in week 0.
-  SAFE_DIVIDE(
-    COUNTIF(retention.day_13.active_in_week_1),
-    COUNTIF(retention.day_13.active_on_metric_date)
-  ) AS retention_1_week_active_on_day_0,
-
-  -- A more restrictive 0-and-1-Week Retention definition where again the denominator
-  -- is restricted to clients active on day 0 and the client must be active both in
-  -- week 0 after the metric date and in week 1.
-  SAFE_DIVIDE(
-    COUNTIF(retention.day_13.active_in_week_0_after_metric_date AND retention.day_13.active_in_week_1),
-    COUNTIF(retention.day_13.active_on_metric_date)
-  ) AS retention_0_and_1_week_active_on_day_0,
-
-FROM
-  base
-WHERE
-  submission_date = '2020-01-28'
-GROUP BY
-  metric_date
-```
-
 ### N-day Retention
 
-Let's define `n`-day retention as the fraction of clients active on a given day
+As an example of a novel metric that can be defined using the low-level
+bit pattern UDFs, let's define `n`-day retention as the fraction of clients active on a given day
 who are also active within the next `n` days. For example, 3-day retention would
 have a denominator of all clients active on day 0 and a numerator of all clients
 active on day 0 who were also active on days 1 or 2.
