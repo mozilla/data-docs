@@ -522,6 +522,8 @@ active_in_week_0_after_metric_date = false
 
 ### N-day Retention
 
+_Not an official metric. This section is intended solely as an example of advanced usage._
+
 As an example of a novel metric that can be defined using the low-level
 bit pattern UDFs, let's define `n`-day retention as the fraction of clients active on a given day
 who are also active within the next `n` days. For example, 3-day retention would
@@ -544,6 +546,8 @@ WITH base AS (
     telemetry.clients_last_seen )
 SELECT
   DATE_SUB(submission_date, INTERVAL n DAY) AS metric_date,
+
+  -- NOT AN OFFICIAL METRIC
   SAFE_DIVIDE(
     COUNTIF(seen_on_day_0 AND seen_after_day_0),
     COUNTIF(seen_on_day_0)
@@ -558,9 +562,11 @@ GROUP BY
 
 ### Retention using activity date
 
+_Not an official metric. This section is intended solely as an example of advanced usage._
+
 GUD's canonical retention definitions are all based on ping submission dates rather
 than logical activity dates taken from client-provided timestamps, but there is
-interest in using client timestamps particular for `n`-day retention calculations
+interest in using client timestamps particularly for `n`-day retention calculations
 for mobile products.
 
 Let's consider Firefox Preview which sends telemetry via Glean. The
@@ -581,17 +587,19 @@ pings, we would need to use an offset of 5 days from `submission_date`:
 DECLARE n, cushion_days, offset_to_day_0 INT64;
 SET n = 3;
 SET cushion_days = 2;
-SET offset_to_day_0 = -n - cushion_days;
+SET offset_to_day_0 = 1 - n - cushion_days;
 
 WITH base AS (
   SELECT
     *,
-    udf.bits28_active_in_range(days_seen_session_start_bits, offset_to_day_0 + 0, 1) AS seen_on_day_0,
+    udf.bits28_active_in_range(days_seen_session_start_bits, offset_to_day_0, 1) AS seen_on_day_0,
     udf.bits28_active_in_range(days_seen_session_start_bits, offset_to_day_0 + 1, n - 1) AS seen_after_day_0
   FROM
     org_mozilla_fenix.baseline_clients_last_seen )
 SELECT
   DATE_SUB(submission_date, INTERVAL offset_to_day_0 DAY) AS metric_date,
+
+  -- NOT AN OFFICIAL METRIC
   SAFE_DIVIDE(
     COUNTIF(seen_on_day_0 AND seen_after_day_0),
     COUNTIF(seen_on_day_0)
