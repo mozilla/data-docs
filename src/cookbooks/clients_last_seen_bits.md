@@ -533,8 +533,8 @@ SET n = 3;
 WITH base AS (
   SELECT
     *,
-    udf.bits28_active_in_range(days_seen_bits, -n + 0, 1) AS seen_on_day_0,
-    udf.bits28_active_in_range(days_seen_bits, -n + 1, n - 1) AS seen_after_day_0
+    udf.bits28_active_in_range(days_seen_bits, -n + 1, 1) AS seen_on_day_0,
+    udf.bits28_active_in_range(days_seen_bits, -n + 2, n - 1) AS seen_after_day_0
   FROM
     telemetry.clients_last_seen )
 SELECT
