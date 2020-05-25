@@ -179,7 +179,7 @@ There is a vast ecosystem of tools for processing data at scale, each with their
 [main ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html
 [ping types]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/pings.html#ping-types
 [create their own ping types]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html
-[API]: https://dxr.mozilla.org/mozilla-central/rev/6a23526fe5168087d7e4132c0705aefcaed5f571/toolkit/components/telemetry/TelemetryController.jsm#202
+[API]: https://searchfox.org/mozilla-central/rev/501eb4718d73870892d28f31a99b46f4783efaa0/toolkit/components/telemetry/app/TelemetryController.jsm#231
 [submit]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/submission.html#submission
 [load balancer]: https://aws.amazon.com/elasticloadbalancing/
 [module]: https://github.com/mozilla-services/nginx_moz_ingest

@@ -107,7 +107,7 @@ Where to go next
 [probe_dict]: https://probes.telemetry.mozilla.org/
 [events]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html
 [histograms]: https://github.com/mozilla/gecko-dev/blob/master/toolkit/components/telemetry/Histograms.json
-[scalars]: https://dxr.mozilla.org/mozilla-central/rev/tip/toolkit/components/telemetry/Scalars.yaml
+[scalars]: https://searchfox.org/mozilla-central/source/toolkit/components/telemetry/Scalars.yaml
 [tmo]: https://telemetry.mozilla.org/
 [measurement_dash]: https://telemetry.mozilla.org/new-pipeline/dist.html
 [evo_dash]: https://telemetry.mozilla.org/new-pipeline/evo.html
