@@ -21,9 +21,10 @@ These records are then stored in [event pings](https://firefox-source-docs.mozil
 
 ## Identifying Events
 
-One challenge with this data is it can be difficult to identify all the records from a particular event. Unlike Scalars and Histograms, which keep data in individual locations (like `scalar_parent_browser_engagement_total_uri_count` for [`total_uri_count`](https://dxr.mozilla.org/mozilla-central/source/toolkit/components/telemetry/Scalars.yaml#99)), all event records are stored together, regardless of which event generated them. The records themselves don't have a field identifying which event produced it[1].
+One challenge with this data is it can be difficult to identify all the records from a particular event.
+Unlike Scalars and Histograms, which keep data in individual locations (like `scalar_parent_browser_engagement_total_uri_count` for [`total_uri_count`](https://searchfox.org/mozilla-central/rev/501eb4718d73870892d28f31a99b46f4783efaa0/toolkit/components/telemetry/Scalars.yaml#204)), all event records are stored together, regardless of which event generated them. The records themselves don't have a field identifying which event produced it[1].
 
-Take, for example, the [`manage`](https://dxr.mozilla.org/mozilla-central/source/toolkit/components/telemetry/Events.yaml#105)
+Take, for example, the [`manage`](https://searchfox.org/mozilla-central/rev/501eb4718d73870892d28f31a99b46f4783efaa0/toolkit/components/telemetry/Events.yaml#151)
  event in the `addonsManager` category.
 
 ```
