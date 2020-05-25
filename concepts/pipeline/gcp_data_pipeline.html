@@ -210,7 +210,7 @@ of all probes collected so far, in the form of a [<code>main</code> ping], which
 sent to our servers.
 The <code>main</code> ping is just one of the many <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/pings.html#ping-types">ping types</a> we support.
 Developers can <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html">create their own ping types</a> if needed.</p>
-<p><em>Pings</em> are submitted via an <a href="https://dxr.mozilla.org/mozilla-central/rev/6a23526fe5168087d7e4132c0705aefcaed5f571/toolkit/components/telemetry/TelemetryController.jsm#202">API</a> that performs a HTTP POST request to our edge servers.
+<p><em>Pings</em> are submitted via an <a href="https://searchfox.org/mozilla-central/rev/501eb4718d73870892d28f31a99b46f4783efaa0/toolkit/components/telemetry/app/TelemetryController.jsm#231">API</a> that performs a HTTP POST request to our edge servers.
 If a ping fails to successfully <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/submission.html#submission">submit</a> (e.g. because of missing internet connection),
 Firefox will store the ping on disk and retry to send it until the maximum ping age is exceeded.</p>
 <h2><a class="header" href="#ingestion" id="ingestion">Ingestion</a></h2>

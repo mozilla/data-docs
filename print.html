@@ -250,7 +250,7 @@ e.g. [1-2] is a bucket, and so is [100-200].</li>
 </ol>
 <p>To see some of these in action, take a look at the <a href="https://telemetry.mozilla.org/histogram-simulator">Histogram Simulator</a>.</p>
 <p>Scalars are simply a single value.
-The <a href="https://dxr.mozilla.org/mozilla-central/rev/tip/toolkit/components/telemetry/Scalars.yaml"><code>Scalars.yaml</code></a> file has the definitions for all scalars.
+The <a href="https://searchfox.org/mozilla-central/source/toolkit/components/telemetry/Scalars.yaml"><code>Scalars.yaml</code></a> file has the definitions for all scalars.
 These values can be integers, strings, or booleans.</p>
 <h2><a class="header" href="#tmo" id="tmo">TMO</a></h2>
 <p>The simplest way to start looking at probe data is to head over to
@@ -1952,7 +1952,7 @@ of all probes collected so far, in the form of a [<code>main</code> ping], which
 sent to our servers.
 The <code>main</code> ping is just one of the many <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/pings.html#ping-types">ping types</a> we support.
 Developers can <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html">create their own ping types</a> if needed.</p>
-<p><em>Pings</em> are submitted via an <a href="https://dxr.mozilla.org/mozilla-central/rev/6a23526fe5168087d7e4132c0705aefcaed5f571/toolkit/components/telemetry/TelemetryController.jsm#202">API</a> that performs a HTTP POST request to our edge servers.
+<p><em>Pings</em> are submitted via an <a href="https://searchfox.org/mozilla-central/rev/501eb4718d73870892d28f31a99b46f4783efaa0/toolkit/components/telemetry/app/TelemetryController.jsm#231">API</a> that performs a HTTP POST request to our edge servers.
 If a ping fails to successfully <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/submission.html#submission">submit</a> (e.g. because of missing internet connection),
 Firefox will store the ping on disk and retry to send it until the maximum ping age is exceeded.</p>
 <h2><a class="header" href="#ingestion" id="ingestion">Ingestion</a></h2>
@@ -4800,8 +4800,9 @@ hg commit -m &quot;Bug nnn - Testing my extension&quot; testing/profiles/common/
 </ul>
 <p>These records are then stored in <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/data/event-ping.html">event pings</a> and available in the <a href="https://docs.telemetry.mozilla.org/datasets/batch_view/events/reference.html">events dataset</a>.</p>
 <h2><a class="header" href="#identifying-events" id="identifying-events">Identifying Events</a></h2>
-<p>One challenge with this data is it can be difficult to identify all the records from a particular event. Unlike Scalars and Histograms, which keep data in individual locations (like <code>scalar_parent_browser_engagement_total_uri_count</code> for <a href="https://dxr.mozilla.org/mozilla-central/source/toolkit/components/telemetry/Scalars.yaml#99"><code>total_uri_count</code></a>), all event records are stored together, regardless of which event generated them. The records themselves don't have a field identifying which event produced it[1].</p>
-<p>Take, for example, the <a href="https://dxr.mozilla.org/mozilla-central/source/toolkit/components/telemetry/Events.yaml#105"><code>manage</code></a>
+<p>One challenge with this data is it can be difficult to identify all the records from a particular event.
+Unlike Scalars and Histograms, which keep data in individual locations (like <code>scalar_parent_browser_engagement_total_uri_count</code> for <a href="https://searchfox.org/mozilla-central/rev/501eb4718d73870892d28f31a99b46f4783efaa0/toolkit/components/telemetry/Scalars.yaml#204"><code>total_uri_count</code></a>), all event records are stored together, regardless of which event generated them. The records themselves don't have a field identifying which event produced it[1].</p>
+<p>Take, for example, the <a href="https://searchfox.org/mozilla-central/rev/501eb4718d73870892d28f31a99b46f4783efaa0/toolkit/components/telemetry/Events.yaml#151"><code>manage</code></a>
 event in the <code>addonsManager</code> category.</p>
 <pre><code>addonsManager: # category
   manage: # event name
@@ -8979,7 +8980,7 @@ style cerberus fill:royalblue
 </ul>
 <p>Users may choose to turn the data collection off in preferences.</p>
 <p>A <em>session</em> begins when Firefox starts up and ends when it shuts down. As a session could be long-running and last weeks, it gets sliced into smaller logical units called <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/sessions.html#subsessions">subsessions</a>. Each subsession generates a batch of data containing the current state of all probes collected so far, i.e. a <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html">main ping</a>, which is sent to our servers. The main ping is just one of the many <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/pings.html#ping-types">ping types</a> we support. Developers can <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html">create their own ping types</a> if needed.</p>
-<p><em>Pings</em> are submitted via an <a href="https://dxr.mozilla.org/mozilla-central/rev/6a23526fe5168087d7e4132c0705aefcaed5f571/toolkit/components/telemetry/TelemetryController.jsm#202">API</a> that performs a HTTP POST request to our edge servers. If a ping fails to successfully <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/submission.html#submission">submit</a> (e.g. because of missing internet connection), Firefox will store the ping on disk and retry to send it until the maximum ping age is exceeded.</p>
+<p><em>Pings</em> are submitted via an <a href="https://searchfox.org/mozilla-central/rev/501eb4718d73870892d28f31a99b46f4783efaa0/toolkit/components/telemetry/app/TelemetryController.jsm#231">API</a> that performs a HTTP POST request to our edge servers. If a ping fails to successfully <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/submission.html#submission">submit</a> (e.g. because of missing internet connection), Firefox will store the ping on disk and retry to send it until the maximum ping age is exceeded.</p>
 <h1><a class="header" href="#kafka" id="kafka">Kafka</a></h1>
 <p>HTTP submissions coming in from the wild hit a <a href="https://aws.amazon.com/elasticloadbalancing/">load balancer</a> and then an NGINX <a href="https://github.com/mozilla-services/nginx_moz_ingest">module</a>. The <a href="https://github.com/mozilla-services/nginx_moz_ingest">module</a> accepts data via a <a href="https://wiki.mozilla.org/CloudServices/DataPipeline/HTTPEdgeServerSpecification">HTTP request</a> which it wraps in a Hindsight protobuf message and forwards to two places: a Kafka cluster and a short-lived S3 bucket (landfill) which acts as a fail-safe in case there is a processing error and/or data loss within the rest of the pipeline. The deployment scripts and configuration files of NGINX and Kafka live in a <a href="https://github.com/mozilla-services/puppet-config/tree/02f716a3e0df1117fc2494b41e85a1416f8e2a64/pipeline">private repository</a>.</p>
 <p>The data from Kafka is read from the Complex Event Processors (CEP) and the Data Warehouse Loader (DWL), both of which use Hindsight.</p>
