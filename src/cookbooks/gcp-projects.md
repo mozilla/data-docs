@@ -18,7 +18,7 @@ This has a number of advantages over our traditional approach of creating bulk "
 
 Note that these prototype GCP projects are not intended to be used for projects which are already in _production_-- those should be maintained on operations-supported projects, presumably after a development phase. Nor are they meant for ad-hoc analysis or experimentation-- for that, just file a request as outlined in the [Accessing BigQuery](bigquery/access.md#access-request) cookbook.
 
-Each sandbox project has a data engineering contact associated with it: this is the person will create the project for you. Additionally, they are meant to be a resource you can freely ask for advice on how to query or use GCP, and how to build software that lends itself to productionisation.
+Each sandbox project has a data engineering contact associated with it: this is the person will create the project for you. Additionally, they are meant to be a resource you can freely ask for advice on how to query or use GCP, and how to build software that lends itself to productionization.
 
 To request the creation of such a project, [file a bug] using the provided template.
 Not sure if you need a project like this? Don't know who to specify as a Data Engineering contact? Not sure what your project budget might be? [Get in touch with the data platform team](../concepts/getting_help.md).
