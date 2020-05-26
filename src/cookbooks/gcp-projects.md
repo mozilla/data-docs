@@ -1,6 +1,6 @@
-# Creating a Sandbox Data Project on Google Cloud Platform
+# Creating a Prototype Data Project on Google Cloud Platform
 
-If you are working on a more complex project (as opposed to ad-hoc or one-off analysis) which you intend to run in production at some point, it may be worthwhile provisioning a separate GCP project for it with access to our datasets. From the [Google Cloud Console](https://console.cloud.google.com/), you may then:
+If you are working on a more complex project (as opposed to ad-hoc or one-off analysis) which you intend to run in production at some point, it may be worthwhile provisioning a separate _prototype_ GCP project for it with access to our datasets. From the [Google Cloud Console](https://console.cloud.google.com/), you may then:
 
 - Provision service accounts for querying BigQuery (including our production tables) or accessing other GCP resources from the command-line or inside Docker containers
 - Write and query data to private BigQuery tables, without worrying about interfering with what we have in production
@@ -16,12 +16,12 @@ This has a number of advantages over our traditional approach of creating bulk "
 - Can self-serve short-lived administrative credentials which exist only for the lifespan of the project.
 - Can easily spin down projects and resources which have run their course
 
-Note that these sandbox GCP projects are not intended to be used for projects which are already in _production_-- those should be maintained on operations-supported projects, presumably after a prototype/development phase. Nor are they meant for ad-hoc analysis or experimentation-- for that, just file a request as outlined in the [Accessing BigQuery](bigquery/access.md) cookbook.
+Note that these prototype GCP projects are not intended to be used for projects which are already in _production_-- those should be maintained on operations-supported projects, presumably after a development phase. Nor are they meant for ad-hoc analysis or experimentation-- for that, just file a request as outlined in the [Accessing BigQuery](bigquery/access.md#access-request) cookbook.
 
 Each sandbox project has a data engineering contact associated with it: this is the person will create the project for you. Additionally, they are meant to be a resource you can freely ask for advice on how to query or use GCP, and how to build software that lends itself to productionisation.
 
 To request the creation of such a project, [file a bug] using the provided template.
-Not sure if you need a project like this? Don't know who to specify as a Data Engineering contact? Not sure what your project budget might be? [Get in touch with us](../concepts/getting_help.md) and we'll help you figure it out.
+Not sure if you need a project like this? Don't know who to specify as a Data Engineering contact? Not sure what your project budget might be? [Get in touch with the data platform team](../concepts/getting_help.md).
 
 We are currently [tracking these projects on mana](https://mana.mozilla.org/wiki/display/DENG/Active+GCP+Prototype+Projects) (link requires Mozilla LDAP)
 
