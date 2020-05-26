@@ -125,7 +125,7 @@ results into Spark.
 ### Databricks
 
 [Databricks Notebooks](https://docs.databricks.com/notebooks/index.html) provide an interactive
-computational environment, similar to Jupyter. If you are a Mozilla employee, you should be able to access it via [`sso.mozilla.com`](https://sso.mozilla.com).
+computational environment, similar to Jupyter. If you are a Mozilla employee, you should be able to access it via [`sso.mozilla.com/databricks`](https://sso.mozilla.com/databricks).
 
 The `shared_serverless_python3` cluster is configured with shared default GCP credentials that are automatically picked up by BigQuery client libraries. It also has the Storage API Connector library added as seen in the example [Python notebook](https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/141939).
 
