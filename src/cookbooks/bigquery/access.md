@@ -115,21 +115,20 @@ python -c 'from google.cloud import bigquery; print([d.dataset_id for d in bigqu
 
 ### Spark
 
+#### Locally
+
 > This method requires [BigQuery Access](#BigQuery-Access-Request) to be provisioned.
 
-We recommend the [Storage API Connector](https://github.com/GoogleCloudPlatform/spark-bigquery-connector) for accessing
-BigQuery tables in Spark as it is the most modern and actively developed connector. It works well with the BigQuery
-client library which is useful if you need to run arbitrary SQL queries (see example Databricks notebook) and load their
-results into Spark.
+If you want to use Spark locally (or via an adhoc GCP instance), we recommend the [Storage API Connector](https://github.com/GoogleCloudPlatform/spark-bigquery-connector) for accessing BigQuery tables in Spark as it is the most modern and actively developed connector. It works well with the BigQuery client library which is useful if you need to run arbitrary SQL queries (see the [Databricks](#databricks) section for a link to an example notebook) and load their results into Spark.
 
-### Databricks
+#### Databricks
 
 [Databricks Notebooks](https://docs.databricks.com/notebooks/index.html) provide an interactive
 computational environment, similar to Jupyter. If you are a Mozilla employee, you should be able to access it via [`sso.mozilla.com/databricks`](https://sso.mozilla.com/databricks).
 
-The `shared_serverless_python3` cluster is configured with shared default GCP credentials that are automatically picked up by BigQuery client libraries. It also has the Storage API Connector library added as seen in the example [Python notebook](https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/141939).
+The `shared_serverless_python3` cluster is configured with shared default GCP credentials that are automatically picked up by BigQuery client libraries. It also has the Spark Storage API Connector library added as seen in the example [Python notebook](https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/141939).
 
-### Dataproc
+#### Dataproc
 
 > This method requires [BigQuery Access](#BigQuery-Access-Request) to be provisioned.
 
