@@ -1,6 +1,6 @@
 # Creating a Prototype Data Project on Google Cloud Platform
 
-If you are working on a more complex project (as opposed to ad-hoc or one-off analysis) which you intend to run in production at some point, it may be worthwhile provisioning a separate _prototype_ GCP project for it with access to our datasets. From the [Google Cloud Console](https://console.cloud.google.com/), you may then:
+If you are working on a more complex project (as opposed to ad-hoc or one-off analysis) which you intend to be run in production at some point, it may be worthwhile provisioning a separate _prototype_ GCP project for it with access to our datasets. From the [Google Cloud Console](https://console.cloud.google.com/), you may then:
 
 - Provision service accounts for querying BigQuery (including our production tables) or accessing other GCP resources from the command-line or inside Docker containers
 - Write and query data to private BigQuery tables, without worrying about interfering with what we have in production
