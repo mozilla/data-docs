@@ -10,7 +10,7 @@ There are many methods you can use to access BigQuery: both interactive and prog
 
 ### STMO (`sql.telemetry.mozilla.org`)
 
-All users with access to [STMO](../../intro/stmo.md) can access BigQuery using the following data sources:
+All users with access to [STMO](../../tools/stmo.md) can access BigQuery using the following data sources:
 
 - `Telemetry (BigQuery)`
 - `Telemetry Search (BigQuery)`
