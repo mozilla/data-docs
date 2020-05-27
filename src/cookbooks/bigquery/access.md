@@ -119,7 +119,7 @@ python -c 'from google.cloud import bigquery; print([d.dataset_id for d in bigqu
 
 > This method requires [BigQuery Access](#BigQuery-Access-Request) to be provisioned.
 
-If you want to use Spark locally (or via an adhoc GCP instance), we recommend the [Storage API Connector](https://github.com/GoogleCloudPlatform/spark-bigquery-connector) for accessing BigQuery tables in Spark as it is the most modern and actively developed connector. It works well with the BigQuery client library which is useful if you need to run arbitrary SQL queries (see the [Databricks](#databricks) section for a link to an example notebook) and load their results into Spark.
+If you want to use Spark locally (or via an arbitrary GCP instance in the cloud), we recommend the [Storage API Connector](https://github.com/GoogleCloudPlatform/spark-bigquery-connector) for accessing BigQuery tables in Spark as it is the most modern and actively developed connector. It works well with the BigQuery client library which is useful if you need to run arbitrary SQL queries and load their results into Spark (see the [Databricks](#databricks) section for a link to an example notebook demonstrating this technique).
 
 #### Databricks
 
