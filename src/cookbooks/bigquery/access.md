@@ -81,7 +81,7 @@ For advanced use cases involving programmatic access -- including automated work
 
 You can locate a list of supported BigQuery client libraries [here](https://cloud.google.com/bigquery/docs/reference/libraries).
 
-Although usually you will want to use a client library, Google also provides a [detailed reference of their underlying REST API](https://cloud.google.com/bigquery/docs/reference/rest/).
+Although you typically want to use a client library, Google also provides a [detailed reference of their underlying REST API](https://cloud.google.com/bigquery/docs/reference/rest/).
 
 #### Service Accounts
 
