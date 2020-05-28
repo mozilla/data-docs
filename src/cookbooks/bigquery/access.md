@@ -149,7 +149,7 @@ gcloud beta dataproc clusters create cluster-name \
     --project project-id
 ```
 
-The Jupyter URL can be retrieved with the following command:
+You can retrieve the Jupyter URL with the following command:
 
 ```bash
 gcloud beta dataproc clusters describe cluster-name --region=us-west1 --project project-id | grep Jupyter
