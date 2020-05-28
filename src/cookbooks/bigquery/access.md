@@ -1,6 +1,6 @@
 # Accessing BigQuery
 
-There are many methods you can use to access BigQuery: both interactive and programmatic. This document tries to give some basic information and pointers on how to get started with each.
+There are many methods that you can use to access BigQuery: both interactive and programmatic. This document provides some basic information and pointers on how to get started with each.
 
 ## Table of Contents
 
