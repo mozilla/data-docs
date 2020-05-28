@@ -15,7 +15,7 @@ All users with access to [STMO](../../tools/stmo.md) can access BigQuery using t
 - `Telemetry (BigQuery)`
 - `Telemetry Search (BigQuery)`
 
-Note that queries made from STMO are read-only: you cannot create views or tables.
+> Queries made from STMO are read-only: you cannot create views or tables.
 
 ### BigQuery Console
 
