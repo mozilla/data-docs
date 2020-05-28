@@ -58,7 +58,7 @@ Steps to use:
   - `gcloud config set project moz-fx-data-bq-<team-name>`
   - project name will be provided for you when your account is provisioned.
 
-Once configured, you can now simply use the `bq` command-line client. Here's a quick one
+Once configured, you can now use the `bq` command-line client. The following example
 which lists the tables and views in a BigQuery dataset:
 
 ```bash
