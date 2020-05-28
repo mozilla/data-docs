@@ -163,7 +163,7 @@ gcloud beta dataproc clusters delete cluster-name --region=us-west1 --project pr
 
 ### Colaboratory
 
-> This method requires [BigQuery Access](#BigQuery-Access-Request) to be provisioned..
+> This method requires [BigQuery Access](#BigQuery-Access-Request) to be provisioned.
 
 [Colaboratory](https://colab.research.google.com) (Colab) is Jupyter notebook environment, managed by Google and running in the cloud. Notebooks are stored in Google Drive and can be shared in a similar way to Google Docs.
 
