@@ -87,7 +87,7 @@ Although you typically want to use a client library, Google also provides a [det
 
 Client SDKs do not access credentials the same way as the `gcloud` and `bq`
 command-line tools. The client SDKs generally assume that the machine is configured with
-a service account and will look for JSON-based credentials in several well-known locations
+a service account and looks for JSON-based credentials in several well-known locations
 rather than looking for user credentials.
 
 If you have service account credentials, you can point client SDKs at them
