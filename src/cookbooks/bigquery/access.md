@@ -59,7 +59,7 @@ Steps to use:
   - project name will be provided for you when your account is provisioned.
 
 Once configured, you can now use the `bq` command-line client. The following example
-which lists the tables and views in a BigQuery dataset:
+lists the tables and views in a BigQuery dataset:
 
 ```bash
 bq ls moz-fx-data-derived-datasets:telemetry
