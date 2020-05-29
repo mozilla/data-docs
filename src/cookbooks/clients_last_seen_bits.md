@@ -21,6 +21,10 @@ article discusses the details of how we represent usage in bit patterns,
 how to extract standard usage and retention metrics,
 and how to build new metrics from them.
 
+## Table of Contents
+
+<!-- toc -->
+
 ## Calculating DAU, WAU, and MAU
 
 The simplest application of usage bit patterns is for calculating metrics in
