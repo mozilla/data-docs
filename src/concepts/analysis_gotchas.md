@@ -28,6 +28,7 @@ that might impact comparisons with history. Here are a few to keep in mind:
   Clients generally retry periodically until they get success, so most of these messages
   were eventually ingested; submission timestamps will be later than normal. A small number of pings
   are attributed to a later day or were never sent due to the client never being reopened.
+- **February 11, 2020** - Firefox 73 was released and began the start of [4-week release cycles][four_week_cycles]. There was a gradual transition from 7/8 week ones to 4 week ones.
 - **December 4 2019** - [AWS Ingestion Pipeline decommissioned][bug1598815].
   Specifically, the last ping relayed through the AWS machinery had a
   timestamp of `2019-12-04 22:04:45.912204 UTC`.
@@ -66,6 +67,7 @@ that might impact comparisons with history. Here are a few to keep in mind:
 [Bug 1501329]: https://bugzilla.mozilla.org/show_bug.cgi?id=1501329
 [bug1482509]: https://bugzilla.mozilla.org/show_bug.cgi?id=1482509
 [bug1598815]: https://bugzilla.mozilla.org/show_bug.cgi?id=1598815
+[four_week_cycles]: https://docs.google.com/document/d/1oJhnvAOx2c8Mp-Xpk-3j-2d45yu_fghYS2yAbn1aeNY/edit#heading=h.iba82gckexg7
 [bug1630096]: https://bugzilla.mozilla.org/show_bug.cgi?id=1630096
 
 ### Pseudo-replication
