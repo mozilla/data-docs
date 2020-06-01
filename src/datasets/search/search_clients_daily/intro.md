@@ -2,7 +2,7 @@
 Querying this dataset can be slow;
 consider using `search_aggregates` for coarse analyses.
 
-#### Contents
+## Contents
 
 `search_clients_daily` has one row for each unique combination of:
 (`client_id`, `submission_date`, `engine`, `source`).
@@ -22,7 +22,7 @@ the column value is `null`.
 Each of these columns represent different types of searches.
 For more details, see the [search data documentation]
 
-#### Background and Caveats
+## Background and Caveats
 
 `search_clients_daily` does not include
 (`client_id` `submission_date`) pairs
