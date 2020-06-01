@@ -158,8 +158,10 @@
                         <h1><a class="header" href="#search-aggregates" id="search-aggregates">Search Aggregates</a></h1>
 <ul>
 <li><a href="#introduction">Introduction</a>
-* <a href="#contents">Contents</a>
-* <a href="#accessing-the-data">Accessing the Data</a></li>
+<ul>
+<li><a href="#contents">Contents</a></li>
+</ul>
+</li>
 <li><a href="#data-reference">Data Reference</a>
 <ul>
 <li><a href="#example-queries">Example Queries</a></li>
@@ -177,7 +179,7 @@ by a limited number of client characteristics which are relevant to search marke
 However, it is not possible to normalize by client count.
 If you need fine-grained data, consider using <code>search_clients_daily</code>
 which breaks down search counts by client</p>
-<h4><a class="header" href="#contents" id="contents">Contents</a></h4>
+<h2><a class="header" href="#contents" id="contents">Contents</a></h2>
 <p>Each row of <code>search_aggregates</code> contains
 the standard search count aggregations
 for each unique combination of the following columns.
@@ -197,13 +199,6 @@ Unless otherwise noted, these columns are taken directly from <code>main_summary
 <code>sap</code>, <code>tagged-sap</code>, and <code>tagged-follow-on</code>, <code>organic</code> and <code>unknown</code>.
 Each of these columns represent different types of searches.
 For more details, see the <a href="../../search.html">search data documentation</a></p>
-<!--
-#### Background and Caveats
--->
-<h4><a class="header" href="#accessing-the-data" id="accessing-the-data">Accessing the Data</a></h4>
-<p>Access to <code>search_aggregates</code> is heavily restricted.
-You will not be able to access this table without additional permissions.
-For more details see the <a href="../../search.html">search data documentation</a>.</p>
 <!--
 #### Further Reading
 -->

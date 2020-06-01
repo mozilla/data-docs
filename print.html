@@ -7578,7 +7578,6 @@ you should understand the search datasets well enough to produce moderately
 complex analyses.</p>
 <h2><a class="header" href="#table-of-contents-7" id="table-of-contents-7">Table of Contents</a></h2>
 <ul>
-<li><a href="datasets/search.html#permissions">Permissions</a></li>
 <li><a href="datasets/search.html#terminology">Terminology</a>
 <ul>
 <li><a href="datasets/search.html#direct-vs-follow-on-search">Direct vs Follow-on Search</a></li>
@@ -7597,17 +7596,6 @@ complex analyses.</p>
 </ul>
 </li>
 </ul>
-<h1><a class="header" href="#permissions" id="permissions">Permissions</a></h1>
-<p>Access to both <code>search_aggregates</code> and <code>search_clients_daily</code>
-is heavily restricted in re:dash.
-We also maintain a restricted group for search on Github and Bugzilla.
-If you reach a 404 on Github or don't have access to a re:dash query or bug
-this is likely your issue.
-To get access permissions, file a bug using the <a href="https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=rharter%40mozilla.com&amp;bug_file_loc=http%3A%2F%2F&amp;bug_ignored=0&amp;bug_severity=normal&amp;bug_status=NEW&amp;cf_fx_iteration=---&amp;cf_fx_points=---&amp;comment=Please%20add%20the%20following%20user%20to%20the%20Search%20group%3A%0D%0A%0D%0AMozilla%20email%20address%3A%0D%0AGithub%20handle%3A&amp;component=Datasets%3A%20Search&amp;contenttypemethod=autodetect&amp;contenttypeselection=text%2Fplain&amp;defined_groups=1&amp;flag_type-4=X&amp;flag_type-607=X&amp;flag_type-800=X&amp;flag_type-803=X&amp;flag_type-916=X&amp;form_name=enter_bug&amp;maketemplate=Remember%20values%20as%20bookmarkable%20template&amp;op_sys=Linux&amp;priority=--&amp;product=Data%20Platform%20and%20Tools&amp;rep_platform=x86_64&amp;short_desc=Add%20user%20to%20search%20user%20groups&amp;target_milestone=---&amp;version=unspecified">search permissions template</a></p>
-<p>Once you have proper permissions,
-you'll have access to a new source in re:dash called <code>Telemetry Search (BigQuery)</code>.
-<strong>You will not be able to access any of the search datasets
-via the standard <code>Telemetry (BigQuery)</code> data source</strong>, even with proper permissions.</p>
 <h1><a class="header" href="#terminology-1" id="terminology-1">Terminology</a></h1>
 <h2><a class="header" href="#direct-vs-follow-on-search" id="direct-vs-follow-on-search">Direct vs Follow-on Search</a></h2>
 <p>Searches can be split into three major classes: <em>sap</em>, <em>follow-on</em>, and <em>organic</em>.</p>
@@ -7710,8 +7698,10 @@ There is no <code>tagged-*</code> search data available before this.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/search.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#search-aggregates" id="search-aggregates">Search Aggregates</a></h1>
 <ul>
 <li><a href="datasets/search/search_aggregates/reference.html#introduction">Introduction</a>
-* <a href="datasets/search/search_aggregates/reference.html#contents">Contents</a>
-* <a href="datasets/search/search_aggregates/reference.html#accessing-the-data">Accessing the Data</a></li>
+<ul>
+<li><a href="datasets/search/search_aggregates/reference.html#contents">Contents</a></li>
+</ul>
+</li>
 <li><a href="datasets/search/search_aggregates/reference.html#data-reference">Data Reference</a>
 <ul>
 <li><a href="datasets/search/search_aggregates/reference.html#example-queries">Example Queries</a></li>
@@ -7729,7 +7719,7 @@ by a limited number of client characteristics which are relevant to search marke
 However, it is not possible to normalize by client count.
 If you need fine-grained data, consider using <code>search_clients_daily</code>
 which breaks down search counts by client</p>
-<h4><a class="header" href="#contents-12" id="contents-12">Contents</a></h4>
+<h2><a class="header" href="#contents-12" id="contents-12">Contents</a></h2>
 <p>Each row of <code>search_aggregates</code> contains
 the standard search count aggregations
 for each unique combination of the following columns.
@@ -7749,13 +7739,6 @@ Unless otherwise noted, these columns are taken directly from <code>main_summary
 <code>sap</code>, <code>tagged-sap</code>, and <code>tagged-follow-on</code>, <code>organic</code> and <code>unknown</code>.
 Each of these columns represent different types of searches.
 For more details, see the <a href="datasets/search/search_aggregates/../../search.html">search data documentation</a></p>
-<!--
-#### Background and Caveats
--->
-<h4><a class="header" href="#accessing-the-data-19" id="accessing-the-data-19">Accessing the Data</a></h4>
-<p>Access to <code>search_aggregates</code> is heavily restricted.
-You will not be able to access this table without additional permissions.
-For more details see the <a href="datasets/search/search_aggregates/../../search.html">search data documentation</a>.</p>
 <!--
 #### Further Reading
 -->
@@ -7806,9 +7789,11 @@ The dataset is backfilled through 2016-03-11</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/search/search_aggregates/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#search-clients-daily" id="search-clients-daily">Search Clients Daily</a></h1>
 <ul>
 <li><a href="datasets/search/search_clients_daily/reference.html#introduction">Introduction</a>
-* <a href="datasets/search/search_clients_daily/reference.html#contents">Contents</a>
-* <a href="datasets/search/search_clients_daily/reference.html#background-and-caveats">Background and Caveats</a>
-* <a href="datasets/search/search_clients_daily/reference.html#accessing-the-data">Accessing the Data</a></li>
+<ul>
+<li><a href="datasets/search/search_clients_daily/reference.html#contents">Contents</a></li>
+<li><a href="datasets/search/search_clients_daily/reference.html#background-and-caveats">Background and Caveats</a></li>
+</ul>
+</li>
 <li><a href="datasets/search/search_clients_daily/reference.html#data-reference">Data Reference</a>
 <ul>
 <li><a href="datasets/search/search_clients_daily/reference.html#example-queries">Example Queries</a></li>
@@ -7822,7 +7807,7 @@ The dataset is backfilled through 2016-03-11</p>
 <p><code>search_clients_daily</code> is designed to enable client-level search analyses.
 Querying this dataset can be slow;
 consider using <code>search_aggregates</code> for coarse analyses.</p>
-<h4><a class="header" href="#contents-13" id="contents-13">Contents</a></h4>
+<h2><a class="header" href="#contents-13" id="contents-13">Contents</a></h2>
 <p><code>search_clients_daily</code> has one row for each unique combination of:
 (<code>client_id</code>, <code>submission_date</code>, <code>engine</code>, <code>source</code>).</p>
 <p>In addition to the standard search count aggregations,
@@ -7838,7 +7823,7 @@ Note that, if there were no such searches in a row's segment
 the column value is <code>null</code>.
 Each of these columns represent different types of searches.
 For more details, see the <a href="datasets/search/search_clients_daily/../../search.html">search data documentation</a></p>
-<h4><a class="header" href="#background-and-caveats-8" id="background-and-caveats-8">Background and Caveats</a></h4>
+<h2><a class="header" href="#background-and-caveats-8" id="background-and-caveats-8">Background and Caveats</a></h2>
 <p><code>search_clients_daily</code> does not include
 (<code>client_id</code> <code>submission_date</code>) pairs
 if we did not receive a ping for that <code>submission_date</code>.</p>
@@ -7848,10 +7833,6 @@ This ensures users who never search are included in this dataset.</p>
 Consider using Spark on <a href="https://dbc-caf9527b-e073.cloud.databricks.com">Databricks</a>.
 If you're querying this dataset from re:dash,
 heavily limit the data you read using <code>submission_date</code> or <code>sample_id</code>.</p>
-<h4><a class="header" href="#accessing-the-data-20" id="accessing-the-data-20">Accessing the Data</a></h4>
-<p>Access to <code>search_clients_daily</code> is heavily restricted.
-You will not be able to access this table without additional permissions.
-For more details see the <a href="datasets/search/search_clients_daily/../../search.html">search data documentation</a>.</p>
 <!--
 #### Further Reading
 -->
@@ -8004,7 +7985,7 @@ days are not directly comparable.</p>
 (<code>client_id</code> <code>submission_date</code>) pairs
 even if we did not receive a ping for that <code>submission_date</code>.
 Any client who was active over the past year will be included.</p>
-<h4><a class="header" href="#accessing-the-data-21" id="accessing-the-data-21">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-19" id="accessing-the-data-19">Accessing the Data</a></h4>
 <p>Access the data at <code>search.search_clients_last_seen</code>.</p>
 <!--
 #### Further Reading
@@ -10015,7 +9996,7 @@ is tractable in STMO with <code>main_summary</code> or <code>clients_daily</code
 </ul>
 </li>
 </ul>
-<h4><a class="header" href="#accessing-the-data-22" id="accessing-the-data-22">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-20" id="accessing-the-data-20">Accessing the Data</a></h4>
 <p><code>churn</code> is available in Re:dash under Athena and Presto. The data is also
 available in parquet for consumption by columnar data engines at
 <code>s3://telemetry-parquet/churn/v3</code>.</p>
@@ -10200,7 +10181,7 @@ The <a href="https://sql.telemetry.mozilla.org/queries/81/source#129">Firefox ER
 is a good example to review.
 Finally, Roberto has a relevant write-up
 <a href="https://ravitillo.wordpress.com/2016/04/12/measuring-product-engagment-at-scale/">here</a>.</p>
-<h4><a class="header" href="#accessing-the-data-23" id="accessing-the-data-23">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-21" id="accessing-the-data-21">Accessing the Data</a></h4>
 <p>The data is available in Re:dash.
 Take a look at this
 <a href="https://sql.telemetry.mozilla.org/queries/81/source#129">example query</a>.</p>
@@ -10327,7 +10308,7 @@ is <code>v2</code>, and has a schema as follows:</p>
 Each row is a distinct set of dimensions, along with their associated crash stats.
 Example stratifying dimensions include channel and country,
 example statistics include usage hours and plugin crashes.</p>
-<h4><a class="header" href="#accessing-the-data-24" id="accessing-the-data-24">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-22" id="accessing-the-data-22">Accessing the Data</a></h4>
 <p>This dataset is accessible via re:dash.</p>
 <p>The data is stored as a parquet table in S3 at the following address.</p>
 <pre><code>s3://telemetry-parquet/crash_aggregates/v1/
@@ -10451,7 +10432,7 @@ The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/d50b938/da
 <p>The <code>crash_summary</code> table contains one row for each crash ping.
 Each column represents one field from the crash ping payload,
 though only a subset of all crash ping fields are included.</p>
-<h4><a class="header" href="#accessing-the-data-25" id="accessing-the-data-25">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-23" id="accessing-the-data-23">Accessing the Data</a></h4>
 <p>The data is stored as a parquet table in S3 at the following address.</p>
 <pre><code>s3://telemetry-parquet/crash_summary/v1/
 </code></pre>
@@ -10553,7 +10534,7 @@ they are participating in. However, they are also aggregated with the rest of th
 these dimensions are null.
 Therefore care must be taken when writing aggregating queries over the whole population - in these cases one needs to
 filter for <code>experiment_id is null</code> and <code>experiment_branch is null</code> in order to not double-count pings from experiments.</p>
-<h4><a class="header" href="#accessing-the-data-26" id="accessing-the-data-26">Accessing the data</a></h4>
+<h4><a class="header" href="#accessing-the-data-24" id="accessing-the-data-24">Accessing the data</a></h4>
 <p>You can access the data via re:dash. Choose <code>Athena</code> and then select the
 <code>telemetry.error_aggregates_v2</code> table.</p>
 <h4><a class="header" href="#further-reading-7" id="further-reading-7">Further Reading</a></h4>
@@ -10705,7 +10686,7 @@ profile was created are counted as zero <code>active_ticks</code>. Analyses may
 need to use the included <code>profile_creation_date</code> field to take this
 into account.</li>
 </ol>
-<h4><a class="header" href="#accessing-the-data-27" id="accessing-the-data-27">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-25" id="accessing-the-data-25">Accessing the Data</a></h4>
 <p>The data is available both via <code>sql.t.m.o</code> and Spark.</p>
 <p>In Spark:</p>
 <pre><code class="language-python">spark.read.parquet(&quot;s3://telemetry-parquet/heavy_users/v1&quot;)
@@ -10788,7 +10769,7 @@ and down-samples to 1% of all clients to reduce query computation time and save 
 <li>The longitudinal dataset samples to 1% of all <code>client_id</code>s</li>
 </ul>
 <p>Please note that this dataset only contains release (or opt-out) histograms and scalars.</p>
-<h4><a class="header" href="#accessing-the-data-28" id="accessing-the-data-28">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-26" id="accessing-the-data-26">Accessing the Data</a></h4>
 <p>The <code>longitudinal</code> is available in re:dash,
 though it can be difficult to work with the array values in SQL.
 Take a look at this <a href="https://sql.telemetry.mozilla.org/queries/4189/source">example query</a>.</p>
@@ -10891,7 +10872,7 @@ size of the HLL object is 2^13 bits or 1KiB. This maintains about a 1% error
 on average. See <a href="https://github.com/twitter/algebird/blob/develop/algebird-core/src/main/scala/com/twitter/algebird/HyperLogLog.scala#L230-L255">this table from Algebird's HLL implementation</a> for
 more details.</li>
 </ol>
-<h4><a class="header" href="#accessing-the-data-29" id="accessing-the-data-29">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-27" id="accessing-the-data-27">Accessing the Data</a></h4>
 <p>The data is primarily available through <a href="https://sql.telemetry.mozilla.org">Re:dash on STMO</a> via
 the Presto source. This service has been configured to use predefined HLL
 functions.</p>

@@ -158,9 +158,11 @@
                         <h1><a class="header" href="#search-clients-daily" id="search-clients-daily">Search Clients Daily</a></h1>
 <ul>
 <li><a href="#introduction">Introduction</a>
-* <a href="#contents">Contents</a>
-* <a href="#background-and-caveats">Background and Caveats</a>
-* <a href="#accessing-the-data">Accessing the Data</a></li>
+<ul>
+<li><a href="#contents">Contents</a></li>
+<li><a href="#background-and-caveats">Background and Caveats</a></li>
+</ul>
+</li>
 <li><a href="#data-reference">Data Reference</a>
 <ul>
 <li><a href="#example-queries">Example Queries</a></li>
@@ -174,7 +176,7 @@
 <p><code>search_clients_daily</code> is designed to enable client-level search analyses.
 Querying this dataset can be slow;
 consider using <code>search_aggregates</code> for coarse analyses.</p>
-<h4><a class="header" href="#contents" id="contents">Contents</a></h4>
+<h2><a class="header" href="#contents" id="contents">Contents</a></h2>
 <p><code>search_clients_daily</code> has one row for each unique combination of:
 (<code>client_id</code>, <code>submission_date</code>, <code>engine</code>, <code>source</code>).</p>
 <p>In addition to the standard search count aggregations,
@@ -190,7 +192,7 @@ Note that, if there were no such searches in a row's segment
 the column value is <code>null</code>.
 Each of these columns represent different types of searches.
 For more details, see the <a href="../../search.html">search data documentation</a></p>
-<h4><a class="header" href="#background-and-caveats" id="background-and-caveats">Background and Caveats</a></h4>
+<h2><a class="header" href="#background-and-caveats" id="background-and-caveats">Background and Caveats</a></h2>
 <p><code>search_clients_daily</code> does not include
 (<code>client_id</code> <code>submission_date</code>) pairs
 if we did not receive a ping for that <code>submission_date</code>.</p>
@@ -200,10 +202,6 @@ This ensures users who never search are included in this dataset.</p>
 Consider using Spark on <a href="https://dbc-caf9527b-e073.cloud.databricks.com">Databricks</a>.
 If you're querying this dataset from re:dash,
 heavily limit the data you read using <code>submission_date</code> or <code>sample_id</code>.</p>
-<h4><a class="header" href="#accessing-the-data" id="accessing-the-data">Accessing the Data</a></h4>
-<p>Access to <code>search_clients_daily</code> is heavily restricted.
-You will not be able to access this table without additional permissions.
-For more details see the <a href="../../search.html">search data documentation</a>.</p>
 <!--
 #### Further Reading
 -->

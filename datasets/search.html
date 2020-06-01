@@ -163,7 +163,6 @@ you should understand the search datasets well enough to produce moderately
 complex analyses.</p>
 <h2><a class="header" href="#table-of-contents" id="table-of-contents">Table of Contents</a></h2>
 <ul>
-<li><a href="#permissions">Permissions</a></li>
 <li><a href="#terminology">Terminology</a>
 <ul>
 <li><a href="#direct-vs-follow-on-search">Direct vs Follow-on Search</a></li>
@@ -182,17 +181,6 @@ complex analyses.</p>
 </ul>
 </li>
 </ul>
-<h1><a class="header" href="#permissions" id="permissions">Permissions</a></h1>
-<p>Access to both <code>search_aggregates</code> and <code>search_clients_daily</code>
-is heavily restricted in re:dash.
-We also maintain a restricted group for search on Github and Bugzilla.
-If you reach a 404 on Github or don't have access to a re:dash query or bug
-this is likely your issue.
-To get access permissions, file a bug using the <a href="https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=rharter%40mozilla.com&amp;bug_file_loc=http%3A%2F%2F&amp;bug_ignored=0&amp;bug_severity=normal&amp;bug_status=NEW&amp;cf_fx_iteration=---&amp;cf_fx_points=---&amp;comment=Please%20add%20the%20following%20user%20to%20the%20Search%20group%3A%0D%0A%0D%0AMozilla%20email%20address%3A%0D%0AGithub%20handle%3A&amp;component=Datasets%3A%20Search&amp;contenttypemethod=autodetect&amp;contenttypeselection=text%2Fplain&amp;defined_groups=1&amp;flag_type-4=X&amp;flag_type-607=X&amp;flag_type-800=X&amp;flag_type-803=X&amp;flag_type-916=X&amp;form_name=enter_bug&amp;maketemplate=Remember%20values%20as%20bookmarkable%20template&amp;op_sys=Linux&amp;priority=--&amp;product=Data%20Platform%20and%20Tools&amp;rep_platform=x86_64&amp;short_desc=Add%20user%20to%20search%20user%20groups&amp;target_milestone=---&amp;version=unspecified">search permissions template</a></p>
-<p>Once you have proper permissions,
-you'll have access to a new source in re:dash called <code>Telemetry Search (BigQuery)</code>.
-<strong>You will not be able to access any of the search datasets
-via the standard <code>Telemetry (BigQuery)</code> data source</strong>, even with proper permissions.</p>
 <h1><a class="header" href="#terminology" id="terminology">Terminology</a></h1>
 <h2><a class="header" href="#direct-vs-follow-on-search" id="direct-vs-follow-on-search">Direct vs Follow-on Search</a></h2>
 <p>Searches can be split into three major classes: <em>sap</em>, <em>follow-on</em>, and <em>organic</em>.</p>
