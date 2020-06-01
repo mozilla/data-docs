@@ -36,16 +36,8 @@ Consider using Spark on [Databricks](https://dbc-caf9527b-e073.cloud.databricks.
 If you're querying this dataset from re:dash,
 heavily limit the data you read using `submission_date` or `sample_id`.
 
-
-#### Accessing the Data
-
-Access to `search_clients_daily` is heavily restricted.
-You will not be able to access this table without additional permissions.
-For more details see the [search data documentation].
-
 <!--
 #### Further Reading
 -->
-
 
 [search data documentation]: ../../search.md
