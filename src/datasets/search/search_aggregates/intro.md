@@ -29,19 +29,8 @@ Each of these columns represent different types of searches.
 For more details, see the [search data documentation]
 
 <!--
-#### Background and Caveats
--->
-
-#### Accessing the Data
-
-Access to `search_aggregates` is heavily restricted.
-You will not be able to access this table without additional permissions.
-For more details see the [search data documentation].
-
-<!--
 #### Further Reading
 -->
-
 
 [followonsearch addon]: https://github.com/mozilla/followonsearch
 [search data documentation]: ../../search.md
