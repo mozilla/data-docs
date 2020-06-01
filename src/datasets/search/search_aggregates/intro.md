@@ -6,7 +6,7 @@ However, it is not possible to normalize by client count.
 If you need fine-grained data, consider using `search_clients_daily`
 which breaks down search counts by client
 
-#### Contents
+## Contents
 
 Each row of `search_aggregates` contains
 the standard search count aggregations
