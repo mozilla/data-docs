@@ -174,6 +174,39 @@ was active and each 0 indicating a day where the client was inactive. This
 article discusses the details of how we represent usage in bit patterns,
 how to extract standard usage and retention metrics,
 and how to build new metrics from them.</p>
+<h2><a class="header" href="#table-of-contents" id="table-of-contents">Table of Contents</a></h2>
+<ul>
+<li><a href="#calculating-dau-wau-and-mau">Calculating DAU, WAU, and MAU</a></li>
+<li><a href="#calculating-retention">Calculating retention</a></li>
+<li><a href="#understanding-bit-patterns">Understanding bit patterns</a>
+<ul>
+<li><a href="#why-28-bits-instead-of-64">Why 28 bits instead of 64?</a></li>
+<li><a href="#forward-looking-windows-and-backward-looking-windows">Forward-looking windows and backward-looking windows</a></li>
+</ul>
+</li>
+<li><a href="#usage-backward-looking-windows">Usage: Backward-looking windows</a>
+<ul>
+<li><a href="#how-windows-shift-from-day-to-day">How windows shift from day to day</a></li>
+</ul>
+</li>
+<li><a href="#retention-forward-looking-windows">Retention: Forward-looking windows</a>
+<ul>
+<li><a href="#n-day-retention">N-day Retention</a></li>
+<li><a href="#retention-using-activity-date">Retention using activity date</a></li>
+</ul>
+</li>
+<li><a href="#udf-reference">UDF Reference</a>
+<ul>
+<li><a href="#bits28_to_string"><code>bits28_to_string</code></a></li>
+<li><a href="#bits28_from_string"><code>bits28_from_string</code></a></li>
+<li><a href="#bits28_to_dates"><code>bits28_to_dates</code></a></li>
+<li><a href="#bits28_days_since_seen"><code>bits28_days_since_seen</code></a></li>
+<li><a href="#bits28_range"><code>bits28_range</code></a></li>
+<li><a href="#bits28_active_in_range"><code>bits28_active_in_range</code></a></li>
+<li><a href="#bits28_retention"><code>bits28_retention</code></a></li>
+</ul>
+</li>
+</ul>
 <h2><a class="header" href="#calculating-dau-wau-and-mau" id="calculating-dau-wau-and-mau">Calculating DAU, WAU, and MAU</a></h2>
 <p>The simplest application of usage bit patterns is for calculating metrics in
 backward-looking windows. This is what we do for our canonical <em>usage</em> measures

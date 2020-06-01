@@ -4041,6 +4041,39 @@ was active and each 0 indicating a day where the client was inactive. This
 article discusses the details of how we represent usage in bit patterns,
 how to extract standard usage and retention metrics,
 and how to build new metrics from them.</p>
+<h2><a class="header" href="#table-of-contents-4" id="table-of-contents-4">Table of Contents</a></h2>
+<ul>
+<li><a href="cookbooks/clients_last_seen_bits.html#calculating-dau-wau-and-mau">Calculating DAU, WAU, and MAU</a></li>
+<li><a href="cookbooks/clients_last_seen_bits.html#calculating-retention">Calculating retention</a></li>
+<li><a href="cookbooks/clients_last_seen_bits.html#understanding-bit-patterns">Understanding bit patterns</a>
+<ul>
+<li><a href="cookbooks/clients_last_seen_bits.html#why-28-bits-instead-of-64">Why 28 bits instead of 64?</a></li>
+<li><a href="cookbooks/clients_last_seen_bits.html#forward-looking-windows-and-backward-looking-windows">Forward-looking windows and backward-looking windows</a></li>
+</ul>
+</li>
+<li><a href="cookbooks/clients_last_seen_bits.html#usage-backward-looking-windows">Usage: Backward-looking windows</a>
+<ul>
+<li><a href="cookbooks/clients_last_seen_bits.html#how-windows-shift-from-day-to-day">How windows shift from day to day</a></li>
+</ul>
+</li>
+<li><a href="cookbooks/clients_last_seen_bits.html#retention-forward-looking-windows">Retention: Forward-looking windows</a>
+<ul>
+<li><a href="cookbooks/clients_last_seen_bits.html#n-day-retention">N-day Retention</a></li>
+<li><a href="cookbooks/clients_last_seen_bits.html#retention-using-activity-date">Retention using activity date</a></li>
+</ul>
+</li>
+<li><a href="cookbooks/clients_last_seen_bits.html#udf-reference">UDF Reference</a>
+<ul>
+<li><a href="cookbooks/clients_last_seen_bits.html#bits28_to_string"><code>bits28_to_string</code></a></li>
+<li><a href="cookbooks/clients_last_seen_bits.html#bits28_from_string"><code>bits28_from_string</code></a></li>
+<li><a href="cookbooks/clients_last_seen_bits.html#bits28_to_dates"><code>bits28_to_dates</code></a></li>
+<li><a href="cookbooks/clients_last_seen_bits.html#bits28_days_since_seen"><code>bits28_days_since_seen</code></a></li>
+<li><a href="cookbooks/clients_last_seen_bits.html#bits28_range"><code>bits28_range</code></a></li>
+<li><a href="cookbooks/clients_last_seen_bits.html#bits28_active_in_range"><code>bits28_active_in_range</code></a></li>
+<li><a href="cookbooks/clients_last_seen_bits.html#bits28_retention"><code>bits28_retention</code></a></li>
+</ul>
+</li>
+</ul>
 <h2><a class="header" href="#calculating-dau-wau-and-mau" id="calculating-dau-wau-and-mau">Calculating DAU, WAU, and MAU</a></h2>
 <p>The simplest application of usage bit patterns is for calculating metrics in
 backward-looking windows. This is what we do for our canonical <em>usage</em> measures
@@ -6568,7 +6601,7 @@ aggregates across arbitrary slices of those dimensions.
 The tables follow a consistent methodology which is intended as a standard
 across Mozilla for MAU analysis going forward.</p>
 <p>Note that this data model is used in the <a href="https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/">Growth &amp; Usage Dashboard (GUD)</a> and that some of this documentation is replicated in the <a href="datasets/bigquery/exact_mau/../../../tools/gud.html">GUD documentation</a>.</p>
-<h2><a class="header" href="#table-of-contents-4" id="table-of-contents-4">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-5" id="table-of-contents-5">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/bigquery/exact_mau/reference.html#conceptual-model">Conceptual Model</a>
 <ul>
@@ -7421,7 +7454,7 @@ you should understand how to answer questions about
 study enrollment,
 identify telemetry from clients enrolled in an experiment,
 and locate telemetry from add-on studies.</p>
-<h2><a class="header" href="#table-of-contents-5" id="table-of-contents-5">Table of contents</a></h2>
+<h2><a class="header" href="#table-of-contents-6" id="table-of-contents-6">Table of contents</a></h2>
 <ul>
 <li><a href="datasets/shield.html#dashboards">Dashboards</a></li>
 <li><a href="datasets/shield.html#experiment-slugs">Experiment slugs</a></li>
@@ -7543,7 +7576,7 @@ for these probes.</p>
 <code>search_aggregates</code> and <code>search_clients_daily</code>. After reading this article,
 you should understand the search datasets well enough to produce moderately
 complex analyses.</p>
-<h2><a class="header" href="#table-of-contents-6" id="table-of-contents-6">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-7" id="table-of-contents-7">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/search.html#permissions">Permissions</a></li>
 <li><a href="datasets/search.html#terminology">Terminology</a>
@@ -8288,7 +8321,7 @@ WHERE
 <p>The dataset is populated via the 
 <a href="https://github.com/mozilla-bteam/bmo/blob/master/Bugzilla/Report/Ping/Simple.pm">simple ping service on Bugzilla</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/other/bmobugs/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#firefox-accounts-data" id="firefox-accounts-data">Firefox Accounts Data</a></h1>
-<h2><a class="header" href="#table-of-contents-7" id="table-of-contents-7">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-8" id="table-of-contents-8">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/fxa.html#introduction">Introduction</a></li>
 <li><a href="datasets/fxa.html#what-is-firefox-accounts">What is Firefox Accounts?</a></li>
@@ -8363,7 +8396,7 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 </ol>
 <p>It is also possible to query the FxA server logs directly through BigQuery (ask an FxA team member for access), though virtually all analytics-related questions are more easily answered using the data sources described above.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/fxa.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#attribution-of-firefox-accounts" id="attribution-of-firefox-accounts">Attribution of Firefox Accounts</a></h1>
-<h2><a class="header" href="#table-of-contents-8" id="table-of-contents-8">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-9" id="table-of-contents-9">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/fxa_metrics/attribution.html#introduction">Introduction</a></li>
 <li><a href="datasets/fxa_metrics/attribution.html#types-of-attribution">Types of Attribution</a>
@@ -8415,7 +8448,7 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 </tbody></table>
 <p>Example amplitude charts: <a href="https://analytics.amplitude.com/mozilla-corp/chart/1ush8xd">registrations by <code>entrypoint</code></a>, <a href="https://analytics.amplitude.com/mozilla-corp/chart/y8t2k1z">logins by <code>entrypoint</code></a>, <a href="https://analytics.amplitude.com/mozilla-corp/chart/jjbkusl">registrations by <code>utm_source</code></a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/fxa_metrics/attribution.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#firefox-account-funnels" id="firefox-account-funnels">Firefox Account Funnels</a></h1>
-<h2><a class="header" href="#table-of-contents-9" id="table-of-contents-9">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-10" id="table-of-contents-10">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/fxa_metrics/funnels.html#introduction">Introduction</a></li>
 <li><a href="datasets/fxa_metrics/funnels.html#registration-funnel">Registration Funnel</a></li>
@@ -8600,7 +8633,7 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 <tr><td>Not Implemented</td><td><code>flow.settings.clients.disconnect.view</code></td><td>User viewed the dialog asking to confirm disconnection of a device.</td></tr>
 </tbody></table>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/fxa_metrics/funnels.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#fxa-email-metrics" id="fxa-email-metrics">FxA Email Metrics</a></h1>
-<h2><a class="header" href="#table-of-contents-10" id="table-of-contents-10">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-11" id="table-of-contents-11">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/fxa_metrics/emails.html#introduction">Introduction</a></li>
 <li><a href="datasets/fxa_metrics/emails.html#email-templates-and-email-types">Email Templates and Email Types</a></li>
