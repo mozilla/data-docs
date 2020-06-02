@@ -98,11 +98,11 @@ Often, questions around histograms are framed as "what's the 99th percentile?" -
 ```sql
 WITH merged_histogram AS (
   SELECT
-    histogram_merge(
+    udf.histogram_merge(
       ARRAY_AGG(udf.json_extract_histogram(payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS))
     ) AS spinner_visible_long_ms,
   FROM
-    `moz-fx-data-shared-prod`.telemetry.main
+    telemetry.main
   WHERE
     application.channel = 'nightly'
     AND normalized_os = 'Windows'
@@ -110,7 +110,7 @@ WITH merged_histogram AS (
 ),
 percentiles AS (
   SELECT
-    histogram_percentiles(spinner_visible_long_ms, [.05, .25, .5, .75, .95]) AS percentile_nested
+    udf.histogram_percentiles(spinner_visible_long_ms, [.05, .25, .5, .75, .95]) AS percentile_nested
   FROM
     merged_histogram
 )
@@ -154,9 +154,9 @@ WITH per_build_day AS (
     KEY,
     SUM(value) AS value,
   FROM
-    `moz-fx-data-shared-prod`.telemetry.main,
+    telemetry.main,
     UNNEST(
-      `moz-fx-data-shared-prod`.udf.json_extract_histogram(
+      udf.json_extract_histogram(
         payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS
       ).VALUES
     )
@@ -188,7 +188,7 @@ FROM
   per_build_day_as_struct
 CROSS JOIN
   UNNEST(
-    `moz-fx-data-shared-prod`.udf.histogram_percentiles(
+    udf.histogram_percentiles(
       spinner_visible_ms,
       [.05, .25, .5, .75, .95]
     )
@@ -220,17 +220,17 @@ WITH per_build_client_day AS (
   SELECT
     PARSE_DATETIME("%Y%m%d%H%M%S", application.build_id) AS build_id,
     client_id,
-    `moz-fx-data-shared-prod`.udf.histogram_normalize(
-      `moz-fx-data-shared-prod`.udf.histogram_merge(
+    udf.histogram_normalize(
+      udf.histogram_merge(
         ARRAY_AGG(
-          `moz-fx-data-shared-prod`.udf.json_extract_histogram(
+          udf.json_extract_histogram(
             payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS
           )
         )
       )
     ) AS tab_switch_visible_ms
   FROM
-    `moz-fx-data-shared-prod`.telemetry.main
+    telemetry.main
   WHERE
     application.channel = 'nightly'
     AND normalized_os = 'Windows'
@@ -266,7 +266,7 @@ as_struct AS (
 percentiles AS (
   SELECT
     build_id,
-    `moz-fx-data-shared-prod`.udf.histogram_percentiles(
+    udf.histogram_percentiles(
       spinner_visible_long_ms,
       [.05, .25, .5, .75, .95]
     ) AS percentile_nested
@@ -306,17 +306,17 @@ WITH per_build_client_day AS (
   SELECT
     PARSE_DATETIME("%Y%m%d%H%M%S", application.build_id) AS build_id,
     client_id,
-    `moz-fx-data-shared-prod`.udf.histogram_normalize(
-      `moz-fx-data-shared-prod`.udf.histogram_merge(
+    udf.histogram_normalize(
+      udf.histogram_merge(
         ARRAY_AGG(
-          `moz-fx-data-shared-prod`.udf.json_extract_histogram(
+          udf.json_extract_histogram(
             payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS
           )
         )
       )
     ) AS tab_switch_visible_ms
   FROM
-    `moz-fx-data-shared-prod`.telemetry.main
+    telemetry.main
   WHERE
     application.channel = 'nightly'
     AND normalized_os = 'Windows'
@@ -353,7 +353,7 @@ as_struct AS (
 percentiles AS (
   SELECT
     build_id,
-    `moz-fx-data-shared-prod`.udf.histogram_percentiles(
+    udf.histogram_percentiles(
       spinner_visible_long_ms,
       [.05, .25, .5, .75, .95]
     ) AS percentile_nested
