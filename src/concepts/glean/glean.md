@@ -77,7 +77,6 @@ Because Glean knows more about the individual data, such as its type and the ran
 
 * _(Work in progress)_ Use events and [Amplitude](https://sso.mozilla.com/amplitude) for product analytics.
 * [Use Databricks](https://sso.mozilla.com/databricks) for deep-dive analysis.
-* [Use the Glean debug ping viewer](debug_ping_view.md) for QA & development.
 * For experimentation, you can use [Android experiments library](https://github.com/mozilla-mobile/android-components/blob/master/components/service/experiments/README.md), which integrates with Glean.
 
 # Contact
