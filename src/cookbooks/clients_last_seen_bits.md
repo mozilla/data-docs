@@ -154,7 +154,7 @@ SELECT
 
   -- 1-Week Retention matching GUD.
   SAFE_DIVIDE(
-    COUNTIF(active_in_week_1),
+    COUNTIF(active_in_week_0 AND active_in_week_1),
     COUNTIF(active_in_week_0)
   ) AS retention_1_week,
 
@@ -168,7 +168,7 @@ SELECT
   -- A more restrictive 1-Week Retention definition that considers only clients
   -- active on day 0 rather than clients active on any day in week 0.
   SAFE_DIVIDE(
-    COUNTIF(active_in_week_1),
+    COUNTIF(active_on_metric_date AND active_in_week_1),
     COUNTIF(active_on_metric_date)
   ) AS retention_1_week_active_on_day_0,
 
@@ -177,7 +177,7 @@ SELECT
   -- is restricted to clients active on day 0 and the client must be active both in
   -- week 0 after the metric date and in week 1.
   SAFE_DIVIDE(
-    COUNTIF(active_in_week_0_after_metric_date AND active_in_week_1),
+    COUNTIF(active_on_metric_date AND active_in_week_0_after_metric_date AND active_in_week_1),
     COUNTIF(active_on_metric_date)
   ) AS retention_0_and_1_week_active_on_day_0,
 
@@ -188,6 +188,11 @@ WHERE
 GROUP BY
   metric_date
 ```
+
+Notice that in each retention definition, the numerator always contains the exact
+same condition as the denominator plus additional constraints (`AND ...`).
+It is very easy to accidentally define a retention metric that is logically
+inconsistent and can rise above 1.
 
 Under the hood, `bits28_retention` is using a series of calls to the lower-level
 `bits28_range` function, which is explained later in this article.
