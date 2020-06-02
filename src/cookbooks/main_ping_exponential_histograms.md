@@ -12,14 +12,15 @@ Assumptions: You have some idea of what a histogram is (if not, the [Wikipedia a
 
 ## Setting the stage: tab spinners duration
 
-For the purposes of this tutorial, let's look at a typical performance-oriented histogram: [`FX_TAB_SWITCH_SPINNER_VISIBLE_MS`](https://probes.telemetry.mozilla.org/?view=detail&probeId=histogram%2FFX_TAB_SWITCH_SPINNER_VISIBLE_MS) which we use to count the number of times a tab spinner appears after a switch tab operation in Firefox. This is an unwanted operation (especially if it's long), as it makes the browser appear unresponsive and [confuses / disturbs users](https://support.mozilla.org/en-US/questions/1198062).
+For the purposes of this tutorial, let's look at a typical performance-oriented histogram: [`FX_TAB_SWITCH_SPINNER_VISIBLE_MS`](https://probes.telemetry.mozilla.org/?view=detail&probeId=histogram%2FFX_TAB_SWITCH_SPINNER_VISIBLE_MS) which we use to count the number of times a tab spinner appears after a switch tab operation in Firefox, along with the duration of
+its appearance in milliseconds (ms). This is an unwanted operation (especially if it's long), as it makes the browser appear unresponsive and [confuses / disturbs users](https://support.mozilla.org/en-US/questions/1198062).
 
 `FX_TAB_SWITCH_SPINNER_VISIBLE_MS` is what's called an [exponential histogram](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/collection/histograms.html#exponential): it represents an exponentially increasing distribution of values in each of its "buckets". It's probably easier to visualize this using the histogram viewer than describe:
 
 ![](https://i.imgur.com/3MHESUa.png)
 [link](https://telemetry.mozilla.org/histogram-simulator/#low=1&high=1000&n_buckets=20&kind=exponential&generate=normal)
 
-This visualization above shows how a [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution) would map into the buckets: you'll see that it biases towards the end: the point of the exponential histogram is to be sensitive to lower values (which one would assume would be more frequent, so long as the tab spinner doesn't come up too frequently!). Each "tick" represents the range of a bucket: so we have a bucket representing values between 1 and 2, 2 and 3, and so on. You'll note that this distribution caps out at 1000: for values higher than this, a separate histogram ([`FX_TAB_SWITCH_SPINNER_VISIBLE_LONG_MS`](https://probes.telemetry.mozilla.org/?view=detail&probeId=histogram%2FFX_TAB_SWITCH_SPINNER_VISIBLE_LONG_MS)) was created.
+This visualization above shows how a [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution) would map into the buckets: you'll see that it biases towards the end: the point of the exponential histogram is to be sensitive to lower values (which one would assume would be more frequent, so long as the tab spinner doesn't come up too frequently!). Each "tick" represents the range of a bucket (in milliseconds): so we have a bucket representing values between `1ms` and `2ms`, `2ms` and `3ms`, and so on. You'll note that this distribution caps out at 1000: for values higher than this, a separate histogram ([`FX_TAB_SWITCH_SPINNER_VISIBLE_LONG_MS`](https://probes.telemetry.mozilla.org/?view=detail&probeId=histogram%2FFX_TAB_SWITCH_SPINNER_VISIBLE_LONG_MS)) was created.
 
 ## Getting client-level data
 
@@ -47,7 +48,7 @@ Running this query on STMO, we get the following output:
 | `{"bucket_count":20,"histogram_type":0,"sum":19145,"range":[1,1000],"values":{"237":0,"340":1,"1000":1}}` |
 | `{"bucket_count":20,"histogram_type":0,"sum":1996,"range":[1,1000],"values":{"698":0,"1000":1}}`          |
 
-In this representation, `bucket_count`, `histogram_type`, and `range` are just duplicates of what's in the probe dictionary. `values` represents the number of instances in each of the buckets,
+In this representation, `bucket_count`, `histogram_type`, and `range` represent the number of buckets, the histogram type (as an index: 0 means exponential), and the range of possible values. `values` represents the number of instances in each of the buckets.
 
 In general, it is best not to rely on this representation of the histogram in production code (it is quite likely to change in the future). Instead, use the [`json_extract_histogram`](https://github.com/mozilla/bigquery-etl/blob/master/udf/json_extract_histogram.sql) user-defined-function (UDF) and extract out the fields you need: for example, to just get the sum for all the histograms above, you could modify the query above to something like:
 
@@ -120,7 +121,7 @@ So we see for this set of results that 95th percentile is `1000ms`, the 75th per
 
 There's a bit of intermediate-to-advanced SQL in the above query, due to the fact that the `histogram_percentiles` UDF returns an _array_ of results in a column (rather than a full-blown table) -- we wrangle the results into something we can handle using the [`UNNEST`](https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#unnest) operator combined with a cross-join at the end. If you don't immediately understand this, don't worry: it's just an implementation detail.
 
-## Creating a time series of change over time
+## Viewing change of percentiles over time
 
 Knowing the approximate distribution of results on a given day is sort of interesting, but probably not what we really want: what we're usually interested in is the evolution of results _over time_. In particular, segmenting by `build_id` (a date-like structure in the main ping representing when Firefox was built) is a useful technique, as it allows us to see if changes to Firefox itself may have caused the distribution to change.
 
@@ -164,7 +165,7 @@ CROSS JOIN UNNEST (`moz-fx-data-shared-prod`.udf.histogram_percentiles(spinner_v
 
 [link](https://sql.telemetry.mozilla.org/queries/71472/source)
 
-As an implementation note, observe that we don't use `histogram_merge` here as we do above: doing so would require using [`ARRAY_AGG`](https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators#array_agg) which can break down when processing large amounts of data. Instead we create a temporary table (`per_build_day`) by hand and then reprocess it into a structured representation. If you're curious what the version using `histogram_merge` would look like, see [this example](https://sql.telemetry.mozilla.org/queries/71413/source).
+As an implementation note, observe that we don't use `histogram_merge` here as we do above: doing so would require using [`ARRAY_AGG`](https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators#array_agg) which can break down when processing large amounts of data. Instead we create an intermediate result (the `per_build_day` `WITH` statement) and then reprocess it into a structured representation. If you're curious what the version using `histogram_merge` would look like, see [this example](https://sql.telemetry.mozilla.org/queries/71413/source).
 
 In any case, rendering the data this query returns, we get a chart like this:
 
@@ -172,13 +173,13 @@ In any case, rendering the data this query returns, we get a chart like this:
 
 You'll note that the 75th and the 95th percentiles are often the same. Which is to say: in 25% of cases, the value was somewhere between `698ms` and `1000ms`. Does this mean that 25% of the time people are seeing a _very_ long-running tab spinner? _No!_ It actually points to a flaw in our methodology, which GLAM was explicitly designed to address. For the last part our tutorial, let's look into how it does it, and how to reproduce its approach.
 
-## Normalized percentiles
+## Percentiles from client-normalized histograms
 
 The example above basically created one _giant_ histogram and then gathered the percentiles out of each one. But histograms are not created equal! At the extreme end of things for the tab spinner, consider a user on an extremely old computer with various kinds of malware installed, constantly interacting with complex and slow web sites. Such a condition is going to trigger the tab spinner frequently, and for long periods. But it is not representative of the overall population, and probably shouldn't _overtly_ influence our decision-making process.
 
 A solution used by GLAM is to give each client "one vote": that is, the aggregate histogram for a client over a day must sum up to one. Even in the extreme case where all tab spinner measurements fall between `658ms` and `1000ms` (the range of the highest bucket), the _maximum_ number for that bucket is just "1".
 
-We can reproduce this approach by using the [`histogram_normalize`](https://github.com/mozilla/bigquery-etl/blob/master/udf/histogram_normalize.sql) UDF, which explicitly takes a set of histograms and makes sure that the values for each one don't sum up to any more than one:
+We can reproduce this approach by using the [`histogram_normalize`](https://github.com/mozilla/bigquery-etl/blob/master/udf/histogram_normalize.sql) UDF, which explicitly takes a set of histograms and makes sure that the values for each one sum up to exactly one:
 
 ```sql
 DECLARE four_twenty DEFAULT DATE('2020-04-20');
