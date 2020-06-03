@@ -25,9 +25,13 @@ so that your communication is forwards compatible.
 
 ### Regular users v3
 
+`clients_last_seen.is_regular_user_v3`
+
 This segment contains clients who sent pings on _at least 14_ of the previous 27 days. As of February 2020 this segment contained approximately 2/3 of DAU and its users had a 1-week retention of around 95%.
 
 ### New or Resurrected v3
+
+`clients_last_seen.is_new_or_resurrected_v3`
 
 This segment contains clients who sent pings on _none_ of the previous 27 days. As of February 2020 this segment contained approximately 4% of DAU and its users had a 1-week retention of approximately 30%.
 
@@ -62,7 +66,7 @@ DAU for _regular users v3_:
 ```lang=sql
 SELECT
     submission_date,
-    COUNTIF(BIT_COUNT(days_seen_bits & 0x0FFFFFFE) >= 14) AS dau_regular_users_v3
+    COUNTIF(is_regular_user_v3) AS dau_regular_users_v3
 FROM moz-fx-data-shared-prod.telemetry.clients_last_seen
 WHERE
     submission_date BETWEEN '2020-01-01' AND '2020-03-01'
@@ -74,7 +78,7 @@ DAU for _regular users v3_, but joining from a different table:
 ```lang=sql
 SELECT
     cd.submission_date,
-    COUNTIF(BIT_COUNT(cls.days_seen_bits & 0x0FFFFFFE) >= 14) AS dau_regular_users_v3
+    COUNTIF(is_regular_user_v3) AS dau_regular_users_v3
 FROM clients_daily cd
 INNER JOIN clients_last_seen cls
     ON cls.client_id = cd.client_id
