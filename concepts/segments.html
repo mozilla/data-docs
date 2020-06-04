@@ -175,8 +175,10 @@ So please quote segments' versions with their names, e.g. &quot;regular users v3
 so that your communication is forwards compatible.</p>
 <h2><a class="header" href="#current-segments" id="current-segments">Current segments</a></h2>
 <h3><a class="header" href="#regular-users-v3" id="regular-users-v3">Regular users v3</a></h3>
+<p><code>clients_last_seen.is_regular_user_v3</code></p>
 <p>This segment contains clients who sent pings on <em>at least 14</em> of the previous 27 days. As of February 2020 this segment contained approximately 2/3 of DAU and its users had a 1-week retention of around 95%.</p>
 <h3><a class="header" href="#new-or-resurrected-v3" id="new-or-resurrected-v3">New or Resurrected v3</a></h3>
+<p><code>clients_last_seen.is_new_or_resurrected_v3</code></p>
 <p>This segment contains clients who sent pings on <em>none</em> of the previous 27 days. As of February 2020 this segment contained approximately 4% of DAU and its users had a 1-week retention of approximately 30%.</p>
 <h2><a class="header" href="#writing-queries-with-segments" id="writing-queries-with-segments">Writing queries with segments</a></h2>
 <p>When a segment is defined with respect to a user's <em>behavior</em> (e.g. usage levels) 
@@ -200,7 +202,7 @@ So stick to DAU for now.</p>
 <p>DAU for <em>regular users v3</em>:</p>
 <pre><code class="language-lang=sql">SELECT
     submission_date,
-    COUNTIF(BIT_COUNT(days_seen_bits &amp; 0x0FFFFFFE) &gt;= 14) AS dau_regular_users_v3
+    COUNTIF(is_regular_user_v3) AS dau_regular_users_v3
 FROM moz-fx-data-shared-prod.telemetry.clients_last_seen
 WHERE
     submission_date BETWEEN '2020-01-01' AND '2020-03-01'
@@ -210,7 +212,7 @@ GROUP BY submission_date
 <p>DAU for <em>regular users v3</em>, but joining from a different table:</p>
 <pre><code class="language-lang=sql">SELECT
     cd.submission_date,
-    COUNTIF(BIT_COUNT(cls.days_seen_bits &amp; 0x0FFFFFFE) &gt;= 14) AS dau_regular_users_v3
+    COUNTIF(is_regular_user_v3) AS dau_regular_users_v3
 FROM clients_daily cd
 INNER JOIN clients_last_seen cls
     ON cls.client_id = cd.client_id
