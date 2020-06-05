@@ -7,7 +7,11 @@ When you perform an analysis on any data, there are some mistakes that are easy 
 
 This section is not about those traps. Instead, it is about quirks and pitfalls that are specific to Mozilla's data systems.
 
-### Intermittent issues
+## Table of Contents
+
+<!-- toc -->
+
+## Intermittent issues
 
 Despite best efforts, problems may occur from time to time with the ingestion of data or the faithful creation of datasets.
 
@@ -15,7 +19,7 @@ Issues undergoing investigation are marked with the `[data-quality]` whiteboard 
 
 Especially severe problems with production data are announced on the `fx-data-dev` mailing list (see [getting help](getting_help.md)). Subscribing to this mailing list is recommended if you are a current or aspiring data practitioner.
 
-### Notable historic events
+## Notable historic events
 
 When you start to evaluate trends, be aware of events from the past that may invite comparisons with history. Here are a few to keep in mind:
 
@@ -63,7 +67,7 @@ When you start to evaluate trends, be aware of events from the past that may inv
 [four_week_cycles]: https://docs.google.com/document/d/1oJhnvAOx2c8Mp-Xpk-3j-2d45yu_fghYS2yAbn1aeNY/edit#heading=h.iba82gckexg7
 [bug1630096]: https://bugzilla.mozilla.org/show_bug.cgi?id=1630096
 
-### Pseudo-replication
+## Pseudo-replication
 
 Telemetry data is a collection of pings.
 A single main-ping represents a single subsession.
@@ -73,7 +77,7 @@ When you say ["63% of beta 53 has Firefox set as its default browser"](https://m
 (Apparently users with Firefox Beta 53 set as their default browser submitted
 more main-pings than users who did not).
 
-### Profiles vs Users
+## Profiles vs Users
 
 You may have noticed that the term "clients" and not "users" was applied in the above-listed section because of all the things can be counted, users is not one of them:
 
@@ -93,7 +97,7 @@ When in doubt, be precise. You count _clients_.
 
 [This article](./profile/index.md) describes the concept of "profiles" in detail.
 
-### Opt-in versus Opt-out
+## Opt-in versus Opt-out
 
 Mozilla does not collect the same information from everyone.
 
@@ -114,7 +118,7 @@ If you want to encourage users to collect good information for Mozilla, ask them
 [Scalars]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/scalars.html
 [Events]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html
 
-### Trusting Dates
+## Trusting Dates
 
 Do not assume that the time reported by an instance of Firefox desktop is correct. The situation is somewhat better on mobile devices, but you should still be cautious.
 
@@ -147,7 +151,7 @@ because it is added in post-processing.
 
 [ping documentation]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/common-ping.html
 
-### Date Formats
+## Date Formats
 
 Not all dates and times are created equal.
 Most of the dates and times in Telemetry pings are [ISO 8601].
@@ -177,7 +181,7 @@ Alternatively, you can use the already parsed version that is available in user-
 [msref]: ../datasets/batch_view/main_summary/reference.md#time-formats
 [RFC 7231]: http://tools.ietf.org/html/rfc7231#section-7.1.1.1
 
-### Delays
+## Delays
 
 There is an inherent delay between Telemetry data being created on the client and it being received by Mozilla.
 Most Telemetry data produced by desktop Firefox is represented in the main ping. It is sent at the beginning of a client's _next_ Firefox session.
@@ -192,7 +196,7 @@ If you'd like to read more about this subject, there is a series of blog posts [
 [delays2]: https://chuttenblog.wordpress.com/2017/07/12/latency-improvements-or-yet-another-satisfying-graph/
 [delays3]: https://chuttenblog.wordpress.com/2017/09/12/two-days-or-how-long-until-the-data-is-in/
 
-#### Pingsender
+### Pingsender
 
 Pingsender greatly reduces any delay before sending pings to Mozilla.
 However, only some types of pings are sent by Pingsender.
