@@ -5,6 +5,7 @@
 # where filename is relative to this configuration file
 1KiB
 200-tab
+24-hour
 28-day
 2FA
 ad-hoc
@@ -54,6 +55,7 @@ CEP
 CFR
 changeset
 changesets
+checkbox
 checkpointed
 checkpointing
 chromehangs
@@ -91,6 +93,7 @@ Django's
 DLLs
 DNS
 Dockerfile
+dropdown
 DWL
 DXR
 DynamoDB
@@ -305,6 +308,7 @@ unenrollment
 unmanaged
 unnesting
 unsuffixed
+unversioned
 up-to-date
 uri
 URIs
