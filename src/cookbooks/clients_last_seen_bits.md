@@ -698,7 +698,7 @@ the rightmost bit in the pattern.
 `n_bits` is the number of bits to consider, counting right from the bit at `start_offset`.
 
 ```
-bits28_active_in_range(bits INT64, offset INT64, n_bits INT64)
+bits28_active_in_range(bits INT64, start_offset INT64, n_bits INT64)
 ```
 
 ### `bits28_retention`
