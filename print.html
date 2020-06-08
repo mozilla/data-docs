@@ -4259,7 +4259,7 @@ SELECT udf.bits28_to_string(udf.bits28_range(18, 5 - 2, 4))
 <p>The <code>start_offset</code> must be zero or a negative number indicating an offset from
 the rightmost bit in the pattern.</p>
 <p><code>n_bits</code> is the number of bits to consider, counting right from the bit at <code>start_offset</code>.</p>
-<pre><code>bits28_active_in_range(bits INT64, offset INT64, n_bits INT64)
+<pre><code>bits28_active_in_range(bits INT64, start_offset INT64, n_bits INT64)
 </code></pre>
 <h3><a class="header" href="#bits28_retention" id="bits28_retention"><code>bits28_retention</code></a></h3>
 <p>Return a nested struct providing numerator and denominator fields for
