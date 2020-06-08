@@ -19,7 +19,7 @@ All users with access to [STMO](../../tools/stmo.md) can access BigQuery using t
 
 ### BigQuery Console
 
-> **⚠** This method requires [BigQuery Access](#BigQuery-Access-Request) to be provisioned.
+> **⚠** This method requires [BigQuery Access](#bigquery-access-request) to be provisioned.
 
 The BigQuery console is similar to STMO, but allows write access to views and tables. Some
 people also prefer its user interface, though note that results that you get from it can
@@ -47,7 +47,7 @@ For more details, see [Google's Documentation on the GCP Console](https://cloud.
 
 ### Using the `bq` Command-Line Tool
 
-> **⚠** This method requires [BigQuery Access](#BigQuery-Access-Request) to be provisioned.
+> **⚠** This method requires [BigQuery Access](#bigquery-access-request) to be provisioned.
 
 Steps to use:
 
@@ -75,7 +75,7 @@ Additional examples and documentation can be found [in the BigQuery command-line
 
 ### API Access
 
-> **⚠** This method requires [BigQuery Access](#BigQuery-Access-Request) to be provisioned.
+> **⚠** This method requires [BigQuery Access](#bigquery-access-request) to be provisioned.
 
 For advanced use cases involving programmatic access -- including automated workloads, ETL, [BigQuery Storage API](https://cloud.google.com/bigquery/docs/reference/storage/).
 
@@ -119,7 +119,7 @@ There are several methods you can use to access BigQuery via Spark, depending on
 
 #### Using the Storage API Connector
 
-> **⚠** This method requires [BigQuery Access](#BigQuery-Access-Request) to be provisioned.
+> **⚠** This method requires [BigQuery Access](#bigquery-access-request) to be provisioned.
 
 If you want to use Spark locally (or via an arbitrary GCP instance in the cloud), we recommend the [Storage API Connector](https://github.com/GoogleCloudPlatform/spark-bigquery-connector) for accessing BigQuery tables in Spark as it is the most modern and actively developed connector. It works well with the BigQuery client library which is useful if you need to run arbitrary SQL queries and load their results into Spark (see the [Databricks](#databricks) section for a link to an example notebook demonstrating this technique).
 
@@ -132,7 +132,7 @@ The `shared_serverless_python3` cluster is configured with shared default GCP cr
 
 #### Using Dataproc
 
-> **⚠** This method requires [BigQuery Access](#BigQuery-Access-Request) to be provisioned.
+> **⚠** This method requires [BigQuery Access](#bigquery-access-request) to be provisioned.
 
 Dataproc is Google's managed Spark cluster service. Accessing BigQuery from there will be faster than from Databricks because it does not involve cross-cloud data transfers.
 
@@ -165,7 +165,7 @@ gcloud beta dataproc clusters delete cluster-name --region=us-west1 --project pr
 
 ### Colaboratory
 
-> **⚠** This method requires [BigQuery Access](#BigQuery-Access-Request) to be provisioned.
+> **⚠** This method requires [BigQuery Access](#bigquery-access-request) to be provisioned.
 
 [Colaboratory](https://colab.research.google.com) (Colab) is Jupyter notebook environment, managed by Google and running in the cloud. Notebooks are stored in Google Drive and can be shared in a similar way to Google Docs.
 
