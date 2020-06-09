@@ -41,7 +41,7 @@ This segment contains clients who sent pings on _none_ of the previous 27 days. 
 
 This segment contains clients in _Regular users v3_ who typically use the browser only on weekdays. This segment is responsible for a slight majority of the weekly seasonality in DAU for _Regular users v3_. Of the previous 27 days, these users submitted a ping on at most one weekend day (UTC). Due to differing timezones, we allow flexibility: the "weekend" could be Friday/Saturday, Saturday/Sunday, or Sunday/Monday; we only ask that each client is self-consistent for the 27 day period.
 
-## All-week regulars v1
+### All-week regulars v1
 
 `clients_last_seen.is_allweek_regular_v1`
 
