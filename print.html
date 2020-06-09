@@ -3191,7 +3191,7 @@ in <a href="https://cloud.google.com/bigquery/">BigQuery</a>:</p>
 </ul>
 <h3><a class="header" href="#bigquery-console" id="bigquery-console">BigQuery Console</a></h3>
 <blockquote>
-<p><strong>⚠</strong> This method requires <a href="cookbooks/bigquery/access.html#BigQuery-Access-Request">BigQuery Access</a> to be provisioned.</p>
+<p><strong>⚠</strong> This method requires <a href="cookbooks/bigquery/access.html#bigquery-access-request">BigQuery Access</a> to be provisioned.</p>
 </blockquote>
 <p>The BigQuery console is similar to STMO, but allows write access to views and tables. Some
 people also prefer its user interface, though note that results that you get from it can
@@ -3215,7 +3215,7 @@ WHERE
 <p>For more details, see <a href="https://cloud.google.com/bigquery/docs/bigquery-web-ui">Google's Documentation on the GCP Console</a>.</p>
 <h3><a class="header" href="#using-the-bq-command-line-tool" id="using-the-bq-command-line-tool">Using the <code>bq</code> Command-Line Tool</a></h3>
 <blockquote>
-<p><strong>⚠</strong> This method requires <a href="cookbooks/bigquery/access.html#BigQuery-Access-Request">BigQuery Access</a> to be provisioned.</p>
+<p><strong>⚠</strong> This method requires <a href="cookbooks/bigquery/access.html#bigquery-access-request">BigQuery Access</a> to be provisioned.</p>
 </blockquote>
 <p>Steps to use:</p>
 <ul>
@@ -3242,7 +3242,7 @@ lists the tables and views in a BigQuery dataset:</p>
 <p>Additional examples and documentation can be found <a href="https://cloud.google.com/bigquery/docs/bq-command-line-tool">in the BigQuery command-line reference</a>.</p>
 <h3><a class="header" href="#api-access" id="api-access">API Access</a></h3>
 <blockquote>
-<p><strong>⚠</strong> This method requires <a href="cookbooks/bigquery/access.html#BigQuery-Access-Request">BigQuery Access</a> to be provisioned.</p>
+<p><strong>⚠</strong> This method requires <a href="cookbooks/bigquery/access.html#bigquery-access-request">BigQuery Access</a> to be provisioned.</p>
 </blockquote>
 <p>For advanced use cases involving programmatic access -- including automated workloads, ETL, <a href="https://cloud.google.com/bigquery/docs/reference/storage/">BigQuery Storage API</a>.</p>
 <p>You can locate a list of supported BigQuery client libraries <a href="https://cloud.google.com/bigquery/docs/reference/libraries">here</a>.</p>
@@ -3270,7 +3270,7 @@ python -c 'from google.cloud import bigquery; print([d.dataset_id for d in bigqu
 <p>There are several methods you can use to access BigQuery via Spark, depending on your needs.</p>
 <h4><a class="header" href="#using-the-storage-api-connector" id="using-the-storage-api-connector">Using the Storage API Connector</a></h4>
 <blockquote>
-<p><strong>⚠</strong> This method requires <a href="cookbooks/bigquery/access.html#BigQuery-Access-Request">BigQuery Access</a> to be provisioned.</p>
+<p><strong>⚠</strong> This method requires <a href="cookbooks/bigquery/access.html#bigquery-access-request">BigQuery Access</a> to be provisioned.</p>
 </blockquote>
 <p>If you want to use Spark locally (or via an arbitrary GCP instance in the cloud), we recommend the <a href="https://github.com/GoogleCloudPlatform/spark-bigquery-connector">Storage API Connector</a> for accessing BigQuery tables in Spark as it is the most modern and actively developed connector. It works well with the BigQuery client library which is useful if you need to run arbitrary SQL queries and load their results into Spark (see the <a href="cookbooks/bigquery/access.html#databricks">Databricks</a> section for a link to an example notebook demonstrating this technique).</p>
 <h4><a class="header" href="#using-databricks" id="using-databricks">Using Databricks</a></h4>
@@ -3279,7 +3279,7 @@ computational environment, similar to Jupyter. If you are a Mozilla employee, yo
 <p>The <code>shared_serverless_python3</code> cluster is configured with shared default GCP credentials, so you can immediately use the BigQuery client libraries. It also includes the Spark Storage API Connector library as seen in <a href="https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/141939">this example Python notebook</a>.</p>
 <h4><a class="header" href="#using-dataproc" id="using-dataproc">Using Dataproc</a></h4>
 <blockquote>
-<p><strong>⚠</strong> This method requires <a href="cookbooks/bigquery/access.html#BigQuery-Access-Request">BigQuery Access</a> to be provisioned.</p>
+<p><strong>⚠</strong> This method requires <a href="cookbooks/bigquery/access.html#bigquery-access-request">BigQuery Access</a> to be provisioned.</p>
 </blockquote>
 <p>Dataproc is Google's managed Spark cluster service. Accessing BigQuery from there will be faster than from Databricks because it does not involve cross-cloud data transfers.</p>
 <p>You can spin up a Dataproc cluster with Jupyter using the following command. Insert your values for <code>cluster-name</code>, <code>bucket-name</code>, and <code>project-id</code> there. Your notebooks are stored in Cloud Storage under <code>gs://bucket-name/notebooks/jupyter</code>:</p>
@@ -3302,7 +3302,7 @@ computational environment, similar to Jupyter. If you are a Mozilla employee, yo
 </code></pre>
 <h3><a class="header" href="#colaboratory" id="colaboratory">Colaboratory</a></h3>
 <blockquote>
-<p><strong>⚠</strong> This method requires <a href="cookbooks/bigquery/access.html#BigQuery-Access-Request">BigQuery Access</a> to be provisioned.</p>
+<p><strong>⚠</strong> This method requires <a href="cookbooks/bigquery/access.html#bigquery-access-request">BigQuery Access</a> to be provisioned.</p>
 </blockquote>
 <p><a href="https://colab.research.google.com">Colaboratory</a> (Colab) is Jupyter notebook environment, managed by Google and running in the cloud. Notebooks are stored in Google Drive and can be shared in a similar way to Google Docs.</p>
 <p>Colab can be used to easily access BigQuery and perform analyses. See the <a href="https://colab.research.google.com/drive/1uXmrPnqzDATiCVH2RNJKD8obIZuofFHx"><code>Telemetry Hello World</code> notebook</a> for an interactive example. Under the hood, it uses the BigQuery API to read and write to BigQuery tables, so access needs to be explicitly provisioned.</p>
