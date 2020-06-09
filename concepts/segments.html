@@ -180,6 +180,12 @@ so that your communication is forwards compatible.</p>
 <h3><a class="header" href="#new-or-resurrected-v3" id="new-or-resurrected-v3">New or Resurrected v3</a></h3>
 <p><code>clients_last_seen.is_new_or_resurrected_v3</code></p>
 <p>This segment contains clients who sent pings on <em>none</em> of the previous 27 days. As of February 2020 this segment contained approximately 4% of DAU and its users had a 1-week retention of approximately 30%.</p>
+<h3><a class="header" href="#weekday-regulars-v1" id="weekday-regulars-v1">Weekday regulars v1</a></h3>
+<p><code>clients_last_seen.is_weekday_regular_v1</code></p>
+<p>This segment contains clients in <em>Regular users v3</em> who typically use the browser only on weekdays. This segment is responsible for a slight majority of the weekly seasonality in DAU for <em>Regular users v3</em>. Of the previous 27 days, these users submitted a ping on at most one weekend day (UTC). Due to differing timezones, we allow flexibility: the &quot;weekend&quot; could be Friday/Saturday, Saturday/Sunday, or Sunday/Monday; we only ask that each client is self-consistent for the 27 day period.</p>
+<h2><a class="header" href="#all-week-regulars-v1" id="all-week-regulars-v1">All-week regulars v1</a></h2>
+<p><code>clients_last_seen.is_allweek_regular_v1</code></p>
+<p>This segment contains clients in <em>Regular users v3</em> who do not fit in <em>Weekday regulars v1</em> - clients that used the browser on a weekend at least twice in the previous 27 days. DAU for this segment does have some weekly seasonality, so some of the clients in this segment use the browser on weekdays preferentially, but not exclusively.</p>
 <h2><a class="header" href="#writing-queries-with-segments" id="writing-queries-with-segments">Writing queries with segments</a></h2>
 <p>When a segment is defined with respect to a user's <em>behavior</em> (e.g. usage levels) 
 as opposed to more stable traits (e.g. country), 
