@@ -9,7 +9,6 @@
   * [Choosing a Mobile Dataset](concepts/choosing_a_dataset_mobile.md)
   * [Glean overview](concepts/glean/glean.md)
   * [Intro to STMO](tools/stmo.md)
-  * [Optimizing Queries](concepts/sql_optimization.md)
   * [Getting Help](concepts/getting_help.md)
   * [Reporting a problem](concepts/reporting_a_problem.md)
 * [Tools](tools/index.md)
