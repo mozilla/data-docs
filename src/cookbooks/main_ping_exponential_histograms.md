@@ -201,7 +201,7 @@ As an implementation note, observe that we don't use `histogram_merge` here as w
 
 In any case, rendering the data this query returns, we get a chart like this:
 
-![](https://i.imgur.com/HByDexv.png)
+![example visualization of histogram percentiles](https://i.imgur.com/HByDexv.png)
 
 You'll note that the 75th and the 95th percentiles are often the same. Which is to say: in 25% of cases, the value was somewhere between `698ms` and `1000ms`. Does this mean that 25% of the time people are seeing a _very_ long-running tab spinner? _No!_ It actually points to a flaw in our methodology, which GLAM was explicitly designed to address. For the last part our tutorial, let's look into how it does it, and how to reproduce its approach.
 
