@@ -163,9 +163,9 @@ The channel of the profile’s pings.
 
 ### Attribution
 
-Attribution is currently available for Firefox Desktop only.  It allows metrics to be restricted to either the "Light Funnel", indicating that at least one of the attribution fields was set, or the "Dark Funnel" indicating that attribution data is unavailable.  Generally, attribution indicates that the browser was installed using an installer from our web properties, but there are many caveats to this.
+Attribution is currently available for Firefox Desktop only.  It allows metrics to be restricted to either "attributed", indicating that at least one of the attribution fields was set, or "unattributed" indicating that attribution data is unavailable.  Generally, attribution indicates that the browser was installed using an installer from our web properties, but there are many caveats to this.
 
-Attribution has been available on the Windows stub installer since 2017.  The light funnel DAU/WAU/MAU has been increasing since then as the proportion of our Windows users that have used an attributed installer increases.  The apparent growth in the light funnel is not necessarily “real growth” - it is probably an artifactual effect of the adoption of attributed installers over time.
+Attribution has been available on the Windows stub installer since 2017.  The attributed DAU/WAU/MAU has been increasing since then as the proportion of our Windows users that have used an attributed installer increases.  The apparent growth in the attributed users is not necessarily “real growth” - it is probably an artifactual effect of the adoption of attributed installers over time.
 
 We have experimented with attribution for MacOS, but as of early 2020 it has never functioned properly.
 
