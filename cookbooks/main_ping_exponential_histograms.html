@@ -1,0 +1,567 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Visualizing Percentiles of an Main Ping Exponential Histogram - Firefox Data Documentation</title>
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../dtmo.css">
+        
+        <link rel="stylesheet" href="../mermaid.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction.html">Firefox Data Documentation</a></li><li class="chapter-item expanded "><a href="../concepts/getting_started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/terminology.html"><strong aria-hidden="true">1.1.</strong> Terminology</a></li><li class="chapter-item expanded "><a href="../concepts/gaining_access.html"><strong aria-hidden="true">1.2.</strong> Gaining Access</a></li><li class="chapter-item expanded "><a href="../concepts/analysis_intro.html"><strong aria-hidden="true">1.3.</strong> Analysis Quick Start</a></li><li class="chapter-item expanded "><a href="../metrics/intro.html"><strong aria-hidden="true">1.4.</strong> Intro to Metrics</a></li><li class="chapter-item expanded "><a href="../concepts/analysis_gotchas.html"><strong aria-hidden="true">1.5.</strong> Common Analysis Gotchas</a></li><li class="chapter-item expanded "><a href="../concepts/choosing_a_dataset.html"><strong aria-hidden="true">1.6.</strong> Choosing a Desktop Dataset</a></li><li class="chapter-item expanded "><a href="../concepts/choosing_a_dataset_mobile.html"><strong aria-hidden="true">1.7.</strong> Choosing a Mobile Dataset</a></li><li class="chapter-item expanded "><a href="../concepts/glean/glean.html"><strong aria-hidden="true">1.8.</strong> Glean overview</a></li><li class="chapter-item expanded "><a href="../tools/stmo.html"><strong aria-hidden="true">1.9.</strong> Intro to STMO</a></li><li class="chapter-item expanded "><a href="../concepts/sql_optimization.html"><strong aria-hidden="true">1.10.</strong> Optimizing Queries</a></li><li class="chapter-item expanded "><a href="../concepts/getting_help.html"><strong aria-hidden="true">1.11.</strong> Getting Help</a></li><li class="chapter-item expanded "><a href="../concepts/reporting_a_problem.html"><strong aria-hidden="true">1.12.</strong> Reporting a problem</a></li></ol></li><li class="chapter-item expanded "><a href="../tools/index.html"><strong aria-hidden="true">2.</strong> Tools</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../tools/projects.html"><strong aria-hidden="true">2.1.</strong> Project Glossary</a></li><li class="chapter-item expanded "><a href="../tools/guiding_principles.html"><strong aria-hidden="true">2.2.</strong> Guiding Principles for Data Infrastructure</a></li><li class="chapter-item expanded "><a href="../concepts/pipeline/gcp_data_pipeline.html"><strong aria-hidden="true">2.3.</strong> Overview of Mozilla's Data Pipeline</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/pipeline/http_edge_spec.html"><strong aria-hidden="true">2.3.1.</strong> HTTP Edge Server Specification</a></li><li class="chapter-item expanded "><a href="../concepts/pipeline/event_pipeline.html"><strong aria-hidden="true">2.3.2.</strong> Event Pipeline Detail</a></li><li class="chapter-item expanded "><a href="../concepts/pipeline/schemas.html"><strong aria-hidden="true">2.3.3.</strong> Schemas</a></li></ol></li><li class="chapter-item expanded "><a href="../tools/interfaces.html"><strong aria-hidden="true">2.4.</strong> Analysis Interfaces</a></li><li class="chapter-item expanded "><a href="../tools/spark.html"><strong aria-hidden="true">2.5.</strong> Custom analysis with Spark</a></li><li class="chapter-item expanded "><a href="../concepts/sql_style.html"><strong aria-hidden="true">2.6.</strong> SQL Style Guide</a></li><li class="chapter-item expanded "><a href="../tools/gud.html"><strong aria-hidden="true">2.7.</strong> Growth &amp; Usage Dashboard (GUD)</a></li></ol></li><li class="chapter-item expanded "><a href="../metrics/index.html"><strong aria-hidden="true">3.</strong> Metrics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../metrics/definitions.html"><strong aria-hidden="true">3.1.</strong> Definitions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../metrics/metrics.html"><strong aria-hidden="true">3.1.1.</strong> Metrics</a></li><li class="chapter-item expanded "><a href="../metrics/usage.html"><strong aria-hidden="true">3.1.2.</strong> Usage Criteria</a></li><li class="chapter-item expanded "><a href="../metrics/dimensions.html"><strong aria-hidden="true">3.1.3.</strong> Slicing Dimensions</a></li></ol></li><li class="chapter-item expanded "><a href="../metrics/policy.html"><strong aria-hidden="true">3.2.</strong> Metrics Standardization and Policy</a></li></ol></li><li class="chapter-item expanded "><a href="../cookbooks/index.html"><strong aria-hidden="true">4.</strong> Analysis cookbooks</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cookbooks/bigquery.html"><strong aria-hidden="true">4.1.</strong> Accessing and working with BigQuery</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cookbooks/bigquery/access.html"><strong aria-hidden="true">4.1.1.</strong> Accessing BigQuery</a></li><li class="chapter-item expanded "><a href="../cookbooks/bigquery/querying.html"><strong aria-hidden="true">4.1.2.</strong> Writing BigQuery Queries</a></li><li class="chapter-item expanded "><a href="../cookbooks/bigquery/optimization.html"><strong aria-hidden="true">4.1.3.</strong> Optimizing BigQuery Queries</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/glean/accessing_glean_data.html"><strong aria-hidden="true">4.2.</strong> Accessing Glean data</a></li><li class="chapter-item expanded "><a href="../cookbooks/dataset_specific.html"><strong aria-hidden="true">4.3.</strong> Dataset Specific</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cookbooks/normandy_events.html"><strong aria-hidden="true">4.3.1.</strong> Working with Normandy events</a></li><li class="chapter-item expanded "><a href="../cookbooks/crash_pings.html"><strong aria-hidden="true">4.3.2.</strong> Working with Crash Pings</a></li><li class="chapter-item expanded "><a href="../cookbooks/clients_last_seen_bits.html"><strong aria-hidden="true">4.3.3.</strong> Working with Bit Patterns in Clients Last Seen</a></li><li class="chapter-item expanded "><a href="../cookbooks/main_ping_exponential_histograms.html" class="active"><strong aria-hidden="true">4.3.4.</strong> Visualizing Percentiles of an Main Ping Exponential Histogram</a></li></ol></li><li class="chapter-item expanded "><a href="../cookbooks/realtime.html"><strong aria-hidden="true">4.4.</strong> Real-time</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cookbooks/view_pings_cep.html"><strong aria-hidden="true">4.4.1.</strong> Seeing Your Own Pings</a></li></ol></li><li class="chapter-item expanded "><a href="../cookbooks/metrics.html"><strong aria-hidden="true">4.5.</strong> Metrics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cookbooks/dau.html"><strong aria-hidden="true">4.5.1.</strong> Daily Active Users (DAU and MAU)</a></li><li class="chapter-item expanded "><a href="../cookbooks/active_dau.html"><strong aria-hidden="true">4.5.2.</strong> Active DAU (aDAU)</a></li><li class="chapter-item expanded "><a href="../cookbooks/retention.html"><strong aria-hidden="true">4.5.3.</strong> Retention</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../cookbooks/index.html"><strong aria-hidden="true">5.</strong> Operational cookbooks</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cookbooks/gcp-projects.html"><strong aria-hidden="true">5.1.</strong> Creating a Prototype Data Project on Google Cloud Platform</a></li><li class="chapter-item expanded "><a href="../cookbooks/bigquery-airflow.html"><strong aria-hidden="true">5.2.</strong> Scheduling BigQuery Queries in Airflow</a></li><li class="chapter-item expanded "><a href="../cookbooks/deploying-containers.html"><strong aria-hidden="true">5.3.</strong> Building and Deploying Containers to GCR with CircleCI</a></li><li class="chapter-item expanded "><a href="../public_data/publishing_datasets.html"><strong aria-hidden="true">5.4.</strong> Publishing Datasets</a></li></ol></li><li class="chapter-item expanded "><a href="../datasets/new_data.html"><strong aria-hidden="true">6.</strong> Sending telemetry</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cookbooks/client_guidelines.html"><strong aria-hidden="true">6.1.</strong> Implementing Experiments</a></li><li class="chapter-item expanded "><a href="../cookbooks/events_best_practices.html"><strong aria-hidden="true">6.2.</strong> Sending Events</a></li><li class="chapter-item expanded "><a href="../cookbooks/new_ping.html"><strong aria-hidden="true">6.3.</strong> Sending a Custom Ping</a></li></ol></li><li class="chapter-item expanded "><a href="../public_data/index.html"><strong aria-hidden="true">7.</strong> Public data</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="../datasets/reference.html"><strong aria-hidden="true">8.</strong> Dataset Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datasets/pings.html"><strong aria-hidden="true">8.1.</strong> Pings</a></li><li class="chapter-item expanded "><a href="../datasets/derived.html"><strong aria-hidden="true">8.2.</strong> Derived Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datasets/active_profiles.html"><strong aria-hidden="true">8.2.1.</strong> Active Profiles</a></li><li class="chapter-item expanded "><a href="../datasets/batch_view/addons/reference.html"><strong aria-hidden="true">8.2.2.</strong> Addons</a></li><li class="chapter-item expanded "><a href="../datasets/other/addons_daily/reference.html"><strong aria-hidden="true">8.2.3.</strong> Addons Daily</a></li><li class="chapter-item expanded "><a href="../datasets/other/asn_aggregates/reference.html"><strong aria-hidden="true">8.2.4.</strong> AS aggregates</a></li><li class="chapter-item expanded "><a href="../datasets/other/attitudes_daily/reference.html"><strong aria-hidden="true">8.2.5.</strong> Attitudes Daily</a></li><li class="chapter-item expanded "><a href="../datasets/batch_view/clients_daily/reference.html"><strong aria-hidden="true">8.2.6.</strong> Clients Daily</a></li><li class="chapter-item expanded "><a href="../datasets/bigquery/clients_last_seen/reference.html"><strong aria-hidden="true">8.2.7.</strong> Clients Last Seen</a></li><li class="chapter-item expanded "><a href="../datasets/batch_view/events/reference.html"><strong aria-hidden="true">8.2.8.</strong> Events</a></li><li class="chapter-item expanded "><a href="../datasets/bigquery/exact_mau/reference.html"><strong aria-hidden="true">8.2.9.</strong> Exact MAU</a></li><li class="chapter-item expanded "><a href="../datasets/batch_view/first_shutdown_summary/reference.html"><strong aria-hidden="true">8.2.10.</strong> First Shutdown Summary</a></li><li class="chapter-item expanded "><a href="../datasets/batch_view/main_summary/reference.html"><strong aria-hidden="true">8.2.11.</strong> Main Summary</a></li><li class="chapter-item expanded "><a href="../datasets/other/socorro_crash/reference.html"><strong aria-hidden="true">8.2.12.</strong> Socorro Crash Reports</a></li><li class="chapter-item expanded "><a href="../datasets/other/ssl/reference.html"><strong aria-hidden="true">8.2.13.</strong> SSL Ratios (public)</a></li><li class="chapter-item expanded "><a href="../datasets/batch_view/telemetry_aggregates/reference.html"><strong aria-hidden="true">8.2.14.</strong> Telemetry Aggregates</a></li><li class="chapter-item expanded "><a href="../datasets/batch_view/update/reference.html"><strong aria-hidden="true">8.2.15.</strong> Update</a></li></ol></li><li class="chapter-item expanded "><a href="../tools/experiments.html"><strong aria-hidden="true">8.3.</strong> Experimental Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datasets/heartbeat.html"><strong aria-hidden="true">8.3.1.</strong> Accessing Heartbeat data</a></li><li class="chapter-item expanded "><a href="../datasets/shield.html"><strong aria-hidden="true">8.3.2.</strong> Accessing Shield Study data</a></li><li class="chapter-item expanded "><a href="../datasets/dynamic_telemetry.html"><strong aria-hidden="true">8.3.3.</strong> Dynamic telemetry</a></li></ol></li><li class="chapter-item expanded "><a href="../datasets/search.html"><strong aria-hidden="true">8.4.</strong> Search Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datasets/search/search_aggregates/reference.html"><strong aria-hidden="true">8.4.1.</strong> Search Aggregates</a></li><li class="chapter-item expanded "><a href="../datasets/search/search_clients_daily/reference.html"><strong aria-hidden="true">8.4.2.</strong> Search Clients Daily</a></li><li class="chapter-item expanded "><a href="../datasets/search/search_clients_last_seen/reference.html"><strong aria-hidden="true">8.4.3.</strong> Search Clients Last Seen</a></li></ol></li><li class="chapter-item expanded "><a href="../datasets/other.html"><strong aria-hidden="true">8.5.</strong> Other Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datasets/other/hgpush/reference.html"><strong aria-hidden="true">8.5.1.</strong> hgpush</a></li><li class="chapter-item expanded "><a href="../datasets/other/stub_installer/reference.html"><strong aria-hidden="true">8.5.2.</strong> Stub installer ping</a></li><li class="chapter-item expanded "><a href="../datasets/other/activity-stream/reference.html"><strong aria-hidden="true">8.5.3.</strong> Activity Stream</a></li><li class="chapter-item expanded "><a href="../datasets/other/bmobugs/reference.html"><strong aria-hidden="true">8.5.4.</strong> bmobugs</a></li></ol></li><li class="chapter-item expanded "><a href="../datasets/fxa.html"><strong aria-hidden="true">8.6.</strong> Firefox Accounts Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datasets/fxa_metrics/attribution.html"><strong aria-hidden="true">8.6.1.</strong> Firefox Account Attribution</a></li><li class="chapter-item expanded "><a href="../datasets/fxa_metrics/funnels.html"><strong aria-hidden="true">8.6.2.</strong> Firefox Account Funnel Metrics</a></li><li class="chapter-item expanded "><a href="../datasets/fxa_metrics/emails.html"><strong aria-hidden="true">8.6.3.</strong> Firefox Account Email Metrics</a></li></ol></li><li class="chapter-item expanded "><a href="../datasets/static.html"><strong aria-hidden="true">8.7.</strong> Static Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datasets/static/normalized_os.html"><strong aria-hidden="true">8.7.1.</strong> Normalized OS Names And Versions</a></li><li class="spacer"></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../concepts/index.html"><strong aria-hidden="true">9.</strong> Telemetry Behavior Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/history.html"><strong aria-hidden="true">9.1.</strong> History of Telemetry</a></li><li class="chapter-item expanded "><a href="../concepts/profile/index.html"><strong aria-hidden="true">9.2.</strong> Profile Behavior</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/profile/profile_creation.html"><strong aria-hidden="true">9.2.1.</strong> Profile Creation</a></li><li class="chapter-item expanded "><a href="../concepts/profile/realworldusage.html"><strong aria-hidden="true">9.2.2.</strong> Real World Usage</a></li><li class="chapter-item expanded "><a href="../concepts/profile/profilehistory.html"><strong aria-hidden="true">9.2.3.</strong> Profile History</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/channels/index.html"><strong aria-hidden="true">9.3.</strong> Channel Behavior</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/channels/channel_normalization.html"><strong aria-hidden="true">9.3.1.</strong> Channel Normalization and Querying</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/censuses.html"><strong aria-hidden="true">9.4.</strong> Census metrics</a></li><li class="chapter-item expanded "><a href="../concepts/engagement.html"><strong aria-hidden="true">9.5.</strong> Engagement metrics</a></li><li class="chapter-item expanded "><a href="../concepts/segments.html"><strong aria-hidden="true">9.6.</strong> Segments</a></li><li class="chapter-item expanded "><a href="../concepts/sample_id.html"><strong aria-hidden="true">9.7.</strong> Sampling</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../historical/index.html"><strong aria-hidden="true">10.</strong> Historical Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/pipeline/data_pipeline.html"><strong aria-hidden="true">10.1.</strong> Previous AWS Pipeline Overview</a></li><li class="chapter-item expanded "><a href="../concepts/pipeline/data_pipeline_detail.html"><strong aria-hidden="true">10.2.</strong> In-depth AWS Data Pipeline Detail</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete.html"><strong aria-hidden="true">10.3.</strong> Obsolete Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datasets/obsolete/churn/reference.html"><strong aria-hidden="true">10.3.1.</strong> Churn</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/client_count/reference.html"><strong aria-hidden="true">10.3.2.</strong> Client Count</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/client_count_daily/reference.html"><strong aria-hidden="true">10.3.3.</strong> Client Count Daily</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/crash_aggregates/reference.html"><strong aria-hidden="true">10.3.4.</strong> Crash Aggregates</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/crash_summary/reference.html"><strong aria-hidden="true">10.3.5.</strong> Crash Summary</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/error_aggregates/reference.html"><strong aria-hidden="true">10.3.6.</strong> Error Aggregates</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/heavy_users/reference.html"><strong aria-hidden="true">10.3.7.</strong> Heavy Users</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/longitudinal/reference.html"><strong aria-hidden="true">10.3.8.</strong> Longitudinal</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/retention/reference.html"><strong aria-hidden="true">10.3.9.</strong> Retention</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/sync_summary/reference.html"><strong aria-hidden="true">10.3.10.</strong> Sync Summary</a></li><li class="spacer"></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../meta/index.html"><strong aria-hidden="true">11.</strong> About this Documentation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../meta/contributing.html"><strong aria-hidden="true">11.1.</strong> Contributing</a></li><li class="chapter-item expanded "><a href="../meta/structure.html"><strong aria-hidden="true">11.2.</strong> Structure</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Firefox Data Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        <a href="https://github.com/mozilla/firefox-data-docs" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#visualizing-percentiles-of-a-main-ping-exponential-histogram" id="visualizing-percentiles-of-a-main-ping-exponential-histogram">Visualizing Percentiles of a Main Ping Exponential Histogram</a></h1>
+<p><a href="https://glam-stage.bespoke.nonprod.dataops.mozgcp.net/">GLAM</a> is great if you want to check out the behaviour of a histogram over a large population across a curated set of dimensions, but what if you have a follow-up question that doesn't fit into its UI model? This tutorial will go into the guts of how to reproduce a GLAM-like view using <code>sql.telemetry.mozilla.org</code> (STMO), along with some suggestions on how to dig deeper.</p>
+<p>This tutorial tries to build up an understanding and intuition of how things work on a low-level before it gets to its main act of reproducing GLAM. If you don't care about the details, you can probably skip the earlier sections in this document.</p>
+<p>Assumptions: You have some idea of what a histogram is (if not, the <a href="https://en.wikipedia.org/wiki/Histogram">Wikipedia article</a> is a great place to start), have at least skimmed over <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/collection/histograms.html">the Firefox documentation on histograms</a>, and have read <a href="../tools/stmo.html">the introduction to STMO</a>.</p>
+<h2><a class="header" href="#table-of-contents" id="table-of-contents">Table of Contents</a></h2>
+<ul>
+<li><a href="#setting-the-stage-tab-spinners-duration">Setting the stage: tab spinners duration</a></li>
+<li><a href="#getting-client-level-data">Getting client-level data</a></li>
+<li><a href="#getting-percentiles-from-a-set-of-histograms">Getting percentiles from a set of histograms</a></li>
+<li><a href="#viewing-change-of-percentiles-over-time">Viewing change of percentiles over time</a></li>
+<li><a href="#percentiles-from-client-normalized-histograms">Percentiles from client-normalized histograms</a></li>
+<li><a href="#slicing-along-arbitrary-dimensions">Slicing along arbitrary dimensions</a></li>
+</ul>
+<h2><a class="header" href="#setting-the-stage-tab-spinners-duration" id="setting-the-stage-tab-spinners-duration">Setting the stage: tab spinners duration</a></h2>
+<p>For the purposes of this tutorial, let's look at a typical performance-oriented histogram: <a href="https://probes.telemetry.mozilla.org/?view=detail&amp;probeId=histogram%2FFX_TAB_SWITCH_SPINNER_VISIBLE_MS"><code>FX_TAB_SWITCH_SPINNER_VISIBLE_MS</code></a> which we use to count the number of times a tab spinner appears after a switch tab operation in Firefox, along with the duration of
+its appearance in milliseconds (ms). This is an unwanted operation (especially if it's long), as it makes the browser appear unresponsive and <a href="https://support.mozilla.org/en-US/questions/1198062">confuses / disturbs users</a>.</p>
+<p><code>FX_TAB_SWITCH_SPINNER_VISIBLE_MS</code> is what's called an <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/collection/histograms.html#exponential">exponential histogram</a>: it represents an exponentially increasing distribution of values in each of its &quot;buckets&quot;. It's probably easier to visualize this using the histogram viewer than describe:</p>
+<p><img src="../assets/exponential_histograms_tutorial/example_visualization_of_an_exponential_histogram.png" alt="example visualization of an exponential histogram" />
+<a href="https://telemetry.mozilla.org/histogram-simulator/#low=1&amp;high=1000&amp;n_buckets=20&amp;kind=exponential&amp;generate=normal">link</a></p>
+<p>This visualization above shows how a <a href="https://en.wikipedia.org/wiki/Normal_distribution">normal distribution</a> would map into the buckets: you'll see that it skews towards the end: the point of the exponential histogram is to be sensitive to lower values (which one would assume would be more frequent, so long as the tab spinner doesn't come up too frequently!). Each &quot;tick&quot; represents the range of a bucket (in milliseconds): so we have a bucket representing values between <code>1ms</code> and <code>2ms</code>, <code>2ms</code> and <code>3ms</code>, and so on. You'll note that this distribution caps out at 1000: any values greater than or equal to this will wind up in this bucket but we won't know their value with any precision. For tracking values higher than this, a separate histogram (<a href="https://probes.telemetry.mozilla.org/?view=detail&amp;probeId=histogram%2FFX_TAB_SWITCH_SPINNER_VISIBLE_LONG_MS"><code>FX_TAB_SWITCH_SPINNER_VISIBLE_LONG_MS</code></a>) was created.</p>
+<h2><a class="header" href="#getting-client-level-data" id="getting-client-level-data">Getting client-level data</a></h2>
+<p>Before we move on, let's do up a quick example of getting some client-level data using an SQL query, hopefully building up some intuition on how this stuff works on a low-level. From there, we can build up to aggregating it in interesting ways.</p>
+<p>As of this writing, each main ping histogram is encoded as a JSON string inside the <code>telemetry.main</code> table inside BigQuery.</p>
+<pre><code class="language-sql">SELECT
+  payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS AS histogram_json,
+FROM
+  telemetry.main
+WHERE
+  sample_id = 42
+  AND normalized_channel = 'nightly'
+  AND DATE(submission_timestamp) = '2020-04-20'
+  AND payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS IS NOT NULL
+LIMIT
+  3
+</code></pre>
+<p><a href="https://sql.telemetry.mozilla.org/queries/71333/source">link</a></p>
+<p>Running this query on STMO, we get the following output:</p>
+<table><thead><tr><th><code>histogram_json</code></th></tr></thead><tbody>
+<tr><td><code>{&quot;bucket_count&quot;:20,&quot;histogram_type&quot;:0,&quot;sum&quot;:118,&quot;range&quot;:[1,1000],&quot;values&quot;:{&quot;80&quot;:0,&quot;115&quot;:1,&quot;165&quot;:0}}</code></td></tr>
+<tr><td><code>{&quot;bucket_count&quot;:20,&quot;histogram_type&quot;:0,&quot;sum&quot;:19145,&quot;range&quot;:[1,1000],&quot;values&quot;:{&quot;237&quot;:0,&quot;340&quot;:1,&quot;1000&quot;:1}}</code></td></tr>
+<tr><td><code>{&quot;bucket_count&quot;:20,&quot;histogram_type&quot;:0,&quot;sum&quot;:1996,&quot;range&quot;:[1,1000],&quot;values&quot;:{&quot;698&quot;:0,&quot;1000&quot;:1}}</code></td></tr>
+</tbody></table>
+<p>In this representation, <code>bucket_count</code>, <code>histogram_type</code>, and <code>range</code> represent the number of buckets, the histogram type (as an index: 0 means exponential), and the range of possible values. <code>values</code> represents the number of instances in each of the buckets while <code>sum</code> represents the sum total of all histogram values recorded.</p>
+<p>In general, it is best not to rely on this representation of the histogram in production code (it is quite likely to change in the future). Instead, use the <a href="https://github.com/mozilla/bigquery-etl/blob/master/udf/json_extract_histogram.sql"><code>json_extract_histogram</code></a> user-defined-function (UDF) and extract out the fields you need: for example, to just get the <code>sum</code> for all the histograms above, you could modify the query above to something like:</p>
+<pre><code class="language-sql">WITH intermediate AS (
+  SELECT
+    udf.json_extract_histogram(payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS) AS histogram,
+  FROM
+    telemetry.main
+  WHERE
+    sample_id = 42
+    AND normalized_channel = 'nightly'
+    AND DATE(submission_timestamp) = '2020-04-20'
+    AND payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS IS NOT NULL
+  LIMIT
+    3
+)
+SELECT
+  histogram.sum,
+  histogram.bucket_count
+FROM
+  intermediate;
+</code></pre>
+<p><a href="https://sql.telemetry.mozilla.org/queries/71408/source">link</a></p>
+<p>Which yields:</p>
+<table><thead><tr><th><code>sum</code></th><th><code>bucket_count</code></th></tr></thead><tbody>
+<tr><td>118</td><td>20</td></tr>
+<tr><td>19145</td><td>20</td></tr>
+<tr><td>1996</td><td>20</td></tr>
+</tbody></table>
+<p>Note that these are the same values in the JSON histogram above.</p>
+<p>Obviously this by itself is not particularly useful or meaningful - generally we are interested in <em>aggregate</em> behaviour across a larger set of clients. Let's look at how we might get that.</p>
+<h2><a class="header" href="#getting-percentiles-from-a-set-of-histograms" id="getting-percentiles-from-a-set-of-histograms">Getting percentiles from a set of histograms</a></h2>
+<p>Often, questions around histograms are framed as &quot;what's the 99th percentile?&quot; -- that is, what is the <em>maximum</em> value that 99% of users experience: this helps give perspective on data which may have a number of weird outliers (a.k.a the <em>Bill Gates walks into a bar and everyone inside becomes a millionaire</em> effect). Let's take an initial stab of grabbing some percentiles of the data we were looking at earlier using the <a href="https://github.com/mozilla/bigquery-etl/blob/master/udf/histogram_merge.sql"><code>histogram_merge</code></a> and <a href="https://github.com/mozilla/bigquery-etl/blob/master/udf/histogram_percentiles.sql"><code>histogram_percentiles</code></a> UDFs:</p>
+<pre><code class="language-sql">WITH merged_histogram AS (
+  SELECT
+    udf.histogram_merge(
+      ARRAY_AGG(udf.json_extract_histogram(payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS))
+    ) AS spinner_visible_long_ms,
+  FROM
+    telemetry.main
+  WHERE
+    application.channel = 'nightly'
+    AND normalized_os = 'Windows'
+    AND DATE(submission_timestamp) = '2020-04-20'
+),
+percentiles AS (
+  SELECT
+    udf.histogram_percentiles(spinner_visible_long_ms, [.05, .25, .5, .75, .95]) AS percentile_nested
+  FROM
+    merged_histogram
+)
+SELECT
+  percentile,
+  value
+FROM
+  percentiles
+CROSS JOIN
+  UNNEST(percentiles.percentile_nested);
+</code></pre>
+<p><a href="https://sql.telemetry.mozilla.org/queries/71410/source">link</a></p>
+<p>Which gives us this set of results:</p>
+<table><thead><tr><th>Percentile</th><th>Value</th></tr></thead><tbody>
+<tr><td>0.05</td><td>13</td></tr>
+<tr><td>0.25</td><td>56</td></tr>
+<tr><td>0.50</td><td>165</td></tr>
+<tr><td>0.75</td><td>698</td></tr>
+<tr><td>0.95</td><td>1,000</td></tr>
+</tbody></table>
+<p>So we see for this set of results that 95th percentile is <code>1000ms</code>, the 75th percentile is <code>698ms</code>, and so on.</p>
+<p>There's a bit of intermediate-to-advanced SQL in the above query, due to the fact that the <code>histogram_percentiles</code> UDF returns an <em>array</em> of results in a column (rather than a full-blown table) -- we wrangle the results into something we can handle using the <a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#unnest"><code>UNNEST</code></a> operator combined with a cross-join at the end. If you don't immediately understand this, don't worry: it's just an implementation detail.</p>
+<h2><a class="header" href="#viewing-change-of-percentiles-over-time" id="viewing-change-of-percentiles-over-time">Viewing change of percentiles over time</a></h2>
+<p>Knowing the approximate distribution of results on a given day is sort of interesting, but probably not what we really want: what we're usually interested in is the evolution of results <em>over time</em>. In particular, segmenting by <code>build_id</code> (a date-like structure in the <code>main</code> ping representing when Firefox was built) is a useful technique, as it allows us to see if changes to Firefox itself may have caused the distribution to change.</p>
+<p>We can do this simply by <em>grouping by</em> the build id field, and then merging the histograms corresponding to each:</p>
+<pre><code class="language-sql">DECLARE four_twenty DEFAULT DATE('2020-04-20');
+
+WITH per_build_day AS (
+  SELECT
+    PARSE_DATETIME(&quot;%Y%m%d%H%M%S&quot;, application.build_id) AS build_id,
+    KEY,
+    SUM(value) AS value,
+  FROM
+    telemetry.main,
+    UNNEST(
+      udf.json_extract_histogram(
+        payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS
+      ).VALUES
+    )
+  WHERE
+    application.channel = 'nightly'
+    AND normalized_os = 'Windows'
+    AND application.build_id &gt; FORMAT_DATE(&quot;%Y%m%d&quot;, DATE_SUB(four_twenty, INTERVAL 2 WEEK))
+    AND application.build_id &lt;= FORMAT_DATE(&quot;%Y%m%d&quot;, four_twenty)
+    AND DATE(submission_timestamp) &gt;= DATE_SUB(four_twenty, INTERVAL 2 WEEK)
+    AND DATE(submission_timestamp) &lt;= four_twenty
+  GROUP BY
+    KEY,
+    build_id
+),
+per_build_day_as_struct AS (
+  SELECT
+    build_id,
+    STRUCT(ARRAY_AGG(STRUCT(KEY, value)) AS VALUES) AS spinner_visible_ms
+  FROM
+    per_build_day
+  GROUP BY
+    build_id
+)
+SELECT
+  build_id,
+  percentile,
+  value
+FROM
+  per_build_day_as_struct
+CROSS JOIN
+  UNNEST(
+    udf.histogram_percentiles(
+      spinner_visible_ms,
+      [.05, .25, .5, .75, .95]
+    )
+  )
+</code></pre>
+<p><a href="https://sql.telemetry.mozilla.org/queries/71472/source">link</a></p>
+<p>As an implementation note, observe that we don't use <code>histogram_merge</code> here as we do above: doing so would require using <a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators#array_agg"><code>ARRAY_AGG</code></a> which can break down when processing large amounts of data. Instead we create an intermediate result (the <code>per_build_day</code> <code>WITH</code> statement) and then reprocess it into a structured representation. If you're curious what the version using <code>histogram_merge</code> would look like, see <a href="https://sql.telemetry.mozilla.org/queries/71413/source">this example</a>.</p>
+<p>In any case, rendering the data this query returns, we get a chart like this:</p>
+<p><img src="../assets/exponential_histograms_tutorial/example_visualization_of_histogram_percentiles.png" alt="example visualization of histogram percentiles" /></p>
+<p>You'll note that the 75th and the 95th percentiles are often the same. Which is to say: in 25% of cases, the value was somewhere between <code>698ms</code> and <code>1000ms</code>. Does this mean that 25% of the time people are seeing a <em>very</em> long-running tab spinner? <em>No!</em> It actually points to a flaw in our methodology, which GLAM was explicitly designed to address. For the last part our tutorial, let's look into how it does it, and how to reproduce its approach.</p>
+<h2><a class="header" href="#percentiles-from-client-normalized-histograms" id="percentiles-from-client-normalized-histograms">Percentiles from client-normalized histograms</a></h2>
+<p>The example above basically created one <em>giant</em> histogram and then gathered the percentiles out of each one. But histograms are not created equal! At the extreme end of things for the tab spinner, consider a user on an extremely old computer with various kinds of malware installed, constantly interacting with complex and slow web sites. Such a condition is going to trigger the tab spinner frequently, and for long periods. But it is not representative of the overall population, and probably shouldn't <em>overtly</em> influence our decision-making process.</p>
+<p>A solution used by GLAM is to give each client &quot;one vote&quot;: that is, the aggregate histogram for a client over a day must sum up to one. Even in the extreme case where all tab spinner measurements fall between <code>658ms</code> and <code>1000ms</code> (the range of the highest bucket), the <em>maximum</em> number for that bucket is just &quot;1&quot;.</p>
+<p>We can reproduce this approach by using the <a href="https://github.com/mozilla/bigquery-etl/blob/master/udf/histogram_normalize.sql"><code>histogram_normalize</code></a> UDF, which explicitly takes a set of histograms and makes sure that the values for each one sum up to exactly one:</p>
+<pre><code class="language-sql">DECLARE four_twenty DEFAULT DATE('2020-04-20');
+
+WITH per_build_client_day AS (
+  SELECT
+    PARSE_DATETIME(&quot;%Y%m%d%H%M%S&quot;, application.build_id) AS build_id,
+    client_id,
+    udf.histogram_normalize(
+      udf.histogram_merge(
+        ARRAY_AGG(
+          udf.json_extract_histogram(
+            payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS
+          )
+        )
+      )
+    ) AS tab_switch_visible_ms
+  FROM
+    telemetry.main
+  WHERE
+    application.channel = 'nightly'
+    AND normalized_os = 'Windows'
+    AND application.build_id &gt; FORMAT_DATE(&quot;%Y%m%d&quot;, DATE_SUB(four_twenty, INTERVAL 14 DAY))
+    AND application.build_id &lt;= FORMAT_DATE(&quot;%Y%m%d&quot;, four_twenty)
+    AND DATE(submission_timestamp) &gt;= DATE_SUB(four_twenty, INTERVAL 14 DAY)
+    AND DATE(submission_timestamp) &lt;= four_twenty
+  GROUP BY
+    build_id,
+    client_id
+),
+merged_histograms AS (
+  SELECT
+    build_id,
+    KEY,
+    SUM(value) AS value,
+  FROM
+    per_build_client_day,
+    UNNEST(per_build_client_day.tab_switch_visible_ms.VALUES)
+  GROUP BY
+    KEY,
+    build_id
+),
+as_struct AS (
+  SELECT
+    build_id,
+    STRUCT(ARRAY_AGG(STRUCT(KEY, value)) AS VALUES) AS spinner_visible_long_ms
+  FROM
+    merged_histograms
+  GROUP BY
+    build_id
+),
+percentiles AS (
+  SELECT
+    build_id,
+    udf.histogram_percentiles(
+      spinner_visible_long_ms,
+      [.05, .25, .5, .75, .95]
+    ) AS percentile_nested
+  FROM
+    as_struct
+)
+SELECT
+  build_id,
+  percentile,
+  value
+FROM
+  percentiles
+CROSS JOIN
+  UNNEST(percentiles.percentile_nested);
+</code></pre>
+<p><a href="https://sql.telemetry.mozilla.org/queries/71489/source">link</a></p>
+<p>You'll notice this query groups by <code>client_id</code> in addition to <code>build_id</code> before <code>histogram_normalize</code>. Grouping by <code>client_id</code> gives each user equal representation and prevents &quot;power users&quot; from skewing the result.</p>
+<p>In any case, the result of this query is this graph:</p>
+<p><img src="../assets/exponential_histograms_tutorial/example_visualization_of_normalized_histogram_percentiles.png" alt="example visualization of normalized histogram percentiles" /></p>
+<p>Things are looking much better! The 95th percentile is still capped out at 1000, but the other percentiles are much lower.</p>
+<h2><a class="header" href="#slicing-along-arbitrary-dimensions" id="slicing-along-arbitrary-dimensions">Slicing along arbitrary dimensions</a></h2>
+<p>OK, so we've reproduced GLAM, but that isn't particularly exciting in and of itself: if you just wanted to see a GLAM-like view of things, GLAM by itself is going to do a better job. The power of writing SQL comes when you want to see how things look on an arbitrary set of dimensions. Let's look at an arbitrary question: what do the tab spinner percentiles look like Windows 7? These are likely to be much older machines, so we'd expect things to look worse. But how much?</p>
+<p>We can filter our query to <em>just</em> that group of users by adding a <code>AND normalized_os_version=&quot;6.1&quot;</code> clause to our query above:</p>
+<pre><code class="language-sql">DECLARE four_twenty DEFAULT DATE('2020-04-20');
+
+WITH per_build_client_day AS (
+  SELECT
+    PARSE_DATETIME(&quot;%Y%m%d%H%M%S&quot;, application.build_id) AS build_id,
+    client_id,
+    udf.histogram_normalize(
+      udf.histogram_merge(
+        ARRAY_AGG(
+          udf.json_extract_histogram(
+            payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS
+          )
+        )
+      )
+    ) AS tab_switch_visible_ms
+  FROM
+    telemetry.main
+  WHERE
+    application.channel = 'nightly'
+    AND normalized_os = 'Windows'
+    AND normalized_os_version = &quot;6.1&quot;
+    AND application.build_id &gt; FORMAT_DATE(&quot;%Y%m%d&quot;, DATE_SUB(four_twenty, INTERVAL 14 DAY))
+    AND application.build_id &lt;= FORMAT_DATE(&quot;%Y%m%d&quot;, four_twenty)
+    AND DATE(submission_timestamp) &gt;= DATE_SUB(four_twenty, INTERVAL 14 DAY)
+    AND DATE(submission_timestamp) &lt;= four_twenty
+  GROUP BY
+    build_id,
+    client_id
+),
+merged_histograms AS (
+  SELECT
+    build_id,
+    KEY,
+    SUM(value) AS value,
+  FROM
+    per_build_client_day,
+    UNNEST(per_build_client_day.tab_switch_visible_ms.VALUES)
+  GROUP BY
+    KEY,
+    build_id
+),
+as_struct AS (
+  SELECT
+    build_id,
+    STRUCT(ARRAY_AGG(STRUCT(KEY, value)) AS VALUES) AS spinner_visible_long_ms
+  FROM
+    merged_histograms
+  GROUP BY
+    build_id
+),
+percentiles AS (
+  SELECT
+    build_id,
+    udf.histogram_percentiles(
+      spinner_visible_long_ms,
+      [.05, .25, .5, .75, .95]
+    ) AS percentile_nested
+  FROM
+    as_struct
+)
+SELECT
+  build_id,
+  percentile,
+  value
+FROM
+  percentiles
+CROSS JOIN
+  UNNEST(percentiles.percentile_nested);
+</code></pre>
+<p><a href="https://sql.telemetry.mozilla.org/queries/71437/source">link</a></p>
+<p>If we do this, we see this chart:</p>
+<p><img src="../assets/exponential_histograms_tutorial/example_visualization_of_normalized_histogram_percentiles_for_Windows_7.png" alt="example visualization of normalized histogram percentiles for Windows 7" /></p>
+<p>As you can see, both the 75th and 100th percentile are now in the highest bucket, and the 50th percentile is much higher as well. From this we can intuit that the user experience for these users is likely considerably worse, which is exactly what we would have expected.</p>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/main_ping_exponential_histograms.md">Edit this file on GitHub.</a></footer>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../cookbooks/clients_last_seen_bits.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../cookbooks/realtime.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../cookbooks/clients_last_seen_bits.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../cookbooks/realtime.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+        <!-- Google Analytics Tag -->
+        <script type="text/javascript">
+            var localAddrs = ["localhost", "127.0.0.1", ""];
+
+            // make sure we don't activate google analytics if the developer is
+            // inspecting the book locally...
+            if (localAddrs.indexOf(document.location.hostname) === -1) {
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'UA-104326577-1', 'auto');
+                ga('send', 'pageview');
+            }
+        </script>
+        
+
+        
+        
+        
+        <script type="text/javascript">
+            window.playpen_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="../mermaid-init.js"></script>
+        
+
+        
+
+    </body>
+</html>
