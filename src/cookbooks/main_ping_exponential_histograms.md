@@ -17,7 +17,7 @@ its appearance in milliseconds (ms). This is an unwanted operation (especially i
 
 `FX_TAB_SWITCH_SPINNER_VISIBLE_MS` is what's called an [exponential histogram](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/collection/histograms.html#exponential): it represents an exponentially increasing distribution of values in each of its "buckets". It's probably easier to visualize this using the histogram viewer than describe:
 
-![example visualization of an exponential histogram](https://i.imgur.com/3MHESUa.png)
+![example visualization of an exponential histogram](../assets/exponential_histograms_tutorial/example_visualization_of_an_exponential_histogram.png)
 [link](https://telemetry.mozilla.org/histogram-simulator/#low=1&high=1000&n_buckets=20&kind=exponential&generate=normal)
 
 This visualization above shows how a [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution) would map into the buckets: you'll see that it skews towards the end: the point of the exponential histogram is to be sensitive to lower values (which one would assume would be more frequent, so long as the tab spinner doesn't come up too frequently!). Each "tick" represents the range of a bucket (in milliseconds): so we have a bucket representing values between `1ms` and `2ms`, `2ms` and `3ms`, and so on. You'll note that this distribution caps out at 1000: any values greater than or equal to this will wind up in this bucket but we won't know their value with any precision. For tracking values higher than this, a separate histogram ([`FX_TAB_SWITCH_SPINNER_VISIBLE_LONG_MS`](https://probes.telemetry.mozilla.org/?view=detail&probeId=histogram%2FFX_TAB_SWITCH_SPINNER_VISIBLE_LONG_MS)) was created.
@@ -201,7 +201,7 @@ As an implementation note, observe that we don't use `histogram_merge` here as w
 
 In any case, rendering the data this query returns, we get a chart like this:
 
-![example visualization of histogram percentiles](https://i.imgur.com/HByDexv.png)
+![example visualization of histogram percentiles](../assets/exponential_histograms_tutorial/example_visualization_of_histogram_percentiles.png)
 
 You'll note that the 75th and the 95th percentiles are often the same. Which is to say: in 25% of cases, the value was somewhere between `698ms` and `1000ms`. Does this mean that 25% of the time people are seeing a _very_ long-running tab spinner? _No!_ It actually points to a flaw in our methodology, which GLAM was explicitly designed to address. For the last part our tutorial, let's look into how it does it, and how to reproduce its approach.
 
@@ -289,7 +289,7 @@ You'll notice this query groups by `client_id` in addition to `build_id` before 
 
 In any case, the result of this query is this graph:
 
-![example visualization of normalized histogram percentiles](https://i.imgur.com/cX3deIM.png)
+![example visualization of normalized histogram percentiles](../assets/exponential_histograms_tutorial/example_visualization_of_normalized_histogram_percentiles.png)
 
 Things are looking much better! The 95th percentile is still capped out at 1000, but the other percentiles are much lower.
 
@@ -374,6 +374,6 @@ CROSS JOIN
 
 If we do this, we see this chart:
 
-![example visualization of normalized histogram percentiles for Windows 7](https://i.imgur.com/aP27vqZ.png)
+![example visualization of normalized histogram percentiles for Windows 7](../assets/exponential_histograms_tutorial/example_visualization_of_normalized_histogram_percentiles_for_Windows_7.png)
 
 As you can see, both the 75th and 100th percentile are now in the highest bucket, and the 50th percentile is much higher as well. From this we can intuit that the user experience for these users is likely considerably worse, which is exactly what we would have expected.
