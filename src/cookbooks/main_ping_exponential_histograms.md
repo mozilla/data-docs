@@ -374,6 +374,6 @@ CROSS JOIN
 
 If we do this, we see this chart:
 
-![](https://i.imgur.com/aP27vqZ.png)
+![example visualization of normalized histogram percentiles for Windows 7](https://i.imgur.com/aP27vqZ.png)
 
 As you can see, both the 75th and 100th percentile are now in the highest bucket, and the 50th percentile is much higher as well. From this we can intuit that the user experience for these users is likely considerably worse, which is exactly what we would have expected.
