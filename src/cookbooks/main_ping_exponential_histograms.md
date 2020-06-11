@@ -289,7 +289,7 @@ You'll notice this query groups by `client_id` in addition to `build_id` before 
 
 In any case, the result of this query is this graph:
 
-![](https://i.imgur.com/cX3deIM.png)
+![example visualization of normalized histogram percentiles](https://i.imgur.com/cX3deIM.png)
 
 Things are looking much better! The 95th percentile is still capped out at 1000, but the other percentiles are much lower.
 
