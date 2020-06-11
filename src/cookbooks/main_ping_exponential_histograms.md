@@ -141,7 +141,7 @@ There's a bit of intermediate-to-advanced SQL in the above query, due to the fac
 
 ## Viewing change of percentiles over time
 
-Knowing the approximate distribution of results on a given day is sort of interesting, but probably not what we really want: what we're usually interested in is the evolution of results _over time_. In particular, segmenting by `build_id` (a date-like structure in the main ping representing when Firefox was built) is a useful technique, as it allows us to see if changes to Firefox itself may have caused the distribution to change.
+Knowing the approximate distribution of results on a given day is sort of interesting, but probably not what we really want: what we're usually interested in is the evolution of results _over time_. In particular, segmenting by `build_id` (a date-like structure in the `main` ping representing when Firefox was built) is a useful technique, as it allows us to see if changes to Firefox itself may have caused the distribution to change.
 
 We can do this simply by _grouping by_ the build id field, and then merging the histograms corresponding to each:
 
