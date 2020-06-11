@@ -54,7 +54,7 @@ Running this query on STMO, we get the following output:
 
 In this representation, `bucket_count`, `histogram_type`, and `range` represent the number of buckets, the histogram type (as an index: 0 means exponential), and the range of possible values. `values` represents the number of instances in each of the buckets.
 
-In general, it is best not to rely on this representation of the histogram in production code (it is quite likely to change in the future). Instead, use the [`json_extract_histogram`](https://github.com/mozilla/bigquery-etl/blob/master/udf/json_extract_histogram.sql) user-defined-function (UDF) and extract out the fields you need: for example, to just get the sum for all the histograms above, you could modify the query above to something like:
+In general, it is best not to rely on this representation of the histogram in production code (it is quite likely to change in the future). Instead, use the [`json_extract_histogram`](https://github.com/mozilla/bigquery-etl/blob/master/udf/json_extract_histogram.sql) user-defined-function (UDF) and extract out the fields you need: for example, to just get the `sum` for all the histograms above, you could modify the query above to something like:
 
 ```sql
 WITH intermediate AS (
