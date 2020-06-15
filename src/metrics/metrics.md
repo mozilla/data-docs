@@ -1,6 +1,6 @@
 # Metrics
 
-Here we provide definitions and information about our standard metrics.
+Here we provide definitions and information about our standard metrics.  We use some terminology that is defined [here](https://docs.telemetry.mozilla.org/concepts/terminology.html).
 
 ## Table of Contents
 
@@ -22,7 +22,7 @@ The concept of being "active" is defined as in the [`usage criterion`](./usage.m
 
 ### Caveats
 
-If the number of users stays constant, but the average number of active profiles per user increases, this metric will tend to increase.
+If the number of users stays constant, but the average number of active profiles per user increases, this metric will tend to increase.  For more details on the relationship between users and profiles, see [here](https://docs.telemetry.mozilla.org/concepts/profile/realworldusage.html).
 
 ### Dashboards
 
@@ -50,6 +50,8 @@ WHERE
 GROUP BY
   date
 ```
+
+You can run this query on [STMO](https://sql.telemetry.mozilla.org/queries/72012/source).
 
 -----
 
