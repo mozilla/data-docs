@@ -22,7 +22,7 @@ The concept of being "active" is defined as in the [`usage criterion`](./usage.m
 
 ### Caveats
 
-If the number of users stays constant, but the average number of active profiles per user increases, this metric will tend to increase.  For more details on the relationship between users and profiles, see [here](https://docs.telemetry.mozilla.org/concepts/profile/realworldusage.html).
+If the number of users stays constant, but the average number of active profiles per user increases, this metric will tend to increase.  For more details on the relationship between users and profiles, see [here](https://docs.telemetry.mozilla.org/concepts/analysis_gotchas.html#profiles-vs-users).
 
 ### Dashboards
 
