@@ -12,7 +12,7 @@ Here we provide definitions and information about our standard metrics.
 
 ### Overview
 
-DAU counts the number of unique profiles active in the product on each day.  This is intended to approximate the number of people using the product each day.
+Daily Active Users or DAU counts the number of unique profiles active in the product on each day.  This is intended to approximate the number of people using the product each day.
 
 ### Details
 
@@ -32,7 +32,7 @@ This metric is available on the [standard Growth and Usage Dashboard (GUD)](http
 
 DAU can easily be calculated from the Smoot tables; for example:
 
-```
+```sql
 SELECT
   date,
   SUM(dau) AS dau
