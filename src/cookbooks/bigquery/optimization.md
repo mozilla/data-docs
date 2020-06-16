@@ -159,6 +159,23 @@ In this case, the query engine no longer even has to read the file. It could jus
 
 Tables are usually partitioned based on dates; e.g., `submission_date` or `DATE(submission_timestamp)`.
 
+#### Data Ordering (clustering)
+
+Another way to improve query performance is to select a subset of data on a field that the data is ordered by. In BigQuery, this is called "clustering". A clustered field is one which is sorted in the underlying data.
+
+For example, if we wanted to get all of ages greater than age 40 in our table above, we might query like this:
+`SELECT age FROM people WHERE age > 45`
+
+Then we would scan all of the `age` field, starting from `27`, then `45`, then `5`.
+
+However, if we sort the data on that field, our table would look like this:
+\```
+name,"Cadence","Ted","Emmanuel"
+age,5,27,45
+height,3.5,6.0,5.9
+\```
+
+Since data is stored on different files, we could ignore any `age` files that don't have data less than 40. So if Cadence and Ted's ages were in one file, and Emmanuel's in the next, we could skip reading that first file entirely. In that way, we can sometimes drastically reduce the amount of data we're reading.
 #### Key takeaways
 
 - Limit queries to a few columns that you need to reduce the volume of data that must be read
