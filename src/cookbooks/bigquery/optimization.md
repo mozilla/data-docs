@@ -23,7 +23,7 @@ When writing a query using [STMO](https://sql.telemetry.mozilla.org) or the BigQ
 - If using JOIN, trim the data to-be-joined before the query performs a JOIN. If you reduce data early in the processing cycle, shuffling and other complex operations only execute on the data that you need.
   - Use sub queries with filters or intermediate tables or views as a way of decreasing sides of a join, prior to the join itself.
 - Do not treat WITH clauses as prepared statements
-  - WITH clauses are used primarily for readability because they are not materialized. For example, placing all your queries in WITH clauses and then running UNION ALL is a misuse of the WITH clause. If a query appears in more than one WITH clause, it executes in each clause.
+  - WITH clauses are used primarily for readability because they are not materialized: if a query appears in more than one WITH clause, it executes in each clause. Do not rely on them to optimize your query!
 
 ## Optimization Caveats
 
