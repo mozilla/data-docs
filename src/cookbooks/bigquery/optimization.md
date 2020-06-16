@@ -17,7 +17,7 @@ When writing a query using [STMO](https://sql.telemetry.mozilla.org) or the BigQ
 - Many datasets also cluster on `normalized_channel`, corresponding to the channel of the product. If you are working with data that has different channels (for example, Firefox desktop), limit your initial query to a channel with a limited population like Nightly (in the case of Firefox desktop, do this by adding `WHERE normalized_channel='nightly'` to your query)
 - Select only the columns that you want (**Don't** use `SELECT *`)
   - If you are experimenting with data or exploring data, use one of the [data preview options](https://cloud.google.com/bigquery/docs/best-practices-costs#preview-data) instead of `SELECT *`.
-- Use approximate algorithms: e.g., `approx_distinct(...)` instead of `COUNT(DISTINCT ...)`
+- Use [approximate algorithms](https://cloud.google.com/bigquery/docs/reference/standard-sql/approximate_aggregate_functions): e.g., `approx_count_distinct(...)` instead of `COUNT(DISTINCT ...)`
   - See [approximate aggregation functions](https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators#approximate-aggregate-functions) in the standard SQL reference.
 - Reference the data size prediction ("This query will process X bytes") in STMO and the BigQuery UI to help gauge the efficiency of your queries. You should see this number go down as you limit the range of `submission_date`s or include fewer fields in your `SELECT` statement.
 - If using JOIN, trim the data to-be-joined before the query performs a JOIN. If you reduce data early in the processing cycle, shuffling and other complex operations only execute on the data that you need.
