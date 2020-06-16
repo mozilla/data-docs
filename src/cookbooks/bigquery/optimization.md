@@ -180,3 +180,4 @@ Since data is stored on different files, we could ignore any `age` files that do
 
 - Limit queries to a few columns that you need to reduce the volume of data that must be read
 - Filter the partitions to reduce the volume of data that you need
+- Filter on clustered fields
