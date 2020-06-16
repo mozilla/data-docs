@@ -2,7 +2,7 @@
 
 When writing a query using [STMO](https://sql.telemetry.mozilla.org) or the BigQuery console, you can improve performance and reduce costs by learning how data is stored, how databases function, and what you can change about a query to take advantage of the storage structure and the data function.
 
-[Queries are charged by data scanned at \$5 per terabyte (TB)](https://cloud.google.com/bigquery/pricing#on_demand_pricing) so each 200 gigabytes of data scanned will cost \$1: on tables with hundreds of TBs of data (like the [main ping table](../../datasets/pings.md#main-ping) or [`clients_daily`](../../datasets/batch_view/clients_daily/reference.md)), costs **can add up very quickly**.
+[Queries are charged by data scanned at \$5 per terabyte (TB)](https://cloud.google.com/bigquery/pricing#on_demand_pricing) so each 200 gigabytes of data scanned will cost \$1: on tables with hundreds of TBs of data (like the [main ping table](../../datasets/pings.md#main-ping) or [`clients_daily`](../../datasets/batch_view/clients_daily/reference.md)), costs **can add up very quickly**. When trying to reduce the cost, the main thing to do is reduce the amount of data scanned: some of the advice in this article will improve your query's performance but will not scan a smaller amount of data, and thus cost the same.
 
 ## Table of Contents
 
@@ -10,26 +10,32 @@ When writing a query using [STMO](https://sql.telemetry.mozilla.org) or the BigQ
 
 ## TL;DR: What to implement for quick improvements
 
-- Filter on a partitioned column such as `submission_timestamp` or `submission_date` (_even_ if you have a `LIMIT`: see [optimization caveats](#optimization-caveats))
+### How to improve both query speed and cost
+
+- Filter on a partitioned column such as `submission_timestamp` or `submission_date` (_even_ if you have a `LIMIT`: see [optimization caveats](#caveats))
 - Use a sample of the data that is based on the `sample_id` field. This can be helpful for initial development even if you later run the query using the entire
   population (without sampling).
   - Tables that include a `sample_id` field will usually have that as one of the clustering fields and you can efficiently scan random samples of users by specifying `WHERE sample_id = 0` (1% sample), `WHERE sample_id < 10` (10% sample), etc. This can be especially helpful with `main_summary`, `clients_daily`, and `clients_last_seen` which are very large tables and are all clustered on `sample_id`.
 - Many datasets also cluster on `normalized_channel`, corresponding to the channel of the product. If you are working with data that has different channels (for example, Firefox desktop), limit your initial query to a channel with a limited population like Nightly (in the case of Firefox desktop, do this by adding `WHERE normalized_channel='nightly'` to your query)
 - Select only the columns that you want (**Don't** use `SELECT *`)
   - If you are experimenting with data or exploring data, use one of the [data preview options](https://cloud.google.com/bigquery/docs/best-practices-costs#preview-data) instead of `SELECT *`.
-- Use [approximate algorithms](https://cloud.google.com/bigquery/docs/reference/standard-sql/approximate_aggregate_functions): e.g., `approx_count_distinct(...)` instead of `COUNT(DISTINCT ...)`
-  - See [approximate aggregation functions](https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators#approximate-aggregate-functions) in the standard SQL reference.
 - Reference the data size prediction ("This query will process X bytes") in STMO and the BigQuery UI to help gauge the efficiency of your queries. You should see this number go down as you limit the range of `submission_date`s or include fewer fields in your `SELECT` statement.
+
+### Improvements to query speed only
+
+These are still worth doing!
+
+- Use [approximate algorithms](https://cloud.google.com/bigquery/docs/reference/standard-sql/approximate_aggregate_functions): e.g., `approx_count_distinct(...)` instead of `COUNT(DISTINCT ...)`
 - If using JOIN, trim the data to-be-joined before the query performs a JOIN. If you reduce data early in the processing cycle, shuffling and other complex operations only execute on the data that you need.
   - Use sub queries with filters or intermediate tables or views as a way of decreasing sides of a join, prior to the join itself.
-- Do not treat WITH clauses as prepared statements
-  - WITH clauses are used primarily for readability because they are not materialized: if a query appears in more than one WITH clause, it executes in each clause. Do not rely on them to optimize your query!
 
-## Optimization Caveats
+### Caveats
 
 - For clustered tables, the data size prediction won't take into account benefits from `LIMIT`s and `WHERE` clauses on clustering fields, so you'll need to compare to the actual "Data Scanned" after the query is run.
 - Applying a `LIMIT` clause to a `SELECT *` query might not affect the amount of data read, depending on the table structure.
   - Many of our tables are configured to use _clustering_ in which case a `LIMIT` clause does effectively limit the amount of data that needs to be scanned. To check whether your `LIMIT` and `WHERE` clauses are actually improving performance, you should see a lower value reported for actual "Data Scanned" by a query compared to the prediction ("This query will process X bytes") in STMO or the BigQuery UI.
+- Do not treat WITH clauses as prepared statements
+  - WITH clauses are used primarily for readability because they are not materialized: if a query appears in more than one WITH clause, it executes in each clause. Do not rely on them to optimize your query!
 
 ## Some Explanations
 
