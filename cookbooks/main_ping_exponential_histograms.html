@@ -233,7 +233,7 @@ FROM
   SELECT
     udf.histogram_merge(
       ARRAY_AGG(udf.json_extract_histogram(payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS))
-    ) AS spinner_visible_long_ms,
+    ) AS spinner_visible_ms,
   FROM
     telemetry.main
   WHERE
@@ -243,7 +243,7 @@ FROM
 ),
 percentiles AS (
   SELECT
-    udf.histogram_percentiles(spinner_visible_long_ms, [.05, .25, .5, .75, .95]) AS percentile_nested
+    udf.histogram_percentiles(spinner_visible_ms, [.05, .25, .5, .75, .95]) AS percentile_nested
   FROM
     merged_histogram
 )
@@ -400,7 +400,7 @@ CROSS JOIN
 <p><img src="../assets/exponential_histograms_tutorial/example_visualization_of_normalized_histogram_percentiles.png" alt="example visualization of normalized histogram percentiles" /></p>
 <p>Things are looking much better! The 95th percentile is still capped out at 1000, but the other percentiles are much lower.</p>
 <h2><a class="header" href="#slicing-along-arbitrary-dimensions" id="slicing-along-arbitrary-dimensions">Slicing along arbitrary dimensions</a></h2>
-<p>OK, so we've reproduced GLAM, but that isn't particularly exciting in and of itself: if you just wanted to see a GLAM-like view of things, GLAM by itself is going to do a better job. The power of writing SQL comes when you want to see how things look on an arbitrary set of dimensions. Let's look at an arbitrary question: what do the tab spinner percentiles look like Windows 7? These are likely to be much older machines, so we'd expect things to look worse. But how much?</p>
+<p>OK, so we've reproduced GLAM, but that isn't particularly exciting in and of itself: if you just wanted to see a GLAM-like view of things, GLAM by itself is going to do a better job. The power of writing SQL comes when you want to see how things look on an arbitrary set of dimensions. Let's look at an arbitrary question: what do the tab spinner percentiles look like for Windows 7? These are likely to be much older machines, so we'd expect things to look worse. But how much?</p>
 <p>We can filter our query to <em>just</em> that group of users by adding a <code>AND normalized_os_version=&quot;6.1&quot;</code> clause to our query above:</p>
 <pre><code class="language-sql">DECLARE four_twenty DEFAULT DATE('2020-04-20');
 
