@@ -100,7 +100,7 @@ WITH merged_histogram AS (
   SELECT
     udf.histogram_merge(
       ARRAY_AGG(udf.json_extract_histogram(payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS))
-    ) AS spinner_visible_long_ms,
+    ) AS spinner_visible_ms,
   FROM
     telemetry.main
   WHERE
@@ -110,7 +110,7 @@ WITH merged_histogram AS (
 ),
 percentiles AS (
   SELECT
-    udf.histogram_percentiles(spinner_visible_long_ms, [.05, .25, .5, .75, .95]) AS percentile_nested
+    udf.histogram_percentiles(spinner_visible_ms, [.05, .25, .5, .75, .95]) AS percentile_nested
   FROM
     merged_histogram
 )
@@ -295,7 +295,7 @@ Things are looking much better! The 95th percentile is still capped out at 1000,
 
 ## Slicing along arbitrary dimensions
 
-OK, so we've reproduced GLAM, but that isn't particularly exciting in and of itself: if you just wanted to see a GLAM-like view of things, GLAM by itself is going to do a better job. The power of writing SQL comes when you want to see how things look on an arbitrary set of dimensions. Let's look at an arbitrary question: what do the tab spinner percentiles look like Windows 7? These are likely to be much older machines, so we'd expect things to look worse. But how much?
+OK, so we've reproduced GLAM, but that isn't particularly exciting in and of itself: if you just wanted to see a GLAM-like view of things, GLAM by itself is going to do a better job. The power of writing SQL comes when you want to see how things look on an arbitrary set of dimensions. Let's look at an arbitrary question: what do the tab spinner percentiles look like for Windows 7? These are likely to be much older machines, so we'd expect things to look worse. But how much?
 
 We can filter our query to _just_ that group of users by adding a `AND normalized_os_version="6.1"` clause to our query above:
 
