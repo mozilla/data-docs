@@ -1,6 +1,6 @@
 # Optimizing BigQuery Queries
 
-When writing a query using [STMO](https://sql.telemetry.mozilla.org) or the BigQuery console, you can improve performance and reduce costs by learning how data is stored, how databases function, and what you can change about a query to take advantage of the storage structure and the data function.
+When you write a query using [STMO](https://sql.telemetry.mozilla.org) or the BigQuery console, you can improve performance and reduce costs by learning how data is stored, how databases function, and what you can change about a query to take advantage of the storage structure and the data function.
 
 [Queries are charged by data scanned at \$5 per terabyte (TB)](https://cloud.google.com/bigquery/pricing#on_demand_pricing) so each 200 gigabytes of data scanned will cost \$1: on tables with hundreds of TBs of data (like the [main ping table](../../datasets/pings.md#main-ping) or [`clients_daily`](../../datasets/batch_view/clients_daily/reference.md)), costs **can add up very quickly**. When trying to reduce the cost, the main thing to do is reduce the amount of data scanned: some of the advice in this article will improve your query's performance but will not scan a smaller amount of data, and thus cost the same.
 
@@ -48,7 +48,7 @@ Multiple machines work together to get the result of your query. Because there i
 For example, consider the following query, which lists the number of rows that are present for each
 `client_id`:
 
-```
+```sql
 SELECT client_id, COUNT(*)
 FROM telemetry.main
 GROUP BY client_id
@@ -87,7 +87,7 @@ The data is stored in columnar format.
 
 Consider a typical CSV file, which represents an example of a row store.
 
-```
+```cs
 name,age,height
 "Ted",27,6.0
 "Emmanuel",45,5.9
@@ -100,7 +100,7 @@ data: `"ted",27,6.0`. Keep scanning and you get `\n"Emm`... and so on.
 
 You can use the following query that you can execute very quickly:
 
-```
+```sql
 SELECT *
 FROM people
 WHERE name == 'Ted'
@@ -108,7 +108,7 @@ WHERE name == 'Ted'
 
 The database can just scan the first row of data. However, the following is more difficult:
 
-```
+```sql
 SELECT name
 FROM people
 ```
@@ -121,7 +121,7 @@ more overhead.
 Columnar turns the data sideways. For example, you can make a columnar version of the above data
 and still store it in CSV format:
 
-```
+```cs
 name,"Ted","Emmanuel","Cadence"
 age,27,45,5
 height,6.0,5.9,3.5
@@ -129,7 +129,7 @@ height,6.0,5.9,3.5
 
 Now let's consider how we can query the data when it's stored this way:
 
-```
+```sql
 SELECT *
 FROM people
 WHERE name == "ted"
@@ -140,7 +140,7 @@ In this case, all the data must be read because the
 
 Here's another query:
 
-```
+```sql
 SELECT name
 FROM people
 ```
@@ -150,12 +150,12 @@ file can be skipped.
 
 #### Data partitions
 
-You can improve performance even further by taking advantage of partitions. These are entire files of data that share a value for a column. For example, if everyone in the `people` table lived in `DE`, then you can add that to the filename: `/country=DE/people.csv`.
+You can improve performance even further by taking advantage of partitions, grouping together data that shares a value for a column. For example, if everyone in the `people` table lived in `DE`, then you can add that to the filename: `/country=DE/people.csv`.
 
 From there, a query engine would have to know how to read that path and understand that
 all of these people share a country. You can query as follows:
 
-```
+```sql
 SELECT *
 FROM people
 WHERE country == 'US'
@@ -169,19 +169,24 @@ Tables are usually partitioned based on dates; e.g., `submission_date` or `DATE(
 
 Another way to improve query performance is to select a subset of data on a field that the data is ordered by. In BigQuery, this is called "clustering". A clustered field is one which is sorted in the underlying data.
 
-For example, if we wanted to get all of ages greater than age 40 in our table above, we might query like this:
-`SELECT age FROM people WHERE age > 45`
+For example, if you wanted to get all of ages greater than age 40 in the table above, you might query like this:
 
-Then we would scan all of the `age` field, starting from `27`, then `45`, then `5`.
+```sql
+SELECT age FROM people WHERE age > 45
+```
 
-However, if we sort the data on that field, our table would look like this:
-\```
+This would scan all of the `age` field, starting from `27`, then `45`, and ending with `5`.
+
+However, if instead data was sorted on that field, the table would look like this:
+
+```cs
 name,"Cadence","Ted","Emmanuel"
 age,5,27,45
 height,3.5,6.0,5.9
-\```
+```
 
 Since data is stored on different files, we could ignore any `age` files that don't have data less than 40. So if Cadence and Ted's ages were in one file, and Emmanuel's in the next, we could skip reading that first file entirely. In that way, we can sometimes drastically reduce the amount of data we're reading.
+
 #### Key takeaways
 
 - Limit queries to a few columns that you need to reduce the volume of data that must be read
