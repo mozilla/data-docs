@@ -16,7 +16,7 @@ Daily Active Users or DAU counts the number of unique profiles active in the pro
 
 ### Details
 
-The concept of a "unique profile" may vary from product to product and the relationship between that concept and actual users may also vary.  As such care should be taken interpreting this metric as an actual count of users.
+DAU counts unique profiles. Keep in mind that a [profile is not necessarily a user](/concepts/analysis_gotchas.html#profiles-vs-users)
 
 The concept of being "active" is defined as in the [`usage criterion`](./usage.md) section and will vary by product.  A product may even have multiple possible `usage criteria`, but there will be one default choice that is our best approximation of general product usage.
 
