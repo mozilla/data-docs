@@ -307,9 +307,12 @@ Brief introduction to how we think about metrics and link to metrics top-level s
 <li><a href="concepts/analysis_gotchas.html#opt-in-versus-opt-out">Opt-in versus Opt-out</a></li>
 <li><a href="concepts/analysis_gotchas.html#trusting-dates">Trusting Dates</a></li>
 <li><a href="concepts/analysis_gotchas.html#date-formats">Date Formats</a></li>
-<li><a href="concepts/analysis_gotchas.html#delays">Delays</a></li>
+<li><a href="concepts/analysis_gotchas.html#delays">Delays</a>
+<ul>
 <li><a href="concepts/analysis_gotchas.html#pingsender">Pingsender</a></li>
 <li><a href="concepts/analysis_gotchas.html#submission-date">Submission Date</a></li>
+</ul>
+</li>
 <li><a href="concepts/analysis_gotchas.html#pings-from-robots">Pings from Robots</a></li>
 </ul>
 <h2><a class="header" href="#intermittent-issues" id="intermittent-issues">Intermittent issues</a></h2>
@@ -2479,10 +2482,13 @@ is already loaded, restart the kernel in the Jupyter notebook.</p>
 <li><a href="concepts/sql_style.html#consistency">Consistency</a></li>
 <li><a href="concepts/sql_style.html#reserved-words">Reserved Words</a></li>
 <li><a href="concepts/sql_style.html#variable-names">Variable Names</a></li>
-<li><a href="concepts/sql_style.html#be-explicit">Be Explicit</a></li>
+<li><a href="concepts/sql_style.html#be-explicit">Be Explicit</a>
+<ul>
 <li><a href="concepts/sql_style.html#aliasing">Aliasing</a></li>
 <li><a href="concepts/sql_style.html#joins">Joins</a></li>
 <li><a href="concepts/sql_style.html#grouping-columns">Grouping Columns</a></li>
+</ul>
+</li>
 <li><a href="concepts/sql_style.html#left-align-root-keywords">Left Align Root Keywords</a></li>
 <li><a href="concepts/sql_style.html#code-blocks">Code Blocks</a></li>
 <li><a href="concepts/sql_style.html#parentheses">Parentheses</a></li>
@@ -3056,17 +3062,26 @@ in <a href="https://cloud.google.com/bigquery/">BigQuery</a>:</p>
 <p>There are many methods that you can use to access BigQuery: both interactive and programmatic. This document provides some basic information and pointers on how to get started with each.</p>
 <h2><a class="header" href="#table-of-contents-3" id="table-of-contents-3">Table of Contents</a></h2>
 <ul>
-<li><a href="cookbooks/bigquery/access.html#interfaces">Interfaces</a></li>
+<li><a href="cookbooks/bigquery/access.html#interfaces">Interfaces</a>
+<ul>
 <li><a href="cookbooks/bigquery/access.html#stmo-sqltelemetrymozillaorg">STMO (<code>sql.telemetry.mozilla.org</code>)</a></li>
 <li><a href="cookbooks/bigquery/access.html#bigquery-console">BigQuery Console</a></li>
 <li><a href="cookbooks/bigquery/access.html#using-the-bq-command-line-tool">Using the <code>bq</code> Command-Line Tool</a></li>
-<li><a href="cookbooks/bigquery/access.html#api-access">API Access</a></li>
+<li><a href="cookbooks/bigquery/access.html#api-access">API Access</a>
+<ul>
 <li><a href="cookbooks/bigquery/access.html#service-accounts">Service Accounts</a></li>
-<li><a href="cookbooks/bigquery/access.html#spark">Spark</a></li>
+</ul>
+</li>
+<li><a href="cookbooks/bigquery/access.html#spark">Spark</a>
+<ul>
 <li><a href="cookbooks/bigquery/access.html#using-the-storage-api-connector">Using the Storage API Connector</a></li>
 <li><a href="cookbooks/bigquery/access.html#using-databricks">Using Databricks</a></li>
 <li><a href="cookbooks/bigquery/access.html#using-dataproc">Using Dataproc</a></li>
+</ul>
+</li>
 <li><a href="cookbooks/bigquery/access.html#colaboratory">Colaboratory</a></li>
+</ul>
+</li>
 <li><a href="cookbooks/bigquery/access.html#bigquery-access-request">BigQuery Access Request</a></li>
 </ul>
 <h2><a class="header" href="#interfaces" id="interfaces">Interfaces</a></h2>
@@ -3201,14 +3216,20 @@ computational environment, similar to Jupyter. If you are a Mozilla employee, yo
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/bigquery/access.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#querying-bigquery-tables" id="querying-bigquery-tables">Querying BigQuery Tables</a></h1>
 <h2><a class="header" href="#table-of-contents-4" id="table-of-contents-4">Table of Contents</a></h2>
 <ul>
-<li><a href="cookbooks/bigquery/querying.html#projects-datasets-and-tables-in-bigquery">Projects, Datasets, and Tables in BigQuery</a></li>
+<li><a href="cookbooks/bigquery/querying.html#projects-datasets-and-tables-in-bigquery">Projects, Datasets, and Tables in BigQuery</a>
+<ul>
 <li><a href="cookbooks/bigquery/querying.html#caveats">Caveats</a></li>
 <li><a href="cookbooks/bigquery/querying.html#projects-with-bigquery-datasets">Projects with BigQuery datasets</a></li>
 <li><a href="cookbooks/bigquery/querying.html#table-layout-and-naming">Table Layout and Naming</a></li>
 <li><a href="cookbooks/bigquery/querying.html#structure-of-ping-tables-in-bigquery">Structure of Ping Tables in BigQuery</a></li>
-<li><a href="cookbooks/bigquery/querying.html#writing-queries">Writing Queries</a></li>
+</ul>
+</li>
+<li><a href="cookbooks/bigquery/querying.html#writing-queries">Writing Queries</a>
+<ul>
 <li><a href="cookbooks/bigquery/querying.html#writing-query-results-to-a-permanent-table">Writing query results to a permanent table</a></li>
 <li><a href="cookbooks/bigquery/querying.html#writing-results-to-gcs-object-store">Writing results to GCS (object store)</a></li>
+</ul>
+</li>
 <li><a href="cookbooks/bigquery/querying.html#creating-a-view">Creating a View</a></li>
 <li><a href="cookbooks/bigquery/querying.html#using-udfs">Using UDFs</a></li>
 <li><a href="cookbooks/bigquery/querying.html#accessing-map-like-fields">Accessing map-like fields</a></li>
@@ -3394,19 +3415,31 @@ LIMIT
 <p><a href="https://cloud.google.com/bigquery/pricing#on_demand_pricing">Queries are charged by data scanned at $5 per terabyte (TB)</a> so each 200 gigabytes of data scanned will cost $1: on tables with hundreds of TBs of data (like the <a href="cookbooks/bigquery/../../datasets/pings.html#main-ping">main ping table</a> or <a href="cookbooks/bigquery/../../datasets/batch_view/clients_daily/reference.html"><code>clients_daily</code></a>), costs <strong>can add up very quickly</strong>. When trying to reduce the cost, the main thing to do is reduce the amount of data scanned: some of the advice in this article will improve your query's performance but will not scan a smaller amount of data, and thus cost the same.</p>
 <h2><a class="header" href="#table-of-contents-5" id="table-of-contents-5">Table of Contents</a></h2>
 <ul>
-<li><a href="cookbooks/bigquery/optimization.html#tldr-what-to-implement-for-quick-improvements">TL;DR: What to implement for quick improvements</a></li>
+<li><a href="cookbooks/bigquery/optimization.html#tldr-what-to-implement-for-quick-improvements">TL;DR: What to implement for quick improvements</a>
+<ul>
 <li><a href="cookbooks/bigquery/optimization.html#how-to-improve-both-query-speed-and-cost">How to improve both query speed and cost</a></li>
 <li><a href="cookbooks/bigquery/optimization.html#improvements-to-query-speed-only">Improvements to query speed only</a></li>
 <li><a href="cookbooks/bigquery/optimization.html#caveats">Caveats</a></li>
-<li><a href="cookbooks/bigquery/optimization.html#some-explanations">Some Explanations</a></li>
-<li><a href="cookbooks/bigquery/optimization.html#what-are-these-databases">What are these databases?</a></li>
+</ul>
+</li>
+<li><a href="cookbooks/bigquery/optimization.html#some-explanations">Some Explanations</a>
+<ul>
+<li><a href="cookbooks/bigquery/optimization.html#what-are-these-databases">What are these databases?</a>
+<ul>
 <li><a href="cookbooks/bigquery/optimization.html#key-takeaways">Key takeaways</a></li>
-<li><a href="cookbooks/bigquery/optimization.html#how-is-the-data-stored">How is the data stored?</a></li>
+</ul>
+</li>
+<li><a href="cookbooks/bigquery/optimization.html#how-is-the-data-stored">How is the data stored?</a>
+<ul>
 <li><a href="cookbooks/bigquery/optimization.html#traditional-row-stores">Traditional Row Stores</a></li>
 <li><a href="cookbooks/bigquery/optimization.html#columnar-stores">Columnar Stores</a></li>
 <li><a href="cookbooks/bigquery/optimization.html#data-partitions">Data partitions</a></li>
 <li><a href="cookbooks/bigquery/optimization.html#data-ordering-clustering">Data Ordering (clustering)</a></li>
 <li><a href="cookbooks/bigquery/optimization.html#key-takeaways">Key takeaways</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <h2><a class="header" href="#tldr-what-to-implement-for-quick-improvements" id="tldr-what-to-implement-for-quick-improvements">TL;DR: What to implement for quick improvements</a></h2>
 <h3><a class="header" href="#how-to-improve-both-query-speed-and-cost" id="how-to-improve-both-query-speed-and-cost">How to improve both query speed and cost</a></h3>
@@ -3714,15 +3747,25 @@ and how to build new metrics from them.</p>
 <ul>
 <li><a href="cookbooks/clients_last_seen_bits.html#calculating-dau-wau-and-mau">Calculating DAU, WAU, and MAU</a></li>
 <li><a href="cookbooks/clients_last_seen_bits.html#calculating-retention">Calculating retention</a></li>
-<li><a href="cookbooks/clients_last_seen_bits.html#understanding-bit-patterns">Understanding bit patterns</a></li>
+<li><a href="cookbooks/clients_last_seen_bits.html#understanding-bit-patterns">Understanding bit patterns</a>
+<ul>
 <li><a href="cookbooks/clients_last_seen_bits.html#why-28-bits-instead-of-64">Why 28 bits instead of 64?</a></li>
 <li><a href="cookbooks/clients_last_seen_bits.html#forward-looking-windows-and-backward-looking-windows">Forward-looking windows and backward-looking windows</a></li>
-<li><a href="cookbooks/clients_last_seen_bits.html#usage-backward-looking-windows">Usage: Backward-looking windows</a></li>
+</ul>
+</li>
+<li><a href="cookbooks/clients_last_seen_bits.html#usage-backward-looking-windows">Usage: Backward-looking windows</a>
+<ul>
 <li><a href="cookbooks/clients_last_seen_bits.html#how-windows-shift-from-day-to-day">How windows shift from day to day</a></li>
-<li><a href="cookbooks/clients_last_seen_bits.html#retention-forward-looking-windows">Retention: Forward-looking windows</a></li>
+</ul>
+</li>
+<li><a href="cookbooks/clients_last_seen_bits.html#retention-forward-looking-windows">Retention: Forward-looking windows</a>
+<ul>
 <li><a href="cookbooks/clients_last_seen_bits.html#n-day-retention">N-day Retention</a></li>
 <li><a href="cookbooks/clients_last_seen_bits.html#retention-using-activity-date">Retention using activity date</a></li>
-<li><a href="cookbooks/clients_last_seen_bits.html#udf-reference">UDF Reference</a></li>
+</ul>
+</li>
+<li><a href="cookbooks/clients_last_seen_bits.html#udf-reference">UDF Reference</a>
+<ul>
 <li><a href="cookbooks/clients_last_seen_bits.html#bits28_to_string"><code>bits28_to_string</code></a></li>
 <li><a href="cookbooks/clients_last_seen_bits.html#bits28_from_string"><code>bits28_from_string</code></a></li>
 <li><a href="cookbooks/clients_last_seen_bits.html#bits28_to_dates"><code>bits28_to_dates</code></a></li>
@@ -3730,6 +3773,8 @@ and how to build new metrics from them.</p>
 <li><a href="cookbooks/clients_last_seen_bits.html#bits28_range"><code>bits28_range</code></a></li>
 <li><a href="cookbooks/clients_last_seen_bits.html#bits28_active_in_range"><code>bits28_active_in_range</code></a></li>
 <li><a href="cookbooks/clients_last_seen_bits.html#bits28_retention"><code>bits28_retention</code></a></li>
+</ul>
+</li>
 </ul>
 <h2><a class="header" href="#calculating-dau-wau-and-mau" id="calculating-dau-wau-and-mau">Calculating DAU, WAU, and MAU</a></h2>
 <p>The simplest application of usage bit patterns is for calculating metrics in
@@ -5121,11 +5166,14 @@ If you need to transition a prototype to a production deployment,
 to start the conversation.</p>
 <ul>
 <li><a href="cookbooks/deploying-containers.html#assumptions">Assumptions</a></li>
-<li><a href="cookbooks/deploying-containers.html#steps">Steps</a></li>
+<li><a href="cookbooks/deploying-containers.html#steps">Steps</a>
+<ul>
 <li><a href="cookbooks/deploying-containers.html#on-gcp">On GCP</a></li>
 <li><a href="cookbooks/deploying-containers.html#on-circleci">On CircleCI</a></li>
 <li><a href="cookbooks/deploying-containers.html#in-your-github-repo">In your GitHub Repo</a></li>
 <li><a href="cookbooks/deploying-containers.html#optional">Optional</a></li>
+</ul>
+</li>
 </ul>
 <h2><a class="header" href="#assumptions" id="assumptions">Assumptions</a></h2>
 <ul>
@@ -6966,14 +7014,23 @@ or key-&gt;(key-&gt;value) nested maps for keyed histograms.</li>
 Refer to this repository for information on how to run or augment the dataset.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/batch_view/main_summary/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#socorro-crash-reports" id="socorro-crash-reports">Socorro Crash Reports</a></h1>
 <ul>
-<li><a href="datasets/other/socorro_crash/reference.html#introduction">Introduction</a></li>
-<li><a href="datasets/other/socorro_crash/reference.html#contents">Contents</a></li>
+<li><a href="datasets/other/socorro_crash/reference.html#introduction">Introduction</a>
+<ul>
+<li><a href="datasets/other/socorro_crash/reference.html#contents">Contents</a>
+<ul>
 <li><a href="datasets/other/socorro_crash/reference.html#accessing-the-data">Accessing the Data</a></li>
-<li><a href="datasets/other/socorro_crash/reference.html#data-reference">Data Reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="datasets/other/socorro_crash/reference.html#data-reference">Data Reference</a>
+<ul>
 <li><a href="datasets/other/socorro_crash/reference.html#example">Example</a></li>
 <li><a href="datasets/other/socorro_crash/reference.html#scheduling">Scheduling</a></li>
 <li><a href="datasets/other/socorro_crash/reference.html#schema">Schema</a></li>
 <li><a href="datasets/other/socorro_crash/reference.html#code-reference">Code Reference</a></li>
+</ul>
+</li>
 </ul>
 <h2><a class="header" href="#introduction-11" id="introduction-11">Introduction</a></h2>
 <p>Public crash statistics for Firefox are available through the Data Platform in a <code>socorro_crash</code> dataset.
@@ -7364,12 +7421,15 @@ and locate telemetry from add-on studies.</p>
 <ul>
 <li><a href="datasets/shield.html#dashboards">Dashboards</a></li>
 <li><a href="datasets/shield.html#experiment-slugs">Experiment slugs</a></li>
-<li><a href="datasets/shield.html#tables">Tables</a></li>
+<li><a href="datasets/shield.html#tables">Tables</a>
+<ul>
 <li><a href="datasets/shield.html#experiments-column"><code>experiments</code> column</a></li>
 <li><a href="datasets/shield.html#experiments"><code>experiments</code></a></li>
 <li><a href="datasets/shield.html#events"><code>events</code></a></li>
 <li><a href="datasets/shield.html#telemetryshield_study_addon"><code>telemetry.shield_study_addon</code></a></li>
 <li><a href="datasets/shield.html#telemetryshield_study"><code>telemetry.shield_study</code></a></li>
+</ul>
+</li>
 </ul>
 <h2><a class="header" href="#dashboards-1" id="dashboards-1">Dashboards</a></h2>
 <p><a href="https://experimenter.services.mozilla.com/">Experimenter</a> is the place to find lists of live experiments.</p>
@@ -8280,9 +8340,12 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 <h2><a class="header" href="#table-of-contents-12" id="table-of-contents-12">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/fxa_metrics/attribution.html#introduction">Introduction</a></li>
-<li><a href="datasets/fxa_metrics/attribution.html#types-of-attribution">Types of Attribution</a></li>
+<li><a href="datasets/fxa_metrics/attribution.html#types-of-attribution">Types of Attribution</a>
+<ul>
 <li><a href="datasets/fxa_metrics/attribution.html#service-attribution">Service Attribution</a></li>
 <li><a href="datasets/fxa_metrics/attribution.html#funnel-attribution-entrypoint-and-utm-parameters">Funnel Attribution (entrypoint and utm parameters)</a></li>
+</ul>
+</li>
 </ul>
 <h2><a class="header" href="#introduction-20" id="introduction-20">Introduction</a></h2>
 <p>Users can create or login to an account through an increasingly large number of relying services and entrypoints. This article describes how we attribute authentications to their point of origin, and documents some of the most frequently trafficked entrypoints (it would not be feasible to list them all, but we will try to update this document when there are substantial changes).</p>
@@ -8331,16 +8394,28 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 <li><a href="datasets/fxa_metrics/funnels.html#introduction">Introduction</a></li>
 <li><a href="datasets/fxa_metrics/funnels.html#registration-funnel">Registration Funnel</a></li>
 <li><a href="datasets/fxa_metrics/funnels.html#login-funnel">Login Funnel</a></li>
-<li><a href="datasets/fxa_metrics/funnels.html#branches-off-the-login-funnel-password-reset-account-recovery-2fa">Branches off the Login Funnel: Password Reset, Account Recovery, 2FA.</a></li>
-<li><a href="datasets/fxa_metrics/funnels.html#password-reset-and-recovery-codes">Password Reset and Recovery Codes</a></li>
+<li><a href="datasets/fxa_metrics/funnels.html#branches-off-the-login-funnel-password-reset-account-recovery-2fa">Branches off the Login Funnel: Password Reset, Account Recovery, 2FA.</a>
+<ul>
+<li><a href="datasets/fxa_metrics/funnels.html#password-reset-and-recovery-codes">Password Reset and Recovery Codes</a>
+<ul>
 <li><a href="datasets/fxa_metrics/funnels.html#password-reset-funnel-without-recovery-key">Password Reset Funnel Without Recovery Key</a></li>
 <li><a href="datasets/fxa_metrics/funnels.html#password-reset-funnel-with-recovery-key">Password Reset Funnel With Recovery Key</a></li>
-<li><a href="datasets/fxa_metrics/funnels.html#login-with-2fa-totp">Login with 2FA (TOTP)</a></li>
+</ul>
+</li>
+<li><a href="datasets/fxa_metrics/funnels.html#login-with-2fa-totp">Login with 2FA (TOTP)</a>
+<ul>
 <li><a href="datasets/fxa_metrics/funnels.html#login-with-2fatotp-funnel-no-recovery-code">Login with 2FA/TOTP Funnel (No Recovery Code)</a></li>
 <li><a href="datasets/fxa_metrics/funnels.html#login-with-2fatotp-funnel-w-recovery-code">Login with 2FA/TOTP Funnel w/ Recovery Code</a></li>
-<li><a href="datasets/fxa_metrics/funnels.html#connect-another-device--sms">Connect Another Device / SMS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="datasets/fxa_metrics/funnels.html#connect-another-device--sms">Connect Another Device / SMS</a>
+<ul>
 <li><a href="datasets/fxa_metrics/funnels.html#sms-funnel">SMS Funnel</a></li>
 <li><a href="datasets/fxa_metrics/funnels.html#connect-another-device-funnel-non-sms">Connect Another Device Funnel (Non-SMS)</a></li>
+</ul>
+</li>
 <li><a href="datasets/fxa_metrics/funnels.html#settings">Settings</a></li>
 </ul>
 <h2><a class="header" href="#introduction-21" id="introduction-21">Introduction</a></h2>
@@ -8730,17 +8805,26 @@ begin in late 2019 / early 2020.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/profile/index.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#profile-creation---the-technical-part" id="profile-creation---the-technical-part">Profile Creation - The technical part</a></h1>
 <ul>
 <li><a href="concepts/profile/profile_creation.html#what-is-a-profile">What is a profile?</a></li>
-<li><a href="concepts/profile/profile_creation.html#profile-behaviors">Profile Behaviors</a></li>
-<li><a href="concepts/profile/profile_creation.html#profile-creation">Profile Creation</a></li>
+<li><a href="concepts/profile/profile_creation.html#profile-behaviors">Profile Behaviors</a>
+<ul>
+<li><a href="concepts/profile/profile_creation.html#profile-creation">Profile Creation</a>
+<ul>
 <li><a href="concepts/profile/profile_creation.html#managed-first-use">Managed: First use</a></li>
 <li><a href="concepts/profile/profile_creation.html#managed-profile-manager-creation">Managed: Profile Manager creation</a></li>
 <li><a href="concepts/profile/profile_creation.html#unmanaged-command-line-start">Unmanaged: Command-line start</a></li>
+</ul>
+</li>
 <li><a href="concepts/profile/profile_creation.html#profile-reset">Profile Reset</a></li>
 <li><a href="concepts/profile/profile_creation.html#profile-deletion">Profile Deletion</a></li>
 <li><a href="concepts/profile/profile_creation.html#telemetry-opt-out">Telemetry opt-out</a></li>
-<li><a href="concepts/profile/profile_creation.html#profile-creation-date">Profile Creation Date</a></li>
+</ul>
+</li>
+<li><a href="concepts/profile/profile_creation.html#profile-creation-date">Profile Creation Date</a>
+<ul>
 <li><a href="concepts/profile/profile_creation.html#managed-during-profile-creation">Managed: During Profile Creation</a></li>
 <li><a href="concepts/profile/profile_creation.html#unmanaged-empty-profile-directory">Unmanaged: Empty profile directory</a></li>
+</ul>
+</li>
 </ul>
 <h2><a class="header" href="#what-is-a-profile" id="what-is-a-profile">What is a profile?</a></h2>
 <p>All of the changes a user makes in Firefox, like the home page, what toolbars you use, installed addons, saved passwords and your bookmarks, are all stored in a special folder, called a profile.

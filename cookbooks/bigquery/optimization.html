@@ -160,19 +160,31 @@
 <p><a href="https://cloud.google.com/bigquery/pricing#on_demand_pricing">Queries are charged by data scanned at $5 per terabyte (TB)</a> so each 200 gigabytes of data scanned will cost $1: on tables with hundreds of TBs of data (like the <a href="../../datasets/pings.html#main-ping">main ping table</a> or <a href="../../datasets/batch_view/clients_daily/reference.html"><code>clients_daily</code></a>), costs <strong>can add up very quickly</strong>. When trying to reduce the cost, the main thing to do is reduce the amount of data scanned: some of the advice in this article will improve your query's performance but will not scan a smaller amount of data, and thus cost the same.</p>
 <h2><a class="header" href="#table-of-contents" id="table-of-contents">Table of Contents</a></h2>
 <ul>
-<li><a href="#tldr-what-to-implement-for-quick-improvements">TL;DR: What to implement for quick improvements</a></li>
+<li><a href="#tldr-what-to-implement-for-quick-improvements">TL;DR: What to implement for quick improvements</a>
+<ul>
 <li><a href="#how-to-improve-both-query-speed-and-cost">How to improve both query speed and cost</a></li>
 <li><a href="#improvements-to-query-speed-only">Improvements to query speed only</a></li>
 <li><a href="#caveats">Caveats</a></li>
-<li><a href="#some-explanations">Some Explanations</a></li>
-<li><a href="#what-are-these-databases">What are these databases?</a></li>
+</ul>
+</li>
+<li><a href="#some-explanations">Some Explanations</a>
+<ul>
+<li><a href="#what-are-these-databases">What are these databases?</a>
+<ul>
 <li><a href="#key-takeaways">Key takeaways</a></li>
-<li><a href="#how-is-the-data-stored">How is the data stored?</a></li>
+</ul>
+</li>
+<li><a href="#how-is-the-data-stored">How is the data stored?</a>
+<ul>
 <li><a href="#traditional-row-stores">Traditional Row Stores</a></li>
 <li><a href="#columnar-stores">Columnar Stores</a></li>
 <li><a href="#data-partitions">Data partitions</a></li>
 <li><a href="#data-ordering-clustering">Data Ordering (clustering)</a></li>
 <li><a href="#key-takeaways">Key takeaways</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <h2><a class="header" href="#tldr-what-to-implement-for-quick-improvements" id="tldr-what-to-implement-for-quick-improvements">TL;DR: What to implement for quick improvements</a></h2>
 <h3><a class="header" href="#how-to-improve-both-query-speed-and-cost" id="how-to-improve-both-query-speed-and-cost">How to improve both query speed and cost</a></h3>
