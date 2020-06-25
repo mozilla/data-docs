@@ -18,7 +18,7 @@ aggregates across arbitrary slices of those dimensions.
 The tables follow a consistent methodology which is intended as a standard
 across Mozilla for MAU analysis going forward.
 
-Note that this data model is used in the [Growth & Usage Dashboard (GUD)](https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/) and that some of this documentation is replicated in the [GUD documentation](../../../tools/gud.md).
+Note that this data model is used in the [Growth & Usage Dashboard (GUD)](https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/) and that some of this documentation is replicated in the [GUD documentation](https://mozilla.github.io/gud).
 
 ## Table of Contents
 

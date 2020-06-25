@@ -111,7 +111,7 @@ when we report a retention value for 2020-01-01, we're talking about what
 portion of clients active on 2020-01-01 are still active some number of days
 later.
 
-In particular, let's consider the "1-Week Retention" measure shown in [GUD](../tools/gud.md)
+In particular, let's consider the "1-Week Retention" measure shown in [GUD](https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/)
 which considers a window of 14 days.
 For each client active in "week 0" (days 0 through 6), we determine retention by
 checking if they were also active in "week 1" (days 7 through 13).
@@ -434,7 +434,7 @@ When we define forward-looking windows, however, we always choose a metric date
 some time in the past. How we number the individual bits depends on what
 metric date we choose.
 
-For example, in [GUD](../tools/gud.md), we show a "1-Week Retention" which considers a window of 14 days.
+For example, in [GUD](https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/), we show a "1-Week Retention" which considers a window of 14 days.
 For each client active in "week 0" (days 0 through 6), we determine retention by
 checking if they were also active in "week 1" (days 7 through 13).
 

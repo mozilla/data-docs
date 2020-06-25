@@ -21,7 +21,6 @@
   * [Analysis Interfaces](tools/interfaces.md)
   * [Custom analysis with Spark](tools/spark.md)
   * [SQL Style Guide](concepts/sql_style.md)
-  * [Growth & Usage Dashboard (GUD)](tools/gud.md)
 * [Metrics](metrics/index.md)
   * [Definitions](metrics/definitions.md)
     * [Metrics](metrics/metrics.md)
