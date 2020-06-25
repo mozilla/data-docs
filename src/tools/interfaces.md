@@ -8,7 +8,7 @@ skill sets.
 
 #### [Mozilla Growth & Usage Dashboard](https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/) (GUD)
 
-The Mozilla Growth & Usage Dashboard (GUD) is a tool to visualize growth metrics in a standard way across Mozilla’s products. It is pretty intuitive to use and does not require any in-depth technical knowledge to use: this is the first place you should look if you have a question like "how many people are using X?".
+The Mozilla Growth & Usage Dashboard (GUD) is a tool to visualize growth metrics in a standard way across Mozilla’s products. It is designed to be intuitive to use and does not assume any in-depth technical knowledge: this is the first place you should look if you have a question like "how many people are using X?".
 
 #### [`sql.telemetry.mozilla.org`](stmo.md) (STMO)
 
