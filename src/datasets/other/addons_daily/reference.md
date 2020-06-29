@@ -44,7 +44,6 @@ HAVING
     avg(dau) > 1000
 ORDER BY
     4 DESC
-
 ```
 
 ## Scheduling
