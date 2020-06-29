@@ -199,7 +199,6 @@ FROM
 WHERE
     submission_date &gt;= DATE_SUB(CURRENT_DATE, INTERVAL 28 DAY)
     AND addon_id = 'uBlock0@raymondhill.net'
-  
 </code></pre>
 <h4><a class="header" href="#add-ons-with-highest-organicsap-search-ratio" id="add-ons-with-highest-organicsap-search-ratio">Add-ons with Highest Organic:SAP search ratio</a></h4>
 <pre><code class="language-sql">SELECT
@@ -218,12 +217,11 @@ HAVING
     avg(dau) &gt; 1000
 ORDER BY
     4 DESC
-    
 </code></pre>
 <h2><a class="header" href="#scheduling" id="scheduling">Scheduling</a></h2>
 <p>This dataset is updated daily via the
 <a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a> infrastructure.
-The job runs as part of the <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/addons_daily.py"><code>addons_daily</code> DAG</a>.</p>
+The job runs as part of the <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/bqetl_addons.py"><code>addons_daily</code> DAG</a>.</p>
 <h2><a class="header" href="#schema" id="schema">Schema</a></h2>
 <p>The data is partitioned by <code>submission_date</code>.</p>
 <p>As of 2020-04-17, the current version of the <code>addons_daily</code> dataset is <code>v1</code>.</p>

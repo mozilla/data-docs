@@ -6066,7 +6066,6 @@ FROM
 WHERE
     submission_date &gt;= DATE_SUB(CURRENT_DATE, INTERVAL 28 DAY)
     AND addon_id = 'uBlock0@raymondhill.net'
-  
 </code></pre>
 <h4><a class="header" href="#add-ons-with-highest-organicsap-search-ratio" id="add-ons-with-highest-organicsap-search-ratio">Add-ons with Highest Organic:SAP search ratio</a></h4>
 <pre><code class="language-sql">SELECT
@@ -6085,12 +6084,11 @@ HAVING
     avg(dau) &gt; 1000
 ORDER BY
     4 DESC
-    
 </code></pre>
 <h2><a class="header" href="#scheduling-2" id="scheduling-2">Scheduling</a></h2>
 <p>This dataset is updated daily via the
 <a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a> infrastructure.
-The job runs as part of the <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/addons_daily.py"><code>addons_daily</code> DAG</a>.</p>
+The job runs as part of the <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/bqetl_addons.py"><code>addons_daily</code> DAG</a>.</p>
 <h2><a class="header" href="#schema-1" id="schema-1">Schema</a></h2>
 <p>The data is partitioned by <code>submission_date</code>.</p>
 <p>As of 2020-04-17, the current version of the <code>addons_daily</code> dataset is <code>v1</code>.</p>
@@ -7935,11 +7933,11 @@ where
 <p>When the stub installer completes with almost any result, it generates a ping containing some data about the system and about how the installation went. This ping isn't part of Firefox unified telemetry, it's a bespoke system; we can't use the telemetry client code when it isn't installed yet.</p>
 <p>No ping is sent if the installer exits early because initial system requirements checks fail.</p>
 <h2><a class="header" href="#how-its-processed" id="how-its-processed">How it’s processed</a></h2>
-<p>They are formed and sent from NSIS code (!) in the stub installer, in the <a href="https://searchfox.org/mozilla-central/source/browser/installer/windows/nsis/stub.nsi">SendPing subroutine</a>. </p>
+<p>They are formed and sent from NSIS code (!) in the stub installer, in the <a href="https://searchfox.org/mozilla-central/source/browser/installer/windows/nsis/stub.nsi">SendPing subroutine</a>.</p>
 <p>They are processed into Redshift by <a href="https://github.com/whd/dsmo_load"><code>dsmo_load</code></a>.</p>
 <h2><a class="header" href="#how-to-access-the-data" id="how-to-access-the-data">How to access the data</a></h2>
-<p>The Redshift tables are accessible from the <code>DSMO-RS</code> data source in <a href="https://sql.telemetry.mozilla.org/">STMO</a>. </p>
-<p>The canonical documentation is in <a href="https://searchfox.org/mozilla-central/source/browser/installer/windows/docs/StubPing.rst">this tree</a>.</p>
+<p>The Redshift tables are accessible from the <code>DSMO-RS</code> data source in <a href="https://sql.telemetry.mozilla.org/">STMO</a>.</p>
+<p>The canonical documentation is in <a href="https://searchfox.org/mozilla-central/source/toolkit/components/telemetry/docs/data/install-ping.rst">this tree</a>.</p>
 <p>There are three tables produced every day (you can see them in Redshift as <code>{tablename}_YYYYMMDD</code>:</p>
 <ul>
 <li><code>download_stats_YYYYMMDD</code> (<a href="https://github.com/whd/dsmo_load/blob/master/hindsight/hs_run/output/dsmo_redshift.lua">source</a>)</li>
@@ -8197,9 +8195,9 @@ WHERE
 <p>Note that in addition to being the most commonly used relier of FxA, sync is also unique in its integration with FxA - unlike the other reliers in the list above, sync is currently <strong>not</strong> an FxA oauth client. When someone signs into an oauth client using Firefox, nothing in the browser changes - more specifically, client-side telemetry probes such as <a href="https://telemetry.mozilla.org/probe-dictionary/?detailView=histogram%2FFXA_CONFIGURED"><code>FXA_CONFIGURED</code></a> do not change state. Thus at the present time the only way to measure usage of FxA oauth reliers is to use the FxA server-side measures described below.</p>
 <p>One more thing: China runs its own stack for sync, but Chinese sign-ups for oauth reliers still go through the &quot;one and only&quot; oauth server. This means that Chinese users who want to use both sync and an oauth service (e.g. Monitor) will have to register for two accounts. It also means that only metrics for Chinese oauth users will show up in the datasets described below; any sync-related measures will not. At present, you must contact those responsible for maintaining the FxA stack in China for metrics on Chinese sync users.</p>
 <h2><a class="header" href="#metrics-background" id="metrics-background">Metrics Background</a></h2>
-<p>Unlike most telemetry described in these docs, FxA metrics are logged server-side. There are many <a href="https://github.com/mozilla/fxa/tree/master/packages">FxA &quot;servers&quot;</a> that handle different aspects of account authentication and management. The metrics of most interest to data analysts are logged by the FxA auth server, content server and oauth server. Each server writes their metrics into their log stream, and some post-processing scripts combine the metrics events from all three servers into datasets that are available in Databricks, BigQuery, STMO and Amplitude.</p>
-<p>In general, metrics logged by the <a href="https://github.com/mozilla/fxa/tree/master/packages/fxa-auth-server">FxA auth server</a> reflect authentication events such as account creation, logins to existing accounts, etc.
-Metrics logged by the <a href="https://github.com/mozilla/fxa/tree/master/packages/fxa-content-server">FxA content server</a> reflect user interaction and progression through the FxA web UI - form views, form engagement, form submission, etc.
+<p>Unlike most telemetry described in these docs, FxA metrics are logged server-side. There are many <a href="https://github.com/mozilla/fxa/tree/main/packages">FxA &quot;servers&quot;</a> that handle different aspects of account authentication and management. The metrics of most interest to data analysts are logged by the FxA auth server, content server and oauth server. Each server writes their metrics into their log stream, and some post-processing scripts combine the metrics events from all three servers into datasets that are available in Databricks, BigQuery, STMO and Amplitude.</p>
+<p>In general, metrics logged by the <a href="https://github.com/mozilla/fxa/tree/main/packages/fxa-auth-server">FxA auth server</a> reflect authentication events such as account creation, logins to existing accounts, etc.
+Metrics logged by the <a href="https://github.com/mozilla/fxa/tree/main/packages/fxa-content-server">FxA content server</a> reflect user interaction and progression through the FxA web UI - form views, form engagement, form submission, etc.
 The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs metrics events when oauth clients (Monitor, Lockwise, etc) create and check authentication tokens.</p>
 <h2><a class="header" href="#metrics-taxonomies" id="metrics-taxonomies">Metrics Taxonomies</a></h2>
 <p>There are two overlapping taxonomies or sets of FxA event metrics.</p>
@@ -8473,7 +8471,7 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 <p>Metrics relating to emails also contain the following properties:</p>
 <ol>
 <li>The email service of the recipient</li>
-<li>The <code>email_template</code> - the <a href="https://github.com/mozilla/fxa/tree/master/packages/fxa-auth-server/lib/senders/templates">template</a> of the email that was sent (we currently only track this for sending events, not click events). This is more specific than the</li>
+<li>The <code>email_template</code> - the <a href="https://github.com/mozilla/fxa/tree/main/packages/fxa-auth-server/lib/senders/templates">template</a> of the email that was sent (we currently only track this for sending events, not click events). This is more specific than the</li>
 <li><code>email_type</code>, which is broader grouping of many email templates into related categories, see chart below.</li>
 </ol>
 <h2><a class="header" href="#email-templates-and-email-types" id="email-templates-and-email-types">Email Templates and Email Types</a></h2>

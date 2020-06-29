@@ -159,11 +159,11 @@
 <p>When the stub installer completes with almost any result, it generates a ping containing some data about the system and about how the installation went. This ping isn't part of Firefox unified telemetry, it's a bespoke system; we can't use the telemetry client code when it isn't installed yet.</p>
 <p>No ping is sent if the installer exits early because initial system requirements checks fail.</p>
 <h2><a class="header" href="#how-its-processed" id="how-its-processed">How it’s processed</a></h2>
-<p>They are formed and sent from NSIS code (!) in the stub installer, in the <a href="https://searchfox.org/mozilla-central/source/browser/installer/windows/nsis/stub.nsi">SendPing subroutine</a>. </p>
+<p>They are formed and sent from NSIS code (!) in the stub installer, in the <a href="https://searchfox.org/mozilla-central/source/browser/installer/windows/nsis/stub.nsi">SendPing subroutine</a>.</p>
 <p>They are processed into Redshift by <a href="https://github.com/whd/dsmo_load"><code>dsmo_load</code></a>.</p>
 <h2><a class="header" href="#how-to-access-the-data" id="how-to-access-the-data">How to access the data</a></h2>
-<p>The Redshift tables are accessible from the <code>DSMO-RS</code> data source in <a href="https://sql.telemetry.mozilla.org/">STMO</a>. </p>
-<p>The canonical documentation is in <a href="https://searchfox.org/mozilla-central/source/browser/installer/windows/docs/StubPing.rst">this tree</a>.</p>
+<p>The Redshift tables are accessible from the <code>DSMO-RS</code> data source in <a href="https://sql.telemetry.mozilla.org/">STMO</a>.</p>
+<p>The canonical documentation is in <a href="https://searchfox.org/mozilla-central/source/toolkit/components/telemetry/docs/data/install-ping.rst">this tree</a>.</p>
 <p>There are three tables produced every day (you can see them in Redshift as <code>{tablename}_YYYYMMDD</code>:</p>
 <ul>
 <li><code>download_stats_YYYYMMDD</code> (<a href="https://github.com/whd/dsmo_load/blob/master/hindsight/hs_run/output/dsmo_redshift.lua">source</a>)</li>
