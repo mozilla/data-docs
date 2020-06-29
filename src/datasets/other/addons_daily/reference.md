@@ -23,7 +23,6 @@ FROM
 WHERE
     submission_date >= DATE_SUB(CURRENT_DATE, INTERVAL 28 DAY)
     AND addon_id = 'uBlock0@raymondhill.net'
-  
 ```
 
 #### Add-ons with Highest Organic:SAP search ratio
@@ -45,14 +44,13 @@ HAVING
     avg(dau) > 1000
 ORDER BY
     4 DESC
-    
 ```
 
 ## Scheduling
 
 This dataset is updated daily via the
 [telemetry-airflow](https://github.com/mozilla/telemetry-airflow) infrastructure.
-The job runs as part of the [`addons_daily` DAG](https://github.com/mozilla/telemetry-airflow/blob/master/dags/addons_daily.py).
+The job runs as part of the [`addons_daily` DAG](https://github.com/mozilla/telemetry-airflow/blob/master/dags/bqetl_addons.py).
 
 ## Schema
 

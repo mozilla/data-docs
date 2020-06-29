@@ -15,7 +15,7 @@ Events that we track relating to email:
 Metrics relating to emails also contain the following properties:
 
 1. The email service of the recipient
-2. The `email_template` - the [template](https://github.com/mozilla/fxa/tree/master/packages/fxa-auth-server/lib/senders/templates) of the email that was sent (we currently only track this for sending events, not click events). This is more specific than the
+2. The `email_template` - the [template](https://github.com/mozilla/fxa/tree/main/packages/fxa-auth-server/lib/senders/templates) of the email that was sent (we currently only track this for sending events, not click events). This is more specific than the
 3. `email_type`, which is broader grouping of many email templates into related categories, see chart below.
 
 
