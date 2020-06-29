@@ -23,7 +23,6 @@ FROM
 WHERE
     submission_date >= DATE_SUB(CURRENT_DATE, INTERVAL 28 DAY)
     AND addon_id = 'uBlock0@raymondhill.net'
-
 ```
 
 #### Add-ons with Highest Organic:SAP search ratio
