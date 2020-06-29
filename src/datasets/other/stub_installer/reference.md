@@ -6,15 +6,15 @@ No ping is sent if the installer exits early because initial system requirements
 
 ## How it’s processed
 
-They are formed and sent from NSIS code (!) in the stub installer, in the [SendPing subroutine](https://searchfox.org/mozilla-central/source/browser/installer/windows/nsis/stub.nsi). 
+They are formed and sent from NSIS code (!) in the stub installer, in the [SendPing subroutine](https://searchfox.org/mozilla-central/source/browser/installer/windows/nsis/stub.nsi).
 
 They are processed into Redshift by [`dsmo_load`](https://github.com/whd/dsmo_load).
 
 ## How to access the data
 
-The Redshift tables are accessible from the `DSMO-RS` data source in [STMO](https://sql.telemetry.mozilla.org/). 
+The Redshift tables are accessible from the `DSMO-RS` data source in [STMO](https://sql.telemetry.mozilla.org/).
 
-The canonical documentation is in [this tree](https://searchfox.org/mozilla-central/source/browser/installer/windows/docs/StubPing.rst).
+The canonical documentation is in [this tree](https://searchfox.org/mozilla-central/source/toolkit/components/telemetry/docs/data/install-ping.rst).
 
 There are three tables produced every day (you can see them in Redshift as `{tablename}_YYYYMMDD`:
 
