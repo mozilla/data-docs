@@ -1,6 +1,6 @@
 # Metrics
 
-Here we provide definitions and information about our standard metrics.  We use some terminology that is defined [here](https://docs.telemetry.mozilla.org/concepts/terminology.html).
+This section contains definitions and information about standard metrics used at Mozilla.  You may wish to refer to the [terminology section](../concepts/terminology.html) while reading this document, in case a particular concept is not clear.
 
 ## Table of Contents
 
