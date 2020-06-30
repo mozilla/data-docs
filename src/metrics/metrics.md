@@ -18,7 +18,11 @@ Daily Active Users or DAU counts the number of unique profiles active in the pro
 
 DAU counts unique profiles. Keep in mind that a [profile is not necessarily a user](/concepts/analysis_gotchas.html#profiles-vs-users)
 
-The concept of being "active" is defined as in the [`usage criterion`](./usage.md) section and will vary by product.  A product may even have multiple possible `usage criteria`, but there will be one default choice that is our best approximation of general product usage.
+By default, active users are users who've sent a `main` ping (on desktop) or a `baseline` ping (on mobile).
+
+This is a pretty low bar to call a user "active", so we'll occasionally restrict the metric to users with more activity. It's **critical to clearly document any additional qualifications on the metric**. The metrics team suggest the following format: `DAU(qualification)`. For example, we might be interested in the count of users who've viewed more than 5 URIs in a day. We'd denote that metric as `DAU(URI > 5)`. 
+
+We have some common usage criteria documented in [`usage criterion`](./usage.md).
 
 ### Caveats
 
