@@ -34,25 +34,20 @@ This metric is available on the [standard Growth and Usage Dashboard (GUD)](http
 
 ### Tables
 
-DAU can easily be calculated from the Smoot tables; for example:
+DAU can easily be calculated from the [Exact MAU tables](https://docs.telemetry.mozilla.org/datasets/bigquery/exact_mau/reference.html); for example:
 
 ```sql
 SELECT
-  date,
+  submission_date,
   SUM(dau) AS dau
 FROM
-  `moz-fx-data-shared-prod.telemetry.smoot_usage_day_0`
--- You must always filter to a single usage criterion
--- For a full list of available usage criteria, see https://sql.telemetry.mozilla.org/queries/65338/source
+  `moz-fx-data-derived-datasets.telemetry.firefox_desktop_exact_mau28_by_dimensions_v1`
 WHERE
-  usage = 'Any Firefox Desktop Activity'
-
   -- You define your slice using additional filters here.
-  -- Available dimensions: app_name, app_version, country, locale, os, os_version, channel
-  AND country IN ('US', 'GB', 'CA', 'FR', 'DE')
+  country IN ('US', 'GB', 'CA', 'FR', 'DE')
 
 GROUP BY
-  date
+  submission_date
 ```
 
 You can run this query on [STMO](https://sql.telemetry.mozilla.org/queries/72012/source).
