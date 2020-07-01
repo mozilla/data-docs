@@ -2848,9 +2848,49 @@ client-side activity dates).</li>
 </li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/metrics/definitions.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#metrics" id="metrics">Metrics</a></h1>
-<p>Here we provide definitions and information about our standard metrics.</p>
-<p>Table of contents with links to all metrics.</p>
+<p>This section contains definitions and information about standard metrics used at Mozilla.  You may wish to refer to the <a href="metrics/../concepts/terminology.html">terminology section</a> while reading this document, in case a particular concept is not clear.</p>
+<h2><a class="header" href="#table-of-contents-3" id="table-of-contents-3">Table of Contents</a></h2>
+<ul>
+<li><a href="metrics/metrics.html#daily-active-users-dau">Daily Active Users (DAU)</a>
+<ul>
+<li><a href="metrics/metrics.html#overview">Overview</a></li>
+<li><a href="metrics/metrics.html#details">Details</a></li>
+<li><a href="metrics/metrics.html#caveats">Caveats</a></li>
+<li><a href="metrics/metrics.html#dashboards">Dashboards</a></li>
+<li><a href="metrics/metrics.html#tables">Tables</a></li>
+</ul>
+</li>
+</ul>
 <hr />
+<h2><a class="header" href="#daily-active-users-dau" id="daily-active-users-dau">Daily Active Users (DAU)</a></h2>
+<h3><a class="header" href="#overview-3" id="overview-3">Overview</a></h3>
+<p>Daily Active Users or DAU counts the number of unique profiles active in the product on each day.  This is intended to approximate the number of people using the product each day.</p>
+<h3><a class="header" href="#details" id="details">Details</a></h3>
+<p>DAU counts unique profiles. Keep in mind that a <a href="metrics//concepts/analysis_gotchas.html#profiles-vs-users">profile is not necessarily a user</a>.</p>
+<p>The standard concept of active varies by product, but generally, active users are defined as unique profiles that have sent a <code>main</code> ping (on desktop) or a <code>baseline</code> ping (on mobile).  The precise criteria are defined in the <a href="metrics/./usage.html"><code>usage criterion</code></a> section of this documentation.</p>
+<p>We can also restrict the metric to alternative usage criteria. It's <strong>critical to clearly state any non-standard usage criteria on the metric</strong>. The metrics team suggest the following format: <code>DAU(usage criterion)</code>. For example, we might be interested in the count of profiles that have viewed more than 5 URIs in a day. We'd denote that metric as <code>DAU(URI &gt; 5)</code>.</p>
+<p>Some common alternative usage criteria documented in the <a href="metrics/./usage.html"><code>usage criterion</code> section</a>.</p>
+<h3><a class="header" href="#caveats-1" id="caveats-1">Caveats</a></h3>
+<p>If the number of users stays constant, but the average number of active profiles per user increases, this metric will tend to increase.  For more details on the relationship between users and profiles, see <a href="https://docs.telemetry.mozilla.org/concepts/analysis_gotchas.html#profiles-vs-users">the profiles vs users section in analysis gotchas</a>.</p>
+<h3><a class="header" href="#dashboards-1" id="dashboards-1">Dashboards</a></h3>
+<p>This metric is available on the <a href="https://go.corp.mozilla.com/gud">standard Growth and Usage Dashboard (GUD)</a> for most products and with some slicing available.</p>
+<h3><a class="header" href="#tables" id="tables">Tables</a></h3>
+<p>DAU can easily be calculated from the <a href="https://docs.telemetry.mozilla.org/datasets/bigquery/exact_mau/reference.html">Exact MAU tables</a>; for example:</p>
+<pre><code class="language-sql">SELECT
+  submission_date,
+  SUM(dau) AS dau
+FROM
+  `moz-fx-data-derived-datasets.telemetry.firefox_desktop_exact_mau28_by_dimensions_v1`
+WHERE
+  -- You define your slice using additional filters here.
+  country IN ('US', 'GB', 'CA', 'FR', 'DE')
+
+GROUP BY
+  submission_date
+</code></pre>
+<p>You can run this query on <a href="https://sql.telemetry.mozilla.org/queries/72012/source">STMO</a>.</p>
+<hr />
+<p>Reference below.</p>
 <p>{{Metric name}}</p>
 <p>TL;DR: two sentence max.</p>
 <p>E.g: MAU counts the number of distinct users we see over a 28-day period. Desktop and Mobile MAU are both corporate KPIs for 2020.</p>
@@ -2943,7 +2983,7 @@ in <a href="https://cloud.google.com/bigquery/">BigQuery</a>:</p>
 <p>There is a <a href="https://cloud.google.com/bigquery/pricing">cost associated with using BigQuery</a> based on operations. The on-demand pricing for queries is based on how much data a query scans. Before using BigQuery, please see <a href="cookbooks/./bigquery/optimization.html">Optimizing BigQuery Queries</a> above for information on how to understand and minimize costs.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/bigquery.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#accessing-bigquery" id="accessing-bigquery">Accessing BigQuery</a></h1>
 <p>There are many methods that you can use to access BigQuery: both interactive and programmatic. This document provides some basic information and pointers on how to get started with each.</p>
-<h2><a class="header" href="#table-of-contents-3" id="table-of-contents-3">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-4" id="table-of-contents-4">Table of Contents</a></h2>
 <ul>
 <li><a href="cookbooks/bigquery/access.html#interfaces">Interfaces</a>
 <ul>
@@ -3097,7 +3137,7 @@ computational environment, similar to Jupyter. If you are a Mozilla employee, yo
 <h2><a class="header" href="#bigquery-access-request" id="bigquery-access-request">BigQuery Access Request</a></h2>
 <p>For access to BigQuery when using the GCP Console and API, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=jthomas%40mozilla.com&amp;bug_file_loc=https%3A%2F%2Fmana.mozilla.org%2Fwiki%2Fx%2FiIPeB&amp;bug_ignored=0&amp;bug_severity=normal&amp;bug_status=NEW&amp;bug_type=task&amp;cf_fx_iteration=---&amp;cf_fx_points=---&amp;comment=Please%20grant%20me%20access%20to%20the%20BigQuery%20GCP%20console%20and%20API%20Access.%20I%20work%20on%20%3Cteam%3E.%0D%0A%0D%0AMy%20mozilla.com%20ldap%20login%20is%20%3Cyour%20ldap%20login%3E%40mozilla.com.&amp;component=Operations&amp;contenttypemethod=list&amp;contenttypeselection=text%2Fplain&amp;defined_groups=1&amp;flag_type-4=X&amp;flag_type-607=X&amp;flag_type-800=X&amp;flag_type-803=X&amp;flag_type-936=X&amp;form_name=enter_bug&amp;maketemplate=Remember%20values%20as%20bookmarkable%20template&amp;op_sys=Unspecified&amp;priority=--&amp;product=Data%20Platform%20and%20Tools&amp;qa_contact=jthomas%40mozilla.com&amp;rep_platform=Unspecified&amp;short_desc=BigQuery%20GCP%20Console%20and%20API%20Access%20for%20%3Cyour%20ldap%20login%3E%40mozilla.com&amp;target_milestone=---&amp;version=unspecified">file a bug</a>. You will be added to the appropriate Google Groups and a <a href="https://cloud.google.com/iam/docs/service-accounts">GCP Service Account</a> will be provisioned for you.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/bigquery/access.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#querying-bigquery-tables" id="querying-bigquery-tables">Querying BigQuery Tables</a></h1>
-<h2><a class="header" href="#table-of-contents-4" id="table-of-contents-4">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-5" id="table-of-contents-5">Table of Contents</a></h2>
 <ul>
 <li><a href="cookbooks/bigquery/querying.html#projects-datasets-and-tables-in-bigquery">Projects, Datasets, and Tables in BigQuery</a>
 <ul>
@@ -3127,7 +3167,7 @@ in BigQuery. In BigQuery terminology,
 datasets represent top-level containers that are used to organize and
 control access to tables and views.</p>
 </blockquote>
-<h3><a class="header" href="#caveats-1" id="caveats-1">Caveats</a></h3>
+<h3><a class="header" href="#caveats-2" id="caveats-2">Caveats</a></h3>
 <ul>
 <li>The date partition field (e.g., <code>submission_date_s3</code>, <code>submission_date</code>) is mostly used as a partitioning column.
 However, it has changed from using a <code>YYYYMMDD</code> string form to a  <code>DATE</code> type that uses string literals in the more standards-friendly <code>YYYY-MM-DD</code> form.</li>
@@ -3296,7 +3336,7 @@ LIMIT
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/bigquery/querying.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#optimizing-bigquery-queries" id="optimizing-bigquery-queries">Optimizing BigQuery Queries</a></h1>
 <p>When you write a query using <a href="https://sql.telemetry.mozilla.org">STMO</a> or the BigQuery console, you can improve performance and reduce costs by learning how data is stored, how databases function, and what you can change about a query to take advantage of the storage structure and the data function.</p>
 <p><a href="https://cloud.google.com/bigquery/pricing#on_demand_pricing">Queries are charged by data scanned at $5 per terabyte (TB)</a> so each 200 gigabytes of data scanned will cost $1: on tables with hundreds of TBs of data (like the <a href="cookbooks/bigquery/../../datasets/pings.html#main-ping">main ping table</a> or <a href="cookbooks/bigquery/../../datasets/batch_view/clients_daily/reference.html"><code>clients_daily</code></a>), costs <strong>can add up very quickly</strong>. When trying to reduce the cost, the main thing to do is reduce the amount of data scanned: some of the advice in this article will improve your query's performance but will not scan a smaller amount of data, and thus cost the same.</p>
-<h2><a class="header" href="#table-of-contents-5" id="table-of-contents-5">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-6" id="table-of-contents-6">Table of Contents</a></h2>
 <ul>
 <li><a href="cookbooks/bigquery/optimization.html#tldr-what-to-implement-for-quick-improvements">TL;DR: What to implement for quick improvements</a>
 <ul>
@@ -3352,7 +3392,7 @@ population (without sampling).
 </ul>
 </li>
 </ul>
-<h3><a class="header" href="#caveats-2" id="caveats-2">Caveats</a></h3>
+<h3><a class="header" href="#caveats-3" id="caveats-3">Caveats</a></h3>
 <ul>
 <li>For clustered tables, the data size prediction won't take into account benefits from <code>LIMIT</code>s and <code>WHERE</code> clauses on clustering fields, so you'll need to compare to the actual &quot;Data Scanned&quot; after the query is run.</li>
 <li>Applying a <code>LIMIT</code> clause to a <code>SELECT *</code> query might not affect the amount of data read, depending on the table structure.
@@ -3626,7 +3666,7 @@ was active and each 0 indicating a day where the client was inactive. This
 article discusses the details of how we represent usage in bit patterns,
 how to extract standard usage and retention metrics,
 and how to build new metrics from them.</p>
-<h2><a class="header" href="#table-of-contents-6" id="table-of-contents-6">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-7" id="table-of-contents-7">Table of Contents</a></h2>
 <ul>
 <li><a href="cookbooks/clients_last_seen_bits.html#calculating-dau-wau-and-mau">Calculating DAU, WAU, and MAU</a></li>
 <li><a href="cookbooks/clients_last_seen_bits.html#calculating-retention">Calculating retention</a></li>
@@ -4203,7 +4243,7 @@ the standard 1-Week, 2-Week, and 3-Week retention definitions.</p>
 <p><a href="https://glam-stage.bespoke.nonprod.dataops.mozgcp.net/">GLAM</a> is great if you want to check out the behaviour of a histogram over a large population across a curated set of dimensions, but what if you have a follow-up question that doesn't fit into its UI model? This tutorial will go into the guts of how to reproduce a GLAM-like view using <code>sql.telemetry.mozilla.org</code> (STMO), along with some suggestions on how to dig deeper.</p>
 <p>This tutorial tries to build up an understanding and intuition of how things work on a low-level before it gets to its main act of reproducing GLAM. If you don't care about the details, you can probably skip the earlier sections in this document.</p>
 <p>Assumptions: You have some idea of what a histogram is (if not, the <a href="https://en.wikipedia.org/wiki/Histogram">Wikipedia article</a> is a great place to start), have at least skimmed over <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/collection/histograms.html">the Firefox documentation on histograms</a>, and have read <a href="cookbooks/../tools/stmo.html">the introduction to STMO</a>.</p>
-<h2><a class="header" href="#table-of-contents-7" id="table-of-contents-7">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-8" id="table-of-contents-8">Table of Contents</a></h2>
 <ul>
 <li><a href="cookbooks/main_ping_exponential_histograms.html#setting-the-stage-tab-spinners-duration">Setting the stage: tab spinners duration</a></li>
 <li><a href="cookbooks/main_ping_exponential_histograms.html#getting-client-level-data">Getting client-level data</a></li>
@@ -5287,7 +5327,7 @@ hg commit -m &quot;Bug nnn - Testing my extension&quot; testing/profiles/common/
 <p>Note that you must have Level 1 commit access to use tryserver. If you are interested in interacting with Mozilla CI from Github (which only requires users to be in the Mozilla GitHub org), check out the <a href="https://github.com/biancadanforth/taskcluster-integration-poc/">Taskcluster Integration proof-of-concept</a>.</p>
 <p>Also note that this requires an investment time to set up just as CircleCI or Travis-CI would, so it's not really appropriate for short-term projects. Use tryserver directly instead.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/client_guidelines.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#telemetry-events-best-practices" id="telemetry-events-best-practices">Telemetry Events Best Practices</a></h1>
-<h2><a class="header" href="#overview-3" id="overview-3">Overview:</a></h2>
+<h2><a class="header" href="#overview-4" id="overview-4">Overview:</a></h2>
 <p><a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html">The Telemetry Events API</a> allows users to define and record events in the browser.</p>
 <p>Events are defined in <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html#the-yaml-definition-file"><code>Events.yaml</code></a> and each events creates records with the following properties:</p>
 <ul>
@@ -6517,7 +6557,7 @@ aggregates across arbitrary slices of those dimensions.
 The tables follow a consistent methodology which is intended as a standard
 across Mozilla for MAU analysis going forward.</p>
 <p>Note that this data model is used in the <a href="https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/">Growth &amp; Usage Dashboard (GUD)</a> and that some of this documentation is replicated in the <a href="https://mozilla.github.io/gud">GUD documentation</a>.</p>
-<h2><a class="header" href="#table-of-contents-8" id="table-of-contents-8">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-9" id="table-of-contents-9">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/bigquery/exact_mau/reference.html#conceptual-model">Conceptual Model</a>
 <ul>
@@ -7298,7 +7338,7 @@ you should understand how to answer questions about
 study enrollment,
 identify telemetry from clients enrolled in an experiment,
 and locate telemetry from add-on studies.</p>
-<h2><a class="header" href="#table-of-contents-9" id="table-of-contents-9">Table of contents</a></h2>
+<h2><a class="header" href="#table-of-contents-10" id="table-of-contents-10">Table of contents</a></h2>
 <ul>
 <li><a href="datasets/shield.html#dashboards">Dashboards</a></li>
 <li><a href="datasets/shield.html#experiment-slugs">Experiment slugs</a></li>
@@ -7312,7 +7352,7 @@ and locate telemetry from add-on studies.</p>
 </ul>
 </li>
 </ul>
-<h2><a class="header" href="#dashboards-1" id="dashboards-1">Dashboards</a></h2>
+<h2><a class="header" href="#dashboards-2" id="dashboards-2">Dashboards</a></h2>
 <p><a href="https://experimenter.services.mozilla.com/">Experimenter</a> is the place to find lists of live experiments.</p>
 <h2><a class="header" href="#experiment-slugs" id="experiment-slugs">Experiment slugs</a></h2>
 <p>Each experiment is associated with a slug,
@@ -7324,7 +7364,7 @@ the slug for add-on experiments is defined in the recipe by a field named <code>
 <a href="https://metrics.mozilla.com/%7Esguha/report/normandy_recipes.html">this summary table</a>
 or the list of active recipes at
 https://normandy.cdn.mozilla.net/api/v1/recipe/signed/.</p>
-<h2><a class="header" href="#tables" id="tables">Tables</a></h2>
+<h2><a class="header" href="#tables-1" id="tables-1">Tables</a></h2>
 <p>These tables are accessible from BigQuery and Databricks.</p>
 <h3><a class="header" href="#experiments-column" id="experiments-column"><code>experiments</code> column</a></h3>
 <p><a href="datasets/batch_view/main_summary/reference.html"><code>main_summary</code></a>,
@@ -7421,7 +7461,7 @@ for these probes.</p>
 <code>search_aggregates</code> and <code>search_clients_daily</code>. After reading this article,
 you should understand the search datasets well enough to produce moderately
 complex analyses.</p>
-<h2><a class="header" href="#table-of-contents-10" id="table-of-contents-10">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-11" id="table-of-contents-11">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/search.html#terminology">Terminology</a>
 <ul>
@@ -8144,7 +8184,7 @@ WHERE
 <p>The dataset is populated via the 
 <a href="https://github.com/mozilla-bteam/bmo/blob/master/Bugzilla/Report/Ping/Simple.pm">simple ping service on Bugzilla</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/other/bmobugs/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#firefox-accounts-data" id="firefox-accounts-data">Firefox Accounts Data</a></h1>
-<h2><a class="header" href="#table-of-contents-11" id="table-of-contents-11">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-12" id="table-of-contents-12">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/fxa.html#introduction">Introduction</a></li>
 <li><a href="datasets/fxa.html#what-is-firefox-accounts">What is Firefox Accounts?</a></li>
@@ -8219,7 +8259,7 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 </ol>
 <p>It is also possible to query the FxA server logs directly through BigQuery (ask an FxA team member for access), though virtually all analytics-related questions are more easily answered using the data sources described above.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/fxa.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#attribution-of-firefox-accounts" id="attribution-of-firefox-accounts">Attribution of Firefox Accounts</a></h1>
-<h2><a class="header" href="#table-of-contents-12" id="table-of-contents-12">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-13" id="table-of-contents-13">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/fxa_metrics/attribution.html#introduction">Introduction</a></li>
 <li><a href="datasets/fxa_metrics/attribution.html#types-of-attribution">Types of Attribution</a>
@@ -8271,7 +8311,7 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 </tbody></table>
 <p>Example amplitude charts: <a href="https://analytics.amplitude.com/mozilla-corp/chart/1ush8xd">registrations by <code>entrypoint</code></a>, <a href="https://analytics.amplitude.com/mozilla-corp/chart/y8t2k1z">logins by <code>entrypoint</code></a>, <a href="https://analytics.amplitude.com/mozilla-corp/chart/jjbkusl">registrations by <code>utm_source</code></a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/fxa_metrics/attribution.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#firefox-account-funnels" id="firefox-account-funnels">Firefox Account Funnels</a></h1>
-<h2><a class="header" href="#table-of-contents-13" id="table-of-contents-13">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-14" id="table-of-contents-14">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/fxa_metrics/funnels.html#introduction">Introduction</a></li>
 <li><a href="datasets/fxa_metrics/funnels.html#registration-funnel">Registration Funnel</a></li>
@@ -8456,7 +8496,7 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 <tr><td>Not Implemented</td><td><code>flow.settings.clients.disconnect.view</code></td><td>User viewed the dialog asking to confirm disconnection of a device.</td></tr>
 </tbody></table>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/fxa_metrics/funnels.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#fxa-email-metrics" id="fxa-email-metrics">FxA Email Metrics</a></h1>
-<h2><a class="header" href="#table-of-contents-14" id="table-of-contents-14">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-15" id="table-of-contents-15">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/fxa_metrics/emails.html#introduction">Introduction</a></li>
 <li><a href="datasets/fxa_metrics/emails.html#email-templates-and-email-types">Email Templates and Email Types</a></li>
@@ -10105,7 +10145,7 @@ WHERE
   count &gt; 10 -- remove outliers
   AND submission_date &gt; DATE_FORMAT(CURRENT_DATE - INTERVAL '9' DAY, '%Y%m%d') -- only days that have a full WAU
 </code></pre>
-<h2><a class="header" href="#caveats-3" id="caveats-3">Caveats</a></h2>
+<h2><a class="header" href="#caveats-4" id="caveats-4">Caveats</a></h2>
 <p>The <code>hll</code> column does not product an exact count. <code>hll</code> stands for
 <a href="https://en.wikipedia.org/wiki/HyperLogLog">HyperLogLog</a>, a sophisticated
 algorithm that allows for the counting of extremely high numbers of items,
