@@ -109,6 +109,4 @@ of the app as users who have received the final released version. Both versions 
 
 ### Upcoming Changes
 
-The Android apps now use *Glean*, the new mobile telemetry SDK, which has been integrated with Project Fenix. Additionally, existing apps have been updated to Glean during the second half of 2019. Glean now sends `baseline`, `metrics`, and `events` pings instead of `core` and `event` pings. For more information about Glean, see the [Glean GitHub page][glean] or `#Glean` in Slack.
-
-[glean]: https://github.com/mozilla-mobile/android-components/tree/master/components/service/glean/#contact
+Most of Mozilla's newer mobile apps, including Fenix, have been adapted to use *Glean*, the new telemetry SDK. Glean now sends `baseline`, `metrics`, and `events` pings instead of `core` and `event` pings. For more information, see the [Glean Overview](./glean/glean.html).
