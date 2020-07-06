@@ -38,7 +38,7 @@ Some amplitude charts segmenting by service can be found [here](https://analytic
 ### Funnel Attribution (entrypoint and utm parameters)
 We can also attribute users to where they began the authentication process, be it from a website or an application. Attribution is done through query parameters appended to links that point at `accounts.firefox.com` (which hosts the actual authentication process). These parameters are logged along with with any metrics events that the user generates during the authentication flow. The table below lists the query parameters that are currently in use, along with the values associated with some of the most common funnels. Note that only `entrypoint` is typically logged for flows beginning within the browser. Web-based entrypoints are listed first, followed by entrypoints that are found within the browser chrome itself.
 
-See [this documentation](https://mozilla.github.io/application-services/docs/accounts/metrics.html) for more implementational detail on utm/entrypoint parameters.
+See the [Metrics for Relying Parties](https://mozilla.github.io/ecosystem-platform/docs/relying-parties/metrics-for-relying-parties) documentation for more implementational detail on utm/entrypoint parameters.
 
 |`entrypoint`|utm parameters|Description & Notes|
 |---|---|---|
