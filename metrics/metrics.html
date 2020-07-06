@@ -174,16 +174,16 @@
 <h3><a class="header" href="#overview" id="overview">Overview</a></h3>
 <p>Daily Active Users or DAU counts the number of unique profiles active in the product on each day.  This is intended to approximate the number of people using the product each day.</p>
 <h3><a class="header" href="#details" id="details">Details</a></h3>
-<p>DAU counts unique profiles. Keep in mind that a <a href="/concepts/analysis_gotchas.html#profiles-vs-users">profile is not necessarily a user</a>.</p>
+<p>DAU counts unique profiles. Keep in mind that a <a href="../concepts/analysis_gotchas.html#profiles-vs-users">profile is not necessarily a user</a>.</p>
 <p>The standard concept of active varies by product, but generally, active users are defined as unique profiles that have sent a <code>main</code> ping (on desktop) or a <code>baseline</code> ping (on mobile).  The precise criteria are defined in the <a href="./usage.html"><code>usage criterion</code></a> section of this documentation.</p>
 <p>We can also restrict the metric to alternative usage criteria. It's <strong>critical to clearly state any non-standard usage criteria on the metric</strong>. The metrics team suggest the following format: <code>DAU(usage criterion)</code>. For example, we might be interested in the count of profiles that have viewed more than 5 URIs in a day. We'd denote that metric as <code>DAU(URI &gt; 5)</code>.</p>
 <p>Some common alternative usage criteria documented in the <a href="./usage.html"><code>usage criterion</code> section</a>.</p>
 <h3><a class="header" href="#caveats" id="caveats">Caveats</a></h3>
-<p>If the number of users stays constant, but the average number of active profiles per user increases, this metric will tend to increase.  For more details on the relationship between users and profiles, see <a href="https://docs.telemetry.mozilla.org/concepts/analysis_gotchas.html#profiles-vs-users">the profiles vs users section in analysis gotchas</a>.</p>
+<p>If the number of users stays constant, but the average number of active profiles per user increases, this metric will tend to increase.  For more details on the relationship between users and profiles, see <a href="../concepts/analysis_gotchas.html#profiles-vs-users">the profiles vs users section in analysis gotchas</a>.</p>
 <h3><a class="header" href="#dashboards" id="dashboards">Dashboards</a></h3>
 <p>This metric is available on the <a href="https://go.corp.mozilla.com/gud">standard Growth and Usage Dashboard (GUD)</a> for most products and with some slicing available.</p>
 <h3><a class="header" href="#tables" id="tables">Tables</a></h3>
-<p>DAU can easily be calculated from the <a href="https://docs.telemetry.mozilla.org/datasets/bigquery/exact_mau/reference.html">Exact MAU tables</a>; for example:</p>
+<p>DAU can easily be calculated from the <a href="../datasets/bigquery/exact_mau/reference.html">Exact MAU tables</a>; for example:</p>
 <pre><code class="language-sql">SELECT
   submission_date,
   SUM(dau) AS dau
