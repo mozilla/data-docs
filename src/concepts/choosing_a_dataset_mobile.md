@@ -109,4 +109,4 @@ of the app as users who have received the final released version. Both versions 
 
 ### Upcoming Changes
 
-Most of Mozilla's newer mobile apps, including Fenix, have been adapted to use *Glean*, the new telemetry SDK. Glean now sends `baseline`, `metrics`, and `events` pings instead of `core` and `event` pings. For more information, see the [Glean Overview](./glean/glean.html).
+Most of Mozilla's newer mobile apps, including Fenix, have been adapted to use *Glean*, the new telemetry SDK. Glean now sends `baseline`, `metrics`, and `events` pings instead of `core` and `event` pings. For more information, see the [Glean Overview](./glean/glean.md).
