@@ -16,30 +16,40 @@ You can locate the source for this documentation in the [firefox-data-docs repos
 
 ## Using this document
 
-This documentation is divided into four main sections:
+This documentation is divided into the following sections:
 
 ### [Getting Started](concepts/getting_started.md)
-  This section provides a **quick introduction** to analyzing telemetry data.
-  After reading these articles, you will be able to confidently perform analysis
-  over telemetry data.
+
+This section provides a **quick introduction** to analyzing telemetry data.
+After reading these articles, you will be able to confidently perform analysis
+over telemetry data.
 
 ### [Standard Metrics](metrics/index.md)
-  This section provides an overview of standard metrics used at Mozilla. Here you'll
-  find the definitions and descriptions for each.
 
-### [Tools](tools/index.md)
-  Describes the tools we maintain to access and analyze product data.
+This section provides an overview of standard metrics used at Mozilla. Here you'll
+find the definitions and descriptions for each.
 
 ### [Cookbooks & Tutorials](cookbooks/index.md)
-  This section contains tutorials presented in a simple problem/solution format.
 
-### [Data Collection and Datasets](datasets/reference.md)
-  Describes all available data we have from our products.
-  For each dataset, we include a description of the dataset's purpose,
-  what data is included, how the data is collected,
-  and how you can change or augment the dataset.
-  You do not need to read this section end-to-end.
+This section contains tutorials presented in a simple problem/solution format, organized by topic.
+
+### [Data Platform Reference](data-platform-reference/index.md)
+
+Detailed reference material on the Mozilla data platform,
+including links to other resources where appropriate.
+
+### [Dataset Reference](datasets/reference.md)
+
+Describes all available data we have from our products.
+For each dataset, we include a description of the dataset's purpose,
+what data is included, how the data is collected,
+and how you can change or augment the dataset.
+You do not need to read this section end-to-end.
+
+### [Historical Reference](historical/index.md)
+
+This section contains some documentation of things that used to be part of the Mozilla Data Platform, but are no
+longer. You can generally safely ignore this section, it is intended only to answer questions like "what happened to X?".
 
 You can find the [fully-rendered documentation here](https://mozilla.github.io/firefox-data-docs/),
 rendered with [mdBook](https://github.com/rust-lang/mdBook), and hosted on Github pages.
-

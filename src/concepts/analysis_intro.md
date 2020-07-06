@@ -70,11 +70,7 @@ probe (Metric Count).
 
 ## Where to go next
 
-* [Analysis using STMO](../tools/stmo.md)
-* [Advanced analysis with Spark](../tools/spark.md)
-* [Experimental data](../tools/experiments.md)
-* [Adding probes, collecting more data][add_probes]
-* [Augmenting the derived datasets](../datasets/derived.md)
+Read through [Analysis Interfaces](../tools/interfaces.md) for more information on tools available for analysis and then work through the rest of the material in this section.
 
 [main_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html
 [probe_dict]: https://probes.telemetry.mozilla.org/
