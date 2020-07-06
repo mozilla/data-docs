@@ -1,6 +1,6 @@
 # Metrics
 
-This section contains definitions and information about standard metrics used at Mozilla.  You may wish to refer to the [terminology section](../concepts/terminology.html) while reading this document, in case a particular concept is not clear.
+This section contains definitions and information about standard metrics used at Mozilla.  You may wish to refer to the [terminology section](../concepts/terminology.md) while reading this document, in case a particular concept is not clear.
 
 ## Table of Contents
 
@@ -16,7 +16,7 @@ Daily Active Users or DAU counts the number of unique profiles active in the pro
 
 ### Details
 
-DAU counts unique profiles. Keep in mind that a [profile is not necessarily a user](/concepts/analysis_gotchas.html#profiles-vs-users).
+DAU counts unique profiles. Keep in mind that a [profile is not necessarily a user](../concepts/analysis_gotchas.md#profiles-vs-users).
 
 The standard concept of active varies by product, but generally, active users are defined as unique profiles that have sent a `main` ping (on desktop) or a `baseline` ping (on mobile).  The precise criteria are defined in the [`usage criterion`](./usage.md) section of this documentation.
 
@@ -26,7 +26,7 @@ Some common alternative usage criteria documented in the [`usage criterion` sect
 
 ### Caveats
 
-If the number of users stays constant, but the average number of active profiles per user increases, this metric will tend to increase.  For more details on the relationship between users and profiles, see [the profiles vs users section in analysis gotchas](https://docs.telemetry.mozilla.org/concepts/analysis_gotchas.html#profiles-vs-users).
+If the number of users stays constant, but the average number of active profiles per user increases, this metric will tend to increase.  For more details on the relationship between users and profiles, see [the profiles vs users section in analysis gotchas](../concepts/analysis_gotchas.md#profiles-vs-users).
 
 ### Dashboards
 
@@ -34,7 +34,7 @@ This metric is available on the [standard Growth and Usage Dashboard (GUD)](http
 
 ### Tables
 
-DAU can easily be calculated from the [Exact MAU tables](https://docs.telemetry.mozilla.org/datasets/bigquery/exact_mau/reference.html); for example:
+DAU can easily be calculated from the [Exact MAU tables](../datasets/bigquery/exact_mau/reference.md); for example:
 
 ```sql
 SELECT
