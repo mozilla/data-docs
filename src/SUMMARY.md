@@ -28,6 +28,7 @@
     * [Slicing Dimensions](metrics/dimensions.md)
   * [Metrics Standardization and Policy](metrics/policy.md)
 * [Analysis cookbooks](cookbooks/index.md)
+    * [Accessing Public Data](cookbooks/public_data.md)
     * [Accessing and working with BigQuery](cookbooks/bigquery.md)
         * [Access](cookbooks/bigquery/access.md)
         * [Writing Queries](cookbooks/bigquery/querying.md)
@@ -53,7 +54,6 @@
   * [Implementing Experiments](cookbooks/client_guidelines.md)
   * [Sending Events](cookbooks/events_best_practices.md)
   * [Sending a Custom Ping](cookbooks/new_ping.md)
-* [Public data](public_data/index.md)
 
 ---
 

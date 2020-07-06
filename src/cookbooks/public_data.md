@@ -1,4 +1,4 @@
-# Public Data
+# Accessing Public Data
 
 A public dataset is a dataset in [BigQuery][bigquery] which is made available to the general public
 in BigQuery or through our [public HTTP endpoint][public_data_endpoint].
