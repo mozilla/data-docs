@@ -52,4 +52,4 @@ This documentation has some automatic checks for spelling and link validity in c
 
 ## Contributing
 
-See [this article](https://docs.telemetry.mozilla.org/meta/contributing.html) for detailed information on how to make additions or changes to the documentation.
+See [contributing](https://docs.telemetry.mozilla.org/meta/contributing.html) for detailed information on how to make additions or changes to the documentation.
