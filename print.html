@@ -7313,8 +7313,6 @@ The heartbeat pings do not contain the survey responses themselves,
 which are stored by SurveyGizmo.</p>
 <p>The telemetry is received using the <code>heartbeat</code> document type,
 which is <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/heartbeat-ping.html">described in the Firefox source tree docs</a>.</p>
-<p>These pings are aggregated into the <code>telemetry_heartbeat_parquet</code> table,
-and may also be accessed using the Dataset API.</p>
 <h2><a class="header" href="#linking-heartbeat-responses-to-telemetry" id="linking-heartbeat-responses-to-telemetry">Linking Heartbeat responses to telemetry</a></h2>
 <p>Heartbeat responses may be linked to Firefox telemetry
 if there is a <code>&quot;includeTelemetryUUID&quot;: true</code> key in the <code>arguments</code> object
