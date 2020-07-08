@@ -14,15 +14,15 @@ matrix:
       node_js:
       - 12
       script:
-        - npm install markdown-spellcheck -g
-        - bash scripts/spell_check.sh
+        - npm install
+        - scripts/spell_check.sh
     - name: link-check
       language: node_js
       node_js:
       - 12
       script:
-        - npm install markdown-link-check -g
-        - bash scripts/link_check.sh
+        - npm install
+        - scripts/link_check.sh
   allow_failures:
   - name: link-check
 deploy:

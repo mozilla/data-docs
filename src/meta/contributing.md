@@ -65,9 +65,7 @@ the `.spelling` file in the code repository.
 For things like dataset names or field names, `code blocks` should be preferred. Things like
 project names or common technical terms should be added to the `.spelling` file.
 
-To run the spell checker locally,
-[install the `markdown-spellcheck` library](https://www.npmjs.com/package/markdown-spellcheck),
-then run the `scripts/spell_check.sh` script from the root of the repository.
+The [markdown-spell-check](https://www.npmjs.com/package/markdown-spellcheck) package checks spelling as part of the build process. To run it locally, install [node.js](https://nodejs.org/en/) (if not already installed) and run `npm install` at the root of the repository. Then run the `scripts/link_check.sh` script.
 
 You may also remove the `--report` parameter to begin an interactive fixing session. In this
 case, it is highly recommended to also add the `--no-suggestions` parameter, which greatly
@@ -75,10 +73,11 @@ speeds things up.
 
 ## Link checking
 
-Any web links should be valid. A dead link might not be your fault, but you will earn a lot
-of good karma by fixing a dead link!
+Any web links should be valid. A dead link might not be your fault, but you will earn a lot of good karma by fixing a dead link!
 
-To run the link checker locally, [install the `markdown-link-check` library](https://github.com/tcort/markdown-link-check#installation), then run the `scripts/link_check.sh` script from the root of the repository.
+The [markdown-link-check](https://www.npmjs.com/package/markdown-link-check) package checks links as part of the build process. Note that dead links do not fail the build: links often go dead for all sorts of reasons, and making it a required check constantly caused otherwise-fine pull requests to appear broken. Still, you should check the status of this check yourself when submitting a pull request: you can do this by looking at the travis status after submitting it.
+
+To run link checking locally, run the installation steps [described for spell checking](#spell-checking) if you haven't already, then run the `scripts/link_check.sh` script.
 
 ## Supported Plugins
 

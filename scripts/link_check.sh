@@ -8,4 +8,4 @@ fi
 
 find src -name "*.md" |\
   sort |\
-  $RUNNER -P 8 markdown-link-check --quiet --verbose --config .linkcheck.json
+  $RUNNER -P 8 npx markdown-link-check --quiet --verbose --config .linkcheck.json
