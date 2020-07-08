@@ -1,62 +1,76 @@
-Introduction
-------------
+# Custom Analysis with Spark
 
-[Apache Spark](https://spark.apache.org/)
-is a data processing engine designed to be fast and easy to use.
+<!-- toc -->
 
-Spark can be used either from [Databricks][db_example] or Dataproc, and works
-with data stored in BigQuery.
+## Introduction
 
-The [BigQuery access cookbook](../cookbooks/bigquery/access.md#from-spark) covers how to access
-BigQuery data from Spark.
+[Apache Spark](https://spark.apache.org/) is a general-purpose cluster computing system - it allows users to
+run general execution graphs. APIs are available in Python, Scala, R, and Java. It is designed to be fast and easy to use.
 
-[db_example]: https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/30598/command/30599
+Here are some useful introductory materials:
 
-## Notebooks
+- [Spark Programming Guide](https://spark.apache.org/docs/latest/programming-guide.html)
+- [Spark SQL Programming Guide](https://spark.apache.org/docs/latest/sql-programming-guide.html)
 
-Notebooks can be easily shared and updated among colleagues
-and, when combined with Spark, enable richer analysis than SQL alone.
+Spark can be used either from [Databricks Notebooks](https://docs.databricks.com/notebooks/index.html) or [Google's Dataproc](https://cloud.google.com/dataproc/), and works with data stored in BigQuery.
 
-Databricks has its own custom notebook environment, which has built-in
-support for sharing, scheduling, collaboration, and commenting.
+There are a number of methods of both reading from and writing to BigQuery using Spark.
 
-Dataproc uses standard [Jupyter notebooks](https://jupyter.org/).
+## Accessing BigQuery data from Spark
 
-### Sharing a Jupyter Notebook
+### Using the Storage API Connector
 
-Jupyter notebooks can be shared in a few different ways.
+> **⚠** This method requires [BigQuery Access](../cookbooks/bigquery/access.md#bigquery-access-request) to be provisioned.
 
-#### Sharing a Static Notebook
+If you want to use Spark locally (or via an arbitrary GCP instance in the cloud), we recommend the [Storage API Connector](https://github.com/GoogleCloudPlatform/spark-bigquery-connector) for accessing BigQuery tables in Spark as it is the most modern and actively developed connector. It works well with the BigQuery client library which is useful if you need to run arbitrary SQL queries and load their results into Spark.
 
-An easy way to share is using a gist on Github. Jupyter notebook files checked
-in to a Github repository will be rendered in the Github web UI, which makes
-sharing convenient.
+### Using Databricks
 
-You can also upload the `.ipynb` file as a gist to share with your colleagues.
+[Databricks Notebooks](https://docs.databricks.com/notebooks/index.html) provide an interactive
+computational environment, similar to Jupyter. If you are a Mozilla employee, you should be able to access it via [`sso.mozilla.com/databricks`](https://sso.mozilla.com/databricks).
 
-Using Spark
------------
+The `shared_serverless_python3` cluster is configured with shared default GCP credentials, so you can immediately use the BigQuery client libraries.
 
-Spark is a general-purpose cluster computing system - it allows users to
-run general execution graphs. APIs are available in Python, Scala, R, and
-Java. The Jupyter notebook utilizes the Python API. In a nutshell, it
-provides a way to run functional code (e.g. map, reduce, etc.) on large,
-distributed data.
+### Using Dataproc
 
-Check out
-[Spark Best Practices](https://ravitillo.wordpress.com/2015/06/30/spark-best-practices/)
-for tips on using Spark to its full capabilities.
+> **⚠** This method requires [BigQuery Access](../cookbooks/bigquery/access.md#bigquery-access-request) to be provisioned.
 
-Other useful introductory materials:
-* [Spark Programming Guide](https://spark.apache.org/docs/latest/programming-guide.html)
-* [Spark SQL Programming Guide](https://spark.apache.org/docs/latest/sql-programming-guide.html)
+Dataproc is Google's managed Spark cluster service. Accessing BigQuery from there will be faster than from Databricks because it does not involve cross-cloud data transfers.
 
+You can spin up a Dataproc cluster with Jupyter using the following command. Insert your values for `cluster-name`, `bucket-name`, and `project-id` there. Your notebooks are stored in Cloud Storage under `gs://bucket-name/notebooks/jupyter`:
 
-### Reading data from BigQuery into Spark
+```bash
+gcloud beta dataproc clusters create cluster-name \
+    --optional-components=ANACONDA,JUPYTER \
+    --image-version=1.4 \
+    --enable-component-gateway \
+    --properties=^#^spark:spark.jars=gs://spark-lib/bigquery/spark-bigquery-latest.jar \
+    --num-workers=3 \
+    --max-idle=3h \
+    --bucket bucket-name \
+    --region=us-west1 \
+    --project project-id
+```
 
-There are two main ways to read data from BigQuery into Spark.
+You can retrieve the Jupyter URL with the following command:
 
-#### Storage API
+```bash
+gcloud beta dataproc clusters describe cluster-name --region=us-west1 --project project-id | grep Jupyter
+```
+
+After you've finished your work, it's a good practice to delete your cluster:
+
+```bash
+gcloud beta dataproc clusters delete cluster-name --region=us-west1 --project project-id --quiet
+```
+
+## Reading data from BigQuery into Spark
+
+There are two main ways to read data from BigQuery into Spark: using either the storage API and the
+query API.
+
+### Storage API
+
 First, using the Storage API - this bypasses BigQuery's execution engine and
 directly reads from the underlying storage.
 
@@ -66,6 +80,7 @@ It is more efficient for reading large amounts of data into Spark, and
 supports basic column and partitioning filters.
 
 Example of using the Storage API from Databricks:
+
 ```python
 dbutils.library.installPyPI("google-cloud-bigquery", "1.16.0")
 dbutils.library.restartPython()
@@ -102,18 +117,20 @@ core_pings_single_day = spark.read.format("bigquery") \
     .select("client_id", "experiments", "normalized_channel")
 ```
 
+You can see this code in action in [this example Python notebook on DataBricks](https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/141939).
+
 A couple of things are worth noting in the above example.
 
-* `get_table` is necessary because an actual _table_ name is required to read
+- `get_table` is necessary because an actual _table_ name is required to read
   from BigQuery here, fully qualified with project name and dataset name.
   The Storage API does not support accessing `VIEW`s, so the convenience names
   such as `telemetry.core` are not available via this API.
-* You must supply a filter on the table's date partitioning column, in this
+- You must supply a filter on the table's date partitioning column, in this
   case `submission_timestamp`.
   Additionally, you must use the `to_date` function to make sure that predicate
   push-down works properly for these filters.
 
-#### Query API
+### Query API
 
 If you want to read the results of a query (rather than directly reading
 tables), you may also use the Query API.
@@ -123,6 +140,7 @@ and is typically suitable for reading smaller amounts of data. If you need
 to read large amounts of data, prefer the Storage API as described above.
 
 Example:
+
 ```python
 
 from google.cloud import bigquery
@@ -151,8 +169,7 @@ rows = query_job.result().to_dataframe()
 
 ```
 
-
-### Persisting data
+## Persisting data
 
 You can save data resulting from your Spark analysis as a [BigQuery table][persist_bq]
 or to [Google Cloud Storage][persist_gcs].
@@ -162,72 +179,3 @@ You can also save data to the [Databricks Filesystem][dbfs].
 [dbfs]: https://docs.databricks.com/user-guide/databricks-file-system.html#dbfs
 [persist_bq]: ../cookbooks/bigquery/querying.md#writing-query-results-to-a-permanent-table
 [persist_gcs]: ../cookbooks/bigquery/querying.md#writing-results-to-gcs-object-store
-
-
-FAQ
----
-
-Please add more FAQ as questions are answered by you or for you.
-
-### I got a REMOTE HOST IDENTIFICATION HAS CHANGED! error
-
-Cloud providers recycles hostnames, so this warning is expected.
-Removing the offending key from `$HOME/.ssh/known_hosts` will remove the warning.
-You can find the line to remove by finding the line in the output that says
-
-`Offending key in /path/to/hosts/known_hosts:2`
-
-Where 2 is the line number of the key that can be deleted.
-Just remove that line, save the file, and try again.
-
-### Why is my notebook hanging?
-
-There are a few common causes for this:
-
-1. Currently, our Spark notebooks can only run a single Python kernel at
-   a time. If you open multiple notebooks on the same cluster and try to
-   run both, the second notebook will hang. Be sure to close notebooks
-   using "Close and Halt" under the "File" drop-down.
-2. The connection from PySpark to the Spark driver might be lost.
-   Unfortunately the best way to recover from this for the moment seems to
-   be spinning up a new cluster.
-3. Cancelling execution of a notebook cell doesn't cancel any spark jobs
-   that might be running in the background. If your spark commands seem to
-   be hanging, try running \`sc.cancelAllJobs()\`.
-
-### How can I keep running after closing the notebook?
-
-For long-running computation, it might be nice to close the notebook
-(and the SSH session) and look at the results later.
-Unfortunately, **all cell output will be lost when a notebook is closed**
-(for the running cell).
-To alleviate this, there are a few options:
-
-1. Have everything output to a variable. These values should still be
-   available when you reconnect.
-2. Put %%capture at the beginning of the cell to store all output.
-   [See the documentation](https://ipython.org/ipython-doc/3/interactive/magics.html#cellmagic-capture).
-
-### How do I load an external library into the cluster?
-
-Assuming you've got a URL for the repo, you can create an egg for it
-this way:
-
-```python
-!git clone `<repo url>` && cd `<repo-name>` && python setup.py bdist_egg`\
-sc.addPyFile('`<repo-name>`/dist/my-egg-file.egg')`
-```
-
-Alternately, you could just create that egg locally, upload it to a web
-server, then download and install it:
-
-```python
-import requests`\
-r = requests.get('`<url-to-my-egg-file>`')`\
-with open('mylibrary.egg', 'wb') as f:`\
-  f.write(r.content)`\
-sc.addPyFile('mylibrary.egg')`
-```
-
-You will want to do this **before** you load the library. If the library
-is already loaded, restart the kernel in the Jupyter notebook.
