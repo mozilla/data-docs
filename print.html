@@ -842,9 +842,9 @@ this table only for analysis of event data from Focus and its related apps.</p>
 <p>Each app uses a unique set of release channels. Most apps include a <code>nightly</code>, <code>beta</code>, <code>release</code>, and an <code>other</code> channel. Each channel is used during various stages of development: generally users sign up to test a pre-release version (anything other than <code>release</code>). In Focus Android, the <code>beta</code> channel uses the same APK in the Google Play Store as the <code>release</code> channel. However, beta users get access to this version earlier than users who receive the final release.</p>
 <p>As soon as the <code>release</code> version is published, beta users work with the same version
 of the app as users who have received the final released version. Both versions of the software become indistinguishable from each other unless you perform a query that flags them by <code>client_id</code>. Beta releases have <code>normalized_channel</code> tagged as <code>release</code>. If you want to filter for beta users, you can only identify the beta users by checking for a higher version number than the version number and date that have been assigned to the official release.</p>
-<h3><a class="header" href="#upcoming-changes" id="upcoming-changes">Upcoming Changes</a></h3>
-<p>The Android apps now use <em>Glean</em>, the new mobile telemetry SDK, which has been integrated with Project Fenix. Additionally, existing apps have been updated to Glean during the second half of 2019. Glean now sends <code>baseline</code>, <code>metrics</code>, and <code>events</code> pings instead of <code>core</code> and <code>event</code> pings. For more information about Glean, see the <a href="https://github.com/mozilla-mobile/android-components/tree/master/components/service/glean/#contact">Glean GitHub page</a> or <code>#Glean</code> in Slack.</p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/choosing_a_dataset_mobile.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#glean" id="glean">Glean</a></h1>
+<h3><a class="header" href="#glean" id="glean">Glean</a></h3>
+<p>Most of Mozilla's newer mobile apps, including Fenix, have been adapted to use <em>Glean</em>, the new telemetry SDK. Glean now sends <code>baseline</code>, <code>metrics</code>, and <code>events</code> pings instead of <code>core</code> and <code>event</code> pings. For more information, see the <a href="concepts/./glean/glean.html">Glean Overview</a>.</p>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/choosing_a_dataset_mobile.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#glean-1" id="glean-1">Glean</a></h1>
 <p>For Mozilla, getting reliable data from our products is critical to inform our decision making. Glean is our new product analytics &amp; telemetry solution that provides a consistent experience and behavior across all of our products.</p>
 <p>The list of supported platforms and implementations is <a href="https://mozilla.github.io/glean/book/dev/core/internal/implementations.html">available in the Glean SDK Book</a>.</p>
 <blockquote>
@@ -1408,7 +1408,7 @@ Data Operations to provide write access to a relevant service account within the
 telemetry pipeline. The pipeline is now configured to republish all messages
 associated with the <code>activity-stream</code> namespace to Pocket's topic, and this has
 been able to serve their real-time needs.</p>
-<h2><a class="header" href="#glean-1" id="glean-1">Glean</a></h2>
+<h2><a class="header" href="#glean-2" id="glean-2">Glean</a></h2>
 <p>While the Activity Stream case study above serves as an encouraging example of
 the flexibility of the pipeline to accept custom payloads, we hope to insulate
 most data producers in the future from having to interact directly with HTTP
