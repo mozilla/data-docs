@@ -107,6 +107,6 @@ Each app uses a unique set of release channels. Most apps include a `nightly`, `
 As soon as the `release` version is published, beta users work with the same version
 of the app as users who have received the final released version. Both versions of the software become indistinguishable from each other unless you perform a query that flags them by `client_id`. Beta releases have `normalized_channel` tagged as `release`. If you want to filter for beta users, you can only identify the beta users by checking for a higher version number than the version number and date that have been assigned to the official release.
 
-### Upcoming Changes
+### Glean
 
 Most of Mozilla's newer mobile apps, including Fenix, have been adapted to use *Glean*, the new telemetry SDK. Glean now sends `baseline`, `metrics`, and `events` pings instead of `core` and `event` pings. For more information, see the [Glean Overview](./glean/glean.md).
