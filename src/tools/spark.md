@@ -142,7 +142,6 @@ to read large amounts of data, prefer the Storage API as described above.
 Example:
 
 ```python
-
 from google.cloud import bigquery
 
 bq = bigquery.Client()
