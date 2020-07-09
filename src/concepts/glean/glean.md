@@ -68,7 +68,6 @@ Because Glean knows more about the individual data, such as its type and the ran
 # How to use Glean
 
 * [Integrate the Glean SDK / library](https://mozilla.github.io/glean/book/user/adding-glean-to-your-project.html) into your product.
-* [File a data engineering bug](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&component=General&short_desc=Glean:%20Enable%20application%20id%20org.mozilla.myProduct) to enable your products application id.
 * [Use Redash](https://sql.telemetry.mozilla.org/) to write SQL queries & build dashboards using your products datasets, e.g.:
   * `org_mozilla_fenix.baseline`
   * `org_mozilla_fenix.events`
