@@ -117,7 +117,7 @@ core_pings_single_day = spark.read.format("bigquery") \
     .select("client_id", "experiments", "normalized_channel")
 ```
 
-You can see this code in action in [this example Python notebook on DataBricks](https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/141939).
+You can see this code in action in [this example Python notebook on Databricks](https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/141939).
 
 A couple of things are worth noting in the above example.
 
