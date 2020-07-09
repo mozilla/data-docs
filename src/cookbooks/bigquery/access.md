@@ -115,53 +115,7 @@ python -c 'from google.cloud import bigquery; print([d.dataset_id for d in bigqu
 
 ### Spark
 
-There are several methods you can use to access BigQuery via Spark, depending on your needs.
-
-#### Using the Storage API Connector
-
-> **⚠** This method requires [BigQuery Access](#bigquery-access-request) to be provisioned.
-
-If you want to use Spark locally (or via an arbitrary GCP instance in the cloud), we recommend the [Storage API Connector](https://github.com/GoogleCloudPlatform/spark-bigquery-connector) for accessing BigQuery tables in Spark as it is the most modern and actively developed connector. It works well with the BigQuery client library which is useful if you need to run arbitrary SQL queries and load their results into Spark (see the [Databricks](#databricks) section for a link to an example notebook demonstrating this technique).
-
-#### Using Databricks
-
-[Databricks Notebooks](https://docs.databricks.com/notebooks/index.html) provide an interactive
-computational environment, similar to Jupyter. If you are a Mozilla employee, you should be able to access it via [`sso.mozilla.com/databricks`](https://sso.mozilla.com/databricks).
-
-The `shared_serverless_python3` cluster is configured with shared default GCP credentials, so you can immediately use the BigQuery client libraries. It also includes the Spark Storage API Connector library as seen in [this example Python notebook](https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/141939).
-
-#### Using Dataproc
-
-> **⚠** This method requires [BigQuery Access](#bigquery-access-request) to be provisioned.
-
-Dataproc is Google's managed Spark cluster service. Accessing BigQuery from there will be faster than from Databricks because it does not involve cross-cloud data transfers.
-
-You can spin up a Dataproc cluster with Jupyter using the following command. Insert your values for `cluster-name`, `bucket-name`, and `project-id` there. Your notebooks are stored in Cloud Storage under `gs://bucket-name/notebooks/jupyter`:
-
-```bash
-gcloud beta dataproc clusters create cluster-name \
-    --optional-components=ANACONDA,JUPYTER \
-    --image-version=1.4 \
-    --enable-component-gateway \
-    --properties=^#^spark:spark.jars=gs://spark-lib/bigquery/spark-bigquery-latest.jar \
-    --num-workers=3 \
-    --max-idle=3h \
-    --bucket bucket-name \
-    --region=us-west1 \
-    --project project-id
-```
-
-You can retrieve the Jupyter URL with the following command:
-
-```bash
-gcloud beta dataproc clusters describe cluster-name --region=us-west1 --project project-id | grep Jupyter
-```
-
-After you've finished your work, it's a good practice to delete your cluster:
-
-```bash
-gcloud beta dataproc clusters delete cluster-name --region=us-west1 --project project-id --quiet
-```
+[Apache Spark](https://spark.apache.org/) is a data processing engine designed to be fast and easy to use. There are several methods you can use to access BigQuery via Spark, depending on your needs. See [Custom Analysis with Spark](../../tools/spark.md) for more information and examples.
 
 ### Colaboratory
 
