@@ -11077,16 +11077,14 @@ happens you may either put specialized terms in <code>code blocks</code>, or you
 the <code>.spelling</code> file in the code repository.</p>
 <p>For things like dataset names or field names, <code>code blocks</code> should be preferred. Things like
 project names or common technical terms should be added to the <code>.spelling</code> file.</p>
-<p>To run the spell checker locally,
-<a href="https://www.npmjs.com/package/markdown-spellcheck">install the <code>markdown-spellcheck</code> library</a>,
-then run the <code>scripts/spell_check.sh</code> script from the root of the repository.</p>
+<p>The <a href="https://www.npmjs.com/package/markdown-spellcheck">markdown-spell-check</a> package checks spelling as part of the build process. To run it locally, install <a href="https://nodejs.org/en/">node.js</a> (if not already installed) and run <code>npm install</code> at the root of the repository. Then run the <code>scripts/link_check.sh</code> script.</p>
 <p>You may also remove the <code>--report</code> parameter to begin an interactive fixing session. In this
 case, it is highly recommended to also add the <code>--no-suggestions</code> parameter, which greatly
 speeds things up.</p>
 <h2><a class="header" href="#link-checking" id="link-checking">Link checking</a></h2>
-<p>Any web links should be valid. A dead link might not be your fault, but you will earn a lot
-of good karma by fixing a dead link!</p>
-<p>To run the link checker locally, <a href="https://github.com/tcort/markdown-link-check#installation">install the <code>markdown-link-check</code> library</a>, then run the <code>scripts/link_check.sh</code> script from the root of the repository.</p>
+<p>Any web links should be valid. A dead link might not be your fault, but you will earn a lot of good karma by fixing a dead link!</p>
+<p>The <a href="https://www.npmjs.com/package/markdown-link-check">markdown-link-check</a> package checks links as part of the build process. Note that dead links do not fail the build: links often go dead for all sorts of reasons, and making it a required check constantly caused otherwise-fine pull requests to appear broken. Still, you should check the status of this check yourself when submitting a pull request: you can do this by looking at the Travis CI status after submitting it.</p>
+<p>To run link checking locally, run the installation steps <a href="meta/contributing.html#spell-checking">described for spell checking</a> if you haven't already, then run the <code>scripts/link_check.sh</code> script.</p>
 <h2><a class="header" href="#supported-plugins" id="supported-plugins">Supported Plugins</a></h2>
 <h3><a class="header" href="#mermaid" id="mermaid">Mermaid</a></h3>
 <p>You may use <a href="https://mermaidjs.github.io/"><code>mermaid.js</code></a> diagrams in code blocks:</p>
