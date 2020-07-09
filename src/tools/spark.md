@@ -166,7 +166,6 @@ LIMIT 20
 query_job = bq.query(query)
 # Wait for query execution, then fetch results as a pandas dataframe.
 rows = query_job.result().to_dataframe()
-
 ```
 
 ## Persisting data
