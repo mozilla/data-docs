@@ -3,7 +3,7 @@
 A common request is to count the number of users who have
 enrolled or unenrolled from a SHIELD experiment.
 
-The [`events` table](../datasets/batch_view/events/intro.md)
+The [`events` table](../datasets/batch_view/events/reference.md)
 includes Normandy enrollment and unenrollment events
 for both pref-flip and add-on studies.
 Note that the events table is updated nightly.
@@ -20,7 +20,6 @@ since addons, not Normandy, are responsible for branch assignment.
 For studies built with the obsolete [add-on utilities][`addon-utils`],
 branch assignments are published to the
 [shield_study] dataset.
-
 
 ## Counting pref-flip enrollment events by branch
 

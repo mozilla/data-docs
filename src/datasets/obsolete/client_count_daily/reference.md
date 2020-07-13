@@ -98,12 +98,6 @@ When count is calculated over a column that may change over time, such as
 `total_uri_count_threshold`, then a client would be counted in every group
 where they appear. Over longer windows, like MAU, this is more likely to occur.
 
-## Scheduling
-
-This dataset is updated daily via the
-[telemetry-airflow](https://github.com/mozilla/telemetry-airflow) infrastructure.
-The job runs as part of the [`main_summary` DAG](https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py).
-
 ## Schema
 
 The data is partitioned by `submission_date` which is formatted as `%Y%m%d`,
