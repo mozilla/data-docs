@@ -67,11 +67,40 @@ User states are found as columns in the `clients_last_seen` dataset: the user st
 
 ### WAU and MAU
 
-Users can change user states part way through a week or a month. 
-At present, 
-we have not settled the questions of whether and how to split MAU by user state,
-and whether and how to measure MAU for each user state.
-So stick to DAU for now.
+Users can move in or out of specific user states part way through a week or a month.
+This poses a conundrum if we want to plot the WAU or MAU for a user state.
+
+Our convention is to _count the number of distinct users who were active in user state in the period_.
+So if a user was active as a regular user v3 on e.g. the second day of a 28-day window, then they will contribute to "regular user v3 MAU" regardless of whether they lost their "regular user v3" status at any point in the 28-day window.
+
+Since many user states use the full extent of the `*_bits` column wizardry in `clients_last_seen`, you'll have to query WAU or MAU the old fashioned way:
+
+```lang=sql
+WITH dates AS (
+    SELECT *
+    FROM UNNEST(GENERATE_DATE_ARRAY('2020-05-01', '2020-07-01')) as d
+) SELECT
+    dates.d AS submission_date,
+    COUNT(DISTINCT client_id) * 100 AS regular_user_v3_mau,
+FROM dates
+INNER JOIN telemetry.clients_last_seen cls
+    ON cls.submission_date BETWEEN DATE_SUB(dates.d, INTERVAL 27 DAY) AND dates.d
+    AND cls.submission_date BETWEEN '2020-04-01' AND '2020-07-01'
+WHERE cls.sample_id = 42
+    AND cls.is_regular_user_v3
+    AND cls.days_since_seen = 0
+GROUP BY dates.d
+ORDER BY dates.d
+```
+
+Our convention has the potentially counterintuitive consequence that a user can count towards "regular user v3 MAU" and "not regular user v3 MAU" for the same 28-day window.
+If you need to break MAU down into the sum of MAU for various user states, then in this instance you would need to break it down into "regular v3", "not regular v3", and "transitioning".
+
+It might be tempting to assign users to whichever user state they happened to be in at the end of the window: this quantity is easy to query.
+But many of the user states were defined to be meaningful _on days the users were active_.
+"Regular users v3" is predictive of retention, _given that the user was active on the day of interest as a regular user_.
+A user can be "new or irregular v3" for only one day in a 28-day period: unless they appear for the first time on the last day of the month, the user will not qualify as "new or irregular v3" at the end of the MAU window!
+So beware this trap and try to only use user states on days the users are active.
 
 
 ### Example queries
