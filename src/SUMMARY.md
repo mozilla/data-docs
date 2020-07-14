@@ -26,7 +26,7 @@
       * [Custom analysis with Spark](tools/spark.md)
     * [Introduction to STMO](tools/stmo.md)
     * [Accessing Glean data](concepts/glean/accessing_glean_data.md)
-    * [Dataset Specific](cookbooks/dataset_specific.md)
+    * [Dataset-Specific](cookbooks/dataset_specific.md)
       * [Working with Normandy events](cookbooks/normandy_events.md)
       * [Working with Crash Pings](cookbooks/crash_pings.md)
       * [Working with Bit Patterns in Clients Last Seen](cookbooks/clients_last_seen_bits.md)
