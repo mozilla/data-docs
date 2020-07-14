@@ -43,8 +43,8 @@ The following options define how data is published:
 Data will get published when the query is executed in Airflow. Metadata of available public
 data on Cloud Storage is updated daily through a separate Airflow task. 
 
-More information about accessing public data can be found in the
-[Public Data introduction section](index.md).
+More information about accessing public data can be found in
+[Accessing Public Data](../cookbooks/public_data.md).
 
 [bigquery_etl]: https://github.com/mozilla/bigquery-etl
 [bigquery_etl_metadata]: https://github.com/mozilla/bigquery-etl#query-metadata
