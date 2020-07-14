@@ -49,7 +49,7 @@
     * [Creating a Prototype Data Project on Google Cloud Platform](cookbooks/gcp-projects.md)
     * [Scheduling BigQuery Queries in Airflow](cookbooks/bigquery-airflow.md)
     * [Building and Deploying Containers to GCR with CircleCI](cookbooks/deploying-containers.md)
-    * [Publishing Datasets](public_data/publishing_datasets.md)
+    * [Publishing Datasets](cookbooks/publishing_datasets.md)
 * [Sending telemetry](datasets/new_data.md)
   * [Implementing Experiments](cookbooks/client_guidelines.md)
   * [Sending Events](cookbooks/events_best_practices.md)
