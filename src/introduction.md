@@ -33,10 +33,9 @@ find the definitions and descriptions for each.
 
 This section contains tutorials presented in a simple problem/solution format, organized by topic.
 
-### [Data Platform Reference](data-platform-reference/index.md)
+### [Data Platform Reference](reference/index.md)
 
-Detailed reference material on the Mozilla data platform,
-including links to other resources where appropriate.
+This section contains detailed reference material on the Mozilla data platform, including links to other resources where appropriate.
 
 ### [Dataset Reference](datasets/reference.md)
 
