@@ -113,24 +113,6 @@
 
 ---
 
-<<<<<<< HEAD
-=======
-* [Telemetry Behavior Reference](concepts/index.md)
-    * [History of Telemetry](concepts/history.md)
-    * [Profile Behavior](concepts/profile/index.md)
-        * [Profile Creation](concepts/profile/profile_creation.md)
-        * [Real World Usage](concepts/profile/realworldusage.md)
-        * [Profile History](concepts/profile/profilehistory.md)
-    * [Channel Behavior](concepts/channels/index.md)
-        * [Channel Normalization and Querying](concepts/channels/channel_normalization.md)
-    * [Census metrics](concepts/censuses.md)
-    * [Engagement metrics](concepts/engagement.md)
-    * [User states/Segments](concepts/segments.md)
-    * [Sampling](concepts/sample_id.md)
-
----
-
->>>>>>> Rename "segments" to "user states"
 * [Historical Reference](historical/index.md)
   * [Previous AWS Pipeline Overview](concepts/pipeline/data_pipeline.md)
   * [In-depth AWS Data Pipeline Detail](concepts/pipeline/data_pipeline_detail.md)
