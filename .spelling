@@ -271,6 +271,7 @@ Stackdriver
 STMO
 struct
 structs
+sql.telemetry.mozilla.org
 subfields
 subsession
 subsessions
