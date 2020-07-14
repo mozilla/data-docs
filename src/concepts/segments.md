@@ -94,7 +94,7 @@ ORDER BY dates.d
 ```
 
 Our convention has the potentially counterintuitive consequence that a user can count towards "regular user v3 MAU" and "not regular user v3 MAU" for the same 28-day window.
-If you need to break MAU down into the sum of MAU for various user states, then in this instance you would need to break it down into "regular v3", "not regular v3", and "transitioning".
+If you need to break MAU down into the sum of MAU for various user states, then in this instance you would need to break it down into "regular v3", "not regular v3", and "both".
 
 It might be tempting to assign users to whichever user state they happened to be in at the end of the window: this quantity is easy to query.
 But many of the user states were defined to be meaningful _on days the users were active_.
