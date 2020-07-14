@@ -176,7 +176,6 @@
 </ul>
 </li>
 <li><a href="#caveats">Caveats</a></li>
-<li><a href="#scheduling">Scheduling</a></li>
 <li><a href="#schema">Schema</a></li>
 </ul>
 </li>
@@ -288,10 +287,6 @@ than a simple counting structure.</p>
 <p>When count is calculated over a column that may change over time, such as
 <code>total_uri_count_threshold</code>, then a client would be counted in every group
 where they appear. Over longer windows, like MAU, this is more likely to occur.</p>
-<h2><a class="header" href="#scheduling" id="scheduling">Scheduling</a></h2>
-<p>This dataset is updated daily via the
-<a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a> infrastructure.
-The job runs as part of the <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py"><code>main_summary</code> DAG</a>.</p>
 <h2><a class="header" href="#schema" id="schema">Schema</a></h2>
 <p>The data is partitioned by <code>submission_date</code> which is formatted as <code>%Y%m%d</code>,
 like <code>20180130</code>.</p>

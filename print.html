@@ -494,12 +494,7 @@ to standardize on using <code>submission_date</code> as opposed to client-genera
 </li>
 <li><a href="concepts/choosing_a_dataset.html#main-ping-derived-datasets">Main Ping Derived Datasets</a>
 <ul>
-<li><a href="concepts/choosing_a_dataset.html#clients_daily"><code>clients_daily</code></a>
-<ul>
-<li><a href="concepts/choosing_a_dataset.html#contents">Contents</a></li>
-<li><a href="concepts/choosing_a_dataset.html#accessing-the-data">Accessing the Data</a></li>
-</ul>
-</li>
+<li><a href="concepts/choosing_a_dataset.html#clients_daily"><code>clients_daily</code></a></li>
 <li><a href="concepts/choosing_a_dataset.html#clients_last_seen"><code>clients_last_seen</code></a>
 <ul>
 <li><a href="concepts/choosing_a_dataset.html#content">Content</a></li>
@@ -507,13 +502,7 @@ to standardize on using <code>submission_date</code> as opposed to client-genera
 <li><a href="concepts/choosing_a_dataset.html#accessing-the-data">Accessing the Data</a></li>
 </ul>
 </li>
-<li><a href="concepts/choosing_a_dataset.html#main_summary"><code>main_summary</code></a>
-<ul>
-<li><a href="concepts/choosing_a_dataset.html#contents">Contents</a></li>
-<li><a href="concepts/choosing_a_dataset.html#background-and-caveats">Background and Caveats</a></li>
-<li><a href="concepts/choosing_a_dataset.html#accessing-the-data">Accessing the Data</a></li>
-</ul>
-</li>
+<li><a href="concepts/choosing_a_dataset.html#main_summary"><code>main_summary</code></a></li>
 <li><a href="concepts/choosing_a_dataset.html#first_shutdown_summary"><code>first_shutdown_summary</code></a>
 <ul>
 <li><a href="concepts/choosing_a_dataset.html#contents">Contents</a></li>
@@ -644,18 +633,7 @@ To augment our data collection, see <a href="https://developer.mozilla.org/en-US
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html">main ping</a> includes most of the measurements that track the performance and health of Firefox in the wild. This ping includes histograms, scalars, and events.</p>
 <p>In its raw form, the main ping can be a bit difficult to work with. To make analyzing data easier, some datasets have been provided that simplify and aggregate information provided by the main ping.</p>
 <h2><a class="header" href="#clients_daily" id="clients_daily"><code>clients_daily</code></a></h2>
-<p>The <code>clients_daily</code> table is intended as the first stop for asking questions
-about how people use Firefox. It should be easy to answer simple questions.
-Each row in the table is a (<code>client_id</code>, <code>submission_date</code>) and contains a
-number of aggregates about that day's activity.</p>
-<h4><a class="header" href="#contents" id="contents">Contents</a></h4>
-<p>Many questions about Firefox take the form &quot;What did clients with
-characteristics X, Y, and Z do during the period S to E?&quot; The
-<code>clients_daily</code> table is aimed at answer those questions.</p>
-<h4><a class="header" href="#accessing-the-data-1" id="accessing-the-data-1">Accessing the Data</a></h4>
-<p>The <code>clients_daily</code> table is accessible through re:dash using the
-<code>Telemetry (BigQuery)</code> data source.</p>
-<p>Here's an <a href="https://sql.telemetry.mozilla.org/queries/23746#61771">example query</a>.</p>
+<p>{{#include ../datasets/batch_view/clients_daily/intro.md}}</p>
 <h2><a class="header" href="#clients_last_seen" id="clients_last_seen"><code>clients_last_seen</code></a></h2>
 <p>The <code>clients_last_seen</code> dataset is useful for efficiently determining exact
 user counts such as <a href="concepts/../../../cookbooks/dau.html">DAU and MAU</a>.
@@ -703,43 +681,27 @@ correctly calculated using <code>days_since_visited_5_uri</code>.</p>
 because a given <code>client_id</code> will only be in one group per <code>submission_date</code>. So
 if MAU were calculated by <code>country</code> and <code>channel</code>, then the sum of the MAU for
 each <code>country</code> would be the same as if MAU were calculated only by <code>channel</code>.</p>
-<h4><a class="header" href="#accessing-the-data-2" id="accessing-the-data-2">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-1" id="accessing-the-data-1">Accessing the Data</a></h4>
 <p>The data is available in Re:dash and BigQuery. Take a look at this full running
 <a href="https://sql.telemetry.mozilla.org/queries/62029/source#159510">example query in Re:dash</a>.</p>
 <h2><a class="header" href="#main_summary" id="main_summary"><code>main_summary</code></a></h2>
-<h4><a class="header" href="#contents-1" id="contents-1">Contents</a></h4>
-<p><em>Note that since the introduction of BigQuery, we are able to represent the
-full <code>main</code> ping structure in a table, available as <code>telemetry.main</code>.
-New analyses should avoid <code>main_summary</code>, which exists only for compatibility.</em></p>
-<p>The <code>main_summary</code> table contains one row for each ping.
-Each column represents one field from the main ping payload,
-though only a subset of all main ping fields are included.
-This dataset <strong>does not include most histograms</strong>.</p>
-<h4><a class="header" href="#background-and-caveats-1" id="background-and-caveats-1">Background and Caveats</a></h4>
-<p>This table is massive, and due to its size, it can be difficult to work with.</p>
-<p>Instead, we recommend using the <code>clients_daily</code> or <code>clients_last_seen</code> dataset
-where possible.</p>
-<p>If you do need to query this table, make use of the <code>sample_id</code> field and
-limit to a short submission date range.</p>
-<h4><a class="header" href="#accessing-the-data-3" id="accessing-the-data-3">Accessing the Data</a></h4>
-<p>The <code>main_summary</code> table is accessible through re:dash.
-Here's an <a href="https://sql.telemetry.mozilla.org/queries/4201/source">example query</a>.</p>
+<p>{{#include ../datasets/batch_view/main_summary/intro.md}}</p>
 <h2><a class="header" href="#first_shutdown_summary" id="first_shutdown_summary"><code>first_shutdown_summary</code></a></h2>
 <p>The <code>first_shutdown_summary</code> table is a summary of the <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/first-shutdown-ping.html"><code>first-shutdown</code>
 ping</a>.</p>
-<h4><a class="header" href="#contents-2" id="contents-2">Contents</a></h4>
+<h4><a class="header" href="#contents" id="contents">Contents</a></h4>
 <p>The first shutdown ping contains first session usage data. The
 dataset has rows similar to the
 <a href="concepts//datasets/batch_view/new_profile/reference.html"><code>telemetry_new_profile_parquet</code></a>,
 but in the shape of
 <a href="concepts//datasets/batch_view/main_summary/reference.html"><code>main_summary</code></a>.</p>
-<h4><a class="header" href="#background-and-caveats-2" id="background-and-caveats-2">Background and Caveats</a></h4>
+<h4><a class="header" href="#background-and-caveats-1" id="background-and-caveats-1">Background and Caveats</a></h4>
 <p>Ping latency was reduced through the
 shutdown ping-sender mechanism in Firefox 55. To maintain consistent historical
 behavior, the first main ping is not sent until the second start up. In Firefox 57, a
 separate first-shutdown ping was created to evaluate first-shutdown behavior while maintaining backwards compatibility.</p>
 <p>In many cases, the first-shutdown ping is a duplicate of the main ping. The first-shutdown summary can be used in conjunction with the main summary by taking the union and deduplicating on the <code>document_id</code>.</p>
-<h4><a class="header" href="#accessing-the-data-4" id="accessing-the-data-4">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-2" id="accessing-the-data-2">Accessing the Data</a></h4>
 <p>The data can be accessed as <code>first_shutdown_summary</code>.</p>
 <p>The data is backfilled to 2017-09-22, the date of its first nightly appearance. This data should be available to all releases on and after Firefox 57.</p>
 <h2><a class="header" href="#client_count_daily" id="client_count_daily"><code>client_count_daily</code></a></h2>
@@ -756,7 +718,7 @@ variable, which is an approximation to the exact count.
 The factor columns include <strong>submission</strong> date and the dimensions listed
 <a href="https://github.com/mozilla/telemetry-airflow/blob/adfce4a30895faa607ccf586b292b61ad68d8f75/jobs/client_count_daily_view.sh">here</a>.
 Each row represents one combinations of the factor columns.</p>
-<h4><a class="header" href="#background-and-caveats-3" id="background-and-caveats-3">Background and Caveats</a></h4>
+<h4><a class="header" href="#background-and-caveats-2" id="background-and-caveats-2">Background and Caveats</a></h4>
 <p>It's important to understand that the <code>hll</code> column is <strong>not a standard count</strong>.
 The <code>hll</code> variable avoids double-counting users when aggregating over multiple days.
 The HyperLogLog variable is a far more efficient way to count distinct elements of a set,
@@ -767,7 +729,7 @@ The <a href="https://sql.telemetry.mozilla.org/queries/81/source#129">Firefox ER
 is a good example to review.
 Finally, Roberto has a relevant write-up
 <a href="https://ravitillo.wordpress.com/2016/04/12/measuring-product-engagment-at-scale/">here</a>.</p>
-<h4><a class="header" href="#accessing-the-data-5" id="accessing-the-data-5">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-3" id="accessing-the-data-3">Accessing the Data</a></h4>
 <p>The data is available in Re:dash.
 Take a look at this
 <a href="https://sql.telemetry.mozilla.org/queries/81/source#129">example query</a>.</p>
@@ -776,8 +738,8 @@ Take a look at this
 <p>Public crash statistics for Firefox are available through the Data Platform in a <code>socorro_crash</code> dataset.
 The crash data in <a href="https://wiki.mozilla.org/Socorro">Socorro</a> is sanitized and made available to STMO.
 A nightly import job converts batches of JSON documents into a columnar format using the associated JSON Schema. </p>
-<h3><a class="header" href="#contents-3" id="contents-3">Contents</a></h3>
-<h4><a class="header" href="#accessing-the-data-6" id="accessing-the-data-6">Accessing the Data</a></h4>
+<h3><a class="header" href="#contents-1" id="contents-1">Contents</a></h3>
+<h4><a class="header" href="#accessing-the-data-4" id="accessing-the-data-4">Accessing the Data</a></h4>
 <p>The dataset is available in parquet at <code>s3://telemetry-parquet/socorro_crash/v2</code>.
 It is also indexed with Athena and Presto with the table name <code>socorro_crash</code>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/choosing_a_dataset.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#choosing-a-mobile-product-dataset" id="choosing-a-mobile-product-dataset">Choosing a Mobile Product Dataset</a></h1>
@@ -3578,7 +3540,7 @@ WHERE
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/dataset_specific.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#working-with-normandy-events" id="working-with-normandy-events">Working with Normandy events</a></h1>
 <p>A common request is to count the number of users who have
 enrolled or unenrolled from a SHIELD experiment.</p>
-<p>The <a href="cookbooks/../datasets/batch_view/events/intro.html"><code>events</code> table</a>
+<p>The <a href="cookbooks/../datasets/batch_view/events/reference.html"><code>events</code> table</a>
 includes Normandy enrollment and unenrollment events
 for both pref-flip and add-on studies.
 Note that the events table is updated nightly.</p>
@@ -5767,7 +5729,7 @@ made to be:</p>
 <strong>check to make sure there isn't already a derived dataset</strong> made for your purpose.
 If you do need to work with raw ping data, be aware that the volume of data can be high.
 Try to limit the size of your data by controlling the date range, and start off using a sample.</p>
-<h4><a class="header" href="#accessing-the-data-7" id="accessing-the-data-7">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-5" id="accessing-the-data-5">Accessing the Data</a></h4>
 <p>Ping data lives in BigQuery and is accessible in <a href="https://sql.telemetry.mozilla.org/">re:dash</a>;
 see the <a href="datasets/../cookbooks/bigquery.html">BigQuery cookbook section</a> for more information.</p>
 <h4><a class="header" href="#further-reading-2" id="further-reading-2">Further Reading</a></h4>
@@ -5938,68 +5900,24 @@ ORDER BY
 or on <a href="https://pypi.org/project/bgbb/">PyPI</a>. The airflow job is defined in the
 <a href="https://github.com/wcbeard/bgbb_airflow"><code>bgbb_airflow</code> repo</a>.</p>
 <p>The model to fit the parameters is run weekly, and the table is updated daily.</p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/active_profiles.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#addons-datasets" id="addons-datasets">Addons Datasets</a></h1>
-<ul>
-<li><a href="datasets/batch_view/addons/reference.html#introduction">Introduction</a></li>
-<li><a href="datasets/batch_view/addons/reference.html#data-reference">Data Reference</a>
-<ul>
-<li><a href="datasets/batch_view/addons/reference.html#example-queries">Example Queries</a></li>
-<li><a href="datasets/batch_view/addons/reference.html#sampling">Sampling</a></li>
-<li><a href="datasets/batch_view/addons/reference.html#scheduling">Scheduling</a></li>
-<li><a href="datasets/batch_view/addons/reference.html#schema">Schema</a></li>
-</ul>
-</li>
-</ul>
-<h1><a class="header" href="#introduction-2" id="introduction-2">Introduction</a></h1>
-<p>This is a work in progress.
-The work is being tracked
-<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1364172">here</a>.</p>
-<h1><a class="header" href="#data-reference-1" id="data-reference-1">Data Reference</a></h1>
-<h2><a class="header" href="#example-queries" id="example-queries">Example Queries</a></h2>
-<h2><a class="header" href="#sampling" id="sampling">Sampling</a></h2>
-<p>It contains one or more records for every
-<a href="datasets/batch_view/addons/../main_summary/reference.html">Main Summary</a>
-record that contains a non-null value for <code>client_id</code>.
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/active_profiles.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#addons" id="addons">Addons</a></h1>
+<p>Addon usage by client, partitioned by day.</p>
+<p>This documentation is a work in progress. Work is
+being tracked in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1364172">bug 1364172</a></p>
+<h2><a class="header" href="#data-reference-1" id="data-reference-1">Data Reference</a></h2>
+<p>This dataset contains one or more records for every entry in the main ping table
+that contain a non-null value for <code>client_id</code>.
 Each Addons record contains info for a single addon,
 or if the main ping did not contain any active addons,
 there will be a row with nulls for all the addon fields
 (to identify <code>client_id</code>s/records without any addons).</p>
-<p>Like the Main Summary dataset, No attempt is made to de-duplicate submissions by <code>documentId</code>, so any analysis that could be affected by duplicate records should take care to remove duplicates using the <code>documentId</code> field.</p>
 <h2><a class="header" href="#scheduling-1" id="scheduling-1">Scheduling</a></h2>
-<p>This dataset is updated daily via the
-<a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a> infrastructure.
+<p>This dataset is updated daily via the <a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a> infrastructure.
 The job DAG runs every day after the Main Summary data has been generated.
-The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py#L36">here</a>.</p>
-<h2><a class="header" href="#schema" id="schema">Schema</a></h2>
-<p>As of 2017-03-16, the current version of the <code>addons</code> dataset is <code>v2</code>,
-and has a schema as follows:</p>
-<pre><code>root
- |-- document_id: string (nullable = true)
- |-- client_id: string (nullable = true)
- |-- subsession_start_date: string (nullable = true)
- |-- normalized_channel: string (nullable = true)
- |-- addon_id: string (nullable = true)
- |-- blocklisted: boolean (nullable = true)
- |-- name: string (nullable = true)
- |-- user_disabled: boolean (nullable = true)
- |-- app_disabled: boolean (nullable = true)
- |-- version: string (nullable = true)
- |-- scope: integer (nullable = true)
- |-- type: string (nullable = true)
- |-- foreign_install: boolean (nullable = true)
- |-- has_binary_components: boolean (nullable = true)
- |-- install_day: integer (nullable = true)
- |-- update_day: integer (nullable = true)
- |-- signed_state: integer (nullable = true)
- |-- is_system: boolean (nullable = true)
- |-- submission_date_s3: string (nullable = true)
- |-- sample_id: string (nullable = true)
-</code></pre>
-<p>For more detail on where these fields come from in the
-<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/environment.html#addons">raw data</a>,
-please look
-<a href="https://github.com/mozilla/telemetry-batch-view/blob/master/GRAVEYARD.md#main-summary-clients-daily-and-addons">in the <code>AddonsView</code> code</a>.</p>
-<p>The fields are all simple scalar values.</p>
+The DAG defined in <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/bqetl_addons.py"><code>dags/bqetl_addons.py</code></a></p>
+<h2><a class="header" href="#code-reference" id="code-reference">Code Reference</a></h2>
+<p>This dataset is generated by <a href="https://github.com/mozilla/bigquery-etl/">BigQuery ETL</a>. The query that generates the dataset is <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/telemetry_derived/addons_v2/query.sql"><code>sql/telemetry_derived/addons_v2/query.sql</code></a>.</p>
+<p>You may find the <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/environment.html#addons">environment reference</a> in The Firefox Source Documentation helpful for understanding the source data.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/batch_view/addons/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#addons-daily" id="addons-daily">Addons Daily</a></h1>
 <ul>
 <li><a href="datasets/other/addons_daily/reference.html#introduction">Introduction</a>
@@ -6022,17 +5940,17 @@ please look
 </li>
 <li><a href="datasets/other/addons_daily/reference.html#code-reference">Code Reference</a></li>
 </ul>
-<h1><a class="header" href="#introduction-3" id="introduction-3">Introduction</a></h1>
+<h1><a class="header" href="#introduction-2" id="introduction-2">Introduction</a></h1>
 <p>The <code>addons_daily</code> table is a small and fast dataset with data on specific add-ons, and the users who have them installed. It contains one row per <code>addon_id</code> and <code>submission_date</code>. </p>
-<h4><a class="header" href="#contents-4" id="contents-4">Contents</a></h4>
+<h4><a class="header" href="#contents-2" id="contents-2">Contents</a></h4>
 <p>Many questions about add-ons are of the form: &quot;How many users have add-on A installed?&quot; or &quot;Are users with add-on Z more active than users with add-on Y?&quot; This dataset is aimed at answering these type of questions without having to do cumbersome joins or filters. </p>
 <p>This dataset also has detailed search aggregates by each add-on, broken out by our major search engines (<code>google</code>, <code>bing</code>, <code>ddg</code>, <code>amazon</code>, <code>yandex</code>, <code>other</code>), along with total aggregates (<code>total</code>). This allows us to identify strange search patterns for add-ons who change a user's search settings on their behalf, often siphoning away SAP searches and Mozilla revenue (see the second example query below).</p>
-<h4><a class="header" href="#accessing-the-data-8" id="accessing-the-data-8">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-6" id="accessing-the-data-6">Accessing the Data</a></h4>
 <p>The <code>addons_daily</code> table is accessible through re:dash using the
 <code>Telemetry (BigQuery)</code> data source.</p>
 <p>Here's an <a href="https://sql.telemetry.mozilla.org/queries/71007/source">example query</a>.</p>
 <h1><a class="header" href="#data-reference-2" id="data-reference-2">Data Reference</a></h1>
-<h2><a class="header" href="#example-queries-1" id="example-queries-1">Example Queries</a></h2>
+<h2><a class="header" href="#example-queries" id="example-queries">Example Queries</a></h2>
 <h4><a class="header" href="#dau-wau-and-mau-for-ublock-origin" id="dau-wau-and-mau-for-ublock-origin">DAU, WAU and MAU for uBlock Origin</a></h4>
 <pre><code class="language-sql">SELECT
     submission_date,
@@ -6067,10 +5985,10 @@ ORDER BY
 <p>This dataset is updated daily via the
 <a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a> infrastructure.
 The job runs as part of the <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/bqetl_addons.py"><code>addons_daily</code> DAG</a>.</p>
-<h2><a class="header" href="#schema-1" id="schema-1">Schema</a></h2>
+<h2><a class="header" href="#schema" id="schema">Schema</a></h2>
 <p>The data is partitioned by <code>submission_date</code>.</p>
 <p>As of 2020-04-17, the current version of the <code>addons_daily</code> dataset is <code>v1</code>.</p>
-<h1><a class="header" href="#code-reference" id="code-reference">Code Reference</a></h1>
+<h1><a class="header" href="#code-reference-1" id="code-reference-1">Code Reference</a></h1>
 <p>This dataset is generated by
 <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/telemetry_derived/addons_daily_v1/query.sql"><code>bigquery-etl</code></a>.
 Refer to this repository for information on how to run or augment the dataset.</p>
@@ -6152,13 +6070,13 @@ if clients report both enabled and disabled states for DoH, they will be double-
 </li>
 <li><a href="datasets/other/attitudes_daily/reference.html#code-reference">Code Reference</a></li>
 </ul>
-<h1><a class="header" href="#introduction-4" id="introduction-4">Introduction</a></h1>
+<h1><a class="header" href="#introduction-3" id="introduction-3">Introduction</a></h1>
 <p>The <code>attitudes_daily</code> table is a Telemetry instantiation of user responses to the <a href="https://qsurvey.mozilla.com/collab/daily-attitude-survey">Daily Attitudes Survey (DAS)</a> over time. 
 It is joined to <code>clients_daily</code> using <code>client_id</code> and <code>submission_date</code>.</p>
-<h4><a class="header" href="#contents-5" id="contents-5">Contents</a></h4>
+<h4><a class="header" href="#contents-3" id="contents-3">Contents</a></h4>
 <p>Most Firefox surveys are point-in-time without longitudinal insights.
 The DAS is completed by ~300 Firefox users every day, allowing us to measure long term attitudinal trends combined with users' corresponding Telemetry attributes.</p>
-<h4><a class="header" href="#accessing-the-data-9" id="accessing-the-data-9">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-7" id="accessing-the-data-7">Accessing the Data</a></h4>
 <p>The <code>attitudes_daily</code> table is accessible through re:dash using the
 <code>Telemetry (BigQuery)</code> data source.
 The full table name is <code>moz-fx-data-shared-prod.telemetry.attitudes_daily</code>.</p>
@@ -6173,7 +6091,7 @@ Each question has an identifier in the <code>attitudes_daily</code> table as the
 <li>Using the internet helped me meet my goals today (<code>met_goals</code>)</li>
 </ul>
 <p>User responses are processed and mapped to their <code>question_key</code>'s in <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/telemetry_derived/surveygizmo_daily_attitudes/import_responses.py">this script</a>, creating a table <code>moz-fx-data-shared-prod.external.survey_gizmo_daily_attitudes</code> which is subsequently joined to <code>clients_daily</code>.</p>
-<h2><a class="header" href="#example-queries-2" id="example-queries-2">Example Queries</a></h2>
+<h2><a class="header" href="#example-queries-1" id="example-queries-1">Example Queries</a></h2>
 <h4><a class="header" href="#distribution-of-user-responses-to-the-internet-is-open-and-accessible-to-all-over-time" id="distribution-of-user-responses-to-the-internet-is-open-and-accessible-to-all-over-time">Distribution of user responses to &quot;The internet is open and accessible to all&quot; over time</a></h4>
 <pre><code class="language-sql">SELECT 
     submission_date,
@@ -6209,50 +6127,24 @@ GROUP BY 1, 2
 <p>This dataset is updated daily via the
 <a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a> infrastructure.
 The job runs as part of the <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/attitudes_daily.py"><code>attitudes_daily</code> DAG</a>.</p>
-<h2><a class="header" href="#schema-2" id="schema-2">Schema</a></h2>
+<h2><a class="header" href="#schema-1" id="schema-1">Schema</a></h2>
 <p>The data is partitioned by <code>submission_date</code>.</p>
 <p>As of 2019-09-15, the current version of the <code>attitudes_daily</code> dataset is <code>v1</code>.</p>
-<h1><a class="header" href="#code-reference-1" id="code-reference-1">Code Reference</a></h1>
+<h1><a class="header" href="#code-reference-2" id="code-reference-2">Code Reference</a></h1>
 <p>This dataset is generated by
 <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/telemetry_derived/attitudes_daily_v1/query.sql"><code>bigquery-etl</code></a>.
 Refer to this repository for information on how to run or augment the dataset. You can view the task run status in airflow <a href="https://workflow.telemetry.mozilla.org/tree?dag_id=attitudes_daily">here</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/other/attitudes_daily/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#clients-daily" id="clients-daily">Clients Daily</a></h1>
-<ul>
-<li><a href="datasets/batch_view/clients_daily/reference.html#introduction">Introduction</a>
-<ul>
-<li><a href="datasets/batch_view/clients_daily/reference.html#contents">Contents</a></li>
-<li><a href="datasets/batch_view/clients_daily/reference.html#accessing-the-data">Accessing the Data</a></li>
-</ul>
-</li>
-<li><a href="datasets/batch_view/clients_daily/reference.html#data-reference">Data Reference</a>
-<ul>
-<li><a href="datasets/batch_view/clients_daily/reference.html#example-queries">Example Queries</a>
-<ul>
-<li><a href="datasets/batch_view/clients_daily/reference.html#compute-churn-for-a-one-day-cohort">Compute Churn for a one-day cohort:</a></li>
-<li><a href="datasets/batch_view/clients_daily/reference.html#distribution-of-pings-per-client-per-day">Distribution of pings per client per day:</a></li>
-</ul>
-</li>
-<li><a href="datasets/batch_view/clients_daily/reference.html#scheduling">Scheduling</a></li>
-<li><a href="datasets/batch_view/clients_daily/reference.html#schema">Schema</a></li>
-</ul>
-</li>
-<li><a href="datasets/batch_view/clients_daily/reference.html#code-reference">Code Reference</a></li>
-</ul>
-<h1><a class="header" href="#introduction-5" id="introduction-5">Introduction</a></h1>
-<p>The <code>clients_daily</code> table is intended as the first stop for asking questions
-about how people use Firefox. It should be easy to answer simple questions.
-Each row in the table is a (<code>client_id</code>, <code>submission_date</code>) and contains a
-number of aggregates about that day's activity.</p>
-<h4><a class="header" href="#contents-6" id="contents-6">Contents</a></h4>
 <p>Many questions about Firefox take the form &quot;What did clients with
 characteristics X, Y, and Z do during the period S to E?&quot; The
-<code>clients_daily</code> table is aimed at answer those questions.</p>
-<h4><a class="header" href="#accessing-the-data-10" id="accessing-the-data-10">Accessing the Data</a></h4>
+<code>clients_daily</code> table aims to answer these questions. Each row in
+the table is a (<code>client_id</code>, <code>submission_date</code>) and contains a
+number of aggregates about that day's activity.</p>
+<h2><a class="header" href="#accessing-the-data-8" id="accessing-the-data-8">Accessing the Data</a></h2>
 <p>The <code>clients_daily</code> table is accessible through re:dash using the
 <code>Telemetry (BigQuery)</code> data source.</p>
-<p>Here's an <a href="https://sql.telemetry.mozilla.org/queries/23746#61771">example query</a>.</p>
-<h1><a class="header" href="#data-reference-4" id="data-reference-4">Data Reference</a></h1>
-<h2><a class="header" href="#example-queries-3" id="example-queries-3">Example Queries</a></h2>
+<h2><a class="header" href="#data-reference-4" id="data-reference-4">Data Reference</a></h2>
+<h3><a class="header" href="#example-queries-2" id="example-queries-2">Example Queries</a></h3>
 <h4><a class="header" href="#compute-churn-for-a-one-day-cohort" id="compute-churn-for-a-one-day-cohort">Compute Churn for a one-day cohort:</a></h4>
 <pre><code class="language-sql">SELECT
   submission_date,
@@ -6288,14 +6180,12 @@ ORDER BY
 <h2><a class="header" href="#scheduling-4" id="scheduling-4">Scheduling</a></h2>
 <p>This dataset is updated daily via the
 <a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a> infrastructure.
-The job runs as part of the <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py"><code>main_summary</code> DAG</a>.</p>
-<h2><a class="header" href="#schema-3" id="schema-3">Schema</a></h2>
+The job runs as part of the <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/bqetl_main_summary.py"><code>main_summary</code> DAG</a>.</p>
+<h2><a class="header" href="#schema-2" id="schema-2">Schema</a></h2>
 <p>The data is partitioned by <code>submission_date</code>.</p>
 <p>As of 2019-11-28, the current version of the <code>clients_daily</code> dataset is <code>v6</code>.</p>
-<h1><a class="header" href="#code-reference-2" id="code-reference-2">Code Reference</a></h1>
-<p>This dataset is generated by
-<a href="https://github.com/mozilla/bigquery-etl/blob/25b702d0824b96ec1342d653296adfbe1302027d/sql/telemetry_derived/clients_daily_v6/query.sql"><code>bigquery-etl</code></a>.
-Refer to this repository for information on how to run or augment the dataset.</p>
+<h2><a class="header" href="#code-reference-3" id="code-reference-3">Code Reference</a></h2>
+<p>This dataset is generated by <a href="https://github.com/mozilla/bigquery-etl/">BigQuery ETL</a>. The query that generates the dataset is <a href="https://github.com/mozilla/bigquery-etl/blob/25b702d0824b96ec1342d653296adfbe1302027d/sql/telemetry_derived/clients_daily_v6/query.sql"><code>sql/telemetry_derived/clients_daily_v6/query.sql</code></a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/batch_view/clients_daily/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#clients-last-seen-reference" id="clients-last-seen-reference">Clients Last Seen Reference</a></h1>
 <ul>
 <li><a href="datasets/bigquery/clients_last_seen/reference.html#introduction">Introduction</a>
@@ -6319,7 +6209,7 @@ Refer to this repository for information on how to run or augment the dataset.</
 </li>
 <li><a href="datasets/bigquery/clients_last_seen/reference.html#code-reference">Code Reference</a></li>
 </ul>
-<h1><a class="header" href="#introduction-6" id="introduction-6">Introduction</a></h1>
+<h1><a class="header" href="#introduction-4" id="introduction-4">Introduction</a></h1>
 <p>The <code>clients_last_seen</code> dataset is useful for efficiently determining exact
 user counts such as <a href="datasets/bigquery/clients_last_seen/../../../cookbooks/dau.html">DAU and MAU</a>.
 It can also allow efficient calculation of other windowed usage metrics
@@ -6350,7 +6240,7 @@ create filters in SQL can be found in
 <a href="https://colab.research.google.com/drive/13AwwORpOtRsq22op_3rMSwPssQkJU1ok">this notebook</a>.</p>
 <p>The rest of the columns use the most recent value in <code>clients_daily</code> where
 the <code>client_id</code> appeared.</p>
-<h4><a class="header" href="#background-and-caveats-4" id="background-and-caveats-4">Background and Caveats</a></h4>
+<h4><a class="header" href="#background-and-caveats-3" id="background-and-caveats-3">Background and Caveats</a></h4>
 <p>User counts generated using <code>days_since_seen</code> only reflect the most recent
 values from <code>clients_daily</code> for each <code>client_id</code> in a 28 day window. This means
 <a href="datasets/bigquery/clients_last_seen/../../../cookbooks/active_dau.html">Active MAU</a>
@@ -6366,11 +6256,11 @@ correctly calculated using <code>days_since_visited_5_uri</code>.</p>
 because a given <code>client_id</code> will only be in one group per <code>submission_date</code>. So
 if MAU were calculated by <code>country</code> and <code>channel</code>, then the sum of the MAU for
 each <code>country</code> would be the same as if MAU were calculated only by <code>channel</code>.</p>
-<h4><a class="header" href="#accessing-the-data-11" id="accessing-the-data-11">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-9" id="accessing-the-data-9">Accessing the Data</a></h4>
 <p>The data is available in Re:dash and BigQuery. Take a look at this full running
 <a href="https://sql.telemetry.mozilla.org/queries/62029/source#159510">example query in Re:dash</a>.</p>
 <h1><a class="header" href="#data-reference-5" id="data-reference-5">Data Reference</a></h1>
-<h2><a class="header" href="#example-queries-4" id="example-queries-4">Example Queries</a></h2>
+<h2><a class="header" href="#example-queries-3" id="example-queries-3">Example Queries</a></h2>
 <h4><a class="header" href="#compute-dau-for-non-windows-clients-for-the-last-week" id="compute-dau-for-non-windows-clients-for-the-last-week">Compute DAU for non-windows clients for the last week</a></h4>
 <pre><code class="language-sql">SELECT
     submission_date,
@@ -6415,70 +6305,33 @@ ORDER BY
 <a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a>
 infrastructure. The job runs as part of the
 <a href="https://github.com/mozilla/telemetry-airflow/blob/89a6dc3/dags/main_summary.py#L365"><code>main_summary</code> DAG</a>.</p>
-<h2><a class="header" href="#schema-4" id="schema-4">Schema</a></h2>
+<h2><a class="header" href="#schema-3" id="schema-3">Schema</a></h2>
 <p>The data is partitioned by <code>submission_date</code>.</p>
 <p>As of 2019-03-25, the current version of the <code>clients_last_seen</code> dataset is
 <code>v1</code>, and the schema is visible in the BigQuery console
 <a href="https://console.cloud.google.com/bigquery?p=moz-fx-data-derived-datasets&amp;d=telemetry&amp;t=clients_last_seen_v1&amp;page=table">here</a>.</p>
-<h1><a class="header" href="#code-reference-3" id="code-reference-3">Code Reference</a></h1>
+<h1><a class="header" href="#code-reference-4" id="code-reference-4">Code Reference</a></h1>
 <p>This dataset is generated by
 <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/telemetry_derived/clients_last_seen_v1/query.sql"><code>bigquery-etl</code></a>.
 Refer to this repository for information on how to run or augment the dataset.</p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/bigquery/clients_last_seen/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#introduction-7" id="introduction-7">Introduction</a></h1>
-<p>This is a work in progress.
-The work is being tracked
-<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1364170">here</a>.</p>
-<h1><a class="header" href="#data-reference-6" id="data-reference-6">Data Reference</a></h1>
-<h2><a class="header" href="#example-queries-5" id="example-queries-5">Example Queries</a></h2>
-<p>This is a work in progress.
-The work is being tracked
-<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1364170">here</a>.</p>
-<h2><a class="header" href="#sampling-1" id="sampling-1">Sampling</a></h2>
-<p>The events dataset contains one row for each event in a main ping.
-This dataset is derived from <a href="datasets/batch_view/events/../main_summary/reference.html"><code>main_summary</code></a>
-so any of <code>main_summary</code>'s filters affect this dataset as well.</p>
-<p>Data is currently available from 2017-01-05 on.</p>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/bigquery/clients_last_seen/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#events" id="events">Events</a></h1>
+<p>Events data submitted as part of the main ping.</p>
+<p>This documentation is a work in progress. Work is
+being tracked in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1364170">bug 1364170</a></p>
+<h2><a class="header" href="#data-reference-6" id="data-reference-6">Data Reference</a></h2>
+<p>The events dataset contains one row for each event in a main ping.</p>
 <h2><a class="header" href="#scheduling-6" id="scheduling-6">Scheduling</a></h2>
-<p>The events dataset is updated daily, shortly after
-<a href="datasets/batch_view/events/../main_summary/reference.html"><code>main_summary</code></a> is updated.
+<p>The events dataset is updated daily.
 The job is scheduled on <a href="https://github.com/mozilla/telemetry-airflow">Airflow</a>.
-The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py#L63">here</a>.</p>
-<h2><a class="header" href="#firefox-events" id="firefox-events">Firefox events</a></h2>
+The DAG is defined in <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/copy_deduplicate.py"><code>dags/copy_deduplicate.py</code></a>.</p>
+<h2><a class="header" href="#code-reference-5" id="code-reference-5">Code Reference</a></h2>
+<p>This dataset is generated by <a href="https://github.com/mozilla/bigquery-etl/">BigQuery ETL</a>. The query that generates the dataset is <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/telemetry_derived/addons_v2/query.sql"><code>sql/telemetry_derived/addons_v2/query.sql</code></a>.</p>
+<h2><a class="header" href="#more-information" id="more-information">More Information</a></h2>
 <p>Firefox has an API to record events, which are then submitted through the main ping.
 The format and mechanism of event collection in Firefox is documented <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html">here</a>.</p>
 <p>The full events data pipeline is <a href="datasets/batch_view/events/../../../concepts/pipeline/event_pipeline.html">documented here</a>.</p>
-<h2><a class="header" href="#schema-5" id="schema-5">Schema</a></h2>
-<p>As of 2017-01-26, the current version of the <code>events</code> dataset is <code>v1</code>, and has a schema as follows:</p>
-<pre><code>root
- |-- document_id: string (nullable = true)
- |-- client_id: string (nullable = true)
- |-- normalized_channel: string (nullable = true)
- |-- country: string (nullable = true)
- |-- locale: string (nullable = true)
- |-- app_name: string (nullable = true)
- |-- app_version: string (nullable = true)
- |-- os: string (nullable = true)
- |-- os_version: string (nullable = true)
- |-- subsession_start_date: string (nullable = true)
- |-- subsession_length: long (nullable = true)
- |-- sync_configured: boolean (nullable = true)
- |-- sync_count_desktop: integer (nullable = true)
- |-- sync_count_mobile: integer (nullable = true)
- |-- timestamp: long (nullable = true)
- |-- sample_id: string (nullable = true)
- |-- event_timestamp: long (nullable = false)
- |-- event_category: string (nullable = false)
- |-- event_method: string (nullable = false)
- |-- event_object: string (nullable = false)
- |-- event_string_value: string (nullable = true)
- |-- event_map_values: map (nullable = true)
- |    |-- key: string
- |    |-- value: string
- |-- submission_date_s3: string (nullable = true)
- |-- doc_type: string (nullable = true)
-</code></pre>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/batch_view/events/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#exact-mau-data" id="exact-mau-data">Exact MAU Data</a></h1>
-<h2><a class="header" href="#introduction-8" id="introduction-8">Introduction</a></h2>
+<h2><a class="header" href="#introduction-5" id="introduction-5">Introduction</a></h2>
 <p>This article introduces the usage of and methodology behind the &quot;exact MAU&quot;
 tables in BigQuery:</p>
 <ul>
@@ -6692,7 +6545,7 @@ infrastructure in the following DAGs:</p>
 <li><a href="https://github.com/mozilla-services/spark-parquet-to-bigquery/blob/master/dags/incremental_telemetry_core_parquet_v3.py"><code>incremental_telemetry_core_parquet_v3</code> DAG</a>, and</li>
 <li><a href="https://github.com/mozilla-services/spark-parquet-to-bigquery/blob/master/dags/incremental_fxa_events_v1.py"><code>incremental_fxa_events_v1</code> DAG</a>.</li>
 </ul>
-<h2><a class="header" href="#schema-6" id="schema-6">Schema</a></h2>
+<h2><a class="header" href="#schema-4" id="schema-4">Schema</a></h2>
 <p>The data is partitioned by <code>submission_date</code>.</p>
 <p>As of 2019-03-29, the current version for all Exact MAU tables is <code>v1</code>,
 and the schemas are visible via the <code>telemetry</code> dataset in <a href="https://console.cloud.google.com/bigquery?project=moz-fx-data-derived-datasets&amp;folder&amp;organizationId=442341870013&amp;p=moz-fx-data-derived-datasets&amp;d=telemetry&amp;page=dataset">the BigQuery console</a>.</p>
@@ -6706,39 +6559,42 @@ and the schemas are visible via the <code>telemetry</code> dataset in <a href="h
 </ul>
 </li>
 </ul>
-<h1><a class="header" href="#introduction-9" id="introduction-9">Introduction</a></h1>
+<h1><a class="header" href="#introduction-6" id="introduction-6">Introduction</a></h1>
 <p>The <code>first_shutdown_summary</code> table is a summary of the <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/first-shutdown-ping.html"><code>first-shutdown</code>
 ping</a>.</p>
-<h4><a class="header" href="#contents-7" id="contents-7">Contents</a></h4>
+<h4><a class="header" href="#contents-4" id="contents-4">Contents</a></h4>
 <p>The first shutdown ping contains first session usage data. The
 dataset has rows similar to the
 <a href="datasets/batch_view/first_shutdown_summary//datasets/batch_view/new_profile/reference.html"><code>telemetry_new_profile_parquet</code></a>,
 but in the shape of
 <a href="datasets/batch_view/first_shutdown_summary//datasets/batch_view/main_summary/reference.html"><code>main_summary</code></a>.</p>
-<h4><a class="header" href="#background-and-caveats-5" id="background-and-caveats-5">Background and Caveats</a></h4>
+<h4><a class="header" href="#background-and-caveats-4" id="background-and-caveats-4">Background and Caveats</a></h4>
 <p>Ping latency was reduced through the
 shutdown ping-sender mechanism in Firefox 55. To maintain consistent historical
 behavior, the first main ping is not sent until the second start up. In Firefox 57, a
 separate first-shutdown ping was created to evaluate first-shutdown behavior while maintaining backwards compatibility.</p>
 <p>In many cases, the first-shutdown ping is a duplicate of the main ping. The first-shutdown summary can be used in conjunction with the main summary by taking the union and deduplicating on the <code>document_id</code>.</p>
-<h4><a class="header" href="#accessing-the-data-12" id="accessing-the-data-12">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-10" id="accessing-the-data-10">Accessing the Data</a></h4>
 <p>The data can be accessed as <code>first_shutdown_summary</code>.</p>
 <p>The data is backfilled to 2017-09-22, the date of its first nightly appearance. This data should be available to all releases on and after Firefox 57.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/batch_view/first_shutdown_summary/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#main-summary" id="main-summary">Main Summary</a></h1>
+<blockquote>
+<p><strong>⚠</strong> Since the introduction of BigQuery, we are able to represent the
+full <code>main</code> ping structure in a table, available as <code>telemetry.main</code>.
+New analyses should avoid <code>main_summary</code>, which exists only for compatibility.</p>
+</blockquote>
+<p>The <code>main_summary</code> table contains one row for each ping.
+Each column represents one field from the main ping payload,
+though only a subset of all main ping fields are included.
+This dataset <strong>does not include most histograms</strong>.</p>
+<p>This table is massive, and due to its size, it can be difficult to work with.</p>
+<p>Instead, we recommend using the <code>clients_daily</code> or <code>clients_last_seen</code> dataset
+where possible.</p>
+<p>If you do need to query this table, make use of the <code>sample_id</code> field and
+limit to a short submission date range.</p>
+<h2><a class="header" href="#table-of-contents-10" id="table-of-contents-10">Table of Contents</a></h2>
 <ul>
-<li><a href="datasets/batch_view/main_summary/reference.html#introduction">Introduction</a>
-<ul>
-<li><a href="datasets/batch_view/main_summary/reference.html#contents">Contents</a></li>
-<li><a href="datasets/batch_view/main_summary/reference.html#background-and-caveats">Background and Caveats</a></li>
 <li><a href="datasets/batch_view/main_summary/reference.html#accessing-the-data">Accessing the Data</a></li>
-</ul>
-</li>
-<li><a href="datasets/batch_view/main_summary/reference.html#adding-new-fields">Adding New Fields</a>
-<ul>
-<li><a href="datasets/batch_view/main_summary/reference.html#user-preferences">User Preferences</a></li>
-<li><a href="datasets/batch_view/main_summary/reference.html#other-fields">Other Fields</a></li>
-</ul>
-</li>
 <li><a href="datasets/batch_view/main_summary/reference.html#data-reference">Data Reference</a>
 <ul>
 <li><a href="datasets/batch_view/main_summary/reference.html#example-queries">Example Queries</a></li>
@@ -6746,42 +6602,16 @@ separate first-shutdown ping was created to evaluate first-shutdown behavior whi
 <li><a href="datasets/batch_view/main_summary/reference.html#scheduling">Scheduling</a></li>
 <li><a href="datasets/batch_view/main_summary/reference.html#schema">Schema</a></li>
 <li><a href="datasets/batch_view/main_summary/reference.html#time-formats">Time formats</a></li>
+<li><a href="datasets/batch_view/main_summary/reference.html#user-preferences">User Preferences</a></li>
 </ul>
 </li>
 <li><a href="datasets/batch_view/main_summary/reference.html#code-reference">Code Reference</a></li>
 </ul>
-<h1><a class="header" href="#introduction-10" id="introduction-10">Introduction</a></h1>
-<h4><a class="header" href="#contents-8" id="contents-8">Contents</a></h4>
-<p><em>Note that since the introduction of BigQuery, we are able to represent the
-full <code>main</code> ping structure in a table, available as <code>telemetry.main</code>.
-New analyses should avoid <code>main_summary</code>, which exists only for compatibility.</em></p>
-<p>The <code>main_summary</code> table contains one row for each ping.
-Each column represents one field from the main ping payload,
-though only a subset of all main ping fields are included.
-This dataset <strong>does not include most histograms</strong>.</p>
-<h4><a class="header" href="#background-and-caveats-6" id="background-and-caveats-6">Background and Caveats</a></h4>
-<p>This table is massive, and due to its size, it can be difficult to work with.</p>
-<p>Instead, we recommend using the <code>clients_daily</code> or <code>clients_last_seen</code> dataset
-where possible.</p>
-<p>If you do need to query this table, make use of the <code>sample_id</code> field and
-limit to a short submission date range.</p>
-<h4><a class="header" href="#accessing-the-data-13" id="accessing-the-data-13">Accessing the Data</a></h4>
+<h2><a class="header" href="#accessing-the-data-11" id="accessing-the-data-11">Accessing the Data</a></h2>
 <p>The <code>main_summary</code> table is accessible through re:dash.
 Here's an <a href="https://sql.telemetry.mozilla.org/queries/4201/source">example query</a>.</p>
-<h1><a class="header" href="#adding-new-fields" id="adding-new-fields">Adding New Fields</a></h1>
-<p>We support a few basic types that can be easily added to <code>main_summary</code>.</p>
-<p>Non-addon scalars are automatically added to <code>main_summary</code>.</p>
-<h2><a class="header" href="#user-preferences" id="user-preferences">User Preferences</a></h2>
-<p>These are added in the <a href="https://github.com/mozilla/bigquery-etl/blob/25b702d0824b96ec1342d653296adfbe1302027d/sql/telemetry_derived/main_summary_v4/part1.sql#L476-L501">Main Summary ETL code</a>.
-They must be available in the <a href="http://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/environment.html">ping environment</a> to be included here.</p>
-<p>Once added, they will show as top-level fields, with the string <code>user_pref</code> prepended.
-For example, <code>dom.ipc.processCount</code> becomes <code>user_pref_dom_ipc_processcount</code>.</p>
-<h2><a class="header" href="#other-fields" id="other-fields">Other Fields</a></h2>
-<p>We can include other types of fields as well, for example if there needs to be
-a specific transformation done.</p>
-<p>In general, it is preferable to simply access the data directly in the <code>main</code> ping table instead.</p>
-<h1><a class="header" href="#data-reference-8" id="data-reference-8">Data Reference</a></h1>
-<h2><a class="header" href="#example-queries-6" id="example-queries-6">Example Queries</a></h2>
+<h2><a class="header" href="#data-reference-8" id="data-reference-8">Data Reference</a></h2>
+<h3><a class="header" href="#example-queries-4" id="example-queries-4">Example Queries</a></h3>
 <p>Compare the search volume for different search source values:</p>
 <pre><code class="language-sql">WITH search_data AS (
   SELECT
@@ -6803,17 +6633,16 @@ FROM search_data
 GROUP BY search_source
 ORDER BY sum(search_count) DESC
 </code></pre>
-<h2><a class="header" href="#sampling-2" id="sampling-2">Sampling</a></h2>
+<h3><a class="header" href="#sampling" id="sampling">Sampling</a></h3>
 <p>The <code>main_summary</code> dataset contains one record for each <code>main</code> ping
 as long as the record contains a non-null value for
 <code>documentId</code>, <code>submissionDate</code>, and <code>Timestamp</code>.
 We do not ever expect nulls for these fields.</p>
-<h2><a class="header" href="#scheduling-8" id="scheduling-8">Scheduling</a></h2>
+<h3><a class="header" href="#scheduling-8" id="scheduling-8">Scheduling</a></h3>
 <p>This dataset is updated daily via the <a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a> infrastructure.
-The job DAG runs every day shortly after midnight UTC.
-You can find the job definition
-<a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py">here</a></p>
-<h2><a class="header" href="#schema-7" id="schema-7">Schema</a></h2>
+The DAG is defined in
+<a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/bqetl_main_summary.py"><code>dags/bqetl_main_summary.py</code></a></p>
+<h3><a class="header" href="#schema-5" id="schema-5">Schema</a></h3>
 <p>As of 2019-11-28, the current version of the <code>main_summary</code> dataset is <code>v4</code>.</p>
 <p>For more detail on where these fields come from in the
 <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html">raw data</a>,
@@ -6856,7 +6685,7 @@ theme.</li>
 <li>Dynamically-included histogram fields are present as key-&gt;value maps,
 or key-&gt;(key-&gt;value) nested maps for keyed histograms.</li>
 </ul>
-<h2><a class="header" href="#time-formats" id="time-formats">Time formats</a></h2>
+<h3><a class="header" href="#time-formats" id="time-formats">Time formats</a></h3>
 <p>Columns in <code>main_summary</code> may use one of a handful of time formats with different precisions:</p>
 <table><thead><tr><th>Column Name</th><th>Origin</th><th>Description</th><th>Example</th><th>Spark</th><th>Presto</th></tr></thead><tbody>
 <tr><td><code>timestamp</code></td><td>stamped at ingestion</td><td>nanoseconds since epoch</td><td><code>1504689165972861952</code></td><td><code>from_unixtime(timestamp/1e9)</code></td><td><code>from_unixtime(timestamp/1e9)</code></td></tr>
@@ -6868,7 +6697,12 @@ or key-&gt;(key-&gt;value) nested maps for keyed histograms.</li>
 <tr><td><code>subsession_length</code></td><td><code>info.subsessionLength</code></td><td>subsession length in seconds</td><td><code>599</code></td><td></td><td><code>date_add('second', subsession_length, subsession_start_date)</code></td></tr>
 <tr><td><code>profile_creation_date</code></td><td><code>environment.profile.creationDate</code></td><td>days since epoch</td><td><code>15,755</code></td><td></td><td><code>from_unixtime(profile_creation_date * 86400)</code></td></tr>
 </tbody></table>
-<h1><a class="header" href="#code-reference-4" id="code-reference-4">Code Reference</a></h1>
+<h3><a class="header" href="#user-preferences" id="user-preferences">User Preferences</a></h3>
+<p>These are added in the <a href="https://github.com/mozilla/bigquery-etl/blob/25b702d0824b96ec1342d653296adfbe1302027d/sql/telemetry_derived/main_summary_v4/part1.sql#L476-L501">Main Summary ETL code</a>.
+They must be available in the <a href="http://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/environment.html">ping environment</a> to be included here.</p>
+<p>Once added, they will show as top-level fields, with the string <code>user_pref</code> prepended.
+For example, <code>dom.ipc.processCount</code> becomes <code>user_pref_dom_ipc_processcount</code>.</p>
+<h2><a class="header" href="#code-reference-6" id="code-reference-6">Code Reference</a></h2>
 <p>This dataset is generated by <a href="https://github.com/mozilla/bigquery-etl/tree/25b702d0824b96ec1342d653296adfbe1302027d/sql/telemetry_derived/main_summary_v4">bigquery-etl</a>.
 Refer to this repository for information on how to run or augment the dataset.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/batch_view/main_summary/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#socorro-crash-reports" id="socorro-crash-reports">Socorro Crash Reports</a></h1>
@@ -6891,12 +6725,12 @@ Refer to this repository for information on how to run or augment the dataset.</
 </ul>
 </li>
 </ul>
-<h2><a class="header" href="#introduction-11" id="introduction-11">Introduction</a></h2>
+<h2><a class="header" href="#introduction-7" id="introduction-7">Introduction</a></h2>
 <p>Public crash statistics for Firefox are available through the Data Platform in a <code>socorro_crash</code> dataset.
 The crash data in <a href="https://wiki.mozilla.org/Socorro">Socorro</a> is sanitized and made available to STMO.
 A nightly import job converts batches of JSON documents into a columnar format using the associated JSON Schema. </p>
-<h3><a class="header" href="#contents-9" id="contents-9">Contents</a></h3>
-<h4><a class="header" href="#accessing-the-data-14" id="accessing-the-data-14">Accessing the Data</a></h4>
+<h3><a class="header" href="#contents-5" id="contents-5">Contents</a></h3>
+<h4><a class="header" href="#accessing-the-data-12" id="accessing-the-data-12">Accessing the Data</a></h4>
 <p>The dataset is available in parquet at <code>s3://telemetry-parquet/socorro_crash/v2</code>.
 It is also indexed with Athena and Presto with the table name <code>socorro_crash</code>.</p>
 <h2><a class="header" href="#data-reference-9" id="data-reference-9">Data Reference</a></h2>
@@ -6918,10 +6752,10 @@ GROUP BY 1,
 <h3><a class="header" href="#scheduling-9" id="scheduling-9">Scheduling</a></h3>
 <p>The job is schedule on a nightly basis on airflow.
 The dag is available under <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/socorro_import.py"><code>mozilla/telemetry-airflow:/dags/socorro_import.py</code></a>.</p>
-<h3><a class="header" href="#schema-8" id="schema-8">Schema</a></h3>
+<h3><a class="header" href="#schema-6" id="schema-6">Schema</a></h3>
 <p>The source schema is available on the <a href="https://raw.githubusercontent.com/mozilla-services/socorro/main/socorro/schemas/crash_report.json"><code>mozilla-services/socorro</code> GitHub repository</a>.
 This schema is transformed into a Spark-SQL structure and serialized to parquet after transforming column names from <code>camelCase</code> to <code>snake_case</code>.</p>
-<h3><a class="header" href="#code-reference-5" id="code-reference-5">Code Reference</a></h3>
+<h3><a class="header" href="#code-reference-7" id="code-reference-7">Code Reference</a></h3>
 <p>The code is <a href="https://github.com/mozilla-services/data-pipeline/blob/master/reports/socorro_import/ImportCrashData.ipynb">a notebook in the <code>mozilla-services/data-pipeline</code> repository</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/other/socorro_crash/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#ssl-ratios" id="ssl-ratios">SSL Ratios</a></h1>
 <ul>
@@ -6942,7 +6776,7 @@ This schema is transformed into a Spark-SQL structure and serialized to parquet 
 </ul>
 </li>
 </ul>
-<h1><a class="header" href="#introduction-12" id="introduction-12">Introduction</a></h1>
+<h1><a class="header" href="#introduction-8" id="introduction-8">Introduction</a></h1>
 <p>The public SSL dataset publishes the percentage of page loads Firefox users have performed
 that were conducted over SSL. This dataset is used to produce graphs like
 <a href="https://letsencrypt.org/stats/">Let's Encrypt's</a> to determine SSL adoption on the Web
@@ -6951,7 +6785,7 @@ over time.</p>
 <p>The public SSL dataset is a table where each row is a distinct set of dimensions, with their
 associated SSL statistics. The dimensions are <code>submission_date</code>, <code>os</code>, and <code>country</code>. The
 statistics are <code>reporting_ratio</code>, <code>normalized_pageloads</code>, and <code>ratio</code>.</p>
-<h4><a class="header" href="#background-and-caveats-7" id="background-and-caveats-7">Background and Caveats</a></h4>
+<h4><a class="header" href="#background-and-caveats-5" id="background-and-caveats-5">Background and Caveats</a></h4>
 <ul>
 <li>We're using normalized values in <code>normalized_pageloads</code> to obscure absolute page load counts.</li>
 <li>This is across the entirety of release, not per-version, because we're looking at Web health,
@@ -6961,7 +6795,7 @@ fewer than 5000 page loads is omitted from the dataset.</li>
 <li>This is hopefully just a temporary dataset to stopgap release aggregates going away
 until we can come up with a better way to publicly publish datasets.</li>
 </ul>
-<h4><a class="header" href="#accessing-the-data-15" id="accessing-the-data-15">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-13" id="accessing-the-data-13">Accessing the Data</a></h4>
 <p>For details on accessing the data, please look at
 <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1414839">bug 1414839</a>.</p>
 <h1><a class="header" href="#data-reference-10" id="data-reference-10">Data Reference</a></h1>
@@ -6984,7 +6818,7 @@ let ratioForDateInQuestion = rows
   .filter(row =&gt; row.submission_date == dateInQuestion)
   .reduce((row, acc) =&gt; acc + row.normalized_pageloads * row.ratio, 0);
 </code></pre>
-<h2><a class="header" href="#schema-9" id="schema-9">Schema</a></h2>
+<h2><a class="header" href="#schema-7" id="schema-7">Schema</a></h2>
 <p>The data is output in re:dash API format:</p>
 <pre><code>&quot;query_result&quot;: {
   &quot;retrieved_at&quot;: &lt;timestamp&gt;,
@@ -7022,7 +6856,7 @@ let ratioForDateInQuestion = rows
 <h2><a class="header" href="#public-data-1" id="public-data-1">Public Data</a></h2>
 <p>The data is publicly available on BigQuery: <code>mozilla-public-data.telemetry_derived.ssl_ratios_v1</code>.
 Data can also be accessed through the public HTTP endpoint: <a href="https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/ssl_ratios/v1/files">https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/ssl_ratios/v1/files</a></p>
-<h2><a class="header" href="#code-reference-6" id="code-reference-6">Code Reference</a></h2>
+<h2><a class="header" href="#code-reference-8" id="code-reference-8">Code Reference</a></h2>
 <p>You can find the query that generates the SSL dataset
 <a href="https://sql.telemetry.mozilla.org/queries/49323/source#table">here</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/other/ssl/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#telemetry-aggregates-reference" id="telemetry-aggregates-reference">Telemetry Aggregates Reference</a></h1>
@@ -7046,19 +6880,19 @@ Data can also be accessed through the public HTTP endpoint: <a href="https://pub
 </ul>
 </li>
 </ul>
-<h1><a class="header" href="#introduction-13" id="introduction-13">Introduction</a></h1>
+<h1><a class="header" href="#introduction-9" id="introduction-9">Introduction</a></h1>
 <p>The <code>telemetry_aggregates</code> dataset is a daily aggregation of the pings,
 aggregating the histograms across a set of dimensions.</p>
 <h4><a class="header" href="#rows-and-columns" id="rows-and-columns">Rows and Columns</a></h4>
 <p>There's one column for each of the dimensions and the histogram and each row
 is a distinct set of dimensions, along with their associated histograms.</p>
-<h4><a class="header" href="#accessing-the-data-16" id="accessing-the-data-16">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-14" id="accessing-the-data-14">Accessing the Data</a></h4>
 <p>This dataset is accessible via re:dash by selecting from <code>telemetry_aggregates</code>.</p>
 <p>The data is stored as a parquet table in S3 at the following address.</p>
 <pre><code>s3://telemetry-parquet/aggregates_poc/v1/
 </code></pre>
 <h1><a class="header" href="#data-reference-11" id="data-reference-11">Data Reference</a></h1>
-<h2><a class="header" href="#example-queries-7" id="example-queries-7">Example Queries</a></h2>
+<h2><a class="header" href="#example-queries-5" id="example-queries-5">Example Queries</a></h2>
 <p>Here's an example query that shows the number of pings received per
 <code>submission_date</code> for the dimensions provided.</p>
 <pre><code class="language-sql">SELECT
@@ -7077,7 +6911,7 @@ ORDER BY
     submission_date
 ;
 </code></pre>
-<h2><a class="header" href="#sampling-3" id="sampling-3">Sampling</a></h2>
+<h2><a class="header" href="#sampling-1" id="sampling-1">Sampling</a></h2>
 <h3><a class="header" href="#invalid-pings" id="invalid-pings">Invalid Pings</a></h3>
 <p>We ignore invalid pings in our processing. Invalid pings are defined as those that:</p>
 <ul>
@@ -7092,7 +6926,7 @@ ORDER BY
 <p>The <code>telemetry_aggregates</code> job is run daily, at midnight UTC.
 The job is scheduled on <a href="https://github.com/mozilla/telemetry-airflow">Airflow</a>.
 The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/831fe84a36347f440ede4f5a90e0bf83d4fa1e1e/dags/mozaggregator_parquet.py">here</a></p>
-<h2><a class="header" href="#schema-10" id="schema-10">Schema</a></h2>
+<h2><a class="header" href="#schema-8" id="schema-8">Schema</a></h2>
 <p>The <code>telemetry_aggregates</code> table has a set of dimensions and set of
 aggregates for those dimensions.</p>
 <p>The partitioned dimensions are the following columns. Filtering by one of
@@ -7142,17 +6976,17 @@ or <code>parent</code>.</li>
 </ul>
 </li>
 </ul>
-<h1><a class="header" href="#introduction-14" id="introduction-14">Introduction</a></h1>
+<h1><a class="header" href="#introduction-10" id="introduction-10">Introduction</a></h1>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/update-ping.html">update ping</a>
 is sent from Firefox Desktop when a browser update is ready to be applied and after it was correctly applied.
 It contains the build information and the update blob information, in addition to some information about the
 user environment.</p>
-<h4><a class="header" href="#contents-10" id="contents-10">Contents</a></h4>
+<h4><a class="header" href="#contents-6" id="contents-6">Contents</a></h4>
 <p>The table contains one row for each ping. Each column represents one field from the update ping payload, though only a subset of all fields are included.</p>
-<h4><a class="header" href="#accessing-the-data-17" id="accessing-the-data-17">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-15" id="accessing-the-data-15">Accessing the Data</a></h4>
 <p>Query the <code>telemetry.update</code> view in BigQuery as in the <a href="https://sql.telemetry.mozilla.org/queries/31267#table">example query in re:dash</a>.</p>
 <h1><a class="header" href="#data-reference-12" id="data-reference-12">Data Reference</a></h1>
-<h2><a class="header" href="#schema-11" id="schema-11">Schema</a></h2>
+<h2><a class="header" href="#schema-9" id="schema-9">Schema</a></h2>
 <p>As of 2017-09-07, the current version of the <code>telemetry_update_parquet</code> dataset is <code>v1</code>, and has a schema as follows:</p>
 <pre><code>root
  |-- id: string (nullable = true)
@@ -7274,7 +7108,7 @@ you should understand how to answer questions about
 study enrollment,
 identify telemetry from clients enrolled in an experiment,
 and locate telemetry from add-on studies.</p>
-<h2><a class="header" href="#table-of-contents-10" id="table-of-contents-10">Table of contents</a></h2>
+<h2><a class="header" href="#table-of-contents-11" id="table-of-contents-11">Table of contents</a></h2>
 <ul>
 <li><a href="datasets/shield.html#dashboards">Dashboards</a></li>
 <li><a href="datasets/shield.html#experiment-slugs">Experiment slugs</a></li>
@@ -7331,7 +7165,7 @@ for calculating retention for periods extending beyond
 the end of the experiment.
 Once a client is unenrolled from an experiment,
 subsequent pings will not be captured by the <code>experiments</code> table.</p>
-<h3><a class="header" href="#events" id="events"><code>events</code></a></h3>
+<h3><a class="header" href="#events-1" id="events-1"><code>events</code></a></h3>
 <p>The <a href="datasets/batch_view/events/reference.html"><code>events</code> table</a> includes
 Normandy enrollment and unenrollment events
 for both pref-flip and add-on studies.</p>
@@ -7392,12 +7226,12 @@ for these probes.</p>
 <tr><td>2019-10</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1573840">DNS over HTTPS heuristics</a></td><td>event</td><td><code>doh#evaluate.heuristics</code>, <code>doh#state</code></td><td>https://github.com/mozilla/doh-rollout/blob/6787458a6901ef3b2a8fef86a179899213809534/docs/telemetry.md</td></tr>
 </tbody></table>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/dynamic_telemetry.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#search-data" id="search-data">Search Data</a></h1>
-<h2><a class="header" href="#introduction-15" id="introduction-15">Introduction</a></h2>
+<h2><a class="header" href="#introduction-11" id="introduction-11">Introduction</a></h2>
 <p>This article introduces the datasets we maintain for search analyses:
 <code>search_aggregates</code> and <code>search_clients_daily</code>. After reading this article,
 you should understand the search datasets well enough to produce moderately
 complex analyses.</p>
-<h2><a class="header" href="#table-of-contents-11" id="table-of-contents-11">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-12" id="table-of-contents-12">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/search.html#terminology">Terminology</a>
 <ul>
@@ -7532,7 +7366,7 @@ There is no <code>tagged-*</code> search data available before this.</p>
 </li>
 <li><a href="datasets/search/search_aggregates/reference.html#code-reference">Code Reference</a></li>
 </ul>
-<h1><a class="header" href="#introduction-16" id="introduction-16">Introduction</a></h1>
+<h1><a class="header" href="#introduction-12" id="introduction-12">Introduction</a></h1>
 <p><code>search_aggregates</code> is designed to power high level search dashboards.
 It's quick and easy to query, but the data are coarse.
 In particular, this dataset allows you to segment
@@ -7540,7 +7374,7 @@ by a limited number of client characteristics which are relevant to search marke
 However, it is not possible to normalize by client count.
 If you need fine-grained data, consider using <code>search_clients_daily</code>
 which breaks down search counts by client</p>
-<h2><a class="header" href="#contents-11" id="contents-11">Contents</a></h2>
+<h2><a class="header" href="#contents-7" id="contents-7">Contents</a></h2>
 <p>Each row of <code>search_aggregates</code> contains
 the standard search count aggregations
 for each unique combination of the following columns.
@@ -7564,7 +7398,7 @@ For more details, see the <a href="datasets/search/search_aggregates/../../searc
 #### Further Reading
 -->
 <h1><a class="header" href="#data-reference-14" id="data-reference-14">Data Reference</a></h1>
-<h2><a class="header" href="#example-queries-8" id="example-queries-8">Example Queries</a></h2>
+<h2><a class="header" href="#example-queries-6" id="example-queries-6">Example Queries</a></h2>
 <p><a href="https://sql.telemetry.mozilla.org/queries/51140/source">This query</a>
 calculates daily US searches.
 If you have trouble viewing this query,
@@ -7574,7 +7408,7 @@ For more details see the <a href="datasets/search/search_aggregates/../../search
 <p>This job is
 <a href="https://github.com/mozilla/telemetry-airflow/blob/9af06204f7073d7fd5b0240db9091b57a7454a74/dags/main_summary.py#L597">scheduled on airflow</a>
 to run daily.</p>
-<h2><a class="header" href="#schema-12" id="schema-12">Schema</a></h2>
+<h2><a class="header" href="#schema-10" id="schema-10">Schema</a></h2>
 <p>As of 2019-11-27,
 the current version of <code>search_aggregates</code> is <code>v8</code>,
 and has a schema as follows.
@@ -7604,7 +7438,7 @@ The dataset is backfilled through 2016-03-11</p>
  |-- os_version: string (nullable = true)
  |-- addon_version: string (nullable = true)
 </code></pre>
-<h1><a class="header" href="#code-reference-7" id="code-reference-7">Code Reference</a></h1>
+<h1><a class="header" href="#code-reference-9" id="code-reference-9">Code Reference</a></h1>
 <p>The <code>search_aggregates</code> job is
 <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/search_derived/search_aggregates_v8/query.sql">defined in <code>bigquery-etl</code></a></p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/search/search_aggregates/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#search-clients-daily" id="search-clients-daily">Search Clients Daily</a></h1>
@@ -7624,11 +7458,11 @@ The dataset is backfilled through 2016-03-11</p>
 </li>
 <li><a href="datasets/search/search_clients_daily/reference.html#code-reference">Code Reference</a></li>
 </ul>
-<h1><a class="header" href="#introduction-17" id="introduction-17">Introduction</a></h1>
+<h1><a class="header" href="#introduction-13" id="introduction-13">Introduction</a></h1>
 <p><code>search_clients_daily</code> is designed to enable client-level search analyses.
 Querying this dataset can be slow;
 consider using <code>search_aggregates</code> for coarse analyses.</p>
-<h2><a class="header" href="#contents-12" id="contents-12">Contents</a></h2>
+<h2><a class="header" href="#contents-8" id="contents-8">Contents</a></h2>
 <p><code>search_clients_daily</code> has one row for each unique combination of:
 (<code>client_id</code>, <code>submission_date</code>, <code>engine</code>, <code>source</code>).</p>
 <p>In addition to the standard search count aggregations,
@@ -7644,7 +7478,7 @@ Note that, if there were no such searches in a row's segment
 the column value is <code>null</code>.
 Each of these columns represent different types of searches.
 For more details, see the <a href="datasets/search/search_clients_daily/../../search.html">search data documentation</a></p>
-<h2><a class="header" href="#background-and-caveats-8" id="background-and-caveats-8">Background and Caveats</a></h2>
+<h2><a class="header" href="#background-and-caveats-6" id="background-and-caveats-6">Background and Caveats</a></h2>
 <p><code>search_clients_daily</code> does not include
 (<code>client_id</code> <code>submission_date</code>) pairs
 if we did not receive a ping for that <code>submission_date</code>.</p>
@@ -7658,7 +7492,7 @@ heavily limit the data you read using <code>submission_date</code> or <code>samp
 #### Further Reading
 -->
 <h1><a class="header" href="#data-reference-15" id="data-reference-15">Data Reference</a></h1>
-<h2><a class="header" href="#example-queries-9" id="example-queries-9">Example Queries</a></h2>
+<h2><a class="header" href="#example-queries-7" id="example-queries-7">Example Queries</a></h2>
 <p><a href="https://sql.telemetry.mozilla.org/queries/51141/source">This query</a>
 calculates searches per <code>normalized_channel</code> for US clients on an arbitrary day.
 If you have trouble viewing this query,
@@ -7667,7 +7501,7 @@ For more details see the <a href="datasets/search/search_clients_daily/../../sea
 <h2><a class="header" href="#scheduling-13" id="scheduling-13">Scheduling</a></h2>
 <p>This dataset is scheduled on Airflow
 (<a href="https://github.com/mozilla/telemetry-airflow/blob/9af06204f7073d7fd5b0240db9091b57a7454a74/dags/main_summary.py#L588">source</a>).</p>
-<h2><a class="header" href="#schema-13" id="schema-13">Schema</a></h2>
+<h2><a class="header" href="#schema-11" id="schema-11">Schema</a></h2>
 <p>As of 2019-11-27, the current version of <code>search_clients_daily</code> is <code>v8</code>,
 and has a schema as follows.
 It's backfilled through 2016-03-12</p>
@@ -7718,7 +7552,7 @@ It's backfilled through 2016-03-12</p>
  |    |-- key: string
  |    |-- value: string
 </code></pre>
-<h1><a class="header" href="#code-reference-8" id="code-reference-8">Code Reference</a></h1>
+<h1><a class="header" href="#code-reference-10" id="code-reference-10">Code Reference</a></h1>
 <p>The <code>search_clients_daily</code> job is
 <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/search_derived/search_clients_daily_v8/query.sql">defined in <code>bigquery-etl</code></a></p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/search/search_clients_daily/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#search-clients-last-seen" id="search-clients-last-seen">Search Clients Last Seen</a></h1>
@@ -7741,12 +7575,12 @@ It's backfilled through 2016-03-12</p>
 </li>
 <li><a href="datasets/search/search_clients_last_seen/reference.html#code-reference">Code Reference</a></li>
 </ul>
-<h1><a class="header" href="#introduction-18" id="introduction-18">Introduction</a></h1>
+<h1><a class="header" href="#introduction-14" id="introduction-14">Introduction</a></h1>
 <p><code>search_clients_last_seen</code> is designed for individual search analysis for clients over the past year.
 This can be useful when wondering about client search behavior over the past year.</p>
 <p><strong>NOTE</strong>: <code>search_clients_last_seen</code> is currently a 1% sample, and the first day with a full year of
 search activity is 2020-01-01.</p>
-<h3><a class="header" href="#contents-13" id="contents-13">Contents</a></h3>
+<h3><a class="header" href="#contents-9" id="contents-9">Contents</a></h3>
 <p><code>search_clients_last_seen</code> has just one row per-client, for any client
 who was active over the past year. Here we define active as &quot;sent a main
 ping&quot;; so if they are present that does not mean they searched.</p>
@@ -7798,18 +7632,18 @@ ago for the given activity type.</p>
 completed each month for the past 12 months. This is across calendar months, so the number of
 days are not directly comparable.</p>
 <p>We have the same data for tagged searches, search with ads, and ad clicks.</p>
-<h4><a class="header" href="#background-and-caveats-9" id="background-and-caveats-9">Background and Caveats</a></h4>
+<h4><a class="header" href="#background-and-caveats-7" id="background-and-caveats-7">Background and Caveats</a></h4>
 <p><code>search_clients_last_seen</code> does includes
 (<code>client_id</code> <code>submission_date</code>) pairs
 even if we did not receive a ping for that <code>submission_date</code>.
 Any client who was active over the past year will be included.</p>
-<h4><a class="header" href="#accessing-the-data-18" id="accessing-the-data-18">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-16" id="accessing-the-data-16">Accessing the Data</a></h4>
 <p>Access the data at <code>search.search_clients_last_seen</code>.</p>
 <!--
 #### Further Reading
 -->
 <h1><a class="header" href="#data-reference-16" id="data-reference-16">Data Reference</a></h1>
-<h2><a class="header" href="#example-queries-10" id="example-queries-10">Example Queries</a></h2>
+<h2><a class="header" href="#example-queries-8" id="example-queries-8">Example Queries</a></h2>
 <p><a href="https://sql.telemetry.mozilla.org/queries/70349/source#177176">This retention query</a>
 gives the WoW retention of users in different segments. Similar to GUD, a user is
 considered retained if they do they same activity the next week. Note here the
@@ -7821,7 +7655,7 @@ baseline amount of activity.</p>
 <h2><a class="header" href="#scheduling-14" id="scheduling-14">Scheduling</a></h2>
 <p>This dataset is scheduled on Airflow
 (<a href="https://github.com/mozilla/telemetry-airflow/blob/f6a1e87c727df70aa12d9e37fc0c214922919e65/dags/main_summary.py#L398">source</a>).</p>
-<h2><a class="header" href="#schema-14" id="schema-14">Schema</a></h2>
+<h2><a class="header" href="#schema-12" id="schema-12">Schema</a></h2>
 <p>As of 2020-04-22, the current version of <code>search_clients_last_seee</code> is <code>v1</code>,
 and has a schema as follows.
 It's backfilled through 2020-01-01</p>
@@ -7873,7 +7707,7 @@ It's backfilled through 2020-01-01</p>
     |- days_clicked_ads_bytes: bytes
     |- days_created_profile_bytes: bytes
 </code></pre>
-<h1><a class="header" href="#code-reference-9" id="code-reference-9">Code Reference</a></h1>
+<h1><a class="header" href="#code-reference-11" id="code-reference-11">Code Reference</a></h1>
 <p>The <code>search_clients_last_seen</code> job is
 <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/search_derived/search_clients_last_seen_v1/query.sql">defined in <code>bigquery-etl</code></a></p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/search/search_clients_last_seen/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#other-datasets-1" id="other-datasets-1">Other Datasets</a></h1>
@@ -7894,7 +7728,7 @@ for a description of available fields.</p>
 <li>Use the latest schema version.  e.g. <code>v1</code>.  Browse the <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/master/schemas/eng-workflow/hgpush"><code>hgpush</code> schema directory</a> in the GitHub repo to be sure.</li>
 <li>Change dataset field names from <code>camelCaseNames</code> to <code>under_score_names</code> in STMO. e.g. <code>reviewSystemUsed</code> in the ping schema becomes <code>review_system_used</code> in STMO.</li>
 </ul>
-<h2><a class="header" href="#example-queries-11" id="example-queries-11">Example Queries</a></h2>
+<h2><a class="header" href="#example-queries-9" id="example-queries-9">Example Queries</a></h2>
 <p>Select the number of commits with an 'unknown' review system in the last 7 days:</p>
 <pre><code class="language-sql">select
     count(1)
@@ -7904,7 +7738,7 @@ where
     review_system_used = 'unknown'
     and date_diff('day', from_unixtime(push_date), now()) &lt; 7
 </code></pre>
-<h1><a class="header" href="#code-reference-10" id="code-reference-10">Code Reference</a></h1>
+<h1><a class="header" href="#code-reference-12" id="code-reference-12">Code Reference</a></h1>
 <p>The dataset is populated via the <a href="https://github.com/mozilla-conduit/commit-telemetry-service">Commit Telemetry Service</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/other/hgpush/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#what-is-the-stub-installer-ping" id="what-is-the-stub-installer-ping">What is the Stub Installer ping?</a></h1>
 <p>When the stub installer completes with almost any result, it generates a ping containing some data about the system and about how the installation went. This ping isn't part of Firefox unified telemetry, it's a bespoke system; we can't use the telemetry client code when it isn't installed yet.</p>
@@ -8104,7 +7938,7 @@ numbers vary by product</p>
 <p>The timestamp of when the bug was last modified</p>
 <p><code>creation_ts</code></p>
 <p>The timestamp of when the bug was filed</p>
-<h2><a class="header" href="#example-queries-12" id="example-queries-12">Example Queries</a></h2>
+<h2><a class="header" href="#example-queries-10" id="example-queries-10">Example Queries</a></h2>
 <p>Select the number of bugs in the Core product filed
 in the past 7 days:</p>
 <pre><code class="language-sql">SELECT
@@ -8116,18 +7950,18 @@ WHERE
   AND date_diff(current_date(), date(parse_timestamp('%Y-%m-%d %H:%M:%S', creation_ts)), DAY) &lt;= 7
   AND date(submission_timestamp) &gt;= '2019-01-01' -- required submission date filter
 </code></pre>
-<h1><a class="header" href="#code-reference-11" id="code-reference-11">Code Reference</a></h1>
+<h1><a class="header" href="#code-reference-13" id="code-reference-13">Code Reference</a></h1>
 <p>The dataset is populated via the 
 <a href="https://github.com/mozilla-bteam/bmo/blob/master/Bugzilla/Report/Ping/Simple.pm">simple ping service on Bugzilla</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/other/bmobugs/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#firefox-accounts-data" id="firefox-accounts-data">Firefox Accounts Data</a></h1>
-<h2><a class="header" href="#table-of-contents-12" id="table-of-contents-12">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-13" id="table-of-contents-13">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/fxa.html#introduction">Introduction</a></li>
 <li><a href="datasets/fxa.html#what-is-firefox-accounts">What is Firefox Accounts?</a></li>
 <li><a href="datasets/fxa.html#metrics-background">Metrics Background</a></li>
 <li><a href="datasets/fxa.html#metrics-taxonomies">Metrics Taxonomies</a></li>
 </ul>
-<h2><a class="header" href="#introduction-19" id="introduction-19">Introduction</a></h2>
+<h2><a class="header" href="#introduction-15" id="introduction-15">Introduction</a></h2>
 <p>This article provides an overview of Firefox Accounts metrics: what is measured and how. See the other articles in this chapter for more details about the specific measurements that are available for analysis.</p>
 <h2><a class="header" href="#what-is-firefox-accounts" id="what-is-firefox-accounts">What is Firefox Accounts?</a></h2>
 <p><a href="https://www.mozilla.org/en-US/firefox/accounts/">Firefox Accounts</a> is Mozilla's authentication solution for account-based end-user services and features. At the time of writing, sync is by far the most popular account-relying service. Below is a partial list of current FxA-relying services (by the time you are reading this others will likely have been added; we will endeavor to update the list periodically):</p>
@@ -8195,7 +8029,7 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 </ol>
 <p>It is also possible to query the FxA server logs directly through BigQuery (ask an FxA team member for access), though virtually all analytics-related questions are more easily answered using the data sources described above.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/fxa.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#attribution-of-firefox-accounts" id="attribution-of-firefox-accounts">Attribution of Firefox Accounts</a></h1>
-<h2><a class="header" href="#table-of-contents-13" id="table-of-contents-13">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-14" id="table-of-contents-14">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/fxa_metrics/attribution.html#introduction">Introduction</a></li>
 <li><a href="datasets/fxa_metrics/attribution.html#types-of-attribution">Types of Attribution</a>
@@ -8205,7 +8039,7 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 </ul>
 </li>
 </ul>
-<h2><a class="header" href="#introduction-20" id="introduction-20">Introduction</a></h2>
+<h2><a class="header" href="#introduction-16" id="introduction-16">Introduction</a></h2>
 <p>Users can create or login to an account through an increasingly large number of relying services and entrypoints. This article describes how we attribute authentications to their point of origin, and documents some of the most frequently trafficked entrypoints (it would not be feasible to list them all, but we will try to update this document when there are substantial changes).</p>
 <h2><a class="header" href="#types-of-attribution" id="types-of-attribution">Types of Attribution</a></h2>
 <p>We can attribute accounts to the <strong>service</strong> that they sign up for, as well as the <strong>entrypoint</strong> that they use to begin the authentication flow. Each service typically has many entrypoints; sync, for example, has web-based entrypoints and browser-based entrypoints (see below).</p>
@@ -8247,7 +8081,7 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 </tbody></table>
 <p>Example amplitude charts: <a href="https://analytics.amplitude.com/mozilla-corp/chart/1ush8xd">registrations by <code>entrypoint</code></a>, <a href="https://analytics.amplitude.com/mozilla-corp/chart/y8t2k1z">logins by <code>entrypoint</code></a>, <a href="https://analytics.amplitude.com/mozilla-corp/chart/jjbkusl">registrations by <code>utm_source</code></a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/fxa_metrics/attribution.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#firefox-account-funnels" id="firefox-account-funnels">Firefox Account Funnels</a></h1>
-<h2><a class="header" href="#table-of-contents-14" id="table-of-contents-14">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-15" id="table-of-contents-15">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/fxa_metrics/funnels.html#introduction">Introduction</a></li>
 <li><a href="datasets/fxa_metrics/funnels.html#registration-funnel">Registration Funnel</a></li>
@@ -8276,7 +8110,7 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 </li>
 <li><a href="datasets/fxa_metrics/funnels.html#settings">Settings</a></li>
 </ul>
-<h2><a class="header" href="#introduction-21" id="introduction-21">Introduction</a></h2>
+<h2><a class="header" href="#introduction-17" id="introduction-17">Introduction</a></h2>
 <p>There are two primary &quot;funnels&quot; that users step through when authenticating with FxA. The <strong>registration</strong> funnel reflects the steps required for a <strong>new</strong> FxA user (or more precisely, email address) to create an account. The <strong>login</strong> funnel reflects the steps necessary for an <strong>existing</strong> FxA user to sign into their account.</p>
 <p>We are also in the process of developing funnels for paying subscribers. We will add documentation on that once the work is is closer to complete.</p>
 <h2><a class="header" href="#registration-funnel" id="registration-funnel">Registration Funnel</a></h2>
@@ -8432,12 +8266,12 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 <tr><td>Not Implemented</td><td><code>flow.settings.clients.disconnect.view</code></td><td>User viewed the dialog asking to confirm disconnection of a device.</td></tr>
 </tbody></table>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/fxa_metrics/funnels.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#fxa-email-metrics" id="fxa-email-metrics">FxA Email Metrics</a></h1>
-<h2><a class="header" href="#table-of-contents-15" id="table-of-contents-15">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-16" id="table-of-contents-16">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/fxa_metrics/emails.html#introduction">Introduction</a></li>
 <li><a href="datasets/fxa_metrics/emails.html#email-templates-and-email-types">Email Templates and Email Types</a></li>
 </ul>
-<h2><a class="header" href="#introduction-22" id="introduction-22">Introduction</a></h2>
+<h2><a class="header" href="#introduction-18" id="introduction-18">Introduction</a></h2>
 <p>Users must provide an email address when they sign up for a Firefox Account. Emails are sent to users to confirm authentication, alert them to new sign-ins, and to complete password resets. Users can also opt-in to marketing emails, however metrics for those are not covered in this article.</p>
 <p>Events that we track relating to email:</p>
 <ol>
@@ -9256,7 +9090,7 @@ At present,
 we have not settled the questions of whether and how to split MAU by segment,
 and whether and how to measure MAU for each segment.
 So stick to DAU for now.</p>
-<h3><a class="header" href="#example-queries-13" id="example-queries-13">Example queries</a></h3>
+<h3><a class="header" href="#example-queries-11" id="example-queries-11">Example queries</a></h3>
 <p>DAU for <em>regular users v3</em>:</p>
 <pre><code class="language-lang=sql">SELECT
     submission_date,
@@ -9758,7 +9592,7 @@ current best practices.</strong></em></p>
 </ul>
 </li>
 </ul>
-<h1><a class="header" href="#introduction-23" id="introduction-23">Introduction</a></h1>
+<h1><a class="header" href="#introduction-19" id="introduction-19">Introduction</a></h1>
 <p>The churn dataset tracks the 7-day churn rate of telemetry profiles. This
 dataset is generally used for analyzing cohort churn across segments and time.</p>
 <h4><a class="header" href="#content-4" id="content-4">Content</a></h4>
@@ -9792,7 +9626,7 @@ a property about the cohort such as the country of origin or the binary
 distribution channel. Each group also contains descriptive aggregates of
 engagement. Each metric describes the activity of a cohort such as size and
 overall usage at a given time instance.</p>
-<h4><a class="header" href="#background-and-caveats-10" id="background-and-caveats-10">Background and Caveats</a></h4>
+<h4><a class="header" href="#background-and-caveats-8" id="background-and-caveats-8">Background and Caveats</a></h4>
 <p>The original concept for churn is captured in <a href="https://mana.mozilla.org/wiki/display/FIREFOX/Project%3A+Firefox+Churn+v1.0">this Mana
 page</a>.
 The original derived data-set was created in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1198537">bug
@@ -9826,12 +9660,12 @@ is tractable in STMO with <code>main_summary</code> or <code>clients_daily</code
 </ul>
 </li>
 </ul>
-<h4><a class="header" href="#accessing-the-data-19" id="accessing-the-data-19">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-17" id="accessing-the-data-17">Accessing the Data</a></h4>
 <p><code>churn</code> is available in Re:dash under Athena and Presto. The data is also
 available in parquet for consumption by columnar data engines at
 <code>s3://telemetry-parquet/churn/v3</code>.</p>
 <h1><a class="header" href="#data-reference-19" id="data-reference-19">Data Reference</a></h1>
-<h2><a class="header" href="#example-queries-14" id="example-queries-14">Example Queries</a></h2>
+<h2><a class="header" href="#example-queries-12" id="example-queries-12">Example Queries</a></h2>
 <p>This section walks through a typical query to generate data suitable for
 visualization.</p>
 <table><thead><tr><th>field</th><th>type</th><th>description</th></tr></thead><tbody>
@@ -9926,7 +9760,7 @@ tables. See <a href="https://sql.telemetry.mozilla.org/dashboard/firefox-telemet
 for more examples.</p>
 <h2><a class="header" href="#scheduling-15" id="scheduling-15">Scheduling</a></h2>
 <p>The aggregated churn data is updated weekly on Wednesday.</p>
-<h2><a class="header" href="#schema-15" id="schema-15">Schema</a></h2>
+<h2><a class="header" href="#schema-13" id="schema-13">Schema</a></h2>
 <p>As of 2017-10-15, the current version of <code>churn</code> is <code>v3</code> and has a schema as follows:</p>
 <pre><code>root
  |-- channel: string (nullable = true)
@@ -9951,7 +9785,7 @@ for more examples.</p>
  |-- total_uri_count: long (nullable = true)
  |-- unique_domains_count_per_profile: double (nullable = true)
 </code></pre>
-<h2><a class="header" href="#code-reference-12" id="code-reference-12">Code Reference</a></h2>
+<h2><a class="header" href="#code-reference-14" id="code-reference-14">Code Reference</a></h2>
 <p>The script for generating <code>churn</code> currently lives in
 <a href="https://github.com/mozilla/python_mozetl/tree/9217335652cad46940a51c7c2784cc5c6d3a00f4"><code>mozilla/python_mozetl</code></a>. The job can
 be found in
@@ -9979,7 +9813,6 @@ maintained. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1585539">B
 </ul>
 </li>
 <li><a href="datasets/obsolete/client_count_daily/reference.html#caveats">Caveats</a></li>
-<li><a href="datasets/obsolete/client_count_daily/reference.html#scheduling">Scheduling</a></li>
 <li><a href="datasets/obsolete/client_count_daily/reference.html#schema">Schema</a></li>
 </ul>
 </li>
@@ -9989,7 +9822,7 @@ maintained. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1585539">B
 <a href="datasets/obsolete/client_count_daily//datasets/bigquery/clients_last_seen/reference.html"><code>clients_last_seen</code></a>, see
 <a href="datasets/obsolete/client_count_daily/../../../cookbooks/dau.html">DAU</a> and
 <a href="datasets/obsolete/client_count_daily/../../../cookbooks/active_dau.html">Active DAU</a> for examples.</p>
-<h1><a class="header" href="#introduction-24" id="introduction-24">Introduction</a></h1>
+<h1><a class="header" href="#introduction-20" id="introduction-20">Introduction</a></h1>
 <p>The <code>client_count_daily</code> dataset is useful for estimating user counts over a few
 <a href="https://github.com/mozilla/telemetry-airflow/blob/adfce4a30895faa607ccf586b292b61ad68d8f75/jobs/client_count_daily_view.sh">pre-defined dimensions</a>.</p>
 <p>The <code>client_count_daily</code> dataset is similar to the deprecated
@@ -10003,7 +9836,7 @@ variable, which is an approximation to the exact count.
 The factor columns include <strong>submission</strong> date and the dimensions listed
 <a href="https://github.com/mozilla/telemetry-airflow/blob/adfce4a30895faa607ccf586b292b61ad68d8f75/jobs/client_count_daily_view.sh">here</a>.
 Each row represents one combinations of the factor columns.</p>
-<h4><a class="header" href="#background-and-caveats-11" id="background-and-caveats-11">Background and Caveats</a></h4>
+<h4><a class="header" href="#background-and-caveats-9" id="background-and-caveats-9">Background and Caveats</a></h4>
 <p>It's important to understand that the <code>hll</code> column is <strong>not a standard count</strong>.
 The <code>hll</code> variable avoids double-counting users when aggregating over multiple days.
 The HyperLogLog variable is a far more efficient way to count distinct elements of a set,
@@ -10014,13 +9847,13 @@ The <a href="https://sql.telemetry.mozilla.org/queries/81/source#129">Firefox ER
 is a good example to review.
 Finally, Roberto has a relevant write-up
 <a href="https://ravitillo.wordpress.com/2016/04/12/measuring-product-engagment-at-scale/">here</a>.</p>
-<h4><a class="header" href="#accessing-the-data-20" id="accessing-the-data-20">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-18" id="accessing-the-data-18">Accessing the Data</a></h4>
 <p>The data is available in Re:dash.
 Take a look at this
 <a href="https://sql.telemetry.mozilla.org/queries/81/source#129">example query</a>.</p>
 <h4><a class="header" href="#further-reading-3" id="further-reading-3">Further Reading</a></h4>
 <h1><a class="header" href="#data-reference-20" id="data-reference-20">Data Reference</a></h1>
-<h2><a class="header" href="#example-queries-15" id="example-queries-15">Example Queries</a></h2>
+<h2><a class="header" href="#example-queries-13" id="example-queries-13">Example Queries</a></h2>
 <h4><a class="header" href="#compute-dau-for-non-windows-clients-for-the-last-week-1" id="compute-dau-for-non-windows-clients-for-the-last-week-1">Compute DAU for non-windows clients for the last week</a></h4>
 <pre><code class="language-sql">WITH sample AS (
   SELECT
@@ -10091,11 +9924,7 @@ than a simple counting structure.</p>
 <p>When count is calculated over a column that may change over time, such as
 <code>total_uri_count_threshold</code>, then a client would be counted in every group
 where they appear. Over longer windows, like MAU, this is more likely to occur.</p>
-<h2><a class="header" href="#scheduling-16" id="scheduling-16">Scheduling</a></h2>
-<p>This dataset is updated daily via the
-<a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a> infrastructure.
-The job runs as part of the <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py"><code>main_summary</code> DAG</a>.</p>
-<h2><a class="header" href="#schema-16" id="schema-16">Schema</a></h2>
+<h2><a class="header" href="#schema-14" id="schema-14">Schema</a></h2>
 <p>The data is partitioned by <code>submission_date</code> which is formatted as <code>%Y%m%d</code>,
 like <code>20180130</code>.</p>
 <p>As of 2018-03-15, the current version of the <code>client_count_daily</code> dataset
@@ -10137,14 +9966,14 @@ is <code>v2</code>, and has a schema as follows:</p>
 </ul>
 </li>
 </ul>
-<h1><a class="header" href="#introduction-25" id="introduction-25">Introduction</a></h1>
+<h1><a class="header" href="#introduction-21" id="introduction-21">Introduction</a></h1>
 <p>The <code>crash_aggregates</code> dataset compiles crash statistics over various dimensions for each day.</p>
 <h4><a class="header" href="#rows-and-columns-1" id="rows-and-columns-1">Rows and Columns</a></h4>
 <p>There's one column for each of the stratifying dimensions and the crash statistics.
 Each row is a distinct set of dimensions, along with their associated crash stats.
 Example stratifying dimensions include channel and country,
 example statistics include usage hours and plugin crashes.</p>
-<h4><a class="header" href="#accessing-the-data-21" id="accessing-the-data-21">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-19" id="accessing-the-data-19">Accessing the Data</a></h4>
 <p>This dataset is accessible via re:dash.</p>
 <p>The data is stored as a parquet table in S3 at the following address.</p>
 <pre><code>s3://telemetry-parquet/crash_aggregates/v1/
@@ -10153,7 +9982,7 @@ example statistics include usage hours and plugin crashes.</p>
 <p>The technical documentation for this dataset can be found in the
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/0128b08/docs/CrashAggregateView.md">telemetry-batch-view documentation</a></p>
 <h1><a class="header" href="#data-reference-21" id="data-reference-21">Data Reference</a></h1>
-<h2><a class="header" href="#example-queries-16" id="example-queries-16">Example Queries</a></h2>
+<h2><a class="header" href="#example-queries-14" id="example-queries-14">Example Queries</a></h2>
 <p>Here's an example query that computes crash rates
 for each channel (sorted by number of usage hours):</p>
 <pre><code class="language-sql">SELECT dimensions['channel'] AS channel,
@@ -10187,7 +10016,7 @@ FROM channel_rates
 WHERE usage_kilohours &gt; 100 -- only aggregates that have statistically significant usage hours
 ORDER BY build_id ASC
 </code></pre>
-<h2><a class="header" href="#sampling-4" id="sampling-4">Sampling</a></h2>
+<h2><a class="header" href="#sampling-2" id="sampling-2">Sampling</a></h2>
 <h3><a class="header" href="#invalid-pings-1" id="invalid-pings-1">Invalid Pings</a></h3>
 <p>We ignore invalid pings in our processing. Invalid pings are defined as those that:</p>
 <ul>
@@ -10196,11 +10025,11 @@ ORDER BY build_id ASC
 <li>The <code>docType</code> field is missing or unknown.</li>
 <li>The ping is a main ping without usage hours or a crash ping with usage hours.</li>
 </ul>
-<h2><a class="header" href="#scheduling-17" id="scheduling-17">Scheduling</a></h2>
+<h2><a class="header" href="#scheduling-16" id="scheduling-16">Scheduling</a></h2>
 <p>The <code>crash_aggregates</code> job is run daily, at midnight UTC.
 The job is scheduled on <a href="https://github.com/mozilla/telemetry-airflow">Airflow</a>.
 The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/d50b938/dags/crash_aggregates.py">here</a></p>
-<h2><a class="header" href="#schema-17" id="schema-17">Schema</a></h2>
+<h2><a class="header" href="#schema-15" id="schema-15">Schema</a></h2>
 <p>The <code>crash_aggregates</code> table has 4 commonly-used columns:</p>
 <ul>
 <li><code>submission_date</code> is the date pings were submitted for a particular aggregate.
@@ -10264,14 +10093,14 @@ The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/d50b938/da
 </ul>
 </li>
 </ul>
-<h1><a class="header" href="#introduction-26" id="introduction-26">Introduction</a></h1>
+<h1><a class="header" href="#introduction-22" id="introduction-22">Introduction</a></h1>
 <p><em><strong>As of 2019-11-06, this dataset has been deprecated and is no longer maintained. Please use the <code>telemetry.crash</code> table instead, which is generated directly from live pings and is much more complete. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1572069">Bug 1572069</a> for more information.</strong></em></p>
 <p>The <code>crash_summary</code> table is the a direct representation of a crash ping.</p>
-<h4><a class="header" href="#contents-14" id="contents-14">Contents</a></h4>
+<h4><a class="header" href="#contents-10" id="contents-10">Contents</a></h4>
 <p>The <code>crash_summary</code> table contains one row for each crash ping.
 Each column represents one field from the crash ping payload,
 though only a subset of all crash ping fields are included.</p>
-<h4><a class="header" href="#accessing-the-data-22" id="accessing-the-data-22">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-20" id="accessing-the-data-20">Accessing the Data</a></h4>
 <p>The data is stored as a parquet table in S3 at the following address.</p>
 <pre><code>s3://telemetry-parquet/crash_summary/v1/
 </code></pre>
@@ -10283,7 +10112,7 @@ Here's an <a href="https://sql.telemetry.mozilla.org/queries/4793/source">exampl
 <p>The code responsible for generating this dataset is
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/GRAVEYARD.md#crash-summary">here</a></p>
 <h1><a class="header" href="#data-reference-22" id="data-reference-22">Data Reference</a></h1>
-<h2><a class="header" href="#example-queries-17" id="example-queries-17">Example Queries</a></h2>
+<h2><a class="header" href="#example-queries-15" id="example-queries-15">Example Queries</a></h2>
 <p>Here is an example query to get the total number of main crashes by <code>gfx_compositor</code>:</p>
 <pre><code class="language-sql">select gfx_compositor, count(*)
 from crash_summary
@@ -10291,16 +10120,16 @@ where application = 'Firefox'
 and (payload.processType IS NULL OR payload.processType = 'main')
 group by gfx_compositor
 </code></pre>
-<h2><a class="header" href="#sampling-5" id="sampling-5">Sampling</a></h2>
+<h2><a class="header" href="#sampling-3" id="sampling-3">Sampling</a></h2>
 <p><code>CrashSummary</code> contains one record for every
 <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html">crash ping</a>
 submitted by Firefox.</p>
-<h2><a class="header" href="#scheduling-18" id="scheduling-18">Scheduling</a></h2>
+<h2><a class="header" href="#scheduling-17" id="scheduling-17">Scheduling</a></h2>
 <p>This dataset is updated daily, shortly after midnight UTC.
 The job is scheduled on
 <a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a>.
 The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/166e0a555ee2de0d3c7f0add1011f7771f7ea23d/dags/crash_summary.py">here</a>.</p>
-<h2><a class="header" href="#schema-18" id="schema-18">Schema</a></h2>
+<h2><a class="header" href="#schema-16" id="schema-16">Schema</a></h2>
 <pre><code>root
  |-- client_id: string (nullable = true)
  |-- normalized_channel: string (nullable = true)
@@ -10358,12 +10187,12 @@ please look at the case classes
 </ul>
 </li>
 </ul>
-<h1><a class="header" href="#introduction-27" id="introduction-27">Introduction</a></h1>
+<h1><a class="header" href="#introduction-23" id="introduction-23">Introduction</a></h1>
 <p>The <code>error_aggregates_v2</code> table represents counts of errors counted from main and crash
 pings, aggregated every 5 minutes. It is the dataset backing the main <a href="https://data-missioncontrol.dev.mozaws.net/">mission
 control</a> view, but may also be queried
 independently.</p>
-<h4><a class="header" href="#contents-15" id="contents-15">Contents</a></h4>
+<h4><a class="header" href="#contents-11" id="contents-11">Contents</a></h4>
 <p>The <code>error_aggregates_v2</code> table contains counts of various error measures (for
 example: crashes, &quot;the slow script dialog showing&quot;), aggregated across each
 unique set of dimensions (for example: channel, operating system) every 5
@@ -10376,13 +10205,13 @@ they are participating in. However, they are also aggregated with the rest of th
 these dimensions are null.
 Therefore care must be taken when writing aggregating queries over the whole population - in these cases one needs to
 filter for <code>experiment_id is null</code> and <code>experiment_branch is null</code> in order to not double-count pings from experiments.</p>
-<h4><a class="header" href="#accessing-the-data-23" id="accessing-the-data-23">Accessing the data</a></h4>
+<h4><a class="header" href="#accessing-the-data-21" id="accessing-the-data-21">Accessing the data</a></h4>
 <p>You can access the data via re:dash. Choose <code>Athena</code> and then select the
 <code>telemetry.error_aggregates_v2</code> table.</p>
 <h4><a class="header" href="#further-reading-6" id="further-reading-6">Further Reading</a></h4>
 <p>The code responsible for generating this dataset is <a href="https://github.com/mozilla/telemetry-streaming/blob/master/src/main/scala/com/mozilla/telemetry/streaming/ErrorAggregator.scala">here</a>.</p>
 <h1><a class="header" href="#data-reference-23" id="data-reference-23">Data Reference</a></h1>
-<h2><a class="header" href="#example-queries-18" id="example-queries-18">Example Queries</a></h2>
+<h2><a class="header" href="#example-queries-16" id="example-queries-16">Example Queries</a></h2>
 <p>Getting a large number of different crash measures across many platforms and channels
 (<a href="https://sql.telemetry.mozilla.org/queries/4769/source">view on Re:dash</a>):</p>
 <pre><code class="language-sql">SELECT window_start,
@@ -10420,16 +10249,16 @@ FROM error_aggregates_v2
   AND experiment_branch IS NULL
 GROUP BY window_start
 </code></pre>
-<h2><a class="header" href="#sampling-6" id="sampling-6">Sampling</a></h2>
+<h2><a class="header" href="#sampling-4" id="sampling-4">Sampling</a></h2>
 <h3><a class="header" href="#data-sources-1" id="data-sources-1">Data sources</a></h3>
 <p>The aggregates in this data source are derived from main, crash and core <a href="datasets/obsolete/error_aggregates/../../pings.html">pings</a>:</p>
 <ul>
 <li>crash pings are used to count/gather main and content crash events, all other errors from desktop clients (including all other crashes) are gathered from main pings</li>
 <li>core pings are used to count usage hours, first subsession and unique client counts.</li>
 </ul>
-<h2><a class="header" href="#scheduling-19" id="scheduling-19">Scheduling</a></h2>
+<h2><a class="header" href="#scheduling-18" id="scheduling-18">Scheduling</a></h2>
 <p>The <code>error_aggregates</code> job is run continuously, using the Spark Streaming infrastructure</p>
-<h2><a class="header" href="#schema-19" id="schema-19">Schema</a></h2>
+<h2><a class="header" href="#schema-17" id="schema-17">Schema</a></h2>
 <p>The <code>error_aggregates_v2</code> table has the following columns which define its dimensions:</p>
 <ul>
 <li><code>window_start</code>: beginning of interval when this sample was taken</li>
@@ -10481,7 +10310,6 @@ people are not actively using the browser or their computer is asleep)</li>
 <li><a href="datasets/obsolete/heavy_users/reference.html#data-reference">Data Reference</a>
 <ul>
 <li><a href="datasets/obsolete/heavy_users/reference.html#example-queries">Example Queries</a></li>
-<li><a href="datasets/obsolete/heavy_users/reference.html#scheduling">Scheduling</a></li>
 <li><a href="datasets/obsolete/heavy_users/reference.html#schema">Schema</a></li>
 </ul>
 </li>
@@ -10501,10 +10329,10 @@ in the <code>active_hours_sum</code> field, which has the <code>sum(active_ticks
 FROM
     clients_daily
 </code></pre>
-<h1><a class="header" href="#introduction-28" id="introduction-28">Introduction</a></h1>
+<h1><a class="header" href="#introduction-24" id="introduction-24">Introduction</a></h1>
 <p>The <code>heavy_users</code> table provides information about whether a given <code>client_id</code> is
 considered a &quot;heavy user&quot; on each day (using submission date).</p>
-<h4><a class="header" href="#contents-16" id="contents-16">Contents</a></h4>
+<h4><a class="header" href="#contents-12" id="contents-12">Contents</a></h4>
 <p>The <code>heavy_users</code> table contains one row per client-day, where day is
 <code>submission_date</code>. A client has a row for a specific <code>submission_date</code> if
 they were active at all in the 28 day window ending on that <code>submission_date</code>.</p>
@@ -10513,7 +10341,7 @@ on day N, the sum of their <code>active_ticks</code> is in the 90th percentile (
 above) of all clients during that period. For more analysis on this,
 and a discussion of new profiles, see
 <a href="https://metrics.mozilla.com/protected/sguha/heavy/heavycutoffs5.html">this link</a>.</p>
-<h4><a class="header" href="#background-and-caveats-12" id="background-and-caveats-12">Background and Caveats</a></h4>
+<h4><a class="header" href="#background-and-caveats-10" id="background-and-caveats-10">Background and Caveats</a></h4>
 <ol>
 <li>Data starts at 20170801. There is technically data in the table before
 this, but the <code>heavy_user</code> column is <code>NULL</code> for those dates because it
@@ -10531,7 +10359,7 @@ profile was created are counted as zero <code>active_ticks</code>. Analyses may
 need to use the included <code>profile_creation_date</code> field to take this
 into account.</li>
 </ol>
-<h4><a class="header" href="#accessing-the-data-24" id="accessing-the-data-24">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-22" id="accessing-the-data-22">Accessing the Data</a></h4>
 <p>The data is available both via <code>sql.t.m.o</code> and Spark.</p>
 <p>In Spark:</p>
 <pre><code class="language-python">spark.read.parquet(&quot;s3://telemetry-parquet/heavy_users/v1&quot;)
@@ -10543,18 +10371,13 @@ into account.</li>
 <p>The code responsible for generating this dataset is
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/GRAVEYARD.md#heavy-users">here</a></p>
 <h1><a class="header" href="#data-reference-24" id="data-reference-24">Data Reference</a></h1>
-<h2><a class="header" href="#example-queries-19" id="example-queries-19">Example Queries</a></h2>
+<h2><a class="header" href="#example-queries-17" id="example-queries-17">Example Queries</a></h2>
 <p>Example queries:</p>
 <ul>
 <li><a href="https://sql.telemetry.mozilla.org/queries/47041/source#127382">Join <code>heavy_users</code> with <code>main_summary</code> to get distribution of <code>max_concurrent_tab_count</code> for heavy vs. non-heavy users</a></li>
 <li><a href="https://sql.telemetry.mozilla.org/queries/47044/source#127385">Join <code>heavy_users</code> with <code>longitudinal</code> to get crash rates for heavy vs. non-heavy users</a></li>
 </ul>
-<h2><a class="header" href="#scheduling-20" id="scheduling-20">Scheduling</a></h2>
-<p>This dataset is updated daily via the <a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a> infrastructure.
-The job DAG runs every day after <code>main_summary</code> is complete.
-You can find the job definition
-<a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/main_summary.py#L187-L195">here</a>.</p>
-<h2><a class="header" href="#schema-20" id="schema-20">Schema</a></h2>
+<h2><a class="header" href="#schema-18" id="schema-18">Schema</a></h2>
 <p>As of 2017-10-05, the current version of the <code>heavy_users</code> dataset is <code>v1</code>, and has a schema as follows:</p>
 <pre><code>root
  |-- client_id: string (nullable = true)
@@ -10566,7 +10389,7 @@ You can find the job definition
  |-- prev_year_heavy_user: boolean (nullable = true)
  |-- submission_date_s3: string (nullable = true)
 </code></pre>
-<h1><a class="header" href="#code-reference-13" id="code-reference-13">Code Reference</a></h1>
+<h1><a class="header" href="#code-reference-15" id="code-reference-15">Code Reference</a></h1>
 <p>This dataset is generated by
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/GRAVEYARD.md#heavy-users">telemetry-batch-view</a>.
 Refer to this repository for information on how to run or augment the dataset.</p>
@@ -10593,12 +10416,12 @@ Refer to this repository for information on how to run or augment the dataset.</
 </li>
 <li><a href="datasets/obsolete/longitudinal/reference.html#code-reference">Code Reference</a></li>
 </ul>
-<h1><a class="header" href="#introduction-29" id="introduction-29">Introduction</a></h1>
+<h1><a class="header" href="#introduction-25" id="introduction-25">Introduction</a></h1>
 <p>The <code>longitudinal</code> dataset is a 1% sample of main ping data
 organized so that each row corresponds to a <code>client_id</code>.
 If you're not sure which dataset to use for your analysis,
 this is probably what you want.</p>
-<h4><a class="header" href="#contents-17" id="contents-17">Contents</a></h4>
+<h4><a class="header" href="#contents-13" id="contents-13">Contents</a></h4>
 <p>Each row in the <code>longitudinal</code> dataset represents one <code>client_id</code>,
 which is approximately a user.
 Each column represents a field from the main ping.
@@ -10607,7 +10430,7 @@ Using arrays give you access to the raw data from each ping,
 but can be difficult to work with from SQL.
 Here's a <a href="https://sql.telemetry.mozilla.org/queries/4188#table">query showing some sample data</a>
 to help illustrate.</p>
-<h4><a class="header" href="#background-and-caveats-13" id="background-and-caveats-13">Background and Caveats</a></h4>
+<h4><a class="header" href="#background-and-caveats-11" id="background-and-caveats-11">Background and Caveats</a></h4>
 <p>Think of the longitudinal table as wide and short.
 The dataset contains more columns than <code>main_summary</code>
 and down-samples to 1% of all clients to reduce query computation time and save resources.</p>
@@ -10617,7 +10440,7 @@ and down-samples to 1% of all clients to reduce query computation time and save 
 <li>The longitudinal dataset samples to 1% of all <code>client_id</code>s</li>
 </ul>
 <p>Please note that this dataset only contains release (or opt-out) histograms and scalars.</p>
-<h4><a class="header" href="#accessing-the-data-25" id="accessing-the-data-25">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-23" id="accessing-the-data-23">Accessing the Data</a></h4>
 <p>The <code>longitudinal</code> is available in re:dash,
 though it can be difficult to work with the array values in SQL.
 Take a look at this <a href="https://sql.telemetry.mozilla.org/queries/4189/source">example query</a>.</p>
@@ -10625,7 +10448,7 @@ Take a look at this <a href="https://sql.telemetry.mozilla.org/queries/4189/sour
 <pre><code>s3://telemetry-parquet/longitudinal/
 </code></pre>
 <h1><a class="header" href="#data-reference-25" id="data-reference-25">Data Reference</a></h1>
-<h2><a class="header" href="#sampling-7" id="sampling-7">Sampling</a></h2>
+<h2><a class="header" href="#sampling-5" id="sampling-5">Sampling</a></h2>
 <h3><a class="header" href="#pings-within-last-6-months" id="pings-within-last-6-months">Pings Within Last 6 Months</a></h3>
 <p>The <code>longitudinal</code> filters to <code>main</code> pings from within the last 6 months.</p>
 <h3><a class="header" href="#1-sample" id="1-sample">1% Sample</a></h3>
@@ -10649,13 +10472,13 @@ or clients without a ping in the last 180 days.</li>
 the sample is created by filtering to pings with <code>main_summary.sample_id == 42</code>.
 If you're working with <code>main_summary</code>,
 you can recreate this sample by doing this filter manually.</p>
-<h2><a class="header" href="#scheduling-21" id="scheduling-21">Scheduling</a></h2>
+<h2><a class="header" href="#scheduling-19" id="scheduling-19">Scheduling</a></h2>
 <p>The <code>longitudinal</code> job is run weekly, early on Sunday morning UTC.
 The job is scheduled on <a href="https://github.com/mozilla/telemetry-airflow">Airflow</a>.
 The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/54cffc42a2ca24e46056b7030735f0d4d093c0c7/dags/longitudinal.py">here</a>.</p>
-<h2><a class="header" href="#schema-21" id="schema-21">Schema</a></h2>
+<h2><a class="header" href="#schema-19" id="schema-19">Schema</a></h2>
 <p><code>TODO(harter)</code>: https://bugzilla.mozilla.org/show_bug.cgi?id=1361862</p>
-<h1><a class="header" href="#code-reference-14" id="code-reference-14">Code Reference</a></h1>
+<h1><a class="header" href="#code-reference-16" id="code-reference-16">Code Reference</a></h1>
 <p>This dataset is generated by
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/GRAVEYARD.md#longitudinal">telemetry-batch-view</a>.
 Refer to this repository for information on how to run or augment the dataset.</p>
@@ -10682,10 +10505,10 @@ current best practices.</strong></em></p>
 </li>
 <li><a href="datasets/obsolete/retention/reference.html#code-reference">Code Reference</a></li>
 </ul>
-<h1><a class="header" href="#introduction-30" id="introduction-30">Introduction</a></h1>
+<h1><a class="header" href="#introduction-26" id="introduction-26">Introduction</a></h1>
 <p>The <code>retention</code> table provides client counts relevant to client retention at a
 1-day granularity. The project is tracked in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1381840">Bug 1381840</a></p>
-<h3><a class="header" href="#contents-18" id="contents-18">Contents</a></h3>
+<h3><a class="header" href="#contents-14" id="contents-14">Contents</a></h3>
 <p>The <code>retention</code> table contains a set of attribute columns used to specify a
 cohort of users and a set of metric columns to describe cohort activity. Each
 row contains a permutation of attributes, an approximate set of clients in a
@@ -10698,7 +10521,7 @@ at the expense of precision. For example, calculating a 7-day retention period
 can be obtained by aggregating over a week of retention data using the union
 operation. With SQL primitive, this requires a recalculation of COUNT DISTINCT
 over <code>client_id</code>'s in the 7-day window.</p>
-<h4><a class="header" href="#background-and-caveats-14" id="background-and-caveats-14">Background and Caveats</a></h4>
+<h4><a class="header" href="#background-and-caveats-12" id="background-and-caveats-12">Background and Caveats</a></h4>
 <ol>
 <li>The data starts at 2017-03-06, the <a href="https://wiki.mozilla.org/RapidRelease/Calendar">merge date where Nightly started to
 track Firefox 55 in Mozilla-Central</a>. However, there was
@@ -10717,7 +10540,7 @@ size of the HLL object is 2^13 bits or 1KiB. This maintains about a 1% error
 on average. See <a href="https://github.com/twitter/algebird/blob/develop/algebird-core/src/main/scala/com/twitter/algebird/HyperLogLog.scala#L230-L255">this table from Algebird's HLL implementation</a> for
 more details.</li>
 </ol>
-<h4><a class="header" href="#accessing-the-data-26" id="accessing-the-data-26">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-24" id="accessing-the-data-24">Accessing the Data</a></h4>
 <p>The data is primarily available through <a href="https://sql.telemetry.mozilla.org">Re:dash on STMO</a> via
 the Presto source. This service has been configured to use predefined HLL
 functions.</p>
@@ -10741,14 +10564,14 @@ configured STMO environment, <a href="https://github.com/mozilla/spark-hyperlogl
 <a href="https://github.com/vitillo/presto-hyperloglog"><code>presto-hyperloglog</code></a>.</p>
 <p>Also see the <a href="datasets/obsolete/retention//datasets/obsolete/client_count_daily/reference.html"><code>client_count_daily</code> dataset</a>.</p>
 <h1><a class="header" href="#data-reference-26" id="data-reference-26">Data Reference</a></h1>
-<h2><a class="header" href="#example-queries-20" id="example-queries-20">Example Queries</a></h2>
+<h2><a class="header" href="#example-queries-18" id="example-queries-18">Example Queries</a></h2>
 <p>See the <a href="https://sql.telemetry.mozilla.org/dashboard/firefox-telemetry-retention-dataset-example-usage">Example Usage Dashboard</a> for more usages of datasets of
 the same shape.</p>
-<h2><a class="header" href="#scheduling-22" id="scheduling-22">Scheduling</a></h2>
+<h2><a class="header" href="#scheduling-20" id="scheduling-20">Scheduling</a></h2>
 <p>The job is scheduled on Airflow on a daily basis after <code>main_summary</code> is run
 for the day. This job requires both <code>mozetl</code> and <code>telemetry-batch-view</code> as
 dependencies.</p>
-<h2><a class="header" href="#schema-22" id="schema-22">Schema</a></h2>
+<h2><a class="header" href="#schema-20" id="schema-20">Schema</a></h2>
 <p>As of 2017-10-10, the current version of <code>retention</code> is <code>v1</code> and has a schema
 as follows:</p>
 <pre><code>root
@@ -10771,7 +10594,7 @@ as follows:</p>
  |-- total_uri_count: long (nullable = true)
  |-- unique_domains_count: double (nullable = true)
 </code></pre>
-<h1><a class="header" href="#code-reference-15" id="code-reference-15">Code Reference</a></h1>
+<h1><a class="header" href="#code-reference-17" id="code-reference-17">Code Reference</a></h1>
 <p>The ETL script for processing the data before aggregation is found in
 <a href="https://github.com/mozilla/python_mozetl/blob/ba51f539e5f1218954b7f3536e96f50c57a1b55c/mozetl/engagement/retention/job.py"><code>mozetl.engagement.retention</code></a>. The aggregate job is found in
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/9428b1951545dcd7517a3e72c81e7891a6dfa1fa/src/main/scala/com/mozilla/telemetry/views/RetentionView.scala">telemetry-batch-view</a> as the <code>RetentionView</code>.</p>
@@ -10797,7 +10620,7 @@ EMR. This script can be used to perform backfill.</p>
 </ul>
 </li>
 </ul>
-<h1><a class="header" href="#introduction-31" id="introduction-31">Introduction</a></h1>
+<h1><a class="header" href="#introduction-27" id="introduction-27">Introduction</a></h1>
 <p><em>Note: some of the information in this chapter is a duplication of the info found on <a href="https://wiki.mozilla.org/CloudServices/Sync/ReDash">this</a> wiki page. You can also find more detailed information about the data contained in the sync ping <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/sync-ping.html">here</a></em></p>
 <p><code>sync_summary</code> and <code>sync_flat_summary</code> are the primary datasets that track the health of sync. <code>sync_flat_summary</code> is derived from <code>sync_summary</code> by unpacking/exploding the <code>engines</code> field of the latter, so they ultimately contain the same data (see below).</p>
 <h2><a class="header" href="#which-dataset-should-i-use" id="which-dataset-should-i-use">Which dataset should I use?</a></h2>
@@ -10828,7 +10651,7 @@ EMR. This script can be used to perform backfill.</p>
 <li><code>prefs</code> not all prefs are synced</li>
 <li><code>tabs</code> note that this is not the same as the &quot;send tab&quot; feature, this is the engine that syncs the tabs you have open across your devices (used to populate the synced tabs sidebar). For data on the send-tab feature use the <code>sync_events</code> dataset.</li>
 </ul>
-<h2><a class="header" href="#example-queries-21" id="example-queries-21">Example Queries</a></h2>
+<h2><a class="header" href="#example-queries-19" id="example-queries-19">Example Queries</a></h2>
 <p>See <a href="https://sql.telemetry.mozilla.org/dashboard/sync-leif-status-dashboard-wip">this dashboard</a> to get a general sense of what this dataset is typically used for.</p>
 <p>Here's an example of a query that will calculate the failure and success rates for a subset of engines per day.</p>
 <pre><code class="language-sql">WITH
@@ -10862,9 +10685,9 @@ EMR. This script can be used to perform backfill.</p>
 
 SELECT * FROM rates
 </code></pre>
-<h2><a class="header" href="#sampling-8" id="sampling-8">Sampling</a></h2>
+<h2><a class="header" href="#sampling-6" id="sampling-6">Sampling</a></h2>
 <p>Sadly, these datasets are not sampled. It should be possible to derive a <code>sample_id</code> on <code>uid</code>, however. Someone should do that because querying these datasets for long time horizons is very expensive.</p>
-<h2><a class="header" href="#scheduling-23" id="scheduling-23">Scheduling</a></h2>
+<h2><a class="header" href="#scheduling-21" id="scheduling-21">Scheduling</a></h2>
 <p>This dataset was updated daily, shortly after midnight UTC.
 The job was scheduled on <a href="https://github.com/mozilla/telemetry-airflow">Airflow</a>.
 The DAG was <a href="https://github.com/mozilla/telemetry-airflow/blob/27d34a73db02131a39f469f3950c1da747bc8a95/dags/sync_view.py">here</a>.</p>
