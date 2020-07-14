@@ -10,7 +10,7 @@ These web-based tools do not require specialized technical knowledge (e.g. how t
 
 ### Mozilla Growth & Usage Dashboard (GUD)
 
-The [Mozilla Growth & Usage Dashboard](<(https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/)>) (GUD) is a tool to visualize growth metrics in a standard way across Mozilla’s products. This is the first place you should look if you have a question like "how many people are using X?".
+The [Mozilla Growth & Usage Dashboard](https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/) (GUD) is a tool to visualize growth metrics in a standard way across Mozilla’s products. This is the first place you should look if you have a question like "how many people are using X?".
 
 ### Glean Aggregated Metrics Dashboard (GLAM)
 
