@@ -26,6 +26,8 @@ If you want to use Spark locally (or via an arbitrary GCP instance in the cloud)
 
 ### Using Databricks
 
+> **⚠** Databricks will be available until the end of 2020.
+
 [Databricks Notebooks](https://docs.databricks.com/notebooks/index.html) provide an interactive
 computational environment, similar to Jupyter. If you are a Mozilla employee, you should be able to access it via [`sso.mozilla.com/databricks`](https://sso.mozilla.com/databricks).
 

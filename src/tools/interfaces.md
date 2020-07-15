@@ -37,5 +37,7 @@ be explicitly exposed as an STMO data source. You can learn more about how to us
 
 ### Databricks
 
+> **⚠** Databricks will be available until the end of 2020.
+
 [Databricks](https://dbc-caf9527b-e073.cloud.databricks.com/) offers a notebook interface with shared, always-on, autoscaling cluster (attaching your notebooks to `shared_serverless_python3` is the best way to start).
 Convenient for quick data investigations. Users are advised to join the [`databricks-discuss@mozilla.com`](https://groups.google.com/a/mozilla.com/forum/#!forum/databricks-discuss) group.
