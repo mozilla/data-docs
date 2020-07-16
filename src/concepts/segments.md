@@ -70,7 +70,7 @@ User states are found as columns in the `clients_last_seen` dataset: the user st
 Users can move in or out of specific user states part way through a week or a month.
 This poses a conundrum if we want to plot the WAU or MAU for a user state.
 
-Our convention is to _count the number of distinct users who were active in user state in the period_.
+Our convention is to _count the number of distinct users who were active in the user state in the period_: e.g. "MAU(sent a ping as a regular user v3)".
 So if a user was active as a regular user v3 on e.g. the second day of a 28-day window, then they will contribute to "regular user v3 MAU" regardless of whether they lost their "regular user v3" status at any point in the 28-day window.
 
 Since many user states use the full extent of the `*_bits` column wizardry in `clients_last_seen`, you'll have to query WAU or MAU the old fashioned way:
