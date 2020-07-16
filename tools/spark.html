@@ -193,6 +193,9 @@ run general execution graphs. APIs are available in Python, Scala, R, and Java. 
 </blockquote>
 <p>If you want to use Spark locally (or via an arbitrary GCP instance in the cloud), we recommend the <a href="https://github.com/GoogleCloudPlatform/spark-bigquery-connector">Storage API Connector</a> for accessing BigQuery tables in Spark as it is the most modern and actively developed connector. It works well with the BigQuery client library which is useful if you need to run arbitrary SQL queries and load their results into Spark.</p>
 <h3><a class="header" href="#using-databricks" id="using-databricks">Using Databricks</a></h3>
+<blockquote>
+<p><strong>⚠</strong> Databricks will be available until the end of 2020.</p>
+</blockquote>
 <p><a href="https://docs.databricks.com/notebooks/index.html">Databricks Notebooks</a> provide an interactive
 computational environment, similar to Jupyter. If you are a Mozilla employee, you should be able to access it via <a href="https://sso.mozilla.com/databricks"><code>sso.mozilla.com/databricks</code></a>.</p>
 <p>The <code>shared_serverless_python3</code> cluster is configured with shared default GCP credentials, so you can immediately use the BigQuery client libraries.</p>

@@ -327,6 +327,9 @@ for SQL-based exploratory analysis and visualization / dashboard
 construction. Requires (surprise!) familiarity with SQL, and for your data to
 be explicitly exposed as an STMO data source. You can learn more about how to use it in <a href="tools/./stmo.html">Introduction to STMO</a>. Bugs or feature requests can be reported in Mozilla's <a href="https://github.com/mozilla/redash/issues">issue tracker</a>.</p>
 <h3><a class="header" href="#databricks" id="databricks">Databricks</a></h3>
+<blockquote>
+<p><strong>⚠</strong> Databricks will be available until the end of 2020.</p>
+</blockquote>
 <p><a href="https://dbc-caf9527b-e073.cloud.databricks.com/">Databricks</a> offers a notebook interface with shared, always-on, autoscaling cluster (attaching your notebooks to <code>shared_serverless_python3</code> is the best way to start).
 Convenient for quick data investigations. Users are advised to join the <a href="https://groups.google.com/a/mozilla.com/forum/#!forum/databricks-discuss"><code>databricks-discuss@mozilla.com</code></a> group.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/tools/interfaces.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#introduction-to-metrics" id="introduction-to-metrics">Introduction to Metrics</a></h1>
@@ -1731,6 +1734,9 @@ run general execution graphs. APIs are available in Python, Scala, R, and Java. 
 </blockquote>
 <p>If you want to use Spark locally (or via an arbitrary GCP instance in the cloud), we recommend the <a href="https://github.com/GoogleCloudPlatform/spark-bigquery-connector">Storage API Connector</a> for accessing BigQuery tables in Spark as it is the most modern and actively developed connector. It works well with the BigQuery client library which is useful if you need to run arbitrary SQL queries and load their results into Spark.</p>
 <h3><a class="header" href="#using-databricks" id="using-databricks">Using Databricks</a></h3>
+<blockquote>
+<p><strong>⚠</strong> Databricks will be available until the end of 2020.</p>
+</blockquote>
 <p><a href="https://docs.databricks.com/notebooks/index.html">Databricks Notebooks</a> provide an interactive
 computational environment, similar to Jupyter. If you are a Mozilla employee, you should be able to access it via <a href="https://sso.mozilla.com/databricks"><code>sso.mozilla.com/databricks</code></a>.</p>
 <p>The <code>shared_serverless_python3</code> cluster is configured with shared default GCP credentials, so you can immediately use the BigQuery client libraries.</p>
