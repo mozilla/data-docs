@@ -48,8 +48,6 @@ mdbook-dtmo serve
 The complete documentation for the mdBook toolchain is available online at <https://rust-lang.github.io/mdBook/>.
 If you run into any problems, please [let us know](https://docs.telemetry.mozilla.org/concepts/getting_help.html). We are happy to change the tooling to make it as much fun as possible to write.
 
-This documentation has some automatic checks for spelling and link validity in continuous integration. See the respective sections in the [contributing article](https://docs.telemetry.mozilla.org/meta/contributing.html) for more information.
-
 ### Spell checking
 
 Articles should use proper spelling, and pull requests will be automatically checked for spelling
@@ -78,4 +76,4 @@ To run link checking locally, run the installation steps [described for spell ch
 
 ## Contributing
 
-See [contributing](https://docs.telemetry.mozilla.org/meta/contributing.html) for detailed information on how to make additions or changes to the documentation.
+See [contributing](https://docs.telemetry.mozilla.org/contributing/index.html) for detailed information on .

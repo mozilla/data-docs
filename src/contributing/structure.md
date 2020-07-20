@@ -26,3 +26,6 @@ To this end, the rendered documentation has an order different from the director
     analysis best practice.
 * Cookbooks
 * Reference material - TBD
+
+This document's structure is heavily influenced by
+[Django's Documentation Style Guide](https://docs.djangoproject.com/en/1.11/internals/contributing/writing-documentation/).
