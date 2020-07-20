@@ -130,6 +130,6 @@
 
 ---
 
-* [About this Documentation](meta/index.md)
-  * [Contributing](meta/contributing.md)
-  * [Structure](meta/structure.md)
+* [Contributing](contributing/index.md)
+  * [Style Guide](contributing/style_guide.md)
+  * [Structure](contributing/structure.md)
