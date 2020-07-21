@@ -23,6 +23,8 @@ Especially severe problems with production data are announced on the `fx-data-de
 
 When you start to evaluate trends, be aware of events from the past that may invite comparisons with history. Here are a few to keep in mind:
 
+- **July 20, 2020** - [Glean dropping application lifetime metrics from `metrics` pings][bug1653244].
+  Glean Android bindings from version `v25.0.0` up to and including `v31.4.0` had a bug that would cause metrics with “lifetime: application” to be cleared before they could be collected for metrics pings sent during startup. This can result in application lifetime metrics like experiment information being randomly missing from the data.
 - **April 14, 2020** - [Telemetry edge server rejects pings for an hour][bug1630096].
   Clients generally retry periodically until success is achieved. Therefore, most of these messages were eventually ingested; submission timestamps appear later than normal. A small number of pings are attributed to a later day or were never sent due to the client never being reopened.
 - **February 11, 2020** - Firefox 73 was released and began the start of [4-week release cycles][four_week_cycles]. There was a gradual transition from 7/8 week ones to 4 week ones.
@@ -66,6 +68,7 @@ When you start to evaluate trends, be aware of events from the past that may inv
 [bug1598815]: https://bugzilla.mozilla.org/show_bug.cgi?id=1598815
 [four_week_cycles]: https://docs.google.com/document/d/1oJhnvAOx2c8Mp-Xpk-3j-2d45yu_fghYS2yAbn1aeNY/edit#heading=h.iba82gckexg7
 [bug1630096]: https://bugzilla.mozilla.org/show_bug.cgi?id=1630096
+[bug1653244]: https://bugzilla.mozilla.org/show_bug.cgi?id=1653244
 
 ## Pseudo-replication
 
