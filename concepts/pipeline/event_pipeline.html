@@ -164,26 +164,26 @@ specific path through our data pipeline, which we will detail here.</p>
 <pre class="mermaid">graph TD
 
 subgraph Products
-fx_code(fa:fa-cog Firefox code) --> firefox(fa:fa-firefox Firefox Telemetry)
-fx_extensions(fa:fa-cog Mozilla extensions) --> firefox
-mobile(fa:fa-cog Mobile products) --> mobile_telemetry(fa:fa-firefox Mobile Telemetry)
+fx_code(fa:fa-cog Firefox code) --&gt; firefox(fa:fa-firefox Firefox Telemetry)
+fx_extensions(fa:fa-cog Mozilla extensions) --&gt; firefox
+mobile(fa:fa-cog Mobile products) --&gt; mobile_telemetry(fa:fa-firefox Mobile Telemetry)
 end
 
 subgraph Data Platform
-firefox -.->|main ping, Firefox <62| pipeline((fa:fa-database Firefox Data Pipeline))
-firefox -->|event ping, Firefox 62+| pipeline
-mobile_telemetry --> |mobile events ping| pipeline
-pipeline -->|Firefox <62 events| main_summary[fa:fa-bars main summary table]
-pipeline -->|Firefox 62+ events| events_table[fa:fa-bars events table]
-main_summary --> events_table
-pipeline -->|Mobile events| mobile_events_table[fa:fa-bars mobile events table]
+firefox -.-&gt;|main ping, Firefox &lt;62| pipeline((fa:fa-database Firefox Data Pipeline))
+firefox --&gt;|event ping, Firefox 62+| pipeline
+mobile_telemetry --&gt; |mobile events ping| pipeline
+pipeline --&gt;|Firefox &lt;62 events| main_summary[fa:fa-bars main summary table]
+pipeline --&gt;|Firefox 62+ events| events_table[fa:fa-bars events table]
+main_summary --&gt; events_table
+pipeline --&gt;|Mobile events| mobile_events_table[fa:fa-bars mobile events table]
 end
 
 subgraph Data Tools
-events_table --> redash
-mobile_events_table --> redash
-main_summary --> redash(fa:fa-bar-chart Redash)
-pipeline -->|on request| amplitude(fa:fa-bar-chart Amplitude)
+events_table --&gt; redash
+mobile_events_table --&gt; redash
+main_summary --&gt; redash(fa:fa-bar-chart Redash)
+pipeline --&gt;|on request| amplitude(fa:fa-bar-chart Amplitude)
 end
 
 style fx_code fill:#f94,stroke-width:0px

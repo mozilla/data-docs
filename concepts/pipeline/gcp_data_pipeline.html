@@ -168,17 +168,17 @@ sources.</p>
 <p>The code for the ingestion pipeline lives in the <a href="https://github.com/mozilla/gcp-ingestion"><code>gcp-ingestion</code></a> repository.</p>
 <pre class="mermaid">graph TD
 
-f1(fa:fa-firefox Firefox) -->|HTTP Post| d0(fa:fa-filter Ingestion Edge)
-d0 --> p1(fa:fa-stream Raw Topic)
-p1 --> d1(fa:fa-exchange-alt Landfill Sink)
-d1 --> b1(fa:fa-database Landfill BQ)
-p1 --> d2(fa:fa-exchange-alt Decoder)
-d2 -->|success| p2(fa:fa-stream Decoded Topic)
-d2 -.->|fail| p3(fa:fa-stream Errors Topic)
-p3 --> d4(fa:fa-exchange-alt Errors Sink)
-p2 --> d3(fa:fa-exchange-alt BigQuery Sink)
-d3 --> b2(fa:fa-database Live Tables BQ)
-d4 --> b3(fa:fa-database Error Tables BQ)
+f1(fa:fa-firefox Firefox) --&gt;|HTTP Post| d0(fa:fa-filter Ingestion Edge)
+d0 --&gt; p1(fa:fa-stream Raw Topic)
+p1 --&gt; d1(fa:fa-exchange-alt Landfill Sink)
+d1 --&gt; b1(fa:fa-database Landfill BQ)
+p1 --&gt; d2(fa:fa-exchange-alt Decoder)
+d2 --&gt;|success| p2(fa:fa-stream Decoded Topic)
+d2 -.-&gt;|fail| p3(fa:fa-stream Errors Topic)
+p3 --&gt; d4(fa:fa-exchange-alt Errors Sink)
+p2 --&gt; d3(fa:fa-exchange-alt BigQuery Sink)
+d3 --&gt; b2(fa:fa-database Live Tables BQ)
+d4 --&gt; b3(fa:fa-database Error Tables BQ)
 
 classDef pubsub fill:#eff,stroke:#099;
 classDef exec fill:#efe,stroke:#090;

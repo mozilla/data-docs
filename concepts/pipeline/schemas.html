@@ -183,27 +183,27 @@ ingestion(gcp-ingestion)
 bigquery(BigQuery)
 
 %% Node hyperlinks
-click bigquery "../../cookbooks/bigquery.html"
-click master "https://github.com/mozilla-services/mozilla-pipeline-schemas"
-click schemas "https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/generated-schemas"
-click generator "https://github.com/mozilla/mozilla-schema-generator"
-click transpiler "https://github.com/mozilla/jsonschema-transpiler"
-click probe-info "https://github.com/mozilla/probe-scraper"
-click ingestion "https://mozilla.github.io/gcp-ingestion/ingestion-beam/"
-click airflow "https://github.com/mozilla/telemetry-airflow"
+click bigquery &quot;../../cookbooks/bigquery.html&quot;
+click master &quot;https://github.com/mozilla-services/mozilla-pipeline-schemas&quot;
+click schemas &quot;https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/generated-schemas&quot;
+click generator &quot;https://github.com/mozilla/mozilla-schema-generator&quot;
+click transpiler &quot;https://github.com/mozilla/jsonschema-transpiler&quot;
+click probe-info &quot;https://github.com/mozilla/probe-scraper&quot;
+click ingestion &quot;https://mozilla.github.io/gcp-ingestion/ingestion-beam/&quot;
+click airflow &quot;https://github.com/mozilla/telemetry-airflow&quot;
 
 
 %% Edges
-master --> |git clone| generator
-transpiler --> |used by| generator
-probe-info --> |used by| generator
-generator --> |scheduled by| airflow
-airflow --> |run nightly| schemas
+master --&gt; |git clone| generator
+transpiler --&gt; |used by| generator
+probe-info --&gt; |used by| generator
+generator --&gt; |scheduled by| airflow
+airflow --&gt; |run nightly| schemas
 
-schemas --> |defines table| bigquery
-schemas --> |defines is valid| ingestion
-schemas --> |defines normalization| ingestion
-ingestion --> |inserts into| bigquery
+schemas --&gt; |defines table| bigquery
+schemas --&gt; |defines is valid| ingestion
+schemas --&gt; |defines normalization| ingestion
+ingestion --&gt; |inserts into| bigquery
 </pre>
 <p><strong>Figure</strong>: <em>An overview of generated schemas. Click on a node to navigate to the relevant
 repository or documentation.</em></p>
@@ -212,11 +212,11 @@ repository or documentation.</em></p>
 
 subgraph mozilla-pipeline-schemas
   subgraph origin/master
-    templates -->|cmake| schemas
+    templates --&gt;|cmake| schemas
   end
 
   subgraph origin/generated-schemas
-    schemas -->|mozilla-schema-generator| artifact(schemas)
+    schemas --&gt;|mozilla-schema-generator| artifact(schemas)
   end
 end
 </pre>
@@ -242,15 +242,15 @@ end
 transpiler[jsonschema-transpiler]
 
 %% hyperlinks
-click json "https://json-schema.org/"
-click avro "https://avro.apache.org/docs/current/spec.html"
-click bigquery "https://cloud.google.com/bigquery/docs/schemas"
-click transpiler "https://github.com/mozilla/jsonschema-transpiler"
+click json &quot;https://json-schema.org/&quot;
+click avro &quot;https://avro.apache.org/docs/current/spec.html&quot;
+click bigquery &quot;https://cloud.google.com/bigquery/docs/schemas&quot;
+click transpiler &quot;https://github.com/mozilla/jsonschema-transpiler&quot;
 
 %% edges
-json --> transpiler
-transpiler --> avro
-transpiler --> bigquery
+json --&gt; transpiler
+transpiler --&gt; avro
+transpiler --&gt; bigquery
 </pre>
 <h3><a class="header" href="#mozilla-schema-generator" id="mozilla-schema-generator">Mozilla Schema Generator</a></h3>
 <p>The schema generator will populate schemas with metadata and insert generated sub-schemas at certain paths.
@@ -376,11 +376,11 @@ generator(mozilla-schema-generator)
 
 %%
 
-manual --> |run now| generator
-scheduled --> |run at midnight UTC| generator
+manual --&gt; |run now| generator
+scheduled --&gt; |run at midnight UTC| generator
 
-master -->|git pull| generator
-generator --> |git push| schemas
+master --&gt;|git pull| generator
+generator --&gt; |git push| schemas
 </pre>
 <p>A new push to the <code>generated-schemas</code> branch is made every time the <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/probe_scraper.py"><code>probe-scraper.schema_generator</code></a> task is run by Airflow.
 <code>mozilla-schema-generator</code> runs in a container that commits snapshots of generated schemas to the remote repository.
@@ -401,12 +401,12 @@ subgraph moz-fx-data-shar-nonprod-efed
 end
 status{Deploy prod}
 
-schemas --> |labeled and archived| artifact
-artifact --> |run terraform| bigquery
-bigquery --> |run terraform| views
-views --> |drain and submit| ingestion
+schemas --&gt; |labeled and archived| artifact
+artifact --&gt; |run terraform| bigquery
+bigquery --&gt; |run terraform| views
+views --&gt; |drain and submit| ingestion
 
-ingestion --> status
+ingestion --&gt; status
 </pre>
 <p>Jenkins is used to automate deploys of the pipeline in the <code>nonprod</code> and <code>prod</code> projects.
 Jenkins polls the <code>generated-schemas</code> branch for new commits.

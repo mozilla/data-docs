@@ -166,23 +166,23 @@ to reflect the <a href="gcp_data_pipeline.html">new GCP pipeline</a>.</em></p>
 <p>This post describes the architecture of Mozilla’s data pipeline, which is used to collect Telemetry data from our users and logs from various services. One of the cool perks of working at Mozilla is that most of what we do is out in the open and because of that I can do more than just show you some diagram with arrows of our architecture; I can point you to the code, script &amp; configuration that underlies it!</p>
 <p>To make the examples concrete, the following description is centered around the collection of Firefox Telemetry data. The same tool-chain is used to collect, store and analyze data coming from disparate sources though, such as service logs.</p>
 <pre class="mermaid">graph TD
-  firefox((fa:fa-firefox Firefox))-->|JSON| elb
-  elb[Load Balancer]-->|JSON| nginx
-  nginx-->|JSON| landfill(fa:fa-database S3 Landfill)
-  nginx-->|protobuf| kafka[fa:fa-files-o Kafka]
-  kafka-->|protobuf| cep(Hindsight CEP)
-  kafka-->|protobuf| dwl(Hindsight DWL)
-  cep--> hsui(Hindsight UI)
-  dwl-->|protobuf| datalake(fa:fa-database S3 Data Lake)
-  dwl-->|parquet| datalake
-  datalake-->|parquet| prestodb
-  prestodb-->redash[fa:fa-line-chart Re:dash]
-  datalake-->spark
-  spark-->datalake
-  airflow[fa:fa-clock-o Airflow]-->|Scheduled tasks|spark{fa:fa-star Spark}
-  spark-->|aggregations|rdbms(fa:fa-database PostgreSQL)
-  rdbms-->tmo[fa:fa-bar-chart TMO]
-  rdbms-->cerberus[fa:fa-search-plus Cerberus]
+  firefox((fa:fa-firefox Firefox))--&gt;|JSON| elb
+  elb[Load Balancer]--&gt;|JSON| nginx
+  nginx--&gt;|JSON| landfill(fa:fa-database S3 Landfill)
+  nginx--&gt;|protobuf| kafka[fa:fa-files-o Kafka]
+  kafka--&gt;|protobuf| cep(Hindsight CEP)
+  kafka--&gt;|protobuf| dwl(Hindsight DWL)
+  cep--&gt; hsui(Hindsight UI)
+  dwl--&gt;|protobuf| datalake(fa:fa-database S3 Data Lake)
+  dwl--&gt;|parquet| datalake
+  datalake--&gt;|parquet| prestodb
+  prestodb--&gt;redash[fa:fa-line-chart Re:dash]
+  datalake--&gt;spark
+  spark--&gt;datalake
+  airflow[fa:fa-clock-o Airflow]--&gt;|Scheduled tasks|spark{fa:fa-star Spark}
+  spark--&gt;|aggregations|rdbms(fa:fa-database PostgreSQL)
+  rdbms--&gt;tmo[fa:fa-bar-chart TMO]
+  rdbms--&gt;cerberus[fa:fa-search-plus Cerberus]
 
 
 style firefox fill:#f61
@@ -240,8 +240,8 @@ style cerberus fill:royalblue
 <h1><a class="header" href="#aggregates-dataset" id="aggregates-dataset">Aggregates Dataset</a></h1>
 <pre class="mermaid">graph TD
 %% Data Flow Diagram for mozaggregator/TMO-adjacent services
-firefox((fa:fa-firefox Firefox)) --> |main ping| pipeline
-fennec((fa:fa-firefox Fennec)) --> |saved-session ping| pipeline
+firefox((fa:fa-firefox Firefox)) --&gt; |main ping| pipeline
+fennec((fa:fa-firefox Fennec)) --&gt; |saved-session ping| pipeline
 pipeline((Telemetry Pipeline))
 
 subgraph mozaggregator
@@ -250,29 +250,29 @@ subgraph mozaggregator
   rdbms(fa:fa-database PostgreSQL)
 end
 
-pipeline --> aggregator
-pipeline --> spark{fa:fa-star Spark}
-pipeline --> redash[fa:fa-line-chart Re:dash]
+pipeline --&gt; aggregator
+pipeline --&gt; spark{fa:fa-star Spark}
+pipeline --&gt; redash[fa:fa-line-chart Re:dash]
 
 subgraph telemetry.mozilla.org
-  telemetry.js(telemetry.js) --> dist
-  telemetry.js --> evo
+  telemetry.js(telemetry.js) --&gt; dist
+  telemetry.js --&gt; evo
   orphan[Update Orphaning]
   crashdash[tmo/crashes]
 end
 
-redash --> crashdash
-service --> telemetry.js
-spark --> orphan
+redash --&gt; crashdash
+service --&gt; telemetry.js
+spark --&gt; orphan
 
-telemetry.js --> telemetry-next-node(telemetry-next-node)
+telemetry.js --&gt; telemetry-next-node(telemetry-next-node)
 subgraph alerts.tmo
-  cerberus[fa:fa-search-plus Cerberus] -->medusa
-  medusa --> html
-  medusa --> email
+  cerberus[fa:fa-search-plus Cerberus] --&gt;medusa
+  medusa --&gt; html
+  medusa --&gt; email
 end
 
-telemetry-next-node --> cerberus
+telemetry-next-node --&gt; cerberus
 
 style redash fill:salmon
 style spark fill:darkorange

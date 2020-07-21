@@ -248,15 +248,15 @@ There are multiple ways this date is determined.</p>
 <p>When a profile is created explicitly the profile directory is created and a <code>times.json</code> containing a timestamp of the current time is stored inside that profile directory<sup class="footnote-reference"><a href="#1">1</a></sup>.
 It is read at later times when the profile creation date is used.</p>
 <pre class="mermaid">graph TD
-A[Start Firefox] -->B[Select profile dir, default or defined]
-B --> C{Selected dir exist?}
-C --> |No| D[Create directory]
-C --> |Yes| E[Write times.json]
-D --> E
-E --> F[Show Browser]
-F --> G[ProfileAge.jsm is called]
-G --> J[Read time from times.json]
-J --> S[Return creation date]
+A[Start Firefox] --&gt;B[Select profile dir, default or defined]
+B --&gt; C{Selected dir exist?}
+C --&gt; |No| D[Create directory]
+C --&gt; |Yes| E[Write times.json]
+D --&gt; E
+E --&gt; F[Show Browser]
+F --&gt; G[ProfileAge.jsm is called]
+G --&gt; J[Read time from times.json]
+J --&gt; S[Return creation date]
 </pre>
 <div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
 <p>Relevant parts in the code: <a href="https://searchfox.org/mozilla-central/rev/292d295d6b084b43b70de26a42e68513bb7b36a3/toolkit/xre/nsAppRunner.cpp#2394-2395,2397-2398,2527-2533"><code>nsAppRunner::SelectProfile</code></a> calling <a href="https://searchfox.org/mozilla-central/rev/196560b95f191b48ff7cba7c2ba9237bba6b5b6a/toolkit/profile/nsToolkitProfileService.cpp#789-793"><code>nsToolkitProfileService::CreateProfile</code></a>.</p>
@@ -268,16 +268,16 @@ It will then iterate through all files in the current profile's directory, readi
 The oldest of these timestamps is then assumed to be the profile creation date and written to <code>times.json</code>.
 Subsequent runs of Firefox will then use this date.</p>
 <pre class="mermaid">graph TD
-A[Start Firefox --profile path/to/dir] -->H{path/to/dir exist?}
-H --> |No| K[Create directory]
-K --> F[Show Browser]
-H --> |Yes| F
-F --> O[ProfileAge.jsm is called]
-O --> R{times.json exists?}
-R -->|Yes| Q[Read time from times.json]
-R -->|No| L[Scan profile dir for oldest file, write to times.json]
-L --> S
-Q --> S[Return creation date]
+A[Start Firefox --profile path/to/dir] --&gt;H{path/to/dir exist?}
+H --&gt; |No| K[Create directory]
+K --&gt; F[Show Browser]
+H --&gt; |Yes| F
+F --&gt; O[ProfileAge.jsm is called]
+O --&gt; R{times.json exists?}
+R --&gt;|Yes| Q[Read time from times.json]
+R --&gt;|No| L[Scan profile dir for oldest file, write to times.json]
+L --&gt; S
+Q --&gt; S[Return creation date]
 </pre>
 <div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
 <p>Relevant part in the code: <a href="https://searchfox.org/mozilla-central/rev/292d295d6b084b43b70de26a42e68513bb7b36a3/toolkit/xre/nsAppRunner.cpp#2357-2363"><code>nsAppRunner::SelectProfile</code></a> creating the directory.</p>
