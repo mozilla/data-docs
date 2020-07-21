@@ -366,6 +366,8 @@ Convenient for quick data investigations. Users are advised to join the <a href=
 <h2><a class="header" href="#notable-historic-events" id="notable-historic-events">Notable historic events</a></h2>
 <p>When you start to evaluate trends, be aware of events from the past that may invite comparisons with history. Here are a few to keep in mind:</p>
 <ul>
+<li><strong>July 20, 2020</strong> - <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1653244">Glean dropping application lifetime metrics from <code>metrics</code> pings</a>.
+Glean Android bindings from version <code>v25.0.0</code> up to and including <code>v31.4.0</code> had a bug that would cause metrics with “lifetime: application” to be cleared before they could be collected for metrics pings sent during startup. This can result in application lifetime metrics like experiment information being randomly missing from the data.</li>
 <li><strong>April 14, 2020</strong> - <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1630096">Telemetry edge server rejects pings for an hour</a>.
 Clients generally retry periodically until success is achieved. Therefore, most of these messages were eventually ingested; submission timestamps appear later than normal. A small number of pings are attributed to a later day or were never sent due to the client never being reopened.</li>
 <li><strong>February 11, 2020</strong> - Firefox 73 was released and began the start of <a href="https://docs.google.com/document/d/1oJhnvAOx2c8Mp-Xpk-3j-2d45yu_fghYS2yAbn1aeNY/edit#heading=h.iba82gckexg7">4-week release cycles</a>. There was a gradual transition from 7/8 week ones to 4 week ones.</li>
