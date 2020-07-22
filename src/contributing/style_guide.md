@@ -48,7 +48,7 @@ That said, it can sometimes be useful to provide a general overview of something
 
 Articles which simply link out to other resources are of limited value and tend to go out of date quickly. Instead, consider your motivation for producing the list and think about what your [intended audience](#audience) might need. Concept, reference, or tutorial documentation need not be long to be helpful.
 
-Of course, linking out to other resources as part of other documentation is always ok.
+Of course, linking out to other resources as part of other documentation is always okay.
 
 ## General guidelines
 
@@ -82,4 +82,4 @@ For much more helpful advice on technical writing, you may wish to review the [O
 ## Colophon
 
 You can find more context for these guidelines in
-[this literature review by Ryan Harter](http://blog.harterrt.com/lit-review.html) and [this follow-up on organization and audience by William Lachance](https://wlach.github.io/blog/2020/05/a-principled-reorganization-of-docs-telemetry-mozilla-org/).
+[this literature review](http://blog.harterrt.com/lit-review.html) and [this follow-up on organization and audience](https://wlach.github.io/blog/2020/05/a-principled-reorganization-of-docs-telemetry-mozilla-org/).

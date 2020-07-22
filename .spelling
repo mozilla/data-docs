@@ -94,6 +94,7 @@ DLLs
 DNS
 Dockerfile
 dropdown
+DTMO
 DWL
 DXR
 DynamoDB
@@ -117,6 +118,7 @@ frac
 funnelcake
 GCP
 GCP-GCR
+gcp-ingestion
 GCR
 geo-city
 geo-country
@@ -203,6 +205,7 @@ OKR
 onboarding
 operationalizes
 ORM-like
+OpenStack
 optout
 pageloads
 parquet2hive
