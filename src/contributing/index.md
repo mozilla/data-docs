@@ -15,16 +15,16 @@ If you see an error in the documentation or want to extend a chapter,
 ## Fixing minor problems
 
 For smaller issues (e.g. a typo or other inaccuracy), it is not necessary to file a bug or even
-check out the source. Instead, use the `Edit on GitHub` button, make your changes, and file a pull request entirely from the GitHub interface.
+check out the source. Instead, use the `Edit on GitHub` button on the bottom of your page, make your changes, and file a pull request entirely from the GitHub interface.
 
 ## Building the Documentation
 
 This documentation is stored as markdown in the
-[`firefox-data-docs` repository](https://github.com/mozilla/firefox-data-docs) on GitHub. To contribute, fork the repository, check out your copy, then [see the README](https://github.com/mozilla/firefox-data-docs/blob/master/README.md#building-the-documentation) for up-to-date information on how to build the documentation.
+[`firefox-data-docs` repository](https://github.com/mozilla/firefox-data-docs) on GitHub. To build a local copy, fork the repository, check out your copy, then [see the README](https://github.com/mozilla/firefox-data-docs/blob/master/README.md#building-the-documentation) for up-to-date information on how to build the documentation.
 
 ## Adding a new article
 
-You should try to read the [style guide](./style_guide.md) before adding a new article: it should help you write material that is more useful and fits cohesively into the documentation.
+You should read the [style guide](./style_guide.md) before adding a new article: it will help you write material that is more useful and fits cohesively into the rest of the documentation.
 
 Be sure to link to your new article from `SUMMARY.md`, or mdBook will not render the file.
 
@@ -38,9 +38,8 @@ to check.
 
 ## Review
 
-Once you're happy with your contribution, open a pull request (PR). Try to give your pull request a meaningful commit message
-(see [this article on commit message guidelines](https://chris.beams.io/posts/git-commit/) for some suggestions). If there is a bug associated with your documentation, give your
-pull request a title in the form of `Bug 1234 - <descriptive one-liner>` - that way, the [Bugzilla PR linker](https://github.com/mozilla/github-bugzilla-pr-linker) will pick up the PR and attach it to the bug.
+Once you're happy with your contribution, open a pull request (PR). Give your PR a meaningful commit message
+(see [this article on commit message guidelines](https://chris.beams.io/posts/git-commit/) for some suggestions). If there is a bug associated with your documentation, title it in the form of `Bug 1234 - <descriptive one-liner>` - that way, the [Bugzilla PR linker](https://github.com/mozilla/github-bugzilla-pr-linker) will pick up the PR and attach it to the bug.
 
 After filing your PR, flag the appropriate person for review
 (GitHub will usually provide some suggestions). If you don't have permissions to ask someone for review yourself, see [getting help](../src/concepts/getting_help.md).
@@ -93,4 +92,4 @@ graph LR
 The documentation is hosted on [Github Pages](https://pages.github.com/).
 
 Updates to the documentation are automatically published to
-[`docs.telemetry.mozilla.org`](https://docs.telemetry.mozilla.org) when changes are merged.
+[`docs.telemetry.mozilla.org`](https://docs.telemetry.mozilla.org).

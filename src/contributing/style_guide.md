@@ -16,25 +16,25 @@ The primary audience for DTMO are *data practitioners* at Mozilla. A "data pract
 
 In general, you can assume that readers have at least some technical knowledge. Different articles on DTMO may have different target audiences: when writing a new article, you should consider who you are writing it for and adjust your content appropriately. For example, a new product manager may require more careful hand-holding (and links to relevant concept or reference material) than a data scientist with many years of experience at Mozilla.
 
-Note that "data engineers" (the maintainers of the Mozilla data platform and tools) are explicitly *not* the target audience for DTMO, though they may find some resources here helpful in the course of the work. In general, if something is *only* of interest to a data engineer, it probably belongs elsewhere: see the note below on [implementation-specific articles](#implementation-specific-articles).
+Note that "data engineers" (the maintainers of the Mozilla data platform and tools) are *not* the target audience for DTMO, though they may find some resources here helpful in the course of the work. If something is *only* of interest to a data engineer, it probably belongs elsewhere: see the note below on [implementation-specific articles](#implementation-specific-articles).
 
 ## What to write
 
-In general there are three different types of documentation that are useful as part of a site like DTMO:
+There are three different types of documentation that are useful as part of a site like DTMO:
 
 * Introductory material: Material intended to help people get their bearings with Mozilla's telemetry system. A set of these articles form the [Getting Started](../concepts/getting_started.html) section on this site.
 * Tutorials & Cookbooks: Instructions on how to perform specific tasks using Mozilla's data platform. The focus here is on how to do things, rather than on what they are.
-* Reference: Reference material on either [datasets](../datasets/reference.md) or the [data platform itself](../reference/index.md). The focus is on describing how things work or what these things do, rather than how to use them.
+* Reference: Reference material on either [datasets](../datasets/reference.md) or the [data platform itself](../reference/index.md). The focus is on describing how things work or what they do, rather than how to use them.
 
-In general, the most useful type of documentation for newcomers is usually a cookbook or tutorial (see this great post: [Teach, Don't Tell](https://stevelosh.com/blog/2013/09/teach-dont-tell/)) as they often don't know where to begin. For more advanced users, reference material may be more useful.
+In general, the most useful documentation for newcomers is usually a cookbook or tutorial as [they often don't know where to begin](https://stevelosh.com/blog/2013/09/teach-dont-tell/). For more advanced users, reference material may be more useful.
 
 ## What *not* to write
 
-There are a few types of documentation that are less useful for a general-purpose reference like DTMO.
+There are a few types of documentation that are less appropriate for a general-purpose reference like DTMO.
 
 ### Implementation-specific articles
 
-Any articles that are specific to the implementation of particular data systems or tools should be maintained alongside the system or tool itself. Examples of this might include:
+Any articles that are specific to the implementation of particular data systems or tools should be published alongside the system or tool itself. Examples of this might include:
 
 * Usage guides for command-line tools
 * In-depth documentation on architecture and design choices (beyond a general overview)
@@ -57,7 +57,7 @@ Of course, linking out to other resources as part of other documentation is alwa
 Try to split lines at the end of sentences,
 or use [Semantic Line Breaks](http://rhodesmill.org/brandon/2012/one-sentence-per-line/).
 This makes it easier to reorganize your thoughts later.
-* This documentation is usually read digitally.
+* This documentation is almost always read digitally.
 Keep in mind that people read digital content much differently than other media.
 Specifically, readers are going to skim your writing,
 so make it easy to identify important information.
