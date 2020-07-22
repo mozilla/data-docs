@@ -3,7 +3,7 @@
 A user state is a group of clients who fit a set of criteria at a point in time. 
 The set of criteria itself can also be referred to as a "user state".
 
-In data science these user states would normally be called "segments"; we have been told to avoid that term to avoid confusion with marketing's segments.
+In data science these are normally called "segments"; for Firefox we call them "user states".
 
 Typically you'll use user states to gain more insight into what is going on, by asking 
 "Regarding the thing I'm interested in, 
@@ -64,6 +64,8 @@ be sure to compute users' user states using only
 data collected before the time period you're analyzing their behavior.
 
 User states are found as columns in the `clients_last_seen` dataset: the user state listed for a client on a `submission_date` is valid for that `submission_date` because it is computed only using behavioral data collected _before_ the `submission_date`.
+
+TODO: mention that user states are only really defined on days the user is active
 
 ### WAU and MAU
 
