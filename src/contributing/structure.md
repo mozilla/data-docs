@@ -1,7 +1,6 @@
 # Documentation Structure
 
-The directory structure is meant to feel comfortable for those
-familiar with the data platform:
+The directory structure is meant to feel comfortable for those familiar with the data platform:
 
 ```
 .
@@ -12,20 +11,11 @@ familiar with the data platform:
    |--cookbooks - focused code examples for reference
 ```
 
-The prose documentation is meant to take the reader from beginner to expert.
-To this end, the rendered documentation has an order different from the directory structure:
+This documentation is meant to take the reader from beginner to expert.
 
-* Getting Started: Get some simple analysis completed so the user understands
-  the amount of work involved / what the product feels like
-* Tutorials
-  * Data Tutorials: tutorials meant to give the reader a complete understanding
-    of a specific dataset. Start with a high level overview, then move on to
-    completely document the data including Data source, Sampling, Common Issues,
-    and where the reader can find the code.
-  * Tools tutorials: Tutorials meant to introduce a single data tool or
-    analysis best practice.
-* Cookbooks
-* Reference material - TBD
+* Getting Started: Introduce concepts, and get some simple analysis completed so the user understands the amount of work involved / what the product feels like. Primarily intended for people new to Mozilla's data platform.
+* Tutorials & Cookbooks: Guides on how to perform specific tasks. Intended for all audiences.
+* Reference material: In-depth reference material on metrics, the data platform, and metrics. Intended primarily for more advanced users.
 
 This document's structure is heavily influenced by
 [Django's Documentation Style Guide](https://docs.djangoproject.com/en/1.11/internals/contributing/writing-documentation/).
