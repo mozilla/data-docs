@@ -15,7 +15,7 @@ This documentation is meant to take the reader from beginner to expert.
 
 * Getting Started: Introduce concepts, and get some simple analysis completed so the user understands the amount of work involved / what the product feels like. Primarily intended for people new to Mozilla's data platform.
 * Tutorials & Cookbooks: Guides on how to perform specific tasks. Intended for all audiences.
-* Reference material: In-depth reference material on metrics, the data platform, and metrics. Intended primarily for more advanced users.
+* Reference material: In-depth reference material on metrics and the data platform. Intended primarily for more advanced users.
 
 This document's structure is heavily influenced by
 [Django's Documentation Style Guide](https://docs.djangoproject.com/en/1.11/internals/contributing/writing-documentation/).

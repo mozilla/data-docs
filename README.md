@@ -76,4 +76,4 @@ To run link checking locally, run the installation steps [described for spell ch
 
 ## Contributing
 
-See [contributing](https://docs.telemetry.mozilla.org/contributing/index.html) for detailed information on .
+See [contributing](https://docs.telemetry.mozilla.org/contributing/index.html) for detailed information on making changes to the documentation.

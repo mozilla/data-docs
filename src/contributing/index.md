@@ -15,7 +15,7 @@ If you see an error in the documentation or want to extend a chapter,
 ## Fixing minor problems
 
 For smaller issues (e.g. a typo or other inaccuracy), it is not necessary to file a bug or even
-check out the source. Instead, use the `Edit on GitHub` button on the bottom of your page, make your changes, and file a pull request entirely from the GitHub interface.
+check out the source. Instead, use the `Edit on GitHub` button on the bottom of any page, make your changes, and file a pull request entirely from the GitHub interface.
 
 ## Building the Documentation
 
