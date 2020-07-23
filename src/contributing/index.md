@@ -1,9 +1,9 @@
 # Contributing
 
 Documentation is critical to making a usable data platform.
-When surveying our users,
-their most common complaint has been our lack of documentation.
-It's important that we improve our documentation as often as possible.
+In surveys of users of the Mozilla Data Platform,
+the most common complaint has been lack of documentation.
+It is important to improve the documentation as often and frequently as possible.
 
 <!-- toc -->
 
@@ -14,13 +14,15 @@ If you see an error in the documentation or want to extend a chapter,
 
 ## Fixing minor problems
 
-For smaller issues (e.g. a typo or other inaccuracy), it is not necessary to file a bug or even
-check out the source. Instead, use the `Edit on GitHub` button on the bottom of any page, make your changes, and file a pull request entirely from the GitHub interface.
+For smaller issues (for example, a typo or minor inaccuracy), it is not necessary to file a bug or even
+check out the source. 
+Instead, use the `Edit on GitHub` button on the bottom of any page, make your changes, and file a pull request entirely from the GitHub interface.
 
 ## Building the Documentation
 
-This documentation is stored as markdown in the
-[`firefox-data-docs` repository](https://github.com/mozilla/firefox-data-docs) on GitHub. To build a local copy, fork the repository, check out your copy, then [see the README](https://github.com/mozilla/firefox-data-docs/blob/master/README.md#building-the-documentation) for up-to-date information on how to build the documentation.
+This documentation is stored as [Markdown](https://en.wikipedia.org/wiki/Markdown) in the
+[`firefox-data-docs` repository](https://github.com/mozilla/firefox-data-docs) on GitHub. 
+To build a local copy, fork the repository and check out your copy. Then, [see the README](https://github.com/mozilla/firefox-data-docs/blob/master/README.md#building-the-documentation) for up-to-date information on how to build the documentation.
 
 ## Adding a new article
 
@@ -48,13 +50,13 @@ After filing your PR, flag the appropriate person for review
 
 ### Table of contents
 
-You can put a table of contents in any article by using the
+You can insert a table of contents in any article by using the
 `toc` shorthand. For example:
 
 ```
 # My fine title
 
-This article discusses how to perform action X.
+This article describes how to perform action X.
 
 <!-- toc -->
 
@@ -69,7 +71,7 @@ For an example of what the rendered table of contents looks like, see the beginn
 
 ### Mermaid
 
-You may use [`mermaid.js`](https://mermaidjs.github.io/) diagrams in code blocks:
+You can use [`mermaid.js`](https://mermaidjs.github.io/) diagrams in code blocks. For example:
 
 ~~~md
 ```mermaid
@@ -79,7 +81,7 @@ graph LR
 ```
 ~~~
 
-Which will be rendered as:
+Which is then rendered as:
 
 ```mermaid
 graph LR

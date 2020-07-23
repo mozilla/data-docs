@@ -1,6 +1,6 @@
 # Documentation Structure
 
-The directory structure is meant to feel comfortable for those familiar with the data platform:
+The directory structure should feel comfortable to anyone who is familiar with the data platform:
 
 ```
 .
@@ -13,7 +13,7 @@ The directory structure is meant to feel comfortable for those familiar with the
 
 This documentation is meant to take the reader from beginner to expert.
 
-* Getting Started: Introduce concepts, and get some simple analysis completed so the user understands the amount of work involved / what the product feels like. Primarily intended for people new to Mozilla's data platform.
+* Getting Started: Introduce concepts and provides information on how to perform and complete a simple analysis, so the user understands the amount of work involved and what the data platform feels like. Primarily intended for people new to Mozilla's data platform.
 * Tutorials & Cookbooks: Guides on how to perform specific tasks. Intended for all audiences.
 * Reference material: In-depth reference material on metrics and the data platform. Intended primarily for more advanced users.
 
