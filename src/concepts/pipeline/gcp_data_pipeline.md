@@ -200,7 +200,7 @@ Data analysis is most commonly done using [SQL queries][stmo] or using [Spark].
 [schema transpiler]: https://github.com/mozilla/jsonschema-transpiler
 [schema generator]: https://github.com/mozilla/mozilla-schema-generator
 [probe scraper]: https://github.com/mozilla/probe-scraper
-[table layout]: ../../cookbooks/bigquery.md#table-layout-and-naming
+[table layout]: ../../cookbooks/bigquery/querying.md#table-layout-and-naming
 [sample_id]: ../sample_id.md
 [norm]: ../channels/channel_normalization.md
 [bqe]: https://github.com/mozilla/bigquery-etl
