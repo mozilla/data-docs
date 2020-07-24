@@ -48,8 +48,32 @@ mdbook-dtmo serve
 The complete documentation for the mdBook toolchain is available online at <https://rust-lang.github.io/mdBook/>.
 If you run into any problems, please [let us know](https://docs.telemetry.mozilla.org/concepts/getting_help.html). We are happy to change the tooling to make it as much fun as possible to write.
 
-This documentation has some automatic checks for spelling and link validity in continuous integration. See the respective sections in the [contributing article](https://docs.telemetry.mozilla.org/meta/contributing.html) for more information.
+### Spell checking
+
+Articles should use proper spelling, and pull requests will be automatically checked for spelling
+errors.
+
+Technical articles often contain words that are not recognized by common dictionaries, if this
+happens you may either put specialized terms in `code blocks`, or you may add an exception to
+the `.spelling` file in the code repository.
+
+For things like dataset names or field names, `code blocks` should be preferred. Things like
+project names or common technical terms should be added to the `.spelling` file.
+
+The [markdown-spell-check](https://www.npmjs.com/package/markdown-spellcheck) package checks spelling as part of the build process. To run it locally, install [node.js](https://nodejs.org/en/) (if not already installed) and run `npm install` at the root of the repository. Then run the `scripts/link_check.sh` script.
+
+You may also remove the `--report` parameter to begin an interactive fixing session. In this
+case, it is highly recommended to also add the `--no-suggestions` parameter, which greatly
+speeds things up.
+
+### Link checking
+
+Any web links should be valid. A dead link might not be your fault, but you will earn a lot of good karma by fixing a dead link!
+
+The [markdown-link-check](https://www.npmjs.com/package/markdown-link-check) package checks links as part of the build process. Note that dead links do not fail the build: links often go dead for all sorts of reasons, and making it a required check constantly caused otherwise-fine pull requests to appear broken. Still, you should check the status of this check yourself when submitting a pull request: you can do this by looking at the Travis CI status after submitting it.
+
+To run link checking locally, run the installation steps [described for spell checking](#spell-checking) if you haven't already, then run the `scripts/link_check.sh` script.
 
 ## Contributing
 
-See [contributing](https://docs.telemetry.mozilla.org/meta/contributing.html) for detailed information on how to make additions or changes to the documentation.
+See [contributing](https://docs.telemetry.mozilla.org/contributing/index.html) for detailed information on making changes to the documentation.
