@@ -34,18 +34,5 @@ See the [`clients_daily` reference]( ../datasets/batch_view/clients_daily/refere
 
 See the [`clients_last_seen` reference]( ../datasets/bigquery/clients_last_seen/reference.md) for more information.
 
-### Main Summary
-
-{{#include ../datasets/batch_view/main_summary/intro.md}}
-
-See the [`main_summary` reference]( ../datasets/batch_view/main_summary/reference.md) for more information.
-
-## Other Datasets
-
-### Socorro Crash Reports
-
-{{#include ../datasets/other/socorro_crash/intro.md}}
-
-See the [Socorro Crash Reports reference]( ../datasets/other/socorro_crash/reference.md) for more information.
 
 [main ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html
