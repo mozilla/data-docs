@@ -127,7 +127,7 @@ On the pipeline side, the event data is made available in different datasets:
 
 # Data tooling
 
-The above datasets are all accessible through [Re:dash](../../tools/stmo.md) and [Spark jobs](../../tools/spark.md).
+The above datasets are all accessible through [STMO](../../tools/stmo.md) and [Spark jobs](../../tools/spark.md).
 
 For product analytics based on event data, we have [Amplitude](https://sso.mozilla.com/amplitude)
 (hosted by the IT data team). We can connect our event data sources data to Amplitude.

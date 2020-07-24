@@ -20,7 +20,7 @@ control access to tables and views.
 However, it has changed from using a `YYYYMMDD` string form to a  `DATE` type that uses string literals in the more standards-friendly `YYYY-MM-DD` form.
 - Unqualified queries can become very costly very easily. Restrictions have been placed on large tables to avoid accidental querying "all data for all time". You must use the date partition fields for large tables (like `main_summary` or `clients_daily`).
 - Read the [_Query Optimization Cookbook_](./optimization.md) that includes recommendations on how to reduce cost and improve query performance.
-- re:dash BigQuery data sources have a 10 TB data-scanned limit for each query. [Let us know](../../concepts/getting_help.md) if this becomes an issue.
+- STMO BigQuery data sources have a 10 TB data-scanned limit for each query. [Let us know](../../concepts/getting_help.md) if this becomes an issue.
 - There is not any native map support available in BigQuery. Instead, structs are used with fields [key, value]. Convenience functions are available to access the like key-value maps, as described [below](#accessing-map-like-fields).
 
 ### Projects with BigQuery datasets

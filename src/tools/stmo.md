@@ -1,6 +1,6 @@
 ## Introduction to STMO
 
-[`sql.telemetry.mozilla.org`](https://sql.telemetry.mozilla.org) (STMO) is Mozilla's installation of the [Re:dash](https://redash.io/) data analysis and dashboarding tool. As the name and URL imply, the effective use of this tool requires familiarity with [SQL](https://en.wikipedia.org/wiki/SQL), with which all of the tool's data extraction and analysis are performed.
+[`sql.telemetry.mozilla.org`](https://sql.telemetry.mozilla.org) (STMO) is Mozilla's installation of the [Redash](https://redash.io/) data analysis and dashboarding tool. As the name and URL imply, the effective use of this tool requires familiarity with [SQL](https://en.wikipedia.org/wiki/SQL), with which all of the tool's data extraction and analysis are performed.
 
 Access to STMO is limited to Mozilla employees and designated contributors. For more information, see [gaining access](../concepts/gaining_access.md).
 
@@ -45,8 +45,8 @@ obtained from telemetry pings received from Firefox clients. _BigQuery_
 refers to Google's [BigQuery](https://cloud.google.com/bigquery/) data warehouse.
 
 Other available data sources include _Crash DB_, _Tiles_, _Sync Stats_, _Push_,
-_Test Pilot_, and even a _Re:dash metadata_ which connects to STMO's
-own Re:dash database. If you want to learn more about all available data sets and how
+_Test Pilot_, and even a _Redash metadata_ which connects to STMO's
+own Redash database. If you want to learn more about all available data sets and how
 to locate one that is suited for your development environment, see the [Choosing a
 dataset](../concepts/choosing_a_dataset.md) page. If you have questions regarding data sets or would like to know if specific data is or can be made available
 in STMO, see the [getting help](../concepts/getting_help.md) topic for more information on how to get in touch.
@@ -256,7 +256,7 @@ Some final notes to help you create your dashboards:
   more sophisticated queries and dashboards by browsing and exploring
   the work that has been published by others.
 
-- The [Re:dash help center](https://redash.io/help/) is a useful resource for exploring Re:dash and all its capabilities.
+- The [Redash help center](https://redash.io/help/) is a useful resource for exploring Redash and all its capabilities.
 
 #### Prototyping Queries
 
