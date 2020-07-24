@@ -322,7 +322,7 @@ This issue is being evaluated at this time and is under consideration for gettin
 <p>These tools require more specialized knowledge to use.</p>
 <h3><a class="header" href="#sqltelemetrymozillaorg-stmo" id="sqltelemetrymozillaorg-stmo">sql.telemetry.mozilla.org (STMO)</a></h3>
 <p>The <a href="https://sql.telemetry.mozilla.org"><code>sql.telemetry.mozilla.org</code></a> (STMO) site
-is an instance of the very fine <a href="https://redash.io/">Re:dash</a> software, allowing
+is an instance of the very fine <a href="https://redash.io/">Redash</a> software, allowing
 for SQL-based exploratory analysis and visualization / dashboard
 construction. Requires (surprise!) familiarity with SQL, and for your data to
 be explicitly exposed as an STMO data source. You can learn more about how to use it in <a href="tools/./stmo.html">Introduction to STMO</a>. Bugs or feature requests can be reported in Mozilla's <a href="https://github.com/mozilla/redash/issues">issue tracker</a>.</p>
@@ -660,7 +660,7 @@ made to be:</p>
 If you do need to work with raw ping data, be aware that the volume of data can be high.
 Try to limit the size of your data by controlling the date range, and start off using a sample.</p>
 <h4><a class="header" href="#accessing-the-data" id="accessing-the-data">Accessing the Data</a></h4>
-<p>Ping data lives in BigQuery and is accessible in <a href="https://sql.telemetry.mozilla.org/">re:dash</a>;
+<p>Ping data lives in BigQuery and is accessible in <a href="https://sql.telemetry.mozilla.org/">STMO</a>;
 see the <a href="concepts/../cookbooks/bigquery.html">BigQuery cookbook section</a> for more information.</p>
 <h4><a class="header" href="#further-reading" id="further-reading">Further Reading</a></h4>
 <p>You can find <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/index.html">the complete ping documentation</a>.
@@ -719,8 +719,8 @@ because a given <code>client_id</code> will only be in one group per <code>submi
 if MAU were calculated by <code>country</code> and <code>channel</code>, then the sum of the MAU for
 each <code>country</code> would be the same as if MAU were calculated only by <code>channel</code>.</p>
 <h4><a class="header" href="#accessing-the-data-1" id="accessing-the-data-1">Accessing the Data</a></h4>
-<p>The data is available in Re:dash and BigQuery. Take a look at this full running
-<a href="https://sql.telemetry.mozilla.org/queries/62029/source#159510">example query in Re:dash</a>.</p>
+<p>The data is available in STMO and BigQuery. Take a look at this full running
+<a href="https://sql.telemetry.mozilla.org/queries/62029/source#159510">example query in STMO</a>.</p>
 <h2><a class="header" href="#main_summary" id="main_summary"><code>main_summary</code></a></h2>
 <p>{{#include ../datasets/batch_view/main_summary/intro.md}}</p>
 <h2><a class="header" href="#first_shutdown_summary" id="first_shutdown_summary"><code>first_shutdown_summary</code></a></h2>
@@ -751,7 +751,7 @@ is a good example to review.
 Finally, Roberto has a relevant write-up
 <a href="https://ravitillo.wordpress.com/2016/04/12/measuring-product-engagment-at-scale/">here</a>.</p>
 <h4><a class="header" href="#accessing-the-data-2" id="accessing-the-data-2">Accessing the Data</a></h4>
-<p>The data is available in Re:dash.
+<p>The data is available in STMO.
 Take a look at this
 <a href="https://sql.telemetry.mozilla.org/queries/81/source#129">example query</a>.</p>
 <h4><a class="header" href="#further-reading-1" id="further-reading-1">Further Reading</a></h4>
@@ -1033,7 +1033,7 @@ ORDER BY 1
 <li>Definitions for both Mobile and Desktop, if applicable.</li>
 <li>What is the easiest way to calculate this metric? E.g. MAU over <code>clients_last_seen</code>.</li>
 <li>At least one working definition</li>
-<li>Link to a scheduled re:dash query (link with <code>stmocli</code>?)</li>
+<li>Link to a scheduled Redash query (link with <code>stmocli</code>?)</li>
 <li>Possibly an API-linked graph from STMO</li>
 <li>If it’s non-obvious, examples for how to stratify. E.g. calculating MAU from <code>clients_daily</code></li>
 <li>Common Issues: Failures and Gotchas</li>
@@ -1341,7 +1341,7 @@ control access to tables and views.</p>
 However, it has changed from using a <code>YYYYMMDD</code> string form to a  <code>DATE</code> type that uses string literals in the more standards-friendly <code>YYYY-MM-DD</code> form.</li>
 <li>Unqualified queries can become very costly very easily. Restrictions have been placed on large tables to avoid accidental querying &quot;all data for all time&quot;. You must use the date partition fields for large tables (like <code>main_summary</code> or <code>clients_daily</code>).</li>
 <li>Read the <a href="cookbooks/bigquery/./optimization.html"><em>Query Optimization Cookbook</em></a> that includes recommendations on how to reduce cost and improve query performance.</li>
-<li>re:dash BigQuery data sources have a 10 TB data-scanned limit for each query. <a href="cookbooks/bigquery/../../concepts/getting_help.html">Let us know</a> if this becomes an issue.</li>
+<li>STMO BigQuery data sources have a 10 TB data-scanned limit for each query. <a href="cookbooks/bigquery/../../concepts/getting_help.html">Let us know</a> if this becomes an issue.</li>
 <li>There is not any native map support available in BigQuery. Instead, structs are used with fields [key, value]. Convenience functions are available to access the like key-value maps, as described <a href="cookbooks/bigquery/querying.html#accessing-map-like-fields">below</a>.</li>
 </ul>
 <h3><a class="header" href="#projects-with-bigquery-datasets" id="projects-with-bigquery-datasets">Projects with BigQuery datasets</a></h3>
@@ -1835,7 +1835,7 @@ rows = query_job.result().to_dataframe()
 or to <a href="tools/../cookbooks/bigquery/querying.html#writing-results-to-gcs-object-store">Google Cloud Storage</a>.</p>
 <p>You can also save data to the <a href="https://docs.databricks.com/user-guide/databricks-file-system.html#dbfs">Databricks Filesystem</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/tools/spark.md">Edit this file on GitHub.</a></footer><h2><a class="header" href="#introduction-to-stmo" id="introduction-to-stmo">Introduction to STMO</a></h2>
-<p><a href="https://sql.telemetry.mozilla.org"><code>sql.telemetry.mozilla.org</code></a> (STMO) is Mozilla's installation of the <a href="https://redash.io/">Re:dash</a> data analysis and dashboarding tool. As the name and URL imply, the effective use of this tool requires familiarity with <a href="https://en.wikipedia.org/wiki/SQL">SQL</a>, with which all of the tool's data extraction and analysis are performed.</p>
+<p><a href="https://sql.telemetry.mozilla.org"><code>sql.telemetry.mozilla.org</code></a> (STMO) is Mozilla's installation of the <a href="https://redash.io/">Redash</a> data analysis and dashboarding tool. As the name and URL imply, the effective use of this tool requires familiarity with <a href="https://en.wikipedia.org/wiki/SQL">SQL</a>, with which all of the tool's data extraction and analysis are performed.</p>
 <p>Access to STMO is limited to Mozilla employees and designated contributors. For more information, see <a href="tools/../concepts/gaining_access.html">gaining access</a>.</p>
 <h2><a class="header" href="#stmo-concepts" id="stmo-concepts">STMO Concepts</a></h2>
 <p>You need to use the following building blocks from which analyses in STMO are constructed:</p>
@@ -1867,8 +1867,8 @@ called <em>Telemetry (BigQuery)</em>, which contains most of the data that is
 obtained from telemetry pings received from Firefox clients. <em>BigQuery</em>
 refers to Google's <a href="https://cloud.google.com/bigquery/">BigQuery</a> data warehouse.</p>
 <p>Other available data sources include <em>Crash DB</em>, <em>Tiles</em>, <em>Sync Stats</em>, <em>Push</em>,
-<em>Test Pilot</em>, and even a <em>Re:dash metadata</em> which connects to STMO's
-own Re:dash database. If you want to learn more about all available data sets and how
+<em>Test Pilot</em>, and even a <em>Redash metadata</em> which connects to STMO's
+own Redash database. If you want to learn more about all available data sets and how
 to locate one that is suited for your development environment, see the <a href="tools/../concepts/choosing_a_dataset.html">Choosing a
 dataset</a> page. If you have questions regarding data sets or would like to know if specific data is or can be made available
 in STMO, see the <a href="tools/../concepts/getting_help.html">getting help</a> topic for more information on how to get in touch.</p>
@@ -2043,7 +2043,7 @@ more sophisticated queries and dashboards by browsing and exploring
 the work that has been published by others.</p>
 </li>
 <li>
-<p>The <a href="https://redash.io/help/">Re:dash help center</a> is a useful resource for exploring Re:dash and all its capabilities.</p>
+<p>The <a href="https://redash.io/help/">Redash help center</a> is a useful resource for exploring Redash and all its capabilities.</p>
 </li>
 </ul>
 <h4><a class="header" href="#prototyping-queries" id="prototyping-queries">Prototyping Queries</a></h4>
@@ -4976,7 +4976,7 @@ its event payload for Firefox versions before 62.</li>
 <li><code>focus_events_longitudinal</code> currently contains events from Firefox Focus.</li>
 </ul>
 <h1><a class="header" href="#data-tooling" id="data-tooling">Data tooling</a></h1>
-<p>The above datasets are all accessible through <a href="concepts/pipeline/../../tools/stmo.html">Re:dash</a> and <a href="concepts/pipeline/../../tools/spark.html">Spark jobs</a>.</p>
+<p>The above datasets are all accessible through <a href="concepts/pipeline/../../tools/stmo.html">STMO</a> and <a href="concepts/pipeline/../../tools/spark.html">Spark jobs</a>.</p>
 <p>For product analytics based on event data, we have <a href="https://sso.mozilla.com/amplitude">Amplitude</a>
 (hosted by the IT data team). We can connect our event data sources data to Amplitude.
 We have an active connector to Amplitude for mobile events, which can push event data over
@@ -6375,8 +6375,8 @@ print(&quot;Client ID {} =&gt; Sample ID {}&quot;.format(clientid, sampleid))
 <tr><td><a href="https://debug-ping-preview.firebaseapp.com">Glean Debug View</a></td><td>Tag and view Glean submissions with low latency</td></tr>
 <tr><td><a href="https://github.com/mozilla/cerberus">Cerberus</a> &amp; <a href="https://github.com/mozilla/medusa">Medusa</a></td><td>Automatic alert system for telemetry aggregates</td></tr>
 <tr><td><a href="https://github.com/mozilla/missioncontrol">Mission Control</a></td><td>Low latency dashboard for stability and health metrics</td></tr>
-<tr><td><a href="https://github.com/mozilla/redash">Re:dash</a></td><td>Mozilla's fork of the <a href="https://sql.telemetry.mozilla.org">data query / visualization system</a></td></tr>
-<tr><td><a href="https://github.com/mozilla/redash-stmo"><code>redash-stmo</code></a></td><td>Mozilla's extensions to Re:dash</td></tr>
+<tr><td><a href="https://github.com/mozilla/redash">Redash</a></td><td>Mozilla's fork of the <a href="https://sql.telemetry.mozilla.org">data query / visualization system</a></td></tr>
+<tr><td><a href="https://github.com/mozilla/redash-stmo"><code>redash-stmo</code></a></td><td>Mozilla's extensions to Redash</td></tr>
 <tr><td><a href="https://github.com/mozilla/taar">TAAR</a></td><td>Telemetry-aware addon recommender</td></tr>
 <tr><td><a href="https://github.com/mozilla/ensemble">Ensemble</a></td><td>A minimalist platform for publishing data</td></tr>
 <tr><td><a href="https://github.com/mozilla/firefox-hardware-report">Hardware Report</a></td><td>Firefox Hardware Report, <a href="https://data.firefox.com/dashboard/hardware">available here</a></td></tr>
@@ -6385,7 +6385,7 @@ print(&quot;Client ID {} =&gt; Sample ID {}&quot;.format(clientid, sampleid))
 <tr><td><a href="https://github.com/mozilla/probe-scraper">probe-scraper</a></td><td>Scrape and publish Telemetry probe data from Firefox</td></tr>
 <tr><td><a href="https://github.com/mozilla/firefox-test-tube">test-tube</a></td><td>Compare data across branches in experiments</td></tr>
 <tr><td><a href="https://github.com/mozilla/experimenter">experimenter</a></td><td>A web application for managing experiments</td></tr>
-<tr><td><a href="https://github.com/mozilla/stmoab">St. Moab</a></td><td>Automatically generate Re:dash dashboard for A/B experiments</td></tr>
+<tr><td><a href="https://github.com/mozilla/stmoab">St. Moab</a></td><td>Automatically generate Redash dashboard for A/B experiments</td></tr>
 <tr><td><a href="http://iodide.telemetry.mozilla.org/">Iodide</a> (<a href="https://github.com/iodide-project/iodide">code</a>)</td><td>Literate scientific computing and communication for the web</td></tr>
 </tbody></table>
 <h2><a class="header" href="#legacy-projects" id="legacy-projects">Legacy projects</a></h2>
@@ -6552,7 +6552,7 @@ made to be:</p>
 If you do need to work with raw ping data, be aware that the volume of data can be high.
 Try to limit the size of your data by controlling the date range, and start off using a sample.</p>
 <h4><a class="header" href="#accessing-the-data-4" id="accessing-the-data-4">Accessing the Data</a></h4>
-<p>Ping data lives in BigQuery and is accessible in <a href="https://sql.telemetry.mozilla.org/">re:dash</a>;
+<p>Ping data lives in BigQuery and is accessible in <a href="https://sql.telemetry.mozilla.org/">STMO</a>;
 see the <a href="datasets/../cookbooks/bigquery.html">BigQuery cookbook section</a> for more information.</p>
 <h4><a class="header" href="#further-reading-2" id="further-reading-2">Further Reading</a></h4>
 <p>You can find <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/index.html">the complete ping documentation</a>.
@@ -6768,7 +6768,7 @@ The DAG defined in <a href="https://github.com/mozilla/telemetry-airflow/blob/ma
 <p>Many questions about add-ons are of the form: &quot;How many users have add-on A installed?&quot; or &quot;Are users with add-on Z more active than users with add-on Y?&quot; This dataset is aimed at answering these type of questions without having to do cumbersome joins or filters. </p>
 <p>This dataset also has detailed search aggregates by each add-on, broken out by our major search engines (<code>google</code>, <code>bing</code>, <code>ddg</code>, <code>amazon</code>, <code>yandex</code>, <code>other</code>), along with total aggregates (<code>total</code>). This allows us to identify strange search patterns for add-ons who change a user's search settings on their behalf, often siphoning away SAP searches and Mozilla revenue (see the second example query below).</p>
 <h4><a class="header" href="#accessing-the-data-5" id="accessing-the-data-5">Accessing the Data</a></h4>
-<p>The <code>addons_daily</code> table is accessible through re:dash using the
+<p>The <code>addons_daily</code> table is accessible through STMO using the
 <code>Telemetry (BigQuery)</code> data source.</p>
 <p>Here's an <a href="https://sql.telemetry.mozilla.org/queries/71007/source">example query</a>.</p>
 <h1><a class="header" href="#data-reference-2" id="data-reference-2">Data Reference</a></h1>
@@ -6899,7 +6899,7 @@ It is joined to <code>clients_daily</code> using <code>client_id</code> and <cod
 <p>Most Firefox surveys are point-in-time without longitudinal insights.
 The DAS is completed by ~300 Firefox users every day, allowing us to measure long term attitudinal trends combined with users' corresponding Telemetry attributes.</p>
 <h4><a class="header" href="#accessing-the-data-6" id="accessing-the-data-6">Accessing the Data</a></h4>
-<p>The <code>attitudes_daily</code> table is accessible through re:dash using the
+<p>The <code>attitudes_daily</code> table is accessible through STMO using the
 <code>Telemetry (BigQuery)</code> data source.
 The full table name is <code>moz-fx-data-shared-prod.telemetry.attitudes_daily</code>.</p>
 <p>Here's an <a href="https://sql.telemetry.mozilla.org/queries/63937/source#163424">example query</a>.</p>
@@ -6963,7 +6963,7 @@ characteristics X, Y, and Z do during the period S to E?&quot; The
 the table is a (<code>client_id</code>, <code>submission_date</code>) and contains a
 number of aggregates about that day's activity.</p>
 <h2><a class="header" href="#accessing-the-data-7" id="accessing-the-data-7">Accessing the Data</a></h2>
-<p>The <code>clients_daily</code> table is accessible through re:dash using the
+<p>The <code>clients_daily</code> table is accessible through STMO using the
 <code>Telemetry (BigQuery)</code> data source.</p>
 <h2><a class="header" href="#data-reference-4" id="data-reference-4">Data Reference</a></h2>
 <h3><a class="header" href="#example-queries-3" id="example-queries-3">Example Queries</a></h3>
@@ -7079,8 +7079,8 @@ because a given <code>client_id</code> will only be in one group per <code>submi
 if MAU were calculated by <code>country</code> and <code>channel</code>, then the sum of the MAU for
 each <code>country</code> would be the same as if MAU were calculated only by <code>channel</code>.</p>
 <h4><a class="header" href="#accessing-the-data-8" id="accessing-the-data-8">Accessing the Data</a></h4>
-<p>The data is available in Re:dash and BigQuery. Take a look at this full running
-<a href="https://sql.telemetry.mozilla.org/queries/62029/source#159510">example query in Re:dash</a>.</p>
+<p>The data is available in STMO and BigQuery. Take a look at this full running
+<a href="https://sql.telemetry.mozilla.org/queries/62029/source#159510">example query in STMO</a>.</p>
 <h1><a class="header" href="#data-reference-5" id="data-reference-5">Data Reference</a></h1>
 <h2><a class="header" href="#example-queries-4" id="example-queries-4">Example Queries</a></h2>
 <h4><a class="header" href="#compute-dau-for-non-windows-clients-for-the-last-week" id="compute-dau-for-non-windows-clients-for-the-last-week">Compute DAU for non-windows clients for the last week</a></h4>
@@ -7402,7 +7402,7 @@ limit to a short submission date range.</p>
 <li><a href="datasets/batch_view/main_summary/reference.html#code-reference">Code Reference</a></li>
 </ul>
 <h2><a class="header" href="#accessing-the-data-9" id="accessing-the-data-9">Accessing the Data</a></h2>
-<p>The <code>main_summary</code> table is accessible through re:dash.
+<p>The <code>main_summary</code> table is accessible through STMO.
 Here's an <a href="https://sql.telemetry.mozilla.org/queries/4201/source">example query</a>.</p>
 <h2><a class="header" href="#data-reference-8" id="data-reference-8">Data Reference</a></h2>
 <h3><a class="header" href="#example-queries-5" id="example-queries-5">Example Queries</a></h3>
@@ -7613,7 +7613,7 @@ let ratioForDateInQuestion = rows
   .reduce((row, acc) =&gt; acc + row.normalized_pageloads * row.ratio, 0);
 </code></pre>
 <h2><a class="header" href="#schema-7" id="schema-7">Schema</a></h2>
-<p>The data is output in re:dash API format:</p>
+<p>The data is output in STMO API format:</p>
 <pre><code>&quot;query_result&quot;: {
   &quot;retrieved_at&quot;: &lt;timestamp&gt;,
   &quot;query_hash&quot;: &lt;hash&gt;,
@@ -7681,7 +7681,7 @@ aggregating the histograms across a set of dimensions.</p>
 <p>There's one column for each of the dimensions and the histogram and each row
 is a distinct set of dimensions, along with their associated histograms.</p>
 <h4><a class="header" href="#accessing-the-data-12" id="accessing-the-data-12">Accessing the Data</a></h4>
-<p>This dataset is accessible via re:dash by selecting from <code>telemetry_aggregates</code>.</p>
+<p>This dataset is accessible via STMO by selecting from <code>telemetry_aggregates</code>.</p>
 <p>The data is stored as a parquet table in S3 at the following address.</p>
 <pre><code>s3://telemetry-parquet/aggregates_poc/v1/
 </code></pre>
@@ -8198,7 +8198,7 @@ if we did not receive a ping for that <code>submission_date</code>.</p>
 This ensures users who never search are included in this dataset.</p>
 <p>This dataset is large.
 Consider using Spark on <a href="https://dbc-caf9527b-e073.cloud.databricks.com">Databricks</a>.
-If you're querying this dataset from re:dash,
+If you're querying this dataset from STMO,
 heavily limit the data you read using <code>submission_date</code> or <code>sample_id</code>.</p>
 <!--
 #### Further Reading
@@ -8749,7 +8749,7 @@ Metrics logged by the <a href="https://github.com/mozilla/fxa/tree/main/packages
 The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs metrics events when oauth clients (Monitor, Lockwise, etc) create and check authentication tokens.</p>
 <h2><a class="header" href="#metrics-taxonomies" id="metrics-taxonomies">Metrics Taxonomies</a></h2>
 <p>There are two overlapping taxonomies or sets of FxA event metrics.</p>
-<p><a href="https://github.com/mozilla/fxa-auth-server/blob/master/docs/metrics-events.md"><strong>Flow Metrics</strong></a>: these are an older set of metrics events that can be queried through redshift and via the <code>FxA Activity Metrics</code> data source in re:dash. The <a href="https://github.com/mozilla/fxa-activity-metrics/">re:dash import jobs</a> are run once a day. See <a href="https://github.com/mozilla/fxa-auth-server/blob/master/docs/metrics-events.md">this documentation</a> for detailed description of the types of flow events that are logged and the tables that contain them (note this documentation does not contain an exhaustive list of all flow metrics but is generally still accurate about the ones that are described). Note there are 50% and 10% sampled versions of the major tables, which contain more historical data than their complete counterparts. Complete tables go back 3 months, 50% tables go back 6 months, and 10% tables go back 24 months. Sampling is done at the level of the FxA user id <code>uid</code> (i.e. integer(<code>uid</code>) % 100).</p>
+<p><a href="https://github.com/mozilla/fxa-auth-server/blob/master/docs/metrics-events.md"><strong>Flow Metrics</strong></a>: these are an older set of metrics events that can be queried through redshift and via the <code>FxA Activity Metrics</code> data source in STMO. The <a href="https://github.com/mozilla/fxa-activity-metrics/">STMO import jobs</a> are run once a day. See <a href="https://github.com/mozilla/fxa-auth-server/blob/master/docs/metrics-events.md">this documentation</a> for detailed description of the types of flow events that are logged and the tables that contain them (note this documentation does not contain an exhaustive list of all flow metrics but is generally still accurate about the ones that are described). Note there are 50% and 10% sampled versions of the major tables, which contain more historical data than their complete counterparts. Complete tables go back 3 months, 50% tables go back 6 months, and 10% tables go back 24 months. Sampling is done at the level of the FxA user id <code>uid</code> (i.e. integer(<code>uid</code>) % 100).</p>
 <p><a href="https://analytics.amplitude.com/mozilla-corp/manage/project/178231/advanced/events"><strong>Amplitude Events</strong></a>: FxA started to send metrics events to amplitude circa October 2017. The <a href="https://github.com/mozilla/fxa-amplitude-send">code responsible for batching events to amplitude</a> over HTTP is run in more-or-less real-time. Amplitude events can be queried through the <a href="https://analytics.amplitude.com/mozilla-corp/space/vj9qof9">amplitude UI</a> as well as various views in <code>moz-fx-data-shared-prod.firefox_accounts</code> dataset in BigQuery that maintain copies of the events that are sent to Amplitude. <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/firefox_accounts/fxa_content_auth_events/view.sql"><code>moz-fx-data-shared-prod.firefox_accounts.fxa_content_auth_events</code></a> is probably the easiest BigQuery view to use, though it does not contain email bounce events and (at the time of writing) only contains data starting at 2019-03-01.</p>
 <p>Note that the BigQuery <a href="https://github.com/mozilla/bigquery-etl/tree/master/sql">ETL jobs</a> run daily while real-time data is accessible through the amplitude UI.</p>
 <p>FxA's amplitude metrics were originally just re-configured and re-named versions of the flow metrics. However things have since diverged a bit and there are now metrics events that only have an amplitude version but no corresponding flow event, and vice-versa. If you are wondering whether a certain event is logged its likely you will have to check both data sources.</p>
@@ -8781,7 +8781,7 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 <h2><a class="header" href="#types-of-attribution" id="types-of-attribution">Types of Attribution</a></h2>
 <p>We can attribute accounts to the <strong>service</strong> that they sign up for, as well as the <strong>entrypoint</strong> that they use to begin the authentication flow. Each service typically has many entrypoints; sync, for example, has web-based entrypoints and browser-based entrypoints (see below).</p>
 <h3><a class="header" href="#service-attribution" id="service-attribution">Service Attribution</a></h3>
-<p>There is a variable called <code>service</code> that we use to (1) attribute users to the relying services of FxA that they have authenticated with and (2) attribute individual events to the services they are associated with. <strong>Except in the case of sync</strong>, <code>service</code> is a mapping from the oauth <code>client_id</code> of the relying service/product to a human readable string. Note that this mapping is currently maintained by hand, and is done after the events have been logged by the server. Currently, mapping to the human-readable <code>service</code> variable is only done for amplitude metrics, where it is treated as a user property. There is also a <code>service</code> variable in the <code>activity_events</code> and <code>flow_metadata</code> re:dash tables (FxA Activity Metrics data source), however it only contains the opaque oauth <code>client_id</code>, not the human-readable string. A table of some of the most common oauth <code>client_id</code>s along with their corresponding <code>service</code> mapping is shown below. This is not a complete list.</p>
+<p>There is a variable called <code>service</code> that we use to (1) attribute users to the relying services of FxA that they have authenticated with and (2) attribute individual events to the services they are associated with. <strong>Except in the case of sync</strong>, <code>service</code> is a mapping from the oauth <code>client_id</code> of the relying service/product to a human readable string. Note that this mapping is currently maintained by hand, and is done after the events have been logged by the server. Currently, mapping to the human-readable <code>service</code> variable is only done for amplitude metrics, where it is treated as a user property. There is also a <code>service</code> variable in the <code>activity_events</code> and <code>flow_metadata</code> STMO tables (FxA Activity Metrics data source), however it only contains the opaque oauth <code>client_id</code>, not the human-readable string. A table of some of the most common oauth <code>client_id</code>s along with their corresponding <code>service</code> mapping is shown below. This is not a complete list.</p>
 <table><thead><tr><th><code>service</code></th><th>oauth <code>client_id</code></th><th>Description</th></tr></thead><tbody>
 <tr><td><code>lockbox</code></td><td><code>e7ce535d93522896</code></td><td>Lockwise App for Android</td></tr>
 <tr><td><code>lockbox</code></td><td><code>98adfa37698f255b</code></td><td>Lockwise App for iOS</td></tr>
@@ -8866,7 +8866,7 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 <tr><td>11</td><td><code>fxa_reg - email_confirmed</code></td><td><code>account.verified</code></td><td>This event is emitted by the auth server. A user has successfully verified their account. They should now be able to use it.</td></tr>
 <tr><td>12</td><td><code>fxa_reg - complete</code></td><td><code>flow.complete</code></td><td>The account registration process is complete. Note there are NO actions required of the user to advance from step 8 to step 9; there should be virtually no drop-off there. The flow event is identical for registration and login.</td></tr>
 </tbody></table>
-<p>See <a href="https://analytics.amplitude.com/mozilla-corp/chart/a9yjkzf">this chart</a> for an example of how this funnel can be constructed for the <code>firstrun</code> (about:welcome) page in amplitude. <a href="https://sql.telemetry.mozilla.org/queries/62595#160701">Here</a> is a version in re:dash using the flow events.</p>
+<p>See <a href="https://analytics.amplitude.com/mozilla-corp/chart/a9yjkzf">this chart</a> for an example of how this funnel can be constructed for the <code>firstrun</code> (about:welcome) page in amplitude. <a href="https://sql.telemetry.mozilla.org/queries/62595#160701">Here</a> is a version in STMO using the flow events.</p>
 <p>The chart above provides the most detailed version of the registration funnel that can currently be constructed. However, it should not be considered the &quot;canonical&quot; version of the funnel - depending on the question it may make sense to omit some of the steps. For example, at the time of writing some browser entrypoints (e.g. <code>menupanel</code>) link directly to step 2 and skip the initial email form. Having both steps 7 and 8 may also be redundant in some cases, etc. Also, as noted above, you may want to omit the &quot;choose what to sync&quot; steps if you do not care about the users' actions there.</p>
 <h2><a class="header" href="#login-funnel" id="login-funnel">Login Funnel</a></h2>
 <p>The login funnel describes the steps required for an existing FxA user to login to their account. With some exceptions, most of the steps here are parallel to the registration funnel (but named differently).</p>
@@ -8886,7 +8886,7 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 <tr><td>8</td><td><code>fxa_login - email_confirmed</code></td><td><code>account.confirmed</code></td><td>This event is emitted by the auth server. A user has successfully confirmed the login via email.</td></tr>
 <tr><td>9</td><td><code>fxa_login - complete</code></td><td><code>flow.complete</code></td><td>The account registration process is complete. Note there are NO actions required of the user to advance from step 8 to step 9; there should be virtually no drop-off there. The flow event is identical for registration and login.</td></tr>
 </tbody></table>
-<p>See <a href="https://analytics.amplitude.com/mozilla-corp/chart/53dqtlo">this chart</a> for an example of how this funnel can be constructed for the <code>firstrun</code> (about:welcome) page. <a href="https://sql.telemetry.mozilla.org/queries/63048#161676">Here</a> is a version in re:dash using the flow events.</p>
+<p>See <a href="https://analytics.amplitude.com/mozilla-corp/chart/53dqtlo">this chart</a> for an example of how this funnel can be constructed for the <code>firstrun</code> (about:welcome) page. <a href="https://sql.telemetry.mozilla.org/queries/63048#161676">Here</a> is a version in STMO using the flow events.</p>
 <p>Note again that you may want to check whether the service you are analyzing requires email confirmation on login.</p>
 <h2><a class="header" href="#branches-off-the-login-funnel-password-reset-account-recovery-2fa" id="branches-off-the-login-funnel-password-reset-account-recovery-2fa">Branches off the Login Funnel: Password Reset, Account Recovery, 2FA.</a></h2>
 <p>Some additional funnels are &quot;branches&quot; off the main login funnel above:</p>
@@ -9126,7 +9126,7 @@ to reflect the <a href="concepts/pipeline/gcp_data_pipeline.html">new GCP pipeli
   dwl--&gt;|protobuf| datalake(fa:fa-database S3 Data Lake)
   dwl--&gt;|parquet| datalake
   datalake--&gt;|parquet| prestodb
-  prestodb--&gt;redash[fa:fa-line-chart Re:dash]
+  prestodb--&gt;redash[fa:fa-line-chart Redash]
   datalake--&gt;spark
   spark--&gt;datalake
   airflow[fa:fa-clock-o Airflow]--&gt;|Scheduled tasks|spark{fa:fa-star Spark}
@@ -9202,7 +9202,7 @@ end
 
 pipeline --&gt; aggregator
 pipeline --&gt; spark{fa:fa-star Spark}
-pipeline --&gt; redash[fa:fa-line-chart Re:dash]
+pipeline --&gt; redash[fa:fa-line-chart Redash]
 
 subgraph telemetry.mozilla.org
   telemetry.js(telemetry.js) --&gt; dist
@@ -9236,9 +9236,9 @@ style evo fill:lightgrey
 </pre>
 <p>A dedicated Spark job feeds daily aggregates to a PostgreSQL database which powers a <a href="https://github.com/mozilla/python_mozaggregator/#api">HTTP service</a> to easily retrieve faceted roll-ups. The service is mainly used by <a href="https://telemetry.mozilla.org/">TMO</a>, a dashboard that visualizes distributions and time-series, and <a href="https://github.com/mozilla/cerberus/">Cerberus</a>, an anomaly detection tool that detects and alerts developers of changes in the distributions. Originally the sole purpose of the Telemetry pipeline was to feed data into this dashboard but in time its scope and flexibility grew to support more general use-cases.</p>
 <p><img src="concepts/pipeline/../../assets/TMO_example.jpeg" alt="TMO" title="TMO – timeseries" /></p>
-<h1><a class="header" href="#presto--redash" id="presto--redash">Presto &amp; re:dash</a></h1>
+<h1><a class="header" href="#presto--stmo" id="presto--stmo">Presto &amp; STMO</a></h1>
 <p>We maintain a couple of <a href="https://github.com/mozilla/emr-bootstrap-presto">Presto clusters</a> and a centralized Hive metastore to query Parquet data with SQL. The Hive metastore provides an universal view of our Parquet dataset to both Spark and Presto clusters.</p>
-<p>Presto, and other databases, are behind a <a href="https://sql.telemetry.mozilla.org/">re:dash</a> service (<a href="https://sql.telemetry.mozilla.org/">STMO</a>) which provides a convenient &amp; powerful interface to query SQL engines and build dashboards that can be shared within the company. Mozilla maintains its own <a href="https://github.com/mozilla/redash">fork of re:dash</a> to iterate quickly on new features, but as good open source citizen we push our changes upstream.</p>
+<p>Presto, and other databases, are behind a <a href="https://redash.io/">Redash</a> service (<a href="https://sql.telemetry.mozilla.org/">STMO</a>) which provides a convenient &amp; powerful interface to query SQL engines and build dashboards that can be shared within the company. Mozilla maintains its own <a href="https://github.com/mozilla/redash">fork of Redash</a> to iterate quickly on new features, but as good open source citizen we push our changes upstream.</p>
 <p><img src="concepts/pipeline/../../assets/STMO_example.jpeg" alt="STMO" title="STMO – who doesn’t love SQL?" /></p>
 <h1><a class="header" href="#is-that-it" id="is-that-it">Is that it?</a></h1>
 <p>No, not really. If you want to read more, check out <a href="concepts/pipeline/data_pipeline_detail.html">this article</a>. For example, the DWL pushes some of the Telemetry data to Redshift and other tools that satisfy more niche needs. The pipeline ingests logs from services as well and there are many specialized dashboards out there I haven’t mentioned.</p>
@@ -9362,26 +9362,26 @@ style evo fill:lightgrey
   batch --&gt; s3_public
   selfserve[Self Serve] --&gt; s3_analysis
   s3_analysis --&gt; selfserve
-  Hive --&gt;|Presto| redash[Re:dash]
-  PostgreSQL --&gt; redash
-  Redshift --&gt; redash
-  MySQL --&gt; redash
-  BigQuery --&gt; redash
+  Hive --&gt;|Presto| STMO[STMO]
+  PostgreSQL --&gt; STMO
+  Redshift --&gt; STMO
+  MySQL --&gt; STMO
+  BigQuery --&gt; STMO
 
   s3_parquet -.- Hive
 </pre>
 <p><a href="https://aws.amazon.com/s3/">Amazon S3</a> forms the backbone of the platform storage layer. The primary format used in the Data Lake is <a href="https://parquet.apache.org/">parquet</a>, which is a strongly typed columnar storage format that can easily be read and written by <a href="https://spark.apache.org/docs/latest/index.html">Spark</a>, as well as being compatible with SQL interfaces such as <a href="https://cwiki.apache.org/confluence/display/Hive/Home">Hive</a> and <a href="http://prestosql.io/">Presto</a>. Some data is also stored in <a href="https://hekad.readthedocs.io/en/dev/message/index.html#stream-framing">Heka-framed protobuf</a> format. This custom format is usually reserved for data where we do not have a complete <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas">JSONSchema specification</a>.</p>
 <p>Using S3 for storage avoids the need for an always-on cluster, which means that data at rest is inexpensive. S3 also makes it very easy to automatically expire (delete) objects after a certain period of time, which is helpful for implementing data retention policies.</p>
 <p>Once written to S3, the data is typically treated as immutable - data is not appended to existing files, nor is data normally updated in place. The exception here is when data is back-filled, in which case previous data may be overwritten.</p>
-<p>There are a number of other types of storage used for more specialized applications, including relational databases (such as PostgreSQL for the <a href="https://github.com/mozilla/python_mozaggregator/#api">Telemetry Aggregates</a>) and NoSQL databases (DynamoDB is used for a backing store for the <a href="https://github.com/mozilla/python_mozetl/blob/master/mozetl/taar/taar_dynamo.py">TAAR project</a>). Reading data from a variety of RDBMS sources is also supported via Re:dash.</p>
+<p>There are a number of other types of storage used for more specialized applications, including relational databases (such as PostgreSQL for the <a href="https://github.com/mozilla/python_mozaggregator/#api">Telemetry Aggregates</a>) and NoSQL databases (DynamoDB is used for a backing store for the <a href="https://github.com/mozilla/python_mozetl/blob/master/mozetl/taar/taar_dynamo.py">TAAR project</a>). Reading data from a variety of RDBMS sources is also supported via STMO.</p>
 <p>The data stored in Heka format is <a href="concepts/pipeline/../../tools/spark.html">readable from Spark</a> using libraries in <a href="https://github.com/mozilla/moztelemetry/blob/master/src/main/scala/com/mozilla/telemetry/heka/Dataset.scala">Scala</a> or <a href="https://mozilla.github.io/python_moztelemetry/api.html#dataset">Python</a>.</p>
-<p>Parquet data can be read and written natively from Spark, and many datasets are indexed in a <a href="https://cwiki.apache.org/confluence/display/Hive/Home">Hive</a> Metastore, making them available through a SQL interface on Re:dash and in notebooks via Spark SQL. Many other SQL data sources are also made available via Re:dash, see <a href="concepts/pipeline/../../tools/stmo.html">this article</a> for more information on accessing data using SQL.</p>
+<p>Parquet data can be read and written natively from Spark, and many datasets are indexed in a <a href="https://cwiki.apache.org/confluence/display/Hive/Home">Hive</a> Metastore, making them available through a SQL interface on STMO and in notebooks via Spark SQL. Many other SQL data sources are also made available via STMO, see <a href="concepts/pipeline/../../tools/stmo.html">this article</a> for more information on accessing data using SQL.</p>
 <p>There is a separate data store for self-serve <strong>Analysis Outputs</strong>, intended to keep ad-hoc, temporary data out of the Data Lake. This is implemented as a separate S3 location, with personal output locations prefixed with each person's user id, similar to the layout of the <code>/home</code> directory on a Unix system.</p>
 <p>Analysis outputs can also be made public using the <strong>Public Outputs</strong> bucket. This is a web-accessible S3 location for powering public dashboards. This public data is available at <code>https://analysis-output.telemetry.mozilla.org/&lt;job name&gt;/data/&lt;files&gt;</code>.</p>
 <h2><a class="header" href="#stream-processing" id="stream-processing">Stream Processing</a></h2>
 <p>Stream processing is done using <a href="https://github.com/mozilla-services/hindsight">Hindsight</a> and <a href="https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html">Spark Streaming</a>.</p>
 <p>Hindsight allows you to run <a href="http://mozilla-services.github.io/lua_sandbox/">plugins written in Lua inside a sandbox</a>. This gives a safe, performant way to do self-serve streaming analysis. Hindsight plugins do the initial data validation and decoding, as well as writing out to long-term storage in both <a href="https://hekad.readthedocs.io/en/dev/message/index.html#stream-framing">Heka-framed protobuf</a> and <a href="https://mozilla-services.github.io/lua_sandbox_extensions/parquet/">parquet</a> forms.</p>
-<p>Spark Streaming is used to read from Kafka and perform <a href="https://github.com/mozilla/telemetry-streaming">low-latency ETL and aggregation tasks</a>. These aggregates are currently used by <a href="https://data-missioncontrol.dev.mozaws.net">Mission Control</a> and are also available for querying via <a href="https://sql.telemetry.mozilla.org">Re:dash</a>.</p>
+<p>Spark Streaming is used to read from Kafka and perform <a href="https://github.com/mozilla/telemetry-streaming">low-latency ETL and aggregation tasks</a>. These aggregates are currently used by <a href="https://data-missioncontrol.dev.mozaws.net">Mission Control</a> and are also available for querying via <a href="concepts/pipeline/../../tools/stmo.html">STMO</a>.</p>
 <h2><a class="header" href="#batch-processing" id="batch-processing">Batch Processing</a></h2>
 <p>Batch processing is done using <a href="https://spark.apache.org/docs/latest/index.html">Spark</a>. Production ETL code is written in both <a href="https://github.com/mozilla/python_mozetl">Python</a> and <a href="https://github.com/mozilla/telemetry-batch-view">Scala</a>.</p>
 <p>There are <a href="https://mozilla.github.io/python_moztelemetry/api.html#dataset">Python</a> and <a href="https://github.com/mozilla/moztelemetry/blob/master/src/main/scala/com/mozilla/telemetry/heka/Dataset.scala">Scala</a> libraries for reading data from the Data Lake in <a href="https://hekad.readthedocs.io/en/dev/message/index.html#stream-framing">Heka-framed protobuf</a> form, though it is much easier and more performant to make use of a <a href="concepts/pipeline/../../concepts/choosing_a_dataset.html">derived dataset</a> whenever possible.</p>
@@ -9396,7 +9396,7 @@ style evo fill:lightgrey
     s3_output_private[Analysis Outputs]
   end
   subgraph STMO
-    redash[Re:dash] --&gt;|read| lake
+    STMO[STMO] --&gt;|read| lake
   end
   subgraph TMO
     evo[Evolution Dashboard]
@@ -9413,8 +9413,8 @@ style evo fill:lightgrey
 <p>Most of the data analysis tooling has been developed with the goal of being &quot;self-serve&quot;. This means that people should be able to access and analyze data on their own, without involving data engineers or operations. Thus can data access scale beyond a small set of people with specialized knowledge of the entire pipeline.</p>
 <p>The use of these self-serve tools is described in the <a href="concepts/pipeline/../../concepts/analysis_intro.html">Getting Started</a> article. This section focuses on how these tools integrate with the platform infrastructure.</p>
 <h5><a class="header" href="#stmo-sql-analysis" id="stmo-sql-analysis">STMO: SQL Analysis</a></h5>
-<p><a href="concepts/pipeline/../../tools/stmo.html">STMO</a> is a customized <a href="https://sql.telemetry.mozilla.org">Re:dash</a> installation that provides self-serve access to a a variety of different <a href="concepts/pipeline/../../concepts/choosing_a_dataset.html">datasets</a>. From here, you can query data in the Parquet Data Lake as well as various RDBMS data sources.</p>
-<p>STMO interfaces with the data lake using both <a href="http://prestosql.io/">Presto</a> and Amazon <a href="https://aws.amazon.com/athena/">Athena</a>. Each has its own data source in Re:dash. Since Athena does not support user-defined functions, datasets with HyperLogLog columns, such as <a href="concepts/pipeline/../../datasets/obsolete/client_count_daily/reference.html"><code>client_count_daily</code></a>, are only available via Presto..</p>
+<p><a href="concepts/pipeline/../../tools/stmo.html">STMO</a> is a customized <a href="https://redash.io">Redash</a> installation that provides self-serve access to a a variety of different <a href="concepts/pipeline/../../concepts/choosing_a_dataset.html">datasets</a>. From here, you can query data in the Parquet Data Lake as well as various RDBMS data sources.</p>
+<p>STMO interfaces with the data lake using both <a href="http://prestosql.io/">Presto</a> and Amazon <a href="https://aws.amazon.com/athena/">Athena</a>. Each has its own data source in STMO. Since Athena does not support user-defined functions, datasets with HyperLogLog columns, such as <a href="concepts/pipeline/../../datasets/obsolete/client_count_daily/reference.html"><code>client_count_daily</code></a>, are only available via Presto..</p>
 <p>Different <strong>Data Sources</strong> in STMO connect to different backends, and each backend might use a slightly different flavor of SQL. You should find a link to the documentation for the expected SQL variant next to the Data Sources list.</p>
 <p>Queries can be run just once, or scheduled to run periodically to keep data up-to-date.</p>
 <p>There is a command-line interface to STMO called <a href="https://github.com/mozilla/stmocli">St. Mocli</a>, if you prefer writing SQL using your own editor and tools.</p>
@@ -9430,7 +9430,7 @@ style evo fill:lightgrey
 <h5><a class="header" href="#notebooks" id="notebooks">Notebooks</a></h5>
 <p>Use of interactive notebooks has become a standard in the industry, and Mozilla makes heavy use of this approach. Databricks makes it easy to run, share, and schedule notebooks.</p>
 <h5><a class="header" href="#others" id="others">Others</a></h5>
-<p><a href="https://sql.telemetry.mozilla.org">Re:dash</a> lets you query the data using SQL, but it also supports a number of useful visualizations.</p>
+<p><a href="concepts/pipeline/../../tools/stmo.html">STMO</a> lets you query the data using SQL, but it also supports a number of useful visualizations.</p>
 <p><a href="concepts/pipeline/BROKEN:http://pipeline-cep.prod.mozaws.net/">Hindsight's web interface</a> has the ability to visualize time-series data.</p>
 <p><a href="https://data-missioncontrol.dev.mozaws.net">Mission Control</a> gives a low-latency view into release health.</p>
 <p>Many bespoke visualizations are built using the <a href="http://metricsgraphicsjs.org/">Metrics Graphics</a> library as a display layer.</p>
@@ -9440,7 +9440,7 @@ style evo fill:lightgrey
 <p>Next, we monitor the &quot;transport&quot; functionality of the system. This includes monitoring incoming submission rates, payload sizes, traffic patterns, schema validation failure rates, and alerting if anomalies are detected. This type of anomaly detection and alerting is handled by <a href="https://github.com/mozilla-services/hindsight">Hindsight</a>.</p>
 <p>Once data has been safely ingested and stored, we run some automatic regression detection on all Telemetry <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/histograms.html">histogram measures</a> using <a href="https://github.com/mozilla/cerberus">Cerberus</a>. This code looks for changes in the distribution of a measure, and emails probe owners if a significant change is observed.</p>
 <p>Production ETL jobs are run via <a href="https://github.com/mozilla/telemetry-airflow">Airflow</a>, which monitors batch job progress and alerts if there are failures in any job. Self-serve batch jobs running via Databricks also generate alerts upon failure.</p>
-<p>Scheduled <a href="https://sql.telemetry.mozilla.org">Re:dash</a> queries may also be configured to generate alerts, which is used to monitor the last-mile user facing status of derived datasets. Re:dash may also be used to monitor and alert on high-level characteristics of the data, or really anything you can think of.</p>
+<p>Scheduled <a href="concepts/pipeline/../../tools/stmo.html">STMO</a> queries may also be configured to generate alerts, which is used to monitor the last-mile user facing status of derived datasets. STMO may also be used to monitor and alert on high-level characteristics of the data, or really anything you can think of.</p>
 <h2><a class="header" href="#data-exports" id="data-exports">Data Exports</a></h2>
 <p>Data is exported from the pipeline to a few other tools and systems. Examples include integration with <a href="https://amplitude.com/">Amplitude</a> for mobile and product analytics and shipping data to other parts of the Mozilla organization.</p>
 <p>There are also a few data sets which are made publicly available, such as the <a href="https://data.firefox.com/dashboard/hardware">Firefox Hardware Report</a>.</p>
@@ -9493,7 +9493,7 @@ style evo fill:lightgrey
   Jupyter
   Zeppelin
   TMO
-  redash_graphs[Re:dash]
+  redash_graphs[STMO]
   MissionControl
   bespoke_viz[Bespoke Viz]
  end
@@ -9502,7 +9502,7 @@ style evo fill:lightgrey
   sparkstreaming --&gt; Amplitude
  end
  subgraph Self Serve
-  redash[Re:dash] -.-&gt; Presto
+  redash[STMO] -.-&gt; Presto
   Presto --&gt; hive
   redash -.-&gt; Athena
   Athena --&gt; hive
@@ -9607,7 +9607,7 @@ is tractable in STMO with <code>main_summary</code> or <code>clients_daily</code
 </li>
 </ul>
 <h4><a class="header" href="#accessing-the-data-14" id="accessing-the-data-14">Accessing the Data</a></h4>
-<p><code>churn</code> is available in Re:dash under Athena and Presto. The data is also
+<p><code>churn</code> is available in STMO under Athena and Presto. The data is also
 available in parquet for consumption by columnar data engines at
 <code>s3://telemetry-parquet/churn/v3</code>.</p>
 <h1><a class="header" href="#data-reference-18" id="data-reference-18">Data Reference</a></h1>
@@ -9794,7 +9794,7 @@ is a good example to review.
 Finally, Roberto has a relevant write-up
 <a href="https://ravitillo.wordpress.com/2016/04/12/measuring-product-engagment-at-scale/">here</a>.</p>
 <h4><a class="header" href="#accessing-the-data-15" id="accessing-the-data-15">Accessing the Data</a></h4>
-<p>The data is available in Re:dash.
+<p>The data is available in STMO.
 Take a look at this
 <a href="https://sql.telemetry.mozilla.org/queries/81/source#129">example query</a>.</p>
 <h4><a class="header" href="#further-reading-3" id="further-reading-3">Further Reading</a></h4>
@@ -9920,7 +9920,7 @@ Each row is a distinct set of dimensions, along with their associated crash stat
 Example stratifying dimensions include channel and country,
 example statistics include usage hours and plugin crashes.</p>
 <h4><a class="header" href="#accessing-the-data-16" id="accessing-the-data-16">Accessing the Data</a></h4>
-<p>This dataset is accessible via re:dash.</p>
+<p>This dataset is accessible via STMO.</p>
 <p>The data is stored as a parquet table in S3 at the following address.</p>
 <pre><code>s3://telemetry-parquet/crash_aggregates/v1/
 </code></pre>
@@ -10050,7 +10050,7 @@ though only a subset of all crash ping fields are included.</p>
 <p>The data is stored as a parquet table in S3 at the following address.</p>
 <pre><code>s3://telemetry-parquet/crash_summary/v1/
 </code></pre>
-<p><code>crash_summary</code> is accessible through re:dash.
+<p><code>crash_summary</code> is accessible through STMO.
 Here's an <a href="https://sql.telemetry.mozilla.org/queries/4793/source">example query</a>.</p>
 <h4><a class="header" href="#further-reading-5" id="further-reading-5">Further Reading</a></h4>
 <p>The technical documentation for <code>crash_summary</code> is located in the
@@ -10152,14 +10152,14 @@ these dimensions are null.
 Therefore care must be taken when writing aggregating queries over the whole population - in these cases one needs to
 filter for <code>experiment_id is null</code> and <code>experiment_branch is null</code> in order to not double-count pings from experiments.</p>
 <h4><a class="header" href="#accessing-the-data-18" id="accessing-the-data-18">Accessing the data</a></h4>
-<p>You can access the data via re:dash. Choose <code>Athena</code> and then select the
+<p>You can access the data via STMO. Choose <code>Athena</code> and then select the
 <code>telemetry.error_aggregates_v2</code> table.</p>
 <h4><a class="header" href="#further-reading-6" id="further-reading-6">Further Reading</a></h4>
 <p>The code responsible for generating this dataset is <a href="https://github.com/mozilla/telemetry-streaming/blob/master/src/main/scala/com/mozilla/telemetry/streaming/ErrorAggregator.scala">here</a>.</p>
 <h1><a class="header" href="#data-reference-22" id="data-reference-22">Data Reference</a></h1>
 <h2><a class="header" href="#example-queries-16" id="example-queries-16">Example Queries</a></h2>
 <p>Getting a large number of different crash measures across many platforms and channels
-(<a href="https://sql.telemetry.mozilla.org/queries/4769/source">view on Re:dash</a>):</p>
+(<a href="https://sql.telemetry.mozilla.org/queries/4769/source">view on STMO</a>):</p>
 <pre><code class="language-sql">SELECT window_start,
        build_id,
        channel,
@@ -10182,7 +10182,7 @@ FROM error_aggregates_v2
 GROUP BY window_start, channel, build_id, version, os_name
 </code></pre>
 <p>Get the number of <code>main_crashes</code> on Windows over a small interval
-(<a href="https://sql.telemetry.mozilla.org/queries/51677">view on Re:dash</a>):</p>
+(<a href="https://sql.telemetry.mozilla.org/queries/51677">view on STMO</a>):</p>
 <pre><code class="language-sql">SELECT window_start as time, sum(main_crashes) AS main_crashes
 FROM error_aggregates_v2
   WHERE application = 'Firefox'
@@ -10415,7 +10415,7 @@ and down-samples to 1% of all clients to reduce query computation time and save 
 </ul>
 <p>Please note that this dataset only contains release (or opt-out) histograms and scalars.</p>
 <h4><a class="header" href="#accessing-the-data-21" id="accessing-the-data-21">Accessing the Data</a></h4>
-<p>The <code>longitudinal</code> is available in re:dash,
+<p>The <code>longitudinal</code> is available in STMO,
 though it can be difficult to work with the array values in SQL.
 Take a look at this <a href="https://sql.telemetry.mozilla.org/queries/4189/source">example query</a>.</p>
 <p>The data is stored as a parquet table in S3 at the following address.</p>
@@ -10515,7 +10515,7 @@ on average. See <a href="https://github.com/twitter/algebird/blob/develop/algebi
 more details.</li>
 </ol>
 <h4><a class="header" href="#accessing-the-data-22" id="accessing-the-data-22">Accessing the Data</a></h4>
-<p>The data is primarily available through <a href="https://sql.telemetry.mozilla.org">Re:dash on STMO</a> via
+<p>The data is primarily available through <a href="https://sql.telemetry.mozilla.org">STMO</a> via
 the Presto source. This service has been configured to use predefined HLL
 functions.</p>
 <p>The column should first be cast to the HLL type. The scalar
@@ -10782,7 +10782,7 @@ user environment.</p>
 <h4><a class="header" href="#contents-13" id="contents-13">Contents</a></h4>
 <p>The table contains one row for each ping. Each column represents one field from the update ping payload, though only a subset of all fields are included.</p>
 <h4><a class="header" href="#accessing-the-data-23" id="accessing-the-data-23">Accessing the Data</a></h4>
-<p>Query the <code>telemetry.update</code> view in BigQuery as in the <a href="https://sql.telemetry.mozilla.org/queries/31267#table">example query in re:dash</a>.</p>
+<p>Query the <code>telemetry.update</code> view in BigQuery as in the <a href="https://sql.telemetry.mozilla.org/queries/31267#table">example query in STMO</a>.</p>
 <h1><a class="header" href="#data-reference-27" id="data-reference-27">Data Reference</a></h1>
 <h2><a class="header" href="#schema-20" id="schema-20">Schema</a></h2>
 <p>As of 2017-09-07, the current version of the <code>telemetry_update_parquet</code> dataset is <code>v1</code>, and has a schema as follows:</p>

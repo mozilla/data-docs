@@ -277,26 +277,26 @@
   batch --&gt; s3_public
   selfserve[Self Serve] --&gt; s3_analysis
   s3_analysis --&gt; selfserve
-  Hive --&gt;|Presto| redash[Re:dash]
-  PostgreSQL --&gt; redash
-  Redshift --&gt; redash
-  MySQL --&gt; redash
-  BigQuery --&gt; redash
+  Hive --&gt;|Presto| STMO[STMO]
+  PostgreSQL --&gt; STMO
+  Redshift --&gt; STMO
+  MySQL --&gt; STMO
+  BigQuery --&gt; STMO
 
   s3_parquet -.- Hive
 </pre>
 <p><a href="https://aws.amazon.com/s3/">Amazon S3</a> forms the backbone of the platform storage layer. The primary format used in the Data Lake is <a href="https://parquet.apache.org/">parquet</a>, which is a strongly typed columnar storage format that can easily be read and written by <a href="https://spark.apache.org/docs/latest/index.html">Spark</a>, as well as being compatible with SQL interfaces such as <a href="https://cwiki.apache.org/confluence/display/Hive/Home">Hive</a> and <a href="http://prestosql.io/">Presto</a>. Some data is also stored in <a href="https://hekad.readthedocs.io/en/dev/message/index.html#stream-framing">Heka-framed protobuf</a> format. This custom format is usually reserved for data where we do not have a complete <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas">JSONSchema specification</a>.</p>
 <p>Using S3 for storage avoids the need for an always-on cluster, which means that data at rest is inexpensive. S3 also makes it very easy to automatically expire (delete) objects after a certain period of time, which is helpful for implementing data retention policies.</p>
 <p>Once written to S3, the data is typically treated as immutable - data is not appended to existing files, nor is data normally updated in place. The exception here is when data is back-filled, in which case previous data may be overwritten.</p>
-<p>There are a number of other types of storage used for more specialized applications, including relational databases (such as PostgreSQL for the <a href="https://github.com/mozilla/python_mozaggregator/#api">Telemetry Aggregates</a>) and NoSQL databases (DynamoDB is used for a backing store for the <a href="https://github.com/mozilla/python_mozetl/blob/master/mozetl/taar/taar_dynamo.py">TAAR project</a>). Reading data from a variety of RDBMS sources is also supported via Re:dash.</p>
+<p>There are a number of other types of storage used for more specialized applications, including relational databases (such as PostgreSQL for the <a href="https://github.com/mozilla/python_mozaggregator/#api">Telemetry Aggregates</a>) and NoSQL databases (DynamoDB is used for a backing store for the <a href="https://github.com/mozilla/python_mozetl/blob/master/mozetl/taar/taar_dynamo.py">TAAR project</a>). Reading data from a variety of RDBMS sources is also supported via STMO.</p>
 <p>The data stored in Heka format is <a href="../../tools/spark.html">readable from Spark</a> using libraries in <a href="https://github.com/mozilla/moztelemetry/blob/master/src/main/scala/com/mozilla/telemetry/heka/Dataset.scala">Scala</a> or <a href="https://mozilla.github.io/python_moztelemetry/api.html#dataset">Python</a>.</p>
-<p>Parquet data can be read and written natively from Spark, and many datasets are indexed in a <a href="https://cwiki.apache.org/confluence/display/Hive/Home">Hive</a> Metastore, making them available through a SQL interface on Re:dash and in notebooks via Spark SQL. Many other SQL data sources are also made available via Re:dash, see <a href="../../tools/stmo.html">this article</a> for more information on accessing data using SQL.</p>
+<p>Parquet data can be read and written natively from Spark, and many datasets are indexed in a <a href="https://cwiki.apache.org/confluence/display/Hive/Home">Hive</a> Metastore, making them available through a SQL interface on STMO and in notebooks via Spark SQL. Many other SQL data sources are also made available via STMO, see <a href="../../tools/stmo.html">this article</a> for more information on accessing data using SQL.</p>
 <p>There is a separate data store for self-serve <strong>Analysis Outputs</strong>, intended to keep ad-hoc, temporary data out of the Data Lake. This is implemented as a separate S3 location, with personal output locations prefixed with each person's user id, similar to the layout of the <code>/home</code> directory on a Unix system.</p>
 <p>Analysis outputs can also be made public using the <strong>Public Outputs</strong> bucket. This is a web-accessible S3 location for powering public dashboards. This public data is available at <code>https://analysis-output.telemetry.mozilla.org/&lt;job name&gt;/data/&lt;files&gt;</code>.</p>
 <h2><a class="header" href="#stream-processing" id="stream-processing">Stream Processing</a></h2>
 <p>Stream processing is done using <a href="https://github.com/mozilla-services/hindsight">Hindsight</a> and <a href="https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html">Spark Streaming</a>.</p>
 <p>Hindsight allows you to run <a href="http://mozilla-services.github.io/lua_sandbox/">plugins written in Lua inside a sandbox</a>. This gives a safe, performant way to do self-serve streaming analysis. Hindsight plugins do the initial data validation and decoding, as well as writing out to long-term storage in both <a href="https://hekad.readthedocs.io/en/dev/message/index.html#stream-framing">Heka-framed protobuf</a> and <a href="https://mozilla-services.github.io/lua_sandbox_extensions/parquet/">parquet</a> forms.</p>
-<p>Spark Streaming is used to read from Kafka and perform <a href="https://github.com/mozilla/telemetry-streaming">low-latency ETL and aggregation tasks</a>. These aggregates are currently used by <a href="https://data-missioncontrol.dev.mozaws.net">Mission Control</a> and are also available for querying via <a href="https://sql.telemetry.mozilla.org">Re:dash</a>.</p>
+<p>Spark Streaming is used to read from Kafka and perform <a href="https://github.com/mozilla/telemetry-streaming">low-latency ETL and aggregation tasks</a>. These aggregates are currently used by <a href="https://data-missioncontrol.dev.mozaws.net">Mission Control</a> and are also available for querying via <a href="../../tools/stmo.html">STMO</a>.</p>
 <h2><a class="header" href="#batch-processing" id="batch-processing">Batch Processing</a></h2>
 <p>Batch processing is done using <a href="https://spark.apache.org/docs/latest/index.html">Spark</a>. Production ETL code is written in both <a href="https://github.com/mozilla/python_mozetl">Python</a> and <a href="https://github.com/mozilla/telemetry-batch-view">Scala</a>.</p>
 <p>There are <a href="https://mozilla.github.io/python_moztelemetry/api.html#dataset">Python</a> and <a href="https://github.com/mozilla/moztelemetry/blob/master/src/main/scala/com/mozilla/telemetry/heka/Dataset.scala">Scala</a> libraries for reading data from the Data Lake in <a href="https://hekad.readthedocs.io/en/dev/message/index.html#stream-framing">Heka-framed protobuf</a> form, though it is much easier and more performant to make use of a <a href="../../concepts/choosing_a_dataset.html">derived dataset</a> whenever possible.</p>
@@ -311,7 +311,7 @@
     s3_output_private[Analysis Outputs]
   end
   subgraph STMO
-    redash[Re:dash] --&gt;|read| lake
+    STMO[STMO] --&gt;|read| lake
   end
   subgraph TMO
     evo[Evolution Dashboard]
@@ -328,8 +328,8 @@
 <p>Most of the data analysis tooling has been developed with the goal of being &quot;self-serve&quot;. This means that people should be able to access and analyze data on their own, without involving data engineers or operations. Thus can data access scale beyond a small set of people with specialized knowledge of the entire pipeline.</p>
 <p>The use of these self-serve tools is described in the <a href="../../concepts/analysis_intro.html">Getting Started</a> article. This section focuses on how these tools integrate with the platform infrastructure.</p>
 <h5><a class="header" href="#stmo-sql-analysis" id="stmo-sql-analysis">STMO: SQL Analysis</a></h5>
-<p><a href="../../tools/stmo.html">STMO</a> is a customized <a href="https://sql.telemetry.mozilla.org">Re:dash</a> installation that provides self-serve access to a a variety of different <a href="../../concepts/choosing_a_dataset.html">datasets</a>. From here, you can query data in the Parquet Data Lake as well as various RDBMS data sources.</p>
-<p>STMO interfaces with the data lake using both <a href="http://prestosql.io/">Presto</a> and Amazon <a href="https://aws.amazon.com/athena/">Athena</a>. Each has its own data source in Re:dash. Since Athena does not support user-defined functions, datasets with HyperLogLog columns, such as <a href="../../datasets/obsolete/client_count_daily/reference.html"><code>client_count_daily</code></a>, are only available via Presto..</p>
+<p><a href="../../tools/stmo.html">STMO</a> is a customized <a href="https://redash.io">Redash</a> installation that provides self-serve access to a a variety of different <a href="../../concepts/choosing_a_dataset.html">datasets</a>. From here, you can query data in the Parquet Data Lake as well as various RDBMS data sources.</p>
+<p>STMO interfaces with the data lake using both <a href="http://prestosql.io/">Presto</a> and Amazon <a href="https://aws.amazon.com/athena/">Athena</a>. Each has its own data source in STMO. Since Athena does not support user-defined functions, datasets with HyperLogLog columns, such as <a href="../../datasets/obsolete/client_count_daily/reference.html"><code>client_count_daily</code></a>, are only available via Presto..</p>
 <p>Different <strong>Data Sources</strong> in STMO connect to different backends, and each backend might use a slightly different flavor of SQL. You should find a link to the documentation for the expected SQL variant next to the Data Sources list.</p>
 <p>Queries can be run just once, or scheduled to run periodically to keep data up-to-date.</p>
 <p>There is a command-line interface to STMO called <a href="https://github.com/mozilla/stmocli">St. Mocli</a>, if you prefer writing SQL using your own editor and tools.</p>
@@ -345,7 +345,7 @@
 <h5><a class="header" href="#notebooks" id="notebooks">Notebooks</a></h5>
 <p>Use of interactive notebooks has become a standard in the industry, and Mozilla makes heavy use of this approach. Databricks makes it easy to run, share, and schedule notebooks.</p>
 <h5><a class="header" href="#others" id="others">Others</a></h5>
-<p><a href="https://sql.telemetry.mozilla.org">Re:dash</a> lets you query the data using SQL, but it also supports a number of useful visualizations.</p>
+<p><a href="../../tools/stmo.html">STMO</a> lets you query the data using SQL, but it also supports a number of useful visualizations.</p>
 <p><a href="BROKEN:http://pipeline-cep.prod.mozaws.net/">Hindsight's web interface</a> has the ability to visualize time-series data.</p>
 <p><a href="https://data-missioncontrol.dev.mozaws.net">Mission Control</a> gives a low-latency view into release health.</p>
 <p>Many bespoke visualizations are built using the <a href="http://metricsgraphicsjs.org/">Metrics Graphics</a> library as a display layer.</p>
@@ -355,7 +355,7 @@
 <p>Next, we monitor the &quot;transport&quot; functionality of the system. This includes monitoring incoming submission rates, payload sizes, traffic patterns, schema validation failure rates, and alerting if anomalies are detected. This type of anomaly detection and alerting is handled by <a href="https://github.com/mozilla-services/hindsight">Hindsight</a>.</p>
 <p>Once data has been safely ingested and stored, we run some automatic regression detection on all Telemetry <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/histograms.html">histogram measures</a> using <a href="https://github.com/mozilla/cerberus">Cerberus</a>. This code looks for changes in the distribution of a measure, and emails probe owners if a significant change is observed.</p>
 <p>Production ETL jobs are run via <a href="https://github.com/mozilla/telemetry-airflow">Airflow</a>, which monitors batch job progress and alerts if there are failures in any job. Self-serve batch jobs running via Databricks also generate alerts upon failure.</p>
-<p>Scheduled <a href="https://sql.telemetry.mozilla.org">Re:dash</a> queries may also be configured to generate alerts, which is used to monitor the last-mile user facing status of derived datasets. Re:dash may also be used to monitor and alert on high-level characteristics of the data, or really anything you can think of.</p>
+<p>Scheduled <a href="../../tools/stmo.html">STMO</a> queries may also be configured to generate alerts, which is used to monitor the last-mile user facing status of derived datasets. STMO may also be used to monitor and alert on high-level characteristics of the data, or really anything you can think of.</p>
 <h2><a class="header" href="#data-exports" id="data-exports">Data Exports</a></h2>
 <p>Data is exported from the pipeline to a few other tools and systems. Examples include integration with <a href="https://amplitude.com/">Amplitude</a> for mobile and product analytics and shipping data to other parts of the Mozilla organization.</p>
 <p>There are also a few data sets which are made publicly available, such as the <a href="https://data.firefox.com/dashboard/hardware">Firefox Hardware Report</a>.</p>
@@ -408,7 +408,7 @@
   Jupyter
   Zeppelin
   TMO
-  redash_graphs[Re:dash]
+  redash_graphs[STMO]
   MissionControl
   bespoke_viz[Bespoke Viz]
  end
@@ -417,7 +417,7 @@
   sparkstreaming --&gt; Amplitude
  end
  subgraph Self Serve
-  redash[Re:dash] -.-&gt; Presto
+  redash[STMO] -.-&gt; Presto
   Presto --&gt; hive
   redash -.-&gt; Athena
   Athena --&gt; hive

@@ -176,7 +176,7 @@ to reflect the <a href="gcp_data_pipeline.html">new GCP pipeline</a>.</em></p>
   dwl--&gt;|protobuf| datalake(fa:fa-database S3 Data Lake)
   dwl--&gt;|parquet| datalake
   datalake--&gt;|parquet| prestodb
-  prestodb--&gt;redash[fa:fa-line-chart Re:dash]
+  prestodb--&gt;redash[fa:fa-line-chart Redash]
   datalake--&gt;spark
   spark--&gt;datalake
   airflow[fa:fa-clock-o Airflow]--&gt;|Scheduled tasks|spark{fa:fa-star Spark}
@@ -252,7 +252,7 @@ end
 
 pipeline --&gt; aggregator
 pipeline --&gt; spark{fa:fa-star Spark}
-pipeline --&gt; redash[fa:fa-line-chart Re:dash]
+pipeline --&gt; redash[fa:fa-line-chart Redash]
 
 subgraph telemetry.mozilla.org
   telemetry.js(telemetry.js) --&gt; dist
@@ -286,9 +286,9 @@ style evo fill:lightgrey
 </pre>
 <p>A dedicated Spark job feeds daily aggregates to a PostgreSQL database which powers a <a href="https://github.com/mozilla/python_mozaggregator/#api">HTTP service</a> to easily retrieve faceted roll-ups. The service is mainly used by <a href="https://telemetry.mozilla.org/">TMO</a>, a dashboard that visualizes distributions and time-series, and <a href="https://github.com/mozilla/cerberus/">Cerberus</a>, an anomaly detection tool that detects and alerts developers of changes in the distributions. Originally the sole purpose of the Telemetry pipeline was to feed data into this dashboard but in time its scope and flexibility grew to support more general use-cases.</p>
 <p><img src="../../assets/TMO_example.jpeg" alt="TMO" title="TMO – timeseries" /></p>
-<h1><a class="header" href="#presto--redash" id="presto--redash">Presto &amp; re:dash</a></h1>
+<h1><a class="header" href="#presto--stmo" id="presto--stmo">Presto &amp; STMO</a></h1>
 <p>We maintain a couple of <a href="https://github.com/mozilla/emr-bootstrap-presto">Presto clusters</a> and a centralized Hive metastore to query Parquet data with SQL. The Hive metastore provides an universal view of our Parquet dataset to both Spark and Presto clusters.</p>
-<p>Presto, and other databases, are behind a <a href="https://sql.telemetry.mozilla.org/">re:dash</a> service (<a href="https://sql.telemetry.mozilla.org/">STMO</a>) which provides a convenient &amp; powerful interface to query SQL engines and build dashboards that can be shared within the company. Mozilla maintains its own <a href="https://github.com/mozilla/redash">fork of re:dash</a> to iterate quickly on new features, but as good open source citizen we push our changes upstream.</p>
+<p>Presto, and other databases, are behind a <a href="https://redash.io/">Redash</a> service (<a href="https://sql.telemetry.mozilla.org/">STMO</a>) which provides a convenient &amp; powerful interface to query SQL engines and build dashboards that can be shared within the company. Mozilla maintains its own <a href="https://github.com/mozilla/redash">fork of Redash</a> to iterate quickly on new features, but as good open source citizen we push our changes upstream.</p>
 <p><img src="../../assets/STMO_example.jpeg" alt="STMO" title="STMO – who doesn’t love SQL?" /></p>
 <h1><a class="header" href="#is-that-it" id="is-that-it">Is that it?</a></h1>
 <p>No, not really. If you want to read more, check out <a href="data_pipeline_detail.html">this article</a>. For example, the DWL pushes some of the Telemetry data to Redshift and other tools that satisfy more niche needs. The pipeline ingests logs from services as well and there are many specialized dashboards out there I haven’t mentioned.</p>

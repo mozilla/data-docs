@@ -220,7 +220,7 @@ let ratioForDateInQuestion = rows
   .reduce((row, acc) =&gt; acc + row.normalized_pageloads * row.ratio, 0);
 </code></pre>
 <h2><a class="header" href="#schema" id="schema">Schema</a></h2>
-<p>The data is output in re:dash API format:</p>
+<p>The data is output in STMO API format:</p>
 <pre><code>&quot;query_result&quot;: {
   &quot;retrieved_at&quot;: &lt;timestamp&gt;,
   &quot;query_hash&quot;: &lt;hash&gt;,

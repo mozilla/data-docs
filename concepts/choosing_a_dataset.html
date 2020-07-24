@@ -308,7 +308,7 @@ made to be:</p>
 If you do need to work with raw ping data, be aware that the volume of data can be high.
 Try to limit the size of your data by controlling the date range, and start off using a sample.</p>
 <h4><a class="header" href="#accessing-the-data" id="accessing-the-data">Accessing the Data</a></h4>
-<p>Ping data lives in BigQuery and is accessible in <a href="https://sql.telemetry.mozilla.org/">re:dash</a>;
+<p>Ping data lives in BigQuery and is accessible in <a href="https://sql.telemetry.mozilla.org/">STMO</a>;
 see the <a href="../cookbooks/bigquery.html">BigQuery cookbook section</a> for more information.</p>
 <h4><a class="header" href="#further-reading" id="further-reading">Further Reading</a></h4>
 <p>You can find <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/index.html">the complete ping documentation</a>.
@@ -367,8 +367,8 @@ because a given <code>client_id</code> will only be in one group per <code>submi
 if MAU were calculated by <code>country</code> and <code>channel</code>, then the sum of the MAU for
 each <code>country</code> would be the same as if MAU were calculated only by <code>channel</code>.</p>
 <h4><a class="header" href="#accessing-the-data-1" id="accessing-the-data-1">Accessing the Data</a></h4>
-<p>The data is available in Re:dash and BigQuery. Take a look at this full running
-<a href="https://sql.telemetry.mozilla.org/queries/62029/source#159510">example query in Re:dash</a>.</p>
+<p>The data is available in STMO and BigQuery. Take a look at this full running
+<a href="https://sql.telemetry.mozilla.org/queries/62029/source#159510">example query in STMO</a>.</p>
 <h2><a class="header" href="#main_summary" id="main_summary"><code>main_summary</code></a></h2>
 <p>{{#include ../datasets/batch_view/main_summary/intro.md}}</p>
 <h2><a class="header" href="#first_shutdown_summary" id="first_shutdown_summary"><code>first_shutdown_summary</code></a></h2>
@@ -399,7 +399,7 @@ is a good example to review.
 Finally, Roberto has a relevant write-up
 <a href="https://ravitillo.wordpress.com/2016/04/12/measuring-product-engagment-at-scale/">here</a>.</p>
 <h4><a class="header" href="#accessing-the-data-2" id="accessing-the-data-2">Accessing the Data</a></h4>
-<p>The data is available in Re:dash.
+<p>The data is available in STMO.
 Take a look at this
 <a href="https://sql.telemetry.mozilla.org/queries/81/source#129">example query</a>.</p>
 <h4><a class="header" href="#further-reading-1" id="further-reading-1">Further Reading</a></h4>
