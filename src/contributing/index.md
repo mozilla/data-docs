@@ -94,4 +94,4 @@ graph LR
 The documentation is hosted on [Github Pages](https://pages.github.com/).
 
 Updates to the documentation are automatically published to
-[`docs.telemetry.mozilla.org`](https://docs.telemetry.mozilla.org).
+[docs.telemetry.mozilla.org](https://docs.telemetry.mozilla.org).
