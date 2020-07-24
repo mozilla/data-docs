@@ -39,7 +39,7 @@ more details.
 
 #### Accessing the Data
 
-The data is primarily available through [Re:dash on STMO][stmo] via
+The data is primarily available through [STMO][stmo] via
 the Presto source. This service has been configured to use predefined HLL
 functions.
 

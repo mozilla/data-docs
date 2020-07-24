@@ -170,7 +170,7 @@ applications (such as [measurement][TMO] and [stability][MC] dashboards,
 Once the data reaches our data warehouse in BigQuery it can be processed
 in a number of ways as described in the [Accessing BigQuery] article.
 
-Data analysis is most commonly done using [SQL queries][stmo] or using [Spark].
+Data analysis is most commonly done using [SQL queries][STMO] or using [Spark].
 
 [collect data]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/index.html
 [histograms]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/histograms.html
@@ -187,7 +187,6 @@ Data analysis is most commonly done using [SQL queries][stmo] or using [Spark].
 [submit]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/submission.html#submission
 [Airflow]: https://github.com/mozilla/telemetry-airflow/
 [TMO]: https://telemetry.mozilla.org/
-[re:dash]: https://sql.telemetry.mozilla.org/
 [STMO]: https://sql.telemetry.mozilla.org/
 [Spark]: ../../tools/spark.md
 [Accessing BigQuery]: ../../cookbooks/bigquery.md

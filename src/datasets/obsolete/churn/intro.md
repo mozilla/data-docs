@@ -70,6 +70,6 @@ window from 10 to 5 days.
 
 #### Accessing the Data
 
-`churn` is available in Re:dash under Athena and Presto. The data is also
+`churn` is available in STMO under Athena and Presto. The data is also
 available in parquet for consumption by columnar data engines at
 `s3://telemetry-parquet/churn/v3`.

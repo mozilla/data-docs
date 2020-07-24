@@ -59,5 +59,5 @@ each `country` would be the same as if MAU were calculated only by `channel`.
 
 #### Accessing the Data
 
-The data is available in Re:dash and BigQuery. Take a look at this full running
-[example query in Re:dash](https://sql.telemetry.mozilla.org/queries/62029/source#159510).
+The data is available in STMO and BigQuery. Take a look at this full running
+[example query in STMO](https://sql.telemetry.mozilla.org/queries/62029/source#159510).

@@ -9,7 +9,7 @@ example statistics include usage hours and plugin crashes.
 
 #### Accessing the Data
 
-This dataset is accessible via re:dash.
+This dataset is accessible via STMO.
 
 The data is stored as a parquet table in S3 at the following address.
 ```

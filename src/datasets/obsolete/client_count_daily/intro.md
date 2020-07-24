@@ -30,7 +30,7 @@ Finally, Roberto has a relevant write-up
 
 #### Accessing the Data
 
-The data is available in Re:dash.
+The data is available in STMO.
 Take a look at this
 [example query](https://sql.telemetry.mozilla.org/queries/81/source#129).
 

@@ -8,7 +8,7 @@ number of aggregates about that day's activity.
 
 ## Accessing the Data
 
-The `clients_daily` table is accessible through re:dash using the
+The `clients_daily` table is accessible through STMO using the
 `Telemetry (BigQuery)` data source.
 
 ## Data Reference
