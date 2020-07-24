@@ -79,7 +79,7 @@
     * [Active Profiles](datasets/active_profiles.md)
     * [Addons](datasets/batch_view/addons/reference.md)
     * [Addons Daily](datasets/other/addons_daily/reference.md)
-    * [AS aggregates](datasets/other/asn_aggregates/reference.md)
+    * [Autonomous System Aggregates](datasets/other/asn_aggregates/reference.md)
     * [Attitudes Daily](datasets/other/attitudes_daily/reference.md)
     * [Clients Daily](datasets/batch_view/clients_daily/reference.md)
     * [Clients Last Seen](datasets/bigquery/clients_last_seen/reference.md)
