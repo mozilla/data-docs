@@ -3,7 +3,7 @@
 Documentation is critical to making a usable data platform.
 In surveys of users of the Mozilla Data Platform,
 the most common complaint has been lack of documentation.
-It is important to improve the documentation as often and frequently as possible.
+It is therefore important to expand and improve the documentation as often as possible.
 
 <!-- toc -->
 
@@ -15,13 +15,13 @@ If you see an error in the documentation or want to extend a chapter,
 ## Fixing minor problems
 
 For smaller issues (for example, a typo or minor inaccuracy), it is not necessary to file a bug or even
-check out the source. 
+check out the source.
 Instead, use the `Edit on GitHub` button on the bottom of any page, make your changes, and file a pull request entirely from the GitHub interface.
 
 ## Building the Documentation
 
 This documentation is stored as [Markdown](https://en.wikipedia.org/wiki/Markdown) in the
-[`firefox-data-docs` repository](https://github.com/mozilla/firefox-data-docs) on GitHub. 
+[`firefox-data-docs` repository](https://github.com/mozilla/firefox-data-docs) on GitHub.
 To build a local copy, fork the repository and check out your copy. Then, [see the README](https://github.com/mozilla/firefox-data-docs/blob/master/README.md#building-the-documentation) for up-to-date information on how to build the documentation.
 
 ## Adding a new article
@@ -41,17 +41,17 @@ to check.
 ## Review
 
 Once you're happy with your contribution, open a pull request (PR). Give your PR a meaningful commit message
-(see [this article on commit message guidelines](https://chris.beams.io/posts/git-commit/) for some suggestions). If there is a bug associated with your documentation, title it in the form of `Bug 1234 - <descriptive one-liner>` - that way, the [Bugzilla PR linker](https://github.com/mozilla/github-bugzilla-pr-linker) will pick up the PR and attach it to the bug.
+(see [this article on commit message guidelines](https://chris.beams.io/posts/git-commit/) for some suggestions).
+If there is a bug associated with your documentation, title it in the form of `Bug 1234 - <descriptive one-liner>` - that way, the [Bugzilla PR linker](https://github.com/mozilla/github-bugzilla-pr-linker) will pick up the PR and attach it to the bug.
 
-After filing your PR, flag the appropriate person for review
-(GitHub will usually provide some suggestions). If you don't have permissions to ask someone for review yourself, see [getting help](../src/concepts/getting_help.md).
+After filing your PR, assign the appropriate person for review (GitHub will usually provide some suggestions), assuming you have permissions to do so yourself.
+If you do not have permission to assign a reviewer, see [getting help](../src/concepts/getting_help.md).
 
 ## Supported Plugins
 
 ### Table of contents
 
-You can insert a table of contents in any article by using the
-`toc` shorthand. For example:
+You can insert a table of contents in any article by using the `toc` shorthand. For example:
 
 ```
 # My fine title
@@ -73,15 +73,15 @@ For an example of what the rendered table of contents looks like, see the beginn
 
 You can use [`mermaid.js`](https://mermaidjs.github.io/) diagrams in code blocks. For example:
 
-~~~md
+````md
 ```mermaid
 graph LR
   you -->|write|docs
   docs --> profit!
 ```
-~~~
+````
 
-Which is then rendered as:
+... is rendered as:
 
 ```mermaid
 graph LR
