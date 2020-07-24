@@ -6,7 +6,7 @@ The work is being tracked in
 
 # Notes & Ideas
 
-* The path to re:dash
+* The path to STMO
   * Heka messages
   * telemetry-batch-view
   * parquet2hive

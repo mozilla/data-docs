@@ -8,7 +8,7 @@ The DAS is completed by ~300 Firefox users every day, allowing us to measure lon
 
 #### Accessing the Data
 
-The `attitudes_daily` table is accessible through re:dash using the
+The `attitudes_daily` table is accessible through STMO using the
 `Telemetry (BigQuery)` data source.
 The full table name is `moz-fx-data-shared-prod.telemetry.attitudes_daily`.
 

@@ -79,8 +79,8 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 | [Glean Debug View][gdv]           | Tag and view Glean submissions with low latency
 | [Cerberus][cer] & [Medusa][med]   | Automatic alert system for telemetry aggregates
 | [Mission Control][mc]             | Low latency dashboard for stability and health metrics
-| [Re:dash][redash]                 | Mozilla's fork of the [data query / visualization system][stmo]
-| [`redash-stmo`][redashstmo]       | Mozilla's extensions to Re:dash
+| [Redash][redash]                 | Mozilla's fork of the [data query / visualization system][stmo]
+| [`redash-stmo`][redashstmo]       | Mozilla's extensions to Redash
 | [TAAR][taar]                      | Telemetry-aware addon recommender
 | [Ensemble][ensemble]              | A minimalist platform for publishing data
 | [Hardware Report][hwreport_gh]    | Firefox Hardware Report, [available here][hwreport]
@@ -89,7 +89,7 @@ See also [`firefox-data-docs`][docs] for documentation on datasets.
 | [probe-scraper]                   | Scrape and publish Telemetry probe data from Firefox
 | [test-tube]                       | Compare data across branches in experiments
 | [experimenter]                    | A web application for managing experiments
-| [St. Moab][stmoab]                | Automatically generate Re:dash dashboard for A/B experiments
+| [St. Moab][stmoab]                | Automatically generate Redash dashboard for A/B experiments
 | [Iodide] ([code][iodide_gh])      | Literate scientific computing and communication for the web
 
 [tmo_gh]: https://github.com/mozilla/telemetry-dashboard

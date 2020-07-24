@@ -23,7 +23,7 @@ limit to a short submission date range.
 
 ## Accessing the Data
 
-The `main_summary` table is accessible through re:dash.
+The `main_summary` table is accessible through STMO.
 Here's an [example query](https://sql.telemetry.mozilla.org/queries/4201/source).
 
 ## Data Reference

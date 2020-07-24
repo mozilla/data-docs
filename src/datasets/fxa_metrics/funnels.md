@@ -28,7 +28,7 @@ While there are some variations, the typical registration funnel is comprised of
 |11|`fxa_reg - email_confirmed`|`account.verified`|This event is emitted by the auth server. A user has successfully verified their account. They should now be able to use it.|
 |12|`fxa_reg - complete`|`flow.complete`|The account registration process is complete. Note there are NO actions required of the user to advance from step 8 to step 9; there should be virtually no drop-off there. The flow event is identical for registration and login.|
 
-See [this chart](https://analytics.amplitude.com/mozilla-corp/chart/a9yjkzf) for an example of how this funnel can be constructed for the `firstrun` (about:welcome) page in amplitude. [Here](https://sql.telemetry.mozilla.org/queries/62595#160701) is a version in re:dash using the flow events.
+See [this chart](https://analytics.amplitude.com/mozilla-corp/chart/a9yjkzf) for an example of how this funnel can be constructed for the `firstrun` (about:welcome) page in amplitude. [Here](https://sql.telemetry.mozilla.org/queries/62595#160701) is a version in STMO using the flow events.
 
 The chart above provides the most detailed version of the registration funnel that can currently be constructed. However, it should not be considered the "canonical" version of the funnel - depending on the question it may make sense to omit some of the steps. For example, at the time of writing some browser entrypoints (e.g. `menupanel`) link directly to step 2 and skip the initial email form. Having both steps 7 and 8 may also be redundant in some cases, etc. Also, as noted above, you may want to omit the "choose what to sync" steps if you do not care about the users' actions there.
 
@@ -53,7 +53,7 @@ Users must confirm their login via email in the following cases:
 |8|`fxa_login - email_confirmed`|`account.confirmed`|This event is emitted by the auth server. A user has successfully confirmed the login via email.|
 |9|`fxa_login - complete`|`flow.complete`|The account registration process is complete. Note there are NO actions required of the user to advance from step 8 to step 9; there should be virtually no drop-off there. The flow event is identical for registration and login.|
 
-See [this chart](https://analytics.amplitude.com/mozilla-corp/chart/53dqtlo) for an example of how this funnel can be constructed for the `firstrun` (about:welcome) page. [Here](https://sql.telemetry.mozilla.org/queries/63048#161676) is a version in re:dash using the flow events.
+See [this chart](https://analytics.amplitude.com/mozilla-corp/chart/53dqtlo) for an example of how this funnel can be constructed for the `firstrun` (about:welcome) page. [Here](https://sql.telemetry.mozilla.org/queries/63048#161676) is a version in STMO using the flow events.
 
 Note again that you may want to check whether the service you are analyzing requires email confirmation on login.
 

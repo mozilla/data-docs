@@ -9,4 +9,4 @@ The table contains one row for each ping. Each column represents one field from 
 
 #### Accessing the Data
 
-Query the `telemetry.update` view in BigQuery as in the [example query in re:dash](https://sql.telemetry.mozilla.org/queries/31267#table).
+Query the `telemetry.update` view in BigQuery as in the [example query in STMO](https://sql.telemetry.mozilla.org/queries/31267#table).

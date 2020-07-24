@@ -119,7 +119,7 @@ E.g: MAU counts the number of distinct users we see over a 28-day period. Deskto
   - Definitions for both Mobile and Desktop, if applicable.
   - What is the easiest way to calculate this metric? E.g. MAU over `clients_last_seen`.
   - At least one working definition
-  - Link to a scheduled re:dash query (link with `stmocli`?)
+  - Link to a scheduled Redash query (link with `stmocli`?)
   - Possibly an API-linked graph from STMO
   - If it’s non-obvious, examples for how to stratify. E.g. calculating MAU from `clients_daily`
  - Common Issues: Failures and Gotchas

@@ -30,7 +30,7 @@ These tools require more specialized knowledge to use.
 ### sql.telemetry.mozilla.org (STMO)
 
 The [`sql.telemetry.mozilla.org`](https://sql.telemetry.mozilla.org) (STMO) site
-is an instance of the very fine [Re:dash](https://redash.io/) software, allowing
+is an instance of the very fine [Redash](https://redash.io/) software, allowing
 for SQL-based exploratory analysis and visualization / dashboard
 construction. Requires (surprise!) familiarity with SQL, and for your data to
 be explicitly exposed as an STMO data source. You can learn more about how to use it in [Introduction to STMO](./stmo.md). Bugs or feature requests can be reported in Mozilla's [issue tracker](https://github.com/mozilla/redash/issues).

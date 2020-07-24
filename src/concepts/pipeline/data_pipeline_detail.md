@@ -149,11 +149,11 @@ graph TD
   batch --> s3_public
   selfserve[Self Serve] --> s3_analysis
   s3_analysis --> selfserve
-  Hive -->|Presto| redash[Re:dash]
-  PostgreSQL --> redash
-  Redshift --> redash
-  MySQL --> redash
-  BigQuery --> redash
+  Hive -->|Presto| STMO[STMO]
+  PostgreSQL --> STMO
+  Redshift --> STMO
+  MySQL --> STMO
+  BigQuery --> STMO
 
   s3_parquet -.- Hive
 ```
@@ -164,11 +164,11 @@ Using S3 for storage avoids the need for an always-on cluster, which means that 
 
 Once written to S3, the data is typically treated as immutable - data is not appended to existing files, nor is data normally updated in place. The exception here is when data is back-filled, in which case previous data may be overwritten.
 
-There are a number of other types of storage used for more specialized applications, including relational databases (such as PostgreSQL for the [Telemetry Aggregates]) and NoSQL databases (DynamoDB is used for a backing store for the [TAAR project]). Reading data from a variety of RDBMS sources is also supported via Re:dash.
+There are a number of other types of storage used for more specialized applications, including relational databases (such as PostgreSQL for the [Telemetry Aggregates]) and NoSQL databases (DynamoDB is used for a backing store for the [TAAR project]). Reading data from a variety of RDBMS sources is also supported via STMO.
 
 The data stored in Heka format is [readable from Spark](../../tools/spark.md) using libraries in [Scala][moztelemetry] or [Python][py_dataset].
 
-Parquet data can be read and written natively from Spark, and many datasets are indexed in a [Hive] Metastore, making them available through a SQL interface on Re:dash and in notebooks via Spark SQL. Many other SQL data sources are also made available via Re:dash, see [this article](../../tools/stmo.md) for more information on accessing data using SQL.
+Parquet data can be read and written natively from Spark, and many datasets are indexed in a [Hive] Metastore, making them available through a SQL interface on STMO and in notebooks via Spark SQL. Many other SQL data sources are also made available via STMO, see [this article](../../tools/stmo.md) for more information on accessing data using SQL.
 
 There is a separate data store for self-serve **Analysis Outputs**, intended to keep ad-hoc, temporary data out of the Data Lake. This is implemented as a separate S3 location, with personal output locations prefixed with each person's user id, similar to the layout of the `/home` directory on a Unix system.
 
@@ -180,7 +180,7 @@ Stream processing is done using [Hindsight] and [Spark Streaming].
 
 Hindsight allows you to run [plugins written in Lua inside a sandbox][lua_sandbox]. This gives a safe, performant way to do self-serve streaming analysis. Hindsight plugins do the initial data validation and decoding, as well as writing out to long-term storage in both [Heka-framed protobuf][heka_protobuf] and [parquet][direct2parquet] forms.
 
-Spark Streaming is used to read from Kafka and perform [low-latency ETL and aggregation tasks][telemetry-streaming]. These aggregates are currently used by [Mission Control] and are also available for querying via [Re:dash].
+Spark Streaming is used to read from Kafka and perform [low-latency ETL and aggregation tasks][telemetry-streaming]. These aggregates are currently used by [Mission Control] and are also available for querying via [STMO].
 
 ## Batch Processing
 
@@ -204,7 +204,7 @@ graph TD
     s3_output_private[Analysis Outputs]
   end
   subgraph STMO
-    redash[Re:dash] -->|read| lake
+    STMO[STMO] -->|read| lake
   end
   subgraph TMO
     evo[Evolution Dashboard]
@@ -225,9 +225,9 @@ The use of these self-serve tools is described in the [Getting Started] article.
 
 ##### STMO: SQL Analysis
 
-[STMO] is a customized [Re:dash] installation that provides self-serve access to a a variety of different [datasets](../../concepts/choosing_a_dataset.md). From here, you can query data in the Parquet Data Lake as well as various RDBMS data sources.
+[STMO] is a customized [Redash] installation that provides self-serve access to a a variety of different [datasets](../../concepts/choosing_a_dataset.md). From here, you can query data in the Parquet Data Lake as well as various RDBMS data sources.
 
-STMO interfaces with the data lake using both [Presto] and Amazon [Athena]. Each has its own data source in Re:dash. Since Athena does not support user-defined functions, datasets with HyperLogLog columns, such as [`client_count_daily`](../../datasets/obsolete/client_count_daily/reference.md), are only available via Presto..
+STMO interfaces with the data lake using both [Presto] and Amazon [Athena]. Each has its own data source in STMO. Since Athena does not support user-defined functions, datasets with HyperLogLog columns, such as [`client_count_daily`](../../datasets/obsolete/client_count_daily/reference.md), are only available via Presto..
 
 Different **Data Sources** in STMO connect to different backends, and each backend might use a slightly different flavor of SQL. You should find a link to the documentation for the expected SQL variant next to the Data Sources list.
 
@@ -259,7 +259,7 @@ Use of interactive notebooks has become a standard in the industry, and Mozilla 
 
 ##### Others
 
-[Re:dash] lets you query the data using SQL, but it also supports a number of useful visualizations.
+[STMO] lets you query the data using SQL, but it also supports a number of useful visualizations.
 
 [Hindsight's web interface][cep] has the ability to visualize time-series data.
 
@@ -279,7 +279,7 @@ Once data has been safely ingested and stored, we run some automatic regression 
 
 Production ETL jobs are run via [Airflow], which monitors batch job progress and alerts if there are failures in any job. Self-serve batch jobs running via Databricks also generate alerts upon failure.
 
-Scheduled [Re:dash] queries may also be configured to generate alerts, which is used to monitor the last-mile user facing status of derived datasets. Re:dash may also be used to monitor and alert on high-level characteristics of the data, or really anything you can think of.
+Scheduled [STMO] queries may also be configured to generate alerts, which is used to monitor the last-mile user facing status of derived datasets. STMO may also be used to monitor and alert on high-level characteristics of the data, or really anything you can think of.
 
 ## Data Exports
 
@@ -339,7 +339,7 @@ graph LR
   Jupyter
   Zeppelin
   TMO
-  redash_graphs[Re:dash]
+  redash_graphs[STMO]
   MissionControl
   bespoke_viz[Bespoke Viz]
  end
@@ -348,7 +348,7 @@ graph LR
   sparkstreaming --> Amplitude
  end
  subgraph Self Serve
-  redash[Re:dash] -.-> Presto
+  redash[STMO] -.-> Presto
   Presto --> hive
   redash -.-> Athena
   Athena --> hive
@@ -380,7 +380,7 @@ graph LR
 [Cerberus]: https://github.com/mozilla/cerberus
 [histogram measures]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/histograms.html
 [Airflow]: https://github.com/mozilla/telemetry-airflow
-[Re:dash]: https://sql.telemetry.mozilla.org
+[Redash]: https://redash.io
 [STMO]: ../../tools/stmo.md
 [Jupyter]: https://jupyter.org/
 [Zeppelin]: https://zeppelin.apache.org/
