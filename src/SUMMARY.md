@@ -85,12 +85,10 @@
     * [Clients Last Seen](datasets/bigquery/clients_last_seen/reference.md)
     * [Events](datasets/batch_view/events/reference.md)
     * [Exact MAU](datasets/bigquery/exact_mau/reference.md)
-    * [First Shutdown Summary](datasets/batch_view/first_shutdown_summary/reference.md)
     * [Main Summary](datasets/batch_view/main_summary/reference.md)
     * [Socorro Crash Reports](datasets/other/socorro_crash/reference.md)
     * [SSL Ratios (public)](datasets/other/ssl/reference.md)
     * [Telemetry Aggregates](datasets/batch_view/telemetry_aggregates/reference.md)
-    * [Update](datasets/batch_view/update/reference.md)
   * [Experimental Datasets](tools/experiments.md)
     * [Accessing Heartbeat data](datasets/heartbeat.md)
     * [Accessing Shield Study data](datasets/shield.md)
@@ -123,10 +121,12 @@
     * [Crash Aggregates](datasets/obsolete/crash_aggregates/reference.md)
     * [Crash Summary](datasets/obsolete/crash_summary/reference.md)
     * [Error Aggregates](datasets/obsolete/error_aggregates/reference.md)
+    * [First Shutdown Summary](datasets/obsolete/first_shutdown_summary/reference.md)
     * [Heavy Users](datasets/obsolete/heavy_users/reference.md)
     * [Longitudinal](datasets/obsolete/longitudinal/reference.md)
     * [Retention](datasets/obsolete/retention/reference.md)
     * [Sync Summary](datasets/obsolete/sync_summary/reference.md)
+    * [Update](datasets/obsolete/update/reference.md)
 
 ---
 
