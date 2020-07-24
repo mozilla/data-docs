@@ -4775,11 +4775,11 @@ and the <a href="https://github.com/mozilla/mozilla-schema-generator">schema gen
 The result are tables that contains SQL-friendly field names for all known
 measures, as implemented in the <a href="https://github.com/mozilla/probe-scraper">probe scraper</a>.</p>
 <p>A <a href="https://cloud.google.com/dataflow/docs/">Dataflow</a> job reads from the Decoded topic and writes out to
-<strong><a href="concepts/pipeline/../../cookbooks/bigquery.html#table-layout-and-naming">live ping tables</a></strong>.
+<strong><a href="concepts/pipeline/../../cookbooks/bigquery/querying.html#table-layout-and-naming">live ping tables</a></strong>.
 These tables are updated frequently, and typically reflect data within a few
 minutes of it being ingested. They are optimized for accessing recent data,
 but are only guaranteed to contain a few days of history.</p>
-<p>Historical raw ping data is stored in <strong><a href="concepts/pipeline/../../cookbooks/bigquery.html#table-layout-and-naming">historical ping tables</a></strong>,
+<p>Historical raw ping data is stored in <strong><a href="concepts/pipeline/../../cookbooks/bigquery/querying.html#table-layout-and-naming">historical ping tables</a></strong>,
 also known as <strong>stable tables</strong>.
 These tables include only completed days of data, are populated once a day
 shortly after midnight UTC.
