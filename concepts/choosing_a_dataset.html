@@ -178,41 +178,22 @@
 <li><a href="#crash-ping">&quot;crash&quot; ping</a></li>
 <li><a href="#deletion-request-ping">&quot;deletion-request&quot; ping</a></li>
 <li><a href="#pingsender">Pingsender</a></li>
-<li><a href="#analysis">Analysis</a></li>
+<li><a href="#analysis">Analysis</a>
+<ul>
 <li><a href="#accessing-the-data">Accessing the Data</a></li>
 <li><a href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#main-ping-derived-datasets">Main Ping Derived Datasets</a>
 <ul>
-<li><a href="#clients_daily"><code>clients_daily</code></a></li>
-<li><a href="#clients_last_seen"><code>clients_last_seen</code></a>
-<ul>
-<li><a href="#content">Content</a></li>
-<li><a href="#background-and-caveats">Background and Caveats</a></li>
-<li><a href="#accessing-the-data">Accessing the Data</a></li>
-</ul>
-</li>
-<li><a href="#main_summary"><code>main_summary</code></a></li>
-<li><a href="#first_shutdown_summary"><code>first_shutdown_summary</code></a></li>
-<li><a href="#client_count_daily"><code>client_count_daily</code></a>
-<ul>
-<li><a href="#content">Content</a></li>
-<li><a href="#background-and-caveats">Background and Caveats</a></li>
-<li><a href="#accessing-the-data">Accessing the Data</a></li>
-<li><a href="#further-reading">Further Reading</a></li>
+<li><a href="#clients-daily">Clients Daily</a></li>
+<li><a href="#clients-last-seen">Clients Last Seen</a></li>
 </ul>
 </li>
 </ul>
-</li>
-<li><a href="#other-datasets">Other Datasets</a>
-<ul>
-<li><a href="#contents">Contents</a></li>
-<li><a href="#accessing-the-data">Accessing the Data</a></li>
-</ul>
-</li>
-</ul>
-<h1><a class="header" href="#raw-pings" id="raw-pings">Raw Pings</a></h1>
+<h2><a class="header" href="#raw-pings" id="raw-pings">Raw Pings</a></h2>
 <p>We receive data from our users via <strong>pings</strong>.
 There are several types of pings,
 each containing different measurements and sent for different purposes.
@@ -314,12 +295,17 @@ see the <a href="../cookbooks/bigquery.html">BigQuery cookbook section</a> for m
 <p>You can find <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/index.html">the complete ping documentation</a>.
 To augment our data collection, see <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Adding_a_new_Telemetry_probe">Collecting New Data</a> and the
 <a href="https://wiki.mozilla.org/Firefox/Data_Collection">Data Collection Policy</a>.</p>
-<h1><a class="header" href="#main-ping-derived-datasets" id="main-ping-derived-datasets">Main Ping Derived Datasets</a></h1>
+<h2><a class="header" href="#main-ping-derived-datasets" id="main-ping-derived-datasets">Main Ping Derived Datasets</a></h2>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html">main ping</a> includes most of the measurements that track the performance and health of Firefox in the wild. This ping includes histograms, scalars, and events.</p>
 <p>In its raw form, the main ping can be a bit difficult to work with. To make analyzing data easier, some datasets have been provided that simplify and aggregate information provided by the main ping.</p>
-<h2><a class="header" href="#clients_daily" id="clients_daily"><code>clients_daily</code></a></h2>
-<p>{{#include ../datasets/batch_view/clients_daily/intro.md}}</p>
-<h2><a class="header" href="#clients_last_seen" id="clients_last_seen"><code>clients_last_seen</code></a></h2>
+<h3><a class="header" href="#clients-daily" id="clients-daily">Clients Daily</a></h3>
+<p>Many questions about Firefox take the form &quot;What did clients with
+characteristics X, Y, and Z do during the period S to E?&quot; The
+<code>clients_daily</code> table aims to answer these questions. Each row in
+the table is a (<code>client_id</code>, <code>submission_date</code>) and contains a
+number of aggregates about that day's activity.</p>
+<p>See the <a href="../datasets/batch_view/clients_daily/reference.html"><code>clients_daily</code> reference</a> for more information.</p>
+<h3><a class="header" href="#clients-last-seen" id="clients-last-seen">Clients Last Seen</a></h3>
 <p>The <code>clients_last_seen</code> dataset is useful for efficiently determining exact
 user counts such as <a href="../../../cookbooks/dau.html">DAU and MAU</a>.
 It can also allow efficient calculation of other windowed usage metrics
@@ -329,88 +315,7 @@ like retention via its <a href="../../../cookbooks/clients_last_seen_bits.html">
 and it includes the most recent values in a 28 day window for all columns in
 the <a href="/datasets/batch_view/clients_daily/reference.html"><code>clients_daily</code> dataset</a>.</p>
 <p>This dataset should be used instead of <code>client_count_daily</code>.</p>
-<h4><a class="header" href="#content" id="content">Content</a></h4>
-<p>For each <code>submission_date</code> this dataset contains one row per <code>client_id</code>
-that appeared in <code>clients_daily</code> in a 28 day window including
-<code>submission_date</code> and preceding days.</p>
-<p>The <code>days_since_seen</code> column indicates the difference between <code>submission_date</code>
-and the most recent <code>submission_date</code> in <code>clients_daily</code> where the <code>client_id</code>
-appeared. A client observed on the given <code>submission_date</code> will have <code>days_since_seen = 0</code>.</p>
-<p>Other <code>days_since_</code> columns use the most recent date in <code>clients_daily</code> where
-a certain condition was met. If the condition was not met for a <code>client_id</code> in
-a 28 day window <code>NULL</code> is used. For example <code>days_since_visited_5_uri</code> uses the
-condition <code>scalar_parent_browser_engagement_total_uri_count_sum &gt;= 5</code>. These
-columns can be used for user counts where a condition must be met on any day
-in a window instead of using the most recent values for each <code>client_id</code>.</p>
-<p>The <code>days_seen_bits</code> field stores the daily history of a client in the 28 day
-window. The daily history is converted into a sequence of bits, with a <code>1</code> for
-the days a client is in <code>clients_daily</code> and a <code>0</code> otherwise, and this sequence
-is converted to an integer. A tutorial on how to use these bit patterns to
-create filters in SQL can be found in
-<a href="https://colab.research.google.com/drive/13AwwORpOtRsq22op_3rMSwPssQkJU1ok">this notebook</a>.</p>
-<p>The rest of the columns use the most recent value in <code>clients_daily</code> where
-the <code>client_id</code> appeared.</p>
-<h4><a class="header" href="#background-and-caveats" id="background-and-caveats">Background and Caveats</a></h4>
-<p>User counts generated using <code>days_since_seen</code> only reflect the most recent
-values from <code>clients_daily</code> for each <code>client_id</code> in a 28 day window. This means
-<a href="../../../cookbooks/active_dau.html">Active MAU</a>
-as defined cannot be efficiently calculated using <code>days_since_seen</code> because if
-a given <code>client_id</code> appeared every day in February and only on February 1st had
-<code>scalar_parent_browser_engagement_total_uri_count_sum &gt;= 5</code> then it would only
-be counted on the 1st, and not the 2nd-28th. Active MAU can be efficiently and
-correctly calculated using <code>days_since_visited_5_uri</code>.</p>
-<p>MAU can be calculated over a <code>GROUP BY submission_date[, ...]</code> clause using
-<code>COUNT(*)</code>, because there is exactly one row in the dataset for each
-<code>client_id</code> in the 28 day MAU window for each <code>submission_date</code>.</p>
-<p>User counts generated using <code>days_since_seen</code> can use <code>SUM</code> to reduce groups,
-because a given <code>client_id</code> will only be in one group per <code>submission_date</code>. So
-if MAU were calculated by <code>country</code> and <code>channel</code>, then the sum of the MAU for
-each <code>country</code> would be the same as if MAU were calculated only by <code>channel</code>.</p>
-<h4><a class="header" href="#accessing-the-data-1" id="accessing-the-data-1">Accessing the Data</a></h4>
-<p>The data is available in STMO and BigQuery. Take a look at this full running
-<a href="https://sql.telemetry.mozilla.org/queries/62029/source#159510">example query in STMO</a>.</p>
-<h2><a class="header" href="#main_summary" id="main_summary"><code>main_summary</code></a></h2>
-<p>{{#include ../datasets/batch_view/main_summary/intro.md}}</p>
-<h2><a class="header" href="#first_shutdown_summary" id="first_shutdown_summary"><code>first_shutdown_summary</code></a></h2>
-<p>{{#include ../datasets/batch_view/first_shutdown_summary/intro.md}}</p>
-<h2><a class="header" href="#client_count_daily" id="client_count_daily"><code>client_count_daily</code></a></h2>
-<p>The <code>client_count_daily</code> dataset is useful for estimating user counts over a few
-<a href="https://github.com/mozilla/telemetry-airflow/blob/adfce4a30895faa607ccf586b292b61ad68d8f75/jobs/client_count_daily_view.sh">pre-defined dimensions</a>.</p>
-<p>The <code>client_count_daily</code> dataset is similar to the deprecated
-<a href="/datasets/batch_view/client_count/reference.html"><code>client_count</code> dataset</a>
-except that is aggregated by submission date and not activity date.</p>
-<h4><a class="header" href="#content-1" id="content-1">Content</a></h4>
-<p>This dataset includes columns for a dozen factors and an HLL variable.
-The <code>hll</code> column contains a
-<a href="https://en.wikipedia.org/wiki/HyperLogLog">HyperLogLog</a>
-variable, which is an approximation to the exact count.
-The factor columns include <strong>submission</strong> date and the dimensions listed
-<a href="https://github.com/mozilla/telemetry-airflow/blob/adfce4a30895faa607ccf586b292b61ad68d8f75/jobs/client_count_daily_view.sh">here</a>.
-Each row represents one combinations of the factor columns.</p>
-<h4><a class="header" href="#background-and-caveats-1" id="background-and-caveats-1">Background and Caveats</a></h4>
-<p>It's important to understand that the <code>hll</code> column is <strong>not a standard count</strong>.
-The <code>hll</code> variable avoids double-counting users when aggregating over multiple days.
-The HyperLogLog variable is a far more efficient way to count distinct elements of a set,
-but comes with some complexity.
-To find the cardinality of an HLL use <code>cardinality(cast(hll AS HLL))</code>.
-To find the union of two HLL's over different dates, use <code>merge(cast(hll AS HLL))</code>.
-The <a href="https://sql.telemetry.mozilla.org/queries/81/source#129">Firefox ER Reporting Query</a>
-is a good example to review.
-Finally, Roberto has a relevant write-up
-<a href="https://ravitillo.wordpress.com/2016/04/12/measuring-product-engagment-at-scale/">here</a>.</p>
-<h4><a class="header" href="#accessing-the-data-2" id="accessing-the-data-2">Accessing the Data</a></h4>
-<p>The data is available in STMO.
-Take a look at this
-<a href="https://sql.telemetry.mozilla.org/queries/81/source#129">example query</a>.</p>
-<h4><a class="header" href="#further-reading-1" id="further-reading-1">Further Reading</a></h4>
-<h1><a class="header" href="#other-datasets" id="other-datasets">Other Datasets</a></h1>
-<p>Public crash statistics for Firefox are available through the Data Platform in a <code>socorro_crash</code> dataset.
-The crash data in <a href="https://wiki.mozilla.org/Socorro">Socorro</a> is sanitized and made available to STMO.
-A nightly import job converts batches of JSON documents into a columnar format using the associated JSON Schema. </p>
-<h3><a class="header" href="#contents" id="contents">Contents</a></h3>
-<h4><a class="header" href="#accessing-the-data-3" id="accessing-the-data-3">Accessing the Data</a></h4>
-<p>The dataset is available in parquet at <code>s3://telemetry-parquet/socorro_crash/v2</code>.
-It is also indexed with Athena and Presto with the table name <code>socorro_crash</code>.</p>
+<p>See the <a href="../datasets/bigquery/clients_last_seen/reference.html"><code>clients_last_seen</code> reference</a> for more information.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/choosing_a_dataset.md">Edit this file on GitHub.</a></footer>
                     </main>
 

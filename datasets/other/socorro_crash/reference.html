@@ -160,15 +160,7 @@
                     <main>
                         <h1><a class="header" href="#socorro-crash-reports" id="socorro-crash-reports">Socorro Crash Reports</a></h1>
 <ul>
-<li><a href="#introduction">Introduction</a>
-<ul>
-<li><a href="#contents">Contents</a>
-<ul>
-<li><a href="#accessing-the-data">Accessing the Data</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a href="#introduction">Introduction</a></li>
 <li><a href="#data-reference">Data Reference</a>
 <ul>
 <li><a href="#example">Example</a></li>
@@ -182,10 +174,6 @@
 <p>Public crash statistics for Firefox are available through the Data Platform in a <code>socorro_crash</code> dataset.
 The crash data in <a href="https://wiki.mozilla.org/Socorro">Socorro</a> is sanitized and made available to STMO.
 A nightly import job converts batches of JSON documents into a columnar format using the associated JSON Schema. </p>
-<h3><a class="header" href="#contents" id="contents">Contents</a></h3>
-<h4><a class="header" href="#accessing-the-data" id="accessing-the-data">Accessing the Data</a></h4>
-<p>The dataset is available in parquet at <code>s3://telemetry-parquet/socorro_crash/v2</code>.
-It is also indexed with Athena and Presto with the table name <code>socorro_crash</code>.</p>
 <h2><a class="header" href="#data-reference" id="data-reference">Data Reference</a></h2>
 <h3><a class="header" href="#example" id="example">Example</a></h3>
 <p>The dataset can be queried using SQL.
