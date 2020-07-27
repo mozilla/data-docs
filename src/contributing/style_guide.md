@@ -25,7 +25,7 @@ If something is _only_ of interest to a data engineer, it probably belongs elsew
 
 There are three different types of documentation that are useful as part of a site like DTMO:
 
-- Introductory material: Material intended to help people get their bearings with Mozilla's telemetry system. A set of these articles form the [Getting Started](../concepts/getting_started.html) section on this site.
+- Introductory material: Material intended to help people get their bearings with Mozilla's telemetry system. A set of these articles form the [Getting Started](../concepts/getting_started.md) section on this site.
 - Tutorials & Cookbooks: Instructions on how to perform specific tasks using Mozilla's data platform. The focus here is on how to do things, rather than on what they are.
 - Reference: Reference material on either [datasets](../datasets/reference.md) or the [data platform itself](../reference/index.md). The focus is on describing how things work or what they do, rather than how to use them.
 
