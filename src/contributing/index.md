@@ -45,7 +45,7 @@ Once you're happy with your contribution, open a pull request (PR). Give your PR
 If there is a bug associated with your documentation, title it in the form of `Bug 1234 - <descriptive one-liner>` - that way, the [Bugzilla PR linker](https://github.com/mozilla/github-bugzilla-pr-linker) will pick up the PR and attach it to the bug.
 
 After filing your PR, assign the appropriate person for review (GitHub will usually provide some suggestions), assuming you have permissions to do so yourself.
-If you do not have permission to assign a reviewer, see [getting help](../src/concepts/getting_help.md).
+If you do not have permission to assign a reviewer, see [getting help](../concepts/getting_help.md).
 
 ## Supported Plugins
 
