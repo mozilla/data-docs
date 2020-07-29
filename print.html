@@ -660,13 +660,10 @@ number of aggregates about that day's activity.</p>
 <h3><a class="header" href="#clients-last-seen" id="clients-last-seen">Clients Last Seen</a></h3>
 <p>The <code>clients_last_seen</code> dataset is useful for efficiently determining exact
 user counts such as <a href="concepts/../../../cookbooks/dau.html">DAU and MAU</a>.
-It can also allow efficient calculation of other windowed usage metrics
-like retention via its <a href="concepts/../../../cookbooks/clients_last_seen_bits.html">bit pattern fields</a>.</p>
-<p>It does <em>not</em> use approximates, unlike the HyperLogLog algorithm used in the
-<a href="concepts//datasets/obsolete/client_count/reference.html"><code>client_count_daily</code> dataset</a>,
-and it includes the most recent values in a 28 day window for all columns in
-the <a href="concepts//datasets/batch_view/clients_daily/reference.html"><code>clients_daily</code> dataset</a>.</p>
-<p>This dataset should be used instead of <code>client_count_daily</code>.</p>
+It can also allow efficient calculation of other windowed usage metrics like retention via its
+<a href="concepts/../../../cookbooks/clients_last_seen_bits.html">bit pattern fields</a>.
+It includes the most recent values in a 28 day window for all columns in the
+<a href="concepts//datasets/batch_view/clients_daily/reference.html"><code>clients_daily</code> dataset</a>.</p>
 <p>See the <a href="concepts/../datasets/bigquery/clients_last_seen/reference.html"><code>clients_last_seen</code> reference</a> for more information.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/choosing_a_dataset.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#choosing-a-mobile-product-dataset" id="choosing-a-mobile-product-dataset">Choosing a Mobile Product Dataset</a></h1>
 <h2><a class="header" href="#products-overview" id="products-overview">Products Overview</a></h2>
@@ -6939,13 +6936,10 @@ The job runs as part of the <a href="https://github.com/mozilla/telemetry-airflo
 <h1><a class="header" href="#introduction-4" id="introduction-4">Introduction</a></h1>
 <p>The <code>clients_last_seen</code> dataset is useful for efficiently determining exact
 user counts such as <a href="datasets/bigquery/clients_last_seen/../../../cookbooks/dau.html">DAU and MAU</a>.
-It can also allow efficient calculation of other windowed usage metrics
-like retention via its <a href="datasets/bigquery/clients_last_seen/../../../cookbooks/clients_last_seen_bits.html">bit pattern fields</a>.</p>
-<p>It does <em>not</em> use approximates, unlike the HyperLogLog algorithm used in the
-<a href="datasets/bigquery/clients_last_seen//datasets/obsolete/client_count/reference.html"><code>client_count_daily</code> dataset</a>,
-and it includes the most recent values in a 28 day window for all columns in
-the <a href="datasets/bigquery/clients_last_seen//datasets/batch_view/clients_daily/reference.html"><code>clients_daily</code> dataset</a>.</p>
-<p>This dataset should be used instead of <code>client_count_daily</code>.</p>
+It can also allow efficient calculation of other windowed usage metrics like retention via its
+<a href="datasets/bigquery/clients_last_seen/../../../cookbooks/clients_last_seen_bits.html">bit pattern fields</a>.
+It includes the most recent values in a 28 day window for all columns in the
+<a href="datasets/bigquery/clients_last_seen//datasets/batch_view/clients_daily/reference.html"><code>clients_daily</code> dataset</a>.</p>
 <h4><a class="header" href="#content" id="content">Content</a></h4>
 <p>For each <code>submission_date</code> this dataset contains one row per <code>client_id</code>
 that appeared in <code>clients_daily</code> in a 28 day window including
