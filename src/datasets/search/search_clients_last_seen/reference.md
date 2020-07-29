@@ -23,7 +23,7 @@ baseline amount of activity.
 ## Scheduling
 
 This dataset is scheduled on Airflow
-([source](https://github.com/mozilla/telemetry-airflow/blob/f6a1e87c727df70aa12d9e37fc0c214922919e65/dags/main_summary.py#L398)).
+([source](https://github.com/mozilla/bigquery-etl/blob/a39e168a2d3396d8dd286e1ae9fa6baf7f8afa2d/dags/bqetl_search.py#L52)).
 
 ## Schema
 
