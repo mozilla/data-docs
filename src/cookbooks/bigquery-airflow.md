@@ -54,11 +54,11 @@ bqetl_clients_ids:   # name of the DAG; must start with bqetl_
     retry_delay: 30m
 ```
 
-The `bqetl_clients_ids` DAG and the created query will be executed on a daily basis at 2am UTC.
+The `bqetl_clients_ids` DAG and the created query will be executed on a daily basis at 02:00 UTC.
 
 Run `./script/generate_airflow_dags` to generate the Airflow DAG. Task dependencies that are defined in bigquery-etl and
 dependencies to stable tables are determined automatically. Generated DAGs are written to the `dags/` directory and
-will be automatically detected and scheduled by Airflow once the changes are commited to master in `bigquery-etl`.
+will be automatically detected and scheduled by Airflow once the changes are committed to master in `bigquery-etl`.
 
 
 ## Other considerations
