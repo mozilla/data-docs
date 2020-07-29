@@ -3,7 +3,7 @@
 This derived dataset makes it easier to analyze the [event ping][event_ping].
 It has the following advantages over accessing the raw ping table (`telemetry.event`):
 
-- There is no need to unnest the `events` column: this is already done for you.
+- There is no need to `UNNEST` the `events` column: this is already done for you.
 - You don't have to introspect a BigQuery structure to find out which process emitted an event: you can query the `event_process` column directly.
 - It is clustered on the `event_category` column, which can dramatically speed up your query.
 
