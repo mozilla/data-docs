@@ -3488,19 +3488,17 @@ GROUP BY `date` ORDER BY `date`
 Not sure if you need a project like this? Don't know who to specify as a Data Engineering contact? Not sure what your project budget might be? <a href="cookbooks/../concepts/getting_help.html">Get in touch with the data platform team</a>.</p>
 <p>We are currently <a href="https://mana.mozilla.org/wiki/display/DENG/Active+GCP+Prototype+Projects">tracking these projects on mana</a> (link requires Mozilla LDAP)</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/gcp-projects.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#scheduling-bigquery-queries-in-airflow" id="scheduling-bigquery-queries-in-airflow">Scheduling BigQuery Queries in Airflow</a></h1>
-<p>Queries in <a href="https://github.com/mozilla/bigquery-etl"><code>bigquery-etl</code></a> can be scheduled in 
+<p>Queries in <a href="https://github.com/mozilla/bigquery-etl"><code>bigquery-etl</code></a> can be scheduled in
 <a href="https://github.com/mozilla/telemetry-airflow">Airflow</a> to be run regularly with the results written to a table.</p>
 <ul>
 <li><a href="cookbooks/bigquery-airflow.html#in-bigquery-etl">In bigquery-etl</a></li>
-<li><a href="cookbooks/bigquery-airflow.html#in-telemetry-airflow">In telemetry-airflow</a></li>
 <li><a href="cookbooks/bigquery-airflow.html#other-considerations">Other considerations</a></li>
 </ul>
 <h2><a class="header" href="#in-bigquery-etl" id="in-bigquery-etl">In bigquery-etl</a></h2>
 <p>In the <a href="https://github.com/mozilla/bigquery-etl"><code>bigquery-etl</code></a> project, queries are written in <code>/sql</code>.
 The directory structure is based on the destination table: <code>/sql/{dataset_id}/{table_name}</code>.
 For example, <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/telemetry_derived/core_clients_last_seen_v1/query.sql"><code>/sql/telemetry_derived/core_clients_last_seen_v1/query.sql</code></a>
-is a query that will write results to the <code>core_clients_last_seen_v1</code> table in the <code>telemetry_derived</code> dataset.
-This can be overridden in Airflow.</p>
+is a query that will write results to the <code>core_clients_last_seen_v1</code> table in the <code>telemetry_derived</code> dataset.</p>
 <p>If we want to create a new table of just <code>client_id</code>'s each day called <code>client_ids</code> in the <code>example</code> dataset, 
 we should create <code>/sql/example/client_ids/query.sql</code>:</p>
 <pre><code class="language-sql">SELECT
@@ -3512,46 +3510,39 @@ WHERE
   submission_date = @submission_date
 </code></pre>
 <p><code>@submission_date</code> is a parameter that will be filled in by Airflow.</p>
-<p>Commit changes in <code>/sql</code>. 
-When a commit is made to master in <code>bigquery-etl</code>, the Docker image is pushed and available to Airflow.</p>
-<h2><a class="header" href="#in-telemetry-airflow" id="in-telemetry-airflow">In telemetry-airflow</a></h2>
-<p>The next step is to create a DAG or add a task to an existing DAG that will run the query.<br />
-In <a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a>, BigQuery related functions are found in <code>/dags/utils/gcp.py</code>.
-The function we are interested in is <a href="https://github.com/mozilla/telemetry-airflow/blob/c103f3eee4ddc653316325d0ee0deab0bb35ee57/dags/utils/gcp.py#L390"><code>bigquery_etl_query</code></a>.</p>
-<p>For our <code>client_ids</code> example, we could create a new DAG, <code>/dags/client_ids.py</code>:</p>
-<pre><code class="language-python">from airflow import models
-from utils.gcp import bigquery_etl_query
-
-default_args = {
-    ...
-}
-
-dag_name = 'client_ids'
-
-with models.DAG(dag_name, schedule_interval='0 1 * * *', default_args=default_args) as dag:
-    client_ids = bigquery_etl_query(
-        task_id='client_ids',
-        destination_table='client_ids',
-        dataset_id='example'
-    )
+<p>To schedule your query, create a <code>/sql/example/client_ids/metadata.yaml</code> file with the following content:</p>
+<pre><code class="language-yaml">friendly_name: Client IDs
+description: Unique client IDs, partitioned by day.
+owners:
+  - example@mozilla.com
+labels:
+  application: firefox
+  incremental: true     # incremental queries add data to existing tables
+scheduling:
+  dag_name: bqetl_client_ids
 </code></pre>
-<p>By default, <code>bigquery_etl_query</code> will execute the query in <code>/sql/{dataset_id}/{destination_table}/query.sql</code> 
-and write to the <code>derived-datasets</code> project but this can be changed via the function arguments.</p>
-<p>This DAG will then execute <code>/sql/example/client_ids/query.sql</code> every day, 
-writing results to the <code>client_ids</code> table in the <code>example</code> dataset in the <code>derived-datasets</code> project.</p>
+<p>The <code>scheduling</code> section schedules the query as a task that is part of the <code>bqetl_clients_ids</code> DAG. Make sure that
+the <code>bqetl_clients_ids</code> DAG is actually defined in <code>dags.yaml</code> and has the right scheduling interval, for example:</p>
+<pre><code class="language-yaml">bqetl_clients_ids:   # name of the DAG; must start with bqetl_
+  schedule_interval: 0 2 * * *    # query schedule; every day at 2am
+  default_args:
+    owner: example@mozilla.com
+    start_date: '2020-04-05'  # YYYY-MM-DD
+    email: ['example@mozilla.com']
+    retries: 2    # number of retries if the query execution fails
+    retry_delay: 30m
+</code></pre>
+<p>In this example, the <code>bqetl_clients_ids</code> DAG and the created query will be executed on a daily basis at 02:00 UTC.</p>
+<p>Run <code>./script/generate_airflow_dags</code> to generate the Airflow DAG. Task dependencies that are defined in bigquery-etl and
+dependencies to stable tables are determined automatically. Generated DAGs are written to the <code>dags/</code> directory and
+will be automatically detected and scheduled by Airflow once the changes are committed to master in <code>bigquery-etl</code>.</p>
 <h2><a class="header" href="#other-considerations" id="other-considerations">Other considerations</a></h2>
 <ul>
 <li>The Airflow task will overwrite the destination table partition
 <ul>
 <li>Destination table should be partitioned by <code>submission_date</code></li>
-<li><code>date_partition_parameter</code> argument in <code>bigquery_etl_query</code> can be set to <code>None</code> to overwrite the whole table</li>
-</ul>
-</li>
-<li>Airflow can be tested locally following instructions here: 
-<a href="https://github.com/mozilla/telemetry-airflow#testing-gke-jobs-including-bigquery-etl-changes">https://github.com/mozilla/telemetry-airflow#testing-gke-jobs-including-bigquery-etl-changes</a></li>
-<li>It's possible to change the Docker image that Airflow uses to test changes to <code>bigquery-etl</code> before merging changes to master
-<ul>
-<li>Supply a value to the <code>docker_image</code> argument in <code>bigquery_etl_query</code></li>
+<li><code>date_partition_parameter</code> can be set to <code>null</code> to overwrite the whole table in the <code>scheduling</code> section
+of the <code>metadata.yaml</code> file</li>
 </ul>
 </li>
 </ul>
@@ -6638,7 +6629,7 @@ there will be a row with nulls for all the addon fields
 <h2><a class="header" href="#scheduling-1" id="scheduling-1">Scheduling</a></h2>
 <p>This dataset is updated daily via the <a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a> infrastructure.
 The job DAG runs every day after the Main Summary data has been generated.
-The DAG defined in <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/bqetl_addons.py"><code>dags/bqetl_addons.py</code></a></p>
+The DAG defined in <a href="https://github.com/mozilla/bigquery-etl/blob/master/dags/bqetl_addons.py"><code>dags/bqetl_addons.py</code></a></p>
 <h2><a class="header" href="#code-reference" id="code-reference">Code Reference</a></h2>
 <p>This dataset is generated by <a href="https://github.com/mozilla/bigquery-etl/">BigQuery ETL</a>. The query that generates the dataset is <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/telemetry_derived/addons_v2/query.sql"><code>sql/telemetry_derived/addons_v2/query.sql</code></a>.</p>
 <p>You may find the <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/environment.html#addons">environment reference</a> in The Firefox Source Documentation helpful for understanding the source data.</p>
@@ -6708,7 +6699,7 @@ ORDER BY
 <h2><a class="header" href="#scheduling-2" id="scheduling-2">Scheduling</a></h2>
 <p>This dataset is updated daily via the
 <a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a> infrastructure.
-The job runs as part of the <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/bqetl_addons.py"><code>addons_daily</code> DAG</a>.</p>
+The job runs as part of the <a href="https://github.com/mozilla/bigquery-etl/blob/master/dags/bqetl_addons.py"><code>addons_daily</code> DAG</a>.</p>
 <h2><a class="header" href="#schema" id="schema">Schema</a></h2>
 <p>The data is partitioned by <code>submission_date</code>.</p>
 <p>As of 2020-04-17, the current version of the <code>addons_daily</code> dataset is <code>v1</code>.</p>
@@ -6904,7 +6895,7 @@ ORDER BY
 <h2><a class="header" href="#scheduling-4" id="scheduling-4">Scheduling</a></h2>
 <p>This dataset is updated daily via the
 <a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a> infrastructure.
-The job runs as part of the <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/bqetl_main_summary.py"><code>main_summary</code> DAG</a>.</p>
+The job runs as part of the <a href="https://github.com/mozilla/bigquery-etl/blob/master/dags/bqetl_main_summary.py"><code>main_summary</code> DAG</a>.</p>
 <h2><a class="header" href="#schema-2" id="schema-2">Schema</a></h2>
 <p>The data is partitioned by <code>submission_date</code>.</p>
 <p>As of 2019-11-28, the current version of the <code>clients_daily</code> dataset is <code>v6</code>.</p>
@@ -7025,7 +7016,7 @@ ORDER BY
 <p>This dataset is updated daily via the
 <a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a>
 infrastructure. The job runs as part of the
-<a href="https://github.com/mozilla/telemetry-airflow/blob/89a6dc3/dags/main_summary.py#L365"><code>main_summary</code> DAG</a>.</p>
+<a href="https://github.com/mozilla/bigquery-etl/blob/a39e168a2d3396d8dd286e1ae9fa6baf7f8afa2d/dags/bqetl_main_summary.py#L104"><code>main_summary</code> DAG</a>.</p>
 <h2><a class="header" href="#schema-3" id="schema-3">Schema</a></h2>
 <p>The data is partitioned by <code>submission_date</code>.</p>
 <p>As of 2019-03-25, the current version of the <code>clients_last_seen</code> dataset is
@@ -7334,7 +7325,7 @@ We do not ever expect nulls for these fields.</p>
 <h3><a class="header" href="#scheduling-8" id="scheduling-8">Scheduling</a></h3>
 <p>This dataset is updated daily via the <a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a> infrastructure.
 The DAG is defined in
-<a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/bqetl_main_summary.py"><code>dags/bqetl_main_summary.py</code></a></p>
+<a href="https://github.com/mozilla/bigquery-etl/blob/master/dags/bqetl_main_summary.py"><code>dags/bqetl_main_summary.py</code></a></p>
 <h3><a class="header" href="#schema-5" id="schema-5">Schema</a></h3>
 <p>As of 2019-11-28, the current version of the <code>main_summary</code> dataset is <code>v4</code>.</p>
 <p>For more detail on where these fields come from in the
@@ -8005,7 +7996,7 @@ it's likely you don't have the proper permissions.
 For more details see the <a href="datasets/search/search_aggregates/../../search.html">search data documentation</a>.</p>
 <h2><a class="header" href="#scheduling-12" id="scheduling-12">Scheduling</a></h2>
 <p>This job is
-<a href="https://github.com/mozilla/telemetry-airflow/blob/9af06204f7073d7fd5b0240db9091b57a7454a74/dags/main_summary.py#L597">scheduled on airflow</a>
+<a href="https://github.com/mozilla/bigquery-etl/blob/a39e168a2d3396d8dd286e1ae9fa6baf7f8afa2d/dags/bqetl_search.py#L40">scheduled on airflow</a>
 to run daily.</p>
 <h2><a class="header" href="#schema-9" id="schema-9">Schema</a></h2>
 <p>As of 2019-11-27,
@@ -8099,7 +8090,7 @@ it's likely you don't have the proper permissions.
 For more details see the <a href="datasets/search/search_clients_daily/../../search.html">search data documentation</a>.</p>
 <h2><a class="header" href="#scheduling-13" id="scheduling-13">Scheduling</a></h2>
 <p>This dataset is scheduled on Airflow
-(<a href="https://github.com/mozilla/telemetry-airflow/blob/9af06204f7073d7fd5b0240db9091b57a7454a74/dags/main_summary.py#L588">source</a>).</p>
+(<a href="https://github.com/mozilla/bigquery-etl/blob/a39e168a2d3396d8dd286e1ae9fa6baf7f8afa2d/dags/bqetl_search.py#L64">source</a>).</p>
 <h2><a class="header" href="#schema-10" id="schema-10">Schema</a></h2>
 <p>As of 2019-11-27, the current version of <code>search_clients_daily</code> is <code>v8</code>,
 and has a schema as follows.
@@ -8253,7 +8244,7 @@ to determine the % of clients who partake in each activity, regardless of their
 baseline amount of activity.</p>
 <h2><a class="header" href="#scheduling-14" id="scheduling-14">Scheduling</a></h2>
 <p>This dataset is scheduled on Airflow
-(<a href="https://github.com/mozilla/telemetry-airflow/blob/f6a1e87c727df70aa12d9e37fc0c214922919e65/dags/main_summary.py#L398">source</a>).</p>
+(<a href="https://github.com/mozilla/bigquery-etl/blob/a39e168a2d3396d8dd286e1ae9fa6baf7f8afa2d/dags/bqetl_search.py#L52">source</a>).</p>
 <h2><a class="header" href="#schema-11" id="schema-11">Schema</a></h2>
 <p>As of 2020-04-22, the current version of <code>search_clients_last_seee</code> is <code>v1</code>,
 and has a schema as follows.
