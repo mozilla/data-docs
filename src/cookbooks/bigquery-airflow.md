@@ -1,6 +1,6 @@
 # Scheduling BigQuery Queries in Airflow
 
-Queries in [`bigquery-etl`](https://github.com/mozilla/bigquery-etl) can be automatically scheduled in
+Queries in [`bigquery-etl`](https://github.com/mozilla/bigquery-etl) can be scheduled in
 [Airflow](https://github.com/mozilla/telemetry-airflow) to be run regularly with the results written to a table.
 
 <!-- toc -->
