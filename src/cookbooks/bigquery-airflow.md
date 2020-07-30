@@ -26,7 +26,7 @@ WHERE
 
 `@submission_date` is a parameter that will be filled in by Airflow.
 
-To schedule the create query, create a `/sql/example/client_ids/metadata.yaml` file with the following content:
+To schedule your query, create a `/sql/example/client_ids/metadata.yaml` file with the following content:
 
 ```yaml
 friendly_name: Client IDs
