@@ -14,7 +14,7 @@ The code for the ingestion pipeline lives in the [`gcp-ingestion`][gcp-ingestion
 ```mermaid
 graph TD
 
-f1(fa:fa-firefox Firefox) -->|HTTP Post| d0(fa:fa-filter Ingestion Edge)
+f1(fa:fa-firefox Data Producers) -->|HTTP Post| d0(fa:fa-filter Ingestion Edge)
 d0 --> p1(fa:fa-stream Raw Topic)
 p1 --> d1(fa:fa-exchange-alt Landfill Sink)
 d1 --> b1(fa:fa-database Landfill BQ)
