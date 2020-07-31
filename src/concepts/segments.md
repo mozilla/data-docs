@@ -101,6 +101,7 @@ If you need to break MAU down into the sum of MAU for various user states, then 
 It might be tempting to assign users to whichever user state they happened to be in at the end of the window: this quantity is easy to query.
 But many of the user states were defined to be meaningful _on days the users were active_.
 "Regular users v3" is predictive of retention, _given that the user was active on the day of interest as a regular user_.
+If someone has been using the browser every day for a year but then suddenly churns, then it's misleading to consider them to be active as a "not regular user v3" for MAU on the period ending the 15th day after their last activity.
 A user can be "new or resurrected v3" for only one day in a 28-day period: unless they appear for the first time on the last day of the month, the user will not qualify as "new or resurrected v3" at the end of the MAU window!
 So beware this trap and try to only use user states on days the users are active.
 
