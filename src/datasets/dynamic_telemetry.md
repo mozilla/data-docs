@@ -14,6 +14,7 @@ for these probes.
 
 | Start date | Study  | Probe type | Probe names | Documentation |
 | ---------- | ------ | ---------- | ----------- | ------------- |
+| 2020-08 | [DoH Resolver Usage Study](https://github.com/mozilla-extensions/doh-resolver-usage-study) | event | `doh.study.resolverusage#resolve.domains` | https://github.com/mozilla-extensions/doh-resolver-usage-study/blob/master/docs/TELEMETRY.md |
 | 2020-06 | [Google Accounts Login Check](https://github.com/mozilla-extensions/login-study) | custom ping |  [`normandy-login-study`](https://github.com/mozilla-services/mozilla-pipeline-schemas/pull/561) ping ingested to the `telemetry.normandy_login_study` table | https://github.com/mozilla-extensions/login-study/blob/master/login-check-metrics.md
 | 2020-04 | [HTTP Upgrade](https://bugzilla.mozilla.org/show_bug.cgi?id=1623996) | scalar | `httpsUpgradeStudy.https`, `httpsUpgradeStudy.nonupgradable`, `httpsUpgradeStudy.upgradable` | https://bugzilla.mozilla.org/show_bug.cgi?id=1629585 |
 | 2020-02 | [Search interventions](https://bugzilla.mozilla.org/show_bug.cgi?id=1564506) | scalar | `urlbarInterventionsExperiment.tipShownCount`, `.tipPickedCount` | missing |
