@@ -366,6 +366,8 @@ Convenient for quick data investigations. Users are advised to join the <a href=
 <h2><a class="header" href="#notable-historic-events" id="notable-historic-events">Notable historic events</a></h2>
 <p>When you start to evaluate trends, be aware of events from the past that may invite comparisons with history. Here are a few to keep in mind:</p>
 <ul>
+<li><strong>August 6, 2020</strong> - <a href="https://github.com/mozilla/bigquery-etl/pull/1215">Pings with &quot;automation&quot; tag in X-Source-Tags will no longer appear in stable tables</a>
+This is particularly relevant for removing pings related to automated testing of Fenix.</li>
 <li><strong>July 20, 2020</strong> - <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1653244">Glean dropping application lifetime metrics from <code>metrics</code> pings</a>.
 Glean Android bindings from version <code>v25.0.0</code> up to and including <code>v31.4.0</code> had a bug that would cause metrics with “lifetime: application” to be cleared before they could be collected for metrics pings sent during startup. This can result in application lifetime metrics like experiment information being randomly missing from the data.</li>
 <li><strong>April 14, 2020</strong> - <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1630096">Telemetry edge server rejects pings for an hour</a>.
@@ -4739,6 +4741,7 @@ Used for computing client clock skew.</li>
 <li><code>DNT</code> - The &quot;Do Not Track&quot; header.</li>
 <li><code>X-PingSender-Version</code> - The version of <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/pingsender.html">Pingsender</a> used to send this ping (if applicable).</li>
 <li><code>X-Debug-ID</code> - An optional tag used to make data available to the [Glean Debug View].</li>
+<li><code>X-Source-Tags</code> - An optional comma-separated list of tags related to the client source; pings sent from automated testing should include the &quot;automation&quot; tag so that they are not included in analyses</li>
 </ul>
 <h2><a class="header" href="#other-considerations-1" id="other-considerations-1">Other Considerations</a></h2>
 <h3><a class="header" href="#compression" id="compression">Compression</a></h3>
