@@ -67,7 +67,7 @@
       * [Profile History](concepts/profile/profilehistory.md)
     * [Census metrics](concepts/censuses.md)
     * [Engagement metrics](concepts/engagement.md)
-    * [Segments](concepts/segments.md)
+    * [User states/Segments](concepts/segments.md)
   * [Project Glossary](tools/projects.md)
 
 ---
