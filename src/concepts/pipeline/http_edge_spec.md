@@ -88,6 +88,7 @@ The following headers will be passed through the pipeline and made available as 
 * `DNT` - The "Do Not Track" header.
 * `X-PingSender-Version` - The version of [Pingsender] used to send this ping (if applicable).
 * `X-Debug-ID` - An optional tag used to make data available to the [Glean Debug View].
+* `X-Source-Tags` - An optional comma-separated list of tags related to the client source; pings sent from automated testing should include the "automation" tag so that they are not presented to analyses
 
 [Pingsender]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/pingsender.html
 
