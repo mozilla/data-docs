@@ -56,6 +56,8 @@
     * [HTTP Edge Server Specification](concepts/pipeline/http_edge_spec.md)
     * [Event Pipeline Detail](concepts/pipeline/event_pipeline.md)
     * [Schemas](concepts/pipeline/schemas.md)
+    * [Channel Normalization](concepts/channels/channel_normalization.md)
+    * [Sampling](concepts/sample_id.md)
   * [SQL Style Guide](concepts/sql_style.md)
   * [Telemetry Behavior Reference](concepts/index.md)
     * [History of Telemetry](concepts/history.md)
@@ -63,12 +65,9 @@
       * [Profile Creation](concepts/profile/profile_creation.md)
       * [Real World Usage](concepts/profile/realworldusage.md)
       * [Profile History](concepts/profile/profilehistory.md)
-    * [Channel Behavior](concepts/channels/index.md)
-      * [Channel Normalization and Querying](concepts/channels/channel_normalization.md)
     * [Census metrics](concepts/censuses.md)
     * [Engagement metrics](concepts/engagement.md)
     * [User states/Segments](concepts/segments.md)
-    * [Sampling](concepts/sample_id.md)
   * [Project Glossary](tools/projects.md)
 
 ---
