@@ -60,6 +60,7 @@ checkpointed
 checkpointing
 chromehangs
 CircleCI
+CIs
 Colaboratory
 Colab
 config
@@ -115,6 +116,7 @@ filesystem
 firefox-data-docs
 FirefoxReality
 FireTV
+FLOAT64
 frac
 funnelcake
 GCP
@@ -152,6 +154,7 @@ inlined
 int64
 interpretability
 iOS
+Jetstream
 JS
 JSON
 JSONSchema
