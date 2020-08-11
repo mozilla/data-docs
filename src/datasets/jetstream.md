@@ -55,72 +55,19 @@ experiment of a given period type, named like:
 
 Statistics tables have the schema:
 
-<table>
-<thead>
-<tr class="header">
-<th>Column name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>`segment`</td>
-<td>STRING</td>
-<td>The segment of the population being analyzed. “all” for the entire population.</td>
-</tr>
-<tr class="even">
-<td>`metric`</td>
-<td>STRING</td>
-<td>The slug of the metric, like `active_ticks` or `retained`</td>
-</tr>
-<tr class="odd">
-<td>`statistic`</td>
-<td>STRING</td>
-<td>The slug of the statistic that was used to summarize the metric, like “mean” or “deciles”</td>
-</tr>
-<tr class="even">
-<td>`parameter`</td>
-<td>NUMERIC (decimal)</td>
-<td>A statistic-dependent quantity. For two-dimensional statistics like “decile,” this represents the x axis of the plot. For one-dimensional statistics, this is NULL.</td>
-</tr>
-<tr class="odd">
-<td>`comparison`</td>
-<td>STRING</td>
-<td>If this row represents a comparison between two branches, this row describes what kind of comparison, like `difference` or `relative_uplift`. If this row represents a measurement of a single branch, then this column is NULL.</td>
-</tr>
-<tr class="even">
-<td>`comparison_to_branch`</td>
-<td>STRING</td>
-<td>If this row represents a comparison between two branches, this row describes which branch is being compared to. For simple A/B tests, this will be “control.”</td>
-</tr>
-<tr class="odd">
-<td>`ci_width`</td>
-<td>FLOAT64</td>
-<td>A value between 0 and 1 describing the width of the confidence interval represented by the lower and upper columns. Valued at 0.95 for 95% CIs.</td>
-</tr>
-<tr class="even">
-<td>`point`</td>
-<td>FLOAT64</td>
-<td>The point estimate of the statistic for the metric given the parameter.</td>
-</tr>
-<tr class="odd">
-<td>`lower`</td>
-<td>FLOAT64</td>
-<td>The lower bound of the confidence interval for the estimate.</td>
-</tr>
-<tr class="even">
-<td>`upper`</td>
-<td>FLOAT64</td>
-<td>The upper bound of the confidence interval for the estimate.</td>
-</tr>
-<tr class="odd">
-<td>`window_index`</td>
-<td>INT64</td>
-<td>(views only) A base-1 index reflecting the analysis window from which the row is drawn (i.e. day 1, day 2, …).</td>
-</tr>
-</tbody>
-</table>
+| Column name | Type | Description |
+| ----------- | ---- | ----------- |
+| `segment` | `STRING` | The segment of the population being analyzed. “all” for the entire population. |
+| `metric` | `STRING` | The slug of the metric, like `active_ticks` or `retained` |
+| `statistic` | `STRING` | The slug of the statistic that was used to summarize the metric, like “mean” or “deciles” |
+| `parameter` | `NUMERIC` (decimal) | A statistic-dependent quantity. For two-dimensional statistics like “decile,” this represents the x axis of the plot. For one-dimensional statistics, this is NULL. |
+| `comparison` | `STRING` | If this row represents a comparison between two branches, this row describes what kind of comparison, like `difference` or `relative_uplift`. If this row represents a measurement of a single branch, then this column is NULL. |
+| `comparison_to_branch` | `STRING` | If this row represents a comparison between two branches, this row describes which branch is being compared to. For simple A/B tests, this will be “control.” |
+| `ci_width` | `FLOAT64` | A value between 0 and 1 describing the width of the confidence interval represented by the lower and upper columns. Valued at 0.95 for 95% CIs. |
+| `point` | `FLOAT64` | The point estimate of the statistic for the metric given the parameter. |
+| `lower` | `FLOAT64` | The lower bound of the confidence interval for the estimate. |
+| `upper` | `FLOAT64` | The upper bound of the confidence interval for the estimate. |
+| `window_index` | `INT64` | (views only) A base-1 index reflecting the analysis window from which the row is drawn (i.e. day 1, day 2, …). |
 
 Each combination of `(segment, metric, statistic, parameter, comparison,
 comparison_to_branch, ci_width)` uniquely describes a single data
@@ -193,47 +140,14 @@ Aggregate tables are named like:
 Aggregate tables have flexible schemas. Every table contains the
 columns:
 
-<table>
-<thead>
-<tr class="header">
-<th>Column name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>`client_id`</td>
-<td>STRING</td>
-<td>Client’s telemetry `client_id`</td>
-</tr>
-<tr class="even">
-<td>`branch`</td>
-<td>STRING</td>
-<td>Branch client enrolled in</td>
-</tr>
-<tr class="odd">
-<td>`enrollment_date`</td>
-<td>DATE</td>
-<td>First date that the client enrolled in the branch</td>
-</tr>
-<tr class="even">
-<td>`num_enrollment_events`</td>
-<td>INT64</td>
-<td>Number of times a client enrolled in the given branch</td>
-</tr>
-<tr class="odd">
-<td>`analysis_window_start`</td>
-<td>INT64</td>
-<td>The day after enrollment that this analysis window began; day 0 is the day of enrollment</td>
-</tr>
-<tr class="even">
-<td>`analysis_window_end`</td>
-<td>INT64</td>
-<td>The day after enrollment that this analysis window terminated (inclusive)</td>
-</tr>
-</tbody>
-</table>
+| Column name | Type | Description |
+| ----------- | ---- | ----------- |
+| `client_id` | `STRING` | Client’s telemetry `client_id` |
+| `branch` | `STRING` | Branch client enrolled in |
+| `enrollment_date` | `DATE` | First date that the client enrolled in the branch |
+| `num_enrollment_events` | `INT64` | Number of times a client enrolled in the given branch |
+| `analysis_window_start` | `INT64` | The day after enrollment that this analysis window began; day 0 is the day of enrollment |
+| `analysis_window_end` | `INT64` | The day after enrollment that this analysis window terminated (inclusive) |
 
 The combination of `(client_id, branch)` is unique.
 
