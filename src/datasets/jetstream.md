@@ -3,12 +3,13 @@
 <!-- toc -->
 
 Statistical summaries of telemetry data from experiments run in Mozilla
-products are provided by Jetstream. These summaries are published to
+products are provided by [Jetstream]. These summaries are published to
 BigQuery and serve both as the substrate for the result visualization
 platform and as a resource for data scientists.
 
-Jetstream runs as part of the nightly ETL job. The tables are published
-to the dataset `moz-fx-data-experiments.mozanalysis`.
+Jetstream runs as part of the nightly ETL job (see Scheduling below).
+Jetstream is also run after pushes to the [jetstream-config] repository.
+Jetstream publishes tables to the dataset `moz-fx-data-experiments.mozanalysis`.
 
 Experiments are analyzed using the concept of analysis windows. Analysis
 windows describe an interval marked from each client’s day of
@@ -36,9 +37,12 @@ for which all clients have complete data.
 Jetstream computes statistics over several metrics by default, including
 for any features associated with the experiment in Experimenter. Data
 scientists can provide configuration to add additional metrics. Advice
-on configuring Jetstream can be found at Jetstream’s Github wiki.
+on configuring Jetstream can be found at the [jetstream-config] repository.
 
-# Statistics tables
+[Jetstream]: https://github.com/mozilla/jetstream
+[jetstream-config]: https://github.com/mozilla/jetstream-config
+
+## Statistics tables
 
 The statistics tables contain statistical summaries of their
 corresponding aggregate tables. These tables are suitable for plotting
@@ -63,7 +67,7 @@ Statistics tables have the schema:
 | `parameter` | `NUMERIC` (decimal) | A statistic-dependent quantity. For two-dimensional statistics like “decile,” this represents the x axis of the plot. For one-dimensional statistics, this is NULL. |
 | `comparison` | `STRING` | If this row represents a comparison between two branches, this row describes what kind of comparison, like `difference` or `relative_uplift`. If this row represents a measurement of a single branch, then this column is NULL. |
 | `comparison_to_branch` | `STRING` | If this row represents a comparison between two branches, this row describes which branch is being compared to. For simple A/B tests, this will be “control.” |
-| `ci_width` | `FLOAT64` | A value between 0 and 1 describing the width of the confidence interval represented by the lower and upper columns. Valued at 0.95 for 95% CIs. |
+| `ci_width` | `FLOAT64` | A value between 0 and 1 describing the width of the confidence interval represented by the lower and upper columns. Valued at 0.95 for 95% confidence intervals. |
 | `point` | `FLOAT64` | The point estimate of the statistic for the metric given the parameter. |
 | `lower` | `FLOAT64` | The lower bound of the confidence interval for the estimate. |
 | `upper` | `FLOAT64` | The upper bound of the confidence interval for the estimate. |
@@ -73,8 +77,17 @@ Each combination of `(segment, metric, statistic, parameter, comparison,
 comparison_to_branch, ci_width)` uniquely describes a single data
 point.
 
+The available segments in a table should be derived from inspection of
+the table.
+
+[Jetstream’s Github wiki][jetstream-wiki] has a description of each statistic and
+comparison.
+
+### Examples
+
 To extract the mean of `active_hours` for each branch from a weekly
-statistics view v, you could run the query:
+statistics view with a name like `statistics_bug_12345_slug_weekly`,
+you could run the query:
 
 ```sql
 SELECT
@@ -84,7 +97,7 @@ SELECT
     point,
     lower,
     upper
-FROM v
+FROM `moz-fx-data-experiments`.mozanalysis.statistics_bug_12345_slug_weekly
 WHERE
     metric = "active_hours"
     AND statistic = "mean"
@@ -105,7 +118,7 @@ SELECT
     point,
     lower,
     upper
-FROM v
+FROM `moz-fx-data-experiments`.mozanalysis.statistics_bug_12345_slug_weekly
 WHERE
     metric = "active_hours"
     AND statistic = "mean"
@@ -119,13 +132,9 @@ This query would return a row for each week of the experiment containing
 an estimate of the absolute difference between the treatment and control
 branches for the segment containing all users.
 
-The available segments in a table should be derived from inspection of
-the table.
+[jetstream-wiki]: https://github.com/mozilla/jetstream/wiki
 
-Jetstream’s Github wiki has a description of each statistic and
-comparison.
-
-# Client-window aggregate tables
+## Client-window aggregate tables
 
 The aggregate tables contain one row per enrolled `client_id`. An
 aggregate table is written for each analysis window. The statistics
@@ -159,3 +168,8 @@ Each data source associated with the experiment defines additional
 `<data_source>_has_non_enrolled_data` columns, which respectively
 indicate whether `client_id` reported data from more than one branch or
 without any tagged branch in that dataset over that analysis window.
+
+## Scheduling
+
+Jetstream is updated nightly by telemetry-airflow.
+It is invoked by the [`jetstream` DAG](https://github.com/mozilla/telemetry-airflow/blob/master/dags/jetstream.py).
