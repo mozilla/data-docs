@@ -8,7 +8,7 @@ BigQuery and serve both as the substrate for the result visualization
 platform and as a resource for data scientists.
 
 Jetstream runs as part of the nightly ETL job (see Scheduling below).
-Jetstream is also run after pushes to the [jetstream-config] repository.
+Jetstream is also run after pushes to the [`jetstream-config`] repository.
 Jetstream publishes tables to the dataset `moz-fx-data-experiments.mozanalysis`.
 
 Experiments are analyzed using the concept of analysis windows. Analysis
@@ -37,10 +37,10 @@ for which all clients have complete data.
 Jetstream computes statistics over several metrics by default, including
 for any features associated with the experiment in Experimenter. Data
 scientists can provide configuration to add additional metrics. Advice
-on configuring Jetstream can be found at the [jetstream-config] repository.
+on configuring Jetstream can be found at the [`jetstream-config`] repository.
 
 [Jetstream]: https://github.com/mozilla/jetstream
-[jetstream-config]: https://github.com/mozilla/jetstream-config
+[`jetstream-config`]: https://github.com/mozilla/jetstream-config
 
 ## Statistics tables
 
