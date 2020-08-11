@@ -1,4 +1,6 @@
-# Jetstream Datasets
+# Jetstream datasets
+
+<!-- toc -->
 
 Statistical summaries of telemetry data from experiments run in Mozilla
 products are provided by Jetstream. These summaries are published to
