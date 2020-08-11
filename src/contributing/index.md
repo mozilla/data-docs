@@ -20,7 +20,7 @@ Instead, use the `Edit on GitHub` button on the bottom of any page, make your ch
 
 ## Building the Documentation
 
-This documentation is stored as [Markdown](https://en.wikipedia.org/wiki/Markdown) in the
+This documentation is stored as [CommonMark Markdown](https://commonmark.org/help/) in the
 [`firefox-data-docs` repository](https://github.com/mozilla/firefox-data-docs) on GitHub.
 To build a local copy, fork the repository and check out your copy. Then, [see the README](https://github.com/mozilla/firefox-data-docs/blob/master/README.md#building-the-documentation) for up-to-date information on how to build the documentation.
 
