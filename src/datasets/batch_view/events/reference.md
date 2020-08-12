@@ -13,6 +13,12 @@ It has the following advantages over accessing the raw ping table (`telemetry.ev
 
 The events dataset contains one row for each event submitted in an event ping for that day.
 
+The `category`, `method`, `object`, `value`, and `extra` fields of the event 
+are mapped to columns named `event_category`, `event_method`, `event_object`,
+`event_string_value`, and `event_map_values`.
+To access the `event_map_values`, you can use the `mozfun.map.get_key` UDF,
+like `SELECT mozfun.map.get_key(event_map_values, "branch") AS branch FROM telemetry.events`.
+
 ### Example Query
 
 This query gets the count of the number of times the user initiated the `dismiss_breach_alert`
