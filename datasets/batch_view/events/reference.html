@@ -159,7 +159,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#events" id="events">Events</a></h1>
-<p>This derived dataset makes it easier to analyze the Firefox <a href="../datasets/pings.html#event-ping">event ping</a>.
+<p>This derived dataset makes it easier to analyze the Firefox <a href="../../pings.html#event-ping">event ping</a>.
 It has the following advantages over accessing the raw ping table (<code>telemetry.event</code>):</p>
 <ul>
 <li>There is no need to <code>UNNEST</code> the <code>events</code> column: this is already done for you.</li>
@@ -168,7 +168,7 @@ It has the following advantages over accessing the raw ping table (<code>telemet
 </ul>
 <h2><a class="header" href="#data-reference" id="data-reference">Data Reference</a></h2>
 <p>The events dataset contains one row for each event submitted in an event ping for that day.</p>
-<p>The <code>category</code>, <code>method</code>, <code>object</code>, <code>value</code>, and <code>extra</code> fields of the event 
+<p>The <code>category</code>, <code>method</code>, <code>object</code>, <code>value</code>, and <code>extra</code> fields of the event
 are mapped to columns named <code>event_category</code>, <code>event_method</code>, <code>event_object</code>,
 <code>event_string_value</code>, and <code>event_map_values</code>.
 To access the <code>event_map_values</code>, you can use the <code>mozfun.map.get_key</code> UDF,
