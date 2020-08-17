@@ -7,13 +7,13 @@ It has the following advantages over accessing the raw ping table (`telemetry.ev
 - You don't have to know which process type emitted your event. If you care, you can query the `event_process` column.
 - It is clustered on the `event_category` column, which can dramatically speed up your query.
 
-[event_ping]: ../datasets/pings.md#event-ping
+[event_ping]: ../../pings.md#event-ping
 
 ## Data Reference
 
 The events dataset contains one row for each event submitted in an event ping for that day.
 
-The `category`, `method`, `object`, `value`, and `extra` fields of the event 
+The `category`, `method`, `object`, `value`, and `extra` fields of the event
 are mapped to columns named `event_category`, `event_method`, `event_object`,
 `event_string_value`, and `event_map_values`.
 To access the `event_map_values`, you can use the `mozfun.map.get_key` UDF,
