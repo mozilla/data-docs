@@ -57,7 +57,10 @@ Of course, linking to other resources as part of other documentation is always o
 
 ## General guidelines
 
-- Articles should be written in Markdown: mdBook uses the [CommonMark dialect](https://commonmark.org/help/).
+- Articles should be written in Markdown:
+  mdBook uses the [CommonMark dialect](https://commonmark.org/help/)
+  as implemented by [`pulldown-cmark`](https://github.com/raphlinus/pulldown-cmark),
+  which supports certain extensions including GitHub-flavored tables.
 - Limit lines to **100 characters** where possible.
   Try to split lines at the end of sentences,
   or use [Semantic Line Breaks](http://rhodesmill.org/brandon/2012/one-sentence-per-line/).
