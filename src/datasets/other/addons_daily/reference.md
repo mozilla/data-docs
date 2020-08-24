@@ -50,7 +50,7 @@ ORDER BY
 
 This dataset is updated daily via the
 [telemetry-airflow](https://github.com/mozilla/telemetry-airflow) infrastructure.
-The job runs as part of the [`addons_daily` DAG](https://github.com/mozilla/telemetry-airflow/blob/master/dags/bqetl_addons.py).
+The job runs as part of the [`addons_daily` DAG](https://github.com/mozilla/bigquery-etl/blob/master/dags/bqetl_addons.py).
 
 ## Schema
 

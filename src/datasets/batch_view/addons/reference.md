@@ -18,7 +18,7 @@ there will be a row with nulls for all the addon fields
 
 This dataset is updated daily via the [telemetry-airflow](https://github.com/mozilla/telemetry-airflow) infrastructure.
 The job DAG runs every day after the Main Summary data has been generated.
-The DAG defined in [`dags/bqetl_addons.py`](https://github.com/mozilla/telemetry-airflow/blob/master/dags/bqetl_addons.py)
+The DAG defined in [`dags/bqetl_addons.py`](https://github.com/mozilla/bigquery-etl/blob/master/dags/bqetl_addons.py)
 
 ## Code Reference
 

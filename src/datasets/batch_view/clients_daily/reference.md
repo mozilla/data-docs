@@ -1,14 +1,10 @@
 # Clients Daily
 
-Many questions about Firefox take the form "What did clients with
-characteristics X, Y, and Z do during the period S to E?" The
-`clients_daily` table aims to answer these questions. Each row in
-the table is a (`client_id`, `submission_date`) and contains a
-number of aggregates about that day's activity.
+{{#include ./intro.md}}
 
 ## Accessing the Data
 
-The `clients_daily` table is accessible through re:dash using the
+The `clients_daily` table is accessible through STMO using the
 `Telemetry (BigQuery)` data source.
 
 ## Data Reference
@@ -57,7 +53,7 @@ ORDER BY
 
 This dataset is updated daily via the
 [telemetry-airflow](https://github.com/mozilla/telemetry-airflow) infrastructure.
-The job runs as part of the [`main_summary` DAG](https://github.com/mozilla/telemetry-airflow/blob/master/dags/bqetl_main_summary.py).
+The job runs as part of the [`main_summary` DAG](https://github.com/mozilla/bigquery-etl/blob/master/dags/bqetl_main_summary.py).
 
 ## Schema
 

@@ -23,7 +23,7 @@ limit to a short submission date range.
 
 ## Accessing the Data
 
-The `main_summary` table is accessible through re:dash.
+The `main_summary` table is accessible through STMO.
 Here's an [example query](https://sql.telemetry.mozilla.org/queries/4201/source).
 
 ## Data Reference
@@ -65,7 +65,7 @@ We do not ever expect nulls for these fields.
 
 This dataset is updated daily via the [telemetry-airflow](https://github.com/mozilla/telemetry-airflow) infrastructure.
 The DAG is defined in
-[`dags/bqetl_main_summary.py`](https://github.com/mozilla/telemetry-airflow/blob/master/dags/bqetl_main_summary.py)
+[`dags/bqetl_main_summary.py`](https://github.com/mozilla/bigquery-etl/blob/master/dags/bqetl_main_summary.py)
 
 ### Schema
 

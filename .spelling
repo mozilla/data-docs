@@ -92,8 +92,10 @@ discoverability
 Django's
 DLLs
 DNS
+docs.telemetry.mozilla.org
 Dockerfile
 dropdown
+DTMO
 DWL
 DXR
 DynamoDB
@@ -117,6 +119,7 @@ frac
 funnelcake
 GCP
 GCP-GCR
+gcp-ingestion
 GCR
 geo-city
 geo-country
@@ -149,6 +152,7 @@ inlined
 int64
 interpretability
 iOS
+Jetstream
 JS
 JSON
 JSONSchema
@@ -203,6 +207,7 @@ OKR
 onboarding
 operationalizes
 ORM-like
+OpenStack
 optout
 pageloads
 parquet2hive

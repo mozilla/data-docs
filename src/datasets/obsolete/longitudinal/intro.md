@@ -27,7 +27,7 @@ Please note that this dataset only contains release (or opt-out) histograms and 
 
 #### Accessing the Data
 
-The `longitudinal` is available in re:dash,
+The `longitudinal` is available in STMO,
 though it can be difficult to work with the array values in SQL.
 Take a look at this [example query](https://sql.telemetry.mozilla.org/queries/4189/source).
 

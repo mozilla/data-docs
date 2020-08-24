@@ -37,7 +37,7 @@ let ratioForDateInQuestion = rows
 
 ## Schema
 
-The data is output in re:dash API format:
+The data is output in STMO API format:
 
 ```
 "query_result": {

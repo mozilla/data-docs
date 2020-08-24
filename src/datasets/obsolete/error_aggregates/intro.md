@@ -22,7 +22,7 @@ filter for `experiment_id is null` and `experiment_branch is null` in order to n
 
 #### Accessing the data
 
-You can access the data via re:dash. Choose `Athena` and then select the
+You can access the data via STMO. Choose `Athena` and then select the
 `telemetry.error_aggregates_v2` table.
 
 #### Further Reading

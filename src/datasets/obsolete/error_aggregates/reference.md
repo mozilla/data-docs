@@ -13,7 +13,7 @@
 ## Example Queries
 
 Getting a large number of different crash measures across many platforms and channels
-([view on Re:dash](https://sql.telemetry.mozilla.org/queries/4769/source)):
+([view on STMO](https://sql.telemetry.mozilla.org/queries/4769/source)):
 
 ```sql
 SELECT window_start,
@@ -40,7 +40,7 @@ GROUP BY window_start, channel, build_id, version, os_name
 
 
 Get the number of `main_crashes` on Windows over a small interval
-([view on Re:dash](https://sql.telemetry.mozilla.org/queries/51677)):
+([view on STMO](https://sql.telemetry.mozilla.org/queries/51677)):
 
 ```sql
 SELECT window_start as time, sum(main_crashes) AS main_crashes

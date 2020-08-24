@@ -23,6 +23,8 @@ Especially severe problems with production data are announced on the `fx-data-de
 
 When you start to evaluate trends, be aware of events from the past that may invite comparisons with history. Here are a few to keep in mind:
 
+- **August 6, 2020** - [Pings with "automation" tag in X-Source-Tags will no longer appear in stable tables][bq1215]
+  This is particularly relevant for removing pings related to automated testing of Fenix.
 - **July 20, 2020** - [Glean dropping application lifetime metrics from `metrics` pings][bug1653244].
   Glean Android bindings from version `v25.0.0` up to and including `v31.4.0` had a bug that would cause metrics with “lifetime: application” to be cleared before they could be collected for metrics pings sent during startup. This can result in application lifetime metrics like experiment information being randomly missing from the data.
 - **April 14, 2020** - [Telemetry edge server rejects pings for an hour][bug1630096].
@@ -62,6 +64,7 @@ When you start to evaluate trends, be aware of events from the past that may inv
 [armagaddon]: https://blog.mozilla.org/blog/2019/05/09/what-we-do-when-things-go-wrong/
 [bug1474285]: https://bugzilla.mozilla.org/show_bug.cgi?id=1474285
 [bq212]: https://github.com/mozilla/bigquery-etl/issues/212
+[bq1215]: https://github.com/mozilla/bigquery-etl/pull/1215
 [reset_cid_retro]: https://docs.google.com/document/d/1r1PDQnqhsrPkft0pB46v9uhXGxR_FzK4laKJLGttXdA
 [Bug 1501329]: https://bugzilla.mozilla.org/show_bug.cgi?id=1501329
 [bug1482509]: https://bugzilla.mozilla.org/show_bug.cgi?id=1482509

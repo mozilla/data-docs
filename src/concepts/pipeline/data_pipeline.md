@@ -21,7 +21,7 @@ graph TD
   dwl-->|protobuf| datalake(fa:fa-database S3 Data Lake)
   dwl-->|parquet| datalake
   datalake-->|parquet| prestodb
-  prestodb-->redash[fa:fa-line-chart Re:dash]
+  prestodb-->redash[fa:fa-line-chart Redash]
   datalake-->spark
   spark-->datalake
   airflow[fa:fa-clock-o Airflow]-->|Scheduled tasks|spark{fa:fa-star Spark}
@@ -117,7 +117,7 @@ end
 
 pipeline --> aggregator
 pipeline --> spark{fa:fa-star Spark}
-pipeline --> redash[fa:fa-line-chart Re:dash]
+pipeline --> redash[fa:fa-line-chart Redash]
 
 subgraph telemetry.mozilla.org
   telemetry.js(telemetry.js) --> dist
@@ -154,11 +154,11 @@ A dedicated Spark job feeds daily aggregates to a PostgreSQL database which powe
 
 ![TMO](../../assets/TMO_example.jpeg "TMO – timeseries")
 
-# Presto & re:dash
+# Presto & STMO
 
 We maintain a couple of [Presto clusters] and a centralized Hive metastore to query Parquet data with SQL. The Hive metastore provides an universal view of our Parquet dataset to both Spark and Presto clusters.
 
-Presto, and other databases, are behind a [re:dash] service ([STMO]) which provides a convenient & powerful interface to query SQL engines and build dashboards that can be shared within the company. Mozilla maintains its own [fork of re:dash] to iterate quickly on new features, but as good open source citizen we push our changes upstream.
+Presto, and other databases, are behind a [Redash] service ([STMO]) which provides a convenient & powerful interface to query SQL engines and build dashboards that can be shared within the company. Mozilla maintains its own [fork of Redash] to iterate quickly on new features, but as good open source citizen we push our changes upstream.
 
 ![STMO](../../assets/STMO_example.jpeg "STMO – who doesn’t love SQL?")
 
@@ -204,7 +204,7 @@ There is a vast ecosystem of tools for processing data at scale, each with their
 [HTTP service]: https://github.com/mozilla/python_mozaggregator/#api
 [TMO]: https://telemetry.mozilla.org/
 [Presto clusters]: https://github.com/mozilla/emr-bootstrap-presto
-[re:dash]: https://sql.telemetry.mozilla.org/
+[Redash]: https://redash.io/
 [STMO]: https://sql.telemetry.mozilla.org/
-[fork of re:dash]: https://github.com/mozilla/redash
+[fork of Redash]: https://github.com/mozilla/redash
 [Databricks instance]: https://dbc-caf9527b-e073.cloud.databricks.com

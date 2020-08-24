@@ -8,7 +8,7 @@ This dataset also has detailed search aggregates by each add-on, broken out by o
 
 #### Accessing the Data
 
-The `addons_daily` table is accessible through re:dash using the
+The `addons_daily` table is accessible through STMO using the
 `Telemetry (BigQuery)` data source.
 
 Here's an [example query](https://sql.telemetry.mozilla.org/queries/71007/source).
