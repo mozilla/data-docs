@@ -97,6 +97,8 @@
     * [Search Aggregates](datasets/search/search_aggregates/reference.md)
     * [Search Clients Daily](datasets/search/search_clients_daily/reference.md)
     * [Search Clients Last Seen](datasets/search/search_clients_last_seen/reference.md)
+  * [Non Desktop Datasets](datasets/non_desktop.md)
+    * [Day 2-7 Activation](datasets/non_desktop/day_2_7_activation/reference.md)
   * [Other Datasets](datasets/other.md)
     * [hgpush](datasets/other/hgpush/reference.md)
     * [Stub installer ping](datasets/other/stub_installer/reference.md)
