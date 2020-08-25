@@ -80,7 +80,7 @@ Because Glean knows more about the individual data, such as its type and the ran
 
 # Contact
 
-*   `#glean` & `#fx-metrics` on slack
+*   `#glean` & `#data-help` on slack
 *   [#glean:mozilla.org](https://chat.mozilla.org/#/room/#glean:mozilla.org) on matrix
 *   [`glean-team@mozilla.com`](mailto:glean-team@mozilla.com) to reach out
 *   [`fx-data-dev@mozilla.com`](mailto:fx-data-dev@mozilla.com) for announcements etc.
