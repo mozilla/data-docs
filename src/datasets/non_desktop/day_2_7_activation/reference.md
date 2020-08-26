@@ -3,7 +3,7 @@
 <!-- toc -->
 
 # Introduction
-`firefox_nondesktop_day_2_7_activation` is designed for use in calculating the day 2-7 activation metric, a key result in 2020 for the non desktop products.
+`firefox_nondesktop_day_2_7_activation` is designed for use in calculating the day 2-7 activation metric, a key result in 2020 for the nondesktop products.
 
 
 # Contents
@@ -31,7 +31,8 @@ This dataset is scheduled on Airflow ([source](https://github.com/mozilla/teleme
 
 ## Schema
 As of 2020-07-24, the current version of firefox_nondesktop_day_2_7_activation is v1, and has a schema as follows. It's backfilled through 2017-01-01
-```root
+```
+root
     |- submission_date: date
     |- product: string
     |- app_name: string

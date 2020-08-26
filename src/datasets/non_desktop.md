@@ -1,23 +1,9 @@
 # Non Desktop Data
 
-## Introduction
+## List of Datasets
 
-This article introduces the datasets we maintain for non desktop analyses:
-- `mau\wau\dau`
-- `day 2-7 Activation`
-- `Google Play Store Data`
-- `Apple App Store Data`
+- [`Day 2-7 Activation`](../../../datasets/non_desktop/day_2_7_activation/reference.md) - Used to calculate the day 2-7 activation metric, a key result in 2020 for the nondesktop products.
+- [`Google Play Store Data`](../../../datasets/non_desktop/google_play_store/reference.md) - Used to understand the acquisition performance for the nondesktop products through the Google Play Store.
+- [`Apple App Store Data`](../../../datasets/non_desktop/apple_app_store/reference.md) - Used to understand the acquisition performance for the nondesktop products through the Apple App Store.
 
-After reading this article, you should understand the current datasets available for non desktop analysis.
 
-## Table of Contents
-
-<!-- toc -->
-
-# Terminology
-
-## Direct vs Follow-on Search
-
-Searches can be split into three major classes: *sap*, *follow-on*, and *organic*.
-
-WORK IN PROGRESS
