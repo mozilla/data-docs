@@ -16,9 +16,6 @@ Due to the delay in receiving all the initial pings and subsequent 7 day wait pr
 
 We also include a variety of dimension information (e.g. `product`, `app_name`, `app_version`, `os`, `normalized_channel` and `country`) to aggregate on. 
 
-# Background and Caveats
-Currently (as of Aug 24 2020) Fenix and Firefox Preview are not included in the table. These products ping sending schedules are not similar to the other products and thus would not be a fair comparison. Work is undergoing to make the reporting comparable and Fenix and Firefox Preview will be included once this is complete. Please see [JIRA DS-696](https://jira.mozilla.com/browse/DS-696) and [JIRA DS-1018](https://jira.mozilla.com/browse/DS-1018) for more information and current status.
-
 # Accessing the Data
 Access the data at [`moz-fx-data-shared-prod.telemetry.firefox_nondesktop_day_2_7_activation`](https://console.cloud.google.com/bigquery?project=moz-fx-data-shared-prod&p=moz-fx-data-shared-prod&d=telemetry&t=firefox_nondesktop_day_2_7_activation&page=table)
 
@@ -46,4 +43,6 @@ root
 
 # Code Reference
 The firefox_nondesktop_day_2_7_activation job is [defined in `bigquery-etl`](https://github.com/mozilla/bigquery-etl/blob/master/sql/telemetry_derived/firefox_nondesktop_day_2_7_activation_v1/query.sql).
+
+# Background and Caveats
 
