@@ -26,27 +26,27 @@ There are other tables available that are yet to be explored / incorporated into
 - Ratings
 
 The metrics included in the retained_installers tables are:
-- **Store_Listing_Visitors** - Unique users who visited the app’s store listing on the Play Store app but haven’t installed the app
-- **Installers** - Unique users who installed the app after visiting the app’s store listing on the Play Store app. 
-- **Visitors_to_installer_conversion_rate** - Percentage of Store_Listing_visitors that install the app.
-- **Installers_retained_for_1_day** - Installers who kept the app on at least one of their devices for 1 day. Installation doesn’t mean the app was opened over this period. 
-- **Installers_to_1_day_retention_rate** - Percentage of installers who have the app on one of their devices 1 day after install.
-- **Installers_retained_for_7_days** - Installers who kept the app on at least one of their devices for 7 days. Installation doesn’t mean the app was opened over this period. 
-- **Installers_to_7_days_retention_rate** - Percentage of installers who have the app on one of their devices 7 days after install.
-- **Installers_retained_for_15_days** - Installers who kept the app on at least one of their devices for 15 days. Installation doesn’t mean the app was opened over this period. 
-- **Installers_to_15_days_retention_rate** - Percentage of installers who have the app on one of their devices 15 days after install.
-- **Installers_retained_for_30_days** - Installers who kept the app on at least one of their devices for 30 days. Installation doesn’t mean the app was opened over this period. 
-- **Installers_to_30_days_retention_rate** - Percentage of installers who have the app on one of their devices 30 days after install.
+- **`Store_Listing_Visitors`** - Unique users who visited the app’s store listing on the Play Store app but haven’t installed the app
+- **`Installers`** - Unique users who installed the app after visiting the app’s store listing on the Play Store app. 
+- **`Visitors_to_installer_conversion_rate`** - Percentage of Store_Listing_visitors that install the app.
+- **`Installers_retained_for_1_day`** - Installers who kept the app on at least one of their devices for 1 day. Installation doesn’t mean the app was opened over this period. 
+- **`Installers_to_1_day_retention_rate`** - Percentage of installers who have the app on one of their devices 1 day after install.
+- **`Installers_retained_for_7_days`** - Installers who kept the app on at least one of their devices for 7 days. Installation doesn’t mean the app was opened over this period. 
+- **`Installers_to_7_days_retention_rate`** - Percentage of installers who have the app on one of their devices 7 days after install.
+- **`Installers_retained_for_15_days`** - Installers who kept the app on at least one of their devices for 15 days. Installation doesn’t mean the app was opened over this period. 
+- **`Installers_to_15_days_retention_rate`** - Percentage of installers who have the app on one of their devices 15 days after install.
+- **`Installers_retained_for_30_days`** - Installers who kept the app on at least one of their devices for 30 days. Installation doesn’t mean the app was opened over this period. 
+- **`Installers_to_30_days_retention_rate`** - Percentage of installers who have the app on one of their devices 30 days after install.
 
 ## Background and Caveats
 
-As of Aug 25 2020 not all the tables available in the dataset have been explored and vetted for accuracy by the data science team. Tables that were fully reviewed and being documented here are the Retained_installers tables whose primary use case is to explain acquisition. 
+As of Aug 25 2020 not all the tables available in the dataset have been explored and vetted for accuracy by the data science team. Tables that were fully reviewed and being documented here are the `Retained_installers` tables whose primary use case is to explain acquisition. 
 
 **Note:** Google does not make the play store data available for export every day. The export job checks for new files every day. However, having monitored the job, it appears the data is made available every 7 - 14 days, and seems to primarily be made available on weekends. Due to this lack of consistency, there will be delays in the data available for this dataset. The data currently in BigQuery is the most current data available from Google.
 
 ## Accessing the Data
 
-Access the data at moz-fx-data-marketing-prod.google_play_store
+Access the data at `moz-fx-data-marketing-prod.google_play_store`
 
 # Data Reference
 
@@ -115,5 +115,5 @@ ORDER BY
 [link](https://sql.telemetry.mozilla.org/queries/74288/source)
 
 ## Scheduling
-The job to retrieve the raw data from the Google Play Store can be found in [github](https://github.com/mozilla/play-store-export) and it is scheduled in [airflow](https://github.com/mozilla/telemetry-airflow/blob/master/dags/play_store_export.py).
+The job to retrieve the raw data from the Google Play Store can be found in [the `play-store-export` repository](https://github.com/mozilla/play-store-export) and it is scheduled in [airflow](https://github.com/mozilla/telemetry-airflow/blob/master/dags/play_store_export.py).
 

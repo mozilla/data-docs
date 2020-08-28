@@ -1,6 +1,6 @@
 # Non-Desktop Data
 
-Non-Desktop data includes data for all mobile browser products as well as non browser products such as lockwise, echo tv, vpn, webxrviewer among others.   
+Non-Desktop data includes data for all mobile browser products as well as non browser products such as `Lockwise`, `echo`, `vpn`, `webxrviewer` among others.   
 
 ## List of Datasets
 

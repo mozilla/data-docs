@@ -43,7 +43,7 @@ ORDER BY 1
 This dataset is scheduled on Airflow ([source](https://github.com/mozilla/telemetry-airflow/blob/59effc6ead0b764a9ef3d30f40fbdb4b0b3394ec/dags/copy_deduplicate.py#L337)).
 
 ## Schema
-As of 2020-07-24, the current version of firefox_nondesktop_day_2_7_activation is v1, and has a schema as follows:
+As of 2020-07-24, the current version of `firefox_nondesktop_day_2_7_activation` is v1, and has a schema as follows:
 ```
 root
     |- submission_date: date
@@ -58,7 +58,7 @@ root
 ```
 
 # Code Reference
-The firefox_nondesktop_day_2_7_activation job is [defined in `bigquery-etl`](https://github.com/mozilla/bigquery-etl/blob/master/sql/telemetry_derived/firefox_nondesktop_day_2_7_activation_v1/query.sql).
+The `firefox_nondesktop_day_2_7_activation job is` [defined in `bigquery-etl`](https://github.com/mozilla/bigquery-etl/blob/master/sql/telemetry_derived/firefox_nondesktop_day_2_7_activation_v1/query.sql).
 
 # Background and Caveats
 
