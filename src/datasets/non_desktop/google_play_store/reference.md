@@ -20,15 +20,15 @@ The [`google_play_store`](https://console.cloud.google.com/bigquery?project=moz-
 
 There are other tables available that are yet to be explored / incorporated into regular reporting. Some that may be of interest include:
 
-- Crashes by app_version
+- Crashes by app version
 - Device and OS
 - Installs
 - Ratings
 
-The metrics included in the retained_installers tables are:
+The metrics included in the `retained_installers` tables are:
 - **`Store_Listing_Visitors`** - Unique users who visited the app’s store listing on the Play Store app but haven’t installed the app
 - **`Installers`** - Unique users who installed the app after visiting the app’s store listing on the Play Store app. 
-- **`Visitors_to_installer_conversion_rate`** - Percentage of Store_Listing_visitors that install the app.
+- **`Visitors_to_installer_conversion_rate`** - Percentage of `Store_Listing_visitors` that install the app.
 - **`Installers_retained_for_1_day`** - Installers who kept the app on at least one of their devices for 1 day. Installation doesn’t mean the app was opened over this period. 
 - **`Installers_to_1_day_retention_rate`** - Percentage of installers who have the app on one of their devices 1 day after install.
 - **`Installers_retained_for_7_days`** - Installers who kept the app on at least one of their devices for 7 days. Installation doesn’t mean the app was opened over this period. 
