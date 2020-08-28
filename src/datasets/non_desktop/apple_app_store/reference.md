@@ -80,7 +80,7 @@ WHERE
 GROUP BY
   date, app_name
   ```
-[link](https://sql.telemetry.mozilla.org/queries/74291/source)
+[link to query in Redash](https://sql.telemetry.mozilla.org/queries/74291/source)
 
 ### Calculate Apple App Store Activity for a given day and app by source
 
@@ -102,7 +102,7 @@ WHERE
 GROUP BY
   date, app_name, source
 ```
-[link](https://sql.telemetry.mozilla.org/queries/74290/source)
+[link to query in Redash](https://sql.telemetry.mozilla.org/queries/74290/source)
 
 ## Scheduling
 The job to retrieve the raw data from the Apple App Store can be found in [the `app-store-analytics-export` repository](https://github.com/mozilla/app-store-analytics-export). The exported results are individual metrics grouped by a single dimension. These exports are initially loaded into the [`apple_app_store_exported`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store_exported&page=dataset) data source. The exports are scheduled in [`airflow`](https://github.com/mozilla/telemetry-airflow/blob/master/dags/app_store_analytics.py). The job to create the derived tables found in [`moz-fx-data-marketing-prod.apple_app_store`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&page=dataset) can be found in [`bigquery-etl` under `apple_app_store`](https://github.com/mozilla/bigquery-etl/tree/master/sql/apple_app_store).

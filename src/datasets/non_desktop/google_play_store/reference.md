@@ -91,7 +91,7 @@ GROUP BY
 ORDER BY
   Store_Visits DESC
   ```
-[link](https://sql.telemetry.mozilla.org/queries/74289/source)
+[link to query in Redash](https://sql.telemetry.mozilla.org/queries/74289/source)
 
 ##### Calculate Google Play Store Activity for a given day by source and app 
 
@@ -112,7 +112,7 @@ GROUP BY
 ORDER BY
   package_name, Store_Visits
 ```
-[link](https://sql.telemetry.mozilla.org/queries/74288/source)
+[link to query in Redash](https://sql.telemetry.mozilla.org/queries/74288/source)
 
 ## Scheduling
 The job to retrieve the raw data from the Google Play Store can be found in [the `play-store-export` repository](https://github.com/mozilla/play-store-export) and it is scheduled in [airflow](https://github.com/mozilla/telemetry-airflow/blob/master/dags/play_store_export.py).
