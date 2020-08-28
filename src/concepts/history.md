@@ -1,17 +1,17 @@
 # A brief history of Firefox data collection
 
 > This section was originally included in the [Project Smoot existing metrics report][smootv1]
-(Mozilla internal link).
+(Mozilla internal link), but has since been extensively modified.
 
 [smootv1]: https://mozilla-private.report/smoot-existing-metrics/book/05_overview.html
 
 ## `blocklist.xml` and Active Daily Installs (ADI)
 
-The [blocklist](https://wiki.mozilla.org/Blocklisting) is a mechanism
+The [blocklist](https://wiki.mozilla.org/Blocklisting) was a mechanism
 for informing Firefox clients about malicious add-ons, DLLs, and other
-extension content that should be blocked. The blocklist also notes when
+extension content that should be blocked. The blocklist also noted when
 hardware acceleration features should be avoided on certain graphics
-cards. To be effective, the blocklist needs to be updated on a faster
+cards. To be effective, the blocklist needed to be updated on a faster
 cadence than Firefox releases.
 
 The blocklist was [first
@@ -30,12 +30,11 @@ Daily Users, which was [renamed to Active Daily
 Installs](https://bugzilla.mozilla.org/show_bug.cgi?id=812282) (ADI) by
 2012.
 
-Work is underway to replace `blocklist.xml` with a [Remote
+As of August 2020, this mechanism has been superseded by a [Remote
 Settings-based](https://bugzilla.mozilla.org/show_bug.cgi?id=1257565#c120)
-replacement, though work is blocked because of the risk of interrupting
-ADI measurement.
-
-ADI is described in more detail in the next chapter.
+replacement and the ADI measure is no longer in use. See the [historical
+reference on ADI](./censuses.md#adi--active-daily-installs-blocklist-fetches)
+for more information.
 
 ## Telemetry
 
