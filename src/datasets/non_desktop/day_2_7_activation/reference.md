@@ -36,6 +36,8 @@ WHERE
   cohort_date = "2020-03-01"
 GROUP BY 1,2
 ORDER BY 1
+```
+[link](https://sql.telemetry.mozilla.org/queries/72054)
 
 ## Scheduling
 This dataset is scheduled on Airflow ([source](https://github.com/mozilla/telemetry-airflow/blob/59effc6ead0b764a9ef3d30f40fbdb4b0b3394ec/dags/copy_deduplicate.py#L337)).

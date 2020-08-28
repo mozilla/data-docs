@@ -10,15 +10,15 @@ The [`apple_app_store`](https://console.cloud.google.com/bigquery?project=moz-fx
 The dimensions (saved as individual derived tables) include:
 
 - [`moz-fx-data-marketing-prod.apple_app_store.metrics_by_platform`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&t=metrics_by_platform&page=table) - The device type on which the app was downloaded or used. E.g. iPad, iPod, or iPhone.
-- [`platform version`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&t=metrics_by_platform_version&page=table) - The OS version on which the app was downloaded or used. App Units, In-App Purchases, and Sales are based on the version on which the app is downloaded. Active in Last 30 Days, Product Page Views, Retention, and Sessions are based on the iOS version on which the app is used.
-- [`app version`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&t=metrics_by_app_version&page=table) - The version of the app displayed on the app store at the time of activity.
-- [`region`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&t=metrics_by_region&page=table) - The App Store region in which purchases were made, based on the customer’s billing address. Regions include (USA and Canada, Europe, Latin America and The Caribbean, Asia Pacific, Africa, The Middle East, and India)
-- [`storefront`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&t=metrics_by_storefront&page=table) - The app store country in which purchases were made, based on the customer’s billing address.
-- [`source`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&t=metrics_by_source&page=table) - The source from which a customer tapped a link to your App Store product page to view your app or download it for the first time. You can view metrics based on the source from which users are finding your app. Source types include (App Store Browse, App Store Search, App Referrers, Web Referrers)
-- [`app referrer`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&t=metrics_by_app_referrer&page=table) - People landing on the app store via links from within other apps. This also includes apps using the storekit api and excludes the native safari.
-- [`web Referrer`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&t=metrics_by_web_referrer&page=table) - Previously top websites. Shows the referring website for the app download. Web referrals must be from Safari on devices with iOS 8 or tvOS 9 or later. Taps from websites using web browsers like chrome are attributed to that app.
-- [`campaign`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&t=metrics_by_campaign&page=table) - Previously top campaigns. Tracks app and website referrals to measure the impact of an advertising campaign. Tracked by adding two tokens to any app store link to see results in app analytics.
-- [`total`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&t=metrics_total&page=table): Total metric activity without any dimension breakdown.
+- [`moz-fx-data-marketing-prod.apple_app_store.platform version`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&t=metrics_by_platform_version&page=table) - The OS version on which the app was downloaded or used. App Units, In-App Purchases, and Sales are based on the version on which the app is downloaded. Active in Last 30 Days, Product Page Views, Retention, and Sessions are based on the iOS version on which the app is used.
+- [`moz-fx-data-marketing-prod.apple_app_store.app version`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&t=metrics_by_app_version&page=table) - The version of the app displayed on the app store at the time of activity.
+- [`moz-fx-data-marketing-prod.apple_app_store.region`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&t=metrics_by_region&page=table) - The App Store region in which purchases were made, based on the customer’s billing address. Regions include (USA and Canada, Europe, Latin America and The Caribbean, Asia Pacific, Africa, The Middle East, and India)
+- [`moz-fx-data-marketing-prod.apple_app_store.storefront`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&t=metrics_by_storefront&page=table) - The app store country in which purchases were made, based on the customer’s billing address.
+- [`moz-fx-data-marketing-prod.apple_app_store.source`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&t=metrics_by_source&page=table) - The source from which a customer tapped a link to your App Store product page to view your app or download it for the first time. You can view metrics based on the source from which users are finding your app. Source types include (App Store Browse, App Store Search, App Referrers, Web Referrers)
+- [`moz-fx-data-marketing-prod.apple_app_store.app referrer`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&t=metrics_by_app_referrer&page=table) - People landing on the app store via links from within other apps. This also includes apps using the storekit api and excludes the native safari.
+- [`moz-fx-data-marketing-prod.apple_app_store.web Referrer`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&t=metrics_by_web_referrer&page=table) - Previously top websites. Shows the referring website for the app download. Web referrals must be from Safari on devices with iOS 8 or tvOS 9 or later. Taps from websites using web browsers like chrome are attributed to that app.
+- [`moz-fx-data-marketing-prod.apple_app_store.campaign`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&t=metrics_by_campaign&page=table) - Previously top campaigns. Tracks app and website referrals to measure the impact of an advertising campaign. Tracked by adding two tokens to any app store link to see results in app analytics.
+- [`moz-fx-data-marketing-prod.apple_app_store.total`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&t=metrics_total&page=table): Total metric activity without any dimension breakdown.
 
 The metrics included in the aggregated tables are:
 - **app_units** - The number of first-time app purchases made on the App Store using iOS 8 and tvOS 9 or later. Updates, re-downloads, download onto other devices are not counted. Family sharing downloads are included for free apps, but not for paid apps.
@@ -62,7 +62,7 @@ root
 ```
 ## Example Queries
 
-### Calculate App Store Activity for a given day by app
+### Calculate Apple App Store Activity for a given day by app
 
 ```sql
 SELECT
@@ -80,8 +80,9 @@ WHERE
 GROUP BY
   date, app_name
   ```
+[link](https://sql.telemetry.mozilla.org/queries/74291/source)
 
-### Calculate App Store Activity for a given day and app by source
+### Calculate Apple App Store Activity for a given day and app by source
 
 ```sql
 SELECT
@@ -101,6 +102,7 @@ WHERE
 GROUP BY
   date, app_name, source
 ```
+[link](https://sql.telemetry.mozilla.org/queries/74290/source)
 
 ## Scheduling
-The job to retrieve the raw data from the Apple App Store can be found in [the `app-store-analytics-export` repository](https://github.com/mozilla/app-store-analytics-export). The export results in individual metrics grouped by a single dimension. These exports are initially loaded into the [`apple_app_store_exported`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store_exported&page=dataset) datasource. The exports are scheduled in [`airflow`](https://github.com/mozilla/telemetry-airflow/blob/master/dags/app_store_analytics.py). The job to create the derived tables found in [`moz-fx-data-marketing-prod.apple_app_store`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&page=dataset) can be found in [`bigquery-etl` under `apple_app_store`](https://github.com/mozilla/bigquery-etl/tree/master/sql/apple_app_store).
+The job to retrieve the raw data from the Apple App Store can be found in [the `app-store-analytics-export` repository](https://github.com/mozilla/app-store-analytics-export). The exported results are individual metrics grouped by a single dimension. These exports are initially loaded into the [`apple_app_store_exported`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store_exported&page=dataset) datasource. The exports are scheduled in [`airflow`](https://github.com/mozilla/telemetry-airflow/blob/master/dags/app_store_analytics.py). The job to create the derived tables found in [`moz-fx-data-marketing-prod.apple_app_store`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&page=dataset) can be found in [`bigquery-etl` under `apple_app_store`](https://github.com/mozilla/bigquery-etl/tree/master/sql/apple_app_store).
