@@ -1,33 +1,47 @@
-# Non Desktop Day 2 - 7 Activation  
+# Non-Desktop Day 2-7 Activation  
 
 <!-- toc -->
 
 # Introduction
-`firefox_nondesktop_day_2_7_activation` is designed for use in calculating the day 2-7 activation metric, a key result in 2020 for the nondesktop products.
-
+`firefox_nondesktop_day_2_7_activation` is designed for use in calculating the day 2-7 activation metric, a key result in 2020 for the non-desktop products.
 
 # Contents
-`firefox_nondesktop_day_2_7_activation` is an aggregate table with two key metrics: `new_profiles` and `day_2_7_activated`. These are primarily aggregated by `submission_date`.
+`firefox_nondesktop_day_2_7_activation` is a table with two key metrics: `new_profiles` and `day_2_7_activated`, aggregated over `submission_date`. It is derived from the [non-desktop clients last seen table](https://docs.telemetry.mozilla.org/cookbooks/clients_last_seen_bits.html).
 
 - `new_profiles`: Unique count of client ids with a given profile creation date. As not all initial pings are received exactly on the day of profile creation, we wait for 7 days after the profile creation date before establishing the New Profile cohort to ensure the data is complete.
 - `days_2_7_activated`: Unique count of client ids who use the product at any point starting the day after they created a profile up to 6 days after.
 
-Due to the delay in receiving all the initial pings and subsequent 7 day wait prior to establishing the new profile cohort, the table will lag other daily usage nondesktop tables e.g. `nondesktop_clients_last_seen` by 7 days. 
 
 We also include a variety of dimension information (e.g. `product`, `app_name`, `app_version`, `os`, `normalized_channel` and `country`) to aggregate on. 
 
+This dataset is backfilled through 2017-01-01.
 # Accessing the Data
 Access the data at [`moz-fx-data-shared-prod.telemetry.firefox_nondesktop_day_2_7_activation`](https://console.cloud.google.com/bigquery?project=moz-fx-data-shared-prod&p=moz-fx-data-shared-prod&d=telemetry&t=firefox_nondesktop_day_2_7_activation&page=table)
 
 # Data Reference
 ## Example Queries
-[This activation query](https://sql.telemetry.mozilla.org/queries/72054/source) gives the `day 2-7 activation` by product. A new profile is considered activated if the client uses the browser at any point starting 1 day up to 6 days after the `profile creation date`.
+
+This query gives the `day 2-7 activation` by product:
+
+```sql
+SELECT
+  cohort_date,
+  product,
+  SUM(day_2_7_activated) as day_2_7_activated,
+  SUM(new_profiles) as new_profiles,
+  SAFE_DIVIDE(SUM(day_2_7_activated), SUM(new_profiles)) as day_2_7_activation
+FROM
+  `moz-fx-data-derived-datasets.telemetry.firefox_nondesktop_day_2_7_activation`
+WHERE
+  cohort_date = "2020-03-01"
+GROUP BY 1,2
+ORDER BY 1
 
 ## Scheduling
 This dataset is scheduled on Airflow ([source](https://github.com/mozilla/telemetry-airflow/blob/59effc6ead0b764a9ef3d30f40fbdb4b0b3394ec/dags/copy_deduplicate.py#L337)).
 
 ## Schema
-As of 2020-07-24, the current version of firefox_nondesktop_day_2_7_activation is v1, and has a schema as follows. It's backfilled through 2017-01-01
+As of 2020-07-24, the current version of firefox_nondesktop_day_2_7_activation is v1, and has a schema as follows:
 ```
 root
     |- submission_date: date
@@ -46,3 +60,4 @@ The firefox_nondesktop_day_2_7_activation job is [defined in `bigquery-etl`](htt
 
 # Background and Caveats
 
+Due to the delay in receiving all the initial pings and subsequent 7 day wait prior to establishing the new profile cohort, the table will lag `nondesktop_clients_last_seen` by 7 days.

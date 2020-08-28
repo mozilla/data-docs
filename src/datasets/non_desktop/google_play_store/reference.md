@@ -2,7 +2,7 @@
 <!-- toc -->
 
 # Introduction
-The [`google_play_store`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&folder=&organizationId=&p=moz-fx-data-marketing-prod&d=google_play_store&page=dataset) dataset is used to understand the acquisition performance for the nondesktop products through the Google Play Store along the key metrics and dimensions. Google’s documentation for all metrics and dimensions can be found [here](https://support.google.com/googleplay/android-developer/answer/6263332?hl=en).
+The [`google_play_store`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&folder=&organizationId=&p=moz-fx-data-marketing-prod&d=google_play_store&page=dataset) dataset is used to understand the acquisition performance for mobile products on the Google Play Store along key metrics and dimensions. Google’s documentation for all metrics and dimensions can be found [on the Play Store support portal](https://support.google.com/googleplay/android-developer/answer/6263332?hl=en).
 
 # Contents
 The [`google_play_store`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&folder=&organizationId=&p=moz-fx-data-marketing-prod&d=google_play_store&page=dataset) dataset contains a collection of tables and views exported from Google. The key tables currently being used for nondesktop reporting are:
@@ -18,7 +18,12 @@ The [`google_play_store`](https://console.cloud.google.com/bigquery?project=moz-
 - [`p_Retained_installers_play_country_v1`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=google_play_store&t=p_Retained_installers_play_country_v1&page=table) - Store activity for the Play  Store (organic) acquisition channel. Includes a country breakdown for the channel.
 - [`p_Retained_installers_utm_tagged_v1`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=google_play_store&t=p_Retained_installers_utm_tagged_v1&page=table) - Store activity for the Tracked Channels (UTM) acquisition channel by campaign UTM.
 
-There are other tables available that are yet to be explored / incorporated into regular reporting. Some that may be of interest include: (Crashes table by app_version, device and os; installs tables and ratings tables).
+There are other tables available that are yet to be explored / incorporated into regular reporting. Some that may be of interest include:
+
+- Crashes by app_version
+- Device and OS
+- Installs
+- Ratings
 
 The metrics included in the retained_installers tables are:
 - **Store_Listing_Visitors** - Unique users who visited the app’s store listing on the Play Store app but haven’t installed the app
@@ -111,5 +116,3 @@ ORDER BY
 The job to retrieve the raw data from the Google Play Store can be found in [github](https://github.com/mozilla/play-store-export) and it is scheduled in [airflow](https://github.com/mozilla/telemetry-airflow/blob/master/dags/play_store_export.py).
 
 **NOTE:** Google does not make the play store data available for export every day. The export job checks for new files every day. However, having monitored the job, it appears the data is made available every 7 - 14 days, and seems to primarily be made available on the weekends. Due to this lack of consistency, there will be delays in the data available for this dataset. The data currently in BigQuery is the most current data available from Google.
-
-

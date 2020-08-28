@@ -2,15 +2,14 @@
 <!-- toc -->
 
 # Introduction
-The [`apple_app_store`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&folder=&organizationId=&p=moz-fx-data-marketing-prod&d=apple_app_store&page=dataset) dataset is used to understand the acquisition performance for the nondesktop products through the Apple App Store along the key metrics and dimensions. Apple’s documentation for all metrics and dimensions can be found [here](https://help.apple.com/app-store-connect/#/itc21781223f).
+The [`apple_app_store`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&folder=&organizationId=&p=moz-fx-data-marketing-prod&d=apple_app_store&page=dataset) dataset is used to understand the acquisition performance for non-desktop products on the Apple App Store along the key metrics and dimensions. Apple’s documentation for all metrics and dimensions can be found [in the app store connect reference](https://help.apple.com/app-store-connect/#/itc21781223f).
 
 # Contents
 The [`apple_app_store`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&folder=&organizationId=&p=moz-fx-data-marketing-prod&d=apple_app_store&page=dataset) dataset contains a collection of aggregated tables by a singular dimension that explains the performance of acquisition activity through the Apple App Store. 
 
-**IMPORTANT NOTE:** The data is received from Apple with only one dimension per metric. As a result, we are unable to do multi-dimensional analysis. i.e. we can tell how each storefront is performing but we can’t further breakdown the storefront to see how specific platforms or sources are contributing to that storefront’s performance. 
+The dimensions (saved as individual derived tables) include:
 
-The dimensions (saved as individual derived tables)  include:
-- [`platform`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&t=metrics_by_platform&page=table) - The device type on which the app was downloaded or used. E.g. iPad, iPod, or iPhone.
+- [`moz-fx-data-marketing-prod.apple_app_store.metrics_by_platform`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&t=metrics_by_platform&page=table) - The device type on which the app was downloaded or used. E.g. iPad, iPod, or iPhone.
 - [`platform version`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&t=metrics_by_platform_version&page=table) - The OS version on which the app was downloaded or used. App Units, In-App Purchases, and Sales are based on the version on which the app is downloaded. Active in Last 30 Days, Product Page Views, Retention, and Sessions are based on the iOS version on which the app is used.
 - [`app version`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&t=metrics_by_app_version&page=table) - The version of the app displayed on the app store at the time of activity.
 - [`region`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&t=metrics_by_region&page=table) - The App Store region in which purchases were made, based on the customer’s billing address. Regions include (USA and Canada, Europe, Latin America and The Caribbean, Asia Pacific, Africa, The Middle East, and India)
@@ -32,13 +31,9 @@ The metrics included in the aggregated tables are:
 - **deletions_opt_in** - The number of times your app was deleted on devices running iOS 12.3 or tvOS 9 or later. This data includes deletions of the app from the Home Screen and deletions of the app through Manage Storage. Data from resetting or erasing a device's content and settings is not included. Data for this metric is “opt-in” - collected only if users have agreed to share their diagnostics and usage information with app developers.
 - **installations_opt_in** - The total number of times your app has been installed on devices with iOS 8 or tvOS 9, or later. Redownloads on the same device, downloads to multiple devices sharing the same Apple ID, and Family Sharing installations are included. Data for this metric is “opt-in” - collected only if users have agreed to share their diagnostics and usage information with app developers.
 - **sessions_opt_in** - The number of times the app has been used for at least two seconds. If the app is in the background and is later used again, that counts as another session. Data for this metric is “opt-in” - collected only if users have agreed to share their diagnostics and usage information with app developers.
-
-
-
-
 ## Background and Caveats
 
-The data is received from Apple with only one dimension per metric. As a result, we are unable to do multi-dimensional analysis. i.e. we can tell how each storefront is performing but we can’t further breakdown the storefront to see how specific platforms or sources are contributing to that storefront’s performance. 
+The data is received from Apple with only one dimension per metric. As a result, we are unable to do multi-dimensional analysis. i.e. we can tell how each storefront is performing but we can’t see how specific platforms or sources are contributing to it.
 
 ## Accessing the Data
 
@@ -67,7 +62,7 @@ root
 ```
 ## Example Queries
 
-##### Calculate App Store Activity for a given day by app
+### Calculate App Store Activity for a given day by app
 
 ```sql
 SELECT
@@ -84,10 +79,9 @@ WHERE
   date = "2020-08-20"
 GROUP BY
   date, app_name
-
   ```
 
-##### Calculate App Store Activity for a given day and app by source
+### Calculate App Store Activity for a given day and app by source
 
 ```sql
 SELECT
@@ -109,7 +103,4 @@ GROUP BY
 ```
 
 ## Scheduling
-The job to retrieve the raw data from the Apple App Store can be found in [github](https://github.com/mozilla/app-store-analytics-export). The export results in individual metrics grouped by a single dimension. These exports are initially loaded into the [`apple_app_store_exported`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store_exported&page=dataset) datasource. The exports are scheduled in [`airflow`](https://github.com/mozilla/telemetry-airflow/blob/master/dags/app_store_analytics.py). The job to create the derived tables found in [`moz-fx-data-marketing-prod.apple_app_store`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&page=dataset) can be found in [`bigquery-etl`](https://github.com/mozilla/bigquery-etl/tree/master/sql/apple_app_store).
-
-
-
+The job to retrieve the raw data from the Apple App Store can be found in [the `app-store-analytics-export` repository](https://github.com/mozilla/app-store-analytics-export). The export results in individual metrics grouped by a single dimension. These exports are initially loaded into the [`apple_app_store_exported`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store_exported&page=dataset) datasource. The exports are scheduled in [`airflow`](https://github.com/mozilla/telemetry-airflow/blob/master/dags/app_store_analytics.py). The job to create the derived tables found in [`moz-fx-data-marketing-prod.apple_app_store`](https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&p=moz-fx-data-marketing-prod&d=apple_app_store&page=dataset) can be found in [`bigquery-etl` under `apple_app_store`](https://github.com/mozilla/bigquery-etl/tree/master/sql/apple_app_store).
