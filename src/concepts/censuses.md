@@ -66,7 +66,7 @@ age, or update failures.
 
 ### DAU / Daily Active Users
 
-> **⚠** The mechanism described below is no longer used: see the [DAU definition in metrics](../metrics/metrics.md#daily-active-users-dau) for the currently-accepted definition.
+> **⚠** This description of DAU is not authoritative; please see the [DAU definition in metrics](../metrics/metrics.md#daily-active-users-dau) for the canonical definition.
 
 Firefox DAU is currently computed as the number of unique `client_id`s
 observed in `main` pings received on a calendar day. The DAU count
