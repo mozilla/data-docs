@@ -1,7 +1,7 @@
 # A brief history of Firefox data collection
 
 > This section was originally included in the [Project Smoot existing metrics report][smootv1]
-(Mozilla internal link), but has since been extensively modified.
+(Mozilla internal link); the DTMO version has been updated to reflect changes to the data platform.
 
 [smootv1]: https://mozilla-private.report/smoot-existing-metrics/book/05_overview.html
 
