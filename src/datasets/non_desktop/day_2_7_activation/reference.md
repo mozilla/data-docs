@@ -4,7 +4,7 @@
 
 # Introduction
 
-`firefox_nondesktop_day_2_7_activation` is designed for use in calculating the [Day 2-7 Activation metric](../../metrics/metrics.md#day-2-7-activation), a key result in 2020 for non-desktop products.
+`firefox_nondesktop_day_2_7_activation` is designed for use in calculating the [Day 2-7 Activation metric](../../../metrics/metrics.md#day-2-7-activation), a key result in 2020 for non-desktop products.
 
 
 # Contents
