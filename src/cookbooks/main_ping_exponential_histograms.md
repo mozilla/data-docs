@@ -52,7 +52,9 @@ Running this query on STMO, we get the following output:
 | `{"bucket_count":20,"histogram_type":0,"sum":19145,"range":[1,1000],"values":{"237":0,"340":1,"1000":1}}` |
 | `{"bucket_count":20,"histogram_type":0,"sum":1996,"range":[1,1000],"values":{"698":0,"1000":1}}`          |
 
-In this representation, `bucket_count`, `histogram_type`, and `range` represent the number of buckets, the histogram type (as an index: 0 means exponential), and the range of possible values. `values` represents the number of instances in each of the buckets while `sum` represents the sum total of all histogram values recorded.
+In this representation, `bucket_count` and `range` represent the number of buckets and the range of possible values. `histogram_type` is an enumerated value that describes whether the histogram has linear, exponential, or categorical buckets; the values are [defined in the Firefox source code](https://searchfox.org/mozilla-central/rev/0c682c4f01442c3de0fa6cd286e9cadc8276b45f/toolkit/components/telemetry/core/nsITelemetry.idl#18-32).
+`values` represents the number of instances in each of the buckets while `sum` represents the sum total of all histogram values recorded.
+Note how the first column has one bucket with no elements in it (the "165" bucket), this is because Firefox adds a zero-count bucket on the left and right edges of the data (unless that would be one of the extremes and that bucket already has a count in it, as is the case for the "1000" bucket in the last two examples).
 
 In general, it is best not to rely on this representation of the histogram in production code (it is quite likely to change in the future). Instead, use the [`json_extract_histogram`](https://github.com/mozilla/bigquery-etl/blob/master/udf/json_extract_histogram.sql) user-defined-function (UDF) and extract out the fields you need: for example, to just get the `sum` for all the histograms above, you could modify the query above to something like:
 
