@@ -332,6 +332,7 @@ v3
 v4
 versioned
 versioning
+VPN
 wakeup
 whitelist
 whitelists
@@ -339,5 +340,6 @@ WAU
 WebExtension
 WebExtensions
 XPI
+XR
 doctype
 validator
