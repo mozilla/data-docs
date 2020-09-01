@@ -15,7 +15,7 @@ and locate telemetry from add-on studies.
 
 [Experimenter] is the place to find lists of live experiments.
 
-[Experimenter]: https://experimenter.services.mozilla.com/
+[experimenter]: https://experimenter.services.mozilla.com/
 
 ## Experiment slugs
 

@@ -71,4 +71,3 @@ For more detail on where these fields come from in the
 [raw data](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html),
 please look at the case classes
 [in the `CrashSummaryView` code](https://github.com/mozilla/telemetry-batch-view/blob/master/GRAVEYARD.md#crash-summary).
-

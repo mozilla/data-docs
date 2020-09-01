@@ -16,7 +16,6 @@ If you have trouble viewing this query,
 it's likely you don't have the proper permissions.
 For more details see the [search data documentation].
 
-
 ## Scheduling
 
 This job is
@@ -61,6 +60,5 @@ root
 
 The `search_aggregates` job is
 [defined in `bigquery-etl`](https://github.com/mozilla/bigquery-etl/blob/master/sql/search_derived/search_aggregates_v8/query.sql)
-
 
 [search data documentation]: ../../search.md

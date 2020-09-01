@@ -1,6 +1,6 @@
 # Choosing a Desktop Product Dataset
 
-This document will help you find the best data source for a given analysis. It focuses on *descriptive* datasets and does not cover anything attempting to explain *why* something is observed. This guide will help if you need to answer questions like:
+This document will help you find the best data source for a given analysis. It focuses on _descriptive_ datasets and does not cover anything attempting to explain _why_ something is observed. This guide will help if you need to answer questions like:
 
 - How many Firefox users are active in Germany?
 - How many crashes occur each day?
@@ -26,13 +26,12 @@ In its raw form, the main ping can be a bit difficult to work with. To make anal
 
 {{#include ../datasets/batch_view/clients_daily/intro.md}}
 
-See the [`clients_daily` reference]( ../datasets/batch_view/clients_daily/reference.md) for more information.
+See the [`clients_daily` reference](../datasets/batch_view/clients_daily/reference.md) for more information.
 
 ### Clients Last Seen
 
 {{#include ../datasets/bigquery/clients_last_seen/intro.md}}
 
-See the [`clients_last_seen` reference]( ../datasets/bigquery/clients_last_seen/reference.md) for more information.
-
+See the [`clients_last_seen` reference](../datasets/bigquery/clients_last_seen/reference.md) for more information.
 
 [main ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html

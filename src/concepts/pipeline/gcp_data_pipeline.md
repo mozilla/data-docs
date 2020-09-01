@@ -40,21 +40,21 @@ class b1,b2,b3 bq
 
 There are different APIs and formats to [collect data] in Firefox, all suiting different use cases:
 
-* [histograms] – for recording multiple data points;
-* [scalars] – for recording single values;
-* [timings] – for measuring how long operations take;
-* [events] – for recording time-stamped events.
+- [histograms] – for recording multiple data points;
+- [scalars] – for recording single values;
+- [timings] – for measuring how long operations take;
+- [events] – for recording time-stamped events.
 
-These are commonly referred to as *[probes]*.
-Each probe must declare the [collection policy] it conforms to: either *release* or *prerelease*.
+These are commonly referred to as _[probes]_.
+Each probe must declare the [collection policy] it conforms to: either _release_ or _prerelease_.
 When adding a new measurement data-reviewers carefully inspect the probe and eventually approve the requested collection policy:
 
-* Release data is collected from all Firefox users.
-* Prerelease data is collected from users on Firefox Nightly and Beta channels.
+- Release data is collected from all Firefox users.
+- Prerelease data is collected from users on Firefox Nightly and Beta channels.
 
 Users may choose to turn the data collection off in preferences.
 
-A *session* begins when Firefox starts up and ends when it shuts down.
+A _session_ begins when Firefox starts up and ends when it shuts down.
 As a session could be long-running and last weeks, it gets sliced into
 smaller logical units called [subsessions].
 Each subsession generates a batch of data containing the current state
@@ -63,7 +63,7 @@ sent to our servers.
 The `main` ping is just one of the many [ping types] we support.
 Developers can [create their own ping types] if needed.
 
-*Pings* are submitted via an [API] that performs a HTTP POST request to our edge servers.
+_Pings_ are submitted via an [API] that performs a HTTP POST request to our edge servers.
 If a ping fails to successfully [submit] (e.g. because of missing internet connection),
 Firefox will store the ping on disk and retry to send it until the maximum ping age is exceeded.
 
@@ -162,7 +162,7 @@ Many examples can be found in the [bigquery-etl][bqe] repository.
 Data in BigQuery is also accessible via Spark, and several ETL jobs also run via Dataproc.
 
 These jobs produce data sets that are used for downstream analysis and data
-applications (such as [measurement][TMO] and [stability][MC] dashboards,
+applications (such as [measurement][tmo] and [stability][mc] dashboards,
 [addon recommendation][taar], and other [data products]).
 
 ## Data Analysis
@@ -170,7 +170,7 @@ applications (such as [measurement][TMO] and [stability][MC] dashboards,
 Once the data reaches our data warehouse in BigQuery it can be processed
 in a number of ways as described in the [Accessing BigQuery] article.
 
-Data analysis is most commonly done using [SQL queries][STMO] or using [Spark].
+Data analysis is most commonly done using [SQL queries][stmo] or using [Spark].
 
 [collect data]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/index.html
 [histograms]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/histograms.html
@@ -183,18 +183,18 @@ Data analysis is most commonly done using [SQL queries][STMO] or using [Spark].
 [main ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html
 [ping types]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/pings.html#ping-types
 [create their own ping types]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html
-[API]: https://searchfox.org/mozilla-central/rev/501eb4718d73870892d28f31a99b46f4783efaa0/toolkit/components/telemetry/app/TelemetryController.jsm#231
+[api]: https://searchfox.org/mozilla-central/rev/501eb4718d73870892d28f31a99b46f4783efaa0/toolkit/components/telemetry/app/TelemetryController.jsm#231
 [submit]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/submission.html#submission
-[Airflow]: https://github.com/mozilla/telemetry-airflow/
-[TMO]: https://telemetry.mozilla.org/
-[STMO]: https://sql.telemetry.mozilla.org/
-[Spark]: ../../tools/spark.md
-[Accessing BigQuery]: ../../cookbooks/bigquery.md
+[airflow]: https://github.com/mozilla/telemetry-airflow/
+[tmo]: https://telemetry.mozilla.org/
+[stmo]: https://sql.telemetry.mozilla.org/
+[spark]: ../../tools/spark.md
+[accessing bigquery]: ../../cookbooks/bigquery.md
 [taar]: https://github.com/mozilla/taar
-[MC]: https://missioncontrol.telemetry.mozilla.org
+[mc]: https://missioncontrol.telemetry.mozilla.org
 [data products]: ../../tools/projects.md#data-applications
-[Dataflow]: https://cloud.google.com/dataflow/docs/
-[JSONSchema validation]: https://json-schema.org/understanding-json-schema/
+[dataflow]: https://cloud.google.com/dataflow/docs/
+[jsonschema validation]: https://json-schema.org/understanding-json-schema/
 [weird behaviour]: https://chuttenblog.wordpress.com/2017/05/02/data-science-is-hard-anomalies-part-2/
 [schema transpiler]: https://github.com/mozilla/jsonschema-transpiler
 [schema generator]: https://github.com/mozilla/mozilla-schema-generator

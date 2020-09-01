@@ -353,14 +353,14 @@ Let's dive more deeply into that bit string representation:
     │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │
     │-26  │-24  │-22  │-20  │-18  │-16  │-14  │-12  │-10  │ -8  │ -6  │ -4  │ -2  │  0
   -27   -25   -23   -21   -19   -17   -15   -13   -11    -9    -7    -5    -3    -1
-   
+
   └──────────────────────────────────────────────────────────────────────────────────┘
   MAU                                                             └──────────────────┘
                                                                    WAU             └─┘
                                                                                    DAU
 ```
 
-In this picture, we've annotated the windows for DAU (day 0 only), 
+In this picture, we've annotated the windows for DAU (day 0 only),
 WAU (days 0 through -6) and MAU (days 0 through -27). This particular client
 won't count toward DAU for 2020-01-28, but the client does count towards both
 WAU and MAU.
@@ -402,7 +402,7 @@ pattern for this client will look like:
     │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │
     │-26  │-24  │-22  │-20  │-18  │-16  │-14  │-12  │-10  │ -8  │ -6  │ -4  │ -2  │  0
   -27   -25   -23   -21   -19   -17   -15   -13   -11    -9    -7    -5    -3    -1
-   
+
   └──────────────────────────────────────────────────────────────────────────────────┘
   MAU                                                             └──────────────────┘
                                                                    WAU             └─┘
@@ -666,7 +666,6 @@ bits28_days_since_seen(bits INT64)
 SELECT bits28_days_since_seen(18)
 >> 1
 ```
-
 
 ### `bits28_range`
 

@@ -2,18 +2,18 @@
 
 A profile's history is simply the progression of that profile's subsessions over its lifetime. We can see this in our main pings by checking:
 
-* `profile_subsession_counter`
-	- A counter which starts at 1 on the very first run of a profile and increments for each subsession. This counter will be reset to 1 if a user resets / refreshes their profile.
-* `subsession_start_date`
-	- The date and time the subsession starts in, truncated to hours. This field is not always reliable due to local clock skew.
-* `previous_subsession_id`
-	- The ID of the previous subsession. Will be `null` for the very first subsession, or the first subsession after a user resets / refreshes their profile.
-* `subsession_id`
-	- The ID of the current subsession.
-* `submission_date_s3`
-	- The date we received the ping. This date is sourced from the server's time and reliable.
-* `profile_reset_date`
-	- The date the profile was reset. Will be `null` if the profile was not reset.
+- `profile_subsession_counter`
+  - A counter which starts at 1 on the very first run of a profile and increments for each subsession. This counter will be reset to 1 if a user resets / refreshes their profile.
+- `subsession_start_date`
+  - The date and time the subsession starts in, truncated to hours. This field is not always reliable due to local clock skew.
+- `previous_subsession_id`
+  - The ID of the previous subsession. Will be `null` for the very first subsession, or the first subsession after a user resets / refreshes their profile.
+- `subsession_id`
+  - The ID of the current subsession.
+- `submission_date_s3`
+  - The date we received the ping. This date is sourced from the server's time and reliable.
+- `profile_reset_date`
+  - The date the profile was reset. Will be `null` if the profile was not reset.
 
 ![](images/profile-history/basic-example.png)
 
@@ -64,15 +64,15 @@ The history of a profile splits, and after a single subsession, there are two (o
 This is probably due to cloned machines or disk image restores. Note, after the profile splits, the two branches might continue concurrently or one branch might die while the other continues.
 It is very hard to distinguish between the different branches of the same profile.
 
-* Profile begins
+- Profile begins
 
 ![](images/profile-history/example-splits-1.png)
 
-* Profile splits: branch 1
+- Profile splits: branch 1
 
 ![](images/profile-history/example-splits-2.png)
 
-* Profile splits: branch 2
+- Profile splits: branch 2
 
 ![](images/profile-history/example-splits-3.png)
 
@@ -82,11 +82,11 @@ In this example, the profile history starts normally, but on the 5th ping, the h
 
 The history of a profile suddenly starts over, with a brand new starting ping.
 
-* Profile begins
+- Profile begins
 
 ![](images/profile-history/example-restart-1.png)
 
-* Profile restarts
+- Profile restarts
 
 ![](images/profile-history/example-restart-2.png)
 

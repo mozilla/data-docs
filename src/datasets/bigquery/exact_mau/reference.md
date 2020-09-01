@@ -28,7 +28,7 @@ Note that this data model is used in the [Growth & Usage Dashboard (GUD)](https:
 
 ## Metric
 
-A metric is anything want to (and can) measure.  In order for a metric to be
+A metric is anything want to (and can) measure. In order for a metric to be
 calculated, a _usage criterion_ and a _slice_ must be specified. The metric
 will produce a single value per day, summarizing data:
 
@@ -36,7 +36,7 @@ will produce a single value per day, summarizing data:
 - for all users (whatever notion of user makes sense for the data, generally profiles) in a particular sub-population
 - where the sub-population will include users that meet the specified usage criteria and are in the specified slice.
 
-A simple _usage criterion_ is "All Desktop Activity", which includes all Firefox Desktop users that we have any data (telemetry ping) for on the day in question.  The simplest slice is "All" which places no restrictions on the sub-population.
+A simple _usage criterion_ is "All Desktop Activity", which includes all Firefox Desktop users that we have any data (telemetry ping) for on the day in question. The simplest slice is "All" which places no restrictions on the sub-population.
 
 For example, the metric "Daily Active Users (DAU)" with usage criteria "All Desktop Activity" and slice "All" involves summarizing data on all users of Firefox Desktop over a single day.
 
@@ -46,7 +46,7 @@ Active user counts must always be calculated in reference to some specific
 _usage criterion_, a binary condition we use to determine whether a given
 user should be considered "active" in a given product or feature.
 It may be something simple like "All Desktop Activity" (as above) or,
-similarly, "All Mobile Activity".  It may also be something more specific like
+similarly, "All Mobile Activity". It may also be something more specific like
 "Desktop Visited 5 URI" corresponding to calculation of
 [aDAU](../../../cookbooks/active_dau.md).
 
@@ -66,7 +66,7 @@ restrictions on any dimension.
 Note there are some complexities here:
 
 - Firstly, a dimension may be scalar and need to be suitably bucketed (instead of every possible profile age being a unique slice element, maybe we prefer to group users between 12 and 16 months old into a single slice element); likewise we may need to use normalized versions of string fields
-- Secondly, we require that dimensions be non-overlapping, especially for metrics calculated over multiple days of user activity.  In a given day, a profile may be active in multiple countries, but we aggregate that to a single value by taking the most frequent value seen in that day, breaking ties by taking the value that occurs last. In a given month, the assigned country may change from day to day; we use the value from the most recent active day up to the day we're calculating usage for.
+- Secondly, we require that dimensions be non-overlapping, especially for metrics calculated over multiple days of user activity. In a given day, a profile may be active in multiple countries, but we aggregate that to a single value by taking the most frequent value seen in that day, breaking ties by taking the value that occurs last. In a given month, the assigned country may change from day to day; we use the value from the most recent active day up to the day we're calculating usage for.
 
 A slice is expressed as a set of conditions in `WHERE` or `GROUP BY` clauses
 when querying Exact MAU tables.
@@ -114,7 +114,7 @@ ORDER BY
     submission_date
 ```
 
-Perhaps we want to compare MAU as above to  [aDAU](../../../cookbooks/active_dau.md)
+Perhaps we want to compare MAU as above to [aDAU](../../../cookbooks/active_dau.md)
 over the same slice. The column `visited_5_uri_dau` gives DAU as calculated
 with the "Desktop Visited 5 URI" usage criterion, corresponding to aDAU:
 

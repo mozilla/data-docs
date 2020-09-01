@@ -1,6 +1,6 @@
 # hgpush
 
-This dataset records facts about individual commits to the Firefox source tree 
+This dataset records facts about individual commits to the Firefox source tree
 in the [`mozilla-central`](https://hg.mozilla.org/mozilla-central/) source
 code repository.
 
@@ -16,8 +16,9 @@ See the [`hgpush` ping schema](https://github.com/mozilla-services/mozilla-pipel
 for a description of available fields.
 
 Be careful to:
- * Use the latest schema version.  e.g. `v1`.  Browse the [`hgpush` schema directory](https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/master/schemas/eng-workflow/hgpush) in the GitHub repo to be sure.
- * Change dataset field names from `camelCaseNames` to `under_score_names` in STMO. e.g. `reviewSystemUsed` in the ping schema becomes `review_system_used` in STMO.
+
+- Use the latest schema version. e.g. `v1`. Browse the [`hgpush` schema directory](https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/master/schemas/eng-workflow/hgpush) in the GitHub repo to be sure.
+- Change dataset field names from `camelCaseNames` to `under_score_names` in STMO. e.g. `reviewSystemUsed` in the ping schema becomes `review_system_used` in STMO.
 
 ## Example Queries
 

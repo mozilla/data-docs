@@ -18,9 +18,9 @@ The canonical documentation is in [this tree](https://searchfox.org/mozilla-cent
 
 There are three tables produced every day (you can see them in Redshift as `{tablename}_YYYYMMDD`:
 
-* `download_stats_YYYYMMDD` ([source](https://github.com/whd/dsmo_load/blob/master/hindsight/hs_run/output/dsmo_redshift.lua))
-* `download_stats_funnelcake_YYYYMMDD` ([source](https://github.com/whd/dsmo_load/blob/master/hindsight/hs_run/output/dsmo_funnelcake_redshift.lua))
-* `download_stats_errors_YYYYMMDD` ([source](https://github.com/whd/dsmo_load/blob/master/hindsight/hs_run/output/dsmo_errors_redshift.lua))
+- `download_stats_YYYYMMDD` ([source](https://github.com/whd/dsmo_load/blob/master/hindsight/hs_run/output/dsmo_redshift.lua))
+- `download_stats_funnelcake_YYYYMMDD` ([source](https://github.com/whd/dsmo_load/blob/master/hindsight/hs_run/output/dsmo_funnelcake_redshift.lua))
+- `download_stats_errors_YYYYMMDD` ([source](https://github.com/whd/dsmo_load/blob/master/hindsight/hs_run/output/dsmo_errors_redshift.lua))
 
 The funnelcake tables aggregate funnelcake builds, which have additional metadata for tracking distribution experiments. [More on Funnelcake](https://wiki.mozilla.org/Funnelcake).
 

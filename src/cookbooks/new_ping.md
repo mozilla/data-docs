@@ -69,28 +69,28 @@ This document can be described in the following way:
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "type": "object",
-    "properties": {
-        "id": {
-            "type": "string",
-            "description": "The document identifier"
-        },
-        "clientId": {
-            "type": "string",
-            "description": "The client identifier"
-        },
-        "payload": {
-            "type": "object",
-            "properties": {
-                "response_ms": {
-                    "type": "integer",
-                    "minimum": 0,
-                    "description": "Response time of the client, in milliseconds"
-                }
-            }
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The document identifier"
+    },
+    "clientId": {
+      "type": "string",
+      "description": "The client identifier"
+    },
+    "payload": {
+      "type": "object",
+      "properties": {
+        "response_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Response time of the client, in milliseconds"
         }
+      }
     }
+  }
 }
 ```
 
@@ -181,8 +181,7 @@ about the expected format.
 
 First confirm with the reviewers of [your schema pull
 request](#submit-schema-to-mozilla-servicesmozilla-pipeline-schemas) that your schemas have been
-deployed. You may also check the diff of the latest commit to [`mozilla-pipeline-schemas/generated
-schemas`](https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/generated-schemas).
+deployed. You may also check the diff of the latest commit to [`mozilla-pipeline-schemas/generated schemas`](https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/generated-schemas).
 
 In the following links, replace `<namespace>`, `<doctype>` And `<docversion>` with appropriate
 values. Also replace `-` with `_` in `<namespace>` if your namespace contains `-` characters.

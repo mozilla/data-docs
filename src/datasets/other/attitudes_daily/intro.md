@@ -1,4 +1,4 @@
-The `attitudes_daily` table is a Telemetry instantiation of user responses to the [Daily Attitudes Survey (DAS)](https://qsurvey.mozilla.com/collab/daily-attitude-survey) over time. 
+The `attitudes_daily` table is a Telemetry instantiation of user responses to the [Daily Attitudes Survey (DAS)](https://qsurvey.mozilla.com/collab/daily-attitude-survey) over time.
 It is joined to `clients_daily` using `client_id` and `submission_date`.
 
 #### Contents

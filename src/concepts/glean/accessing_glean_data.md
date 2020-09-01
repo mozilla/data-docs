@@ -14,10 +14,10 @@ For example, columns containing Glean's built-in client information are in the `
 
 The top-level groups are:
 
-* `client_info`: [Client information provided by Glean](https://mozilla.github.io/glean/book/user/pings/index.html#the-client_info-section).
-* `ping_info`: [Ping information provided by Glean](https://mozilla.github.io/glean/book/user/pings/index.html#the-ping_info-section).
-* `metrics`: [Custom metrics](https://mozilla.github.io/glean/book/user/metrics/index.html) defined by the application and its libraries.
-* `events`: [Custom events](https://mozilla.github.io/glean/book/user/metrics/event.html) defined by the application and its libraries.
+- `client_info`: [Client information provided by Glean](https://mozilla.github.io/glean/book/user/pings/index.html#the-client_info-section).
+- `ping_info`: [Ping information provided by Glean](https://mozilla.github.io/glean/book/user/pings/index.html#the-ping_info-section).
+- `metrics`: [Custom metrics](https://mozilla.github.io/glean/book/user/metrics/index.html) defined by the application and its libraries.
+- `events`: [Custom events](https://mozilla.github.io/glean/book/user/metrics/event.html) defined by the application and its libraries.
 
 ### Built-in metrics
 
@@ -37,7 +37,7 @@ WHERE
 
 ### The `metrics` group
 
-Custom metrics in the `metrics` section have two additional levels of indirection in their column name: they are organized by the metric type, and then by their category: `metrics.{metric_type}.{category}_{name}`. 
+Custom metrics in the `metrics` section have two additional levels of indirection in their column name: they are organized by the metric type, and then by their category: `metrics.{metric_type}.{category}_{name}`.
 
 For example, suppose you had the following `boolean` metric defined in a `metrics.yaml` file (abridged for clarity):
 
@@ -59,7 +59,7 @@ SELECT
   COUNT(*),
   COUNTIF(metrics.boolean.browser_is_default)
 FROM
-  -- We give the table an alias so that the table name `metrics` and field name 
+  -- We give the table an alias so that the table name `metrics` and field name
   -- `metrics` don't conflict.
   org_mozilla_fenix.metrics AS m
 WHERE
@@ -70,4 +70,4 @@ WHERE
 
 Custom events in the `events` section have a different structure.
 
-Documentation TBD.  [See bug 1606836](https://bugzilla.mozilla.org/show_bug.cgi?id=1606836)
+Documentation TBD. [See bug 1606836](https://bugzilla.mozilla.org/show_bug.cgi?id=1606836)

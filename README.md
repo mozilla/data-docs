@@ -74,6 +74,19 @@ The [markdown-link-check](https://www.npmjs.com/package/markdown-link-check) pac
 
 To run link checking locally, run the installation steps [described for spell checking](#spell-checking) if you haven't already, then run the `scripts/link_check.sh` script.
 
+### Markdown formatting
+
+We use [prettier](https://prettier.io) to ensure a consistent formatting style in our markdown.
+To reduce friction, this is not a required check but running it on the files
+you're modifying before submission is highly appreciated!
+Most editors can be configured to run prettier automatically,
+see for example the
+[Prettier Plugin for VSCode](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode).
+
+To run prettier locally on the entire repository, run the installation steps
+[described for spell checking](#spell-checking) if you haven't already, then
+run the `scripts/prettier_fix.sh` script.
+
 ## Contributing
 
 See [contributing](https://docs.telemetry.mozilla.org/contributing/index.html) for detailed information on making changes to the documentation.

@@ -12,6 +12,7 @@ example statistics include usage hours and plugin crashes.
 This dataset is accessible via STMO.
 
 The data is stored as a parquet table in S3 at the following address.
+
 ```
 s3://telemetry-parquet/crash_aggregates/v1/
 ```

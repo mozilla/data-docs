@@ -32,7 +32,7 @@ By far most data handled by the Data Platform is [produced by Firefox][fx_teleme
 
 Most data is submitted via HTTP POST, but data is also produced in the form of service logs and `statsd` messages.
 
-If you would like to locally test a new data producer, the [`gzipServer`][gzipServer] project provides a simplified server that makes it easy to inspect submitted messages.
+If you would like to locally test a new data producer, the [`gzipServer`][gzipserver] project provides a simplified server that makes it easy to inspect submitted messages.
 
 ## Ingestion
 
@@ -74,7 +74,7 @@ graph LR
 
 Data arrives as an HTTP POST of an optionally gzipped payload of JSON. See the common [Edge Server] specification for details.
 
-Submissions hit a load balancer which handles the SSL connection, then forwards to a "tee" server, which may direct some or all submissions to alternate backends. In the past, the tee was used to manage the [cutover between different versions of the backend][cutover] infrastructure. It is implemented as an [`OpenResty`][OpenResty] plugin.
+Submissions hit a load balancer which handles the SSL connection, then forwards to a "tee" server, which may direct some or all submissions to alternate backends. In the past, the tee was used to manage the [cutover between different versions of the backend][cutover] infrastructure. It is implemented as an [`OpenResty`][openresty] plugin.
 
 From there, the [`mozingest`][mozingest] HTTP Server receives submissions from the tee and batches and stores data durably on Amazon S3 as a fail-safe (we call this "Landfill"). Data is then passed along via [Kafka] for validation and further processing. If there is a problem with decoding, validation, or any of the code described in the rest of this section, data can be re-processed from this fail-safe store. The `mozingest` server is implemented as an `nginx` module.
 
@@ -359,13 +359,12 @@ graph LR
  Schemas -.->|validation| dwl
 ```
 
-
 [fx_telemetry_docs]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html
-[gzipServer]: https://github.com/mozilla/gzipServer
-[Hindsight]: https://github.com/mozilla-services/hindsight
+[gzipserver]: https://github.com/mozilla/gzipServer
+[hindsight]: https://github.com/mozilla-services/hindsight
 [telemetry-streaming]: https://github.com/mozilla/telemetry-streaming
-[Spark Streaming]: https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html
-[Edge Server]: http_edge_spec.md
+[spark streaming]: https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html
+[edge server]: http_edge_spec.md
 [generic ingestion]: https://docs.google.com/document/d/1PqiF1rF2fCk_kQuGSwGwildDf4Crg9MJTY44E6N5DSk/edit
 [mps]: https://github.com/mozilla-services/mozilla-pipeline-schemas
 [lua_sandbox]: http://mozilla-services.github.io/lua_sandbox/
@@ -373,38 +372,38 @@ graph LR
 [direct2parquet]: https://mozilla-services.github.io/lua_sandbox_extensions/parquet/
 [mozingest]: https://github.com/mozilla-services/nginx_moz_ingest
 [cutover]: https://bugzilla.mozilla.org/show_bug.cgi?id=1302265
-[OpenResty]: http://openresty.org/en/
-[Amplitude]: https://amplitude.com/
-[Firefox Hardware Report]: https://data.firefox.com/dashboard/hardware
-[DataDog]: http://datadoghq.com/
-[Cerberus]: https://github.com/mozilla/cerberus
+[openresty]: http://openresty.org/en/
+[amplitude]: https://amplitude.com/
+[firefox hardware report]: https://data.firefox.com/dashboard/hardware
+[datadog]: http://datadoghq.com/
+[cerberus]: https://github.com/mozilla/cerberus
 [histogram measures]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/histograms.html
-[Airflow]: https://github.com/mozilla/telemetry-airflow
-[Redash]: https://redash.io
-[STMO]: ../../tools/stmo.md
-[Jupyter]: https://jupyter.org/
-[Zeppelin]: https://zeppelin.apache.org/
-[Databricks instance]: https://dbc-caf9527b-e073.cloud.databricks.com
-[Databricks docs]: https://docs.databricks.com/user-guide/notebooks/index.html
+[airflow]: https://github.com/mozilla/telemetry-airflow
+[redash]: https://redash.io
+[stmo]: ../../tools/stmo.md
+[jupyter]: https://jupyter.org/
+[zeppelin]: https://zeppelin.apache.org/
+[databricks instance]: https://dbc-caf9527b-e073.cloud.databricks.com
+[databricks docs]: https://docs.databricks.com/user-guide/notebooks/index.html
 [tmo]: https://telemetry.mozilla.org
 [measurement dashboard]: https://telemetry.mozilla.org/new-pipeline/dist.html
 [cep]: BROKEN:http://pipeline-cep.prod.mozaws.net/
-[Mission Control]: https://data-missioncontrol.dev.mozaws.net
-[Metrics Graphics]: http://metricsgraphicsjs.org/
+[mission control]: https://data-missioncontrol.dev.mozaws.net
+[metrics graphics]: http://metricsgraphicsjs.org/
 [parquet]: https://parquet.apache.org/
-[Hive]: https://cwiki.apache.org/confluence/display/Hive/Home
-[Presto]: http://prestosql.io/
-[Telemetry Aggregates]: https://github.com/mozilla/python_mozaggregator/#api
-[Amazon S3]: https://aws.amazon.com/s3/
-[TAAR Project]: https://github.com/mozilla/python_mozetl/blob/master/mozetl/taar/taar_dynamo.py
+[hive]: https://cwiki.apache.org/confluence/display/Hive/Home
+[presto]: http://prestosql.io/
+[telemetry aggregates]: https://github.com/mozilla/python_mozaggregator/#api
+[amazon s3]: https://aws.amazon.com/s3/
+[taar project]: https://github.com/mozilla/python_mozetl/blob/master/mozetl/taar/taar_dynamo.py
 [py_dataset]: https://mozilla.github.io/python_moztelemetry/api.html#dataset
 [moztelemetry]: https://github.com/mozilla/moztelemetry/blob/master/src/main/scala/com/mozilla/telemetry/heka/Dataset.scala
 [statsd]: https://github.com/etsy/statsd
 [hslog]: https://mozilla-services.github.io/lua_sandbox_extensions/moz_logging/
 [python_mozetl]: https://github.com/mozilla/python_mozetl
 [telemetry-batch-view]: https://github.com/mozilla/telemetry-batch-view
-[Getting Started]: ../../concepts/analysis_intro.md
-[St. Mocli]: https://github.com/mozilla/stmocli
-[Kafka]: https://kafka.apache.org/
-[Spark]: https://spark.apache.org/docs/latest/index.html
-[Athena]: https://aws.amazon.com/athena/
+[getting started]: ../../concepts/analysis_intro.md
+[st. mocli]: https://github.com/mozilla/stmocli
+[kafka]: https://kafka.apache.org/
+[spark]: https://spark.apache.org/docs/latest/index.html
+[athena]: https://aws.amazon.com/athena/

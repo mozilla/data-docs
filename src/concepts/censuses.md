@@ -25,21 +25,21 @@ The blocklist request does not contain the telemetry `client_id` or any
 other persistent identifiers. Some data about the install are provided
 as URI parameters:
 
-  - App ID
-  - App version
-  - Product name
-  - Build ID
-  - Build target
-  - Locale
-  - Update channel
-  - OS version
-  - Distribution
-  - Distribution version
-  - Number of pings sent by this client for this version of Firefox
-    (stored in the pref `extensions.blocklist.pingCountVersion`)
-  - Total ping count (stored in the pref
-    `extensions.blocklist.pingCountTotal`)
-  - Number of full days since last ping
+- App ID
+- App version
+- Product name
+- Build ID
+- Build target
+- Locale
+- Update channel
+- OS version
+- Distribution
+- Distribution version
+- Number of pings sent by this client for this version of Firefox
+  (stored in the pref `extensions.blocklist.pingCountVersion`)
+- Total ping count (stored in the pref
+  `extensions.blocklist.pingCountTotal`)
+- Number of full days since last ping
 
 so subsets of ADI may be queried along these dimensions.
 

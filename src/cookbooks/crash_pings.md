@@ -1,11 +1,11 @@
 # Working with Crash Pings
 
-Here are some snippets to get you started querying [crash pings](../datasets/pings.md#crash-ping) with [STMO](../tools/stmo.md) and 
-[BigQuery](./bigquery.md). Using these tools, you can quickly get counts 
+Here are some snippets to get you started querying [crash pings](../datasets/pings.md#crash-ping) with [STMO](../tools/stmo.md) and
+[BigQuery](./bigquery.md). Using these tools, you can quickly get counts
 and other information on the nature of crash pings submitted day-to-day.
 
 The simplest example is probably just to count all existing pings for a few days
-across some dimensions: 
+across some dimensions:
 
 ```sql
 SELECT date(submission_timestamp) AS crash_date,

@@ -23,8 +23,16 @@ matrix:
       script:
         - npm install
         - scripts/link_check.sh
+    - name: prettier-check
+      language: node_js
+      node_js:
+      - 12
+      script:
+        - npm install
+        - npx prettier -c src/**/*md
   allow_failures:
   - name: link-check
+  - name: prettier-check
 deploy:
   provider: pages
   skip-cleanup: true

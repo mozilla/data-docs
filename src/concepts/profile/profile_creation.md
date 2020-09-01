@@ -28,13 +28,13 @@ Some of these behave slightly differently.
 
 Profiles can be created and managed by the Firefox Profile Manager:
 
-* New profile on first launch
-* New profile from Profile Manager
-* `--createprofile` command line argument
+- New profile on first launch
+- New profile from Profile Manager
+- `--createprofile` command line argument
 
 Profiles can be created externally and not be managed by the Firefox Profile Manager:
 
-* `--profile` command line argument
+- `--profile` command line argument
 
 #### Managed: First use
 
@@ -89,7 +89,7 @@ The profile itself and the profile creation date are unaffected by this.
 
 ## Profile Creation Date
 
-The *profile creation date* is the assumed date of initial profile creation.
+The _profile creation date_ is the assumed date of initial profile creation.
 However it proved to be not reliable for all cases.
 There are multiple ways this date is determined.
 
@@ -112,7 +112,6 @@ J --> S[Return creation date]
 ```
 
 [^1]: Relevant parts in the code: [`nsAppRunner::SelectProfile`](https://searchfox.org/mozilla-central/rev/292d295d6b084b43b70de26a42e68513bb7b36a3/toolkit/xre/nsAppRunner.cpp#2394-2395,2397-2398,2527-2533) calling [`nsToolkitProfileService::CreateProfile`](https://searchfox.org/mozilla-central/rev/196560b95f191b48ff7cba7c2ba9237bba6b5b6a/toolkit/profile/nsToolkitProfileService.cpp#789-793).
-
 
 ### Unmanaged: Empty profile directory
 

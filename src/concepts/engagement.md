@@ -1,7 +1,7 @@
 # Engagement metrics
 
 > This section was originally included in the [Project Smoot existing metrics report][smootv1]
-(Mozilla internal link).
+> (Mozilla internal link).
 
 [smootv1]: https://mozilla-private.report/smoot-existing-metrics/book/05_overview.html
 
@@ -71,15 +71,15 @@ It works by attaching an instance of `URICountListener` as a
 
 Some filters are applied to `onLocationChange` events:
 
-  - Error pages are excluded.
-  - Only top-level pageloads (where `webProgress.isTopLevel`,
-    [documented inline][total_uri_src], is true) are counted – i.e,
-    not navigations within a frame.
-  - Tab restore events are excluded.
-  - URIs visited in private browsing mode are excluded unless
-    `browser.engagement.total_uri_count.pbm` is true. (The pref has been
-    flipped on for small populations in a couple of short studies, but,
-    [for now][bug1535169] remains false by default.)
+- Error pages are excluded.
+- Only top-level pageloads (where `webProgress.isTopLevel`,
+  [documented inline][total_uri_src], is true) are counted – i.e,
+  not navigations within a frame.
+- Tab restore events are excluded.
+- URIs visited in private browsing mode are excluded unless
+  `browser.engagement.total_uri_count.pbm` is true. (The pref has been
+  flipped on for small populations in a couple of short studies, but,
+  [for now][bug1535169] remains false by default.)
 
 [total_uri_src]: https://searchfox.org/mozilla-central/rev/f1c7ba91fad60bfea184006f3728dd6ac48c8e56/uriloader/base/nsIWebProgress.idl#144
 [bug1535169]: https://bugzilla.mozilla.org/show_bug.cgi?id=1535169

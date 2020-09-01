@@ -1,6 +1,7 @@
 # Firefox Accounts Data
 
 ## Table of Contents
+
 <!-- toc -->
 
 ## Introduction
@@ -11,20 +12,20 @@ This article provides an overview of Firefox Accounts metrics: what is measured 
 
 [Firefox Accounts](https://www.mozilla.org/en-US/firefox/accounts/) is Mozilla's authentication solution for account-based end-user services and features. At the time of writing, sync is by far the most popular account-relying service. Below is a partial list of current FxA-relying services (by the time you are reading this others will likely have been added; we will endeavor to update the list periodically):
 
-* [Sync](https://support.mozilla.org/en-US/kb/how-do-i-set-sync-my-computer)
-    * Requires FxA.
-* [Firefox Send](https://send.firefox.com/)
-    * FxA Optional; Required to send large files.
-* [Lockwise](https://lockwise.firefox.com/)
-    * Requires FxA and sync.
-* [AMO](https://addons.mozilla.org/en-US/firefox/)
-    * For developer accounts; not required by end-users to use or download addons.
-* [Pocket](https://getpocket.com/login/?ep=1)
-    * FxA is an optional authentication method among others.
-* [Monitor](https://monitor.firefox.com)
-    * Required to receive email alerts. Not required for email scans.
-* [Mozilla IAM](https://wiki.mozilla.org/IAM/Frequently_asked_questions)
-    * Optional authentication method among others.
+- [Sync](https://support.mozilla.org/en-US/kb/how-do-i-set-sync-my-computer)
+  - Requires FxA.
+- [Firefox Send](https://send.firefox.com/)
+  - FxA Optional; Required to send large files.
+- [Lockwise](https://lockwise.firefox.com/)
+  - Requires FxA and sync.
+- [AMO](https://addons.mozilla.org/en-US/firefox/)
+  - For developer accounts; not required by end-users to use or download addons.
+- [Pocket](https://getpocket.com/login/?ep=1)
+  - FxA is an optional authentication method among others.
+- [Monitor](https://monitor.firefox.com)
+  - Required to receive email alerts. Not required for email scans.
+- [Mozilla IAM](https://wiki.mozilla.org/IAM/Frequently_asked_questions)
+  - Optional authentication method among others.
 
 A single account can be used to authenticate with all of the services listed above (though see the note below about Chinese users).
 
@@ -53,8 +54,9 @@ Note that the BigQuery [ETL jobs](https://github.com/mozilla/bigquery-etl/tree/m
 FxA's amplitude metrics were originally just re-configured and re-named versions of the flow metrics. However things have since diverged a bit and there are now metrics events that only have an amplitude version but no corresponding flow event, and vice-versa. If you are wondering whether a certain event is logged its likely you will have to check both data sources.
 
 **Generally speaking, one should first try to use the amplitude metrics rather than the flow events** for these reasons:
+
 1. For quick answers to simple questions the amplitude UI is often more efficient than writing SQL.
-    * The caveat here is that is can sometimes be *too* easy to build a chart in amplitude - it doesn't exactly encourage the careful consideration that having to write a query out by hand implicitly encourages.
+   - The caveat here is that is can sometimes be _too_ easy to build a chart in amplitude - it doesn't exactly encourage the careful consideration that having to write a query out by hand implicitly encourages.
 2. By-country data is currently not available in redshift.
 3. There have been outages in the redshift data that have not affected the amplitude data.
 4. Querying redshift is (generally) slower.

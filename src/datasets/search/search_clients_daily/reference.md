@@ -16,7 +16,6 @@ If you have trouble viewing this query,
 it's likely you don't have the proper permissions.
 For more details see the [search data documentation].
 
-
 ## Scheduling
 
 This dataset is scheduled on Airflow
@@ -81,6 +80,5 @@ root
 
 The `search_clients_daily` job is
 [defined in `bigquery-etl`](https://github.com/mozilla/bigquery-etl/blob/master/sql/search_derived/search_clients_daily_v8/query.sql)
-
 
 [search data documentation]: ../../search.md
