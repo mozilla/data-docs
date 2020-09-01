@@ -96,6 +96,15 @@ only the [common ping data][common_ping_data] and an empty payload.
 It was introduced in Firefox 72, replacing the ["optout" ping][optout_ping]
 (which was in turn introduced in Firefox 63).
 
+### "coverage" ping
+
+The [coverage ping][coverage_ping] ([announcement](https://blog.mozilla.org/data/2018/08/20/effectively-measuring-search-in-firefox/))
+is a periodic census intended to estimate telemetry opt-out rates.
+
+We estimate that [93% of release channel
+profiles](https://metrics.mozilla.com/~rharter/reports/coverage/index.html)
+have telemetry enabled (and are therefore included in DAU).
+
 ### Pingsender
 
 [Pingsender][pingsender] is a small application shipped with Firefox which
@@ -156,3 +165,4 @@ To augment our data collection, see [Collecting New Data][addprobe] and the
 [addprobe]: https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Adding_a_new_Telemetry_probe
 [datacollection]: https://wiki.mozilla.org/Firefox/Data_Collection
 [pingsender]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/pingsender.html
+[coverage_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/coverage-ping.html
