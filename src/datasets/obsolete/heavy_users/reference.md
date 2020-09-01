@@ -1,6 +1,6 @@
 # Heavy Users
 
-**_As of 2018-05-18, this dataset has been deprecated and is no longer maintained. See [Bug 1455314](https://bugzilla.mozilla.org/show_bug.cgi?id=1455314)_**
+> As of 2018-05-18, this dataset has been deprecated and is no longer maintained. See [Bug 1455314](https://bugzilla.mozilla.org/show_bug.cgi?id=1455314)
 
 <!-- toc -->
 

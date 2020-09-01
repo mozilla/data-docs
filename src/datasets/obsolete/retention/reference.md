@@ -1,10 +1,10 @@
 # 1 Day Retention
 
-**_As of 2019-08-13, this dataset has been deprecated and is no longer
-maintained. See [Bug
-1571565](https://bugzilla.mozilla.org/show_bug.cgi?id=1571565) for historical
-sources. See the [retention cookbook](../../../cookbooks/retention.md) for
-current best practices._**
+> As of 2019-08-13, this dataset has been deprecated and is no longer
+> maintained. See [Bug
+> 1571565](https://bugzilla.mozilla.org/show_bug.cgi?id=1571565) for historical
+> sources. See the [retention cookbook](../../../cookbooks/retention.md) for
+> current best practices.
 
 <!-- toc -->
 

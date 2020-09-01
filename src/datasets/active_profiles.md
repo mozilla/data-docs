@@ -73,9 +73,9 @@ which can be useful for quicker queries, as the table is clustered by this colum
 A way to think about the model that infers these quantities is to imagine a simple process
 where each client is given 2 weighted coins when they become users, and that they flip each
 day. Since they're weighted, the probability of heads won't be 50%, but rather some probability
-between 0 and 100%, specific to each client's coin. One coin, called _L_, comes up heads with
+between 0 and 100%, specific to each client's coin. One coin, called `L`, comes up heads with
 probability `prob_daily_leave`, and if it ever comes up heads, the client will never use the
-browser again. The daily usage coin, _U_, has heads `prob_daily_usage`% of the time. _While
+browser again. The daily usage coin, `U`, has heads `prob_daily_usage`% of the time. _While
 they are still active_, clients flip this coin to decide whether they will use the browser
 on that day, and show up in `clients_daily`.
 

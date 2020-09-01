@@ -1,9 +1,9 @@
 # An overview of Mozilla’s Data Pipeline
 
-_Note: This article describes the AWS-based pipeline which
-[has been retired](https://bugzilla.mozilla.org/show_bug.cgi?id=1598815);
-the client-side concepts here still apply, but this article has been updated
-to reflect the [new GCP pipeline](gcp_data_pipeline.md)._
+> Note: This article describes the AWS-based pipeline which
+> [has been retired](https://bugzilla.mozilla.org/show_bug.cgi?id=1598815);
+> the client-side concepts here still apply, but this article has been updated
+> to reflect the [new GCP pipeline](gcp_data_pipeline.md).
 
 This post describes the architecture of Mozilla’s data pipeline, which is used to collect Telemetry data from our users and logs from various services. One of the cool perks of working at Mozilla is that most of what we do is out in the open and because of that I can do more than just show you some diagram with arrows of our architecture; I can point you to the code, script & configuration that underlies it!
 

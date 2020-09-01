@@ -1,6 +1,6 @@
 # Crash Aggregates
 
-**_As of 2018-04-02, this dataset has been deprecated and is no longer maintained. See [Bug 1388025](https://bugzilla.mozilla.org/show_bug.cgi?id=1388025) for more information._**
+> As of 2018-04-02, this dataset has been deprecated and is no longer maintained. See [Bug 1388025](https://bugzilla.mozilla.org/show_bug.cgi?id=1388025) for more information.
 
 <!-- toc -->
 

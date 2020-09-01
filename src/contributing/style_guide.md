@@ -79,7 +79,7 @@ The following is a distillation of common best practices for technical writing i
 
 - In general: use a friendly, conversational tone. This makes the documentation more approachable.
 - Avoid specifying particular people or teams unless absolutely necessary: change is constant at Mozilla, and the person or people who maintains a system today is not necessarily the same as yesterday.
-- If possible, use "you" when describing how to do something. Avoid use of first person (for example: _I_, _we_, _our_) as this emphasizes the writer rather than the reader and it is often unclear who _I_, _we_ or _our_ actually refer to.
+- If possible, use "you" when describing how to do something. Avoid use of first person (for example: "I", "we", "our") as this emphasizes the writer rather than the reader and it is often unclear who "I", "we" or "our" actually refer to.
 - Avoid unnecessary formalities like "please" or "thank you".
 - Where it makes sense, use present tense (as opposed to future tense). For example, "You need to perform the following tasks" is preferable to "You will need to perform the following tasks".
 - Where possible, avoid the use of the passive voice (identifying the agent of action as the subject of the sentence): active voice sentences are generally clearer and less verbose. For example, "Press OK to confirm changes" is preferable to "The system will confirm changes when you press OK". You can use a tool like [write-good](https://github.com/btford/write-good) to identify uses of passive voice in your own work.

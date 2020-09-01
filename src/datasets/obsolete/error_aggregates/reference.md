@@ -1,6 +1,6 @@
 # Error Aggregates Reference
 
-**_As of 2019-11-21, this dataset has been deprecated and is no longer maintained. See [Bug 1594112](https://bugzilla.mozilla.org/show_bug.cgi?id=1594112) for more information._**
+> As of 2019-11-21, this dataset has been deprecated and is no longer maintained. See [Bug 1594112](https://bugzilla.mozilla.org/show_bug.cgi?id=1594112) for more information.
 
 <!-- toc -->
 
