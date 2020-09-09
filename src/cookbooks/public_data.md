@@ -33,7 +33,7 @@ For example:
 ```json
 {
   "telemetry_derived": {
-    // dataset name
+    // ^ dataset name
     "deviations": {
       // table name
       "v1": {
