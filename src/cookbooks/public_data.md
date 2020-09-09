@@ -35,7 +35,7 @@ For example:
   "telemetry_derived": {
     // ^ dataset name
     "deviations": {
-      // table name
+      // ^ table name
       "v1": {
         // ^ table version
         "friendly_name": "Deviations",
