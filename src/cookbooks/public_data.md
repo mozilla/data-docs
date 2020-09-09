@@ -37,7 +37,7 @@ For example:
     "deviations": {
       // table name
       "v1": {
-        // table version
+        // ^ table version
         "friendly_name": "Deviations",
         "description": "Deviation of different metrics from forecast.",
         "incremental": true,
