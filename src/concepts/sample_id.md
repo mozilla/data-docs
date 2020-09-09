@@ -19,6 +19,7 @@ include the `sample_id` field.
 TL;DR `sample_id = crc32(client_id) % 100`
 
 An example python implementation:
+
 ```python
 # USAGE: python cid2sid.py 859c8a32-0b73-b547-a5e7-8ef4ed9c4c2d
 # Prints
@@ -33,4 +34,4 @@ sampleid = (crc & 0xFFFFFFFF) % 100
 print("Client ID {} => Sample ID {}".format(clientid, sampleid))
 ```
 
-[CRC]: https://en.wikipedia.org/wiki/Cyclic_redundancy_check
+[crc]: https://en.wikipedia.org/wiki/Cyclic_redundancy_check

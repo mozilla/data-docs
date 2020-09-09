@@ -42,6 +42,7 @@ LIMIT
 ```
 
 ## Normalized Channel
+
 This field is a normalization of the directly reported channel, and replaces unusual
 and unexpected values with the string `Other`.
 There are a couple of exceptions, notably that variations on `nightly-cck-*` become `nightly`.

@@ -86,5 +86,4 @@ root
 The `search_clients_last_seen` job is
 [defined in `bigquery-etl`](https://github.com/mozilla/bigquery-etl/blob/master/sql/search_derived/search_clients_last_seen_v1/query.sql)
 
-
 [search data documentation]: ../../search.md

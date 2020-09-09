@@ -7,6 +7,7 @@
 {{#include ./intro.md}}
 
 # Data Reference
+
 ## Combining Rows
 
 This is a dataset of ratios. You can't combine ratios if they have different bases. For example,
@@ -31,7 +32,7 @@ Or, in JavaScript:
 ```js
 let rows = query_result.data.rows;
 let ratioForDateInQuestion = rows
-  .filter(row => row.submission_date == dateInQuestion)
+  .filter((row) => row.submission_date == dateInQuestion)
   .reduce((row, acc) => acc + row.normalized_pageloads * row.ratio, 0);
 ```
 

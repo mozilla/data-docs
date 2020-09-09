@@ -11,6 +11,7 @@ is a distinct set of dimensions, along with their associated histograms.
 This dataset is accessible via STMO by selecting from `telemetry_aggregates`.
 
 The data is stored as a parquet table in S3 at the following address.
+
 ```
 s3://telemetry-parquet/aggregates_poc/v1/
 ```

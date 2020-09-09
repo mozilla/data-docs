@@ -8,29 +8,29 @@ This page backs away from our profile-focused data view and examines what Firefo
 
 The above image illustrates all the layers that sit between a user acquiring and running Firefox Desktop and the Telemetry pings we receive.
 
-* 1: The user
-	- A human being presumably.
-* 2: The machine
-	- The physical hardware running Firefox.
-* 3: The disk image / hard drive
-	- A single machine could have separate partitions running different OSes.
-	- Multiple machines could run copies of a single disk image
-	- Disk images are also used as backups to restore a machine.
-* 4: OS user profile
-	- Most operating systems allow users to log into different user profiles with separate user directories (such as a "Guest" account).
-	- Usually, Firefox is installed into a system directory that all users profiles will share, but Firefox profiles are saved within the user directories, effectively segregating them.
-* 5: Firefox binary / installer
-	- The downloaded binary package or stub installer which installs Firefox into the disk image. Users can get these from our website or one of our managed properties, but they can also acquire these from 3rd party sources as well.
-	- Our website is instrumented with Google Analytics to track download numbers, but other properties (FTP) and 3rd party sources are not. Google Analytics data is not directly connected to Telemetry data.
-	- A user can produce multiple installations from a single Firefox binary / installer. For example, if a user copies it to a USB stick or keeps it in cloud storage, they could install Firefox on multiple machines from a single binary / installer.
-* 6: Firefox installation
-	- The installed Firefox program on a given disk image.
-	- Since Firefox is usually installed in a system directory, the single installation of Firefox will be shared by all the OS user profiles in the disk image.
-	- Stub installers are instrumented with pings to report new install counts, however, full binaries are not.
-* 7: Firefox profile
-	- The profile Firefox uses during a user's session.
-	- A user can create multiple Firefox profiles using the Firefox Profile Manager, or by specifying a custom directory to use at startup. More details [here](profile_creation.md).
-	- This is the entity that we see in Telemetry. Profiles send pings to Telemetry with a client ID as its identifier.
+- 1: The user
+  - A human being presumably.
+- 2: The machine
+  - The physical hardware running Firefox.
+- 3: The disk image / hard drive
+  - A single machine could have separate partitions running different OSes.
+  - Multiple machines could run copies of a single disk image
+  - Disk images are also used as backups to restore a machine.
+- 4: OS user profile
+  - Most operating systems allow users to log into different user profiles with separate user directories (such as a "Guest" account).
+  - Usually, Firefox is installed into a system directory that all users profiles will share, but Firefox profiles are saved within the user directories, effectively segregating them.
+- 5: Firefox binary / installer
+  - The downloaded binary package or stub installer which installs Firefox into the disk image. Users can get these from our website or one of our managed properties, but they can also acquire these from 3rd party sources as well.
+  - Our website is instrumented with Google Analytics to track download numbers, but other properties (FTP) and 3rd party sources are not. Google Analytics data is not directly connected to Telemetry data.
+  - A user can produce multiple installations from a single Firefox binary / installer. For example, if a user copies it to a USB stick or keeps it in cloud storage, they could install Firefox on multiple machines from a single binary / installer.
+- 6: Firefox installation
+  - The installed Firefox program on a given disk image.
+  - Since Firefox is usually installed in a system directory, the single installation of Firefox will be shared by all the OS user profiles in the disk image.
+  - Stub installers are instrumented with pings to report new install counts, however, full binaries are not.
+- 7: Firefox profile
+  - The profile Firefox uses during a user's session.
+  - A user can create multiple Firefox profiles using the Firefox Profile Manager, or by specifying a custom directory to use at startup. More details [here](profile_creation.md).
+  - This is the entity that we see in Telemetry. Profiles send pings to Telemetry with a client ID as its identifier.
 
 ## Desktop Browser Use Cases
 
@@ -135,5 +135,3 @@ In this case, since the Firefox profile is being copied over, both the new and t
 And since the profile contains any unsent Telemetry pings, we may receive duplicated submissions of pings from the same client ID.
 
 If the Firefox binary / installer was downloaded, there will be a download and install event. If it was migrated via USB stick, it will only have an install event.
-
-

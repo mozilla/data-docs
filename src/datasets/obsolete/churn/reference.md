@@ -1,10 +1,10 @@
 # Churn
 
-***As of 2019-08-21, this dataset has been deprecated and is no longer
-maintained. See [Bug
-1561048](https://bugzilla.mozilla.org/show_bug.cgi?id=1561048) for historical
-sources. See the [retention cookbook](../../../cookbooks/retention.md) for
-current best practices.***
+> As of 2019-08-21, this dataset has been deprecated and is no longer
+> maintained. See [Bug
+> 1561048](https://bugzilla.mozilla.org/show_bug.cgi?id=1561048) for historical
+> sources. See the [retention cookbook](../../../cookbooks/retention.md) for
+> current best practices.
 
 <!-- toc -->
 
@@ -13,18 +13,19 @@ current best practices.***
 {{#include ./intro.md}}
 
 # Data Reference
+
 ## Example Queries
 
 This section walks through a typical query to generate data suitable for
 visualization.
 
-| field | type | description |
-|-------|------|-------------|
-| `cohort_date` | common, attribute |  The start date bucket of the cohort. This is week the client was acquired.
-| `elapsed_periods` | common, attribute | The number of periods that have elapsed since the cohort date. In this dataset, the retention period is 7 days.
-| `channel` | attribute | Part of the release train model. An attribute that distinguishes cohorts.
-| `geo` | filter attribute | Country code. Used to filter out all countries other than the 'US'
-| `n_profiles` | metric | Count of users in a cohort. Use sum to aggregate.
+| field             | type              | description                                                                                                     |
+| ----------------- | ----------------- | --------------------------------------------------------------------------------------------------------------- |
+| `cohort_date`     | common, attribute | The start date bucket of the cohort. This is week the client was acquired.                                      |
+| `elapsed_periods` | common, attribute | The number of periods that have elapsed since the cohort date. In this dataset, the retention period is 7 days. |
+| `channel`         | attribute         | Part of the release train model. An attribute that distinguishes cohorts.                                       |
+| `geo`             | filter attribute  | Country code. Used to filter out all countries other than the 'US'                                              |
+| `n_profiles`      | metric            | Count of users in a cohort. Use sum to aggregate.                                                               |
 
 First the fields are extracted and aliased for consistency. `cohort_date` and
 `elapsed_periods` are common to most retention queries and are useful concepts
@@ -77,15 +78,16 @@ analysis.
      GROUP BY 1, 2, 3
 ),
 ```
+
 The table will have the following structure. The table is sorted by the first three columns for demonstration.
 
 | `channel` | `cohort_date` | `elapsed_periods` | `n_profiles` |
-|-----------|---------------|-------------------|--------------|
-| release | 20170101 | 0 | 100 |
-| release | 20170101 | 1 | 90 |
-| release | 20170101 | 2 | 80 |
-| ... | ... | ... | ... |
-| beta | 20170128 | 10 | 25 |
+| --------- | ------------- | ----------------- | ------------ |
+| release   | 20170101      | 0                 | 100          |
+| release   | 20170101      | 1                 | 90           |
+| release   | 20170101      | 2                 | 80           |
+| ...       | ...           | ...               | ...          |
+| beta      | 20170128      | 10                | 25           |
 
 Finally, retention is calculated through the number of profiles at the time of
 the `elapsed_period` relative to the initial period. This data can be imported
@@ -109,7 +111,7 @@ results AS (
 ```
 
 | `channel` | `cohort_date` | `elapsed_periods` | `n_profiles` | `total_n_profiles` | `percentage_n_profiles` |
-|-----------|---------------|-------------------|--------------|--------------------|-------------------------|
+| --------- | ------------- | ----------------- | ------------ | ------------------ | ----------------------- |
 | release   | 20170101      | 0                 | 100          | 100                | 1.0                     |
 | release   | 20170101      | 1                 | 90           | 100                | 0.9                     |
 | release   | 20170101      | 2                 | 80           | 100                | 0.8                     |
@@ -132,6 +134,7 @@ for more examples.
 The aggregated churn data is updated weekly on Wednesday.
 
 ## Schema
+
 As of 2017-10-15, the current version of `churn` is `v3` and has a schema as follows:
 
 ```
@@ -158,6 +161,7 @@ root
  |-- total_uri_count: long (nullable = true)
  |-- unique_domains_count_per_profile: double (nullable = true)
 ```
+
 ## Code Reference
 
 The script for generating `churn` currently lives in

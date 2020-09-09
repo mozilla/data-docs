@@ -1,25 +1,25 @@
 # User states/segments
 
-A user state is a group of clients who fit a set of criteria at a point in time. 
+A user state is a group of clients who fit a set of criteria at a point in time.
 The set of criteria itself can also be referred to as a "user state".
 
 In data science these are normally called "segments"; for Firefox we call them "user states".
 
-Typically you'll use user states to gain more insight into what is going on, by asking 
-"Regarding the thing I'm interested in, 
-do users in different user states behave differently, 
-and what insights does this give me into the users and the product?" 
-For example, "In this experiment, how do new users react to this feature, 
-and how does this differ from established users?". 
-Or "DAU moved dramatically - 
-is this restricted to users in this particular country (i.e. a user state) 
+Typically you'll use user states to gain more insight into what is going on, by asking
+"Regarding the thing I'm interested in,
+do users in different user states behave differently,
+and what insights does this give me into the users and the product?"
+For example, "In this experiment, how do new users react to this feature,
+and how does this differ from established users?".
+Or "DAU moved dramatically -
+is this restricted to users in this particular country (i.e. a user state)
 where there's an event happening, which would raise our suspicions,
 or is it global and therefore not solely due to that event?"
 
 ## Versioning
 
-We are building out our library of user states, 
-and we want room to iterate to improve them in the future. 
+We are building out our library of user states,
+and we want room to iterate to improve them in the future.
 So please quote user states' versions with their names, e.g. "regular users v3"
 so that your communication is forwards compatible.
 
@@ -51,16 +51,16 @@ This user state contains clients in _Regular users v3_ who do not fit in _Weekda
 
 ## Writing queries with user states/segments
 
-When a user state is defined with respect to a user's _behavior_ (e.g. usage levels) 
-as opposed to more stable traits (e.g. country), 
-we should evaluate each user's user state eligibility 
-using data collected _before_ the time period in which we want to study their actions. 
-Else we run the risk of making trivial discoveries 
-like "heavy users use the product heavily" instead of more meaningful ones 
+When a user state is defined with respect to a user's _behavior_ (e.g. usage levels)
+as opposed to more stable traits (e.g. country),
+we should evaluate each user's user state eligibility
+using data collected _before_ the time period in which we want to study their actions.
+Else we run the risk of making trivial discoveries
+like "heavy users use the product heavily" instead of more meaningful ones
 like "heavy users go on to continue using the product heavily".
 
-So, when writing queries to compute user states directly from their definition, 
-be sure to compute users' user states using only 
+So, when writing queries to compute user states directly from their definition,
+be sure to compute users' user states using only
 data collected before the time period you're analyzing their behavior.
 
 User states are found as columns in the `clients_last_seen` dataset: the user state listed for a client on a `submission_date` is valid for that `submission_date` because it is computed only using behavioral data collected _before_ the `submission_date`.
@@ -105,10 +105,10 @@ If someone has been using the browser every day for a year but then suddenly chu
 A user can be "new or resurrected v3" for only one day in a 28-day period: unless they appear for the first time on the last day of the month, the user will not qualify as "new or resurrected v3" at the end of the MAU window!
 So beware this trap and try to only use user states on days the users are active.
 
-
 ### Example queries
 
 DAU for _regular users v3_:
+
 ```lang=sql
 SELECT
     submission_date,
@@ -121,6 +121,7 @@ GROUP BY submission_date
 ```
 
 DAU for _regular users v3_, but joining from a different table:
+
 ```lang=sql
 SELECT
     cd.submission_date,
@@ -134,28 +135,26 @@ WHERE
     cd.submission_date BETWEEN '2020-01-01' AND '2020-03-01'
 ```
 
-
 ## Obsolete user states
 
 ### Usage regularity v2
 
-This is a set of three segments. 
+This is a set of three segments.
 On a given day, every client falls into exactly one of these segments.
 Each client's segment can be computed from `telemetry.clients_last_seen.days_visited_5_uri_bits`.
 
-
-*Regular users v2* is defined as 
+_Regular users v2_ is defined as
 clients who browsed >=5 URIs on _at least eight_ of the previous 27 days.
 As of February 2020 this segment contained approximately 2/3 of DAU
 and its users had a 1-week retention for a 5 URI day usage criterion of approximately 95%.
 
-*New/irregular users v2* is defined as 
+_New/irregular users v2_ is defined as
 clients who browsed >=5 URIs on _none_ of the previous 27 days.
 As of February 2020 this segment contained approximately 15% of DAU,
 and had a retention for a 5 URI day usage criterion of about 10%
 (though "activation" is likely a more relevant word than "retention" for many of these clients).
 
-*Semi-regular users v2* is defined as
+_Semi-regular users v2_ is defined as
 clients who browsed >=5 URIs on _between one and seven_ of the previous 27 days,
 i.e. it contains users who do not fit the other two segments at this time.
 As of February 2020 this segment contained approximately 20% of DAU,

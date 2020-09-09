@@ -18,6 +18,6 @@ Slack. See also [`#data`] for general data-related discussion.
 [fx-data-dev]: https://mail.mozilla.org/listinfo/fx-data-dev
 [fx-data-platform]: mailto:fx-data-platform@mozilla.com
 [#telemetry:mozilla.org]: https://chat.mozilla.org/#/room/#telemetry:mozilla.org
-[Mozilla's instance of matrix]: https://wiki.mozilla.org/Matrix
+[mozilla's instance of matrix]: https://wiki.mozilla.org/Matrix
 [`#data-help`]: https://mozilla.slack.com/messages/data-help
 [`#data`]: https://mozilla.slack.com/messages/data

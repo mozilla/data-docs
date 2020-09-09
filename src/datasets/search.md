@@ -15,21 +15,21 @@ complex analyses.
 
 ## Direct vs Follow-on Search
 
-Searches can be split into three major classes: *sap*, *follow-on*, and *organic*.
+Searches can be split into three major classes: _sap_, _follow-on_, and _organic_.
 
 SAP searches result from a direct interaction with a `search access point` (SAP),
 which is part of the Firefox UI.
 These searches are often called SAP searches.
 There are currently 7 SAPs:
 
-* `urlbar` - entering a search query in the Awesomebar
-* `searchbar` - the main search bar; not present by default for new profiles on Firefox 57+
-* `newtab` - the search bar on the `about:newtab` page
-* `abouthome` - the search bar on the `about:home` page
-* `contextmenu` - selecting text and clicking "Search" from the context menu
-* `system` - starting Firefox from the command line with an option that immediately makes a search
-* `webextension` - initiated from a web extension ([added](https://bugzilla.mozilla.org/show_bug.cgi?id=1492233) as of Firefox 63)
-* `alias` - initiated from a search keyword (like @google) ([added](https://bugzilla.mozilla.org/show_bug.cgi?id=1499193) as of Firefox 64)
+- `urlbar` - entering a search query in the Awesomebar
+- `searchbar` - the main search bar; not present by default for new profiles on Firefox 57+
+- `newtab` - the search bar on the `about:newtab` page
+- `abouthome` - the search bar on the `about:home` page
+- `contextmenu` - selecting text and clicking "Search" from the context menu
+- `system` - starting Firefox from the command line with an option that immediately makes a search
+- `webextension` - initiated from a web extension ([added](https://bugzilla.mozilla.org/show_bug.cgi?id=1492233) as of Firefox 63)
+- `alias` - initiated from a search keyword (like @google) ([added](https://bugzilla.mozilla.org/show_bug.cgi?id=1499193) as of Firefox 64)
 
 Users will often interact with the Search Engine Results Page (SERP)
 to create "downstream" queries.
@@ -40,11 +40,11 @@ and not from the Firefox UI.
 
 For example, follow-on queries can be caused by:
 
-* Revising a query (`restaurants` becomes `restaurants near me`)
-* Clicking on the "next" button
-* Accepting spelling suggestions
+- Revising a query (`restaurants` becomes `restaurants near me`)
+- Clicking on the "next" button
+- Accepting spelling suggestions
 
-Finally, we track the number of *organic* searches. These would be searches initiated directly
+Finally, we track the number of _organic_ searches. These would be searches initiated directly
 from a search engine provider, not through a search access point.
 
 ## Tagged vs Untagged Searches
@@ -107,7 +107,6 @@ analyses of our search datasets tractable.
 
 We remove search count observations representing more than
 10,000 searches for a single search engine in a single ping.
-
 
 # In Content Telemetry Issues
 

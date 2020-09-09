@@ -52,7 +52,7 @@ in use at Mozilla.
 
 ## Integrating with the Data Pipeline: A Case Study
 
-Mozilla's core data platform has been built to support *structured ingestion* of
+Mozilla's core data platform has been built to support _structured ingestion_ of
 arbitrary JSON payloads whether they come from browser products on client
 devices or from server-side applications that have nothing to do with Firefox;
 any team at Mozilla can hook into structured ingestion by defining a schema and
@@ -71,7 +71,7 @@ Schema](https://json-schema.org/) definitions. As an example,
 adds a new document namespace `activity-stream` and under that a document type
 `impression-stats` with version specified as `1`. These changes are picked up by
 an automated job that translates them into relevant BigQuery schemas and
-provisions tables for each unique schema (see 
+provisions tables for each unique schema (see
 [Defining Tables](#defining-tables) below).
 
 With the schema now registered with the pipeline, clients can send payloads to
@@ -84,18 +84,18 @@ https://incoming.telemetry.mozilla.org/submit/activity-stream/impression-stats/1
 where `<document_id>` should be a UUID that uniquely identifies the payload;
 `document_id` is used within the pipeline for deduplication of repeated
 documents. The payload is processed by a small edge service that returns a 200
-response to the client and publishes the message to a *raw* Pub/Sub topic. A
-*decoder* Dataflow job reads from this topic with low latency, validates that
+response to the client and publishes the message to a _raw_ Pub/Sub topic. A
+_decoder_ Dataflow job reads from this topic with low latency, validates that
 the payload matches the schema registered for the endpoint, does some additional
-metadata processing, and then emits the message back to Pub/Sub in a *decoded*
-topic. A final job reads the *decoded* topic, batches together records
-destined for the same table, and loads the records into the relevant *live ping
-table* in BigQuery (`activity_stream_live.impression_stats_v1` in this case). A
+metadata processing, and then emits the message back to Pub/Sub in a _decoded_
+topic. A final job reads the _decoded_ topic, batches together records
+destined for the same table, and loads the records into the relevant _live ping
+table_ in BigQuery (`activity_stream_live.impression_stats_v1` in this case). A
 nightly job reads all records for the previous day from the live ping table,
 deduplicates the records based on `document_id` values, and loads the final
-deduplicated day to the relevant *historical ping table*
+deduplicated day to the relevant _historical ping table_
 (`activity_stream_stable.impression_stats_v1`). The results are automatically
-presented to users through a view (`activity_stream.impression_stats`). 
+presented to users through a view (`activity_stream.impression_stats`).
 
 While most analysis use cases for this data are served via queries on the
 user-facing BigQuery view, the Pocket team also needed to build an application
@@ -115,7 +115,7 @@ requests and JSON Schema definitions at all. The state of the art for analytics
 at Mozilla is
 [Glean](https://docs.telemetry.mozilla.org/concepts/glean/glean.html), a set of
 projects that reimagines the end-to-end experience of reporting and consuming
-analytics data. 
+analytics data.
 
 Glean sits on top of structured ingestion, but provides helpful
 abstractions &mdash; instead of building JSON payloads and making HTTP requests, your
@@ -135,7 +135,7 @@ analytics tools at Mozilla.
 
 We discussed the overall shape of Mozilla's structured ingestion system and how
 to integrate with it in the case study earlier in this article, so this section
-will be brief. 
+will be brief.
 
 When you choose to build on top of structured ingestion, whether
 using the Glean SDK or by registering custom named schemas, consider the
@@ -180,16 +180,16 @@ compresses data under the hood, pricing reflects the uncompressed data size and
 users have no view into how data is compressed. It is still possible, however,
 to use BigQuery as an economical store for compressed data by saving compressed
 blobs in a `BYTES` column. Additional fields can be used like metadata. For
-examples, see the _raw_ schema from the pipeline 
+examples, see the _raw_ schema from the pipeline
 ([JSON schema](https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/80386c53b8e6910068964bd7c09904326b9480fd/schemas/metadata/raw/raw.1.schema.json)
-and final 
+and final
 [BigQuery schema](https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/43edf3ffff932eb89f3e2a1092696d0d0081c43b/schemas/metadata/raw/raw.1.bq)).
 
 ### Defining tables
 
 BigQuery tables can express complex nested structures via compound `STRUCT`
 types and `REPEATED` fields. It's possible to model arbitrary JSON payloads as
-BigQuery tables, but there are 
+BigQuery tables, but there are
 [limitations to JSON modeling](https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#limitations)
 that are well-described in BigQuery's documentation.
 
@@ -209,18 +209,18 @@ which requires modifying the JSON payload to convert
   "key1": "value1",
   "key2": "value2"
 }
-``` 
+```
 
 into
 
 ```
 [
  {
-  "key": "key1", 
+  "key": "key1",
   "value": "value1"
  },
  {
-  "key": "key2", 
+  "key": "key2",
   "value": "value2"
  }
 ]
@@ -252,7 +252,7 @@ may look into providing a standard solution for ingesting Cloud SQL databases to
 BigQuery in 2020.
 
 And don't forget about the possibility of hooking into the core telemetry
-pipeline through *structured ingestion* as discussed earlier.
+pipeline through _structured ingestion_ as discussed earlier.
 
 If you have a more complex processing need that doesn't fit into an existing
 server application, you may want to consider building your application as a
@@ -318,7 +318,7 @@ querying a view as they would be querying the underlying tables themselves; a
 query will fail if the user does not have read access to all of the datasets
 accessed in the view.
 
-Views, however, can also be *authorized* so that specific groups of users can
+Views, however, can also be _authorized_ so that specific groups of users can
 run queries who would not normally be allowed to read the underlying tables.
 This allows view authors to provide finer-grained controls and to hide specific
 columns or rows.
@@ -365,7 +365,7 @@ when interacting with Pub/Sub. That said, the I/O abstractions allow only
 limited control over performance and we have found the need to replace some of
 our Dataflow jobs with custom applications running on GKE &mdash; particularly
 the jobs focused on batching together messages from Pub/Sub and sinking to GCS
-or BigQuery. 
+or BigQuery.
 
 Beam's `BigQueryIO` module requires shuffling data several times when writing,
 checkpointing the intermediate state to local disk. This incurs expense for
@@ -394,8 +394,8 @@ provides instructions for how to propose new tables and views by sending pull
 requests containing SQL queries.
 
 We use BigQuery _views_ heavily to improve the usability of raw data and we
-recommend that you do too! As discussed in the 
-[BigQuery Access Controls](#access-controls-in-bigquery) section above, 
+recommend that you do too! As discussed in the
+[BigQuery Access Controls](#access-controls-in-bigquery) section above,
 views take up no storage resources and are essentially reusable snippets
 that appear like tables, but the underlying logic is executed every time a user
 queries a view. For simple cases like renaming fields or unnesting array
@@ -436,4 +436,3 @@ but the more we can standardize architectural approaches across the company, the
 better prepared we will be to collaborate across product teams and ultimately
 the better positioned we will be to realize our mission. Let's work together to
 keep individuals empowered, safe, and independent on the Internet.
-

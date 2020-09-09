@@ -15,15 +15,17 @@ ping"; so if they are present that does not mean they searched.
 The key pieces of this dataset are byte arrays that contain
 daily information about client activity over the past year.
 We have these for a variety of activity types:
+
 - `days_seen_bytes`: Days when we received a main ping from the client
 - `days_searched_bytes`: Days that the client searched in any form
 - `days_tagged_searched_bytes`: Days that the client performed a tagged search
 - `days_searched_with_ads_bytes`: Days that the client performed a search that contained ads
 - `days_clicked_ads_bytes`: Days that the client clicked an ad post-search
-See "Utilizing BYTE columns" for how to use these fields.
+  See "Utilizing BYTE columns" for how to use these fields.
 
 There are some convenience columns around these, that give the number of days
-since the client was last active for that usage criteria: 
+since the client was last active for that usage criteria:
+
 - `days_since_seen`
 - `days_since_searched`
 - `days_since_tagged_searched`
@@ -42,6 +44,7 @@ and `total_searches`. Please note that these are just for the current day,
 and not over the entire year of history contained in the `days_*_bytes` columns.
 
 #### Utilizing BYTE columns
+
 These are stored as BigQuery `BYTE` type, so they can be a bit confusing
 to use. We have a few convenience functions for using them. For these functions,
 anytime we say "was active", we mean "within the usage criteria defined by that
@@ -56,6 +59,7 @@ of history for this dataset.
 ago for the given activity type.
 
 #### Engine Searches
+
 Warning: This column was designed specifically for use with the revenue data, and probably isn't good for other kinds of analysis.
 
 For each search engine, we store an array that contains the number of searches that user
@@ -78,6 +82,5 @@ Access the data at `search.search_clients_last_seen`.
 <!--
 #### Further Reading
 -->
-
 
 [search data documentation]: ../../search.md

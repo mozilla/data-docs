@@ -1,6 +1,6 @@
 # Heavy Users
 
-***As of 2018-05-18, this dataset has been deprecated and is no longer maintained. See [Bug 1455314](https://bugzilla.mozilla.org/show_bug.cgi?id=1455314)***
+> As of 2018-05-18, this dataset has been deprecated and is no longer maintained. See [Bug 1455314](https://bugzilla.mozilla.org/show_bug.cgi?id=1455314)
 
 <!-- toc -->
 
@@ -13,6 +13,7 @@ The activity of a user based on `active_ticks` is available in `clients_daily`
 in the `active_hours_sum` field, which has the `sum(active_ticks / 720)`.
 
 To retrieve a client's 28-day `active_hours`, use the following query:
+
 ```sql
 SELECT submission_date_s3,
        client_id,

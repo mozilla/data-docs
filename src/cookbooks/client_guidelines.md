@@ -3,9 +3,9 @@
 There are three supported approaches for enabling experimental features for Firefox:
 
 - [Firefox Prefs](#prefs)
-  - Prefs can be used to control features that __land in-tree__.
+  - Prefs can be used to control features that **land in-tree**.
     [Feature Gates](#feature-gates) provide a wrapper around prefs that can be used from JavaScript.
-- [Firefox Extensions](#extensions) AKA "__Add-ons__".
+- [Firefox Extensions](#extensions) AKA "**Add-ons**".
   - If the feature being tested should not land in the tree, or if it will ultimately ship as an extension, then an extension should be used.
 
 New features go through the standard Firefox review, testing, and deployment processes, and are then enabled experimentally in the field using [Normandy][normandy-docs].
@@ -14,7 +14,7 @@ New features go through the standard Firefox review, testing, and deployment pro
 
 Firefox Preferences (AKA "prefs") are commonly used to enable and disable features. However, prefs are more complex to implement correctly than [feature gates](#feature-gates).
 
-__Each pref should represent a different experimental treatment__. If your experimental feature requires multiple prefs, then Normandy does not currently support this but will soon. In the meantime, an [extension](#extensions) such as [multipreffer][multipreffer-docs] may be used.
+**Each pref should represent a different experimental treatment**. If your experimental feature requires multiple prefs, then Normandy does not currently support this but will soon. In the meantime, an [extension](#extensions) such as [multipreffer][multipreffer-docs] may be used.
 
 There are three types of Prefs:
 
@@ -22,9 +22,9 @@ There are three types of Prefs:
 2. `user branch` - set by the user, overriding built-in prefs.
 3. `default branch` - Overrides both built-in and `user branch` prefs. Only persists until the browser session ends, next restart will revert to either built-in or `user branch` (if set).
 
-  [Normandy][normandy-docs] supports overriding both the `user` and `default` branches, although the latter is preferred as it does not permanently override user settings. `default` branch prefs are simple to reset since they do not persist past a restart.
+[Normandy][normandy-docs] supports overriding both the `user` and `default` branches, although the latter is preferred as it does not permanently override user settings. `default` branch prefs are simple to reset since they do not persist past a restart.
 
-   __In order for features to be activated experimentally using `default branch` prefs__:
+**In order for features to be activated experimentally using `default branch` prefs**:
 
 - The feature must not start up before `final-ui-startup` is observed.
 
@@ -56,7 +56,7 @@ If your feature cannot abide by one or more of these rules (for instance, it nee
 
 A new Feature Gate library for Firefox Desktop is now available.
 
-__Each feature gate should represent a different experimental treatment__. If your experimental feature requires multiple flags, then Normandy will not be able to support this directly and an [extension](#extensions) may be used.
+**Each feature gate should represent a different experimental treatment**. If your experimental feature requires multiple flags, then Normandy will not be able to support this directly and an [extension](#extensions) may be used.
 
 ### Feature Gate caveats
 
@@ -75,13 +75,13 @@ Read [the documentation][feature-gate-docs] to get started.
 
 Firefox currently supports the [Web Extensions API](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions).
 
-__If new WebExtension APIs are needed, they should land in-tree__. Extensions which are signed by Mozilla can load privileged code using the [WebExtension Experiments](https://firefox-source-docs.mozilla.org/toolkit/components/extensions/webextensions/index.html), but this is not preferred.
+**If new WebExtension APIs are needed, they should land in-tree**. Extensions which are signed by Mozilla can load privileged code using the [WebExtension Experiments](https://firefox-source-docs.mozilla.org/toolkit/components/extensions/webextensions/index.html), but this is not preferred.
 
 WebExtensions go through the same correctness and performance tests as other features. This is possible using the Mozilla tryserver by dropping your XPI into `testing/profiles/common/extensions` in `mozilla-central` and pushing to Tryserver - see the [Testing Extensions](#testing-extensions) section below.
 
 NOTE - it is ideal to test against the version of Firefox which the extension will release against, but there is a [bug related to artifact builds on release channels][artifact-bug] which must be worked around. The workaround is pretty simple (modify an `artifacts.py` file), but this bug being resolved will make it much simpler.
 
-__Each extension can represent a different experimental treatment (preferred), or the extension can choose the branch internally__.
+**Each extension can represent a different experimental treatment (preferred), or the extension can choose the branch internally**.
 
 ### SHIELD studies
 
@@ -91,35 +91,33 @@ This sort of approach is discouraged for new features - land these (or the neces
 
 For the moment, the [SHIELD Study Add-on Utilities](https://github.com/mozilla/shield-studies-addon-utils/) may be used if the extension needs to control the lifecycle of the study, but using one extension per experimental treatment makes this unnecessary and is preferred. The APIs provided by the SHIELD Study Add-on Utilities will be available as privileged APIs shipped with Firefox soon.
 
-
 # Development and Testing
+
 ## Testing Built-in Features
 
 Firefox features go through standard development and testing processes. See the [Firefox developer guide][firefox-dev-docs] for more information.
-
 
 ## Testing Extensions
 
 Extensions do not need to go through the same process, but should take advantage of Mozilla CI and bug tracking systems:
 
 1. Use the Mozilla CI to test changes (tryserver).
-2. Performance tests (__this step is required__) - extension XPI files should be placed in `testing/profiles/common/extensions/`, which will cause test harnesses to load the XPI.
-3. Custom unit/functional tests (AKA `xpcshell`/`mochitest`) may be placed in `testing/extensions`, although running these tests outside Mozilla CI is acceptable so these are __optional__.
-4. Receive reviewer approval. A Firefox peer __must sign off__ if this extension contains privileged code, aka WebExtension Experiments.
-  - Any [Firefox Peer][firefox-peer-list] should be able to do the review, or point you to someone who can.
+2. Performance tests (**this step is required**) - extension XPI files should be placed in `testing/profiles/common/extensions/`, which will cause test harnesses to load the XPI.
+3. Custom unit/functional tests (AKA `xpcshell`/`mochitest`) may be placed in `testing/extensions`, although running these tests outside Mozilla CI is acceptable so these are **optional**.
+4. Receive reviewer approval. A Firefox peer **must sign off** if this extension contains privileged code, aka WebExtension Experiments.
+
+- Any [Firefox Peer][firefox-peer-list] should be able to do the review, or point you to someone who can.
+
 5. Extension is signed.
 6. Email to `pi-request@mozilla.com` is sent to request QA
 7. QA approval signed off in Bugzilla.
 8. Extension is shipped via [Normandy][normandy-docs].
 
-
 ## Example Extensions Testing Workflow
 
 Note that for the below to work you only need [Mercurial][mercurial] installed, but if you want to do local testing you must be set up to [build Firefox][firefox-build-docs]. You don't need to build Firefox from source; [artifact builds][firefox-artifact-build] are sufficient.
 
-
 In order to use Mozilla CI (AKA "[Tryserver][try-server-docs]"), you must have a full clone of the `mozilla-central` repository:
-
 
 ```
 hg clone https://hg.mozilla.org/mozilla-central

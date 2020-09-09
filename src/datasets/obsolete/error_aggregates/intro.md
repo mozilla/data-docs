@@ -13,9 +13,9 @@ by summing using SQL.
 
 ##### Experiment unpacking
 
-It's important to note that when this dataset is written, pings from clients participating in an experiment 
-are aggregated on the `experiment_id` and `experiment_branch` dimensions corresponding to what experiment and branch 
-they are participating in. However, they are also aggregated with the rest of the population where the values of 
+It's important to note that when this dataset is written, pings from clients participating in an experiment
+are aggregated on the `experiment_id` and `experiment_branch` dimensions corresponding to what experiment and branch
+they are participating in. However, they are also aggregated with the rest of the population where the values of
 these dimensions are null.
 Therefore care must be taken when writing aggregating queries over the whole population - in these cases one needs to
 filter for `experiment_id is null` and `experiment_branch is null` in order to not double-count pings from experiments.

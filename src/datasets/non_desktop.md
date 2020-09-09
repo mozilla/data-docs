@@ -1,6 +1,6 @@
 # Non-Desktop Data
 
-Non-Desktop data includes data for all mobile browser products as well as non browser products such as Lockwise, Firefox for Echo Show, Mozilla VPN, and Web XR Viewer among others.   
+Non-Desktop data includes data for all mobile browser products as well as non browser products such as Lockwise, Firefox for Echo Show, Mozilla VPN, and Web XR Viewer among others.
 
 ## List of Datasets
 

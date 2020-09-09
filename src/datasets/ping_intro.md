@@ -21,12 +21,12 @@ It delivers the Telemetry Environment as well as Histograms and Scalars for all
 process types that collect data in Firefox. It has several variants each with
 specific delivery characteristics:
 
-| Reason             | Sent when                | Notes                         |
-| ------------------ | ------------------------ | ------------------------------|
-| shutdown           | Firefox session ends cleanly | Accounts for about [80%][main_reasons] of all "main" pings. Sent by Pingsender immediately after Firefox shuts down, subject to conditions: Firefox 55+, if the OS isn't also shutting down, and if this isn't the client's first session. If Pingsender fails or isn't used, the ping is sent by Firefox at the beginning of the next Firefox session.|
-| daily              | It has been more than 24 hours since the last "main" ping, and it is around local midnight | In long-lived Firefox sessions we might go days without receiving a "shutdown" ping. Thus the "daily" ping is sent to ensure we occasionally hear from long-lived sessions.|
-| environment-change | Telemetry Environment changes | Is sent immediately when triggered by Firefox (Installing or removing an addon or changing a monitored user preference are common ways for the Telemetry Environment to change)|
-| aborted-session    | Firefox session doesn't end cleanly | Sent by Firefox at the beginning of the next Firefox session.|
+| Reason             | Sent when                                                                                  | Notes                                                                                                                                                                                                                                                                                                                                                   |
+| ------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| shutdown           | Firefox session ends cleanly                                                               | Accounts for about [80%][main_reasons] of all "main" pings. Sent by Pingsender immediately after Firefox shuts down, subject to conditions: Firefox 55+, if the OS isn't also shutting down, and if this isn't the client's first session. If Pingsender fails or isn't used, the ping is sent by Firefox at the beginning of the next Firefox session. |
+| daily              | It has been more than 24 hours since the last "main" ping, and it is around local midnight | In long-lived Firefox sessions we might go days without receiving a "shutdown" ping. Thus the "daily" ping is sent to ensure we occasionally hear from long-lived sessions.                                                                                                                                                                             |
+| environment-change | Telemetry Environment changes                                                              | Is sent immediately when triggered by Firefox (Installing or removing an addon or changing a monitored user preference are common ways for the Telemetry Environment to change)                                                                                                                                                                         |
+| aborted-session    | Firefox session doesn't end cleanly                                                        | Sent by Firefox at the beginning of the next Firefox session.                                                                                                                                                                                                                                                                                           |
 
 It was introduced in Firefox 38.
 
@@ -125,9 +125,10 @@ This ping includes histograms, scalars, and other performance and diagnostic dat
 Few analyses actually rely directly on any raw ping data.
 Instead, we provide **derived datasets** which are processed versions of these data,
 made to be:
-* Easier and faster to query
-* Organized to make the data easier to analyze
-* Cleaned of erroneous or misleading data
+
+- Easier and faster to query
+- Organized to make the data easier to analyze
+- Cleaned of erroneous or misleading data
 
 Before analyzing raw ping data,
 **check to make sure there isn't already a derived dataset** made for your purpose.

@@ -44,6 +44,7 @@ Always include the `AS` keyword when aliasing a variable or table name,
 it's easier to read when explicit.
 
 **Good**
+
 ```sql
 SELECT
   date(submission_timestamp) AS day
@@ -54,6 +55,7 @@ LIMIT
 ```
 
 **Bad**
+
 ```sql
 SELECT
   date(submission_timestamp) day
@@ -68,6 +70,7 @@ LIMIT
 Always include the `JOIN` type rather than relying on the default join.
 
 **Good**
+
 ```sql
 -- BigQuery Standard SQL Syntax
 SELECT
@@ -89,6 +92,7 @@ GROUP BY
 ```
 
 **Bad**
+
 ```sql
 -- BigQuery Standard SQL Syntax
 SELECT
@@ -113,6 +117,7 @@ In the previous example, implicit grouping columns were discouraged, but there a
 In some SQL flavors (such as [Presto](https://prestodb.github.io/docs/current/sql/select.html)) grouping elements must refer to the expression before any aliasing is done. If you are grouping by a complex expression it may be desirable to use implicit grouping columns rather than repeating the expression.
 
 **Good**
+
 ```sql
 -- BigQuery SQL Syntax
 SELECT
@@ -129,6 +134,7 @@ GROUP BY
 ```
 
 **Good**
+
 ```sql
 -- Presto SQL Syntax
 SELECT
@@ -144,6 +150,7 @@ GROUP BY
 ```
 
 **Bad**
+
 ```sql
 -- Presto SQL Syntax
 SELECT
@@ -196,6 +203,7 @@ Root keywords should be on their own line.
 For example:
 
 **Good**:
+
 ```sql
 SELECT
   client_id,
@@ -213,6 +221,7 @@ It's acceptable to include an argument on the same line as the root keyword,
 if there is exactly one argument.
 
 **Acceptable**:
+
 ```sql
 SELECT
   client_id,
@@ -227,6 +236,7 @@ LIMIT 10
 Do not include multiple arguments on one line.
 
 **Bad**:
+
 ```sql
 SELECT client_id, submission_date
 FROM main_summary
@@ -237,6 +247,7 @@ LIMIT 10
 ```
 
 **Bad**
+
 ```sql
 SELECT
   client_id,
@@ -259,6 +270,7 @@ If parentheses span multiple lines:
 For example:
 
 **Good**
+
 ```sql
 WITH sample AS (
   SELECT
@@ -271,6 +283,7 @@ WITH sample AS (
 ```
 
 **Bad** (Terminating parenthesis on shared line)
+
 ```sql
 WITH sample AS (
   SELECT
@@ -282,6 +295,7 @@ WITH sample AS (
 ```
 
 **Bad** (No indent)
+
 ```sql
 WITH sample AS (
 SELECT
@@ -299,6 +313,7 @@ WHERE
 For example:
 
 **Good**
+
 ```sql
 ...
 WHERE
@@ -307,6 +322,7 @@ WHERE
 ```
 
 **Bad**
+
 ```sql
 ...
 WHERE
@@ -320,6 +336,7 @@ Do not use nested queries.
 Instead, use common table expressions to improve readability.
 
 **Good**:
+
 ```sql
 WITH sample AS (
   SELECT
@@ -337,6 +354,7 @@ LIMIT 10
 ```
 
 **Bad**:
+
 ```sql
 SELECT *
 FROM (
@@ -357,5 +375,3 @@ This document was heavily influenced by https://www.sqlstyle.guide/
 
 Changes to the style guide should be reviewed by at least one member of
 both the Data Engineering team and the Data Science team.
-
-

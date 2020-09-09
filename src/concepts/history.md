@@ -1,7 +1,7 @@
 # A brief history of Firefox data collection
 
 > This section was originally included in the [Project Smoot existing metrics report][smootv1]
-(Mozilla internal link); the DTMO version has been updated to reflect changes to the data platform.
+> (Mozilla internal link); the DTMO version has been updated to reflect changes to the data platform.
 
 [smootv1]: https://mozilla-private.report/smoot-existing-metrics/book/05_overview.html
 
@@ -27,8 +27,7 @@ in the bug comments.
 
 A count of blocklist fetches was used to produce a metric called Active
 Daily Users, which was [renamed to Active Daily
-Installs](https://bugzilla.mozilla.org/show_bug.cgi?id=812282) (ADI) by
-2012.
+Installs](https://bugzilla.mozilla.org/show_bug.cgi?id=812282) (ADI) by 2012.
 
 As of August 2020, this mechanism has been superseded by a [Remote
 Settings-based](https://bugzilla.mozilla.org/show_bug.cgi?id=1257565#c120)
@@ -83,18 +82,17 @@ document](https://docs.google.com/document/d/1IGpzsYGi_sq3YFQDAPyKOkU_BKvXAC95fZ
 describes how unified telemetry can answer the questions Mozilla had
 attempted to answer with FHR. The [implementation of unified
 telemetry](https://bugzilla.mozilla.org/show_bug.cgi?id=1122515) and
-opt-out delivery to the release channel was completed for Firefox 42, in
-2015.
+opt-out delivery to the release channel was completed for Firefox 42, in 2015.
 
 Telemetry payloads are uploaded in documents called pings. Several kinds
 of pings are defined, representing different kinds of measurement. These
 include:
 
-  - `main`: activity, performance, technical, and other measurements;
-    the workhorse of Firefox desktop telemetry
-  - `crash`: information about crashes, including stack traces
-  - `opt-out`: a farewell ping sent when a user disables telemetry
-  - `module`: on Windows, records DLLs injected into the Firefox process
+- `main`: activity, performance, technical, and other measurements;
+  the workhorse of Firefox desktop telemetry
+- `crash`: information about crashes, including stack traces
+- `opt-out`: a farewell ping sent when a user disables telemetry
+- `module`: on Windows, records DLLs injected into the Firefox process
 
 and others.
 
@@ -104,9 +102,9 @@ days later— when the parent browser process terminates.
 
 A **subsession** ends
 
-  - when its parent session ends, or
-  - at local midnight, or
-  - when the telemetry environment changes,
+- when its parent session ends, or
+- at local midnight, or
+- when the telemetry environment changes,
 
 whichever comes first.
 
@@ -123,16 +121,16 @@ client’s pings.
 
 Telemetry pings can contain several different types of measurements:
 
-  - scalars are integers describing either an event count or a
-    measurement that occurs only once during a subsession;
-    `simpleMeasurement`s are an older, less flexible scalar
-    implementation in the process of being deprecated
-  - histograms represent measurements that can occur repeatedly during a
-    subsession; histograms report the count of measurements that fell
-    into each of a set of predefined buckets (e.g. between zero and one,
-    between one and two, etc).
-  - events represent discrete events; the time and ordering of the
-    events are preserved, which clarifies sequences of user actions
+- scalars are integers describing either an event count or a
+  measurement that occurs only once during a subsession;
+  `simpleMeasurement`s are an older, less flexible scalar
+  implementation in the process of being deprecated
+- histograms represent measurements that can occur repeatedly during a
+  subsession; histograms report the count of measurements that fell
+  into each of a set of predefined buckets (e.g. between zero and one,
+  between one and two, etc).
+- events represent discrete events; the time and ordering of the
+  events are preserved, which clarifies sequences of user actions
 
 Data types are discussed in more depth in the [telemetry data
 collection](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/index.html)
