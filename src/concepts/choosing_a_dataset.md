@@ -8,19 +8,23 @@ This document will help you find the best data source for a given analysis. It f
 
 If you want to know whether a causal link occurs between two events, you can learn more at [tools for experimentation](../tools/experiments.md).
 
-## Table of Contents
+There are two types of datasets that you might want to use: those based on raw pings and those derived from them.
 
-<!-- toc -->
+## Raw Ping Datasets
 
-## Raw Pings
+We receive data from Firefox users via **pings**: small JSON payloads sent by clients at specified intervals.
+There are many types of pings, each containing different measurements and sent for different purposes.
 
-{{#include ../datasets/ping_intro.md}}
+These pings are then [aggregated into ping-level datasets](../cookbooks/bigquery/querying.md#structure-of-ping-tables-in-bigquery) that can be retrieved using BigQuery.
+Pings can be a bit difficult to work with in their raw form and there are many pitfalls that are easy to fall into when using them naively.
+Where possible, you should use a derived dataset to answer your question.
 
-## Main Ping Derived Datasets
+For more information on pings and how to use them, see [Raw Ping Data](../datasets/pings.md).
 
-The [main ping] includes most of the measurements that track the performance and health of Firefox in the wild. This ping includes histograms, scalars, and events.
+## Derived Datasets
 
-In its raw form, the main ping can be a bit difficult to work with. To make analyzing data easier, some datasets have been provided that simplify and aggregate information provided by the main ping.
+Derived datasets are built using the raw ping data above with various transformations to make them easier to work with and help you avoid common pitfalls.
+You can find a full list of them in the [derived datasets section](../datasets/derived.md), but two commonly used ones are "Clients Daily" and "Clients Last Seen".
 
 ### Clients Daily
 
@@ -33,5 +37,3 @@ See the [`clients_daily` reference](../datasets/batch_view/clients_daily/referen
 {{#include ../datasets/bigquery/clients_last_seen/intro.md}}
 
 See the [`clients_last_seen` reference](../datasets/bigquery/clients_last_seen/reference.md) for more information.
-
-[main ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html
