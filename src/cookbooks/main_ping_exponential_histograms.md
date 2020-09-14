@@ -56,7 +56,7 @@ In this representation, `bucket_count` and `range` represent the number of bucke
 `values` represents the number of instances in each of the buckets while `sum` represents the sum total of all histogram values recorded.
 Note how the first column has one bucket with no elements in it (the "165" bucket), this is because Firefox adds a zero-count bucket on the left and right edges of the data (unless that would be one of the extremes and that bucket already has a count in it, as is the case for the "1000" bucket in the last two examples).
 
-In general, it is best not to rely on this representation of the histogram in production code (it is quite likely to change in the future). Instead, use the [`json_extract_histogram`](https://github.com/mozilla/bigquery-etl/blob/master/udf/json_extract_histogram/udf.sql) user-defined-function (UDF) and extract out the fields you need: for example, to just get the `sum` for all the histograms above, you could modify the query above to something like:
+In general, it is best not to rely on this representation of the histogram in production code (it is quite likely to change in the future). Instead, use the [`mozfun.hist.extract`](https://mozilla.github.io/bigquery-etl/mozfun/hist/#extract) user-defined-function (UDF) and extract out the fields you need: for example, to just get the `sum` for all the histograms above, you could modify the query above to something like:
 
 ```sql
 WITH intermediate AS (
