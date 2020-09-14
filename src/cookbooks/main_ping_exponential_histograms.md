@@ -95,7 +95,7 @@ Obviously this by itself is not particularly useful or meaningful - generally we
 
 ## Getting percentiles from a set of histograms
 
-Often, questions around histograms are framed as "what's the 99th percentile?" -- that is, what is the _maximum_ value that 99% of users experience: this helps give perspective on data which may have a number of weird outliers (a.k.a the _Bill Gates walks into a bar and everyone inside becomes a millionaire_ effect). Let's take an initial stab of grabbing some percentiles of the data we were looking at earlier using the [`histogram_merge`](https://github.com/mozilla/bigquery-etl/blob/master/udf/histogram_merge/udf.sql) and [`histogram_percentiles`](https://github.com/mozilla/bigquery-etl/blob/master/udf/histogram_percentiles/udf.sql) UDFs:
+Often, questions around histograms are framed as "what's the 99th percentile?" -- that is, what is the _maximum_ value that 99% of users experience: this helps give perspective on data which may have a number of weird outliers (a.k.a the _Bill Gates walks into a bar and everyone inside becomes a millionaire_ effect). Let's take an initial stab of grabbing some percentiles of the data we were looking at earlier using the [`mozfun.hist.merge`](https://mozilla.github.io/bigquery-etl/mozfun/hist/#merge) and [`mozfun.hist.percentiles`](https://mozilla.github.io/bigquery-etl/mozfun/hist/#percentiles) UDFs:
 
 ```sql
 WITH merged_histogram AS (
