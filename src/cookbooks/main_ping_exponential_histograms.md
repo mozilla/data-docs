@@ -213,7 +213,7 @@ The example above basically created one _giant_ histogram and then gathered the 
 
 A solution used by GLAM is to give each client "one vote": that is, the aggregate histogram for a client over a day must sum up to one. Even in the extreme case where all tab spinner measurements fall between `658ms` and `1000ms` (the range of the highest bucket), the _maximum_ number for that bucket is just "1".
 
-We can reproduce this approach by using the [`mozfun.hist.normalize`](https://mozilla.github.io/bigquery-etl/mozfun/hist/) UDF, which explicitly takes a set of histograms and makes sure that the values for each one sum up to exactly one:
+We can reproduce this approach by using the [`mozfun.hist.normalize`](https://mozilla.github.io/bigquery-etl/mozfun/hist/#normalize) UDF, which explicitly takes a set of histograms and makes sure that the values for each one sum up to exactly one:
 
 ```sql
 DECLARE four_twenty DEFAULT DATE('2020-04-20');
