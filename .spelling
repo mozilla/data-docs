@@ -237,6 +237,8 @@ prefs
 prepended
 productionization
 protobuf
+protodash
+protosaur
 PubSub
 pushlog
 PyPI
@@ -275,6 +277,7 @@ Smoot
 SMS
 Sonatype
 SSL
+SSO
 Stackdriver
 STMO
 struct
