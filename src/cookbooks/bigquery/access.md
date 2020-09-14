@@ -2,6 +2,8 @@
 
 There are many methods that you can use to access BigQuery: both interactive and programmatic. This document provides some basic information and pointers on how to get started with each.
 
+It is worth pointing out that all internal access to BigQuery is logged and periodically audited by Data Engineering and Operations for cost and other purposes.
+
 ## Table of Contents
 
 <!-- toc -->
