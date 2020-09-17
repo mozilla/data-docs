@@ -1,8 +1,8 @@
-`client_ltv_normalized` is designed to enable relative user value estimates based on their past and expected search and ad click behavior. This behavior is revenue-generating for Firefox.
+`client_ltv` is designed to enable relative user value estimates based on their past and expected search and ad click behavior. This behavior is revenue-generating for Firefox.
 
 ## Contents
 
-`client_ltv_normalized` has one row for each (`client_id`, `engine`, `submission_date`) triplet.
+`client_ltv` has one row for each (`client_id`, `engine`, `submission_date`) triplet.
 
 Each row captures a year's worth of history for the `client_id` on the given `engine`, therefore the values will not change much when looking at `submission_date` in 1-day (or even 1-month) sequences, since there is significant overlap. For **most** analyses, using yesterday's `submission_date` will be sufficient.
 
@@ -41,6 +41,6 @@ The `normalized_ltv_ad_clicks_current` field, for example, does **not** represen
 
 LTV is broken down by engine, so the LTV for a user who searches on multiple engines must be interpreted in context. **LTV is only available for Google and Bing on Firefox Desktop** at this time.
 
-We **do** have the ability to calculate a dollar value per user, however the (unnormalized) `client_ltv` table is restricted to those with proper revenue access. For more information, please reach out to :bmiroglio (bmiroglio@mozilla.com).
+We **do** have the ability to calculate a dollar value per user, however the (unnormalized) table is restricted to those with proper revenue access. For more information, please reach out to :bmiroglio (bmiroglio@mozilla.com).
 
 

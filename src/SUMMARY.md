@@ -90,7 +90,7 @@
     - [Search Aggregates](datasets/search/search_aggregates/reference.md)
     - [Search Clients Daily](datasets/search/search_clients_daily/reference.md)
     - [Search Clients Last Seen](datasets/search/search_clients_last_seen/reference.md)
-    - [Normalized Client LTV](datasets/search/client_ltv_normalized/reference.md)
+    - [Client LTV](datasets/search/client_ltv/reference.md)
   - [Non-Desktop Datasets](datasets/non_desktop.md)
     - [Day 2-7 Activation](datasets/non_desktop/day_2_7_activation/reference.md)
     - [Google Play Store](datasets/non_desktop/google_play_store/reference.md)
