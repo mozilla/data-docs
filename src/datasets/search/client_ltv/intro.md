@@ -4,9 +4,9 @@
 
 `client_ltv` has one row for each (`client_id`, `engine`, `submission_date`) triplet.
 
-Each row captures a year's worth of history for the `client_id` on the given `engine`, therefore the values will not change much when looking at `submission_date` in 1-day (or even 1-month) sequences, since there is significant overlap. For **most** analyses, using yesterday's `submission_date` will be sufficient.
+Each row captures a year's worth of history for the `client_id` on the given `engine`, therefore the values will not change much when looking at `submission_date` in 1-day (or even 1-month) sequences, since there is significant overlap. For **most** analyses, using yesterday's `submission_date` will be sufficient. To get users active in the last i.e. 7 days, a join with `clients_last_seen` is required. We plan to propagate the necessary fields into `client_ltv` in the future so such a join isn't necessary.
 
-Using yesterday's date, a client's row will contain the total number of searches, ad clicks, etc for the last 365 days, along with active search and ad clicks days (how many days did a user search or click an ad). Additionally each row contains the predicted number active search/ad click days for the *next* 365 days. See the schema at the bottom of this page for a full list of the fields.
+Using yesterday's date, a client's row will contain the total number of searches, ad clicks, etc for the last 365 days, along with active search and ad click days (how many days did a user search or click an ad). Additionally each row contains the predicted number active search/ad click days for the *next* 365 days. See the schema at the bottom of this page for a full list of the fields.
 
 ## LTV
 
