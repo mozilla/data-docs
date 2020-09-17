@@ -52,9 +52,9 @@ ORDER BY
 # Schema
 
 As of 2020-09-16,
-the current version of `normalized_client_ltv` is `v1`,
+the current version of `client_ltv` is `v1`,
 and has a schema as follows.
-The dataset is backfilled through yyyy-mm-dd.
+The dataset is backfilled through 2020-09-14.
 
 ```
 root
