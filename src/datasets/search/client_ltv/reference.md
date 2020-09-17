@@ -11,18 +11,41 @@
 
 
 
-*Percent of users who clicked an ad in the last 365 days, and who are expected to click an ad in the **next** 365 days by Engine.*
+*Percent of users we predict will click an ad in the **next** 365 days by Engine.* ([source](https://sql.telemetry.mozilla.org/queries/74878/source))
 ```sql
 SELECT
   engine,
-  AVG(IF(ad_click_days > 0, 1, 0)) as pct_ad_clickers_past_year,
-  AVG(IF(pred_num_days_clicking_ads > 0, 1, 0)) as pct_predicted_ad_clickers_next_year
+  AVG(IF(pred_num_days_seeing_ads > 0, 1, 0)) as pct_predicted_ad_viewers_next_year,
+  AVG(IF(pred_num_days_clicking_ads > 0, 1, 0)) as pct_predicted_ad_clickers_next_year,
 FROM
-  `moz-it-eip-revenue-users.ltv_derived.client_ltv_v1`
+  `moz-fx-data-shared-prod`.revenue_derived.client_ltv_v1
 WHERE
   submission_date = DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
 GROUP BY
   1
+```
+
+*LTV Value of Users Over Lifetime (by `days_since_created_profile`) of Users Active in Past 7 Days* ([source](https://sql.telemetry.mozilla.org/queries/74867/source#187036))
+```sql
+SELECT
+  days_since_created_profile,
+  SUM(normalized_ltv_ad_clicks_current) AS sum_normalized_ltv_ad_clicks_current,
+  SUM(normalized_ltv_ad_clicks_future) AS normalized_ltv_ad_clicks_future,
+  1000000 * SUM(normalized_ltv_ad_clicks_future) / COUNT(*) AS avg_normalized_ltv_ad_clicks_future,
+FROM
+  `moz-fx-data-shared-prod`.revenue_derived.client_ltv_v1
+JOIN
+  `moz-fx-data-shared-prod`.search.search_clients_last_seen
+  USING(submission_date, client_id)
+WHERE
+  submission_date = '2020-09-16'
+  AND days_since_created_profile <= 365
+  AND days_since_seen <= 6
+GROUP BY
+  days_since_created_profile
+ORDER BY
+  days_since_created_profile DESC
+
 
 ```
 
@@ -78,8 +101,8 @@ root
  # Code References
 
 * [LTV daily model fitting](https://github.com/mozilla/telemetry-airflow/blob/master/jobs/ltv_daily.py)
-* [`client_ltv` query](https://github.com/mozilla/bigquery-etl/blob/master/sql/revenue_derived/client_ltv_v1/query.sql)
-* [`client_ltv_normalized`  view](https://github.com/mozilla/bigquery-etl/blob/master/sql/revenue_derived/client_ltv_normalized/query.sql)
+* Unnormalized [`client_ltv` query](https://github.com/mozilla/bigquery-etl/blob/master/sql/revenue_derived/client_ltv_v1/query.sql) (restricted query access)
+* [`client_ltv` view](https://github.com/mozilla/bigquery-etl/blob/master/sql/revenue_derived/client_ltv_normalized/query.sql) (for broad use)
 
 
 
