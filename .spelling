@@ -46,7 +46,9 @@ behaviour
 Bhattacharyya
 BigQuery
 bigquery-etl
+Bing
 blocklist
+bmiroglio
 bmobugs
 boolean
 booleans
@@ -168,6 +170,8 @@ lifecycle
 Lockbox
 Lockwise
 lookups
+LTV
+LTVs
 Lua
 matcher
 matchers
@@ -260,6 +264,7 @@ release_calendar
 relier
 reliers
 repo
+ROI
 RTMO
 runtime
 S3
@@ -322,6 +327,8 @@ unenroll
 unenrollment
 unmanaged
 unnesting
+unnormalized
+Unnormalized
 unsuffixed
 unversioned
 up-to-date
