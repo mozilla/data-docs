@@ -8,6 +8,7 @@ If you are working on a more complex project (as opposed to ad-hoc or one-off an
 - Create [Google Cloud Storage](https://cloud.google.com/storage/) buckets for storing temporary data
 - Create [Google Compute Instances](https://cloud.google.com/compute/docs/instances) for test-running software in the cloud
 - Create a temporary Kubernetes cluster for test-running a scheduled job with [telemetry-airflow](https://github.com/mozilla/telemetry-airflow)
+- Create static dashboards with protosaur (see [Creating Static Dashboards with Protosaur](./operational/protosaur.md))
 - Track the costs for all of the above using the Google Cost Dashboard feature of the GCP console
 
 This has a number of advantages over our traditional approach of creating bulk "sandbox" projects for larger teams:
