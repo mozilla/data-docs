@@ -47,6 +47,7 @@ Bhattacharyya
 BigQuery
 bigquery-etl
 blocklist
+bmiroglio
 bmobugs
 boolean
 booleans
@@ -168,6 +169,8 @@ lifecycle
 Lockbox
 Lockwise
 lookups
+LTV
+LTVs
 Lua
 matcher
 matchers
@@ -319,6 +322,8 @@ unenroll
 unenrollment
 unmanaged
 unnesting
+unnormalized
+Unnormalized
 unsuffixed
 unversioned
 up-to-date
