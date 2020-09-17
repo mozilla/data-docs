@@ -9,7 +9,7 @@ Protosaur's architecture is simple: it serves files in a [Google Cloud Storage](
 
 The current procedure for creating a new protosaur dashboard is as follows:
 
-- Find a GCP project to use for the GCS bucket. This could be a team project (if you have one already) or a [GCP prototype project](../gcp-projects.md). Using a prototype project is preferred, especially for larger efforts with multiple components in addition to a front-end dashboard.
+- Find a GCP project to use for the GCS bucket. This could be a team project (if you have one already) or a [GCP prototype project](../gcp-projects.md). Using a prototype project is preferred for larger efforts with multiple components in addition to a front-end dashboard.
 - Create a GCS bucket in said project.
 - Upload content into the bucket (e.g. via [`gsutil`](https://cloud.google.com/storage/docs/gsutil)).
 - Add the project to Protosaur's configuration, which currently lives in the [protodash repository](https://github.com/mozilla/protodash) on GitHub. For up to date instructions on how to do this, [see the project's README](https://github.com/mozilla/protodash/blob/master/README.md).
