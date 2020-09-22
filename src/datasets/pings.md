@@ -1,6 +1,6 @@
 # Raw Ping Data
 
-> **⚠** This article discusses pings sent by Firefox's legacy telemetry system.
+> **⚠** This article discusses pings sent by Firefox's legacy v4 telemetry system.
 > See the [Glean documentation on pings](https://mozilla.github.io/glean/book/user/pings/index.html) for newer applications written using the Glean SDK.
 
 <!-- toc -->
@@ -148,13 +148,10 @@ As of September 28, 2018, members of the `meta` key on main pings include:
 
 ## Analysis
 
-The large majority of analyses can be completed using only the
-[main ping][main_ping].
-This ping includes histograms, scalars, and other performance and diagnostic data.
+The [main ping][main_ping] includes histograms, scalars, and other performance and diagnostic data.
+Since Firefox 62, it [no longer contains event data](https://bugzilla.mozilla.org/show_bug.cgi?id=1460595); events are now sent in a separate `event` ping.
 
-Few analyses actually rely directly on any raw ping data.
-Instead, we provide [derived datasets](./derived.md) which are processed versions of these data,
-made to be:
+[Derived datasets](./derived.md) are processed from ping tables. They are intended to be:
 
 - Easier and faster to query
 - Organized to make the data easier to analyze
@@ -163,7 +160,7 @@ made to be:
 Ping data lives in BigQuery and is accessible in [STMO][stmo];
 see the [BigQuery cookbook section](../cookbooks/bigquery.md) for more information.
 Before analyzing raw ping data,
-**check to make sure there isn't already a derived dataset** made for your purpose.
+check if a derived dataset can answer your question.
 If you do need to work with raw ping data, be aware that the volume of data can be high.
 Try to limit the size of your data by controlling the date range, and start off using a sample.
 
