@@ -106,7 +106,7 @@ root
 
 # Model Performance
 
-There is additionally a dataset, `ltv_daily_model_perf` that tracks the LTV model's prediction performance each day it is re-trained. For a given day, one could check the performance with the following [query](https://sql.telemetry.mozilla.org/queries/75244/source#187873):
+There is additionally a dataset, `ltv_daily_model_perf`, that tracks the LTV model's prediction performance each day it is re-trained. For a given day, one could check the performance with the following [query](https://sql.telemetry.mozilla.org/queries/75244/source#187873):
 
 ```sql
 SELECT
