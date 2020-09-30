@@ -5,13 +5,24 @@
         <meta charset="UTF-8">
         <title>Client LTV - Firefox Data Documentation</title>
         
+        
+
+
+        <!-- Custom HTML head -->
+        
+
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
+        
+        <link rel="icon" href="../../../favicon.svg">
+        
+        
         <link rel="shortcut icon" href="../../../favicon.png">
+        
         <link rel="stylesheet" href="../../../css/variables.css">
         <link rel="stylesheet" href="../../../css/general.css">
         <link rel="stylesheet" href="../../../css/chrome.css">
@@ -19,8 +30,9 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+        
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../../../highlight.css">
@@ -43,7 +55,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "../../../";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -170,6 +182,7 @@
 <li><a href="#example-queries">Example Queries</a></li>
 <li><a href="#schema">Schema</a></li>
 <li><a href="#code-references">Code References</a></li>
+<li><a href="#model-performance">Model Performance</a></li>
 </ul>
 <h1><a class="header" href="#introduction" id="introduction">Introduction</a></h1>
 <p><code>client_ltv</code> is designed to enable relative user value estimates based on their past and expected search and ad click behavior. This behavior is revenue-generating for Firefox.</p>
@@ -303,6 +316,22 @@ The dataset is backfilled through 2020-09-14.</p>
 <li>Unnormalized <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/revenue_derived/client_ltv_v1/query.sql"><code>client_ltv</code> query</a> (restricted query access)</li>
 <li><a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/revenue_derived/client_ltv_normalized/query.sql"><code>client_ltv</code> view</a> (for broad use)</li>
 </ul>
+<h1><a class="header" href="#model-performance" id="model-performance">Model Performance</a></h1>
+<p>There is additionally a dataset, <code>ltv_daily_model_perf</code>, that tracks the LTV model's prediction performance each day it is re-trained. For a given day, one could check the performance with the following <a href="https://sql.telemetry.mozilla.org/queries/75244/source#187873">query</a>:</p>
+<pre><code class="language-sql">SELECT
+  active_days,
+  actual,
+  model
+FROM
+  `moz-fx-data-shared-prod.analysis.ltv_daily_model_perf`
+WHERE
+  date = '2020-09-29'
+AND
+  metric = 'days_clicked_ads'
+ORDER BY
+  active_days
+</code></pre>
+<p>This produces a histogram for the observed user frequencies and the model's predicted frequencies, allowing a chart similar to the one shown in the <a href="https://lifetimes.readthedocs.io/en/latest/Quickstart.html#assessing-model-fit">&quot;assessing model fit&quot; example</a> in the <code>lifetimes</code> documentation. This table only checks performance for clients the model expects have, for example, clicked an ad in 0 to 28 days in the past year, since most of the distribution is contained in that interval.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/search/client_ltv/reference.md">Edit this file on GitHub.</a></footer>
                     </main>
 
@@ -363,10 +392,10 @@ The dataset is backfilled through 2020-09-14.</p>
         
 
         
-        
+
         
         <script type="text/javascript">
-            window.playpen_copyable = true;
+            window.playground_copyable = true;
         </script>
         
 
