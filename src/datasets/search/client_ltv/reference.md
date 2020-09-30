@@ -104,7 +104,7 @@ root
 * Unnormalized [`client_ltv` query](https://github.com/mozilla/bigquery-etl/blob/master/sql/revenue_derived/client_ltv_v1/query.sql) (restricted query access)
 * [`client_ltv` view](https://github.com/mozilla/bigquery-etl/blob/master/sql/revenue_derived/client_ltv_normalized/query.sql) (for broad use)
 
-# Model Performace
+# Model Performance
 
 There is additionally a dataset, `ltv_daily_model_perf` that tracks the LTV model's prediction performance each day it is re-trained. For a given day, one could check the performance with the following [query](https://sql.telemetry.mozilla.org/queries/75244/source#187873):
 
