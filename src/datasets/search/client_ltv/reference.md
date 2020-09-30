@@ -104,5 +104,24 @@ root
 * Unnormalized [`client_ltv` query](https://github.com/mozilla/bigquery-etl/blob/master/sql/revenue_derived/client_ltv_v1/query.sql) (restricted query access)
 * [`client_ltv` view](https://github.com/mozilla/bigquery-etl/blob/master/sql/revenue_derived/client_ltv_normalized/query.sql) (for broad use)
 
+# Model Performance
 
+There is additionally a dataset, `ltv_daily_model_perf`, that tracks the LTV model's prediction performance each day it is re-trained. For a given day, one could check the performance with the following [query](https://sql.telemetry.mozilla.org/queries/75244/source#187873):
+
+```sql
+SELECT
+  active_days,
+  actual,
+  model
+FROM
+  `moz-fx-data-shared-prod.analysis.ltv_daily_model_perf`
+WHERE
+  date = '2020-09-29'
+AND
+  metric = 'days_clicked_ads'
+ORDER BY
+  active_days
+```
+
+This produces a histogram for the observed user frequencies and the model's predicted frequencies, allowing a chart similar to the one shown in the ["assessing model fit" example](https://lifetimes.readthedocs.io/en/latest/Quickstart.html#assessing-model-fit) in the `lifetimes` documentation. This table only checks performance for clients the model expects have, for example, clicked an ad in 0 to 28 days in the past year, since most of the distribution is contained in that interval.
 
