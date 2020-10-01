@@ -79,6 +79,6 @@ root
 # Code Reference
 
 The `search_clients_daily` job is
-[defined in `bigquery-etl`](https://github.com/mozilla/bigquery-etl/blob/master/sql/search_derived/search_clients_daily_v8/query.sql)
+[defined in `bigquery-etl`](https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/search_derived/search_clients_daily_v8/query.sql)
 
 [search data documentation]: ../../search.md

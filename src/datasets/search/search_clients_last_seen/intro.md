@@ -35,7 +35,7 @@ since the client was last active for that usage criteria:
 
 We also include a variety of dimension information (e.g. os,
 country, channel, default_search) to aggregate on. The
-[query itself](https://github.com/mozilla/bigquery-etl/blob/master/sql/search_derived/search_clients_last_seen_v1/query.sql#L37)
+[query itself](https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/search_derived/search_clients_last_seen_v1/query.sql#L37)
 lays out all of the available dimensional fields.
 
 There are, finally, a few fields with daily activity data.
