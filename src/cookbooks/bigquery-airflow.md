@@ -8,12 +8,12 @@ Queries in [`bigquery-etl`](https://github.com/mozilla/bigquery-etl) can be sche
 ## In bigquery-etl
 
 In the [`bigquery-etl`](https://github.com/mozilla/bigquery-etl) project, queries are written in `/sql`.
-The directory structure is based on the destination table: `/sql/{dataset_id}/{table_name}`.
-For example, [`/sql/telemetry_derived/core_clients_last_seen_v1/query.sql`](https://github.com/mozilla/bigquery-etl/blob/master/sql/telemetry_derived/core_clients_last_seen_v1/query.sql)
+The directory structure is based on the destination table: `/sql/{project_id}/{dataset_id}/{table_name}`.
+For example, [`/sql/moz-fx-data-shared-prod/telemetry_derived/core_clients_last_seen_v1/query.sql`](https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/core_clients_last_seen_v1/query.sql)
 is a query that will write results to the `core_clients_last_seen_v1` table in the `telemetry_derived` dataset.
 
-If we want to create a new table of just `client_id`'s each day called `client_ids` in the `example` dataset,
-we should create `/sql/example/client_ids/query.sql`:
+If we want to create a new table of just `client_id`'s each day called `client_ids` in the `example` dataset
+in the `moz-fx-data-shared-prod` project, we should create `/sql/moz-fx-data-shared-prod/example/client_ids/query.sql`:
 
 ```sql
 SELECT
@@ -27,7 +27,7 @@ WHERE
 
 `@submission_date` is a parameter that will be filled in by Airflow.
 
-To schedule your query, create a `/sql/example/client_ids/metadata.yaml` file with the following content:
+To schedule your query, create a `/sql/moz-fx-data-shared-prod/example/client_ids/metadata.yaml` file with the following content:
 
 ```yaml
 friendly_name: Client IDs
@@ -57,7 +57,8 @@ bqetl_clients_ids: # name of the DAG; must start with bqetl_
 
 In this example, the `bqetl_clients_ids` DAG and the created query will be executed on a daily basis at 02:00 UTC.
 
-Run `./script/generate_airflow_dags` to generate the Airflow DAG. Task dependencies that are defined in bigquery-etl and
+Run `./script/generate_airflow_dags` to generate the Airflow DAG or generate the DAG using the [`bqetl` CLI](https://github.com/mozilla/bigquery-etl#the-bqetl-cli):
+`bqetl dag generate bqetl_clients_ids`. Task dependencies that are defined in bigquery-etl and
 dependencies to stable tables are determined automatically. Generated DAGs are written to the `dags/` directory and
 will be automatically detected and scheduled by Airflow once the changes are committed to master in `bigquery-etl`.
 

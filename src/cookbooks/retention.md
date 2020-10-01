@@ -104,7 +104,7 @@ When performing retention analysis it is important to understand that there are 
 
 It is good practice to always compute confidence intervals for retention metrics, especially when looking at specific slices of users or when making comparisons between different groups.
 
-The [Growth and Usage Dashboard](https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/) provides confidence intervals automatically using a jackknife resampling method over `client_id` buckets. This confidence intervals generated using this method should be considered the "standard". We show below how to compute them using the data sources described above. These methods use UDFs [defined in bigquery-etl](https://github.com/mozilla/bigquery-etl/blob/master/udf_js/jackknife_ratio_ci/udf.sql).
+The [Growth and Usage Dashboard](https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/) provides confidence intervals automatically using a jackknife resampling method over `client_id` buckets. This confidence intervals generated using this method should be considered the "standard". We show below how to compute them using the data sources described above. These methods use UDFs [defined in bigquery-etl](https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/udf_js/jackknife_ratio_ci/udf.sql).
 
 We also note that it is fairly simple to calculate a confidence interval using any statistical method appropriate for proportions. The queries given above provide both numerators and denominators, so feel free to calculate confidence intervals in the manner you prefer. However, if you want to replicate the standard confidence intervals, please work from the example queries below.
 

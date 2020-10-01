@@ -101,8 +101,8 @@ root
  # Code References
 
 * [LTV daily model fitting](https://github.com/mozilla/telemetry-airflow/blob/master/jobs/ltv_daily.py)
-* Unnormalized [`client_ltv` query](https://github.com/mozilla/bigquery-etl/blob/master/sql/revenue_derived/client_ltv_v1/query.sql) (restricted query access)
-* [`client_ltv` view](https://github.com/mozilla/bigquery-etl/blob/master/sql/revenue_derived/client_ltv_normalized/query.sql) (for broad use)
+* Unnormalized [`client_ltv` query](https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/revenue_derived/client_ltv_v1/query.sql) (restricted query access)
+* [`client_ltv` view](https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/revenue_derived/client_ltv_normalized/query.sql) (for broad use)
 
 # Model Performance
 
