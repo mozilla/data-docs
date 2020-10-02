@@ -16,14 +16,13 @@ We receive data from Firefox users via **pings**: small JSON payloads sent by cl
 There are many types of pings, each containing different measurements and sent for different purposes.
 
 These pings are then [aggregated into ping-level datasets](../cookbooks/bigquery/querying.md#structure-of-ping-tables-in-bigquery) that can be retrieved using BigQuery.
-Pings can be a bit difficult to work with in their raw form and there are many pitfalls that are easy to fall into when using them naively.
-Where possible, you should use a derived dataset to answer your question.
+Pings can be difficult to work with and expensive to query: where possible, you should use a derived dataset to answer your question.
 
 For more information on pings and how to use them, see [Raw Ping Data](../datasets/pings.md).
 
 ## Derived Datasets
 
-Derived datasets are built using the raw ping data above with various transformations to make them easier to work with and help you avoid common pitfalls.
+Derived datasets are built using the raw ping data above with various transformations to make them easier to work with and help you avoid the pitfall of [pseudo-replication](https://docs.telemetry.mozilla.org/concepts/analysis_gotchas.html#pseudo-replication).
 You can find a full list of them in the [derived datasets section](../datasets/derived.md), but two commonly used ones are "Clients Daily" and "Clients Last Seen".
 
 ### Clients Daily

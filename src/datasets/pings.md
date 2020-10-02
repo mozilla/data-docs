@@ -155,7 +155,6 @@ Since Firefox 62, it [no longer contains event data](https://bugzilla.mozilla.or
 
 - Easier and faster to query
 - Organized to make the data easier to analyze
-- Cleaned of erroneous or misleading data
 
 Ping data lives in BigQuery and is accessible in [STMO][stmo];
 see the [BigQuery cookbook section](../cookbooks/bigquery.md) for more information.
