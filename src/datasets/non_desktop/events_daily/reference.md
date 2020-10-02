@@ -15,7 +15,7 @@
 
 1. An ancillary table, `event_types`, is updated with the new events seen on that day. Each event is mapped to a unique
     unicode character, and each event property (the `extras` fields) are also mapped to a unique unicode character.
-2. For every user, that day's events are mapped to their associated unicode characters (including event_properties).
+2. For every user, that day's events are mapped to their associated unicode characters (including `event_properties`).
     The strings are aggregated and comma-separated, giving a single ordered string that represents all of that user's
     events on that day.
 
@@ -35,7 +35,7 @@ This approach makes some queries fast and easy, but has some limits:
 # Accessing the Data
 
 While it is possible to build queries that access this events data directly, the Data Platform instead recommends using a set of stored procedures we have available.
-These procedures create easily-queryable views that hide the complexity of the event representation. The [mozfun library documentation](https://mozilla.github.io/bigquery-etl/mozfun/event_analysis/)
+These procedures create easily queryable views that hide the complexity of the event representation. The [`mozfun` library documentation](https://mozilla.github.io/bigquery-etl/mozfun/event_analysis/)
 has information about these procedures and examples of their usage.
 
 # Data Reference
