@@ -171,21 +171,19 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#working-with-crash-pings" id="working-with-crash-pings">Working with Crash Pings</a></h1>
-<p>Here are some snippets to get you started querying <a href="../datasets/pings.html#crash-ping">crash pings</a> with <a href="../tools/stmo.html">STMO</a> and
-<a href="./bigquery.html">BigQuery</a>. Using these tools, you can quickly get counts
-and other information on the nature of crash pings submitted day-to-day.</p>
-<p>The simplest example is probably just to count all existing pings for a few days
-across some dimensions:</p>
+<p>You can use the following snippets to start querying <a href="../datasets/pings.html#crash-ping">crash pings</a> with <a href="../tools/stmo.html">STMO</a> and 
+<a href="../cookbooks/bigquery.html">BigQuery</a>. Using these tools, you can quickly get counts 
+and other information about crash pings that are submitted day-to-day.</p>
+<p>The following example just counts all existing pings for a few days across several dimensions: </p>
 <pre><code class="language-sql">SELECT date(submission_timestamp) AS crash_date,
        count(*) AS crash_count
 FROM telemetry.crash
 WHERE date(submission_timestamp) &gt;= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY)
 GROUP BY crash_date
 </code></pre>
-<p>You can see an example of this query, along with a simple graph in <a href="https://sql.telemetry.mozilla.org/queries/67925/">this STMO query</a>.</p>
-<p>Normally, looking at total crash counts isn't so useful: you usually want to restrict
-a query to a channel or some other dimensions, and also facet the results. This can
-be done by adding a few more fields to our SQL:</p>
+<p><a href="https://sql.telemetry.mozilla.org/queries/67925/">Link to query in STMO</a>.</p>
+<p>Although the total crash counts is not always useful, you may want to restrict
+a query to a channel or some other dimensions, and also facet the results. Therefore, you can add a few more fields to the SQL:</p>
 <pre><code class="language-sql">SELECT date(submission_timestamp) AS crash_date,
        normalized_os AS os,
        count(*) AS crash_count
@@ -195,10 +193,9 @@ WHERE date(submission_timestamp) &gt;= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY)
 GROUP BY normalized_os,
          crash_date
 </code></pre>
-<p>Here's <a href="https://sql.telemetry.mozilla.org/queries/67927/">another STMO query</a> showing this in action.</p>
-<p>These are just initial examples: it is possible to query across all the fields in
-a telemetry crash ping, which can give you useful information about the crashes themselves. You can see a summary of the available fields in the STMO schema
-browser, referring to <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/data/crash-ping.html">the documentation on the Firefox crash ping</a>
+<p><a href="https://sql.telemetry.mozilla.org/queries/67927/">Link to query in STMO</a></p>
+<p>These are just initial examples. You can query across all the fields in
+a telemetry crash ping, which provides useful information about the crashes themselves. You can view a summary of the available fields in the STMO schema browser, referring to <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/data/crash-ping.html">the documentation on the Firefox crash ping</a>
 for more information where necessary.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/crash_pings.md">Edit this file on GitHub.</a></footer>
                     </main>
