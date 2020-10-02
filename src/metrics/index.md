@@ -62,4 +62,4 @@ specified day, what proportion (out of 1) are active during the following week.
 
 [usage criterion]: https://mozilla.github.io/gud#data-model
 [submission dates]: https://bugzilla.mozilla.org/show_bug.cgi?id=1422892
-[pings]: ../datasets/ping_intro.md
+[pings]: ../datasets/ping.md
