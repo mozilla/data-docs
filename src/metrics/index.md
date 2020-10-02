@@ -3,10 +3,12 @@
 This section provides an overview of standard metrics used at Mozilla.
 Here you'll find the definitions and descriptions for each.
 
-For a deep dive into these metrics, see [the GUD documentation](../tools/gud.md).
+For a deep dive into these metrics, see [the GUD documentation](https://mozilla.github.io/gud/).
 
 The [Telemetry Behavior Reference](../concepts/index.md) section also provides
 information related to the definitions below.
+
+We are now in the process of setting up the metrics top-level section here. This information will be moved into the appropriate subsection and this page will be replaced with an overview.
 
 ## Activity
 
@@ -43,6 +45,7 @@ Among profiles that were active at least once in the week starting on the
 specified day, what proportion (out of 1) are active during the following week.
 
 ## Frequently Asked Questions
+
 - Why isn't "New Users" a metric?
   - "New Users" is considered a [usage criterion], which means it may be used
     to filter other metrics, rather than itself being a metric. For example,
@@ -57,6 +60,6 @@ specified day, what proportion (out of 1) are active during the following week.
   - For Firefox Desktop, we use the `main` ping to determine activity.
   - For products instrumented using Glean, we use the `baseline` ping.
 
-[usage criterion]: ../tools/gud.md#data-model
-[Submission dates]: https://bugzilla.mozilla.org/show_bug.cgi?id=1422892
-[pings]: ../datasets/ping_intro.md
+[usage criterion]: https://mozilla.github.io/gud#data-model
+[submission dates]: https://bugzilla.mozilla.org/show_bug.cgi?id=1422892
+[pings]: ../datasets/ping.md

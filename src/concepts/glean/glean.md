@@ -32,64 +32,62 @@ Because Glean knows more about the individual data, such as its type and the ran
 
 **Provide a consistent base of telemetry**
 
-  A baseline of analysis is important for all our products, from counting active users to retention and session times. This is supported out-of-the-box by the SDK, and funnels directly into visualization tools like the [Growth and Usage Dashboard (GUD)](../../tools/gud.md).
+A baseline of analysis is important for all our products, from counting active users to retention and session times. This is supported out-of-the-box by the SDK, and funnels directly into visualization tools like the [Growth and Usage Dashboard (GUD)](https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/).
 
-  Metrics that are common to all products, such as the operating system and architecture, are provided automatically in a consistent way.
+Metrics that are common to all products, such as the operating system and architecture, are provided automatically in a consistent way.
 
-  Any issues found with these base metrics only need be fixed in Glean to benefit all SDK-using products.
+Any issues found with these base metrics only need be fixed in Glean to benefit all SDK-using products.
 
 **Encourage specificity**
 
-  Rather than just treating metrics as generic data points, Glean wants to know as much as possible about the things being measured.
-  From this information, it can:
+Rather than just treating metrics as generic data points, Glean wants to know as much as possible about the things being measured.
+From this information, it can:
 
-  - Provide a well-designed API to perform specific types of measurements, which is consistent and avoids common pitfalls
-  - Reject invalid data, and report them as errors
-  - Store the data in a consistent way, rather than custom, ad hoc data structures
-  - Provide the most appropriate visualization and analysis automatically
+- Provide a well-designed API to perform specific types of measurements, which is consistent and avoids common pitfalls
+- Reject invalid data, and report them as errors
+- Store the data in a consistent way, rather than custom, ad hoc data structures
+- Provide the most appropriate visualization and analysis automatically
 
 **Follow [lean data practices](https://leandatapractices.com/)**
 
-  The Glean system enforces that all measurements received [data review](https://wiki.mozilla.org/Firefox/Data_Collection), and it is impossible to collect measurements that haven't been declared.
-  It also makes it easy to limit data collection to only what's necessary:
+The Glean system enforces that all measurements received [data review](https://wiki.mozilla.org/Firefox/Data_Collection), and it is impossible to collect measurements that haven't been declared.
+It also makes it easy to limit data collection to only what's necessary:
 
-  - Enforced expiration dates for every metric
-  - Some metric types can automatically limit resolution
-  - It's easy to send data that isn't associated with the client id
+- Enforced expiration dates for every metric
+- Some metric types can automatically limit resolution
+- It's easy to send data that isn't associated with the client id
 
-  Glean also supports data transparency by automatically generating documentation for all of the metrics sent by an application.
+Glean also supports data transparency by automatically generating documentation for all of the metrics sent by an application.
 
 **Provide a self-serve experience**
 
-  Adding new metric is designed to be as easy as possible.
-  Simply by adding a few lines of configuration, everything to make them work across the entire suite of tools happens automatically.
-  This includes previously manual and error-prone steps such as updating the ping payload and database schemas.
+Adding new metric is designed to be as easy as possible.
+Simply by adding a few lines of configuration, everything to make them work across the entire suite of tools happens automatically.
+This includes previously manual and error-prone steps such as updating the ping payload and database schemas.
 
 # How to use Glean
 
-* [Integrate the Glean SDK / library](https://mozilla.github.io/glean/book/user/adding-glean-to-your-project.html) into your product.
-* [File a data engineering bug](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&component=General&short_desc=Glean:%20Enable%20application%20id%20org.mozilla.myProduct) to enable your products application id.
-* [Use Redash](https://sql.telemetry.mozilla.org/) to write SQL queries & build dashboards using your products datasets, e.g.:
-  * `org_mozilla_fenix.baseline`
-  * `org_mozilla_fenix.events`
-  * `org_mozilla_fenix.metrics`
-  * There is [more documentation about accessing Glean data](accessing_glean_data.md).
+- [Integrate the Glean SDK / library](https://mozilla.github.io/glean/book/user/adding-glean-to-your-project.html) into your product.
+- [Use Redash](https://sql.telemetry.mozilla.org/) to write SQL queries & build dashboards using your products datasets, e.g.:
 
-* _(Work in progress)_ Use events and [Amplitude](https://sso.mozilla.com/amplitude) for product analytics.
-* [Use Databricks](https://sso.mozilla.com/databricks) for deep-dive analysis.
-* [Use the Glean debug ping viewer](debug_ping_view.md) for QA & development.
-* For experimentation, you can use [Android experiments library](https://github.com/mozilla-mobile/android-components/blob/master/components/service/experiments/README.md), which integrates with Glean.
+  - `org_mozilla_fenix.baseline`
+  - `org_mozilla_fenix.events`
+  - `org_mozilla_fenix.metrics`
+  - There is [more documentation about accessing Glean data](accessing_glean_data.md).
+
+- _(Work in progress)_ Use events and [Amplitude](https://sso.mozilla.com/amplitude) for product analytics.
+- [Use Databricks](https://sso.mozilla.com/databricks) for deep-dive analysis.
+- For experimentation, you can use [Android experiments library](https://github.com/mozilla-mobile/android-components/blob/master/components/service/experiments/README.md), which integrates with Glean.
 
 # Contact
 
-*   `#glean` & `#fx-metrics` on slack
-*   [#glean:mozilla.org](https://chat.mozilla.org/#/room/#glean:mozilla.org) on matrix
-*   [`glean-team@mozilla.com`](mailto:glean-team@mozilla.com) to reach out
-*   [`fx-data-dev@mozilla.com`](mailto:fx-data-dev@mozilla.com) for announcements etc.
+- `#glean` on slack
+- [#glean:mozilla.org](https://chat.mozilla.org/#/room/#glean:mozilla.org) on matrix
+- [`glean-team@mozilla.com`](mailto:glean-team@mozilla.com) to reach out
 
 # References
 
-* The [Glean SDK](https://github.com/mozilla/glean/) implementation.
-* [Reporting issues & bugs for the Glean SDK](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&component=Glean%3A%20SDK).
-* Datasets documentation (TBD)
-* [Glean Debug pings viewer](https://debug-ping-preview.firebaseapp.com/)
+- The [Glean SDK](https://github.com/mozilla/glean/) implementation.
+- [Reporting issues & bugs for the Glean SDK](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&component=Glean%3A%20SDK).
+- Datasets documentation (TBD)
+- [Glean Debug pings viewer](https://debug-ping-preview.firebaseapp.com/)

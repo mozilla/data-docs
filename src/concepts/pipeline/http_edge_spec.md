@@ -17,6 +17,8 @@ any further processing, analysis, and storage will be handled.
 Submission payloads are expected to be optionally-gzipped JSON
 documents described by a [JSONSchema].
 
+[jsonschema]: https://json-schema.org/
+
 ## Server Request/Response
 
 ### GET Request
@@ -26,9 +28,9 @@ check the health of web servers.
 
 ### GET Response codes
 
-* *200* - OK. `/status` and all's well
-* *404* - Any GET other than `/status`
-* *500* - All is not well
+- _200_ - OK. `/status` and all's well
+- _404_ - Any GET other than `/status`
+- _500_ - All is not well
 
 ### POST/PUT Request
 
@@ -42,10 +44,10 @@ A specific example submission URL looks like:
 
 With the following components:
 
-* `namespace` - an identifier used for grouping a set of related document types. Typically this represents an application that produces data.
-* `docType` - a short descriptive name of the document type. Examples include `event`, `crash`, or `baseline`
-* `docVersion` - a numeric value indicating the version of the schema for this `docType`
-* `docId` - a UUID identifying the exact submission. If the same `docId` is seen more than once, it will be discarded as a duplicate.
+- `namespace` - an identifier used for grouping a set of related document types. Typically this represents an application that produces data.
+- `docType` - a short descriptive name of the document type. Examples include `event`, `crash`, or `baseline`
+- `docVersion` - a numeric value indicating the version of the schema for this `docType`
+- `docId` - a UUID identifying the exact submission. If the same `docId` is seen more than once, it will be discarded as a duplicate.
 
 The combination of `namespace`, `docType` and `docVersion` together identify a specific schema to be used for validating submissions to the above endpoint.
 
@@ -68,26 +70,27 @@ to apply for validation. This logic is part of the downstream [decoder] job.
 
 ### POST/PUT Response codes
 
-* *200* - OK. Request accepted into the pipeline.
-* *400* - Bad request, for example an un-encoded space in the URL.
-* *404* - not found - POST/PUT to an unknown namespace
-* *405* - wrong request type (anything other than POST/PUT)
-* *411* - missing content-length header
-* *413* - request body too large (Note that if we have badly-behaved clients that retry on `4XX`, we may opt to send back 202 on body/path too long).
-* *414* - request path too long (See above)
-* *500* - internal error
+- _200_ - OK. Request accepted into the pipeline.
+- _400_ - Bad request, for example an un-encoded space in the URL.
+- _404_ - not found - POST/PUT to an unknown namespace
+- _405_ - wrong request type (anything other than POST/PUT)
+- _411_ - missing content-length header
+- _413_ - request body too large (Note that if we have badly-behaved clients that retry on `4XX`, we may opt to send back 202 on body/path too long).
+- _414_ - request path too long (See above)
+- _500_ - internal error
 
 ### Supported HTTP Headers
 
 The following headers will be passed through the pipeline and made available as metadata.
 
-* `Date` - The client-supplied timestamp of the incoming request.
+- `Date` - The client-supplied timestamp of the incoming request.
   Used for computing client clock skew.
-* `DNT` - The "Do Not Track" header.
-* `X-PingSender-Version` - The version of [Pingsender] used to send this ping (if applicable).
-* `X-Debug-ID` - An optional tag used to make data available to the [Glean Debug View].
+- `DNT` - The "Do Not Track" header.
+- `X-PingSender-Version` - The version of [Pingsender] used to send this ping (if applicable).
+- `X-Debug-ID` - An optional tag used to make data available to the [Glean Debug View].
+- `X-Source-Tags` - An optional comma-separated list of tags related to the client source; pings sent from automated testing should include the "automation" tag so that they are not included in analyses
 
-[Pingsender]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/pingsender.html
+[pingsender]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/pingsender.html
 
 ## Other Considerations
 

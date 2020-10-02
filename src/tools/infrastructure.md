@@ -6,10 +6,9 @@ The work is being tracked in
 
 # Notes & Ideas
 
-* The path to re:dash
-  * Heka messages
-  * telemetry-batch-view
-  * parquet2hive
-  * Airflow
-  * Presto
-
+- The path to STMO
+  - Heka messages
+  - telemetry-batch-view
+  - parquet2hive
+  - Airflow
+  - Presto

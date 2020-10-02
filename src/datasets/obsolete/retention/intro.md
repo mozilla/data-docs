@@ -21,25 +21,24 @@ over `client_id`'s in the 7-day window.
 
 1. The data starts at 2017-03-06, the [merge date where Nightly started to
    track Firefox 55 in Mozilla-Central][release_calendar]. However, there was
-not a consistent view into the behavior of first session profiles until the
-[`new_profile` ping][new_profile]. This means much of the data is inaccurate
-before 2017-06-26.
+   not a consistent view into the behavior of first session profiles until the
+   [`new_profile` ping][new_profile]. This means much of the data is inaccurate
+   before 2017-06-26.
 2. This dataset uses 4 day reporting latency to aggregate at least 99% of the
    data in a given submission date. This figure is derived from the
-[telemetry-health measurements on submission latency][telemetry-health], with
-the discussion in [Bug 1407410][bug_1407410]. This latency metric was reduced
-Firefox 55 with the introduction of the shutdown ping-sender mechanism.
+   [telemetry-health measurements on submission latency][telemetry-health], with
+   the discussion in [Bug 1407410][bug_1407410]. This latency metric was reduced
+   Firefox 55 with the introduction of the shutdown ping-sender mechanism.
 3. Caution should be taken before adding new columns. Additional attribute
    columns will grow the number of rows exponentially.
 4. The number of HLL bits chosen for this dataset is 13. This means the default
    size of the HLL object is 2^13 bits or 1KiB. This maintains about a 1% error
-on average. See [this table from Algebird's HLL implementation][algebird] for
-more details.
-
+   on average. See [this table from Algebird's HLL implementation][algebird] for
+   more details.
 
 #### Accessing the Data
 
-The data is primarily available through [Re:dash on STMO][stmo] via
+The data is primarily available through [STMO][stmo] via
 the Presto source. This service has been configured to use predefined HLL
 functions.
 
@@ -49,16 +48,19 @@ items per HLL object. The aggregate `merge(<hll_column>)` function will perform
 the set union between all objects in a column.
 
 Example: Cast the count column into the appropriate type.
+
 ```sql
 SELECT cast(hll as HLL) as n_profiles_hll FROM retention
 ```
 
 Count the number of clients seen over all attribute combinations.
+
 ```sql
 SELECT cardinality(cast(hll as HLL)) FROM retention
 ```
 
 Group-by and aggregate client counts over different release channels.
+
 ```sql
 SELECT channel, cardinality(merge(cast(hll AS HLL))
 FROM retention
@@ -71,7 +73,6 @@ configured STMO environment, [`spark-hyperloglog`][s-hll] and
 
 Also see the [`client_count_daily` dataset][client_count_daily].
 
-
 [original_bug]: https://bugzilla.mozilla.org/show_bug.cgi?id=1381840
 [release_calendar]: https://wiki.mozilla.org/RapidRelease/Calendar
 [new_profile]: /datasets/batch_view/new_profile/reference.md
@@ -82,4 +83,3 @@ Also see the [`client_count_daily` dataset][client_count_daily].
 [s-hll]: https://github.com/mozilla/spark-hyperloglog
 [p-hll]: https://github.com/vitillo/presto-hyperloglog
 [client_count_daily]: /datasets/obsolete/client_count_daily/reference.md
-

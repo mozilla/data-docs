@@ -1,13 +1,14 @@
-## Censuses
+## Legacy Census Metrics
 
-> This section was originally included in the [Project Smoot existing metrics report][smootv1]
-(Mozilla internal link).
+> **⚠** The information in this document is obsolete: see the [metrics section](../metrics/metrics.md) for currently-used metrics measuring our users. This content was originally included in the [Project Smoot existing metrics report][smootv1] (Mozilla internal link).
 
 [smootv1]: https://mozilla-private.report/smoot-existing-metrics/book/05_overview.html
 
 ADI and DAU are oft-discussed censuses. This chapter discusses their history and definition.
 
 ### ADI / Active Daily Installs (blocklist fetches)
+
+> **⚠** The Blocklist mechanism described below is no longer used and has been replaced with [remote settings](https://bugzilla.mozilla.org/show_bug.cgi?id=1257565). The content is left verbatim for historical reference.
 
 ADI, one of Firefox’s oldest client censuses, is computed as the number
 of conforming requests to the Firefox
@@ -24,21 +25,21 @@ The blocklist request does not contain the telemetry `client_id` or any
 other persistent identifiers. Some data about the install are provided
 as URI parameters:
 
-  - App ID
-  - App version
-  - Product name
-  - Build ID
-  - Build target
-  - Locale
-  - Update channel
-  - OS version
-  - Distribution
-  - Distribution version
-  - Number of pings sent by this client for this version of Firefox
-    (stored in the pref `extensions.blocklist.pingCountVersion`)
-  - Total ping count (stored in the pref
-    `extensions.blocklist.pingCountTotal`)
-  - Number of full days since last ping
+- App ID
+- App version
+- Product name
+- Build ID
+- Build target
+- Locale
+- Update channel
+- OS version
+- Distribution
+- Distribution version
+- Number of pings sent by this client for this version of Firefox
+  (stored in the pref `extensions.blocklist.pingCountVersion`)
+- Total ping count (stored in the pref
+  `extensions.blocklist.pingCountTotal`)
+- Number of full days since last ping
 
 so subsets of ADI may be queried along these dimensions.
 
@@ -64,6 +65,8 @@ age, or update failures.
 [bl_notify]: https://searchfox.org/mozilla-central/rev/b36e97fc776635655e84f2048ff59f38fa8a4626/toolkit/mozapps/extensions/Blocklist.jsm#569
 
 ### DAU / Daily Active Users
+
+> **⚠** This description of DAU is not authoritative; please see the [DAU definition in metrics](../metrics/metrics.md#daily-active-users-dau) for the canonical definition.
 
 Firefox DAU is currently computed as the number of unique `client_id`s
 observed in `main` pings received on a calendar day. The DAU count
@@ -122,15 +125,3 @@ When and how a ping is sent depends on the reason the subsession ends:
 </table>
 
 </div>
-
-### Coverage pings
-
-The [coverage ping]
-([announcement](https://blog.mozilla.org/data/2018/08/20/effectively-measuring-search-in-firefox/))
-is a periodic census intended to estimate telemetry opt-out rates.
-
-We estimate that [93% of release channel
-profiles](https://metrics.mozilla.com/~rharter/reports/coverage/index.html)
-have telemetry enabled (and are therefore included in DAU).
-
-[coverage ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/coverage-ping.html

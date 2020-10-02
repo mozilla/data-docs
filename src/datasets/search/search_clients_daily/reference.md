@@ -16,11 +16,10 @@ If you have trouble viewing this query,
 it's likely you don't have the proper permissions.
 For more details see the [search data documentation].
 
-
 ## Scheduling
 
 This dataset is scheduled on Airflow
-([source](https://github.com/mozilla/telemetry-airflow/blob/9af06204f7073d7fd5b0240db9091b57a7454a74/dags/main_summary.py#L588)).
+([source](https://github.com/mozilla/bigquery-etl/blob/a39e168a2d3396d8dd286e1ae9fa6baf7f8afa2d/dags/bqetl_search.py#L64)).
 
 ## Schema
 
@@ -81,6 +80,5 @@ root
 
 The `search_clients_daily` job is
 [defined in `bigquery-etl`](https://github.com/mozilla/bigquery-etl/blob/master/sql/search_derived/search_clients_daily_v8/query.sql)
-
 
 [search data documentation]: ../../search.md

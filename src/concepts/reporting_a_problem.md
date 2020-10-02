@@ -1,28 +1,27 @@
 # Reporting a problem
 
-If you have a problem with data tools, datasets, or other pieces of infrastructure,
-please help us out by reporting it.
+If you see a problem with data tools, datasets, or other pieces of infrastructure,
+report it!
 
-Most of our work is tracked in Bugzilla in the [Data Platform and Tools](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools) product.
+Defects in the data platform and tools are tracked in Bugzilla in the [Data Platform and Tools](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools) product.
 
-Bugs should be filed in the closest-matching component in the Data Platform and Tools
-product, but if there is no component for the item in question, please file an issue
+Bugs need to be filed in the closest-matching component in the Data Platform and Tools
+product. If you are not able to locate an appropriate component for the item in question, file an issue
 in the [General component](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&component=General).
 
-Components are triaged at least weekly by the component owner(s). For issues needing
+Components are triaged at least weekly by the component owner(s). For any issues that need
 urgent attention, it is recommended that you use the `needinfo` flag to attract attention
-from a specific person. If an issue doesn't receive the appropriate attention within a
-week (or it's urgent), you can find out how to reach us in the [getting help](getting_help.md) section.
+from a specific person. If an issue does not receive the appropriate attention in a
+week (or it is urgent), see [getting help](getting_help.md).
 
-When a bug is triaged, it will be assigned a **priority** and **points**. **Priorities** have the
-following meanings:
+When a bug is triaged, it is assigned a **priority** and **points**. **Priorities** are processed as follows:
 
 - **`P1`**: in active development in the current sprint
 - **`P2`**: planned to be worked on in the current quarter
 - **`P3`**: planned to be worked on next quarter
-- **`P4`** and beyond: nice to have, we would accept a patch, but not actively being worked on.
+- **`P4`** and beyond: nice to have, would accept a patch, but not actively being worked on.
 
-**Points** reflect the amount of effort required for a bug and are assigned as follows:
+**Points** reflect the amount of effort that is required for a bug. They are assigned as follows:
 
 - **1 point**: one day or less of effort
 - **2 points**: two days of effort
@@ -31,23 +30,21 @@ following meanings:
 
 ### Problems with the data
 
-There are bugzilla components for several of core datasets.
-described in this documentation, so if possible, please use a specific component.
+There are Bugzilla components for several core datasets, as
+described in this documentation. If at all possible, assign a specific component to the issue.
 
-If there is a problem with a dataset that does not have its own component, please
+If there is an issue with a dataset to which you are unable to assign its own component,
 file an issue in the [Datasets: General component](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&component=Datasets%3A%20General).
 
 ### Problems with tools
 
-There are bugzilla components for several of the [tools](../tools/interfaces.md) that
-comprise the [Data Platform](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools),
-so please file a bug in the specific component that most closely matches the
-tool in question.
+There are Bugzilla components for several of the [tools](../tools/interfaces.md) that
+comprise the [Data Platform](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools).
+File a bug in the specific component that most closely matches the tool in question.
 
-Operational bugs, such as services being unavailable, should be filed either in
+Operational bugs, such as services being unavailable, need to be filed either in
 the component for the service itself or in the [Operations component](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&component=Operations).
 
-### Other problems
+### Other issues
 
-When in doubt, please file issues in the [General component](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&component=General).
-
+When in doubt, file issues in the [General component](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&component=General).

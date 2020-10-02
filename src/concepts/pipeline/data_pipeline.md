@@ -1,9 +1,9 @@
 # An overview of Mozilla’s Data Pipeline
 
-*Note: This article describes the AWS-based pipeline which
-[has been retired](https://bugzilla.mozilla.org/show_bug.cgi?id=1598815);
-the client-side concepts here still apply, but this article has been updated
-to reflect the [new GCP pipeline](gcp_data_pipeline.md).*
+> Note: This article describes the AWS-based pipeline which
+> [has been retired](https://bugzilla.mozilla.org/show_bug.cgi?id=1598815);
+> the client-side concepts here still apply, but this article has been updated
+> to reflect the [new GCP pipeline](gcp_data_pipeline.md).
 
 This post describes the architecture of Mozilla’s data pipeline, which is used to collect Telemetry data from our users and logs from various services. One of the cool perks of working at Mozilla is that most of what we do is out in the open and because of that I can do more than just show you some diagram with arrows of our architecture; I can point you to the code, script & configuration that underlies it!
 
@@ -21,7 +21,7 @@ graph TD
   dwl-->|protobuf| datalake(fa:fa-database S3 Data Lake)
   dwl-->|parquet| datalake
   datalake-->|parquet| prestodb
-  prestodb-->redash[fa:fa-line-chart Re:dash]
+  prestodb-->redash[fa:fa-line-chart Redash]
   datalake-->spark
   spark-->datalake
   airflow[fa:fa-clock-o Airflow]-->|Scheduled tasks|spark{fa:fa-star Spark}
@@ -52,21 +52,21 @@ style cerberus fill:royalblue
 
 There are different APIs and formats to [collect data] in Firefox, all suiting different use cases:
 
-* [histograms] – for recording multiple data points;
-* [scalars] – for recording single values;
-* [timings] – for measuring how long operations take;
-* [events] – for recording time-stamped events.
+- [histograms] – for recording multiple data points;
+- [scalars] – for recording single values;
+- [timings] – for measuring how long operations take;
+- [events] – for recording time-stamped events.
 
-These are commonly referred to as *[probes]*. Each probe must declare the [collection policy] it conforms to: either *release* or *prerelease*. When adding a new measurement data-reviewers carefully inspect the probe and eventually approve the requested collection policy:
+These are commonly referred to as _[probes]_. Each probe must declare the [collection policy] it conforms to: either _release_ or _prerelease_. When adding a new measurement data-reviewers carefully inspect the probe and eventually approve the requested collection policy:
 
-* Release data is collected from all Firefox users.
-* Prerelease data is collected from users on Firefox Nightly and Beta channels.
+- Release data is collected from all Firefox users.
+- Prerelease data is collected from users on Firefox Nightly and Beta channels.
 
 Users may choose to turn the data collection off in preferences.
 
-A *session* begins when Firefox starts up and ends when it shuts down. As a session could be long-running and last weeks, it gets sliced into smaller logical units called [subsessions]. Each subsession generates a batch of data containing the current state of all probes collected so far, i.e. a [main ping], which is sent to our servers. The main ping is just one of the many [ping types] we support. Developers can [create their own ping types] if needed.
+A _session_ begins when Firefox starts up and ends when it shuts down. As a session could be long-running and last weeks, it gets sliced into smaller logical units called [subsessions]. Each subsession generates a batch of data containing the current state of all probes collected so far, i.e. a [main ping], which is sent to our servers. The main ping is just one of the many [ping types] we support. Developers can [create their own ping types] if needed.
 
-*Pings* are submitted via an [API] that performs a HTTP POST request to our edge servers. If a ping fails to successfully [submit] (e.g. because of missing internet connection), Firefox will store the ping on disk and retry to send it until the maximum ping age is exceeded.
+_Pings_ are submitted via an [API] that performs a HTTP POST request to our edge servers. If a ping fails to successfully [submit] (e.g. because of missing internet connection), Firefox will store the ping on disk and retry to send it until the maximum ping age is exceeded.
 
 # Kafka
 
@@ -78,13 +78,13 @@ The data from Kafka is read from the Complex Event Processors (CEP) and the Data
 
 [Hindsight], an open source stream processing software system developed by Mozilla as [Heka]’s successor, is useful for a wide variety of different tasks, such as:
 
-* converting data from one format to another;
-* shipping data from one location to another;
-* performing real time analysis, graphing, and anomaly detection.
+- converting data from one format to another;
+- shipping data from one location to another;
+- performing real time analysis, graphing, and anomaly detection.
 
 Hindsight’s core is a lightweight data processing kernel written in C that controls a set of Lua [plugins] executed inside a sandbox.
 
-The CEP are custom plugins that are created, configured and deployed from an [UI] which produce real-time plots like the number of pings matching a certain criteria.  Mozilla employees can [access the UI] and create/deploy their own custom plugin in real-time without interfering with other plugins running.
+The CEP are custom plugins that are created, configured and deployed from an [UI] which produce real-time plots like the number of pings matching a certain criteria. Mozilla employees can [access the UI] and create/deploy their own custom plugin in real-time without interfering with other plugins running.
 
 ![CEP Custom Plugin](../../assets/CEP_custom_plugin.jpeg "CEP – a custom plugin in action")
 
@@ -117,7 +117,7 @@ end
 
 pipeline --> aggregator
 pipeline --> spark{fa:fa-star Spark}
-pipeline --> redash[fa:fa-line-chart Re:dash]
+pipeline --> redash[fa:fa-line-chart Redash]
 
 subgraph telemetry.mozilla.org
   telemetry.js(telemetry.js) --> dist
@@ -154,11 +154,11 @@ A dedicated Spark job feeds daily aggregates to a PostgreSQL database which powe
 
 ![TMO](../../assets/TMO_example.jpeg "TMO – timeseries")
 
-# Presto & re:dash
+# Presto & STMO
 
 We maintain a couple of [Presto clusters] and a centralized Hive metastore to query Parquet data with SQL. The Hive metastore provides an universal view of our Parquet dataset to both Spark and Presto clusters.
 
-Presto, and other databases, are behind a [re:dash] service ([STMO]) which provides a convenient & powerful interface to query SQL engines and build dashboards that can be shared within the company. Mozilla maintains its own [fork of re:dash] to iterate quickly on new features, but as good open source citizen we push our changes upstream.
+Presto, and other databases, are behind a [Redash] service ([STMO]) which provides a convenient & powerful interface to query SQL engines and build dashboards that can be shared within the company. Mozilla maintains its own [fork of Redash] to iterate quickly on new features, but as good open source citizen we push our changes upstream.
 
 ![STMO](../../assets/STMO_example.jpeg "STMO – who doesn’t love SQL?")
 
@@ -179,32 +179,32 @@ There is a vast ecosystem of tools for processing data at scale, each with their
 [main ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html
 [ping types]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/pings.html#ping-types
 [create their own ping types]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html
-[API]: https://dxr.mozilla.org/mozilla-central/rev/6a23526fe5168087d7e4132c0705aefcaed5f571/toolkit/components/telemetry/TelemetryController.jsm#202
+[api]: https://searchfox.org/mozilla-central/rev/501eb4718d73870892d28f31a99b46f4783efaa0/toolkit/components/telemetry/app/TelemetryController.jsm#231
 [submit]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/submission.html#submission
 [load balancer]: https://aws.amazon.com/elasticloadbalancing/
 [module]: https://github.com/mozilla-services/nginx_moz_ingest
-[HTTP request]: https://wiki.mozilla.org/CloudServices/DataPipeline/HTTPEdgeServerSpecification
-[Hindsight]: https://github.com/mozilla-services/hindsight
-[Heka]: https://github.com/mozilla-services/heka
+[http request]: https://wiki.mozilla.org/CloudServices/DataPipeline/HTTPEdgeServerSpecification
+[hindsight]: https://github.com/mozilla-services/hindsight
+[heka]: https://github.com/mozilla-services/heka
 [plugins]: https://github.com/mozilla-services/hindsight/blob/9593668e84a642aff9dd95ccc648b6585948abfe/docs/index.md
-[UI]: https://github.com/mozilla-services/hindsight_admin
-[access the UI]: BROKEN:https://pipeline-cep.prod.mozaws.net/
-[reads pings from Kafka]: https://github.com/mozilla-services/lua_sandbox_extensions/blob/0895238e32d25241ef46f561e43039beb201c7cd/kafka/sandboxes/heka/input/kafka.lua
+[ui]: https://github.com/mozilla-services/hindsight_admin
+[access the ui]: BROKEN:https://pipeline-cep.prod.mozaws.net/
+[reads pings from kafka]: https://github.com/mozilla-services/lua_sandbox_extensions/blob/0895238e32d25241ef46f561e43039beb201c7cd/kafka/sandboxes/heka/input/kafka.lua
 [pre-processes]: https://github.com/mozilla-services/lua_sandbox_extensions/blob/5d8907ee9f1a20e3a02bfe5b57d4312b173487a3/moz_telemetry/io_modules/decoders/moz_telemetry/ping.lua
-[sends batches to S3]: https://github.com/mozilla-services/lua_sandbox_extensions/blob/5d8907ee9f1a20e3a02bfe5b57d4312b173487a3/moz_telemetry/sandboxes/heka/output/moz_telemetry_s3.lua
-[Protobuf]: https://hekad.readthedocs.io/en/latest/message/index.html#stream-framing
-[dump data directly in Parquet form]: https://github.com/mozilla-services/lua_sandbox_extensions/pull/48
+[sends batches to s3]: https://github.com/mozilla-services/lua_sandbox_extensions/blob/5d8907ee9f1a20e3a02bfe5b57d4312b173487a3/moz_telemetry/sandboxes/heka/output/moz_telemetry_s3.lua
+[protobuf]: https://hekad.readthedocs.io/en/latest/message/index.html#stream-framing
+[dump data directly in parquet form]: https://github.com/mozilla-services/lua_sandbox_extensions/pull/48
 [private repository]: https://github.com/mozilla-services/puppet-config/tree/02f716a3e0df1117fc2494b41e85a1416f8e2a64/pipeline
-[an API]: https://mozilla.github.io/python_moztelemetry/api.html#module-moztelemetry.dataset
-[EMR]: https://github.com/mozilla/emr-bootstrap-spark/
-[ETL jobs]: https://github.com/mozilla/telemetry-batch-view
-[Airflow]: https://github.com/mozilla/telemetry-airflow/
-[Parquet views]: ../choosing_a_dataset.md
+[an api]: https://mozilla.github.io/python_moztelemetry/api.html#module-moztelemetry.dataset
+[emr]: https://github.com/mozilla/emr-bootstrap-spark/
+[etl jobs]: https://github.com/mozilla/telemetry-batch-view
+[airflow]: https://github.com/mozilla/telemetry-airflow/
+[parquet views]: ../choosing_a_dataset.md
 [telemetry-batch-view]: https://github.com/mozilla/telemetry-batch-view/
-[HTTP service]: https://github.com/mozilla/python_mozaggregator/#api
-[TMO]: https://telemetry.mozilla.org/
-[Presto clusters]: https://github.com/mozilla/emr-bootstrap-presto
-[re:dash]: https://sql.telemetry.mozilla.org/
-[STMO]: https://sql.telemetry.mozilla.org/
-[fork of re:dash]: https://github.com/mozilla/redash
-[Databricks instance]: https://dbc-caf9527b-e073.cloud.databricks.com
+[http service]: https://github.com/mozilla/python_mozaggregator/#api
+[tmo]: https://telemetry.mozilla.org/
+[presto clusters]: https://github.com/mozilla/emr-bootstrap-presto
+[redash]: https://redash.io/
+[stmo]: https://sql.telemetry.mozilla.org/
+[fork of redash]: https://github.com/mozilla/redash
+[databricks instance]: https://dbc-caf9527b-e073.cloud.databricks.com

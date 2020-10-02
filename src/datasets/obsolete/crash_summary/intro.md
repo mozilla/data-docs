@@ -1,4 +1,4 @@
-  ***As of 2019-11-06, this dataset has been deprecated and is no longer maintained. Please use the `telemetry.crash` table instead, which is generated directly from live pings and is much more complete. See [Bug 1572069](https://bugzilla.mozilla.org/show_bug.cgi?id=1572069) for more information.***
+> As of 2019-11-06, this dataset has been deprecated and is no longer maintained. Please use the `telemetry.crash` table instead, which is generated directly from live pings and is much more complete. See [Bug 1572069](https://bugzilla.mozilla.org/show_bug.cgi?id=1572069) for more information.
 
 The `crash_summary` table is the a direct representation of a crash ping.
 
@@ -11,11 +11,12 @@ though only a subset of all crash ping fields are included.
 #### Accessing the Data
 
 The data is stored as a parquet table in S3 at the following address.
+
 ```
 s3://telemetry-parquet/crash_summary/v1/
 ```
 
-`crash_summary` is accessible through re:dash.
+`crash_summary` is accessible through STMO.
 Here's an [example query](https://sql.telemetry.mozilla.org/queries/4793/source).
 
 #### Further Reading

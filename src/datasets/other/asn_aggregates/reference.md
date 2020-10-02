@@ -24,7 +24,7 @@ DoH will not be enabled by default.
 Network operators control this behavior
 by configuring the resolvers they provision for their clients.
 
-An [autonomous system](https://en.wikipedia.org/wiki/Autonomous_system_(Internet))
+An [autonomous system](<https://en.wikipedia.org/wiki/Autonomous_system_(Internet)>)
 represents a network with a common routing policy,
 often because it is controlled by a single entity.
 Autonomous systems advertise a set of routes, representing blocks of network addresses.
@@ -34,13 +34,13 @@ The `asn_aggregates` dataset,
 created in [bug 1615269](https://bugzilla.mozilla.org/show_bug.cgi?id=1615269),
 contains the columns:
 
-* `autonomous_system_number` (int64): the number of the autonomous system
+- `autonomous_system_number` (int64): the number of the autonomous system
   from which pings were submitted
-* `submission_date` (date): the date that pings reached the ingestion endpoint
-* `n_clients` (int64): number of Firefox clients sending event pings that day, from that AS
-* `doh_enabled` (int64): number of clients who sent a `enable_doh` result
+- `submission_date` (date): the date that pings reached the ingestion endpoint
+- `n_clients` (int64): number of Firefox clients sending event pings that day, from that AS
+- `doh_enabled` (int64): number of clients who sent a `enable_doh` result
   **for the canary heuristic** that day, from that AS
-* `doh_disabled` (int64): number of clients who sent a `disable_doh` result
+- `doh_disabled` (int64): number of clients who sent a `disable_doh` result
   **for the canary heuristic** that day, from that AS
 
 The canary heuristic indicates whether a client was able to resolve
@@ -57,8 +57,8 @@ The client AS number is determined by looking up the client's IP address in a Ma
 
 Some notes on interpretation:
 
-* ASs can change route announcements frequently, so the MaxMind database may be stale
-* Telemetry is not necessarily sent on network change events,
+- ASs can change route announcements frequently, so the MaxMind database may be stale
+- Telemetry is not necessarily sent on network change events,
   so users may record activity on one network and submit it from another.
-* The number of distinct client evaluating DoH heuristics is not currently captured;
+- The number of distinct client evaluating DoH heuristics is not currently captured;
   if clients report both enabled and disabled states for DoH, they will be double-counted.

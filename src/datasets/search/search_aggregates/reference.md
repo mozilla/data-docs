@@ -16,11 +16,10 @@ If you have trouble viewing this query,
 it's likely you don't have the proper permissions.
 For more details see the [search data documentation].
 
-
 ## Scheduling
 
 This job is
-[scheduled on airflow](https://github.com/mozilla/telemetry-airflow/blob/9af06204f7073d7fd5b0240db9091b57a7454a74/dags/main_summary.py#L597)
+[scheduled on airflow](https://github.com/mozilla/bigquery-etl/blob/a39e168a2d3396d8dd286e1ae9fa6baf7f8afa2d/dags/bqetl_search.py#L40)
 to run daily.
 
 ## Schema
@@ -61,6 +60,5 @@ root
 
 The `search_aggregates` job is
 [defined in `bigquery-etl`](https://github.com/mozilla/bigquery-etl/blob/master/sql/search_derived/search_aggregates_v8/query.sql)
-
 
 [search data documentation]: ../../search.md

@@ -2,7 +2,8 @@
 
 For the purposes of DAU, a desktop profile is considered active if it sends any main ping.
 See the next section for analogous definitions on top of mobile products.
-* Dates are defined by `submission_date`.
+
+- Dates are defined by `submission_date`.
 
 **DAU** is the number of clients sending a main ping on a given day.
 
@@ -104,8 +105,8 @@ A single session of a mobile application is likely to last only a few minutes an
 we have generally instrumented mobile applications to send a separate ping for
 each user session:
 
-* `core` pings are the canonical measure for usage on legacy mobile products
-* `baseline` pings are the canonical measure for usage on mobile products using the Glean SDK
+- `core` pings are the canonical measure for usage on legacy mobile products
+- `baseline` pings are the canonical measure for usage on mobile products using the Glean SDK
 
 A given client is considered "active" for a given mobile product on a given day if we receive at
 least one of the above pings. Otherwise, the definitions of DAU and MAU for individual mobile products
@@ -148,7 +149,6 @@ Returns:
   FirefoxConnect
 */
 ```
-
 
 ### Combining metrics from multiple products
 

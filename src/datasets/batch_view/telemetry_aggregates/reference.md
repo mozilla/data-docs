@@ -37,13 +37,12 @@ ORDER BY
 
 We ignore invalid pings in our processing. Invalid pings are defined as those that:
 
-* The submission dates are invalid or missing.
-* The build ID is malformed.
-* The `docType` field is missing or unknown.
-* The build ID is older than a defined cutoff days.
+- The submission dates are invalid or missing.
+- The build ID is malformed.
+- The `docType` field is missing or unknown.
+- The build ID is older than a defined cutoff days.
   (See the `BUILD_ID_CUTOFFS` variable in the
   [code](https://github.com/mozilla/python_mozaggregator/) for the max days per channel)
-
 
 ## Scheduling
 
@@ -60,31 +59,31 @@ The partitioned dimensions are the following columns. Filtering by one of
 these fields to limit the resulting number of rows can run significantly
 faster:
 
-* `metric` is the name of the metric, like `"GC_MS"`.
-* `aggregate_type` is the type of aggregation, either `"build_id"` or
+- `metric` is the name of the metric, like `"GC_MS"`.
+- `aggregate_type` is the type of aggregation, either `"build_id"` or
   `"submission_date"`, representing how this aggregation was grouped.
-* `period` is a string representing the month in `YYYYMM` format that a ping
+- `period` is a string representing the month in `YYYYMM` format that a ping
   was submitted, like `'201901'`.
 
 The rest of the dimensions are:
 
-* `submission_date` is the date pings were submitted for a particular aggregate.
-* `channel` is the channel, like `release` or `beta`.
-* `version` is the program version, like `46.0a1`.
-* `build_id` is the `YYYYMMDDhhmmss` timestamp the program was built, like
+- `submission_date` is the date pings were submitted for a particular aggregate.
+- `channel` is the channel, like `release` or `beta`.
+- `version` is the program version, like `46.0a1`.
+- `build_id` is the `YYYYMMDDhhmmss` timestamp the program was built, like
   `20190123192837`.
-* `application` is the program name, like `Firefox` or `Fennec`.
-* `architecture` is the architecture that the program was built for (not
+- `application` is the program name, like `Firefox` or `Fennec`.
+- `architecture` is the architecture that the program was built for (not
   necessarily the one it is running on).
-* `os` is the name of the OS the program is running on, like `Darwin` or `Windows_NT`.
-* `os_version` is the version of the OS the program is running on.
-* `key` is the key of a keyed metric. This will be empty if the underlying
+- `os` is the name of the OS the program is running on, like `Darwin` or `Windows_NT`.
+- `os_version` is the version of the OS the program is running on.
+- `key` is the key of a keyed metric. This will be empty if the underlying
   metric is not a keyed metric.
-* `process_type` is the process the histogram was recorded in, like `content`
+- `process_type` is the process the histogram was recorded in, like `content`
   or `parent`.
 
 The aggregates are:
 
-* `count` is the aggregate sum of the number of pings per dimensions.
-* `sum` is the aggregate sum of the histogram values per dimensions.
-* `histogram` is the aggregated histogram per dimensions.
+- `count` is the aggregate sum of the number of pings per dimensions.
+- `sum` is the aggregate sum of the histogram values per dimensions.
+- `histogram` is the aggregated histogram per dimensions.

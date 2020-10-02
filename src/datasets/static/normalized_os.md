@@ -12,12 +12,13 @@ Pings should already have a `normalized_os` field that corrects this.
 The `normalized_os_name` table exists as an alternative lookup table.
 
 Example query:
+
 ```sql
 SELECT
   client_id,
   environment.system.os.name,
   normalized_os_name
-FROM 
+FROM
   telemetry_stable.main_v4
 LEFT JOIN
   static.normalized_os_name
@@ -27,10 +28,10 @@ ON
 
 ### OS Versions
 
-OS versions for some OS's are not properly normalized in telemetry.  For example, the version
-reported by Mac clients is the Darwin version instead of the MacOS version and the version 
+OS versions for some OS's are not properly normalized in telemetry. For example, the version
+reported by Mac clients is the Darwin version instead of the MacOS version and the version
 reported by Android Fennec clients is the Android SDK version instead of the Android version.
-The `normalized_os_version` table can be used to map the sent version to the "display version" 
+The `normalized_os_version` table can be used to map the sent version to the "display version"
 of the OS.
 
 The table uses a regular expression to look up the OS version so `REGEXP_CONTAINS` should be used.

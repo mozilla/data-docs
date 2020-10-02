@@ -60,18 +60,23 @@ Events are submitted as an array, e.g.:
 [
   [2147, "ui", "click", "back_button"],
   [2213, "ui", "search", "search_bar", "google"],
-  [2892, "ui", "completion", "search_bar", "yahoo",
-    {"querylen": "7", "results": "23"}],
-  [5434, "dom", "load", "frame", null,
-    {"prot": "https", "src": "script"}],
+  [
+    2892,
+    "ui",
+    "completion",
+    "search_bar",
+    "yahoo",
+    { querylen: "7", results: "23" },
+  ],
+  [5434, "dom", "load", "frame", null, { prot: "https", src: "script" }],
   // ...
-]
+];
 ```
 
 Each event is of the form:
 
 ```javascript
-[timestamp, category, method, object, value, extra]
+[timestamp, category, method, object, value, extra];
 ```
 
 Where the individual fields are:
@@ -85,19 +90,19 @@ Where the individual fields are:
 
 See also the [Firefox Telemetry documentation](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html#serialization-format).
 
-
 # Event data collection
 
 ## Firefox event collection
 
 To collect this event data in Firefox there are different APIs in Firefox, all addressing different
 use cases:
-- The [*Telemetry event API*](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html)
+
+- The [_Telemetry event API_](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html)
   allows easy recording of events from Firefox code.
-- The [*dynamic event API*](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html#registerevents)
+- The [_dynamic event API_](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html#registerevents)
   allows code from Mozilla addons to record new events into Telemetry without shipping Firefox
   code.
-- The *[Telemetry WebExtension API](https://searchfox.org/mozilla-central/rev/55da592d85c2baf8d8818010c41d9738c97013d2/toolkit/components/extensions/schemas/telemetry.json#87)* ([introduced here](https://bugzilla.mozilla.org/show_bug.cgi?id=1280234))
+- The _[Telemetry WebExtension API](https://searchfox.org/mozilla-central/rev/55da592d85c2baf8d8818010c41d9738c97013d2/toolkit/components/extensions/schemas/telemetry.json#87)_ ([introduced here](https://bugzilla.mozilla.org/show_bug.cgi?id=1280234))
   which allows Mozilla extensions to record new events into Telemetry.
 
 For all these APIs, events will get sent to the pipeline through the
@@ -105,7 +110,7 @@ For all these APIs, events will get sent to the pipeline through the
 Before Firefox 62, events were sent through the [main ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html) instead, with a hard limit of 500 events per ping.
 From Firefox 61, all events recorded through these APIs are [automatically counted in scalars](https://bugzilla.mozilla.org/show_bug.cgi?id=1440673).
 
-Finally, [*custom pings*](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html)
+Finally, [_custom pings_](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html)
 can follow the event data format and potentially connect to the existing tooling with some integration work.
 
 ## Mobile event collection
@@ -119,6 +124,7 @@ using the [`telemetry-ios`](https://github.com/mozilla-mobile/telemetry-ios) and
 # Datasets
 
 On the pipeline side, the event data is made available in different datasets:
+
 - [`main_summary`](../choosing_a_dataset.md#mainsummary) has a row for each main ping and includes
   its event payload for Firefox versions before 62.
 - [`events`](../../datasets/batch_view/events/reference.md) contains a row for each event received from main pings and event pings. See [this sample query](https://sql.telemetry.mozilla.org/queries/52582/source).
@@ -127,7 +133,7 @@ On the pipeline side, the event data is made available in different datasets:
 
 # Data tooling
 
-The above datasets are all accessible through [Re:dash](../../tools/stmo.md) and [Spark jobs](../../tools/spark.md).
+The above datasets are all accessible through [STMO](../../tools/stmo.md) and [Spark jobs](../../tools/spark.md).
 
 For product analytics based on event data, we have [Amplitude](https://sso.mozilla.com/amplitude)
 (hosted by the IT data team). We can connect our event data sources data to Amplitude.

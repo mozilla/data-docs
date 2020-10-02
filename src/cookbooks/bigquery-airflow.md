@@ -1,6 +1,6 @@
 # Scheduling BigQuery Queries in Airflow
 
-Queries in [`bigquery-etl`](https://github.com/mozilla/bigquery-etl) can be scheduled in 
+Queries in [`bigquery-etl`](https://github.com/mozilla/bigquery-etl) can be scheduled in
 [Airflow](https://github.com/mozilla/telemetry-airflow) to be run regularly with the results written to a table.
 
 <!-- toc -->
@@ -11,10 +11,10 @@ In the [`bigquery-etl`](https://github.com/mozilla/bigquery-etl) project, querie
 The directory structure is based on the destination table: `/sql/{dataset_id}/{table_name}`.
 For example, [`/sql/telemetry_derived/core_clients_last_seen_v1/query.sql`](https://github.com/mozilla/bigquery-etl/blob/master/sql/telemetry_derived/core_clients_last_seen_v1/query.sql)
 is a query that will write results to the `core_clients_last_seen_v1` table in the `telemetry_derived` dataset.
-This can be overridden in Airflow.
 
-If we want to create a new table of just `client_id`'s each day called `client_ids` in the `example` dataset, 
+If we want to create a new table of just `client_id`'s each day called `client_ids` in the `example` dataset,
 we should create `/sql/example/client_ids/query.sql`:
+
 ```sql
 SELECT
   DISTINCT(client_id),
@@ -27,46 +27,43 @@ WHERE
 
 `@submission_date` is a parameter that will be filled in by Airflow.
 
-Commit changes in `/sql`. 
-When a commit is made to master in `bigquery-etl`, the Docker image is pushed and available to Airflow.
+To schedule your query, create a `/sql/example/client_ids/metadata.yaml` file with the following content:
 
-## In telemetry-airflow
-
-The next step is to create a DAG or add a task to an existing DAG that will run the query.  
-In [telemetry-airflow](https://github.com/mozilla/telemetry-airflow), BigQuery related functions are found in `/dags/utils/gcp.py`.
-The function we are interested in is [`bigquery_etl_query`](https://github.com/mozilla/telemetry-airflow/blob/c103f3eee4ddc653316325d0ee0deab0bb35ee57/dags/utils/gcp.py#L390).
-
-For our `client_ids` example, we could create a new DAG, `/dags/client_ids.py`:
-```python
-from airflow import models
-from utils.gcp import bigquery_etl_query
-
-default_args = {
-    ...
-}
-
-dag_name = 'client_ids'
-
-with models.DAG(dag_name, schedule_interval='0 1 * * *', default_args=default_args) as dag:
-    client_ids = bigquery_etl_query(
-        task_id='client_ids',
-        destination_table='client_ids',
-        dataset_id='example'
-    )
+```yaml
+friendly_name: Client IDs
+description: Unique client IDs, partitioned by day.
+owners:
+  - example@mozilla.com
+labels:
+  application: firefox
+  incremental: true # incremental queries add data to existing tables
+scheduling:
+  dag_name: bqetl_client_ids
 ```
 
-By default, `bigquery_etl_query` will execute the query in `/sql/{dataset_id}/{destination_table}/query.sql` 
-and write to the `derived-datasets` project but this can be changed via the function arguments.
+The `scheduling` section schedules the query as a task that is part of the `bqetl_clients_ids` DAG. Make sure that
+the `bqetl_clients_ids` DAG is actually defined in `dags.yaml` and has the right scheduling interval, for example:
 
-This DAG will then execute `/sql/example/client_ids/query.sql` every day, 
-writing results to the `client_ids` table in the `example` dataset in the `derived-datasets` project.
+```yaml
+bqetl_clients_ids: # name of the DAG; must start with bqetl_
+  schedule_interval: 0 2 * * * # query schedule; every day at 2am
+  default_args:
+    owner: example@mozilla.com
+    start_date: "2020-04-05" # YYYY-MM-DD
+    email: ["example@mozilla.com"]
+    retries: 2 # number of retries if the query execution fails
+    retry_delay: 30m
+```
+
+In this example, the `bqetl_clients_ids` DAG and the created query will be executed on a daily basis at 02:00 UTC.
+
+Run `./script/generate_airflow_dags` to generate the Airflow DAG. Task dependencies that are defined in bigquery-etl and
+dependencies to stable tables are determined automatically. Generated DAGs are written to the `dags/` directory and
+will be automatically detected and scheduled by Airflow once the changes are committed to master in `bigquery-etl`.
 
 ## Other considerations
 
 - The Airflow task will overwrite the destination table partition
   - Destination table should be partitioned by `submission_date`
-  - `date_partition_parameter` argument in `bigquery_etl_query` can be set to `None` to overwrite the whole table
-- Airflow can be tested locally following instructions here: 
-[https://github.com/mozilla/telemetry-airflow#testing-gke-jobs-including-bigquery-etl-changes](https://github.com/mozilla/telemetry-airflow#testing-gke-jobs-including-bigquery-etl-changes)
-- It's possible to change the Docker image that Airflow uses to test changes to `bigquery-etl` before merging changes to master
-  - Supply a value to the `docker_image` argument in `bigquery_etl_query`
+  - `date_partition_parameter` can be set to `null` to overwrite the whole table in the `scheduling` section
+    of the `metadata.yaml` file

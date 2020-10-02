@@ -4,6 +4,7 @@ If you're not sure which dataset to use for your analysis,
 this is probably what you want.
 
 #### Contents
+
 Each row in the `longitudinal` dataset represents one `client_id`,
 which is approximately a user.
 Each column represents a field from the main ping.
@@ -14,24 +15,26 @@ Here's a [query showing some sample data](https://sql.telemetry.mozilla.org/quer
 to help illustrate.
 
 #### Background and Caveats
+
 Think of the longitudinal table as wide and short.
 The dataset contains more columns than `main_summary`
 and down-samples to 1% of all clients to reduce query computation time and save resources.
 
 In summary, the longitudinal table differs from `main_summary` in two important ways:
 
-* The longitudinal dataset groups all data so that one row represents a `client_id`
-* The longitudinal dataset samples to 1% of all `client_id`s
+- The longitudinal dataset groups all data so that one row represents a `client_id`
+- The longitudinal dataset samples to 1% of all `client_id`s
 
 Please note that this dataset only contains release (or opt-out) histograms and scalars.
 
 #### Accessing the Data
 
-The `longitudinal` is available in re:dash,
+The `longitudinal` is available in STMO,
 though it can be difficult to work with the array values in SQL.
 Take a look at this [example query](https://sql.telemetry.mozilla.org/queries/4189/source).
 
 The data is stored as a parquet table in S3 at the following address.
+
 ```
 s3://telemetry-parquet/longitudinal/
 ```

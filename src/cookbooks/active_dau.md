@@ -1,8 +1,9 @@
 # Active DAU and Active MAU
 
 An **Active User** is defined as a client who has `total_daily_uri` >= 5 URI for a given date.
-* Dates are defined by `submission_date` (_not_ by [client activity date](https://bugzilla.mozilla.org/show_bug.cgi?id=1422892)).
-* A client's `total_daily_uri` is defined as their sum of `scalar_parent_browser_engagement_total_uri_count` for a given date<sup>[1](#total_uri_count)</sup>.
+
+- Dates are defined by `submission_date` (_not_ by [client activity date](https://bugzilla.mozilla.org/show_bug.cgi?id=1422892)).
+- A client's `total_daily_uri` is defined as their sum of `scalar_parent_browser_engagement_total_uri_count` for a given date<sup>[1](#total_uri_count)</sup>.
 
 **Active DAU** (aDAU) is the number of Active Users on a given day.
 

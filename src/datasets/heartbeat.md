@@ -7,9 +7,6 @@ which are stored by SurveyGizmo.
 The telemetry is received using the `heartbeat` document type,
 which is [described in the Firefox source tree docs][hbping].
 
-These pings are aggregated into the `telemetry_heartbeat_parquet` table,
-and may also be accessed using the Dataset API.
-
 ## Linking Heartbeat responses to telemetry
 
 Heartbeat responses may be linked to Firefox telemetry

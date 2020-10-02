@@ -1,8 +1,7 @@
-# Cookbooks
+# Tutorials & Cookbooks
 
-A Cookbook is a focused tutorial to guide you through a focused task.
-For example, a Cookbook could:
+This section contains documentation describing how to perform specific tasks. It includes the following sections:
 
-* Introduce you to what types of analyses are common for (e.g.) Search or Crash data
-* Guide you through an example analysis to demonstrate
-  the basic principles behind a new statistical technique
+- [Analysis Cookbooks](analysis/index.md): Tutorials on analyzing data.
+- [Operational Cookbooks](operational/index.md): Tutorials describing how to perform various operational tasks.
+- [Sending Telemetry](/datasets/new_data.md): Tutorials on adding new Telemetry.

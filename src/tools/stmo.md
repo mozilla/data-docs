@@ -1,123 +1,85 @@
-Introduction
-------------
+## Introduction to STMO
 
-STMO is shorthand for
-[`sql.telemetry.mozilla.org`](https://sql.telemetry.mozilla.org), an installation
-of the excellent [Re:dash](https://redash.io/) data analysis and dashboarding
-tool that has been customized and configured for use with a number of the
-Firefox organization's data sets. As the name and URL imply, effective use of
-this tool requires familiarity with
-[SQL](https://en.wikipedia.org/wiki/SQL), with which all of the
-tool's data extraction and analysis are performed.
+[`sql.telemetry.mozilla.org`](https://sql.telemetry.mozilla.org) (STMO) is Mozilla's installation of the [Redash](https://redash.io/) data analysis and dashboarding tool. As the name and URL imply, the effective use of this tool requires familiarity with [SQL](https://en.wikipedia.org/wiki/SQL), with which all of the tool's data extraction and analysis are performed.
 
-Access to STMO is limited to Mozilla employees and specific contributors,
-please see the [gaining access](../concepts/gaining_access.md) document
-for more information.
+Access to STMO is limited to Mozilla employees and designated contributors. For more information, see [gaining access](../concepts/gaining_access.md).
 
-Concepts
---------
+## STMO Concepts
 
-There are three building block from which analyses in STMO are constructed:
-queries, visualizations, and dashboards.
+You need to use the following building blocks from which analyses in STMO are constructed:
+
+- Queries
+- Visualizations
+- Dashboards
 
 #### Queries
 
-STMO's basic unit of analysis is the query. A query is a block of SQL code that
-extracts and (optionally) transforms data from a single data source. Queries
-can vary widely in complexity. Some queries are trivial one liners
-(e.g. `SELECT some_field FROM tablename LIMIT 10`), while others are many pages long,
-small programs in their own right.
+STMO's basic unit of analysis is a query. A query is a block of SQL code that
+extracts and optionally transforms data from a single data source. Queries
+can vary widely in complexity. Some queries are simply one liners (e.g., `SELECT some_field FROM tablename LIMIT 10`) while others span over many pages, almost like small programs.
 
-The raw output from a query is tabular data, where each row is one set of
-return values for the query's output columns. A query can be run manually or it
-can be specified to have a refresh schedule, where it will execute
-automatically after a specified interval of time.
+The raw output from a query is tabular data. Each row represents one set of
+return values for the query's output columns. You can run a query manually or specify a refresh schedule that executes automatically after a specified interval of time.
 
 #### Visualizations
 
 Tabular data is great, but rarely is a grid of values the best way to make
-sense of your data. Each query can be associated with multiple visualizations,
-each visualization rendering the extracted data in some more useful
-format. There are many visualization types, including charts (line, bar, area,
-pie, etc.), counters, maps, pivot tables, and more. Each visualization type
-provides a set of configuration parameters that allow you to specify how to map
-from the raw query output to the desired visualization. Some visualization types
-make demands of the query output; a map visualization requires each row to contain
-a longitude value and a latitude value, for instance.
+sense of your data. You can associate each query with multiple visualizations. Each visualization can render the extracted data in a format that makes it easy to interpret your data.
+
+There are many visualization types, including charts (line, bar, area, pie, etc.), counters, maps, pivot tables, and more. You can use each visualization type that provides a set of configuration parameters to specify how to map from the raw query output to the desired visualization. Some visualization types make demands of the query output. For example, a map visualization requires each row to include a longitude value and a latitude value.
 
 #### Dashboards
 
-A dashboard is a collection of visualizations, combined into a single visual
-presentation for convenient perusal. A dashboard is decoupled from any
-particular queries. While it is possible to include multiple visualizations
-from a single query in one dashboard, it is not required; users can add any
-visualizations they can access to the dashboards they create.
+A dashboard is a collection of visualizations that is combined into a single visual
+presentation for your convenience. A dashboard is decoupled from any particular queries. Although you can include multiple visualizations from a single query in one dashboard, it is not required. Users can add any visualizations that they can access to any dashboards they have created.
 
-Data Sources
-------------
+## Data Sources
 
 SQL provides the ability to extract and manipulate the data, but you won't get
 very far without having some familiarity with what data is actually available,
 and how that data is structured. Each query in STMO is associated with exactly
 one data source, and you have to know ahead of time which data source contains
 the information that you need. One of the most commonly used data sources is
-called *Telemetry (BigQuery)*, which contains most of the data that is
-obtained from telemetry pings received from Firefox clients. *BigQuery*
+called _Telemetry (BigQuery)_, which contains most of the data that is
+obtained from telemetry pings received from Firefox clients. _BigQuery_
 refers to Google's [BigQuery](https://cloud.google.com/bigquery/) data warehouse.
 
-Other available data sources include *Crash DB*, *Tiles*, *Sync Stats*, *Push*,
-*Test Pilot*, and even a *Re:dash metadata* which connects to STMO's
-own Re:dash database. You can learn more about the available data sets and how
-to find the one that's right for you on the [Choosing a
-dataset](../concepts/choosing_a_dataset.md) page. If you have data set
-questions, or would like to know if specific data is or can be made available
-in STMO, please see the [getting help](../concepts/getting_help.md) section for information on how to get in touch.
+Other available data sources include _Crash DB_, _Tiles_, _Sync Stats_, _Push_,
+_Test Pilot_, and even a _Redash metadata_ which connects to STMO's
+own Redash database. If you want to learn more about all available data sets and how
+to locate one that is suited for your development environment, see the [Choosing a
+dataset](../concepts/choosing_a_dataset.md) page. If you have questions regarding data sets or would like to know if specific data is or can be made available
+in STMO, see the [getting help](../concepts/getting_help.md) topic for more information on how to get in touch.
 
-Creating an Example Dashboard
------------------------------
+## Create an Example Dashboard
 
-The rest of this document will take you through the process of creating a
-simple dashboard using STMO.
+The following topics describe the process of creating a simple dashboard using STMO.
 
-#### Creating A Query
+#### Create A Query
 
-We start by creating a query. Our first query will count the number of client
-ids that we have coming from each country, for the top N countries. Clicking on
-the 'New Query' button near the top left of the site will bring you to the
-query editing page:
+Let's start by creating a query. The first query counts the number of client ids that Mozilla receives from each country, for the top N countries. If you click the 'New Query' button that is located at the top on the left-hand side of the site, the query editing page appears:
 
 ![New Query Page](../assets/STMO_screenshots/new_query.png "New Query page")
 
-For this (and most queries where we're counting distinct client IDs) we'll want
-to use
+For this and most other queries where each client IDs is counted, you want to use
 [`clients_last_seen`](../datasets/bigquery/clients_last_seen/reference.md),
 which is generated from Firefox telemetry pings.
 
-* Search for the table in `Telemetry (BigQuery)`
+- Search for the table in `Telemetry (BigQuery)`
 
-  Click on the 'Data Source' drop-down and
-  select `Telemetry (BigQuery)`, then search for the table we want by typing
-  `clients_last_seen` into the "Search schema..." search box above the schema
-  browser interface to the left of the main query edit box. You should see that
-  there is, in fact, a `clients_last_seen` table (showing up as
-  `telemetry.clients_last_seen`), as well as versioned `clients_last_seen` data
-  sets (showing up as `telemetry.clients_last_seen_v<VERSION>`).
+  Click the 'Data Source' drop-down and select `Telemetry (BigQuery)`. Then, search for the table by typing `clients_last_seen` in the "Search schema..." field that is above the schema browser interface to the left of the main query Edit field.
 
-* If the table you want is not found
+You should see a `clients_last_seen` entry (appearing as `telemetry.clients_last_seen`). You may also see versioned copies of the tables as `telemetry.clients_last_seen_v<VERSION>`.
 
-  Again, there are many different data sources connected to STMO, so if the
-  one you want is not in the Telemetry source, we should check other sources.
-  If you're having trouble finding the data you need, see the [getting help](../concepts/getting_help.md) section.
+- Introspect the available columns
 
-* Introspect the available columns
+  Click `telemetry.clients_last_seen` in the schema browser to display the columns that are available in the table. The following columns are of interest for this query:
 
-  Click on `telemetry.clients_last_seen` in the schema browser to expose
-  the columns that are available in the table. Three of the columns are of
-  interest to us for this query: `country`, `days_since_seen`, and
-  `submission_date`.
+  - `country`
+  - `days_since_seen`
+  - `submission_date`.
 
-So a query that extracts all of the unique country values and the MAU for one
-day for each one, sorted from highest MAU to lowest MAU looks like this:
+If a query extracts all unique country values and the MAU for one day for each one, sorted from highest MAU to lowest MAU, the query then appears as follows:
 
 ```sql
 SELECT
@@ -133,50 +95,28 @@ ORDER BY
   mau DESC
 ```
 
-If you type that into the main query edit box and then click on the "Execute"
-button, you should see a blue bar appear below the edit box containing the text
-"Executing query..." followed by a timer indicating how long the query has been
-running. After a reasonable (for some definition of "reasonable", usually less
-than a minute) amount of time the query should complete, resulting in a
-table showing a MAU value for each country. Congratulations, you've
-just created and run your first STMO query!
+If you type these parameters into the main query Edit field and then click the "Execute"
+button, a blue bar then appears below the Edit field. It includes the text "Executing query...", followed by a timer that indicates how long the query has run. After some period of time, usually less than a minute, the query typically completes its run. A table appears that displays a MAU value for each country. You have just created and run your first STMO query!
 
-Now would be a good time to click on the large "New Query" text near the top of
-the page; it should turn into an edit box, allowing you to rename the
-query. For this exercise, you should use a unique prefix (such as your name)
-for your query name, so it will be easy to find your query later; I used
-`rmiller:Top Countries`.
+Next, click the large "New Query" text located at the top of the page. An Edit field appears so you can rename the query. It is recommended that you assign a unique prefix (such as your name) to the query to make it easy to find your query later. For example, `rmiller:Top Countries`.
 
-#### Creating A Visualization
+#### Create A Visualization
 
-Now that the query is created, we'll want to provide a simple
-visualization. The table with results from the first query execution should be
-showing up underneath the query edit box. Next to the `TABLE` heading should be
-another heading entitled `+NEW VISUALIZATION`.
+After you have created a query, you may want to provide a simple visualization. The table with results from the first query execution now appears under the query Edit field. Another heading titled `+NEW VISUALIZATION` appears next to the `TABLE` heading:
 
 ![New Visualization](../assets/STMO_screenshots/new_visualization.png "New Visualization")
 
-Clicking on the `+NEW VISUALIZATION` link should bring you to the
-"Visualization Editor" screen, where you can specify a visualization name ("Top
-Countries bar chart"), a chart type ("Bar"), an x-axis column (`country`), and
-a y-axis column (`mau`).:
+Click the `+NEW VISUALIZATION` link to display the "Visualization Editor" screen. You can now specify a visualization name ("Top Countries bar chart"), a chart type ("Bar"), an x-axis column (`country`), and a y-axis column (`mau`):
 
 ![Visualization Editor](../assets/STMO_screenshots/vis_editor.png "Visualization Editor")
 
-After the `GENERAL` settings have been specified, we'll want to tweak a few
-more settings on the `X AXIS` tab. You'll want to click on this tab and then
-change the 'Scale' setting to 'Category', and un-check the 'Sort Values'
-check-box to allow the query's sort order to take precedence:
+After the `GENERAL` settings have been specified, you need to modify additional settings on the `X AXIS` tab. Click this tab and then change the 'Scale' setting to 'Category', and un-check the 'Sort Values' checkbox to enable the query's sort order to take precedence:
 
 ![Visualization X Axis](../assets/STMO_screenshots/x_axis_editor.png "Visualization X Axis")
 
 #### A Note About Limits
 
-Once you save the visualization settings and return to the query source page,
-you should have a nice bar graph near the bottom of the page. You may notice,
-however, that the graph has quite a long tail. Rather than seeing *all* of
-the countries, it might be nicer to only see the top 20. We can do this by adding
-a `LIMIT` clause to the end of our query:
+After you have saved the visualization settings and displayed the query source page, a bar graph appears near the bottom of the page. The graph includes quite a few entries. Rather than being able to view _all_ of the countries, you may want to display only the first 20 entries by adding a `LIMIT` clause to the end of a query:
 
 ```sql
 SELECT
@@ -194,34 +134,17 @@ LIMIT
   20
 ```
 
-If you edit the query to add a limit clause and again hit the 'Execute' button,
-you should get a new bar graph that only shows the 20 countries with the
-highest number of unique clients. In this case, the full result set has
-approximately 250 return values, and so limiting the result count improves
-readability. In other cases, however, an unlimited query might return thousands
-or even millions of rows. When those queries are run, readability is not the
-only problem; queries that return millions of rows can tax the system, failing
-to return the desired results, and negatively impacting the performance of all
-of the other users of the system. Thus, a very important warning:
+If you edit the query to add a limit clause and then click 'Execute', a new bar graph only displays the 20 countries that have the highest number of unique clients. In this case, the full result set includes approximately 250 return values: limiting the result count improves readability.
 
-  **ALL QUERIES SHOULD INCLUDE A "LIMIT" STATEMENT BY DEFAULT!**
+In other cases, however, an unlimited query may return thousands or even millions of rows. Any queries that return millions of rows or lines can not only be unreadable but negatively impact the performance of all other users of STMO. Thus an important warning:
 
-You should be in the habit of adding a "LIMIT 100" clause to the end of all new
-queries, to prevent your query from returning a gigantic result set that causes
-UI and performance problems. You may learn that the total result set is small
-enough that the limit is unnecessary, but unless you're certain that is the
-case specifying an explicit LIMIT helps prevent unnecessary issues.
+**ALL QUERIES SHOULD INCLUDE A "LIMIT" STATEMENT BY DEFAULT!**
+
+It is highly recommended that you add a "LIMIT 100" clause to the end of all new queries to prevent a query from returning a large result set that causes user interface (UI) and performance problems. You may learn that the total result set is small enough that setting a limit becomes unnecessary. Specifying an explicit LIMIT helps prevent unnecessary issues.
 
 #### Query Parameters
 
-We got our chart under control by adding a "LIMIT 20" clause at the end. But
-what if we only want the top 10? Or maybe sometimes we want to see the top 30?
-We don't always know how many results our users will want. Is it possible to
-allow users to specify how many results they want to see?
-
-As you've probably guessed, I wouldn't be asking that question if the answer
-wasn't "yes". STMO allows queries to accept user arguments by the use of double
-curly-braces around a variable name. So our query now becomes the following:
+You can add user arguments to a query, which allows the user to specify parameters without modifying the query itself. Using the query in the previous section as an example, you can replace the `LIMIT 20` with a country count variable in double curly braces:
 
 ```sql
 SELECT
@@ -239,49 +162,23 @@ LIMIT
   {{country_count}}
 ```
 
-Once you replace the hard coded limit value with `{{country_count}}` you should
-see an input field show up directly above the bar chart. If you enter a numeric
-value into this input box and click on 'Execute' the query will run with the
-specified limit. Clicking on the 'Save' button will then save the query, using
-the entered parameter value as the default.
+After you have replaced the hard-coded limit value with `{{country_count}}`, an input field appears above the bar chart. If you type a numeric value in the input field and click 'Execute', the query will run with the specified limit. Click 'Save' to save the query. The query applies the parameter value that you typed as the default.
 
-#### Creating A Dashboard
+#### Create A Dashboard
 
-Now we can create a dashboard to display our visualization. Do this by clicking
-on the 'Dashboards' drop-down near the top left of the page, and then clicking
-the 'New Dashboard' option. Choose a name for your dashboard, and you will be
-brought to a mostly empty page. Clicking on the '...' button near the top right
-of the page will give you the option to 'Add Widget'. This displays the
-following dialog:
+You can create a dashboard to display visualization by selecting 'New Dashboard' from the 'Dashboards' dropdown that is located at the top left of the page. Choose a name for your dashboard and an empty page should appears. Click the '...' button near the top right of the page to select 'Add Widget'. The following dialog box appears:
 
 ![Add Widget](../assets/STMO_screenshots/add_widget.png "Add Widget")
 
-The "Search a query by name" field is where you can enter in the unique prefix
-used in your query name to find the query you created. This will not yet work,
-however, because your query isn't published. Publishing a query makes it show
-up in searches and on summary pages. Since this is only an exercise, we won't
-want to leave our query published, but it must be published briefly in order to
-add it to our dashboard. You can publish your query by returning to the query
-source page and clicking the "Publish" button near the top right of the screen.
+Type a unique prefix that has previously been used in a query name in the "Search a query by name" field to locate the query that you have created. You cannot yet execute this query because the query has not yet been published. As soon as you publish a query, you can search on the summary pages. Even though this is only an exercise, the query must be published briefly and then added to the dashboard. You can publish your query by clicking "Publish" on the query source page.
 
-Once your query is published, it should show up in the search results when you
-type your unique prefix into the "Search a query by name" field on the "Add
-Widget" dialog. When you select your query, a new "Choose Visualization"
-drop-down will appear, allowing you to choose which of the query's
-visualizations to use. Choose the bar chart you created and then click on the
-"Add to Dashboard" button. Voila! Now your dashboard should have a bar chart,
-and you should be able to edit the `country_count` value and click the refresh
-button to change the number of countries that show up on the chart.
+As soon as a query is published, it appears in the search results when you type a unique prefix in the "Search a query by name" field on the "Add Widget" dialog box. When you select a query, you can select a query's visualizations from the "Choose Visualization" dropdown. Select the bar chart that you created and then click "Add to Dashboard". The dashboard now includes a bar chart. You can now edit the `country_count` value and click "Refresh" to change the number of countries that are included in the chart.
 
 #### Completing the Dashboard
 
-A dashboard with just one graph is a bit sad, so let's flesh it out by adding a
-handful of additional widgets. We're going to create three more queries, each
-with a very similar bar chart. The text of the queries will be provided here,
-but creating the queries and the visualizations and wiring them up to the
-dashboard will be left as an exercise to the user. The queries are as follows:
+A dashboard with just one graph is often insufficient. Therefore, you may want to create additional queries, each with a very similar bar chart. The text that you need to apply to the queries is listed below. However, you need to create the queries and the visualizations and then link them to the dashboard. The queries are as follows:
 
-* Top OSes (recommended `os_count` value == 6)
+- Top OSes (recommended `os_count` value == 6)
 
 ```sql
 SELECT
@@ -299,7 +196,7 @@ LIMIT
   {{os_count}}
 ```
 
-* Channel Counts
+- Channel Counts
 
 ```sql
 SELECT
@@ -315,7 +212,7 @@ ORDER BY
   mau DESC
 ```
 
-* App Version Counts (recommended `app_version_count value` == 20)
+- App Version Counts (recommended `app_version_count value` == 20)
 
 ```sql
 SELECT
@@ -336,40 +233,37 @@ LIMIT
 ```
 
 Creating bar charts for these queries and adding them to the original dashboard
-can result in a dashboard resembling this:
+can result in a dashboard that resembles this:
 
 ![Completed Dashboard](../assets/STMO_screenshots/finished_dashboard.png "Completed Dashboard")
 
 Some final notes to help you create your dashboards:
 
-* Don't forget that you'll need to publish each of your queries before you can
-  add its visualizations to your dashboard.
+- Remember to publish each of your queries before adding its visualizations to a dashboard.
 
-* Similarly, it's a good idea to un-publish any test queries after you've used
-  them in a dashboard so as not to permanently pollute everyone's search results
-  with your tests and experiments. Queries that are the result of actual
-  work-related analysis should usually remain published, so others can see and
+- Similarly, it is recommended to un-publish any test queries after you have used
+  them in a dashboard. This prevents everyone's search results from being contaminated
+  with your tests and experiments. Any queries that result from an actual
+  work-related analysis typically remain published. Others users can view these queries and
   learn from them.
 
-* The 'Firefox' label on the 'App Version counts' graph is related to the use
-  of the 'Group by' visualization setting. I encourage you to experiment with
-  the use of 'Group by' in your graphs to learn more about how this can be
-  used.
+- The 'Firefox' label on the 'App Version counts' graph is related to the use
+  of the 'Group by' visualization setting. It is recommended that you experiment with
+  the use of 'Group by' in your graphs to learn more about its usage.
 
-* This tutorial has only scratched the surface of the wide variety of very
-  sophisticated visualizations supported by STMO. You can see a great many much
-  more sophisticated queries and dashboards by browsing around and exploring
+- This tutorial has only touched the surface of the wide variety of
+  sophisticated visualizations that STMO supports. You can view many
+  more sophisticated queries and dashboards by browsing and exploring
   the work that has been published by others.
 
-* The [Re:dash help center](https://redash.io/help/) is useful for further deep
-  diving into Re:dash and all of its capabilities.
+- The [Redash help center](https://redash.io/help/) is a useful resource for exploring Redash and all its capabilities.
 
 #### Prototyping Queries
 
-Sometimes you want to start working on your query before the data is available.
+You may want to start working on a query before data becomes available.
 You can do this with most of the data sources by selecting a static test data
-set, then working with it as usual. You can also use this method to explore
-how a given SQL backend behaves.
+set and then work with it, as usual. You can also use this method to explore
+how a particular SQL backend behaves.
 
 Note that `UNION ALL` will retain duplicate rows while `UNION` will discard them.
 

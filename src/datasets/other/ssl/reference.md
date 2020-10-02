@@ -7,6 +7,7 @@
 {{#include ./intro.md}}
 
 # Data Reference
+
 ## Combining Rows
 
 This is a dataset of ratios. You can't combine ratios if they have different bases. For example,
@@ -31,13 +32,13 @@ Or, in JavaScript:
 ```js
 let rows = query_result.data.rows;
 let ratioForDateInQuestion = rows
-  .filter(row => row.submission_date == dateInQuestion)
+  .filter((row) => row.submission_date == dateInQuestion)
   .reduce((row, acc) => acc + row.normalized_pageloads * row.ratio, 0);
 ```
 
 ## Schema
 
-The data is output in re:dash API format:
+The data is output in STMO API format:
 
 ```
 "query_result": {
@@ -79,7 +80,7 @@ The dataset updates every 24 hours.
 ## Public Data
 
 The data is publicly available on BigQuery: `mozilla-public-data.telemetry_derived.ssl_ratios_v1`.
-Data can also be accessed through the public HTTP endpoint: [https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/ssl_ratios/v1/files/metadata.json](https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/ssl_ratios/v1/files/metadata.json)
+Data can also be accessed through the public HTTP endpoint: [https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/ssl_ratios/v1/files](https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/ssl_ratios/v1/files)
 
 ## Code Reference
 

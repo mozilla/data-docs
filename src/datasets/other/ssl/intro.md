@@ -11,13 +11,13 @@ statistics are `reporting_ratio`, `normalized_pageloads`, and `ratio`.
 
 #### Background and Caveats
 
-* We're using normalized values in `normalized_pageloads` to obscure absolute page load counts.
-* This is across the entirety of release, not per-version, because we're looking at Web health,
-not Firefox user health.
-* Any dimension tuple (any given combination of `submission_date`, `os`, and `country`) with 
-fewer than 5000 page loads is omitted from the dataset.
-* This is hopefully just a temporary dataset to stopgap release aggregates going away
-until we can come up with a better way to publicly publish datasets.
+- We're using normalized values in `normalized_pageloads` to obscure absolute page load counts.
+- This is across the entirety of release, not per-version, because we're looking at Web health,
+  not Firefox user health.
+- Any dimension tuple (any given combination of `submission_date`, `os`, and `country`) with
+  fewer than 5000 page loads is omitted from the dataset.
+- This is hopefully just a temporary dataset to stopgap release aggregates going away
+  until we can come up with a better way to publicly publish datasets.
 
 #### Accessing the Data
 
