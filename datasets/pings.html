@@ -171,8 +171,13 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#raw-ping-data" id="raw-ping-data">Raw Ping Data</a></h1>
+<blockquote>
+<p><strong>⚠</strong> This article discusses pings sent by Firefox's legacy v4 telemetry system.
+See the <a href="https://mozilla.github.io/glean/book/user/pings/index.html">Glean documentation on pings</a> for newer applications written using the Glean SDK.</p>
+</blockquote>
 <ul>
-<li><a href="#introduction">Introduction</a>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#ping-types">Ping Types</a>
 <ul>
 <li><a href="#main-ping">&quot;main&quot; ping</a></li>
 <li><a href="#first-shutdown-ping">&quot;first-shutdown&quot; ping</a></li>
@@ -182,16 +187,14 @@
 <li><a href="#crash-ping">&quot;crash&quot; ping</a></li>
 <li><a href="#deletion-request-ping">&quot;deletion-request&quot; ping</a></li>
 <li><a href="#coverage-ping">&quot;coverage&quot; ping</a></li>
-<li><a href="#pingsender">Pingsender</a></li>
-<li><a href="#analysis">Analysis</a></li>
-<li><a href="#accessing-the-data">Accessing the Data</a></li>
-<li><a href="#further-reading">Further Reading</a></li>
 </ul>
 </li>
-<li><a href="#data-reference">Data Reference</a></li>
+<li><a href="#pingsender">Pingsender</a></li>
 <li><a href="#ping-metadata">Ping Metadata</a></li>
+<li><a href="#analysis">Analysis</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
 </ul>
-<h1><a class="header" href="#introduction" id="introduction">Introduction</a></h1>
+<h2><a class="header" href="#introduction" id="introduction">Introduction</a></h2>
 <p>We receive data from our users via <strong>pings</strong>.
 There are several types of pings,
 each containing different measurements and sent for different purposes.
@@ -203,6 +206,7 @@ primitives (Histograms, Events, Scalars) and for keeping an eye on Firefox
 behaviour (Environment, New Profiles, Updates, Crashes).</p>
 <p>For instance, a user's first session in Firefox might have four pings like this:</p>
 <p><img src="/datasets/images/first_session_pings.png" alt="Flowchart of pings in the user's first session" /></p>
+<h2><a class="header" href="#ping-types" id="ping-types">Ping Types</a></h2>
 <h3><a class="header" href="#main-ping" id="main-ping">&quot;main&quot; ping</a></h3>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html">&quot;main&quot; ping</a> is the workhorse of the Firefox Telemetry system.
 It delivers the Telemetry Environment as well as Histograms and Scalars for all
@@ -268,7 +272,7 @@ is a periodic census intended to estimate telemetry opt-out rates.</p>
 <p>We estimate that <a href="https://metrics.mozilla.com/%7Erharter/reports/coverage/index.html">93% of release channel
 profiles</a>
 have telemetry enabled (and are therefore included in DAU).</p>
-<h3><a class="header" href="#pingsender" id="pingsender">Pingsender</a></h3>
+<h2><a class="header" href="#pingsender" id="pingsender">Pingsender</a></h2>
 <p><a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/pingsender.html">Pingsender</a> is a small application shipped with Firefox which
 attempts to send pings even if Firefox is not running. If Firefox has crashed or has already shut
 down we would otherwise have to wait for the next Firefox session to begin to
@@ -276,34 +280,7 @@ send pings.</p>
 <p>Pingsender was introduced in Firefox 54 to send &quot;crash&quot; pings. It was expanded
 to send &quot;main&quot; pings of reason &quot;shutdown&quot; in Firefox 55 (excepting the first
 session). It sends the &quot;first-shutdown&quot; ping since its introduction in Firefox 57.</p>
-<h3><a class="header" href="#analysis" id="analysis">Analysis</a></h3>
-<p>The large majority of analyses can be completed using only the
-<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html">main ping</a>.
-This ping includes histograms, scalars, and other performance and diagnostic data.</p>
-<p>Few analyses actually rely directly on any raw ping data.
-Instead, we provide <strong>derived datasets</strong> which are processed versions of these data,
-made to be:</p>
-<ul>
-<li>Easier and faster to query</li>
-<li>Organized to make the data easier to analyze</li>
-<li>Cleaned of erroneous or misleading data</li>
-</ul>
-<p>Before analyzing raw ping data,
-<strong>check to make sure there isn't already a derived dataset</strong> made for your purpose.
-If you do need to work with raw ping data, be aware that the volume of data can be high.
-Try to limit the size of your data by controlling the date range, and start off using a sample.</p>
-<h4><a class="header" href="#accessing-the-data" id="accessing-the-data">Accessing the Data</a></h4>
-<p>Ping data lives in BigQuery and is accessible in <a href="https://sql.telemetry.mozilla.org/">STMO</a>;
-see the <a href="../cookbooks/bigquery.html">BigQuery cookbook section</a> for more information.</p>
-<h4><a class="header" href="#further-reading" id="further-reading">Further Reading</a></h4>
-<p>You can find <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/index.html">the complete ping documentation</a>.
-To augment our data collection, see <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Adding_a_new_Telemetry_probe">Collecting New Data</a> and the
-<a href="https://wiki.mozilla.org/Firefox/Data_Collection">Data Collection Policy</a>.</p>
-<h1><a class="header" href="#data-reference" id="data-reference">Data Reference</a></h1>
-<p>You can find the reference documentation for all Firefox Telemetry ping types
-<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/pings.html">here</a>.</p>
-<p>The <a href="../concepts/glean/glean.html">Glean</a> article describes ping types sent by that SDK.</p>
-<h1><a class="header" href="#ping-metadata" id="ping-metadata">Ping Metadata</a></h1>
+<h2><a class="header" href="#ping-metadata" id="ping-metadata">Ping Metadata</a></h2>
 <p>The data pipeline appends metadata to arriving pings containing
 information about the ingestion environment including timestamps,
 Geo-IP data about the client,
@@ -344,6 +321,24 @@ these fields are documented here, instead of in the source tree docs.</p>
 <tr><td><code>metadata.isp.name</code></td><td>The name of the Internet Service Provider</td></tr>
 <tr><td><code>metadata.isp.organization</code></td><td>The name of a specific business entity when available; otherwise the ISP name</td></tr>
 </tbody></table>
+<h2><a class="header" href="#analysis" id="analysis">Analysis</a></h2>
+<p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html">main ping</a> includes histograms, scalars, and other performance and diagnostic data.
+Since Firefox 62, it <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1460595">no longer contains event data</a>; events are now sent in a separate <code>event</code> ping.</p>
+<p><a href="./derived.html">Derived datasets</a> are processed from ping tables. They are intended to be:</p>
+<ul>
+<li>Easier and faster to query</li>
+<li>Organized to make the data easier to analyze</li>
+</ul>
+<p>Ping data lives in BigQuery and is accessible in <a href="https://sql.telemetry.mozilla.org/">STMO</a>;
+see the <a href="../cookbooks/bigquery.html">BigQuery cookbook section</a> for more information.
+Before analyzing raw ping data,
+check if a derived dataset can answer your question.
+If you do need to work with raw ping data, be aware that the volume of data can be high.
+Try to limit the size of your data by controlling the date range, and start off using a sample.</p>
+<h2><a class="header" href="#further-reading" id="further-reading">Further Reading</a></h2>
+<p>You can find <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/index.html">the complete ping documentation</a> in the Firefox source documentation.
+To augment our data collection, see <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Adding_a_new_Telemetry_probe">Collecting New Data</a> and the
+<a href="https://wiki.mozilla.org/Firefox/Data_Collection">Data Collection Policy</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/pings.md">Edit this file on GitHub.</a></footer>
                     </main>
 

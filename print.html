@@ -530,145 +530,16 @@ to standardize on using <code>submission_date</code> as opposed to client-genera
 <li>How many users have installed a specific add-on?</li>
 </ul>
 <p>If you want to know whether a causal link occurs between two events, you can learn more at <a href="concepts/../tools/experiments.html">tools for experimentation</a>.</p>
-<h2><a class="header" href="#table-of-contents-1" id="table-of-contents-1">Table of Contents</a></h2>
-<ul>
-<li><a href="concepts/choosing_a_dataset.html#raw-pings">Raw Pings</a>
-<ul>
-<li><a href="concepts/choosing_a_dataset.html#main-ping">&quot;main&quot; ping</a></li>
-<li><a href="concepts/choosing_a_dataset.html#first-shutdown-ping">&quot;first-shutdown&quot; ping</a></li>
-<li><a href="concepts/choosing_a_dataset.html#event-ping">&quot;event&quot; ping</a></li>
-<li><a href="concepts/choosing_a_dataset.html#update-ping">&quot;update&quot; ping</a></li>
-<li><a href="concepts/choosing_a_dataset.html#new-profile-ping">&quot;new-profile&quot; ping</a></li>
-<li><a href="concepts/choosing_a_dataset.html#crash-ping">&quot;crash&quot; ping</a></li>
-<li><a href="concepts/choosing_a_dataset.html#deletion-request-ping">&quot;deletion-request&quot; ping</a></li>
-<li><a href="concepts/choosing_a_dataset.html#coverage-ping">&quot;coverage&quot; ping</a></li>
-<li><a href="concepts/choosing_a_dataset.html#pingsender">Pingsender</a></li>
-<li><a href="concepts/choosing_a_dataset.html#analysis">Analysis</a>
-<ul>
-<li><a href="concepts/choosing_a_dataset.html#accessing-the-data">Accessing the Data</a></li>
-<li><a href="concepts/choosing_a_dataset.html#further-reading">Further Reading</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="concepts/choosing_a_dataset.html#main-ping-derived-datasets">Main Ping Derived Datasets</a>
-<ul>
-<li><a href="concepts/choosing_a_dataset.html#clients-daily">Clients Daily</a></li>
-<li><a href="concepts/choosing_a_dataset.html#clients-last-seen">Clients Last Seen</a></li>
-</ul>
-</li>
-</ul>
-<h2><a class="header" href="#raw-pings" id="raw-pings">Raw Pings</a></h2>
-<p>We receive data from our users via <strong>pings</strong>.
-There are several types of pings,
-each containing different measurements and sent for different purposes.
-To review a complete list of ping types and their schemata, see
-<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/index.html">this section of the Mozilla Source Tree Docs</a>.</p>
-<p>Pings are also described by a JSONSchema specification which can be found in <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/master/schemas/telemetry">the <code>mozilla-pipeline-schemas</code> repository</a>.</p>
-<p>There are a few pings that are central to delivering our core data collection
-primitives (Histograms, Events, Scalars) and for keeping an eye on Firefox
-behaviour (Environment, New Profiles, Updates, Crashes).</p>
-<p>For instance, a user's first session in Firefox might have four pings like this:</p>
-<p><img src="concepts//datasets/images/first_session_pings.png" alt="Flowchart of pings in the user's first session" /></p>
-<h3><a class="header" href="#main-ping" id="main-ping">&quot;main&quot; ping</a></h3>
-<p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html">&quot;main&quot; ping</a> is the workhorse of the Firefox Telemetry system.
-It delivers the Telemetry Environment as well as Histograms and Scalars for all
-process types that collect data in Firefox. It has several variants each with
-specific delivery characteristics:</p>
-<table><thead><tr><th>Reason</th><th>Sent when</th><th>Notes</th></tr></thead><tbody>
-<tr><td>shutdown</td><td>Firefox session ends cleanly</td><td>Accounts for about <a href="https://sql.telemetry.mozilla.org/queries/3434">80%</a> of all &quot;main&quot; pings. Sent by Pingsender immediately after Firefox shuts down, subject to conditions: Firefox 55+, if the OS isn't also shutting down, and if this isn't the client's first session. If Pingsender fails or isn't used, the ping is sent by Firefox at the beginning of the next Firefox session.</td></tr>
-<tr><td>daily</td><td>It has been more than 24 hours since the last &quot;main&quot; ping, and it is around local midnight</td><td>In long-lived Firefox sessions we might go days without receiving a &quot;shutdown&quot; ping. Thus the &quot;daily&quot; ping is sent to ensure we occasionally hear from long-lived sessions.</td></tr>
-<tr><td>environment-change</td><td>Telemetry Environment changes</td><td>Is sent immediately when triggered by Firefox (Installing or removing an addon or changing a monitored user preference are common ways for the Telemetry Environment to change)</td></tr>
-<tr><td>aborted-session</td><td>Firefox session doesn't end cleanly</td><td>Sent by Firefox at the beginning of the next Firefox session.</td></tr>
-</tbody></table>
-<p>It was introduced in Firefox 38.</p>
-<h3><a class="header" href="#first-shutdown-ping" id="first-shutdown-ping">&quot;first-shutdown&quot; ping</a></h3>
-<p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/first-shutdown-ping.html">&quot;first-shutdown&quot; ping</a> is identical to the &quot;main&quot;
-ping with reason &quot;shutdown&quot; created at the end of the user's first session,
-but sent with a different ping type. This was introduced when we started
-using Pingsender to send shutdown pings as there would be a lot of
-first-session &quot;shutdown&quot; pings that we'd start receiving all of a sudden.</p>
-<p>It is sent using Pingsender.</p>
-<p>It was introduced in Firefox 57.</p>
-<h3><a class="header" href="#event-ping" id="event-ping">&quot;event&quot; ping</a></h3>
-<p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/event-ping.html">&quot;event&quot; ping</a> provides low-latency eventing support to Firefox
-Telemetry. It delivers the Telemetry Environment, Telemetry Events from all
-Firefox processes, and some diagnostic information about Event Telemetry. It is
-sent every hour if there have been events recorded, and up to once every 10
-minutes (governed by a <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/preferences.html">preference</a>) if the maximum event limit
-for the ping (default to 1000 per process, governed by a
-<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/preferences.html">preference</a>) is reached before the hour is up.</p>
-<p>It was introduced in Firefox 62.</p>
-<h3><a class="header" href="#update-ping" id="update-ping">&quot;update&quot; ping</a></h3>
-<p>Firefox Update is the most important means we have of reaching our users with
-the latest fixes and features. The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/update-ping.html">&quot;update&quot; ping</a> notifies us
-when an update is downloaded and ready to be applied (reason: &quot;ready&quot;) and when
-the update has been successfully applied (reason: &quot;success&quot;). It contains the
-Telemetry Environment and information about the update.</p>
-<p>It was introduced in Firefox 56.</p>
-<h3><a class="header" href="#new-profile-ping" id="new-profile-ping">&quot;new-profile&quot; ping</a></h3>
-<p>When a user starts up Firefox for the first time, a profile is created.
-Telemetry marks the occasion with the <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/new-profile-ping.html">&quot;new-profile&quot; ping</a>
-which sends the Telemetry Environment. It is sent either 30 minutes after Firefox
-starts running for the first time in this profile (reason: &quot;startup&quot;) or at the
-end of the profile's first session (reason: &quot;shutdown&quot;), whichever comes first.
-&quot;new-profile&quot; pings are sent immediately when triggered. Those with reason
-&quot;startup&quot; are sent by Firefox. Those with reason &quot;shutdown&quot; are sent by
-Pingsender.</p>
-<p>It was introduced in Firefox 55.</p>
-<h3><a class="header" href="#crash-ping" id="crash-ping">&quot;crash&quot; ping</a></h3>
-<p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html">&quot;crash&quot; ping</a> provides diagnostic information whenever a
-Firefox process exits abnormally. Unlike the &quot;main&quot; ping with reason
-&quot;aborted-session&quot;, this ping does not contain Histograms or Scalars. It
-contains a Telemetry Environment, <a href="https://searchfox.org/mozilla-central/source/toolkit/crashreporter/CrashAnnotations.yaml">Crash Annotations</a>, and
-<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html#stack-traces">Stack Traces</a>.</p>
-<p>It was introduced in Firefox 40.</p>
-<h3><a class="header" href="#deletion-request-ping" id="deletion-request-ping">&quot;deletion-request&quot; ping</a></h3>
-<p>In the event a user opts out of Telemetry, we send one final
-<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/data/deletion-request-ping.html">&quot;deletion-request&quot; ping</a> to let us know. It contains
-only the <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/common-ping.html">common ping data</a> and an empty payload.</p>
-<p>It was introduced in Firefox 72, replacing the <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/obsolete/optout-ping.html">&quot;optout&quot; ping</a>
-(which was in turn introduced in Firefox 63).</p>
-<h3><a class="header" href="#coverage-ping" id="coverage-ping">&quot;coverage&quot; ping</a></h3>
-<p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/coverage-ping.html">coverage ping</a> (<a href="https://blog.mozilla.org/data/2018/08/20/effectively-measuring-search-in-firefox/">announcement</a>)
-is a periodic census intended to estimate telemetry opt-out rates.</p>
-<p>We estimate that <a href="https://metrics.mozilla.com/%7Erharter/reports/coverage/index.html">93% of release channel
-profiles</a>
-have telemetry enabled (and are therefore included in DAU).</p>
-<h3><a class="header" href="#pingsender-1" id="pingsender-1">Pingsender</a></h3>
-<p><a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/pingsender.html">Pingsender</a> is a small application shipped with Firefox which
-attempts to send pings even if Firefox is not running. If Firefox has crashed or has already shut
-down we would otherwise have to wait for the next Firefox session to begin to
-send pings.</p>
-<p>Pingsender was introduced in Firefox 54 to send &quot;crash&quot; pings. It was expanded
-to send &quot;main&quot; pings of reason &quot;shutdown&quot; in Firefox 55 (excepting the first
-session). It sends the &quot;first-shutdown&quot; ping since its introduction in Firefox 57.</p>
-<h3><a class="header" href="#analysis" id="analysis">Analysis</a></h3>
-<p>The large majority of analyses can be completed using only the
-<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html">main ping</a>.
-This ping includes histograms, scalars, and other performance and diagnostic data.</p>
-<p>Few analyses actually rely directly on any raw ping data.
-Instead, we provide <strong>derived datasets</strong> which are processed versions of these data,
-made to be:</p>
-<ul>
-<li>Easier and faster to query</li>
-<li>Organized to make the data easier to analyze</li>
-<li>Cleaned of erroneous or misleading data</li>
-</ul>
-<p>Before analyzing raw ping data,
-<strong>check to make sure there isn't already a derived dataset</strong> made for your purpose.
-If you do need to work with raw ping data, be aware that the volume of data can be high.
-Try to limit the size of your data by controlling the date range, and start off using a sample.</p>
-<h4><a class="header" href="#accessing-the-data" id="accessing-the-data">Accessing the Data</a></h4>
-<p>Ping data lives in BigQuery and is accessible in <a href="https://sql.telemetry.mozilla.org/">STMO</a>;
-see the <a href="concepts/../cookbooks/bigquery.html">BigQuery cookbook section</a> for more information.</p>
-<h4><a class="header" href="#further-reading" id="further-reading">Further Reading</a></h4>
-<p>You can find <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/index.html">the complete ping documentation</a>.
-To augment our data collection, see <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Adding_a_new_Telemetry_probe">Collecting New Data</a> and the
-<a href="https://wiki.mozilla.org/Firefox/Data_Collection">Data Collection Policy</a>.</p>
-<h2><a class="header" href="#main-ping-derived-datasets" id="main-ping-derived-datasets">Main Ping Derived Datasets</a></h2>
-<p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html">main ping</a> includes most of the measurements that track the performance and health of Firefox in the wild. This ping includes histograms, scalars, and events.</p>
-<p>In its raw form, the main ping can be a bit difficult to work with. To make analyzing data easier, some datasets have been provided that simplify and aggregate information provided by the main ping.</p>
+<p>There are two types of datasets that you might want to use: those based on raw pings and those derived from them.</p>
+<h2><a class="header" href="#raw-ping-datasets" id="raw-ping-datasets">Raw Ping Datasets</a></h2>
+<p>We receive data from Firefox users via <strong>pings</strong>: small JSON payloads sent by clients at specified intervals.
+There are many types of pings, each containing different measurements and sent for different purposes.</p>
+<p>These pings are then <a href="concepts/../cookbooks/bigquery/querying.html#structure-of-ping-tables-in-bigquery">aggregated into ping-level datasets</a> that can be retrieved using BigQuery.
+Pings can be difficult to work with and expensive to query: where possible, you should use a derived dataset to answer your question.</p>
+<p>For more information on pings and how to use them, see <a href="concepts/../datasets/pings.html">Raw Ping Data</a>.</p>
+<h2><a class="header" href="#derived-datasets" id="derived-datasets">Derived Datasets</a></h2>
+<p>Derived datasets are built using the raw ping data above with various transformations to make them easier to work with and help you avoid the pitfall of <a href="https://docs.telemetry.mozilla.org/concepts/analysis_gotchas.html#pseudo-replication">pseudo-replication</a>.
+You can find a full list of them in the <a href="concepts/../datasets/derived.html">derived datasets section</a>, but two commonly used ones are &quot;Clients Daily&quot; and &quot;Clients Last Seen&quot;.</p>
 <h3><a class="header" href="#clients-daily" id="clients-daily">Clients Daily</a></h3>
 <p>Many questions about Firefox take the form &quot;What did clients with
 characteristics X, Y, and Z do during the period S to E?&quot; The
@@ -704,7 +575,7 @@ It includes the most recent values in a 28 day window for all columns in the
 <p>For more information on how telemetry is sent for iOS apps, see the <a href="https://github.com/mozilla-mobile/telemetry-ios">telemetry documentation</a>.</p>
 <p>Some telemetry is also sent by FirefoxReality and some non-Mozilla forks of our
 browsers. It is recommended that you filter on App Name to make sure that you are looking at only the app for which you want to analyze data.</p>
-<h2><a class="header" href="#raw-pings-1" id="raw-pings-1">Raw Pings</a></h2>
+<h2><a class="header" href="#raw-pings" id="raw-pings">Raw Pings</a></h2>
 <p>Mobile data is structured differently when compared to desktop data. Instead of sending a <code>main</code> ping, mobile has provides the following key types of pings:</p>
 <ul>
 <li><code>core</code></li>
@@ -841,7 +712,7 @@ usage criteria.</li>
 client-side activity dates).</li>
 </ul>
 </li>
-<li>What <a href="metrics/../datasets/ping_intro.html">pings</a> are used as a signal of activity?
+<li>What <a href="metrics/../datasets/ping.html">pings</a> are used as a signal of activity?
 <ul>
 <li>For Firefox Desktop, we use the <code>main</code> ping to determine activity.</li>
 <li>For products instrumented using Glean, we use the <code>baseline</code> ping.</li>
@@ -863,7 +734,7 @@ client-side activity dates).</li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/metrics/definitions.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#metrics" id="metrics">Metrics</a></h1>
 <p>This section contains definitions and information about standard metrics used at Mozilla. You may wish to refer to the <a href="metrics/../concepts/terminology.html">terminology section</a> while reading this document, in case a particular concept is not clear.</p>
-<h2><a class="header" href="#table-of-contents-2" id="table-of-contents-2">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-1" id="table-of-contents-1">Table of Contents</a></h2>
 <ul>
 <li><a href="metrics/metrics.html#daily-active-users-dau">Daily Active Users (DAU)</a>
 <ul>
@@ -1024,7 +895,7 @@ ORDER BY 1
 <li><a href="cookbooks/operational/index.html">Operational Cookbooks</a>: Tutorials describing how to perform various operational tasks.</li>
 <li><a href="cookbooks//datasets/new_data.html">Sending Telemetry</a>: Tutorials on adding new Telemetry.</li>
 </ul>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/index.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#analysis-1" id="analysis-1">Analysis</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/index.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#analysis" id="analysis">Analysis</a></h1>
 <p>This section contains tutorials on how to analyze Telemetry data.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/analysis/index.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#accessing-public-data" id="accessing-public-data">Accessing Public Data</a></h1>
 <p>A public dataset is a dataset in <a href="https://cloud.google.com/bigquery">BigQuery</a> which is made available to the general public
@@ -1115,7 +986,7 @@ in <a href="https://cloud.google.com/bigquery/">BigQuery</a>:</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/bigquery.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#accessing-bigquery" id="accessing-bigquery">Accessing BigQuery</a></h1>
 <p>There are many methods that you can use to access BigQuery: both interactive and programmatic. This document provides some basic information and pointers on how to get started with each.</p>
 <p>It is worth pointing out that all internal access to BigQuery is logged and periodically audited by Data Engineering and Operations for cost and other purposes.</p>
-<h2><a class="header" href="#table-of-contents-3" id="table-of-contents-3">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-2" id="table-of-contents-2">Table of Contents</a></h2>
 <ul>
 <li><a href="cookbooks/bigquery/access.html#interfaces">Interfaces</a>
 <ul>
@@ -1231,7 +1102,7 @@ python -c 'from google.cloud import bigquery; print([d.dataset_id for d in bigqu
 <h2><a class="header" href="#bigquery-access-request" id="bigquery-access-request">BigQuery Access Request</a></h2>
 <p>For access to BigQuery when using the GCP Console and API, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=jthomas%40mozilla.com&amp;bug_file_loc=https%3A%2F%2Fmana.mozilla.org%2Fwiki%2Fx%2FiIPeB&amp;bug_ignored=0&amp;bug_severity=normal&amp;bug_status=NEW&amp;bug_type=task&amp;cf_fx_iteration=---&amp;cf_fx_points=---&amp;comment=Please%20grant%20me%20access%20to%20the%20BigQuery%20GCP%20console%20and%20API%20Access.%20I%20work%20on%20%3Cteam%3E.%0D%0A%0D%0AMy%20mozilla.com%20ldap%20login%20is%20%3Cyour%20ldap%20login%3E%40mozilla.com.&amp;component=Operations&amp;contenttypemethod=list&amp;contenttypeselection=text%2Fplain&amp;defined_groups=1&amp;flag_type-4=X&amp;flag_type-607=X&amp;flag_type-800=X&amp;flag_type-803=X&amp;flag_type-936=X&amp;form_name=enter_bug&amp;maketemplate=Remember%20values%20as%20bookmarkable%20template&amp;op_sys=Unspecified&amp;priority=--&amp;product=Data%20Platform%20and%20Tools&amp;qa_contact=jthomas%40mozilla.com&amp;rep_platform=Unspecified&amp;short_desc=BigQuery%20GCP%20Console%20and%20API%20Access%20for%20%3Cyour%20ldap%20login%3E%40mozilla.com&amp;target_milestone=---&amp;version=unspecified">file a bug</a>. You will be added to the appropriate Google Groups and a <a href="https://cloud.google.com/iam/docs/service-accounts">GCP Service Account</a> will be provisioned for you.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/bigquery/access.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#querying-bigquery-tables" id="querying-bigquery-tables">Querying BigQuery Tables</a></h1>
-<h2><a class="header" href="#table-of-contents-4" id="table-of-contents-4">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-3" id="table-of-contents-3">Table of Contents</a></h2>
 <ul>
 <li><a href="cookbooks/bigquery/querying.html#projects-datasets-and-tables-in-bigquery">Projects, Datasets, and Tables in BigQuery</a>
 <ul>
@@ -1430,7 +1301,7 @@ LIMIT
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/bigquery/querying.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#optimizing-bigquery-queries" id="optimizing-bigquery-queries">Optimizing BigQuery Queries</a></h1>
 <p>When you write a query using <a href="https://sql.telemetry.mozilla.org">STMO</a> or the BigQuery console, you can improve performance and reduce costs by learning how data is stored, how databases function, and what you can change about a query to take advantage of the storage structure and the data function.</p>
 <p><a href="https://cloud.google.com/bigquery/pricing#on_demand_pricing">Queries are charged by data scanned at $5 per terabyte (TB)</a> so each 200 gigabytes of data scanned will cost $1: on tables with hundreds of TBs of data (like the <a href="cookbooks/bigquery/../../datasets/pings.html#main-ping">main ping table</a> or <a href="cookbooks/bigquery/../../datasets/batch_view/clients_daily/reference.html"><code>clients_daily</code></a>), costs <strong>can add up very quickly</strong>. When trying to reduce the cost, the main thing to do is reduce the amount of data scanned: some of the advice in this article will improve your query's performance but will not scan a smaller amount of data, and thus cost the same.</p>
-<h2><a class="header" href="#table-of-contents-5" id="table-of-contents-5">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-4" id="table-of-contents-4">Table of Contents</a></h2>
 <ul>
 <li><a href="cookbooks/bigquery/optimization.html#tldr-what-to-implement-for-quick-improvements">TL;DR: What to implement for quick improvements</a>
 <ul>
@@ -2170,7 +2041,7 @@ was active and each 0 indicating a day where the client was inactive. This
 article discusses the details of how we represent usage in bit patterns,
 how to extract standard usage and retention metrics,
 and how to build new metrics from them.</p>
-<h2><a class="header" href="#table-of-contents-6" id="table-of-contents-6">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-5" id="table-of-contents-5">Table of Contents</a></h2>
 <ul>
 <li><a href="cookbooks/clients_last_seen_bits.html#calculating-dau-wau-and-mau">Calculating DAU, WAU, and MAU</a></li>
 <li><a href="cookbooks/clients_last_seen_bits.html#calculating-retention">Calculating retention</a></li>
@@ -2747,7 +2618,7 @@ the standard 1-Week, 2-Week, and 3-Week retention definitions.</p>
 <p><a href="https://glam-stage.bespoke.nonprod.dataops.mozgcp.net/">GLAM</a> is great if you want to check out the behaviour of a histogram over a large population across a curated set of dimensions, but what if you have a follow-up question that doesn't fit into its UI model? This tutorial will go into the guts of how to reproduce a GLAM-like view using <code>sql.telemetry.mozilla.org</code> (STMO), along with some suggestions on how to dig deeper.</p>
 <p>This tutorial tries to build up an understanding and intuition of how things work on a low-level before it gets to its main act of reproducing GLAM. If you don't care about the details, you can probably skip the earlier sections in this document.</p>
 <p>Assumptions: You have some idea of what a histogram is (if not, the <a href="https://en.wikipedia.org/wiki/Histogram">Wikipedia article</a> is a great place to start), have at least skimmed over <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/collection/histograms.html">the Firefox documentation on histograms</a>, and have read <a href="cookbooks/../tools/stmo.html">the introduction to STMO</a>.</p>
-<h2><a class="header" href="#table-of-contents-7" id="table-of-contents-7">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-6" id="table-of-contents-6">Table of Contents</a></h2>
 <ul>
 <li><a href="cookbooks/main_ping_exponential_histograms.html#setting-the-stage-tab-spinners-duration">Setting the stage: tab spinners duration</a></li>
 <li><a href="cookbooks/main_ping_exponential_histograms.html#getting-client-level-data">Getting client-level data</a></li>
@@ -5254,7 +5125,7 @@ sampleid = (crc &amp; 0xFFFFFFFF) % 100
 print(&quot;Client ID {} =&gt; Sample ID {}&quot;.format(clientid, sampleid))
 </code></pre>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/sample_id.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#sql-style-guide" id="sql-style-guide">SQL Style Guide</a></h1>
-<h2><a class="header" href="#table-of-contents-8" id="table-of-contents-8">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-7" id="table-of-contents-7">Table of Contents</a></h2>
 <ul>
 <li><a href="concepts/sql_style.html#consistency">Consistency</a></li>
 <li><a href="concepts/sql_style.html#reserved-words">Reserved Words</a></li>
@@ -6296,8 +6167,13 @@ and how it is meant to be used</li>
 </li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#raw-ping-data" id="raw-ping-data">Raw Ping Data</a></h1>
+<blockquote>
+<p><strong>⚠</strong> This article discusses pings sent by Firefox's legacy v4 telemetry system.
+See the <a href="https://mozilla.github.io/glean/book/user/pings/index.html">Glean documentation on pings</a> for newer applications written using the Glean SDK.</p>
+</blockquote>
 <ul>
-<li><a href="datasets/pings.html#introduction">Introduction</a>
+<li><a href="datasets/pings.html#introduction">Introduction</a></li>
+<li><a href="datasets/pings.html#ping-types">Ping Types</a>
 <ul>
 <li><a href="datasets/pings.html#main-ping">&quot;main&quot; ping</a></li>
 <li><a href="datasets/pings.html#first-shutdown-ping">&quot;first-shutdown&quot; ping</a></li>
@@ -6307,16 +6183,14 @@ and how it is meant to be used</li>
 <li><a href="datasets/pings.html#crash-ping">&quot;crash&quot; ping</a></li>
 <li><a href="datasets/pings.html#deletion-request-ping">&quot;deletion-request&quot; ping</a></li>
 <li><a href="datasets/pings.html#coverage-ping">&quot;coverage&quot; ping</a></li>
-<li><a href="datasets/pings.html#pingsender">Pingsender</a></li>
-<li><a href="datasets/pings.html#analysis">Analysis</a></li>
-<li><a href="datasets/pings.html#accessing-the-data">Accessing the Data</a></li>
-<li><a href="datasets/pings.html#further-reading">Further Reading</a></li>
 </ul>
 </li>
-<li><a href="datasets/pings.html#data-reference">Data Reference</a></li>
+<li><a href="datasets/pings.html#pingsender">Pingsender</a></li>
 <li><a href="datasets/pings.html#ping-metadata">Ping Metadata</a></li>
+<li><a href="datasets/pings.html#analysis">Analysis</a></li>
+<li><a href="datasets/pings.html#further-reading">Further Reading</a></li>
 </ul>
-<h1><a class="header" href="#introduction-1" id="introduction-1">Introduction</a></h1>
+<h2><a class="header" href="#introduction-1" id="introduction-1">Introduction</a></h2>
 <p>We receive data from our users via <strong>pings</strong>.
 There are several types of pings,
 each containing different measurements and sent for different purposes.
@@ -6328,7 +6202,8 @@ primitives (Histograms, Events, Scalars) and for keeping an eye on Firefox
 behaviour (Environment, New Profiles, Updates, Crashes).</p>
 <p>For instance, a user's first session in Firefox might have four pings like this:</p>
 <p><img src="datasets//datasets/images/first_session_pings.png" alt="Flowchart of pings in the user's first session" /></p>
-<h3><a class="header" href="#main-ping-1" id="main-ping-1">&quot;main&quot; ping</a></h3>
+<h2><a class="header" href="#ping-types" id="ping-types">Ping Types</a></h2>
+<h3><a class="header" href="#main-ping" id="main-ping">&quot;main&quot; ping</a></h3>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html">&quot;main&quot; ping</a> is the workhorse of the Firefox Telemetry system.
 It delivers the Telemetry Environment as well as Histograms and Scalars for all
 process types that collect data in Firefox. It has several variants each with
@@ -6340,7 +6215,7 @@ specific delivery characteristics:</p>
 <tr><td>aborted-session</td><td>Firefox session doesn't end cleanly</td><td>Sent by Firefox at the beginning of the next Firefox session.</td></tr>
 </tbody></table>
 <p>It was introduced in Firefox 38.</p>
-<h3><a class="header" href="#first-shutdown-ping-1" id="first-shutdown-ping-1">&quot;first-shutdown&quot; ping</a></h3>
+<h3><a class="header" href="#first-shutdown-ping" id="first-shutdown-ping">&quot;first-shutdown&quot; ping</a></h3>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/first-shutdown-ping.html">&quot;first-shutdown&quot; ping</a> is identical to the &quot;main&quot;
 ping with reason &quot;shutdown&quot; created at the end of the user's first session,
 but sent with a different ping type. This was introduced when we started
@@ -6348,7 +6223,7 @@ using Pingsender to send shutdown pings as there would be a lot of
 first-session &quot;shutdown&quot; pings that we'd start receiving all of a sudden.</p>
 <p>It is sent using Pingsender.</p>
 <p>It was introduced in Firefox 57.</p>
-<h3><a class="header" href="#event-ping-1" id="event-ping-1">&quot;event&quot; ping</a></h3>
+<h3><a class="header" href="#event-ping" id="event-ping">&quot;event&quot; ping</a></h3>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/event-ping.html">&quot;event&quot; ping</a> provides low-latency eventing support to Firefox
 Telemetry. It delivers the Telemetry Environment, Telemetry Events from all
 Firefox processes, and some diagnostic information about Event Telemetry. It is
@@ -6357,14 +6232,14 @@ minutes (governed by a <a href="https://firefox-source-docs.mozilla.org/toolkit/
 for the ping (default to 1000 per process, governed by a
 <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/preferences.html">preference</a>) is reached before the hour is up.</p>
 <p>It was introduced in Firefox 62.</p>
-<h3><a class="header" href="#update-ping-1" id="update-ping-1">&quot;update&quot; ping</a></h3>
+<h3><a class="header" href="#update-ping" id="update-ping">&quot;update&quot; ping</a></h3>
 <p>Firefox Update is the most important means we have of reaching our users with
 the latest fixes and features. The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/update-ping.html">&quot;update&quot; ping</a> notifies us
 when an update is downloaded and ready to be applied (reason: &quot;ready&quot;) and when
 the update has been successfully applied (reason: &quot;success&quot;). It contains the
 Telemetry Environment and information about the update.</p>
 <p>It was introduced in Firefox 56.</p>
-<h3><a class="header" href="#new-profile-ping-1" id="new-profile-ping-1">&quot;new-profile&quot; ping</a></h3>
+<h3><a class="header" href="#new-profile-ping" id="new-profile-ping">&quot;new-profile&quot; ping</a></h3>
 <p>When a user starts up Firefox for the first time, a profile is created.
 Telemetry marks the occasion with the <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/new-profile-ping.html">&quot;new-profile&quot; ping</a>
 which sends the Telemetry Environment. It is sent either 30 minutes after Firefox
@@ -6374,26 +6249,26 @@ end of the profile's first session (reason: &quot;shutdown&quot;), whichever com
 &quot;startup&quot; are sent by Firefox. Those with reason &quot;shutdown&quot; are sent by
 Pingsender.</p>
 <p>It was introduced in Firefox 55.</p>
-<h3><a class="header" href="#crash-ping-1" id="crash-ping-1">&quot;crash&quot; ping</a></h3>
+<h3><a class="header" href="#crash-ping" id="crash-ping">&quot;crash&quot; ping</a></h3>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html">&quot;crash&quot; ping</a> provides diagnostic information whenever a
 Firefox process exits abnormally. Unlike the &quot;main&quot; ping with reason
 &quot;aborted-session&quot;, this ping does not contain Histograms or Scalars. It
 contains a Telemetry Environment, <a href="https://searchfox.org/mozilla-central/source/toolkit/crashreporter/CrashAnnotations.yaml">Crash Annotations</a>, and
 <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html#stack-traces">Stack Traces</a>.</p>
 <p>It was introduced in Firefox 40.</p>
-<h3><a class="header" href="#deletion-request-ping-1" id="deletion-request-ping-1">&quot;deletion-request&quot; ping</a></h3>
+<h3><a class="header" href="#deletion-request-ping" id="deletion-request-ping">&quot;deletion-request&quot; ping</a></h3>
 <p>In the event a user opts out of Telemetry, we send one final
 <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/data/deletion-request-ping.html">&quot;deletion-request&quot; ping</a> to let us know. It contains
 only the <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/common-ping.html">common ping data</a> and an empty payload.</p>
 <p>It was introduced in Firefox 72, replacing the <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/obsolete/optout-ping.html">&quot;optout&quot; ping</a>
 (which was in turn introduced in Firefox 63).</p>
-<h3><a class="header" href="#coverage-ping-1" id="coverage-ping-1">&quot;coverage&quot; ping</a></h3>
+<h3><a class="header" href="#coverage-ping" id="coverage-ping">&quot;coverage&quot; ping</a></h3>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/coverage-ping.html">coverage ping</a> (<a href="https://blog.mozilla.org/data/2018/08/20/effectively-measuring-search-in-firefox/">announcement</a>)
 is a periodic census intended to estimate telemetry opt-out rates.</p>
 <p>We estimate that <a href="https://metrics.mozilla.com/%7Erharter/reports/coverage/index.html">93% of release channel
 profiles</a>
 have telemetry enabled (and are therefore included in DAU).</p>
-<h3><a class="header" href="#pingsender-2" id="pingsender-2">Pingsender</a></h3>
+<h2><a class="header" href="#pingsender-1" id="pingsender-1">Pingsender</a></h2>
 <p><a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/pingsender.html">Pingsender</a> is a small application shipped with Firefox which
 attempts to send pings even if Firefox is not running. If Firefox has crashed or has already shut
 down we would otherwise have to wait for the next Firefox session to begin to
@@ -6401,34 +6276,7 @@ send pings.</p>
 <p>Pingsender was introduced in Firefox 54 to send &quot;crash&quot; pings. It was expanded
 to send &quot;main&quot; pings of reason &quot;shutdown&quot; in Firefox 55 (excepting the first
 session). It sends the &quot;first-shutdown&quot; ping since its introduction in Firefox 57.</p>
-<h3><a class="header" href="#analysis-2" id="analysis-2">Analysis</a></h3>
-<p>The large majority of analyses can be completed using only the
-<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html">main ping</a>.
-This ping includes histograms, scalars, and other performance and diagnostic data.</p>
-<p>Few analyses actually rely directly on any raw ping data.
-Instead, we provide <strong>derived datasets</strong> which are processed versions of these data,
-made to be:</p>
-<ul>
-<li>Easier and faster to query</li>
-<li>Organized to make the data easier to analyze</li>
-<li>Cleaned of erroneous or misleading data</li>
-</ul>
-<p>Before analyzing raw ping data,
-<strong>check to make sure there isn't already a derived dataset</strong> made for your purpose.
-If you do need to work with raw ping data, be aware that the volume of data can be high.
-Try to limit the size of your data by controlling the date range, and start off using a sample.</p>
-<h4><a class="header" href="#accessing-the-data-1" id="accessing-the-data-1">Accessing the Data</a></h4>
-<p>Ping data lives in BigQuery and is accessible in <a href="https://sql.telemetry.mozilla.org/">STMO</a>;
-see the <a href="datasets/../cookbooks/bigquery.html">BigQuery cookbook section</a> for more information.</p>
-<h4><a class="header" href="#further-reading-1" id="further-reading-1">Further Reading</a></h4>
-<p>You can find <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/index.html">the complete ping documentation</a>.
-To augment our data collection, see <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Adding_a_new_Telemetry_probe">Collecting New Data</a> and the
-<a href="https://wiki.mozilla.org/Firefox/Data_Collection">Data Collection Policy</a>.</p>
-<h1><a class="header" href="#data-reference" id="data-reference">Data Reference</a></h1>
-<p>You can find the reference documentation for all Firefox Telemetry ping types
-<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/pings.html">here</a>.</p>
-<p>The <a href="datasets/../concepts/glean/glean.html">Glean</a> article describes ping types sent by that SDK.</p>
-<h1><a class="header" href="#ping-metadata" id="ping-metadata">Ping Metadata</a></h1>
+<h2><a class="header" href="#ping-metadata" id="ping-metadata">Ping Metadata</a></h2>
 <p>The data pipeline appends metadata to arriving pings containing
 information about the ingestion environment including timestamps,
 Geo-IP data about the client,
@@ -6469,7 +6317,25 @@ these fields are documented here, instead of in the source tree docs.</p>
 <tr><td><code>metadata.isp.name</code></td><td>The name of the Internet Service Provider</td></tr>
 <tr><td><code>metadata.isp.organization</code></td><td>The name of a specific business entity when available; otherwise the ISP name</td></tr>
 </tbody></table>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/pings.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#derived-datasets" id="derived-datasets">Derived Datasets</a></h1>
+<h2><a class="header" href="#analysis-1" id="analysis-1">Analysis</a></h2>
+<p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html">main ping</a> includes histograms, scalars, and other performance and diagnostic data.
+Since Firefox 62, it <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1460595">no longer contains event data</a>; events are now sent in a separate <code>event</code> ping.</p>
+<p><a href="datasets/./derived.html">Derived datasets</a> are processed from ping tables. They are intended to be:</p>
+<ul>
+<li>Easier and faster to query</li>
+<li>Organized to make the data easier to analyze</li>
+</ul>
+<p>Ping data lives in BigQuery and is accessible in <a href="https://sql.telemetry.mozilla.org/">STMO</a>;
+see the <a href="datasets/../cookbooks/bigquery.html">BigQuery cookbook section</a> for more information.
+Before analyzing raw ping data,
+check if a derived dataset can answer your question.
+If you do need to work with raw ping data, be aware that the volume of data can be high.
+Try to limit the size of your data by controlling the date range, and start off using a sample.</p>
+<h2><a class="header" href="#further-reading" id="further-reading">Further Reading</a></h2>
+<p>You can find <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/index.html">the complete ping documentation</a> in the Firefox source documentation.
+To augment our data collection, see <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Adding_a_new_Telemetry_probe">Collecting New Data</a> and the
+<a href="https://wiki.mozilla.org/Firefox/Data_Collection">Data Collection Policy</a>.</p>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/pings.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#derived-datasets-1" id="derived-datasets-1">Derived Datasets</a></h1>
 <p>See <a href="datasets/../concepts/choosing_a_dataset.html">Choosing a Dataset</a>
 for a discussion on the differences between pings and derived datasets.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/derived.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#intro" id="intro">Intro</a></h1>
@@ -6592,7 +6458,7 @@ or on <a href="https://pypi.org/project/bgbb/">PyPI</a>. The airflow job is defi
 <p>Addon usage by client, partitioned by day.</p>
 <p>This documentation is a work in progress. Work is
 being tracked in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1364172">bug 1364172</a></p>
-<h2><a class="header" href="#data-reference-1" id="data-reference-1">Data Reference</a></h2>
+<h2><a class="header" href="#data-reference" id="data-reference">Data Reference</a></h2>
 <p>This dataset contains one or more records for every entry in the main ping table
 that contain a non-null value for <code>client_id</code>.
 Each Addons record contains info for a single addon,
@@ -6633,11 +6499,11 @@ The DAG defined in <a href="https://github.com/mozilla/bigquery-etl/blob/master/
 <h4><a class="header" href="#contents" id="contents">Contents</a></h4>
 <p>Many questions about add-ons are of the form: &quot;How many users have add-on A installed?&quot; or &quot;Are users with add-on Z more active than users with add-on Y?&quot; This dataset is aimed at answering these type of questions without having to do cumbersome joins or filters.</p>
 <p>This dataset also has detailed search aggregates by each add-on, broken out by our major search engines (<code>google</code>, <code>bing</code>, <code>ddg</code>, <code>amazon</code>, <code>yandex</code>, <code>other</code>), along with total aggregates (<code>total</code>). This allows us to identify strange search patterns for add-ons who change a user's search settings on their behalf, often siphoning away SAP searches and Mozilla revenue (see the second example query below).</p>
-<h4><a class="header" href="#accessing-the-data-2" id="accessing-the-data-2">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data" id="accessing-the-data">Accessing the Data</a></h4>
 <p>The <code>addons_daily</code> table is accessible through STMO using the
 <code>Telemetry (BigQuery)</code> data source.</p>
 <p>Here's an <a href="https://sql.telemetry.mozilla.org/queries/71007/source">example query</a>.</p>
-<h1><a class="header" href="#data-reference-2" id="data-reference-2">Data Reference</a></h1>
+<h1><a class="header" href="#data-reference-1" id="data-reference-1">Data Reference</a></h1>
 <h2><a class="header" href="#example-queries-1" id="example-queries-1">Example Queries</a></h2>
 <h4><a class="header" href="#dau-wau-and-mau-for-ublock-origin" id="dau-wau-and-mau-for-ublock-origin">DAU, WAU and MAU for uBlock Origin</a></h4>
 <pre><code class="language-sql">SELECT
@@ -6764,12 +6630,12 @@ It is joined to <code>clients_daily</code> using <code>client_id</code> and <cod
 <h4><a class="header" href="#contents-1" id="contents-1">Contents</a></h4>
 <p>Most Firefox surveys are point-in-time without longitudinal insights.
 The DAS is completed by ~300 Firefox users every day, allowing us to measure long term attitudinal trends combined with users' corresponding Telemetry attributes.</p>
-<h4><a class="header" href="#accessing-the-data-3" id="accessing-the-data-3">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-1" id="accessing-the-data-1">Accessing the Data</a></h4>
 <p>The <code>attitudes_daily</code> table is accessible through STMO using the
 <code>Telemetry (BigQuery)</code> data source.
 The full table name is <code>moz-fx-data-shared-prod.telemetry.attitudes_daily</code>.</p>
 <p>Here's an <a href="https://sql.telemetry.mozilla.org/queries/63937/source#163424">example query</a>.</p>
-<h1><a class="header" href="#data-reference-3" id="data-reference-3">Data Reference</a></h1>
+<h1><a class="header" href="#data-reference-2" id="data-reference-2">Data Reference</a></h1>
 <p>The DAS shows the user the following four statements, all having the same possible responses of &quot;Agree&quot;, &quot;Disagree&quot; or &quot;Neutral or not sure&quot;.
 Each question has an identifier in the <code>attitudes_daily</code> table as the <code>question_key</code>field (shown in parentheses after each statement below)</p>
 <ul>
@@ -6828,10 +6694,10 @@ characteristics X, Y, and Z do during the period S to E?&quot; The
 <code>clients_daily</code> table aims to answer these questions. Each row in
 the table is a (<code>client_id</code>, <code>submission_date</code>) and contains a
 number of aggregates about that day's activity.</p>
-<h2><a class="header" href="#accessing-the-data-4" id="accessing-the-data-4">Accessing the Data</a></h2>
+<h2><a class="header" href="#accessing-the-data-2" id="accessing-the-data-2">Accessing the Data</a></h2>
 <p>The <code>clients_daily</code> table is accessible through STMO using the
 <code>Telemetry (BigQuery)</code> data source.</p>
-<h2><a class="header" href="#data-reference-4" id="data-reference-4">Data Reference</a></h2>
+<h2><a class="header" href="#data-reference-3" id="data-reference-3">Data Reference</a></h2>
 <h3><a class="header" href="#example-queries-3" id="example-queries-3">Example Queries</a></h3>
 <h4><a class="header" href="#compute-churn-for-a-one-day-cohort" id="compute-churn-for-a-one-day-cohort">Compute Churn for a one-day cohort:</a></h4>
 <pre><code class="language-sql">SELECT
@@ -6941,10 +6807,10 @@ correctly calculated using <code>days_since_visited_5_uri</code>.</p>
 because a given <code>client_id</code> will only be in one group per <code>submission_date</code>. So
 if MAU were calculated by <code>country</code> and <code>channel</code>, then the sum of the MAU for
 each <code>country</code> would be the same as if MAU were calculated only by <code>channel</code>.</p>
-<h4><a class="header" href="#accessing-the-data-5" id="accessing-the-data-5">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-3" id="accessing-the-data-3">Accessing the Data</a></h4>
 <p>The data is available in Re:dash and BigQuery. Take a look at this full running
 <a href="https://sql.telemetry.mozilla.org/queries/62029/source#159510">example query in Re:dash</a>.</p>
-<h1><a class="header" href="#data-reference-5" id="data-reference-5">Data Reference</a></h1>
+<h1><a class="header" href="#data-reference-4" id="data-reference-4">Data Reference</a></h1>
 <h2><a class="header" href="#example-queries-4" id="example-queries-4">Example Queries</a></h2>
 <h4><a class="header" href="#compute-dau-for-non-windows-clients-for-the-last-week" id="compute-dau-for-non-windows-clients-for-the-last-week">Compute DAU for non-windows clients for the last week</a></h4>
 <pre><code class="language-sql">SELECT
@@ -7007,7 +6873,7 @@ It has the following advantages over accessing the raw ping table (<code>telemet
 <li>You don't have to know which process type emitted your event. If you care, you can query the <code>event_process</code> column.</li>
 <li>It is clustered on the <code>event_category</code> column, which can dramatically speed up your query.</li>
 </ul>
-<h2><a class="header" href="#data-reference-6" id="data-reference-6">Data Reference</a></h2>
+<h2><a class="header" href="#data-reference-5" id="data-reference-5">Data Reference</a></h2>
 <p>The events dataset contains one row for each event submitted in an event ping for that day.</p>
 <p>The <code>category</code>, <code>method</code>, <code>object</code>, <code>value</code>, and <code>extra</code> fields of the event
 are mapped to columns named <code>event_category</code>, <code>event_method</code>, <code>event_object</code>,
@@ -7054,7 +6920,7 @@ aggregates across arbitrary slices of those dimensions.
 The tables follow a consistent methodology which is intended as a standard
 across Mozilla for MAU analysis going forward.</p>
 <p>Note that this data model is used in the <a href="https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/">Growth &amp; Usage Dashboard (GUD)</a> and that some of this documentation is replicated in the <a href="https://mozilla.github.io/gud">GUD documentation</a>.</p>
-<h2><a class="header" href="#table-of-contents-9" id="table-of-contents-9">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-8" id="table-of-contents-8">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/bigquery/exact_mau/reference.html#conceptual-model">Conceptual Model</a>
 <ul>
@@ -7241,7 +7107,7 @@ of variation and assign a confidence interval to our sums.</p>
 <p>As an example of calculating confidence intervals, see the
 <a href="https://sql.telemetry.mozilla.org/queries/61957/source">Desktop MAU KPI query in STMO</a>
 which uses a jackknife resampling technique implemented as a BigQuery UDF.</p>
-<h1><a class="header" href="#data-reference-7" id="data-reference-7">Data Reference</a></h1>
+<h1><a class="header" href="#data-reference-6" id="data-reference-6">Data Reference</a></h1>
 <h2><a class="header" href="#scheduling-7" id="scheduling-7">Scheduling</a></h2>
 <p>These tables are updated daily via the
 <a href="https://github.com/mozilla-services/spark-parquet-to-bigquery">parquet to BigQuery</a>
@@ -7270,7 +7136,7 @@ This dataset <strong>does not include most histograms</strong>.</p>
 where possible.</p>
 <p>If you do need to query this table, make use of the <code>sample_id</code> field and
 limit to a short submission date range.</p>
-<h2><a class="header" href="#table-of-contents-10" id="table-of-contents-10">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-9" id="table-of-contents-9">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/batch_view/main_summary/reference.html#accessing-the-data">Accessing the Data</a></li>
 <li><a href="datasets/batch_view/main_summary/reference.html#data-reference">Data Reference</a>
@@ -7285,10 +7151,10 @@ limit to a short submission date range.</p>
 </li>
 <li><a href="datasets/batch_view/main_summary/reference.html#code-reference">Code Reference</a></li>
 </ul>
-<h2><a class="header" href="#accessing-the-data-6" id="accessing-the-data-6">Accessing the Data</a></h2>
+<h2><a class="header" href="#accessing-the-data-4" id="accessing-the-data-4">Accessing the Data</a></h2>
 <p>The <code>main_summary</code> table is accessible through STMO.
 Here's an <a href="https://sql.telemetry.mozilla.org/queries/4201/source">example query</a>.</p>
-<h2><a class="header" href="#data-reference-8" id="data-reference-8">Data Reference</a></h2>
+<h2><a class="header" href="#data-reference-7" id="data-reference-7">Data Reference</a></h2>
 <h3><a class="header" href="#example-queries-5" id="example-queries-5">Example Queries</a></h3>
 <p>Compare the search volume for different search source values:</p>
 <pre><code class="language-sql">WITH search_data AS (
@@ -7399,7 +7265,7 @@ Refer to this repository for information on how to run or augment the dataset.</
 <p>Public crash statistics for Firefox are available through the Data Platform in a <code>socorro_crash</code> dataset.
 The crash data in <a href="https://wiki.mozilla.org/Socorro">Socorro</a> is sanitized and made available to STMO.
 A nightly import job converts batches of JSON documents into a columnar format using the associated JSON Schema.</p>
-<h2><a class="header" href="#data-reference-9" id="data-reference-9">Data Reference</a></h2>
+<h2><a class="header" href="#data-reference-8" id="data-reference-8">Data Reference</a></h2>
 <h3><a class="header" href="#example" id="example">Example</a></h3>
 <p>The dataset can be queried using SQL.
 For example, we can aggregate the number of crashes and total up-time by date and reason.</p>
@@ -7461,10 +7327,10 @@ fewer than 5000 page loads is omitted from the dataset.</li>
 <li>This is hopefully just a temporary dataset to stopgap release aggregates going away
 until we can come up with a better way to publicly publish datasets.</li>
 </ul>
-<h4><a class="header" href="#accessing-the-data-7" id="accessing-the-data-7">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-5" id="accessing-the-data-5">Accessing the Data</a></h4>
 <p>For details on accessing the data, please look at
 <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1414839">bug 1414839</a>.</p>
-<h1><a class="header" href="#data-reference-10" id="data-reference-10">Data Reference</a></h1>
+<h1><a class="header" href="#data-reference-9" id="data-reference-9">Data Reference</a></h1>
 <h2><a class="header" href="#combining-rows" id="combining-rows">Combining Rows</a></h2>
 <p>This is a dataset of ratios. You can't combine ratios if they have different bases. For example,
 if 50% of 10 loads (5 loads) were SSL and 5% of 20 loads (1 load) were SSL, you cannot calculate
@@ -7552,12 +7418,12 @@ aggregating the histograms across a set of dimensions.</p>
 <h4><a class="header" href="#rows-and-columns" id="rows-and-columns">Rows and Columns</a></h4>
 <p>There's one column for each of the dimensions and the histogram and each row
 is a distinct set of dimensions, along with their associated histograms.</p>
-<h4><a class="header" href="#accessing-the-data-8" id="accessing-the-data-8">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-6" id="accessing-the-data-6">Accessing the Data</a></h4>
 <p>This dataset is accessible via STMO by selecting from <code>telemetry_aggregates</code>.</p>
 <p>The data is stored as a parquet table in S3 at the following address.</p>
 <pre><code>s3://telemetry-parquet/aggregates_poc/v1/
 </code></pre>
-<h1><a class="header" href="#data-reference-11" id="data-reference-11">Data Reference</a></h1>
+<h1><a class="header" href="#data-reference-10" id="data-reference-10">Data Reference</a></h1>
 <h2><a class="header" href="#example-queries-6" id="example-queries-6">Example Queries</a></h2>
 <p>Here's an example query that shows the number of pings received per
 <code>submission_date</code> for the dimensions provided.</p>
@@ -7825,7 +7691,7 @@ containing both the telemetry <code>client_id</code> and the Normandy <code>user
 <p>These can be extracted from the ping table for analysis using expressions like:</p>
 <pre><code>SPLIT(payload.survey_id,'::')[OFFSET(1)] AS surveygizmo_userid
 </code></pre>
-<h2><a class="header" href="#data-reference-12" id="data-reference-12">Data reference</a></h2>
+<h2><a class="header" href="#data-reference-11" id="data-reference-11">Data reference</a></h2>
 <p>Heartbeat data is available in the <code>telemetry.heartbeat</code> table in BigQuery.</p>
 <p>Its structure matches the <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/8b0641ebb8aad570b79e811ae10fd81c718af48f/schemas/telemetry/heartbeat/heartbeat.4.schema.json">heartbeat ping schema</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/heartbeat.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#analyzing-data-from-shield-studies" id="analyzing-data-from-shield-studies">Analyzing data from SHIELD studies</a></h1>
@@ -7835,7 +7701,7 @@ you should understand how to answer questions about
 study enrollment,
 identify telemetry from clients enrolled in an experiment,
 and locate telemetry from add-on studies.</p>
-<h2><a class="header" href="#table-of-contents-11" id="table-of-contents-11">Table of contents</a></h2>
+<h2><a class="header" href="#table-of-contents-10" id="table-of-contents-10">Table of contents</a></h2>
 <ul>
 <li><a href="datasets/shield.html#dashboards">Dashboards</a></li>
 <li><a href="datasets/shield.html#experiment-slugs">Experiment slugs</a></li>
@@ -7959,7 +7825,7 @@ for these probes.</p>
 <code>search_aggregates</code> and <code>search_clients_daily</code>. After reading this article,
 you should understand the search datasets well enough to produce moderately
 complex analyses.</p>
-<h2><a class="header" href="#table-of-contents-12" id="table-of-contents-12">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-11" id="table-of-contents-11">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/search.html#terminology">Terminology</a>
 <ul>
@@ -8125,7 +7991,7 @@ For more details, see the <a href="datasets/search/search_aggregates/../../searc
 <!--
 #### Further Reading
 -->
-<h1><a class="header" href="#data-reference-13" id="data-reference-13">Data Reference</a></h1>
+<h1><a class="header" href="#data-reference-12" id="data-reference-12">Data Reference</a></h1>
 <h2><a class="header" href="#example-queries-7" id="example-queries-7">Example Queries</a></h2>
 <p><a href="https://sql.telemetry.mozilla.org/queries/51140/source">This query</a>
 calculates daily US searches.
@@ -8219,7 +8085,7 @@ heavily limit the data you read using <code>submission_date</code> or <code>samp
 <!--
 #### Further Reading
 -->
-<h1><a class="header" href="#data-reference-14" id="data-reference-14">Data Reference</a></h1>
+<h1><a class="header" href="#data-reference-13" id="data-reference-13">Data Reference</a></h1>
 <h2><a class="header" href="#example-queries-8" id="example-queries-8">Example Queries</a></h2>
 <p><a href="https://sql.telemetry.mozilla.org/queries/51141/source">This query</a>
 calculates searches per <code>normalized_channel</code> for US clients on an arbitrary day.
@@ -8365,12 +8231,12 @@ days are not directly comparable.</p>
 (<code>client_id</code> <code>submission_date</code>) pairs
 even if we did not receive a ping for that <code>submission_date</code>.
 Any client who was active over the past year will be included.</p>
-<h4><a class="header" href="#accessing-the-data-9" id="accessing-the-data-9">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-7" id="accessing-the-data-7">Accessing the Data</a></h4>
 <p>Access the data at <code>search.search_clients_last_seen</code>.</p>
 <!--
 #### Further Reading
 -->
-<h1><a class="header" href="#data-reference-15" id="data-reference-15">Data Reference</a></h1>
+<h1><a class="header" href="#data-reference-14" id="data-reference-14">Data Reference</a></h1>
 <h2><a class="header" href="#example-queries-9" id="example-queries-9">Example Queries</a></h2>
 <p><a href="https://sql.telemetry.mozilla.org/queries/70349/source#177176">This retention query</a>
 gives the WoW retention of users in different segments. Similar to GUD, a user is
@@ -8633,9 +8499,9 @@ ORDER BY
 We also include a variety of dimension information (e.g. <code>product</code>, <code>app_name</code>, <code>app_version</code>, <code>os</code>, <code>normalized_channel</code> and <code>country</code>) to aggregate on.</li>
 </ul>
 <p>This dataset is backfilled through 2017-01-01.</p>
-<h1><a class="header" href="#accessing-the-data-10" id="accessing-the-data-10">Accessing the Data</a></h1>
+<h1><a class="header" href="#accessing-the-data-8" id="accessing-the-data-8">Accessing the Data</a></h1>
 <p>Access the data at <a href="https://console.cloud.google.com/bigquery?project=moz-fx-data-shared-prod&amp;p=moz-fx-data-shared-prod&amp;d=telemetry&amp;t=firefox_nondesktop_day_2_7_activation&amp;page=table"><code>moz-fx-data-shared-prod.telemetry.firefox_nondesktop_day_2_7_activation</code></a></p>
-<h1><a class="header" href="#data-reference-16" id="data-reference-16">Data Reference</a></h1>
+<h1><a class="header" href="#data-reference-15" id="data-reference-15">Data Reference</a></h1>
 <h2><a class="header" href="#example-queries-11" id="example-queries-11">Example Queries</a></h2>
 <p>This query gives the <code>day 2-7 activation</code> by product:</p>
 <pre><code class="language-sql">SELECT
@@ -8736,9 +8602,9 @@ ORDER BY 1
 <h2><a class="header" href="#background-and-caveats-6" id="background-and-caveats-6">Background and Caveats</a></h2>
 <p>As of Aug 25 2020 not all the tables available in the dataset have been explored and vetted for accuracy by the data science team. Tables that were fully reviewed and being documented here are the <code>Retained_installers</code> tables whose primary use case is to explain acquisition.</p>
 <p><strong>Note:</strong> Google does not make the play store data available for export every day. The export job checks for new files every day. However, having monitored the job, it appears the data is made available every 7 - 14 days, and seems to primarily be made available on weekends. Due to this lack of consistency, there will be delays in the data available for this dataset. The data currently in BigQuery is the most current data available from Google.</p>
-<h2><a class="header" href="#accessing-the-data-11" id="accessing-the-data-11">Accessing the Data</a></h2>
+<h2><a class="header" href="#accessing-the-data-9" id="accessing-the-data-9">Accessing the Data</a></h2>
 <p>Access the data at <code>moz-fx-data-marketing-prod.google_play_store</code></p>
-<h1><a class="header" href="#data-reference-17" id="data-reference-17">Data Reference</a></h1>
+<h1><a class="header" href="#data-reference-16" id="data-reference-16">Data Reference</a></h1>
 <h2><a class="header" href="#schema-14" id="schema-14">Schema</a></h2>
 <pre><code>Retained_installer tables schema
 root
@@ -8851,9 +8717,9 @@ ORDER BY
 </ul>
 <h2><a class="header" href="#background-and-caveats-7" id="background-and-caveats-7">Background and Caveats</a></h2>
 <p>The data is received from Apple with only one dimension per metric. As a result, we are unable to do multi-dimensional analysis. i.e. we can tell how each storefront is performing but we can’t see how specific platforms or sources are contributing to it.</p>
-<h2><a class="header" href="#accessing-the-data-12" id="accessing-the-data-12">Accessing the Data</a></h2>
+<h2><a class="header" href="#accessing-the-data-10" id="accessing-the-data-10">Accessing the Data</a></h2>
 <p>Access the data at <a href="https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&amp;folder=&amp;organizationId=&amp;p=moz-fx-data-marketing-prod&amp;d=apple_app_store&amp;page=dataset"><code>moz-fx-data-marketing-prod.apple_app_store</code></a></p>
-<h1><a class="header" href="#data-reference-18" id="data-reference-18">Data Reference</a></h1>
+<h1><a class="header" href="#data-reference-17" id="data-reference-17">Data Reference</a></h1>
 <h2><a class="header" href="#schema-15" id="schema-15">Schema</a></h2>
 <pre><code>metrics_by_[dimension] tables
 root
@@ -8916,7 +8782,7 @@ GROUP BY
 <p>This dataset records facts about individual commits to the Firefox source tree
 in the <a href="https://hg.mozilla.org/mozilla-central/"><code>mozilla-central</code></a> source
 code repository.</p>
-<h1><a class="header" href="#data-reference-19" id="data-reference-19">Data Reference</a></h1>
+<h1><a class="header" href="#data-reference-18" id="data-reference-18">Data Reference</a></h1>
 <p>The dataset is accessible via <a href="https://sql.telemetry.mozilla.org"><code>STMO</code></a>.
 Use the <code>eng_workflow_hgpush_parquet_v1</code> table with the <code>Athena</code> data source.
 (The <code>Presto</code> data source is also available, but much slower.)</p>
@@ -8960,7 +8826,7 @@ where
 <p>Note about <code>os_version</code>: Previous versions of Windows have used a very small set of build numbers through their entire life cycle. However, Windows 10 gets a new build number with every major update (about every 6 months), and many more builds have been released on its insider channels. So, to prevent a huge amount of noise, queries using this field should generally filter out the build number and only use the major and minor version numbers to differentiate Windows versions, unless the build number is specifically needed.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/other/stub_installer/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#activity-stream-datasets" id="activity-stream-datasets">Activity Stream Datasets</a></h1>
 <p>This article describes the various BigQuery tables Mozilla uses to store Activity Stream data, along with some examples of how to access them.</p>
-<h2><a class="header" href="#table-of-contents-13" id="table-of-contents-13">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-12" id="table-of-contents-12">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/other/activity-stream/reference.html#what-is-activity-stream">What is Activity Stream?</a></li>
 <li><a href="datasets/other/activity-stream/reference.html#activity-stream-pings">Activity Stream Pings</a></li>
@@ -9094,7 +8960,7 @@ WHERE
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/other/activity-stream/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#bmobugs" id="bmobugs"><code>bmobugs</code></a></h1>
 <p>This dataset mirrors bugs (defects, enhancements, tasks) reported in the
 <a href="https://bugzilla.mozilla.org/"><code>Bugzilla</code></a> bug tracker.</p>
-<h1><a class="header" href="#data-reference-20" id="data-reference-20">Data Reference</a></h1>
+<h1><a class="header" href="#data-reference-19" id="data-reference-19">Data Reference</a></h1>
 <p>The dataset is accessible via <a href="https://sql.telemetry.mozilla.org"><code>STMO</code></a>.
 Use the <code>eng_workflow.bmobugs</code> table with the <code>Telemetry (BigQuery)</code> data source.</p>
 <h2><a class="header" href="#field-types-and-descriptions-1" id="field-types-and-descriptions-1">Field Types and Descriptions</a></h2>
@@ -9179,7 +9045,7 @@ WHERE
 <p>The dataset is populated via the
 <a href="https://github.com/mozilla-bteam/bmo/blob/master/Bugzilla/Report/Ping/Simple.pm">simple ping service on Bugzilla</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/other/bmobugs/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#firefox-accounts-data" id="firefox-accounts-data">Firefox Accounts Data</a></h1>
-<h2><a class="header" href="#table-of-contents-14" id="table-of-contents-14">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-13" id="table-of-contents-13">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/fxa.html#introduction">Introduction</a></li>
 <li><a href="datasets/fxa.html#what-is-firefox-accounts">What is Firefox Accounts?</a></li>
@@ -9254,7 +9120,7 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 </ol>
 <p>It is also possible to query the FxA server logs directly through BigQuery (ask an FxA team member for access), though virtually all analytics-related questions are more easily answered using the data sources described above.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/fxa.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#attribution-of-firefox-accounts" id="attribution-of-firefox-accounts">Attribution of Firefox Accounts</a></h1>
-<h2><a class="header" href="#table-of-contents-15" id="table-of-contents-15">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-14" id="table-of-contents-14">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/fxa_metrics/attribution.html#introduction">Introduction</a></li>
 <li><a href="datasets/fxa_metrics/attribution.html#types-of-attribution">Types of Attribution</a>
@@ -9306,7 +9172,7 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 </tbody></table>
 <p>Example amplitude charts: <a href="https://analytics.amplitude.com/mozilla-corp/chart/1ush8xd">registrations by <code>entrypoint</code></a>, <a href="https://analytics.amplitude.com/mozilla-corp/chart/y8t2k1z">logins by <code>entrypoint</code></a>, <a href="https://analytics.amplitude.com/mozilla-corp/chart/jjbkusl">registrations by <code>utm_source</code></a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/fxa_metrics/attribution.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#firefox-account-funnels" id="firefox-account-funnels">Firefox Account Funnels</a></h1>
-<h2><a class="header" href="#table-of-contents-16" id="table-of-contents-16">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-15" id="table-of-contents-15">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/fxa_metrics/funnels.html#introduction">Introduction</a></li>
 <li><a href="datasets/fxa_metrics/funnels.html#registration-funnel">Registration Funnel</a></li>
@@ -9491,7 +9357,7 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 <tr><td>Not Implemented</td><td><code>flow.settings.clients.disconnect.view</code></td><td>User viewed the dialog asking to confirm disconnection of a device.</td></tr>
 </tbody></table>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/fxa_metrics/funnels.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#fxa-email-metrics" id="fxa-email-metrics">FxA Email Metrics</a></h1>
-<h2><a class="header" href="#table-of-contents-17" id="table-of-contents-17">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-16" id="table-of-contents-16">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/fxa_metrics/emails.html#introduction">Introduction</a></li>
 <li><a href="datasets/fxa_metrics/emails.html#email-templates-and-email-types">Email Templates and Email Types</a></li>
@@ -10203,11 +10069,11 @@ is tractable in STMO with <code>main_summary</code> or <code>clients_daily</code
 </ul>
 </li>
 </ul>
-<h4><a class="header" href="#accessing-the-data-13" id="accessing-the-data-13">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-11" id="accessing-the-data-11">Accessing the Data</a></h4>
 <p><code>churn</code> is available in STMO under Athena and Presto. The data is also
 available in parquet for consumption by columnar data engines at
 <code>s3://telemetry-parquet/churn/v3</code>.</p>
-<h1><a class="header" href="#data-reference-21" id="data-reference-21">Data Reference</a></h1>
+<h1><a class="header" href="#data-reference-20" id="data-reference-20">Data Reference</a></h1>
 <h2><a class="header" href="#example-queries-16" id="example-queries-16">Example Queries</a></h2>
 <p>This section walks through a typical query to generate data suitable for
 visualization.</p>
@@ -10394,12 +10260,12 @@ The <a href="https://sql.telemetry.mozilla.org/queries/81/source#129">Firefox ER
 is a good example to review.
 Finally, Roberto has a relevant write-up
 <a href="https://ravitillo.wordpress.com/2016/04/12/measuring-product-engagment-at-scale/">here</a>.</p>
-<h4><a class="header" href="#accessing-the-data-14" id="accessing-the-data-14">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-12" id="accessing-the-data-12">Accessing the Data</a></h4>
 <p>The data is available in STMO.
 Take a look at this
 <a href="https://sql.telemetry.mozilla.org/queries/81/source#129">example query</a>.</p>
-<h4><a class="header" href="#further-reading-2" id="further-reading-2">Further Reading</a></h4>
-<h1><a class="header" href="#data-reference-22" id="data-reference-22">Data Reference</a></h1>
+<h4><a class="header" href="#further-reading-1" id="further-reading-1">Further Reading</a></h4>
+<h1><a class="header" href="#data-reference-21" id="data-reference-21">Data Reference</a></h1>
 <h2><a class="header" href="#example-queries-17" id="example-queries-17">Example Queries</a></h2>
 <h4><a class="header" href="#compute-dau-for-non-windows-clients-for-the-last-week-1" id="compute-dau-for-non-windows-clients-for-the-last-week-1">Compute DAU for non-windows clients for the last week</a></h4>
 <pre><code class="language-sql">WITH sample AS (
@@ -10522,15 +10388,15 @@ is <code>v2</code>, and has a schema as follows:</p>
 Each row is a distinct set of dimensions, along with their associated crash stats.
 Example stratifying dimensions include channel and country,
 example statistics include usage hours and plugin crashes.</p>
-<h4><a class="header" href="#accessing-the-data-15" id="accessing-the-data-15">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-13" id="accessing-the-data-13">Accessing the Data</a></h4>
 <p>This dataset is accessible via STMO.</p>
 <p>The data is stored as a parquet table in S3 at the following address.</p>
 <pre><code>s3://telemetry-parquet/crash_aggregates/v1/
 </code></pre>
-<h4><a class="header" href="#further-reading-3" id="further-reading-3">Further Reading</a></h4>
+<h4><a class="header" href="#further-reading-2" id="further-reading-2">Further Reading</a></h4>
 <p>The technical documentation for this dataset can be found in the
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/0128b08/docs/CrashAggregateView.md">telemetry-batch-view documentation</a></p>
-<h1><a class="header" href="#data-reference-23" id="data-reference-23">Data Reference</a></h1>
+<h1><a class="header" href="#data-reference-22" id="data-reference-22">Data Reference</a></h1>
 <h2><a class="header" href="#example-queries-18" id="example-queries-18">Example Queries</a></h2>
 <p>Here's an example query that computes crash rates
 for each channel (sorted by number of usage hours):</p>
@@ -10651,18 +10517,18 @@ The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/d50b938/da
 <p>The <code>crash_summary</code> table contains one row for each crash ping.
 Each column represents one field from the crash ping payload,
 though only a subset of all crash ping fields are included.</p>
-<h4><a class="header" href="#accessing-the-data-16" id="accessing-the-data-16">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-14" id="accessing-the-data-14">Accessing the Data</a></h4>
 <p>The data is stored as a parquet table in S3 at the following address.</p>
 <pre><code>s3://telemetry-parquet/crash_summary/v1/
 </code></pre>
 <p><code>crash_summary</code> is accessible through STMO.
 Here's an <a href="https://sql.telemetry.mozilla.org/queries/4793/source">example query</a>.</p>
-<h4><a class="header" href="#further-reading-4" id="further-reading-4">Further Reading</a></h4>
+<h4><a class="header" href="#further-reading-3" id="further-reading-3">Further Reading</a></h4>
 <p>The technical documentation for <code>crash_summary</code> is located in the
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/docs/CrashSummary.md">telemetry-batch-view documentation</a>.</p>
 <p>The code responsible for generating this dataset is
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/GRAVEYARD.md#crash-summary">here</a></p>
-<h1><a class="header" href="#data-reference-24" id="data-reference-24">Data Reference</a></h1>
+<h1><a class="header" href="#data-reference-23" id="data-reference-23">Data Reference</a></h1>
 <h2><a class="header" href="#example-queries-19" id="example-queries-19">Example Queries</a></h2>
 <p>Here is an example query to get the total number of main crashes by <code>gfx_compositor</code>:</p>
 <pre><code class="language-sql">select gfx_compositor, count(*)
@@ -10758,12 +10624,12 @@ they are participating in. However, they are also aggregated with the rest of th
 these dimensions are null.
 Therefore care must be taken when writing aggregating queries over the whole population - in these cases one needs to
 filter for <code>experiment_id is null</code> and <code>experiment_branch is null</code> in order to not double-count pings from experiments.</p>
-<h4><a class="header" href="#accessing-the-data-17" id="accessing-the-data-17">Accessing the data</a></h4>
+<h4><a class="header" href="#accessing-the-data-15" id="accessing-the-data-15">Accessing the data</a></h4>
 <p>You can access the data via STMO. Choose <code>Athena</code> and then select the
 <code>telemetry.error_aggregates_v2</code> table.</p>
-<h4><a class="header" href="#further-reading-5" id="further-reading-5">Further Reading</a></h4>
+<h4><a class="header" href="#further-reading-4" id="further-reading-4">Further Reading</a></h4>
 <p>The code responsible for generating this dataset is <a href="https://github.com/mozilla/telemetry-streaming/blob/master/src/main/scala/com/mozilla/telemetry/streaming/ErrorAggregator.scala">here</a>.</p>
-<h1><a class="header" href="#data-reference-25" id="data-reference-25">Data Reference</a></h1>
+<h1><a class="header" href="#data-reference-24" id="data-reference-24">Data Reference</a></h1>
 <h2><a class="header" href="#example-queries-20" id="example-queries-20">Example Queries</a></h2>
 <p>Getting a large number of different crash measures across many platforms and channels
 (<a href="https://sql.telemetry.mozilla.org/queries/4769/source">view on STMO</a>):</p>
@@ -10873,7 +10739,7 @@ shutdown ping-sender mechanism in Firefox 55. To maintain consistent historical
 behavior, the first main ping is not sent until the second start up. In Firefox 57, a
 separate first-shutdown ping was created to evaluate first-shutdown behavior while maintaining backwards compatibility.</p>
 <p>In many cases, the first-shutdown ping is a duplicate of the main ping. The first-shutdown summary can be used in conjunction with the main summary by taking the union and deduplicating on the <code>document_id</code>.</p>
-<h4><a class="header" href="#accessing-the-data-18" id="accessing-the-data-18">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-16" id="accessing-the-data-16">Accessing the Data</a></h4>
 <p>The data can be accessed as <code>first_shutdown_summary</code>.</p>
 <p>The data is backfilled to 2017-09-22, the date of its first nightly appearance. This data should be available to all releases on and after Firefox 57.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/obsolete/first_shutdown_summary/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#heavy-users" id="heavy-users">Heavy Users</a></h1>
@@ -10942,7 +10808,7 @@ profile was created are counted as zero <code>active_ticks</code>. Analyses may
 need to use the included <code>profile_creation_date</code> field to take this
 into account.</li>
 </ol>
-<h4><a class="header" href="#accessing-the-data-19" id="accessing-the-data-19">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-17" id="accessing-the-data-17">Accessing the Data</a></h4>
 <p>The data is available both via <code>sql.t.m.o</code> and Spark.</p>
 <p>In Spark:</p>
 <pre><code class="language-python">spark.read.parquet(&quot;s3://telemetry-parquet/heavy_users/v1&quot;)
@@ -10950,10 +10816,10 @@ into account.</li>
 <p>In SQL:</p>
 <pre><code class="language-sql">SELECT * FROM heavy_users LIMIT 3
 </code></pre>
-<h4><a class="header" href="#further-reading-6" id="further-reading-6">Further Reading</a></h4>
+<h4><a class="header" href="#further-reading-5" id="further-reading-5">Further Reading</a></h4>
 <p>The code responsible for generating this dataset is
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/GRAVEYARD.md#heavy-users">here</a></p>
-<h1><a class="header" href="#data-reference-26" id="data-reference-26">Data Reference</a></h1>
+<h1><a class="header" href="#data-reference-25" id="data-reference-25">Data Reference</a></h1>
 <h2><a class="header" href="#example-queries-21" id="example-queries-21">Example Queries</a></h2>
 <p>Example queries:</p>
 <ul>
@@ -11023,14 +10889,14 @@ and down-samples to 1% of all clients to reduce query computation time and save 
 <li>The longitudinal dataset samples to 1% of all <code>client_id</code>s</li>
 </ul>
 <p>Please note that this dataset only contains release (or opt-out) histograms and scalars.</p>
-<h4><a class="header" href="#accessing-the-data-20" id="accessing-the-data-20">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-18" id="accessing-the-data-18">Accessing the Data</a></h4>
 <p>The <code>longitudinal</code> is available in STMO,
 though it can be difficult to work with the array values in SQL.
 Take a look at this <a href="https://sql.telemetry.mozilla.org/queries/4189/source">example query</a>.</p>
 <p>The data is stored as a parquet table in S3 at the following address.</p>
 <pre><code>s3://telemetry-parquet/longitudinal/
 </code></pre>
-<h1><a class="header" href="#data-reference-27" id="data-reference-27">Data Reference</a></h1>
+<h1><a class="header" href="#data-reference-26" id="data-reference-26">Data Reference</a></h1>
 <h2><a class="header" href="#sampling-5" id="sampling-5">Sampling</a></h2>
 <h3><a class="header" href="#pings-within-last-6-months" id="pings-within-last-6-months">Pings Within Last 6 Months</a></h3>
 <p>The <code>longitudinal</code> filters to <code>main</code> pings from within the last 6 months.</p>
@@ -11125,7 +10991,7 @@ size of the HLL object is 2^13 bits or 1KiB. This maintains about a 1% error
 on average. See <a href="https://github.com/twitter/algebird/blob/develop/algebird-core/src/main/scala/com/twitter/algebird/HyperLogLog.scala#L230-L255">this table from Algebird's HLL implementation</a> for
 more details.</li>
 </ol>
-<h4><a class="header" href="#accessing-the-data-21" id="accessing-the-data-21">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-19" id="accessing-the-data-19">Accessing the Data</a></h4>
 <p>The data is primarily available through <a href="https://sql.telemetry.mozilla.org">STMO</a> via
 the Presto source. This service has been configured to use predefined HLL
 functions.</p>
@@ -11148,7 +11014,7 @@ GROUP BY channel
 configured STMO environment, <a href="https://github.com/mozilla/spark-hyperloglog"><code>spark-hyperloglog</code></a> and
 <a href="https://github.com/vitillo/presto-hyperloglog"><code>presto-hyperloglog</code></a>.</p>
 <p>Also see the <a href="datasets/obsolete/retention//datasets/obsolete/client_count_daily/reference.html"><code>client_count_daily</code> dataset</a>.</p>
-<h1><a class="header" href="#data-reference-28" id="data-reference-28">Data Reference</a></h1>
+<h1><a class="header" href="#data-reference-27" id="data-reference-27">Data Reference</a></h1>
 <h2><a class="header" href="#example-queries-22" id="example-queries-22">Example Queries</a></h2>
 <p>See the <a href="https://sql.telemetry.mozilla.org/dashboard/firefox-telemetry-retention-dataset-example-usage">Example Usage Dashboard</a> for more usages of datasets of
 the same shape.</p>
@@ -11211,7 +11077,7 @@ EMR. This script can be used to perform backfill.</p>
 <h2><a class="header" href="#which-dataset-should-i-use" id="which-dataset-should-i-use">Which dataset should I use?</a></h2>
 <p>Which dataset to use depends on whether you are interested in <em>per-engine</em> sync success or <em>per-sync</em> sync success (see below). If you are interested in whether a sync failed overall, regardless of which engine may have caused the failure, then you can use <code>sync_summary</code>. Otherwise, if you are interested in per-engine data, you should use <code>sync_flat_summary</code>.</p>
 <p>If you aren't sure, or just trying to get acquainted, you should probably just use <code>sync_flat_summary</code>.</p>
-<h1><a class="header" href="#data-reference-29" id="data-reference-29">Data Reference</a></h1>
+<h1><a class="header" href="#data-reference-28" id="data-reference-28">Data Reference</a></h1>
 <h2><a class="header" href="#a-note-about-user-ids" id="a-note-about-user-ids">A note about user IDs</a></h2>
 <p>Unlike most other telemetry datasets, these do not contain the profile-level identifier <code>client_id</code>. Because you need to sign up for a <a href="https://www.mozilla.org/en-US/firefox/accounts/">Firefox Account</a> in order to use sync, these datasets instead include an anonymised version of the user's Firefox Account user id <code>uid</code> and an anonymised version of their individual devices' <code>device_id</code>s. Put another way, each <code>uid</code> can have many associated <code>device_id</code>s.</p>
 <p><strong>Q:</strong> Why not include <code>client_id</code> in these datasets so that they can be joined on (e.g.) <code>main_summary</code>?</p>
@@ -11392,9 +11258,9 @@ It contains the build information and the update blob information, in addition t
 user environment.</p>
 <h4><a class="header" href="#contents-15" id="contents-15">Contents</a></h4>
 <p>The table contains one row for each ping. Each column represents one field from the update ping payload, though only a subset of all fields are included.</p>
-<h4><a class="header" href="#accessing-the-data-22" id="accessing-the-data-22">Accessing the Data</a></h4>
+<h4><a class="header" href="#accessing-the-data-20" id="accessing-the-data-20">Accessing the Data</a></h4>
 <p>Query the <code>telemetry.update</code> view in BigQuery as in the <a href="https://sql.telemetry.mozilla.org/queries/31267#table">example query in STMO</a>.</p>
-<h1><a class="header" href="#data-reference-30" id="data-reference-30">Data Reference</a></h1>
+<h1><a class="header" href="#data-reference-29" id="data-reference-29">Data Reference</a></h1>
 <h2><a class="header" href="#schema-24" id="schema-24">Schema</a></h2>
 <p>As of 2017-09-07, the current version of the <code>telemetry_update_parquet</code> dataset is <code>v1</code>, and has a schema as follows:</p>
 <pre><code>root
@@ -11499,7 +11365,7 @@ If there is a bug associated with your documentation, title it in the form of <c
 <p>After filing your PR, assign the appropriate person for review (GitHub will usually provide some suggestions), assuming you have permissions to do so yourself.
 If you do not have permission to assign a reviewer, see <a href="contributing/../concepts/getting_help.html">getting help</a>.</p>
 <h2><a class="header" href="#supported-plugins" id="supported-plugins">Supported Plugins</a></h2>
-<h3><a class="header" href="#table-of-contents-18" id="table-of-contents-18">Table of contents</a></h3>
+<h3><a class="header" href="#table-of-contents-17" id="table-of-contents-17">Table of contents</a></h3>
 <p>You can insert a table of contents in any article by using the <code>toc</code> shorthand. For example:</p>
 <pre><code># My fine title
 
