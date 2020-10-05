@@ -2,14 +2,14 @@
 
 <!-- toc -->
 
-# Introduction
+## Introduction
 
 `org_mozilla_firefox.events_daily` is designed to answer questions about events. These include:
 - Funnels
 - Event Counts
 - User Flows
 
-# Contents
+## Contents
 
 `events_daily` has one row per-client per-day, much the same as `clients_daily`. The table is created in a two-step process:
 
@@ -21,26 +21,26 @@
 
 For Fenix, we aggregate the events ping data _only_. If you're looking for events in other pings, you'll need to query them directly.
 
-Included in this data is a set of dimensional information about the user, also derived from the events ping. The full list of fields is available [in the query.](https://github.com/mozilla/bigquery-etl/blob/master/sql/org_mozilla_firefox_derived/events_daily_v1/query.sql#L48).
+Included in this data is a set of dimensional information about the user, also derived from the events ping. The full list of fields is available [in the query](https://github.com/mozilla/bigquery-etl/blob/master/sql/org_mozilla_firefox_derived/events_daily_v1/query.sql#L48).
 
 ## Limitations
 
 This approach makes some queries fast and easy, but has some limits:
 1. Each product is limited to at most 1 Million unique event types
-2. Each event property is limited to at most 1 Million values. As a result, [some Fenix event properties are not included in this table](https://github.com/mozilla/bigquery-etl/blob/master/sql/org_mozilla_firefox_derived/event_types_v1/query.sql#L89).
+2. Each event property is limited to at most 1 Million values. As a result, [some Fenix event properties are not included in this table](https://github.com/mozilla/bigquery-etl/blob/bc5e4292fa74aac5addba44ff6788854c4e0dcd4/sql/org_mozilla_firefox_derived/event_types_v1/query.sql#L89).
 3. Queries do not know the amount of time that passed between events, only that they occurred on the same day
         *Note*: This can be alleviated by sessionizing and splitting the events string using a session_start event.
             For Fenix this could be [`events.app_opened_all_startup`](https://github.com/mozilla-mobile/fenix/blob/master/app/metrics.yaml#L11).
 
-# Accessing the Data
+## Accessing the Data
 
 While it is possible to build queries that access this events data directly, the Data Platform instead recommends using a set of stored procedures we have available.
-These procedures create easily queryable views that hide the complexity of the event representation. The [`mozfun` library documentation](https://mozilla.github.io/bigquery-etl/mozfun/event_analysis/)
+These procedures create BigQuery views that hide the complexity of the event representation. The [`mozfun` library documentation](https://mozilla.github.io/bigquery-etl/mozfun/event_analysis/)
 has information about these procedures and examples of their usage.
 
-# Data Reference
+## Data Reference
 
-## Example Queries
+### Example Queries
 
 This query gives the event-count and client-counts per-event per-day.
 It is slightly less efficient than it could be 
@@ -103,10 +103,10 @@ root
     |  |- value: string
 ```
 
-# Code Reference
+## Code Reference
 
 The job is [defined in `bigquery-etl`](https://github.com/mozilla/bigquery-etl/blob/master/sql/org_mozilla_firefox_derived/events_daily_v1/query.sql).
 The job for updating `event_types` is [also defined in `bigquery-etl`](https://github.com/mozilla/bigquery-etl/blob/master/sql/org_mozilla_firefox_derived/event_types_v1/query.sql).
 
-# Background and Caveats
+## Background and Caveats
 See [this presentation](https://docs.google.com/presentation/d/1hY82h_hP-pJd1j_7PsPPHn469XIQ7p4BfTH3aqRpYTk) for background. 
