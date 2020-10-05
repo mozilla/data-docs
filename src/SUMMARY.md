@@ -96,6 +96,7 @@
     - [Day 2-7 Activation](datasets/non_desktop/day_2_7_activation/reference.md)
     - [Google Play Store](datasets/non_desktop/google_play_store/reference.md)
     - [Apple App Store](datasets/non_desktop/apple_app_store/reference.md)
+    - [Events Daily](datasets/non_desktop/events_daily/reference.md)
   - [Other Datasets](datasets/other.md)
     - [hgpush](datasets/other/hgpush/reference.md)
     - [Stub installer ping](datasets/other/stub_installer/reference.md)
