@@ -179,11 +179,11 @@
 </ul>
 <h2><a class="header" href="#in-bigquery-etl" id="in-bigquery-etl">In bigquery-etl</a></h2>
 <p>In the <a href="https://github.com/mozilla/bigquery-etl"><code>bigquery-etl</code></a> project, queries are written in <code>/sql</code>.
-The directory structure is based on the destination table: <code>/sql/{dataset_id}/{table_name}</code>.
-For example, <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/telemetry_derived/core_clients_last_seen_v1/query.sql"><code>/sql/telemetry_derived/core_clients_last_seen_v1/query.sql</code></a>
+The directory structure is based on the destination table: <code>/sql/{project_id}/{dataset_id}/{table_name}</code>.
+For example, <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/core_clients_last_seen_v1/query.sql"><code>/sql/moz-fx-data-shared-prod/telemetry_derived/core_clients_last_seen_v1/query.sql</code></a>
 is a query that will write results to the <code>core_clients_last_seen_v1</code> table in the <code>telemetry_derived</code> dataset.</p>
-<p>If we want to create a new table of just <code>client_id</code>'s each day called <code>client_ids</code> in the <code>example</code> dataset,
-we should create <code>/sql/example/client_ids/query.sql</code>:</p>
+<p>If we want to create a new table of just <code>client_id</code>'s each day called <code>client_ids</code> in the <code>example</code> dataset
+in the <code>moz-fx-data-shared-prod</code> project, we should create <code>/sql/moz-fx-data-shared-prod/example/client_ids/query.sql</code>:</p>
 <pre><code class="language-sql">SELECT
   DISTINCT(client_id),
   submission_date
@@ -193,7 +193,7 @@ WHERE
   submission_date = @submission_date
 </code></pre>
 <p><code>@submission_date</code> is a parameter that will be filled in by Airflow.</p>
-<p>To schedule your query, create a <code>/sql/example/client_ids/metadata.yaml</code> file with the following content:</p>
+<p>To schedule your query, create a <code>/sql/moz-fx-data-shared-prod/example/client_ids/metadata.yaml</code> file with the following content:</p>
 <pre><code class="language-yaml">friendly_name: Client IDs
 description: Unique client IDs, partitioned by day.
 owners:
@@ -216,7 +216,8 @@ the <code>bqetl_clients_ids</code> DAG is actually defined in <code>dags.yaml</c
     retry_delay: 30m
 </code></pre>
 <p>In this example, the <code>bqetl_clients_ids</code> DAG and the created query will be executed on a daily basis at 02:00 UTC.</p>
-<p>Run <code>./script/generate_airflow_dags</code> to generate the Airflow DAG. Task dependencies that are defined in bigquery-etl and
+<p>Run <code>./script/generate_airflow_dags</code> to generate the Airflow DAG or generate the DAG using the <a href="https://github.com/mozilla/bigquery-etl#the-bqetl-cli"><code>bqetl</code> CLI</a>:
+<code>bqetl dag generate bqetl_clients_ids</code>. Task dependencies that are defined in bigquery-etl and
 dependencies to stable tables are determined automatically. Generated DAGs are written to the <code>dags/</code> directory and
 will be automatically detected and scheduled by Airflow once the changes are committed to master in <code>bigquery-etl</code>.</p>
 <h2><a class="header" href="#other-considerations" id="other-considerations">Other considerations</a></h2>

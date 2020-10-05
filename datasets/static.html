@@ -172,15 +172,15 @@
                     <main>
                         <h1><a class="header" href="#static-datasets" id="static-datasets">Static Datasets</a></h1>
 <p>Tables containing static data exist in the <code>static</code> dataset in BigQuery.
-These tables are generated from CSV files named <code>data.csv</code> in subdirectories of the <code>sql/static/</code>
-directory in <a href="https://github.com/mozilla/bigquery-etl/tree/master/sql/static"><code>bigquery-etl</code></a>.</p>
+These tables are generated from CSV files named <code>data.csv</code> in subdirectories of the <code>sql/&lt;project&gt;/static/</code>
+directory in <a href="https://github.com/mozilla/bigquery-etl/tree/master/sql/moz-fx-data-shared-prod/static"><code>bigquery-etl</code></a>.</p>
 <h2><a class="header" href="#creating-a-static-table" id="creating-a-static-table">Creating a Static Table</a></h2>
-<p>To create a new table, create a directory in <code>sql/static/</code>.
+<p>To create a new table, create a directory in <code>sql/&lt;project&gt;/static/</code>.
 This directory should be named whatever you wish the table to be named.
 Then, put a CSV file named <code>data.csv</code> in the directory.
 It is expected that the first line of <code>data.csv</code> is a header row containing the column
 names of the data.</p>
-<p>e.g. In <code>sql/static/new_table/data.csv</code>:</p>
+<p>e.g. In <code>sql/moz-fx-data-shared-prod/static/new_table/data.csv</code>:</p>
 <pre><code>id,val
 a,1
 b,2
@@ -189,7 +189,7 @@ c,3
 <p>An optional <code>description.txt</code> and <code>schema.json</code> can be added. <code>description.txt</code> will fill the description
 field in BigQuery. <code>schema.json</code> will set the schema of the table; if no schema is provided, it is assumed
 that all fields are nullable strings.</p>
-<p>See <a href="https://github.com/mozilla/bigquery-etl/tree/master/sql/static/country_names_v1"><code>country_names_v1</code></a> for an example.</p>
+<p>See <a href="https://github.com/mozilla/bigquery-etl/tree/master/sql/moz-fx-data-shared-prod/static/country_names_v1"><code>country_names_v1</code></a> for an example.</p>
 <p>To create the table in BigQuery, run <a href="https://github.com/mozilla/bigquery-etl/blob/master/script/publish_static"><code>script/publish_static</code></a>.</p>
 <h3><a class="header" href="#notes" id="notes">Notes</a></h3>
 <p>Static tables can be created in any dataset in bigquery-etl. However, it is recommended for consistency and

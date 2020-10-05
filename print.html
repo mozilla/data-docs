@@ -1259,8 +1259,8 @@ Spark jobs that will need to do this.</p>
 <li>See <a href="https://cloud.google.com/bigquery/docs/views">Creating Views</a> documentation for detailed steps.</li>
 </ul>
 <h2><a class="header" href="#using-udfs" id="using-udfs">Using UDFs</a></h2>
-<p>BigQuery offers <a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/user-defined-functions">user-defined functions</a> (UDFs) that can be defined in SQL or JavaScript as part of a query or as a persistent function stored in a dataset. We have defined a suite of persistent functions to enable transformations specific to our data formats, available in datasets <code>udf</code> (for functions defined in SQL) and <code>udf_js</code> (for functions defined in JavaScript). Note that JavaScript functions are potentially much slower than those defined in SQL, so use functions in <code>udf_js</code> with some caution, likely only after performing aggregation in your query.</p>
-<p>We document a few of the most broadly useful UDFs below, but you can see the full list of UDFs with source code in <a href="https://github.com/mozilla/bigquery-etl/tree/master/udf"><code>bigquery-etl/udf</code></a> and <a href="https://github.com/mozilla/bigquery-etl/tree/master/udf_js"><code>bigquery-etl/udf_js</code></a>. Publishing a full reference page for our persistent UDFs is a planned improvement, tracked in <a href="https://github.com/mozilla/bigquery-etl/issues/228"><code>bigquery-etl#228</code></a>.</p>
+<p>BigQuery offers <a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/user-defined-functions">user-defined functions</a> (UDFs) that can be defined in SQL or JavaScript as part of a query or as a persistent function stored in a dataset. We have defined a suite of public persistent functions to enable transformations specific to our data formats, available in <a href="https://mozilla.github.io/bigquery-etl/"><code>mozfun</code></a>. UDFs used internally in <code>moz-fx-data-shared-prod</code> are available in datasets <code>udf</code> (for functions defined in SQL) and <code>udf_js</code> (for functions defined in JavaScript). Note that JavaScript functions are potentially much slower than those defined in SQL, so use functions in <code>udf_js</code> with some caution, likely only after performing aggregation in your query.</p>
+<p>We document a few of the most broadly useful UDFs below, but you can see the full list of <code>mozfun</code> UDFs in <a href="https://mozilla.github.io/bigquery-etl/">mozilla.github.io/bigquery-etl</a> and or UDFs with source code used within <code>moz-fx-data-shared-prod</code> in <a href="https://github.com/mozilla/bigquery-etl/tree/master/sql/moz-fx-data-shared-prod/udf"><code>bigquery-etl/sql/moz-fx-data-shared-prod/udf</code></a> and <a href="https://github.com/mozilla/bigquery-etl/tree/master/sql/moz-fx-data-shared-prod/udf_js"><code>bigquery-etl/sql/moz-fx-data-shared-prod/udf_js</code></a>. Publishing a full reference page for our persistent UDFs is a planned improvement, tracked in <a href="https://github.com/mozilla/bigquery-etl/issues/228"><code>bigquery-etl#228</code></a>.</p>
 <h2><a class="header" href="#accessing-map-like-fields" id="accessing-map-like-fields">Accessing map-like fields</a></h2>
 <p>BigQuery currently lacks native map support and our workaround is to use a STRUCT type with fields named [key, value]. We've created a UDF that provides key-based access with the signature: <code>udf.get_key(&lt;struct&gt;, &lt;key&gt;)</code>. The example below generates a count per <code>reason</code> key in the <code>event_map_values</code> field in the telemetry events table for Normandy unenrollment events from yesterday.</p>
 <pre><code class="language-sql">SELECT udf.get_key(event_map_values, 'reason') AS reason,
@@ -3290,7 +3290,7 @@ GROUP BY
 <p>When performing retention analysis it is important to understand that there are many reasons for retention differences between groups. Unless you are comparing two arms of a controlled experiment, in which case you can probably attribute any difference to the experimental treatment, it is impossible to make causal arguments about retention differences. For example, if you observe the users that save a large number of bookmarks tend to have higher retention than those who do not, it is more likely that the retention difference is simply a property of <em>the types of people</em> that save bookmarks, and an intervention to encourage saving more bookmarks is not necessarily likely to improve retention.</p>
 <h2><a class="header" href="#confidence-intervals" id="confidence-intervals">Confidence Intervals</a></h2>
 <p>It is good practice to always compute confidence intervals for retention metrics, especially when looking at specific slices of users or when making comparisons between different groups.</p>
-<p>The <a href="https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/">Growth and Usage Dashboard</a> provides confidence intervals automatically using a jackknife resampling method over <code>client_id</code> buckets. This confidence intervals generated using this method should be considered the &quot;standard&quot;. We show below how to compute them using the data sources described above. These methods use UDFs <a href="https://github.com/mozilla/bigquery-etl/blob/master/udf_js/jackknife_ratio_ci/udf.sql">defined in bigquery-etl</a>.</p>
+<p>The <a href="https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/">Growth and Usage Dashboard</a> provides confidence intervals automatically using a jackknife resampling method over <code>client_id</code> buckets. This confidence intervals generated using this method should be considered the &quot;standard&quot;. We show below how to compute them using the data sources described above. These methods use UDFs <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/udf_js/jackknife_ratio_ci/udf.sql">defined in bigquery-etl</a>.</p>
 <p>We also note that it is fairly simple to calculate a confidence interval using any statistical method appropriate for proportions. The queries given above provide both numerators and denominators, so feel free to calculate confidence intervals in the manner you prefer. However, if you want to replicate the standard confidence intervals, please work from the example queries below.</p>
 <h3><a class="header" href="#querying-smoot-usage-tables-1" id="querying-smoot-usage-tables-1">Querying Smoot Usage Tables</a></h3>
 <pre><code class="language-sql">WITH bucketed AS (
@@ -3404,11 +3404,11 @@ However, for presenting dashboards and other types of data visualization, a stat
 </ul>
 <h2><a class="header" href="#in-bigquery-etl" id="in-bigquery-etl">In bigquery-etl</a></h2>
 <p>In the <a href="https://github.com/mozilla/bigquery-etl"><code>bigquery-etl</code></a> project, queries are written in <code>/sql</code>.
-The directory structure is based on the destination table: <code>/sql/{dataset_id}/{table_name}</code>.
-For example, <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/telemetry_derived/core_clients_last_seen_v1/query.sql"><code>/sql/telemetry_derived/core_clients_last_seen_v1/query.sql</code></a>
+The directory structure is based on the destination table: <code>/sql/{project_id}/{dataset_id}/{table_name}</code>.
+For example, <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/core_clients_last_seen_v1/query.sql"><code>/sql/moz-fx-data-shared-prod/telemetry_derived/core_clients_last_seen_v1/query.sql</code></a>
 is a query that will write results to the <code>core_clients_last_seen_v1</code> table in the <code>telemetry_derived</code> dataset.</p>
-<p>If we want to create a new table of just <code>client_id</code>'s each day called <code>client_ids</code> in the <code>example</code> dataset,
-we should create <code>/sql/example/client_ids/query.sql</code>:</p>
+<p>If we want to create a new table of just <code>client_id</code>'s each day called <code>client_ids</code> in the <code>example</code> dataset
+in the <code>moz-fx-data-shared-prod</code> project, we should create <code>/sql/moz-fx-data-shared-prod/example/client_ids/query.sql</code>:</p>
 <pre><code class="language-sql">SELECT
   DISTINCT(client_id),
   submission_date
@@ -3418,7 +3418,7 @@ WHERE
   submission_date = @submission_date
 </code></pre>
 <p><code>@submission_date</code> is a parameter that will be filled in by Airflow.</p>
-<p>To schedule your query, create a <code>/sql/example/client_ids/metadata.yaml</code> file with the following content:</p>
+<p>To schedule your query, create a <code>/sql/moz-fx-data-shared-prod/example/client_ids/metadata.yaml</code> file with the following content:</p>
 <pre><code class="language-yaml">friendly_name: Client IDs
 description: Unique client IDs, partitioned by day.
 owners:
@@ -3441,7 +3441,8 @@ the <code>bqetl_clients_ids</code> DAG is actually defined in <code>dags.yaml</c
     retry_delay: 30m
 </code></pre>
 <p>In this example, the <code>bqetl_clients_ids</code> DAG and the created query will be executed on a daily basis at 02:00 UTC.</p>
-<p>Run <code>./script/generate_airflow_dags</code> to generate the Airflow DAG. Task dependencies that are defined in bigquery-etl and
+<p>Run <code>./script/generate_airflow_dags</code> to generate the Airflow DAG or generate the DAG using the <a href="https://github.com/mozilla/bigquery-etl#the-bqetl-cli"><code>bqetl</code> CLI</a>:
+<code>bqetl dag generate bqetl_clients_ids</code>. Task dependencies that are defined in bigquery-etl and
 dependencies to stable tables are determined automatically. Generated DAGs are written to the <code>dags/</code> directory and
 will be automatically detected and scheduled by Airflow once the changes are committed to master in <code>bigquery-etl</code>.</p>
 <h2><a class="header" href="#other-considerations" id="other-considerations">Other considerations</a></h2>
@@ -6467,7 +6468,7 @@ there will be a row with nulls for all the addon fields
 The job DAG runs every day after the Main Summary data has been generated.
 The DAG defined in <a href="https://github.com/mozilla/bigquery-etl/blob/master/dags/bqetl_addons.py"><code>dags/bqetl_addons.py</code></a></p>
 <h2><a class="header" href="#code-reference" id="code-reference">Code Reference</a></h2>
-<p>This dataset is generated by <a href="https://github.com/mozilla/bigquery-etl/">BigQuery ETL</a>. The query that generates the dataset is <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/telemetry_derived/addons_v2/query.sql"><code>sql/telemetry_derived/addons_v2/query.sql</code></a>.</p>
+<p>This dataset is generated by <a href="https://github.com/mozilla/bigquery-etl/">BigQuery ETL</a>. The query that generates the dataset is <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/addons_v2/query.sql"><code>sql/moz-fx-data-shared-prod/telemetry_derived/addons_v2/query.sql</code></a>.</p>
 <p>You may find the <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/environment.html#addons">environment reference</a> in The Firefox Source Documentation helpful for understanding the source data.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/batch_view/addons/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#addons-daily" id="addons-daily">Addons Daily</a></h1>
 <ul>
@@ -6541,7 +6542,7 @@ The job runs as part of the <a href="https://github.com/mozilla/bigquery-etl/blo
 <p>As of 2020-04-17, the current version of the <code>addons_daily</code> dataset is <code>v1</code>.</p>
 <h1><a class="header" href="#code-reference-1" id="code-reference-1">Code Reference</a></h1>
 <p>This dataset is generated by
-<a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/telemetry_derived/addons_daily_v1/query.sql"><code>bigquery-etl</code></a>.
+<a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/addons_daily_v1/query.sql"><code>bigquery-etl</code></a>.
 Refer to this repository for information on how to run or augment the dataset.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/other/addons_daily/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#autonomous-system-aggregates" id="autonomous-system-aggregates">Autonomous system aggregates</a></h1>
 <p>In the normal course of processing incoming telemetry,
@@ -6641,7 +6642,7 @@ Each question has an identifier in the <code>attitudes_daily</code> table as the
 <li>All the sites I’ve visited recently have worked; none of them seem broken (<code>sites_work</code>)</li>
 <li>Using the internet helped me meet my goals today (<code>met_goals</code>)</li>
 </ul>
-<p>User responses are processed and mapped to their <code>question_key</code>'s in <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/telemetry_derived/surveygizmo_daily_attitudes/import_responses.py">this script</a>, creating a table <code>moz-fx-data-shared-prod.external.survey_gizmo_daily_attitudes</code> which is subsequently joined to <code>clients_daily</code>.</p>
+<p>User responses are processed and mapped to their <code>question_key</code>'s in <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/surveygizmo_daily_attitudes/import_responses.py">this script</a>, creating a table <code>moz-fx-data-shared-prod.external.survey_gizmo_daily_attitudes</code> which is subsequently joined to <code>clients_daily</code>.</p>
 <h2><a class="header" href="#example-queries-2" id="example-queries-2">Example Queries</a></h2>
 <h4><a class="header" href="#distribution-of-user-responses-to-the-internet-is-open-and-accessible-to-all-over-time" id="distribution-of-user-responses-to-the-internet-is-open-and-accessible-to-all-over-time">Distribution of user responses to &quot;The internet is open and accessible to all&quot; over time</a></h4>
 <pre><code class="language-sql">SELECT
@@ -6683,7 +6684,7 @@ The job runs as part of the <a href="https://github.com/mozilla/telemetry-airflo
 <p>As of 2019-09-15, the current version of the <code>attitudes_daily</code> dataset is <code>v1</code>.</p>
 <h1><a class="header" href="#code-reference-2" id="code-reference-2">Code Reference</a></h1>
 <p>This dataset is generated by
-<a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/telemetry_derived/attitudes_daily_v1/query.sql"><code>bigquery-etl</code></a>.
+<a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/attitudes_daily_v1/query.sql"><code>bigquery-etl</code></a>.
 Refer to this repository for information on how to run or augment the dataset. You can view the task run status in airflow <a href="https://workflow.telemetry.mozilla.org/tree?dag_id=attitudes_daily">here</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/other/attitudes_daily/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#clients-daily-1" id="clients-daily-1">Clients Daily</a></h1>
 <p>Many questions about Firefox take the form &quot;What did clients with
@@ -6736,7 +6737,7 @@ The job runs as part of the <a href="https://github.com/mozilla/bigquery-etl/blo
 <p>The data is partitioned by <code>submission_date</code>.</p>
 <p>As of 2019-11-28, the current version of the <code>clients_daily</code> dataset is <code>v6</code>.</p>
 <h2><a class="header" href="#code-reference-3" id="code-reference-3">Code Reference</a></h2>
-<p>This dataset is generated by <a href="https://github.com/mozilla/bigquery-etl/">BigQuery ETL</a>. The query that generates the dataset is <a href="https://github.com/mozilla/bigquery-etl/blob/25b702d0824b96ec1342d653296adfbe1302027d/sql/telemetry_derived/clients_daily_v6/query.sql"><code>sql/telemetry_derived/clients_daily_v6/query.sql</code></a>.</p>
+<p>This dataset is generated by <a href="https://github.com/mozilla/bigquery-etl/">BigQuery ETL</a>. The query that generates the dataset is <a href="https://github.com/mozilla/bigquery-etl/blob/25b702d0824b96ec1342d653296adfbe1302027d/sql/moz-fx-data-shared-prod/telemetry_derived/clients_daily_v6/query.sql"><code>sql/moz-fx-data-shared-prod/telemetry_derived/clients_daily_v6/query.sql</code></a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/batch_view/clients_daily/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#clients-last-seen-reference" id="clients-last-seen-reference">Clients Last Seen Reference</a></h1>
 <ul>
 <li><a href="datasets/bigquery/clients_last_seen/reference.html#introduction">Introduction</a>
@@ -6860,7 +6861,7 @@ infrastructure. The job runs as part of the
 <a href="https://console.cloud.google.com/bigquery?p=moz-fx-data-derived-datasets&amp;d=telemetry&amp;t=clients_last_seen_v1&amp;page=table">here</a>.</p>
 <h1><a class="header" href="#code-reference-4" id="code-reference-4">Code Reference</a></h1>
 <p>This dataset is generated by
-<a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/telemetry_derived/clients_last_seen_v1/query.sql"><code>bigquery-etl</code></a>.
+<a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/clients_last_seen_v1/query.sql"><code>bigquery-etl</code></a>.
 Refer to this repository for information on how to run or augment the dataset.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/bigquery/clients_last_seen/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#events" id="events">Events</a></h1>
 <p>This derived dataset makes it easier to analyze the Firefox <a href="datasets/batch_view/events/../../pings.html#event-ping">event ping</a>.
@@ -6894,7 +6895,7 @@ WHERE event_category = 'pwmgr'
 The job is scheduled on <a href="https://github.com/mozilla/telemetry-airflow">Airflow</a>.
 The DAG is defined in <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/copy_deduplicate.py"><code>dags/copy_deduplicate.py</code></a>.</p>
 <h2><a class="header" href="#code-reference-5" id="code-reference-5">Code Reference</a></h2>
-<p>This dataset is generated by <a href="https://github.com/mozilla/bigquery-etl/">BigQuery ETL</a>. The query that generates the dataset is <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/telemetry_derived/event_events_v1/query.sql"><code>sql/telemetry_derived/event_events_v1/query.sql</code></a>.</p>
+<p>This dataset is generated by <a href="https://github.com/mozilla/bigquery-etl/">BigQuery ETL</a>. The query that generates the dataset is <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/event_events_v1/query.sql"><code>sql/moz-fx-data-shared-prod/telemetry_derived/event_events_v1/query.sql</code></a>.</p>
 <h2><a class="header" href="#more-information" id="more-information">More Information</a></h2>
 <p>Firefox has an API to record events, which are then submitted through the main ping.
 The format and mechanism of event collection in Firefox is documented <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html">in the Firefox source documentation</a>.</p>
@@ -7187,7 +7188,7 @@ The DAG is defined in
 <p>As of 2019-11-28, the current version of the <code>main_summary</code> dataset is <code>v4</code>.</p>
 <p>For more detail on where these fields come from in the
 <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html">raw data</a>,
-please look <a href="https://github.com/mozilla/bigquery-etl/tree/25b702d0824b96ec1342d653296adfbe1302027d/sql/telemetry_derived/main_summary_v4">in the <code>main_summary</code> ETL code</a>.</p>
+please look <a href="https://github.com/mozilla/bigquery-etl/tree/25b702d0824b96ec1342d653296adfbe1302027d/sql/moz-fx-data-shared-prod/telemetry_derived/main_summary_v4">in the <code>main_summary</code> ETL code</a>.</p>
 <p>Most of the fields are simple scalar values, with a few notable exceptions:</p>
 <ul>
 <li>The <code>search_count</code> field is an array of structs, each item in the array representing
@@ -7239,12 +7240,12 @@ or key-&gt;(key-&gt;value) nested maps for keyed histograms.</li>
 <tr><td><code>profile_creation_date</code></td><td><code>environment.profile.creationDate</code></td><td>days since epoch</td><td><code>15,755</code></td><td></td><td><code>from_unixtime(profile_creation_date * 86400)</code></td></tr>
 </tbody></table>
 <h3><a class="header" href="#user-preferences" id="user-preferences">User Preferences</a></h3>
-<p>These are added in the <a href="https://github.com/mozilla/bigquery-etl/blob/25b702d0824b96ec1342d653296adfbe1302027d/sql/telemetry_derived/main_summary_v4/part1.sql#L476-L501">Main Summary ETL code</a>.
+<p>These are added in the <a href="https://github.com/mozilla/bigquery-etl/blob/25b702d0824b96ec1342d653296adfbe1302027d/sql/moz-fx-data-shared-prod/telemetry_derived/main_summary_v4/part1.sql#L476-L501">Main Summary ETL code</a>.
 They must be available in the <a href="http://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/environment.html">ping environment</a> to be included here.</p>
 <p>Once added, they will show as top-level fields, with the string <code>user_pref</code> prepended.
 For example, <code>dom.ipc.processCount</code> becomes <code>user_pref_dom_ipc_processcount</code>.</p>
 <h2><a class="header" href="#code-reference-6" id="code-reference-6">Code Reference</a></h2>
-<p>This dataset is generated by <a href="https://github.com/mozilla/bigquery-etl/tree/25b702d0824b96ec1342d653296adfbe1302027d/sql/telemetry_derived/main_summary_v4">bigquery-etl</a>.
+<p>This dataset is generated by <a href="https://github.com/mozilla/bigquery-etl/tree/25b702d0824b96ec1342d653296adfbe1302027d/sql/moz-fx-data-shared-prod/telemetry_derived/main_summary_v4">bigquery-etl</a>.
 Refer to this repository for information on how to run or augment the dataset.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/batch_view/main_summary/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#socorro-crash-reports" id="socorro-crash-reports">Socorro Crash Reports</a></h1>
 <ul>
@@ -8031,7 +8032,7 @@ The dataset is backfilled through 2016-03-11</p>
 </code></pre>
 <h1><a class="header" href="#code-reference-10" id="code-reference-10">Code Reference</a></h1>
 <p>The <code>search_aggregates</code> job is
-<a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/search_derived/search_aggregates_v8/query.sql">defined in <code>bigquery-etl</code></a></p>
+<a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/search_derived/search_aggregates_v8/query.sql">defined in <code>bigquery-etl</code></a></p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/search/search_aggregates/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#search-clients-daily" id="search-clients-daily">Search Clients Daily</a></h1>
 <ul>
 <li><a href="datasets/search/search_clients_daily/reference.html#introduction">Introduction</a>
@@ -8145,7 +8146,7 @@ It's backfilled through 2016-03-12</p>
 </code></pre>
 <h1><a class="header" href="#code-reference-11" id="code-reference-11">Code Reference</a></h1>
 <p>The <code>search_clients_daily</code> job is
-<a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/search_derived/search_clients_daily_v8/query.sql">defined in <code>bigquery-etl</code></a></p>
+<a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/search_derived/search_clients_daily_v8/query.sql">defined in <code>bigquery-etl</code></a></p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/search/search_clients_daily/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#search-clients-last-seen" id="search-clients-last-seen">Search Clients Last Seen</a></h1>
 <ul>
 <li><a href="datasets/search/search_clients_last_seen/reference.html#introduction">Introduction</a>
@@ -8199,7 +8200,7 @@ since the client was last active for that usage criteria:</p>
 </ul>
 <p>We also include a variety of dimension information (e.g. os,
 country, channel, default_search) to aggregate on. The
-<a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/search_derived/search_clients_last_seen_v1/query.sql#L37">query itself</a>
+<a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/search_derived/search_clients_last_seen_v1/query.sql#L37">query itself</a>
 lays out all of the available dimensional fields.</p>
 <p>There are, finally, a few fields with daily activity data.
 These include <code>active_hours_sum</code>, <code>organic</code> for organic searches,
@@ -8300,7 +8301,7 @@ It's backfilled through 2020-01-01</p>
 </code></pre>
 <h1><a class="header" href="#code-reference-12" id="code-reference-12">Code Reference</a></h1>
 <p>The <code>search_clients_last_seen</code> job is
-<a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/search_derived/search_clients_last_seen_v1/query.sql">defined in <code>bigquery-etl</code></a></p>
+<a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/search_derived/search_clients_last_seen_v1/query.sql">defined in <code>bigquery-etl</code></a></p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/search/search_clients_last_seen/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#normalized-client-lifetime-value-ltv" id="normalized-client-lifetime-value-ltv">Normalized Client Lifetime Value (LTV)</a></h1>
 <ul>
 <li><a href="datasets/search/client_ltv/reference.html#introduction">Introduction</a>
@@ -8444,8 +8445,8 @@ The dataset is backfilled through 2020-09-14.</p>
 <h1><a class="header" href="#code-references" id="code-references">Code References</a></h1>
 <ul>
 <li><a href="https://github.com/mozilla/telemetry-airflow/blob/master/jobs/ltv_daily.py">LTV daily model fitting</a></li>
-<li>Unnormalized <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/revenue_derived/client_ltv_v1/query.sql"><code>client_ltv</code> query</a> (restricted query access)</li>
-<li><a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/revenue_derived/client_ltv_normalized/query.sql"><code>client_ltv</code> view</a> (for broad use)</li>
+<li>Unnormalized <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/revenue_derived/client_ltv_v1/query.sql"><code>client_ltv</code> query</a> (restricted query access)</li>
+<li><a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/revenue_derived/client_ltv_normalized/query.sql"><code>client_ltv</code> view</a> (for broad use)</li>
 </ul>
 <h1><a class="header" href="#model-performance" id="model-performance">Model Performance</a></h1>
 <p>There is additionally a dataset, <code>ltv_daily_model_perf</code>, that tracks the LTV model's prediction performance each day it is re-trained. For a given day, one could check the performance with the following <a href="https://sql.telemetry.mozilla.org/queries/75244/source#187873">query</a>:</p>
@@ -8532,7 +8533,7 @@ ORDER BY 1
     |- day_2_7_activated: integer
 </code></pre>
 <h1><a class="header" href="#code-reference-13" id="code-reference-13">Code Reference</a></h1>
-<p>The <code>firefox_nondesktop_day_2_7_activation job is</code> <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/telemetry_derived/firefox_nondesktop_day_2_7_activation_v1/query.sql">defined in <code>bigquery-etl</code></a>.</p>
+<p>The <code>firefox_nondesktop_day_2_7_activation job is</code> <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/firefox_nondesktop_day_2_7_activation_v1/query.sql">defined in <code>bigquery-etl</code></a>.</p>
 <h1><a class="header" href="#background-and-caveats-5" id="background-and-caveats-5">Background and Caveats</a></h1>
 <p>Due to the delay in receiving all the initial pings and subsequent 7 day wait prior to establishing the new profile cohort, the table will lag <code>nondesktop_clients_last_seen</code> by 7 days.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/non_desktop/day_2_7_activation/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#google-play-store" id="google-play-store">Google Play Store</a></h1>
@@ -8773,7 +8774,7 @@ GROUP BY
 </code></pre>
 <p><a href="https://sql.telemetry.mozilla.org/queries/74290/source">link to query on STMO</a></p>
 <h2><a class="header" href="#scheduling-18" id="scheduling-18">Scheduling</a></h2>
-<p>The job to retrieve the raw data from the Apple App Store can be found in <a href="https://github.com/mozilla/app-store-analytics-export">the <code>app-store-analytics-export</code> repository</a>. The exported results are individual metrics grouped by a single dimension. These exports are initially loaded into the <a href="https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&amp;p=moz-fx-data-marketing-prod&amp;d=apple_app_store_exported&amp;page=dataset"><code>apple_app_store_exported</code></a> data source. The exports are scheduled in <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/app_store_analytics.py"><code>airflow</code></a>. The job to create the derived tables found in <a href="https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&amp;p=moz-fx-data-marketing-prod&amp;d=apple_app_store&amp;page=dataset"><code>moz-fx-data-marketing-prod.apple_app_store</code></a> can be found in <a href="https://github.com/mozilla/bigquery-etl/tree/master/sql/apple_app_store"><code>bigquery-etl</code> under <code>apple_app_store</code></a>.</p>
+<p>The job to retrieve the raw data from the Apple App Store can be found in <a href="https://github.com/mozilla/app-store-analytics-export">the <code>app-store-analytics-export</code> repository</a>. The exported results are individual metrics grouped by a single dimension. These exports are initially loaded into the <a href="https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&amp;p=moz-fx-data-marketing-prod&amp;d=apple_app_store_exported&amp;page=dataset"><code>apple_app_store_exported</code></a> data source. The exports are scheduled in <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/app_store_analytics.py"><code>airflow</code></a>. The job to create the derived tables found in <a href="https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&amp;p=moz-fx-data-marketing-prod&amp;d=apple_app_store&amp;page=dataset"><code>moz-fx-data-marketing-prod.apple_app_store</code></a> can be found in <a href="https://github.com/mozilla/bigquery-etl/tree/master/sql/moz-fx-data-shared-prod/apple_app_store"><code>bigquery-etl</code> under <code>apple_app_store</code></a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/non_desktop/apple_app_store/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#events-daily" id="events-daily">Events Daily</a></h1>
 <ul>
 <li><a href="datasets/non_desktop/events_daily/reference.html#introduction">Introduction</a></li>
@@ -9206,7 +9207,7 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 <h2><a class="header" href="#metrics-taxonomies" id="metrics-taxonomies">Metrics Taxonomies</a></h2>
 <p>There are two overlapping taxonomies or sets of FxA event metrics.</p>
 <p><a href="https://github.com/mozilla/fxa-auth-server/blob/master/docs/metrics-events.md"><strong>Flow Metrics</strong></a>: these are an older set of metrics events that can be queried through redshift and via the <code>FxA Activity Metrics</code> data source in STMO. The <a href="https://github.com/mozilla/fxa-activity-metrics/">STMO import jobs</a> are run once a day. See <a href="https://github.com/mozilla/fxa-auth-server/blob/master/docs/metrics-events.md">this documentation</a> for detailed description of the types of flow events that are logged and the tables that contain them (note this documentation does not contain an exhaustive list of all flow metrics but is generally still accurate about the ones that are described). Note there are 50% and 10% sampled versions of the major tables, which contain more historical data than their complete counterparts. Complete tables go back 3 months, 50% tables go back 6 months, and 10% tables go back 24 months. Sampling is done at the level of the FxA user id <code>uid</code> (i.e. integer(<code>uid</code>) % 100).</p>
-<p><a href="https://analytics.amplitude.com/mozilla-corp/manage/project/178231/advanced/events"><strong>Amplitude Events</strong></a>: FxA started to send metrics events to amplitude circa October 2017. The <a href="https://github.com/mozilla/fxa-amplitude-send">code responsible for batching events to amplitude</a> over HTTP is run in more-or-less real-time. Amplitude events can be queried through the <a href="https://analytics.amplitude.com/mozilla-corp/space/vj9qof9">amplitude UI</a> as well as various views in <code>moz-fx-data-shared-prod.firefox_accounts</code> dataset in BigQuery that maintain copies of the events that are sent to Amplitude. <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/firefox_accounts/fxa_content_auth_events/view.sql"><code>moz-fx-data-shared-prod.firefox_accounts.fxa_content_auth_events</code></a> is probably the easiest BigQuery view to use, though it does not contain email bounce events and (at the time of writing) only contains data starting at 2019-03-01.</p>
+<p><a href="https://analytics.amplitude.com/mozilla-corp/manage/project/178231/advanced/events"><strong>Amplitude Events</strong></a>: FxA started to send metrics events to amplitude circa October 2017. The <a href="https://github.com/mozilla/fxa-amplitude-send">code responsible for batching events to amplitude</a> over HTTP is run in more-or-less real-time. Amplitude events can be queried through the <a href="https://analytics.amplitude.com/mozilla-corp/space/vj9qof9">amplitude UI</a> as well as various views in <code>moz-fx-data-shared-prod.firefox_accounts</code> dataset in BigQuery that maintain copies of the events that are sent to Amplitude. <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/firefox_accounts/fxa_content_auth_events/view.sql"><code>moz-fx-data-shared-prod.firefox_accounts.fxa_content_auth_events</code></a> is probably the easiest BigQuery view to use, though it does not contain email bounce events and (at the time of writing) only contains data starting at 2019-03-01.</p>
 <p>Note that the BigQuery <a href="https://github.com/mozilla/bigquery-etl/tree/master/sql">ETL jobs</a> run daily while real-time data is accessible through the amplitude UI.</p>
 <p>FxA's amplitude metrics were originally just re-configured and re-named versions of the flow metrics. However things have since diverged a bit and there are now metrics events that only have an amplitude version but no corresponding flow event, and vice-versa. If you are wondering whether a certain event is logged its likely you will have to check both data sources.</p>
 <p><strong>Generally speaking, one should first try to use the amplitude metrics rather than the flow events</strong> for these reasons:</p>
@@ -9510,15 +9511,15 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 </tbody></table>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/datasets/fxa_metrics/emails.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#static-datasets" id="static-datasets">Static Datasets</a></h1>
 <p>Tables containing static data exist in the <code>static</code> dataset in BigQuery.
-These tables are generated from CSV files named <code>data.csv</code> in subdirectories of the <code>sql/static/</code>
-directory in <a href="https://github.com/mozilla/bigquery-etl/tree/master/sql/static"><code>bigquery-etl</code></a>.</p>
+These tables are generated from CSV files named <code>data.csv</code> in subdirectories of the <code>sql/&lt;project&gt;/static/</code>
+directory in <a href="https://github.com/mozilla/bigquery-etl/tree/master/sql/moz-fx-data-shared-prod/static"><code>bigquery-etl</code></a>.</p>
 <h2><a class="header" href="#creating-a-static-table" id="creating-a-static-table">Creating a Static Table</a></h2>
-<p>To create a new table, create a directory in <code>sql/static/</code>.
+<p>To create a new table, create a directory in <code>sql/&lt;project&gt;/static/</code>.
 This directory should be named whatever you wish the table to be named.
 Then, put a CSV file named <code>data.csv</code> in the directory.
 It is expected that the first line of <code>data.csv</code> is a header row containing the column
 names of the data.</p>
-<p>e.g. In <code>sql/static/new_table/data.csv</code>:</p>
+<p>e.g. In <code>sql/moz-fx-data-shared-prod/static/new_table/data.csv</code>:</p>
 <pre><code>id,val
 a,1
 b,2
@@ -9527,7 +9528,7 @@ c,3
 <p>An optional <code>description.txt</code> and <code>schema.json</code> can be added. <code>description.txt</code> will fill the description
 field in BigQuery. <code>schema.json</code> will set the schema of the table; if no schema is provided, it is assumed
 that all fields are nullable strings.</p>
-<p>See <a href="https://github.com/mozilla/bigquery-etl/tree/master/sql/static/country_names_v1"><code>country_names_v1</code></a> for an example.</p>
+<p>See <a href="https://github.com/mozilla/bigquery-etl/tree/master/sql/moz-fx-data-shared-prod/static/country_names_v1"><code>country_names_v1</code></a> for an example.</p>
 <p>To create the table in BigQuery, run <a href="https://github.com/mozilla/bigquery-etl/blob/master/script/publish_static"><code>script/publish_static</code></a>.</p>
 <h3><a class="header" href="#notes-1" id="notes-1">Notes</a></h3>
 <p>Static tables can be created in any dataset in bigquery-etl. However, it is recommended for consistency and

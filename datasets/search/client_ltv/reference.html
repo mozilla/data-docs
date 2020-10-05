@@ -313,8 +313,8 @@ The dataset is backfilled through 2020-09-14.</p>
 <h1><a class="header" href="#code-references" id="code-references">Code References</a></h1>
 <ul>
 <li><a href="https://github.com/mozilla/telemetry-airflow/blob/master/jobs/ltv_daily.py">LTV daily model fitting</a></li>
-<li>Unnormalized <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/revenue_derived/client_ltv_v1/query.sql"><code>client_ltv</code> query</a> (restricted query access)</li>
-<li><a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/revenue_derived/client_ltv_normalized/query.sql"><code>client_ltv</code> view</a> (for broad use)</li>
+<li>Unnormalized <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/revenue_derived/client_ltv_v1/query.sql"><code>client_ltv</code> query</a> (restricted query access)</li>
+<li><a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/revenue_derived/client_ltv_normalized/query.sql"><code>client_ltv</code> view</a> (for broad use)</li>
 </ul>
 <h1><a class="header" href="#model-performance" id="model-performance">Model Performance</a></h1>
 <p>There is additionally a dataset, <code>ltv_daily_model_perf</code>, that tracks the LTV model's prediction performance each day it is re-trained. For a given day, one could check the performance with the following <a href="https://sql.telemetry.mozilla.org/queries/75244/source#187873">query</a>:</p>
