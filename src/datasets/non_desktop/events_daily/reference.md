@@ -43,7 +43,6 @@ has information about these procedures and examples of their usage.
 ### Example Queries
 
 This query gives the event-count and client-counts per-event per-day.
-It is slightly less efficient than it could be 
 
 ```sql
 SELECT
