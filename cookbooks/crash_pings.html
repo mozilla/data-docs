@@ -171,10 +171,10 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#working-with-crash-pings" id="working-with-crash-pings">Working with Crash Pings</a></h1>
-<p>You can use the following snippets to start querying <a href="../datasets/pings.html#crash-ping">crash pings</a> with <a href="../tools/stmo.html">STMO</a> and 
-<a href="../cookbooks/bigquery.html">BigQuery</a>. Using these tools, you can quickly get counts 
+<p>You can use the following snippets to start querying <a href="../datasets/pings.html#crash-ping">crash pings</a> with <a href="../tools/stmo.html">STMO</a> and
+<a href="../cookbooks/bigquery.html">BigQuery</a>. Using these tools, you can quickly get counts
 and other information about crash pings that are submitted day-to-day.</p>
-<p>The following example just counts all existing pings for a few days across several dimensions: </p>
+<p>The following example just counts all existing pings for a few days across several dimensions:</p>
 <pre><code class="language-sql">SELECT date(submission_timestamp) AS crash_date,
        count(*) AS crash_count
 FROM telemetry.crash

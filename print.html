@@ -712,7 +712,7 @@ usage criteria.</li>
 client-side activity dates).</li>
 </ul>
 </li>
-<li>What <a href="metrics/../datasets/ping.html">pings</a> are used as a signal of activity?
+<li>What <a href="metrics/../datasets/pings.html">pings</a> are used as a signal of activity?
 <ul>
 <li>For Firefox Desktop, we use the <code>main</code> ping to determine activity.</li>
 <li>For products instrumented using Glean, we use the <code>baseline</code> ping.</li>
@@ -1993,10 +1993,10 @@ GROUP BY 1, 2, 3
 ORDER BY 1, 2, 3
 </code></pre>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/cookbooks/normandy_events.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#working-with-crash-pings" id="working-with-crash-pings">Working with Crash Pings</a></h1>
-<p>You can use the following snippets to start querying <a href="cookbooks/../datasets/pings.html#crash-ping">crash pings</a> with <a href="cookbooks/../tools/stmo.html">STMO</a> and 
-<a href="cookbooks/../cookbooks/bigquery.html">BigQuery</a>. Using these tools, you can quickly get counts 
+<p>You can use the following snippets to start querying <a href="cookbooks/../datasets/pings.html#crash-ping">crash pings</a> with <a href="cookbooks/../tools/stmo.html">STMO</a> and
+<a href="cookbooks/../cookbooks/bigquery.html">BigQuery</a>. Using these tools, you can quickly get counts
 and other information about crash pings that are submitted day-to-day.</p>
-<p>The following example just counts all existing pings for a few days across several dimensions: </p>
+<p>The following example just counts all existing pings for a few days across several dimensions:</p>
 <pre><code class="language-sql">SELECT date(submission_timestamp) AS crash_date,
        count(*) AS crash_count
 FROM telemetry.crash
