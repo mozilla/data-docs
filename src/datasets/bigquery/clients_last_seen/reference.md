@@ -112,7 +112,7 @@ ORDER BY
 This dataset is updated daily via the
 [telemetry-airflow](https://github.com/mozilla/telemetry-airflow)
 infrastructure. The job runs as part of the
-[`main_summary` DAG](https://github.com/mozilla/bigquery-etl/blob/a39e168a2d3396d8dd286e1ae9fa6baf7f8afa2d/dags/bqetl_main_summary.py#L104).
+[`main_summary` DAG](https://github.com/mozilla/bigquery-etl/blob/ad84a15d580333b41d36cfe8331e51238f3bafa1/dags/bqetl_main_summary.py#L104).
 
 ## Schema
 

@@ -19,7 +19,7 @@ For more details see the [search data documentation].
 ## Scheduling
 
 This job is
-[scheduled on airflow](https://github.com/mozilla/bigquery-etl/blob/a39e168a2d3396d8dd286e1ae9fa6baf7f8afa2d/dags/bqetl_search.py#L40)
+[scheduled on airflow](https://github.com/mozilla/bigquery-etl/blob/ad84a15d580333b41d36cfe8331e51238f3bafa1/dags/bqetl_search.py#L40)
 to run daily.
 
 ## Schema
