@@ -168,6 +168,8 @@ Each data source associated with the experiment defines additional
 indicate whether `client_id` reported data from more than one branch or
 without any tagged branch in that dataset over that analysis window.
 
+Each segment associated with the experiment defines an additional boolean column.
+
 ## Scheduling
 
 Jetstream is updated nightly by telemetry-airflow.
