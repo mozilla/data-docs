@@ -306,6 +306,7 @@ columns:</p>
 <code>&lt;data_source&gt;_has_non_enrolled_data</code> columns, which respectively
 indicate whether <code>client_id</code> reported data from more than one branch or
 without any tagged branch in that dataset over that analysis window.</p>
+<p>Each segment associated with the experiment defines an additional boolean column.</p>
 <h2><a class="header" href="#scheduling" id="scheduling">Scheduling</a></h2>
 <p>Jetstream is updated nightly by telemetry-airflow.
 It is invoked by the <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/jetstream.py"><code>jetstream</code> DAG</a>.</p>
