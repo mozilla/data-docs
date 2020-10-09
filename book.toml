@@ -1,5 +1,5 @@
 [book]
-title = "Firefox Data Documentation"
+title = "Mozilla Data Documentation"
 
 [build]
 create-missing = false

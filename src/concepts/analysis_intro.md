@@ -13,7 +13,7 @@ Most of the data for Firefox Desktop data is received from `main` pings.
 
 ## Measurement Types
 
-Measurements for a specific aspect of Firefox are called _probes_. A single telemetry ping sends many different probes. Probes are either _Histograms_ (recording distributions of data points) or _Scalars_ (recording a single value).
+Measurements for a specific aspect of a product are called _probes_. A single telemetry ping sends many different probes. Probes are either _Histograms_ (recording distributions of data points) or _Scalars_ (recording a single value).
 
 You can search for details about probes by using the [Probe Dictionary][probe_dict]. For each probe, the probe dictionary will give you:
 

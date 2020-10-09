@@ -1,4 +1,4 @@
-# Firefox Data Documentation
+# Mozilla Data Documentation
 
 [![Linux Build Status](https://travis-ci.org/mozilla/firefox-data-docs.svg?branch=master)](https://travis-ci.org/mozilla/firefox-data-docs)
 
