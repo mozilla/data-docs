@@ -30,7 +30,7 @@ There are three types of Prefs:
 
 For instance, to set an observer:
 
-```
+```js
 Services.obs.addObserver(this, "final-ui-startup", true);
 ```
 
@@ -40,7 +40,7 @@ In this example, `this` would implement an `observe(subject, topic, data)` funct
 
 This is similar to the observer pattern above:
 
-```
+```js
 Services.prefs.addObserver("pref_name", this);
 ```
 
@@ -119,14 +119,14 @@ Note that for the below to work you only need [Mercurial][mercurial] installed, 
 
 In order to use Mozilla CI (AKA "[Tryserver][try-server-docs]"), you must have a full clone of the `mozilla-central` repository:
 
-```
+```bash
 hg clone https://hg.mozilla.org/mozilla-central
 cd mozilla-central
 ```
 
 Copy in unsigned XPI, and commit it to your local Mercurial repo:
 
-```
+```bash
 cp ~/src/my-extension.xpi testing/profiles/common/extensions/
 hg add testing/profiles/common/extensions/my-extension.xpi
 hg commit -m "Bug nnn - Testing my extension" testing/profiles/common/extensions/my-extension.xpi
@@ -134,7 +134,7 @@ hg commit -m "Bug nnn - Testing my extension" testing/profiles/common/extensions
 
 Push to Try:
 
-```
+```bash
 ./mach try -p linux64,macosx64,win64 -b do -u none -t all --artifact
 ```
 

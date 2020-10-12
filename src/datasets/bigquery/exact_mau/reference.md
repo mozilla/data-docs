@@ -118,7 +118,7 @@ Perhaps we want to compare MAU as above to [aDAU](../../../cookbooks/active_dau.
 over the same slice. The column `visited_5_uri_dau` gives DAU as calculated
 with the "Desktop Visited 5 URI" usage criterion, corresponding to aDAU:
 
-```
+```sql
 SELECT
     submission_date,
     SUM(mau) AS mau,
@@ -147,7 +147,7 @@ available as views that do not require any aggregation:
 
 An example query for desktop:
 
-```
+```sql
 SELECT
     submission_date,
     mau,
@@ -170,7 +170,7 @@ In the Exact MAU datasets, country is a dimension that would normally be specifi
 in a slice definition.
 Indeed, for desktop and non-desktop clients, the definition of "Tier 1 MAU" looks like:
 
-```
+```sql
 SELECT
     submission_date,
     SUM(mau) AS mau
@@ -196,7 +196,7 @@ even a single FxA event originating from a tier 1 country in the 28 day MAU wind
 That calculation requires a separate "FxA Seen in Tier 1 Country" criterion
 and is represented in the exact MAU table as `seen_in_tier1_country_mau`:
 
-```
+```sql
 SELECT
     submission_date,
     SUM(seen_in_tier1_country_mau) AS tier1_mau

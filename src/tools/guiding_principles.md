@@ -204,7 +204,7 @@ Avro types to BigQuery
 fields](https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#complex_types),
 which requires modifying the JSON payload to convert
 
-```
+```json
 {
   "key1": "value1",
   "key2": "value2"
@@ -213,7 +213,7 @@ which requires modifying the JSON payload to convert
 
 into
 
-```
+```json
 [
  {
   "key": "key1",

@@ -120,7 +120,7 @@ results AS (
 
 Obtain the results.
 
-```SQL
+```sql
 SELECT *
 FROM results
 ```

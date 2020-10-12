@@ -124,7 +124,7 @@ This table has a `product` dimension used to differentiate different application
 Not that exact naming for applications and channels is sometimes different
 between analyses. You can retrieve the list of names used here via query:
 
-```
+```sql
 SELECT
   product
 FROM

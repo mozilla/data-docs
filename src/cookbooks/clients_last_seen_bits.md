@@ -41,7 +41,7 @@ The user-facing `clients_last_seen` views present fields like `days_since_seen`
 that extract this information for us from the underlying `days_seen_bits` field,
 allowing us to easily express DAU, WAU, and MAU aggregates like:
 
-```
+```sql
 SELECT
   submission_date,
   COUNTIF(days_since_seen < 28) AS mau,
@@ -64,7 +64,7 @@ Note that the desktop `clients_last_seen` table also has additional bit pattern
 fields corresponding to other [usage criteria](../metrics/index.md),
 so other variants on MAU can be calculated like:
 
-```
+```sql
 SELECT
   submission_date,
   COUNTIF(days_since_visited_5_uri < 28) AS visited_5_uri_mau,
@@ -87,7 +87,7 @@ new usage criteria.
 Also note that non-desktop products also have derived tables following the
 `clients_last_seen` methodology. Per-product MAU could be calculated as:
 
-```
+```sql
 SELECT
   submission_date,
   app_name,
@@ -127,7 +127,7 @@ and it returns fields like:
 
 Calculating GUD's retention aggregates and some other variants looks like:
 
-```
+```sql
 -- The struct returned by bits28_retention is nested.
 -- The first level of nesting defines the beginning of our window;
 -- in our case, we want day_13 to get retention in a 2-week window.
@@ -217,7 +217,7 @@ It's much easier to reason about these bit patterns, however, when we view them
 as strings of ones and zeros. We've provided a UDF to convert these
 values to "bit strings":
 
-```
+```sql
 SELECT
   [ udf.bits28_to_string(1),
     udf.bits28_to_string(2),
@@ -237,7 +237,7 @@ to `2^13 + 2^6` and its string representation should have two `1` values.
 If we label the rightmost bit as "offset 0", we would expect the set
 bits to be at offsets `-13` and `-6`:
 
-```
+```sql
 SELECT udf.bits28_to_string(8256)
 
 >>> '0000000000000010000001000000'
@@ -246,7 +246,7 @@ SELECT udf.bits28_to_string(8256)
 We also provide the inverse of this function to take a string representation
 of a bit pattern and return the associated integer:
 
-```
+```sql
 SELECT udf.bits28_from_string('0000000000000010000001000000')
 
 >>> 8256
@@ -254,7 +254,7 @@ SELECT udf.bits28_from_string('0000000000000010000001000000')
 
 Note that the leading zeros are optional for this function:
 
-```
+```sql
 SELECT udf.bits28_from_string('10000001000000')
 
 >>> 8256
@@ -263,7 +263,7 @@ SELECT udf.bits28_from_string('10000001000000')
 Finally, we can translate this into an array of concrete dates by passing
 a value for the date that corresponds to the rightmost bit:
 
-```
+```sql
 SELECT udf.bits28_to_dates(8256, '2020-01-28')
 
 >>> ['2020-01-15', '2020-01-22']
@@ -370,7 +370,7 @@ does not matter but only the _recency_ of the latest active day.
 We provide a special function to tell us how many days have elapsed since
 the most recent activity encoded in a bit pattern:
 
-```
+```sql
 SELECT udf.bits28_days_since_seen(udf.bits28_from_string('10000001000000'))
 
 >>> 6
@@ -381,7 +381,7 @@ views, so that instead of referencing `days_seen_bits` with a UDF, you can
 instead reference a field called `days_since_seen`. Counting MAU, WAU, and
 DAU generally looks like:
 
-```
+```sql
 SELECT
   COUNTIF(days_since_seen < 28) AS mau,
   COUNTIF(days_since_seen <  7) AS wau,
@@ -415,7 +415,7 @@ on the right (this would be a `1` instead if the user had been active on 2020-01
 
 The `days_since_seen` value is now `7`, which is outside the WAU window:
 
-```
+```sql
 SELECT udf.bits28_days_since_seen(udf.bits28_from_string('100000010000000'))
 
 >>> 7
@@ -477,7 +477,7 @@ But how can we extract this usage per week information in a query?
 
 Extracting the bits for a specific week can be achieved via UDF:
 
-```
+```sql
 SELECT
   -- Signature is bits28_range(offset_to_day_0, start_bit, number_of_bits)
   udf.bits28_range(days_seen_bits, -13 + 0, 7) AS week_0_bits,
@@ -489,7 +489,7 @@ FROM
 And then we can turn those bits into a boolean indicating whether the client
 was active or not as:
 
-```
+```sql
 SELECT
   BIT_COUNT(udf.bits28_range(days_seen_bits, -13 + 0, 7)) > 0 AS active_in_week_0
   BIT_COUNT(udf.bits28_range(days_seen_bits, -13 + 7, 7)) > 0 AS active_in_week_1
@@ -501,7 +501,7 @@ This pattern of checking whether any bit is set within a given range is common
 enough that we provide short-hand for it in `bits28_active_in_range`.
 The above query can be made a bit cleaner as:
 
-```
+```sql
 SELECT
   udf.bits28_active_in_range(days_seen_bits, -13 + 0, 7) AS active_in_week_0
   udf.bits28_active_in_range(days_seen_bits, -13 + 7, 7) AS active_in_week_1
@@ -512,7 +512,7 @@ FROM
 In terms of the higher-level `bits28_retention` function discussed earlier,
 here's how this client looks:
 
-```
+```sql
 SELECT
   submission_date,
   udf.bits28_retention(days_seen_bits, submission_date).day_13.*
@@ -542,7 +542,7 @@ active on day 0 who were also active on days 1 or 2.
 To calculate `n`-day retention, we need to use the lower-level `bits28_range`
 function:
 
-```
+```sql
 DECLARE n INT64;
 SET n = 3;
 
@@ -592,7 +592,7 @@ to ensure we are considering late-arriving pings. For example, if we wanted
 to calculate 3-day retention but allow 2 days of cushion for late-arriving
 pings, we would need to use an offset of 5 days from `submission_date`:
 
-```
+```sql
 DECLARE n, cushion_days, offset_to_day_0 INT64;
 SET n = 3;
 SET cushion_days = 2;
@@ -627,7 +627,7 @@ GROUP BY
 
 Convert an INT64 field into a 28 character string representing the individual bits.
 
-```
+```sql
 bits28_to_string(bits INT64)
 
 SELECT udf.bits28_to_string(18)
@@ -638,7 +638,7 @@ SELECT udf.bits28_to_string(18)
 
 Convert a string representing individual bits into an INT64.
 
-```
+```sql
 bits28_from_string(bits STRING)
 
 SELECT udf.bits28_from_string('10010')
@@ -649,7 +649,7 @@ SELECT udf.bits28_from_string('10010')
 
 Convert a bit pattern into an array of the dates is represents.
 
-```
+```sql
 bits28_to_dates(bits INT64, end_date DATE)
 
 SELECT udf.bits28_to_dates(18, '2020-01-28')
@@ -660,7 +660,7 @@ SELECT udf.bits28_to_dates(18, '2020-01-28')
 
 Return the position of the rightmost set bit in an INT64 bit pattern.
 
-```
+```sql
 bits28_days_since_seen(bits INT64)
 
 SELECT bits28_days_since_seen(18)
@@ -676,7 +676,7 @@ the rightmost bit in the pattern.
 
 `n_bits` is the number of bits to consider, counting right from the bit at `start_offset`.
 
-```
+```sql
 bits28_range(bits INT64, offset INT64, n_bits INT64)
 
 SELECT udf.bits28_to_string(udf.bits28_range(18, 5, 6))
@@ -696,7 +696,7 @@ the rightmost bit in the pattern.
 
 `n_bits` is the number of bits to consider, counting right from the bit at `start_offset`.
 
-```
+```sql
 bits28_active_in_range(bits INT64, start_offset INT64, n_bits INT64)
 ```
 
@@ -705,6 +705,6 @@ bits28_active_in_range(bits INT64, start_offset INT64, n_bits INT64)
 Return a nested struct providing numerator and denominator fields for
 the standard 1-Week, 2-Week, and 3-Week retention definitions.
 
-```
+```sql
 bits28_retention(bits INT64, submission_date DATE)
 ```

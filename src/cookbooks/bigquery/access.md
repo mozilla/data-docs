@@ -95,7 +95,7 @@ rather than looking for user credentials.
 If you have service account credentials, you can point client SDKs at them
 by setting:
 
-```
+```bash
 export GOOGLE_APPLICATION_CREDENTIALS=/path/to/creds.json
 ```
 
@@ -103,14 +103,14 @@ If you do not have appropriate service account credentials, but your GCP user
 account has sufficient access, you can have your user credentials mimic a
 service account by running:
 
-```
+```bash
 gcloud auth application-default login
 ```
 
 Once you've followed the browser flow to grant access, you should be able to,
 for example, access BigQuery from Python:
 
-```
+```bash
 pip install google-cloud-bigquery
 python -c 'from google.cloud import bigquery; print([d.dataset_id for d in bigquery.Client().list_datasets()])'
 ```

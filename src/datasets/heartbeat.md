@@ -28,7 +28,7 @@ hb-example-slug::e87bcae5-bb63-4829-822a-85ba41ee5d53
 
 These can be extracted from the ping table for analysis using expressions like:
 
-```
+```sql
 SPLIT(payload.survey_id,'::')[OFFSET(1)] AS surveygizmo_userid
 ```
 
