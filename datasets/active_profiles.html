@@ -261,7 +261,7 @@ that will hopefully yield good heuristics for users that only show up for a sing
 <p><a href="https://console.cloud.google.com/bigquery?sq=630180991450:648f8e0a2faa4d86847fe8d27daf1938">Here</a> is
 a sample query that will give averages for predicted MAU, probability that users are still
 active, and other quantities across different operating systems:</p>
-<pre><code>SELECT
+<pre><code class="language-sql">SELECT
   os,
   cast(sum(prob_mau) AS int64) AS predicted_mau,
   count(*) AS n,

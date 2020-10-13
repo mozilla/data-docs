@@ -201,14 +201,14 @@
 <li>The feature must not start up before <code>final-ui-startup</code> is observed.</li>
 </ul>
 <p>For instance, to set an observer:</p>
-<pre><code>Services.obs.addObserver(this, &quot;final-ui-startup&quot;, true);
+<pre><code class="language-js">Services.obs.addObserver(this, &quot;final-ui-startup&quot;, true);
 </code></pre>
 <p>In this example, <code>this</code> would implement an <code>observe(subject, topic, data)</code> function which will be called when <code>final-ui-startup</code> is observed. See the <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIObserverService#addObserver()">Observer documentation</a> for more information.</p>
 <ul>
 <li>It must be possible to enable/disable the feature at runtime, via a pref change.</li>
 </ul>
 <p>This is similar to the observer pattern above:</p>
-<pre><code>Services.prefs.addObserver(&quot;pref_name&quot;, this);
+<pre><code class="language-js">Services.prefs.addObserver(&quot;pref_name&quot;, this);
 </code></pre>
 <p>More information is available in the <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIPrefService">Preference service documentation</a>.</p>
 <ul>
@@ -265,16 +265,16 @@
 <h2><a class="header" href="#example-extensions-testing-workflow" id="example-extensions-testing-workflow">Example Extensions Testing Workflow</a></h2>
 <p>Note that for the below to work you only need <a href="https://www.mercurial-scm.org/">Mercurial</a> installed, but if you want to do local testing you must be set up to <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide/Build_Instructions">build Firefox</a>. You don't need to build Firefox from source; <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide/Build_Instructions/Artifact_builds">artifact builds</a> are sufficient.</p>
 <p>In order to use Mozilla CI (AKA &quot;<a href="https://firefox-source-docs.mozilla.org/tools/try/">Tryserver</a>&quot;), you must have a full clone of the <code>mozilla-central</code> repository:</p>
-<pre><code>hg clone https://hg.mozilla.org/mozilla-central
+<pre><code class="language-bash">hg clone https://hg.mozilla.org/mozilla-central
 cd mozilla-central
 </code></pre>
 <p>Copy in unsigned XPI, and commit it to your local Mercurial repo:</p>
-<pre><code>cp ~/src/my-extension.xpi testing/profiles/common/extensions/
+<pre><code class="language-bash">cp ~/src/my-extension.xpi testing/profiles/common/extensions/
 hg add testing/profiles/common/extensions/my-extension.xpi
 hg commit -m &quot;Bug nnn - Testing my extension&quot; testing/profiles/common/extensions/my-extension.xpi
 </code></pre>
 <p>Push to Try:</p>
-<pre><code>./mach try -p linux64,macosx64,win64 -b do -u none -t all --artifact
+<pre><code class="language-bash">./mach try -p linux64,macosx64,win64 -b do -u none -t all --artifact
 </code></pre>
 <p>This will run Mozilla CI tests on all platforms</p>
 <p>Note that you must have Level 1 commit access to use tryserver. If you are interested in interacting with Mozilla CI from Github (which only requires users to be in the Mozilla GitHub org), check out the <a href="https://github.com/biancadanforth/taskcluster-integration-poc/">Taskcluster Integration proof-of-concept</a>.</p>

@@ -190,7 +190,7 @@ containing both the telemetry <code>client_id</code> and the Normandy <code>user
 <pre><code>hb-example-slug::e87bcae5-bb63-4829-822a-85ba41ee5d53
 </code></pre>
 <p>These can be extracted from the ping table for analysis using expressions like:</p>
-<pre><code>SPLIT(payload.survey_id,'::')[OFFSET(1)] AS surveygizmo_userid
+<pre><code class="language-sql">SPLIT(payload.survey_id,'::')[OFFSET(1)] AS surveygizmo_userid
 </code></pre>
 <h2><a class="header" href="#data-reference" id="data-reference">Data reference</a></h2>
 <p>Heartbeat data is available in the <code>telemetry.heartbeat</code> table in BigQuery.</p>

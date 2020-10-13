@@ -287,7 +287,7 @@ ORDER BY
 <p>Perhaps we want to compare MAU as above to <a href="../../../cookbooks/active_dau.html">aDAU</a>
 over the same slice. The column <code>visited_5_uri_dau</code> gives DAU as calculated
 with the &quot;Desktop Visited 5 URI&quot; usage criterion, corresponding to aDAU:</p>
-<pre><code>SELECT
+<pre><code class="language-sql">SELECT
     submission_date,
     SUM(mau) AS mau,
     SUM(visited_5_uri_dau) AS adau
@@ -312,7 +312,7 @@ available as views that do not require any aggregation:</p>
 <li><code>firefox_accounts_exact_mau28_v1</code>.</li>
 </ul>
 <p>An example query for desktop:</p>
-<pre><code>SELECT
+<pre><code class="language-sql">SELECT
     submission_date,
     mau,
     tier1_mau
@@ -329,7 +329,7 @@ to a specific set of &quot;Tier 1&quot; countries.
 In the Exact MAU datasets, country is a dimension that would normally be specified
 in a slice definition.
 Indeed, for desktop and non-desktop clients, the definition of &quot;Tier 1 MAU&quot; looks like:</p>
-<pre><code>SELECT
+<pre><code class="language-sql">SELECT
     submission_date,
     SUM(mau) AS mau
 FROM
@@ -351,7 +351,7 @@ follow a more inclusive definition for &quot;Tier 1 FxA MAU&quot; where a user c
 even a single FxA event originating from a tier 1 country in the 28 day MAU window.
 That calculation requires a separate &quot;FxA Seen in Tier 1 Country&quot; criterion
 and is represented in the exact MAU table as <code>seen_in_tier1_country_mau</code>:</p>
-<pre><code>SELECT
+<pre><code class="language-sql">SELECT
     submission_date,
     SUM(seen_in_tier1_country_mau) AS tier1_mau
 FROM

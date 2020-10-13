@@ -266,16 +266,16 @@ a service account and looks for JSON-based credentials in several well-known loc
 rather than looking for user credentials.</p>
 <p>If you have service account credentials, you can point client SDKs at them
 by setting:</p>
-<pre><code>export GOOGLE_APPLICATION_CREDENTIALS=/path/to/creds.json
+<pre><code class="language-bash">export GOOGLE_APPLICATION_CREDENTIALS=/path/to/creds.json
 </code></pre>
 <p>If you do not have appropriate service account credentials, but your GCP user
 account has sufficient access, you can have your user credentials mimic a
 service account by running:</p>
-<pre><code>gcloud auth application-default login
+<pre><code class="language-bash">gcloud auth application-default login
 </code></pre>
 <p>Once you've followed the browser flow to grant access, you should be able to,
 for example, access BigQuery from Python:</p>
-<pre><code>pip install google-cloud-bigquery
+<pre><code class="language-bash">pip install google-cloud-bigquery
 python -c 'from google.cloud import bigquery; print([d.dataset_id for d in bigquery.Client().list_datasets()])'
 </code></pre>
 <h3><a class="header" href="#spark" id="spark">Spark</a></h3>
