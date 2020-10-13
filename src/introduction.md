@@ -1,7 +1,7 @@
-# Firefox Data Documentation
+# Mozilla Data Documentation
 
 This documentation helps Mozilla's developers and data scientists analyze and interpret the data gathered
-by the Firefox Telemetry system.
+by the Mozilla Telemetry system.
 
 At [Mozilla](https://www.mozilla.org), our data-gathering and data-handling practices are anchored in our
 [Data Privacy Principles](https://www.mozilla.org/en-US/privacy/principles/) and elaborated in the

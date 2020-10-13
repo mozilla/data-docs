@@ -1,4 +1,4 @@
-[Firefox Data Documentation](introduction.md)
+[Mozilla Data Documentation](introduction.md)
 
 - [Getting Started](concepts/getting_started.md)
   - [Terminology](concepts/terminology.md)

@@ -1,4 +1,4 @@
-# A brief history of Firefox data collection
+# A brief history of Mozilla data collection
 
 > This section was originally included in the [Project Smoot existing metrics report][smootv1]
 > (Mozilla internal link); the DTMO version has been updated to reflect changes to the data platform.
