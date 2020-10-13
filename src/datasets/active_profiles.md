@@ -111,7 +111,7 @@ that will hopefully yield good heuristics for users that only show up for a sing
 a sample query that will give averages for predicted MAU, probability that users are still
 active, and other quantities across different operating systems:
 
-```
+```sql
 SELECT
   os,
   cast(sum(prob_mau) AS int64) AS predicted_mau,
