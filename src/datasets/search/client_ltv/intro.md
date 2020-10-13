@@ -41,6 +41,6 @@ The `normalized_ltv_ad_clicks_current` field, for example, does **not** represen
 
 LTV is broken down by engine, so the LTV for a user who searches on multiple engines must be interpreted in context. **LTV is only available for Google and Bing on Firefox Desktop** at this time.
 
-We **do** have the ability to calculate a dollar value per user, however the (unnormalized) table is restricted to those with proper revenue access. For more information, please reach out to :frank (frank@mozilla.com).
+We **do** have the ability to calculate a dollar value per user, however the (unnormalized) table is restricted to those with proper revenue access. For more information, please ask in #data-help on Slack.
 
 
