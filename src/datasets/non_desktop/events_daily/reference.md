@@ -5,6 +5,7 @@
 ## Introduction
 
 `org_mozilla_firefox.events_daily` is designed to answer questions about events. These include:
+
 - Funnels
 - Event Counts
 - User Flows
@@ -14,10 +15,10 @@
 `events_daily` has one row per-client per-day, much the same as `clients_daily`. The table is created in a two-step process:
 
 1. An ancillary table, `event_types`, is updated with the new events seen on that day. Each event is mapped to a unique
-    unicode character, and each event property (the `extras` fields) are also mapped to a unique unicode character.
+   unicode character, and each event property (the `extras` fields) are also mapped to a unique unicode character.
 2. For every user, that day's events are mapped to their associated unicode characters (including `event_properties`).
-    The strings are aggregated and comma-separated, giving a single ordered string that represents all of that user's
-    events on that day.
+   The strings are aggregated and comma-separated, giving a single ordered string that represents all of that user's
+   events on that day.
 
 For Fenix, we aggregate the events ping data _only_. If you're looking for events in other pings, you'll need to query them directly.
 
@@ -26,11 +27,12 @@ Included in this data is a set of dimensional information about the user, also d
 ## Limitations
 
 This approach makes some queries fast and easy, but has some limits:
+
 1. Each product is limited to at most 1 Million unique event types
 2. Each event property is limited to at most 1 Million values. As a result, [some Fenix event properties are not included in this table](https://github.com/mozilla/bigquery-etl/blob/ad84a15d580333b41d36cfe8331e51238f3bafa1/sql/moz-fx-data-shared-prod/org_mozilla_firefox_derived/event_types_v1/query.sql#L89).
 3. Queries do not know the amount of time that passed between events, only that they occurred on the same day
-        *Note*: This can be alleviated by sessionizing and splitting the events string using a session_start event.
-            For Fenix this could be [`events.app_opened_all_startup`](https://github.com/mozilla-mobile/fenix/blob/master/app/metrics.yaml#L11).
+   _Note_: This can be alleviated by sessionizing and splitting the events string using a session_start event.
+   For Fenix this could be [`events.app_opened_all_startup`](https://github.com/mozilla-mobile/fenix/blob/master/app/metrics.yaml#L11).
 
 ## Accessing the Data
 
@@ -108,4 +110,5 @@ The job is [defined in `bigquery-etl`](https://github.com/mozilla/bigquery-etl/b
 The job for updating `event_types` is [also defined in `bigquery-etl`](https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/org_mozilla_firefox_derived/event_types_v1/query.sql).
 
 ## Background and Caveats
-See [this presentation](https://docs.google.com/presentation/d/1hY82h_hP-pJd1j_7PsPPHn469XIQ7p4BfTH3aqRpYTk) for background. 
+
+See [this presentation](https://docs.google.com/presentation/d/1hY82h_hP-pJd1j_7PsPPHn469XIQ7p4BfTH3aqRpYTk) for background.

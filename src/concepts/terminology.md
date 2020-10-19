@@ -6,7 +6,6 @@ This glossary provides definitions for commonly-used terms at Mozilla.
 
 <!-- toc -->
 
-
 ## AET
 
 Account Ecosystem Telemetry; see the [PRD](https://docs.google.com/document/d/1yRLiD8JuaZIIaKhs6DhXEa7aH8jwOau5yW0kHaldFQU/edit#)
@@ -39,9 +38,9 @@ See [Analyst](#Analyst)
 
 Data scientists at Mozilla are a team with a broad array of technical backgrounds and a core set of common professional skills:
 
-* applying statistical methods to noisy data to answer questions about what, how, or why something is happening
-* transform unstructured data into usable metrics and models
-* augmenting strategic product and decision-making with empirical evidence created and curated by the team
+- applying statistical methods to noisy data to answer questions about what, how, or why something is happening
+- transform unstructured data into usable metrics and models
+- augmenting strategic product and decision-making with empirical evidence created and curated by the team
 
 ## Dataset
 
@@ -106,9 +105,9 @@ Measurements for a specific aspect of Firefox are called probes. A single teleme
 
 You can search for details about probes by using the [Probe Dictionary](https://probes.telemetry.mozilla.org/). For each probe, the probe dictionary provides:
 
-* A description of the probe
-* When a probe started being collected
-* Whether data from this probe is collected in the release channel
+- A description of the probe
+- When a probe started being collected
+- Whether data from this probe is collected in the release channel
 
 ## Profile
 
@@ -120,9 +119,9 @@ Typically refers to a query written in the SQL syntax, run on (for example) [STM
 
 ## Retention
 
-* As in “Data retention” - how long data is stored before it is automatically deleted/archived
+- As in “Data retention” - how long data is stored before it is automatically deleted/archived
 
-* As in “User retention” - how likely is a user to continue using a product
+- As in “User retention” - how likely is a user to continue using a product
 
 ## Schema
 
