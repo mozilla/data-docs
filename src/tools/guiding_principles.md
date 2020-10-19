@@ -215,14 +215,14 @@ into
 
 ```json
 [
- {
-  "key": "key1",
-  "value": "value1"
- },
- {
-  "key": "key2",
-  "value": "value2"
- }
+  {
+    "key": "key1",
+    "value": "value1"
+  },
+  {
+    "key": "key2",
+    "value": "value2"
+  }
 ]
 ```
 
