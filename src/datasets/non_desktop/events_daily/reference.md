@@ -31,7 +31,7 @@ This approach makes some queries fast and easy, but has some limits:
 1. Each product is limited to at most 1 Million unique event types
 2. Each event property is limited to at most 1 Million values. As a result, [some Fenix event properties are not included in this table](https://github.com/mozilla/bigquery-etl/blob/ad84a15d580333b41d36cfe8331e51238f3bafa1/sql/moz-fx-data-shared-prod/org_mozilla_firefox_derived/event_types_v1/query.sql#L89).
 3. Queries do not know the amount of time that passed between events, only that they occurred on the same day
-   _Note_: This can be alleviated by sessionizing and splitting the events string using a session_start event.
+   _Note_: This can be alleviated by sessionizing and splitting the events string using a `session_start` event.
    For Fenix this could be [`events.app_opened_all_startup`](https://github.com/mozilla-mobile/fenix/blob/master/app/metrics.yaml#L11).
 
 ## Accessing the Data
