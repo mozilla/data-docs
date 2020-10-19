@@ -52,7 +52,7 @@ The number of unique profiles active on each day.
 
 ## Derived Dataset
 
-A processed dataset, such as [Clients Daily](..datasets/batch_view/clients_daily/reference.md). At Mozilla, this is in contrast to a raw ping table which represents (more or less) the raw data submitted by our users.
+A processed dataset, such as [Clients Daily](../datasets/batch_view/clients_daily/reference.md). At Mozilla, this is in contrast to a raw ping table which represents (more or less) the raw data submitted by our users.
 
 ## Glean
 
