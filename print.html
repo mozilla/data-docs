@@ -8492,7 +8492,7 @@ GROUP BY
   days_since_created_profile,
   SUM(normalized_ltv_ad_clicks_current) AS sum_normalized_ltv_ad_clicks_current,
   SUM(normalized_ltv_ad_clicks_future) AS normalized_ltv_ad_clicks_future,
-  1000000 * SUM(normalized_ltv_ad_clicks_future) / COUNT(*) AS avg_normalized_ltv_ad_clicks_future,
+  SUM(normalized_ltv_ad_clicks_future) / COUNT(*) AS avg_normalized_ltv_ad_clicks_future,
 FROM
   `moz-fx-data-shared-prod`.revenue_derived.client_ltv_v1
 JOIN
