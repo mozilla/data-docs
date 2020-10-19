@@ -113,7 +113,7 @@ the flexibility of the pipeline to accept custom payloads, we hope to insulate
 most data producers in the future from having to interact directly with HTTP
 requests and JSON Schema definitions at all. The state of the art for analytics
 at Mozilla is
-[Glean](https://docs.telemetry.mozilla.org/concepts/glean/glean.html), a set of
+[Glean](../concepts/glean/glean.md), a set of
 projects that reimagines the end-to-end experience of reporting and consuming
 analytics data.
 
