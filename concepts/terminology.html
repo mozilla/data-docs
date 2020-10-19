@@ -171,19 +171,130 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#terminology" id="terminology">Terminology</a></h1>
-<p>You may want to familiarize yourself with a few terms before you start reading the documentation.</p>
+<h2><a class="header" href="#table-of-contents" id="table-of-contents">Table of Contents</a></h2>
+<p>This glossary provides definitions for commonly-used terms at Mozilla.</p>
 <ul>
-<li><strong>Analyst</strong>: Anyone who performs an analysis.
-This is more general than referring to a <strong>data scientist</strong>.</li>
-<li><strong>Ping</strong>: A message that is sent to Mozilla's telemetry servers. Generally speaking, a ping is received from Firefox and includes information about the browser state, user actions, etc.
-(<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/common-ping.html">more details</a>). However, a ping can also be received from other Mozilla products or services</li>
-<li><strong>Dataset</strong>: A set of data that include ping data, derived datasets, etc. It can also refer to a <a href="https://cloud.google.com/bigquery/docs/datasets-intro">BigQuery dataset</a>, which is a container for tables.</li>
-<li><strong>Derived Dataset</strong>: A processed dataset, such as the <code>clients_daily</code> dataset. This is in contrast to a <strong>raw</strong> dataset, which is typically a collection of pings.</li>
-<li><strong>Metric</strong>: Any quantity that we can calculate using our data and that, to some degree, measures some quantity of interest. See also <a href="../metrics/index.html">standard metrics</a>.</li>
-<li><strong>Session</strong>: The time period that commences when a Firefox browser starts until the browser shuts down.</li>
-<li><strong>Subsession</strong>: <code>Sessions</code> are split into <code>subsessions</code> when a 24-hour threshold is exceeded or an environment change occurs.
-(<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/sessions.html?highlight=subsession">more details</a>)</li>
+<li><a href="#aet">AET</a></li>
+<li><a href="#analyst">Analyst</a></li>
+<li><a href="#amplitude">Amplitude</a></li>
+<li><a href="#bigquery">BigQuery</a></li>
+<li><a href="#client-id">Client ID</a></li>
+<li><a href="#data-analyst">Data Analyst</a></li>
+<li><a href="#data-practitioner">Data Practitioner</a></li>
+<li><a href="#data-scientist">Data Scientist</a></li>
+<li><a href="#dataset">Dataset</a></li>
+<li><a href="#dau">DAU</a></li>
+<li><a href="#derived-dataset">Derived Dataset</a></li>
+<li><a href="#glean">Glean</a></li>
+<li><a href="#gcp">GCP</a></li>
+<li><a href="#geoip">GeoIP</a></li>
+<li><a href="#ingestion">Ingestion</a></li>
+<li><a href="#intensity">Intensity</a></li>
+<li><a href="#metric">Metric</a></li>
+<li><a href="#mau">MAU</a></li>
+<li><a href="#ping">Ping</a></li>
+<li><a href="#ping-table">Ping Table</a></li>
+<li><a href="#pipeline">Pipeline</a></li>
+<li><a href="#probe">Probe</a></li>
+<li><a href="#profile">Profile</a></li>
+<li><a href="#query">Query</a></li>
+<li><a href="#retention">Retention</a></li>
+<li><a href="#schema">Schema</a></li>
+<li><a href="#session">Session</a></li>
+<li><a href="#subsession">Subsession</a></li>
+<li><a href="#stmo-sqltelemetrymozillaorg">STMO (sql.telemetry.mozilla.org)</a></li>
+<li><a href="#telemetry">Telemetry</a>
+<ul>
+<li><a href="#wau">WAU</a></li>
 </ul>
+</li>
+</ul>
+<h2><a class="header" href="#aet" id="aet">AET</a></h2>
+<p>Account Ecosystem Telemetry; see the <a href="https://docs.google.com/document/d/1yRLiD8JuaZIIaKhs6DhXEa7aH8jwOau5yW0kHaldFQU/edit#">PRD</a></p>
+<h2><a class="header" href="#analyst" id="analyst">Analyst</a></h2>
+<p>A data analyst is someone who looks at Mozilla data, identifies trends and other qualitative measurements in them, and creates charts and dashboards.</p>
+<h2><a class="header" href="#amplitude" id="amplitude">Amplitude</a></h2>
+<p>A third-party product used by several teams within Mozilla for analysis of user events.</p>
+<h2><a class="header" href="#bigquery" id="bigquery">BigQuery</a></h2>
+<p><a href="https://cloud.google.com/bigquery">BigQuery</a> is Google Cloud's managed data warehouse. Most of the data described on this site is stored and queried using BigQuery. See the <a href="https://docs.telemetry.mozilla.org/cookbooks/bigquery.html0">Accessing and working with BigQuery</a> article for more details.</p>
+<h2><a class="header" href="#client-id" id="client-id">Client ID</a></h2>
+<p>A unique id identifying the client who sent a <a href="#ping">ping</a>.</p>
+<h2><a class="header" href="#data-analyst" id="data-analyst">Data Analyst</a></h2>
+<p>See <a href="#Analyst">Analyst</a></p>
+<h2><a class="header" href="#data-practitioner" id="data-practitioner">Data Practitioner</a></h2>
+<p>See <a href="#Analyst">Analyst</a></p>
+<h2><a class="header" href="#data-scientist" id="data-scientist">Data Scientist</a></h2>
+<p>Data scientists at Mozilla are a team with a broad array of technical backgrounds and a core set of common professional skills:</p>
+<ul>
+<li>applying statistical methods to noisy data to answer questions about what, how, or why something is happening</li>
+<li>transform unstructured data into usable metrics and models</li>
+<li>augmenting strategic product and decision-making with empirical evidence created and curated by the team</li>
+</ul>
+<h2><a class="header" href="#dataset" id="dataset">Dataset</a></h2>
+<p>A set of data, which includes ping data, derived datasets, etc.; sometimes it is used synonymously with “table”; sometimes it is used technically to refer to a <a href="#bigquery">BigQuery</a> dataset, which represents a container for one or more tables.</p>
+<h2><a class="header" href="#dau" id="dau">DAU</a></h2>
+<p>The number of unique profiles active on each day.</p>
+<h2><a class="header" href="#derived-dataset" id="derived-dataset">Derived Dataset</a></h2>
+<p>A processed dataset, such as <a href="..datasets/batch_view/clients_daily/reference.html">Clients Daily</a>. At Mozilla, this is in contrast to a raw ping table which represents (more or less) the raw data submitted by our users.</p>
+<h2><a class="header" href="#glean" id="glean">Glean</a></h2>
+<p>Glean is Mozilla’s product analytics &amp; telemetry solution that provides a consistent experience and behavior across all of our products. Most of Mozilla's mobile apps, including Fenix, have been adapted to use the Glean SDK. For more information, see the <a href="./glean/glean.html">Glean Overview</a>.</p>
+<h2><a class="header" href="#gcp" id="gcp">GCP</a></h2>
+<p>Google Cloud Platform (GCP) is a suite of cloud-computing services that runs on the same infrastructure that Google uses internally for its end-user products.</p>
+<h2><a class="header" href="#geoip" id="geoip">GeoIP</a></h2>
+<p>IP Geolocation involves attempting to discover the location of an IP address in the real world. IP addresses are assigned to an organization, and as these are ever-changing associations, it can be difficult to determine exactly where in the world an IP address is located. Mozilla’s ingestion infrastructure attempts to perform GeoIP lookup during the data decoding process and subsequently discards the IP address before the message arrives in long-term storage.</p>
+<h2><a class="header" href="#ingestion" id="ingestion">Ingestion</a></h2>
+<p>Mozilla's core data platform has been built to support structured ingestion of arbitrary JSON payloads whether they come from browser products on client devices or from server-side applications that have nothing to do with Firefox; any team at Mozilla can hook into structured ingestion by defining a schema and registering it with pipeline. Once a schema is registered, everything else is automatically provisioned, from an HTTPS endpoint for accepting payloads to a set of tables in BigQuery for holding the processed data.</p>
+<h2><a class="header" href="#intensity" id="intensity">Intensity</a></h2>
+<p>Intuitively, how many days per week do users use the product? Among profiles active at least once in the week ending on the date specified, the number of days on average they were active during that one-week window.</p>
+<h2><a class="header" href="#metric" id="metric">Metric</a></h2>
+<p>A metric is anything that you want to (and can) measure. This differs from a dimension which is a qualitative attribute of data.</p>
+<h2><a class="header" href="#mau" id="mau">MAU</a></h2>
+<p>Monthly Active Users - the number of unique profiles active in the 28-day period ending on a given day. The number of unique profiles active at least once during the 28-day window
+ending on the specified day.</p>
+<h2><a class="header" href="#ping" id="ping">Ping</a></h2>
+<p>A ping represents a message that is sent from the Firefox browser to Mozilla’s Telemetry servers. It typically includes information about the browser’s state, user actions, etc.
+<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/common-ping.html">for more details</a></p>
+<h2><a class="header" href="#ping-table" id="ping-table">Ping Table</a></h2>
+<p>A set of pings that is stored in a BigQuery table. See article on <a href="../datasets/pings.html">raw ping datasets</a>.</p>
+<h2><a class="header" href="#pipeline" id="pipeline">Pipeline</a></h2>
+<p>Mozilla’s data pipeline, which is used to collect Telemetry data from Mozilla’s products and logs from various services.
+The bulk of the data that is handled by this pipeline is Firefox Telemetry data. The same tool-chain is used to collect, store, and analyze data that comes from many sources.</p>
+<p>For more information, see <a href="./pipeline/gcp_data_pipeline.html">An overview of Mozilla’s Data Pipeline</a>.</p>
+<h2><a class="header" href="#probe" id="probe">Probe</a></h2>
+<p>Measurements for a specific aspect of Firefox are called probes. A single telemetry ping sends many different probes. Probes are either Histograms (recording distributions of data points) or Scalars (recording a single value).</p>
+<p>You can search for details about probes by using the <a href="https://probes.telemetry.mozilla.org/">Probe Dictionary</a>. For each probe, the probe dictionary provides:</p>
+<ul>
+<li>A description of the probe</li>
+<li>When a probe started being collected</li>
+<li>Whether data from this probe is collected in the release channel</li>
+</ul>
+<h2><a class="header" href="#profile" id="profile">Profile</a></h2>
+<p>All of the changes a user makes in Firefox, like the home page, what toolbars you use, installed addons, saved passwords and your bookmarks, are all stored in a special folder, called a profile. Telemetry stores archived and pending pings in the profile directory as well as metadata like the <a href="#client-id">client id</a>. See also <a href="./profile/profile_creation.html">Profile Creation</a></p>
+<h2><a class="header" href="#query" id="query">Query</a></h2>
+<p>Typically refers to a query written in the SQL syntax, run on (for example) <a href="#stmo">STMO</a>.</p>
+<h2><a class="header" href="#retention" id="retention">Retention</a></h2>
+<ul>
+<li>
+<p>As in “Data retention” - how long data is stored before it is automatically deleted/archived</p>
+</li>
+<li>
+<p>As in “User retention” - how likely is a user to continue using a product</p>
+</li>
+</ul>
+<h2><a class="header" href="#schema" id="schema">Schema</a></h2>
+<p>A schema is the organization or structure for our data. We use schemas at many levels (in data ingestion and storage) to make sure the data we submit is valid and possible to be processed efficiently.</p>
+<h2><a class="header" href="#session" id="session">Session</a></h2>
+<p>The period of time that it takes between Firefox being started until it is shut down. See also <a href="#subsession">subsession</a>.</p>
+<h2><a class="header" href="#subsession" id="subsession">Subsession</a></h2>
+<p>In Firefox, <a href="#sessions">Sessions</a> are split into subsessions after every 24-hour time period has passed or the environment has changed.
+(<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/sessions.html?highlight=subsession">for more details</a>)</p>
+<h2><a class="header" href="#stmo-sqltelemetrymozillaorg" id="stmo-sqltelemetrymozillaorg">STMO (sql.telemetry.mozilla.org)</a></h2>
+<p>A service for creating queries and dashboards. See <a href="../tools/interfaces.html#sqltelemetrymozillaorg-stmo">STMO under analysis tools</a>.</p>
+<h2><a class="header" href="#telemetry" id="telemetry">Telemetry</a></h2>
+<p>As you use Firefox, Telemetry measures and collects non-personal information, such as performance, hardware, usage and customizations. It then sends this information to Mozilla on a daily basis and we use it to improve Firefox.</p>
+<h3><a class="header" href="#wau" id="wau">WAU</a></h3>
+<p>The number of unique profiles active at least once during the 7-day window
+ending on the specified day.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/terminology.md">Edit this file on GitHub.</a></footer>
                     </main>
 
