@@ -16,6 +16,7 @@ addon
 addons
 Add-ons
 aDAU
+AET
 aMAU
 aWAU
 a.k.a.
@@ -132,6 +133,7 @@ GCS
 GeckoDriver
 geoip
 GeoIP
+Geolocation
 Github
 GKE
 GoFaster
@@ -226,6 +228,7 @@ Plotly
 Postgres
 PostgreSQL
 post-mortem
+PRD
 pre-computed
 pre-compiled
 pre-configured
