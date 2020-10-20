@@ -2,19 +2,23 @@
 
 ## Products Overview
 
-Before you perform an analysis, it is important to identify the products that you want to include. You can select any of the following mobile products:
+Mobile products may send either legacy telemetry (see "Legacy ping tables" below), Glean telemetry, or both.
 
-| Product Name            | App Name              | OS      | Notes                                  |
-| ----------------------- | --------------------- | ------- | -------------------------------------- |
-| Firefox for Android     | `org_mozilla_firefox` | Android | formerly Fenix; uses Glean (see below) |
-| Firefox Android (old)   | `Fennec`              | Android | End-of-life; replaced by above         |
-| Firefox iOS             | `Fennec`              | iOS     |                                        |
-| Focus Android           | `Focus`               | Android | Privacy browser                        |
-| Focus iOS               | `Focus`               | iOS     | Privacy browser                        |
-| Klar                    | `Klar`                | Android | German Focus release                   |
-| Firefox for Fire TV     | `FirefoxForFireTV`    | Android |                                        |
-| Firefox for Echo Show   | `FirefoxConnect`      | Android |                                        |
-| Firefox Lite            | `Zerda`               | Android | Formerly Rocket (See below)            |
+| Marketing name        | OS      | Legacy `app_name`  | Glean dataset                                                                                             | Notes                                  |
+| --------------------- | ------- | ------------------ | --------------------------------------------------------------------------------------------------------- | -------------------------------------- |
+| Firefox for Android   | Android |                    | `org_mozilla_firefox` (release), `org_mozilla_firefox_beta` (beta), `org_mozilla_fenix` (nightly)         | formerly Fenix; uses Glean (see below) |
+| Firefox Android (old) | iOS     | `Fennec`           |                                                                                                           | End-of-life; replaced by above         |
+| Firefox iOS           | iOS     | `Fennec`           | `org_mozilla_ios_firefox` (release), `org_mozilla_ios_firefoxbeta` (beta), `org_mozilla_ios_fennec` (dev) |                                        |
+| Focus Android         | Android | `Focus`            |                                                                                                           | Privacy browser                        |
+| Focus iOS             | iOS     | `Focus`            |                                                                                                           | Privacy browser                        |
+| Klar                  | Android | `Klar`             |                                                                                                           | German Focus release                   |
+| Firefox for Fire TV   | Android | `FirefoxForFireTV` | `org_mozilla_tv_firefox `                                                                                 |                                        |
+| Firefox for Echo Show | Android | `FirefoxConnect`   | `org_mozilla_connect_firefox`                                                                             |                                        |
+| Firefox Lite          | Android | `Zerda`            |                                                                                                           | Formerly Rocket (See below)            |
+| Firefox Reality       | Android | `FirefoxReality`   | `org_mozilla_vrbrowser`                                                                                   | Headset VR browser                     |
+| Reference Browser     | Android |                    | `org_mozilla_reference_browser`                                                                           | GeckoView integration testbed          |
+
+Some other app names are documented in the [ETL documentation](https://mozilla.github.io/bigquery-etl/mozfun/norm/#product_info-udf).
 
 Firefox Lite was formerly known as Rocket. It is only available in certain countries in Asia Pacific. For more information on Firefox Lite data, see the [telemetry documentation][fxlite].
 
@@ -24,13 +28,13 @@ Klar is the known release name for Focus in Germany.
 
 For more information on how telemetry is sent for iOS apps, see the [telemetry documentation][ios].
 
-Some telemetry is also sent by FirefoxReality and some non-Mozilla forks of our
-browsers. It is recommended that you filter on App Name to make sure that you are looking at only the app for which you want to analyze data.
+Some telemetry is also sent by non-Mozilla forks of our browsers.
+When consulting legacy telemetry, filter on app name to make sure that you are looking at only the app for which you want to analyze data.
 
 [fxlite]: https://github.com/mozilla-tw/FirefoxLite/blob/master/docs/telemetry.md
 [ios]: https://github.com/mozilla-mobile/telemetry-ios
 
-## Ping tables
+## Legacy ping tables
 
 Legacy (pre-Glean) mobile data is structured differently than desktop data. Instead of sending a `main` ping, mobile has provides the following key types of pings:
 
