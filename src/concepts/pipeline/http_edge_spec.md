@@ -58,15 +58,17 @@ will be considered an error and will not proceed to the data lake.
 
 Firefox Desktop Telemetry uses a slightly different URL scheme:
 
-`/submit/telemetry/docId/docType/appName/appVersion/appUpdateChannel/appBuildID`
+`/submit/telemetry/docId/docType/appName/appVersion/appUpdateChannel/appBuildID?v=4`
 
 A specific example:
 
-`/submit/telemetry/ce39b608-f595-4c69-b6a6-f7a436604648/main/Firefox/61.0a1/nightly/20180328030202`
+`/submit/telemetry/ce39b608-f595-4c69-b6a6-f7a436604648/main/Firefox/61.0a1/nightly/20180328030202?v=4`
 
 Here the `namespace` is fixed as "telemetry", and there is no `docVersion` in the URL.
 This means that incoming JSON documents must be parsed to determine the schema version
 to apply for validation. This logic is part of the downstream [decoder] job.
+Also note the required query parameter suffix `?v=4`.
+Documents sent under `/submit/telemetry` without `v=4` will be rejected at the edge.
 
 ### POST/PUT Response codes
 
