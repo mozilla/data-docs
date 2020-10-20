@@ -2,19 +2,19 @@
 
 ## Products Overview
 
-Before you perform an analysis, it is important to identify the products that you want to include. You can select any of the following Mozilla's mobile products:
+Before you perform an analysis, it is important to identify the products that you want to include. You can select any of the following mobile products:
 
-| Product Name            | App Name            | OS      | Notes                       |
-| ----------------------- | ------------------- | ------- | --------------------------- |
-| Firefox Android         | `Fennec`            | Android |                             |
-| Firefox iOS             | `Fennec`            | iOS     |                             |
-| Focus Android           | `Focus`             | Android | Privacy browser             |
-| Focus iOS               | `Focus`             | iOS     | Privacy browser             |
-| Klar                    | `Klar`              | Android | German Focus release        |
-| Firefox for Fire TV     | `FirefoxForFireTV`  | Android |                             |
-| Firefox for Echo Show   | `FirefoxConnect`    | Android |                             |
-| Firefox Lite            | `Zerda`             | Android | Formerly Rocket (See below) |
-| Fenix (Firefox Preview) | `org_mozilla_fenix` | Android | Uses Glean (see below)      |
+| Product Name            | App Name              | OS      | Notes                                  |
+| ----------------------- | --------------------- | ------- | -------------------------------------- |
+| Firefox for Android     | `org_mozilla_firefox` | Android | formerly Fenix; uses Glean (see below) |
+| Firefox Android (old)   | `Fennec`              | Android | End-of-life; replaced by above         |
+| Firefox iOS             | `Fennec`              | iOS     |                                        |
+| Focus Android           | `Focus`               | Android | Privacy browser                        |
+| Focus iOS               | `Focus`               | iOS     | Privacy browser                        |
+| Klar                    | `Klar`                | Android | German Focus release                   |
+| Firefox for Fire TV     | `FirefoxForFireTV`    | Android |                                        |
+| Firefox for Echo Show   | `FirefoxConnect`      | Android |                                        |
+| Firefox Lite            | `Zerda`               | Android | Formerly Rocket (See below)            |
 
 Firefox Lite was formerly known as Rocket. It is only available in certain countries in Asia Pacific. For more information on Firefox Lite data, see the [telemetry documentation][fxlite].
 
@@ -32,7 +32,7 @@ browsers. It is recommended that you filter on App Name to make sure that you ar
 
 ## Raw Pings
 
-Mobile data is structured differently when compared to desktop data. Instead of sending a `main` ping, mobile has provides the following key types of pings:
+Legacy (pre-Glean) mobile data is structured differently than to desktop data. Instead of sending a `main` ping, mobile has provides the following key types of pings:
 
 - `core`
 - `events`
