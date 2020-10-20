@@ -139,7 +139,7 @@
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         
-                        <a href="https://github.com/mozilla/firefox-data-docs" title="Git repository" aria-label="Git repository">
+                        <a href="https://github.com/mozilla/data-docs" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
                         
@@ -175,7 +175,7 @@
 which is used to collect Telemetry data from our products and logs from various services.</p>
 <p>The bulk of the data handled by this pipeline is Firefox Telemetry data, but the
 same tool-chain is used to collect, store, and analyze data coming from many
-sources, including <a href="../glean.html">Glean</a> applications.</p>
+sources, including <a href="../glean/glean.html">Glean</a> applications.</p>
 <p>Here is a simplified diagram of how data is ingested into the data warehouse.</p>
 <p>The code for the ingestion pipeline lives in the <a href="https://github.com/mozilla/gcp-ingestion"><code>gcp-ingestion</code></a> repository.</p>
 <pre class="mermaid">graph TD
@@ -301,7 +301,7 @@ applications (such as <a href="https://telemetry.mozilla.org/">measurement</a> a
 <p>Once the data reaches our data warehouse in BigQuery it can be processed
 in a number of ways as described in the <a href="../../cookbooks/bigquery.html">Accessing BigQuery</a> article.</p>
 <p>Data analysis is most commonly done using <a href="https://sql.telemetry.mozilla.org/">SQL queries</a> or using <a href="../../tools/spark.html">Spark</a>.</p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/firefox-data-docs/edit/master/src/concepts/pipeline/gcp_data_pipeline.md">Edit this file on GitHub.</a></footer>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/master/src/concepts/pipeline/gcp_data_pipeline.md">Edit this file on GitHub.</a></footer>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
