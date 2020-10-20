@@ -30,7 +30,7 @@ browsers. It is recommended that you filter on App Name to make sure that you ar
 [fxlite]: https://github.com/mozilla-tw/FirefoxLite/blob/master/docs/telemetry.md
 [ios]: https://github.com/mozilla-mobile/telemetry-ios
 
-## Raw Pings
+## Ping tables
 
 Legacy (pre-Glean) mobile data is structured differently than desktop data. Instead of sending a `main` ping, mobile has provides the following key types of pings:
 
