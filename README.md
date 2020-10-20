@@ -15,6 +15,11 @@ as a user, please see the [Firefox Privacy Notice](https://www.mozilla.org/en-US
 
 The rendered documentation is hosted at [https://docs.telemetry.mozilla.org/](https://docs.telemetry.mozilla.org/).
 
+Issues for this documentation are [tracked in Bugzilla][docszilla]. You can use this link to [file a bug].
+
+[docszilla]: https://bugzilla.mozilla.org/buglist.cgi?product=Data%20Platform%20and%20Tools&component=Documentation%20and%20Knowledge%20Repo%20%28RTMO%29&resolution=---
+[file a bug]: https://bugzilla.mozilla.org/enter_bug.cgi?component=Documentation%20and%20Knowledge%20Repo%20(RTMO)&product=Data%20Platform%20and%20Tools
+
 ## Building the Documentation
 
 The documentation is rendered with [mdBook](https://github.com/rust-lang/mdBook).
