@@ -6,12 +6,10 @@
 
 {{#include ./intro.md}}
 
-
 # Example Queries
 
+_Percent of users we predict will click an ad in the **next** 365 days by Engine._ ([source](https://sql.telemetry.mozilla.org/queries/74878/source))
 
-
-*Percent of users we predict will click an ad in the **next** 365 days by Engine.* ([source](https://sql.telemetry.mozilla.org/queries/74878/source))
 ```sql
 SELECT
   engine,
@@ -25,7 +23,8 @@ GROUP BY
   1
 ```
 
-*LTV Value of Users Over Lifetime (by `days_since_created_profile`) of Users Active in Past 7 Days* ([source](https://sql.telemetry.mozilla.org/queries/74867/source#187036))
+_LTV Value of Users Over Lifetime (by `days_since_created_profile`) of Users Active in Past 7 Days_ ([source](https://sql.telemetry.mozilla.org/queries/74867/source#187036))
+
 ```sql
 SELECT
   days_since_created_profile,
@@ -96,13 +95,13 @@ root
  |-- normalized_ltv_search_with_ads_future: double (nullable = true)
  |-- normalized_ltv_search_future: double (nullable = true)
  |-- normalized_ltv_tagged_search_future: double (nullable = true)
- ```
+```
 
- # Code References
+# Code References
 
-* [LTV daily model fitting](https://github.com/mozilla/telemetry-airflow/blob/master/jobs/ltv_daily.py)
-* Unnormalized [`client_ltv` query](https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/revenue_derived/client_ltv_v1/query.sql) (restricted query access)
-* [`client_ltv` view](https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/revenue_derived/client_ltv_normalized/query.sql) (for broad use)
+- [LTV daily model fitting](https://github.com/mozilla/telemetry-airflow/blob/master/jobs/ltv_daily.py)
+- Unnormalized [`client_ltv` query](https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/revenue_derived/client_ltv_v1/query.sql) (restricted query access)
+- [`client_ltv` view](https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/revenue_derived/client_ltv_normalized/query.sql) (for broad use)
 
 # Model Performance
 
@@ -124,4 +123,3 @@ ORDER BY
 ```
 
 This produces a histogram for the observed user frequencies and the model's predicted frequencies, allowing a chart similar to the one shown in the ["assessing model fit" example](https://lifetimes.readthedocs.io/en/latest/Quickstart.html#assessing-model-fit) in the `lifetimes` documentation. This table only checks performance for clients the model expects have, for example, clicked an ad in 0 to 28 days in the past year, since most of the distribution is contained in that interval.
-

@@ -6,7 +6,6 @@ This glossary provides definitions for commonly-used terms at Mozilla.
 
 <!-- toc -->
 
-
 ## AET
 
 Account Ecosystem Telemetry; see the [PRD](https://docs.google.com/document/d/1yRLiD8JuaZIIaKhs6DhXEa7aH8jwOau5yW0kHaldFQU/edit#)
@@ -21,7 +20,7 @@ A third-party product used by several teams within Mozilla for analysis of user 
 
 ## BigQuery
 
-[BigQuery](https://cloud.google.com/bigquery) is Google Cloud's managed data warehouse. Most of the data described on this site is stored and queried using BigQuery. See the [Accessing and working with BigQuery](https://docs.telemetry.mozilla.org/cookbooks/bigquery.html0) article for more details.
+[BigQuery](https://cloud.google.com/bigquery) is Google Cloud's managed data warehouse. Most of the data described on this site is stored and queried using BigQuery. See [Accessing and working with BigQuery](../cookbooks/bigquery.md) for more details.
 
 ## Client ID
 
@@ -39,9 +38,9 @@ See [Analyst](#Analyst)
 
 Data scientists at Mozilla are a team with a broad array of technical backgrounds and a core set of common professional skills:
 
-* applying statistical methods to noisy data to answer questions about what, how, or why something is happening
-* transform unstructured data into usable metrics and models
-* augmenting strategic product and decision-making with empirical evidence created and curated by the team
+- applying statistical methods to noisy data to answer questions about what, how, or why something is happening
+- transform unstructured data into usable metrics and models
+- augmenting strategic product and decision-making with empirical evidence created and curated by the team
 
 ## Dataset
 
@@ -53,11 +52,11 @@ The number of unique profiles active on each day.
 
 ## Derived Dataset
 
-A processed dataset, such as [Clients Daily](..datasets/batch_view/clients_daily/reference.md). At Mozilla, this is in contrast to a raw ping table which represents (more or less) the raw data submitted by our users.
+A processed dataset, such as [Clients Daily](../datasets/batch_view/clients_daily/reference.md). At Mozilla, this is in contrast to a raw ping table which represents (more or less) the raw data submitted by our users.
 
 ## Glean
 
-Glean is Mozilla’s product analytics & telemetry solution that provides a consistent experience and behavior across all of our products. Most of Mozilla's mobile apps, including Fenix, have been adapted to use the Glean SDK. For more information, see the [Glean Overview](./glean/glean.html).
+Glean is Mozilla’s product analytics & telemetry solution that provides a consistent experience and behavior across all of our products. Most of Mozilla's mobile apps, including Fenix, have been adapted to use the Glean SDK. For more information, see the [Glean Overview](./glean/glean.md).
 
 ## GCP
 
@@ -98,7 +97,7 @@ A set of pings that is stored in a BigQuery table. See article on [raw ping data
 Mozilla’s data pipeline, which is used to collect Telemetry data from Mozilla’s products and logs from various services.
 The bulk of the data that is handled by this pipeline is Firefox Telemetry data. The same tool-chain is used to collect, store, and analyze data that comes from many sources.
 
-For more information, see [An overview of Mozilla’s Data Pipeline](./pipeline/gcp_data_pipeline.html).
+For more information, see [An overview of Mozilla’s Data Pipeline](./pipeline/gcp_data_pipeline.md).
 
 ## Probe
 
@@ -106,13 +105,13 @@ Measurements for a specific aspect of Firefox are called probes. A single teleme
 
 You can search for details about probes by using the [Probe Dictionary](https://probes.telemetry.mozilla.org/). For each probe, the probe dictionary provides:
 
-* A description of the probe
-* When a probe started being collected
-* Whether data from this probe is collected in the release channel
+- A description of the probe
+- When a probe started being collected
+- Whether data from this probe is collected in the release channel
 
 ## Profile
 
-All of the changes a user makes in Firefox, like the home page, what toolbars you use, installed addons, saved passwords and your bookmarks, are all stored in a special folder, called a profile. Telemetry stores archived and pending pings in the profile directory as well as metadata like the [client id](#client-id). See also [Profile Creation](./profile/profile_creation.html)
+All of the changes a user makes in Firefox, like the home page, what toolbars you use, installed addons, saved passwords and your bookmarks, are all stored in a special folder, called a profile. Telemetry stores archived and pending pings in the profile directory as well as metadata like the [client id](#client-id). See also [Profile Creation](./profile/profile_creation.md)
 
 ## Query
 
@@ -120,9 +119,9 @@ Typically refers to a query written in the SQL syntax, run on (for example) [STM
 
 ## Retention
 
-* As in “Data retention” - how long data is stored before it is automatically deleted/archived
+- As in “Data retention” - how long data is stored before it is automatically deleted/archived
 
-* As in “User retention” - how likely is a user to continue using a product
+- As in “User retention” - how likely is a user to continue using a product
 
 ## Schema
 
@@ -139,7 +138,7 @@ In Firefox, [Sessions](#sessions) are split into subsessions after every 24-hour
 
 ## STMO (sql.telemetry.mozilla.org)
 
-A service for creating queries and dashboards. See [STMO under analysis tools](../tools/interfaces.html#sqltelemetrymozillaorg-stmo).
+A service for creating queries and dashboards. See [STMO under analysis tools](../tools/interfaces.md#sqltelemetrymozillaorg-stmo).
 
 ## Telemetry
 

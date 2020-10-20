@@ -1,10 +1,10 @@
 {
-  "name": "firefox-data-docs",
+  "name": "data-docs",
   "version": "1.0.0",
   "description": "Documentation about Mozilla's Data Platform",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mozilla/firefox-data-docs.git"
+    "url": "git+https://github.com/mozilla/data-docs.git"
   },
   "author": "",
   "license": "MPL",

@@ -15,7 +15,7 @@ command = "mdbook-toc"
 mathjax-support = true
 additional-css = ["dtmo.css", "mermaid.css"]
 additional-js = ["mermaid.min.js", "mermaid-init.js"]
-git-repository-url = "https://github.com/mozilla/firefox-data-docs"
+git-repository-url = "https://github.com/mozilla/data-docs"
 google-analytics = "UA-104326577-1"
 
 [preprocessor.open-on-gh]

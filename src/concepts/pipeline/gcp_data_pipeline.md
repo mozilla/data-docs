@@ -5,7 +5,7 @@ which is used to collect Telemetry data from our products and logs from various 
 
 The bulk of the data handled by this pipeline is Firefox Telemetry data, but the
 same tool-chain is used to collect, store, and analyze data coming from many
-sources, including [Glean](../glean.md) applications.
+sources, including [Glean](../glean/glean.md) applications.
 
 Here is a simplified diagram of how data is ingested into the data warehouse.
 

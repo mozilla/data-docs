@@ -29,7 +29,7 @@ Below are a number of trailheads that lead into the projects and code that compr
 | [`python_mozaggregator`][pyagg] | Aggregation job for `telemetry.mozilla.org` aggregates |
 | [`telemetry-streaming`][stream] | Spark Streaming ETL jobs for Mozilla Telemetry         |
 
-See also [`firefox-data-docs`][docs] for documentation on datasets.
+See also [`data-docs`][docs] for documentation on datasets.
 
 [bqe]: https://github.com/mozilla/bigquery-etl
 [tbv]: https://github.com/mozilla/telemetry-batch-view
@@ -135,13 +135,13 @@ starting a new project using anything in this section.
 
 ### Public
 
-| Name and repo                  | Description                                                                     |
-| ------------------------------ | ------------------------------------------------------------------------------- |
-| [`firefox-data-docs`][docs_gh] | All the info you need to [answer questions about Firefox users with data][docs] |
-| Firefox source docs            | [Mozilla Source Tree Docs - Telemetry section][fxsrcdocs]                       |
-| [`reports.t.m.o`][rtmo_gh]     | Knowledge repository for [public reports][rtmo]                                 |
+| Name and repo              | Description                                                                     |
+| -------------------------- | ------------------------------------------------------------------------------- |
+| [`data-docs`][docs_gh]     | All the info you need to [answer questions about Firefox users with data][docs] |
+| Firefox source docs        | [Mozilla Source Tree Docs - Telemetry section][fxsrcdocs]                       |
+| [`reports.t.m.o`][rtmo_gh] | Knowledge repository for [public reports][rtmo]                                 |
 
-[docs_gh]: https://github.com/mozilla/firefox-data-docs
+[docs_gh]: https://github.com/mozilla/data-docs
 [docs]: https://docs.telemetry.mozilla.org
 [fxsrcdocs]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/
 [rtmo_gh]: https://github.com/mozilla/mozilla-reports
