@@ -32,7 +32,7 @@ browsers. It is recommended that you filter on App Name to make sure that you ar
 
 ## Raw Pings
 
-Legacy (pre-Glean) mobile data is structured differently than to desktop data. Instead of sending a `main` ping, mobile has provides the following key types of pings:
+Legacy (pre-Glean) mobile data is structured differently than desktop data. Instead of sending a `main` ping, mobile has provides the following key types of pings:
 
 - `core`
 - `events`
