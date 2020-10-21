@@ -46,7 +46,9 @@ metrics than the main ping because of network and data size constraints. All mob
 
 Event pings are not sent for all products. They are sent by Focus Android, Focus iOS, Klar, Firefox for FireTV, Firefox for Echo Show, and Firefox Lite.
 Event pings are sent more frequently than core pings, at most once per 10 minute interval.
-If a ping records 10,000 events, it is sent immediately unless it is within 10 minutes of the last event ping sent: in this case some data may be lost. For more information about the event ping, see the [telemetry documentation][event_ping].
+If a ping records 10,000 events, it is sent immediately unless it is within 10 minutes of the last event ping sent: in this case some data may be lost.
+
+Mobile legacy event pings follow generally the same format as the [desktop `event` ping][event_ping].
 
 Fennec (Firefox Android) does not send event pings. Instead, it includes a
 `saved_session` ping with the same format as `main` pings. However, it is only
