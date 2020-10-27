@@ -93,6 +93,7 @@ deduplication
 default_search
 detrended
 DevTools
+dev
 discoverability
 Django's
 DLLs
@@ -131,6 +132,7 @@ geo-country
 FxA
 GCS
 GeckoDriver
+GeckoView
 geoip
 GeoIP
 Geolocation
@@ -234,6 +236,7 @@ pre-compiled
 pre-configured
 pre-defined
 pre-filled
+pre-Glean
 pre-loaded
 pre-processes
 pre-release
@@ -342,6 +345,7 @@ uri
 URIs
 utm
 UUID
+VR
 v1
 v2
 v3

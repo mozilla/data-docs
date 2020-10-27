@@ -2,19 +2,23 @@
 
 ## Products Overview
 
-Before you perform an analysis, it is important to identify the products that you want to include. You can select any of the following Mozilla's mobile products:
+Mobile products may send either legacy telemetry (see "Legacy ping tables" below), Glean telemetry, or both.
 
-| Product Name            | App Name            | OS      | Notes                       |
-| ----------------------- | ------------------- | ------- | --------------------------- |
-| Firefox Android         | `Fennec`            | Android |                             |
-| Firefox iOS             | `Fennec`            | iOS     |                             |
-| Focus Android           | `Focus`             | Android | Privacy browser             |
-| Focus iOS               | `Focus`             | iOS     | Privacy browser             |
-| Klar                    | `Klar`              | Android | German Focus release        |
-| Firefox for Fire TV     | `FirefoxForFireTV`  | Android |                             |
-| Firefox for Echo Show   | `FirefoxConnect`    | Android |                             |
-| Firefox Lite            | `Zerda`             | Android | Formerly Rocket (See below) |
-| Fenix (Firefox Preview) | `org_mozilla_fenix` | Android | Uses Glean (see below)      |
+| Marketing name        | OS      | Legacy `app_name`  | Glean dataset                                                                                             | Notes                                  |
+| --------------------- | ------- | ------------------ | --------------------------------------------------------------------------------------------------------- | -------------------------------------- |
+| Firefox for Android   | Android |                    | `org_mozilla_firefox` (release), `org_mozilla_firefox_beta` (beta), `org_mozilla_fenix` (nightly)         | formerly Fenix; uses Glean (see below) |
+| Firefox Android (old) | iOS     | `Fennec`           |                                                                                                           | End-of-life; replaced by above         |
+| Firefox iOS           | iOS     | `Fennec`           | `org_mozilla_ios_firefox` (release), `org_mozilla_ios_firefoxbeta` (beta), `org_mozilla_ios_fennec` (dev) |                                        |
+| Focus Android         | Android | `Focus`            |                                                                                                           | Privacy browser                        |
+| Focus iOS             | iOS     | `Focus`            |                                                                                                           | Privacy browser                        |
+| Klar                  | Android | `Klar`             |                                                                                                           | German Focus release                   |
+| Firefox for Fire TV   | Android | `FirefoxForFireTV` | `org_mozilla_tv_firefox `                                                                                 |                                        |
+| Firefox for Echo Show | Android | `FirefoxConnect`   | `org_mozilla_connect_firefox`                                                                             |                                        |
+| Firefox Lite          | Android | `Zerda`            |                                                                                                           | Formerly Rocket (See below)            |
+| Firefox Reality       | Android | `FirefoxReality`   | `org_mozilla_vrbrowser`                                                                                   | Headset VR browser                     |
+| Reference Browser     | Android |                    | `org_mozilla_reference_browser`                                                                           | GeckoView integration testbed          |
+
+Some other app names are documented in the [ETL documentation](https://mozilla.github.io/bigquery-etl/mozfun/norm/#product_info-udf).
 
 Firefox Lite was formerly known as Rocket. It is only available in certain countries in Asia Pacific. For more information on Firefox Lite data, see the [telemetry documentation][fxlite].
 
@@ -24,15 +28,15 @@ Klar is the known release name for Focus in Germany.
 
 For more information on how telemetry is sent for iOS apps, see the [telemetry documentation][ios].
 
-Some telemetry is also sent by FirefoxReality and some non-Mozilla forks of our
-browsers. It is recommended that you filter on App Name to make sure that you are looking at only the app for which you want to analyze data.
+Some telemetry is also sent by non-Mozilla forks of our browsers.
+When consulting legacy telemetry, filter on app name to make sure that you are looking at only the app for which you want to analyze data.
 
 [fxlite]: https://github.com/mozilla-tw/FirefoxLite/blob/master/docs/telemetry.md
 [ios]: https://github.com/mozilla-mobile/telemetry-ios
 
-## Raw Pings
+## Legacy ping tables
 
-Mobile data is structured differently when compared to desktop data. Instead of sending a `main` ping, mobile has provides the following key types of pings:
+Legacy (pre-Glean) mobile data is structured differently than desktop data. Instead of sending a `main` ping, mobile has provides the following key types of pings:
 
 - `core`
 - `events`
@@ -42,7 +46,9 @@ metrics than the main ping because of network and data size constraints. All mob
 
 Event pings are not sent for all products. They are sent by Focus Android, Focus iOS, Klar, Firefox for FireTV, Firefox for Echo Show, and Firefox Lite.
 Event pings are sent more frequently than core pings, at most once per 10 minute interval.
-If a ping records 10,000 events, it is sent immediately unless it is within 10 minutes of the last event ping sent: in this case some data may be lost. For more information about the event ping, see the [telemetry documentation][event_ping].
+If a ping records 10,000 events, it is sent immediately unless it is within 10 minutes of the last event ping sent: in this case some data may be lost.
+
+Mobile legacy event pings follow generally the same format as the [desktop `event` ping][event_ping].
 
 Fennec (Firefox Android) does not send event pings. Instead, it includes a
 `saved_session` ping with the same format as `main` pings. However, it is only
