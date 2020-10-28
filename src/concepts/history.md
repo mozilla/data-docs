@@ -76,11 +76,11 @@ FHR was retired and merged with telemetry to produce the current
 generation of telemetry data, distinguished as “v4 telemetry” or
 “unified telemetry.”
 
-Instead of mapping FHR probes directly to telemetry, the [unified
-telemetry design
-document](https://docs.google.com/document/d/1IGpzsYGi_sq3YFQDAPyKOkU_BKvXAC95fZYA2i4ceVs/edit)
-describes how unified telemetry can answer the questions Mozilla had
-attempted to answer with FHR. The [implementation of unified
+Instead of mapping FHR probes directly to telemetry, the Unified
+Telemetry project built upon the telemetry system to answer the 
+questions Mozilla had attempted to answer with FHR. 
+
+The [implementation of unified
 telemetry](https://bugzilla.mozilla.org/show_bug.cgi?id=1122515) and
 opt-out delivery to the release channel was completed for Firefox 42, in 2015.
 
