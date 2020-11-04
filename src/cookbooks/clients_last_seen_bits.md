@@ -631,6 +631,8 @@ Below is a sample query for producing a small `clients_last_seen`-like view
 that presents an experimental usage definition. In this approach, the temporary
 analysis table we create actually stores a client's whole usage history as a
 BYTES field, and then we rely on view logic to present this as per-day windows.
+Much of the logic is boilerplate; the sections that would need to change for
+your specific new field are marked between `-- BEGIN` and `-- END` comments.
 
 The example queries `main_v4` directly in order to be as generic as possible.
 The `daily` CTE below could be removed in the case that `clients_daily` already
@@ -648,8 +650,12 @@ WITH daily AS (
   SELECT
     DATE(submission_timestamp) AS submission_date,
     client_id,
+    -- BEGIN
+    -- Here is where we put clients_daily-like aggregations that will be
+    -- used as the basis for bit patterns in the next step.
     SUM(payload.processes.parent.scalars.browser_engagement_active_ticks)
       AS active_ticks_sum,
+    -- END
   FROM
     telemetry.main
   WHERE
@@ -661,12 +667,16 @@ WITH daily AS (
 )
 SELECT
   client_id,
-  `moz-fx-data-shared-prod`.udf.bits_from_offsets(
+  -- BEGIN
+  -- Here we produce bit pattern fields based on the daily aggregates from the
+  -- previous step;
+  udf.bits_from_offsets(
     ARRAY_AGG(
       IF(active_ticks_sum >= 8,DATE_DIFF(target_date, submission_date, DAY), NULL)
       IGNORE NULLS
     )
   ) AS days_had_8_active_ticks_bits,
+  -- END
 FROM
   daily
 GROUP BY
@@ -679,16 +689,21 @@ SELECT
   target_date - i AS submission_date,
   sample_id,
   client_id,
-  -- We shift for bits field to match the row's calculated submission_date
+  -- BEGIN
+  -- Here we introduce various derived fields from the underlying BYTES.
+  -- First, we shift the BYTES field to align with the row's calculated submission_date
   days_had_8_active_ticks_bits >> i
     AS days_had_8_active_ticks_bits,
-  -- An INT64 version of the bits, compatible with bits28 functions
+  -- Here's an INT64 version of the bits, compatible with bits28 functions
   CAST(CONCAT('0x', TO_HEX(RIGHT(days_had_8_active_ticks_bits >> i, 4))) AS INT64) << 36 >> 36
     AS days_had_8_active_ticks_bits28,
+  -- A field like days_since_seen from clients_last_seen.
   udf.bits_to_days_since_seen(days_had_8_active_ticks_bits >> i)
     AS days_since_had_8_active_ticks,
-  target_date - `moz-fx-data-shared-prod`.udf.bits_to_days_since_first_seen(days_had_8_active_ticks_bits)
+  -- First seen date, as it would appear in clients_first_seen
+  target_date - udf.bits_to_days_since_first_seen(days_had_8_active_ticks_bits)
     AS first_had_8_active_ticks_date,
+  -- END
 FROM
   `moz-fx-data-shared-prod.analysis.klukas_usage1_raw`
 -- The cross join parses each input row into one row per day since the client
