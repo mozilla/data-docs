@@ -703,6 +703,9 @@ or joined with clients_daily for validations that involve slicing on dimensions.
 If the definition proves useful in validation, your variant of the query
 above can serve as a good starting point for Data Engineering to integrate the new
 definition into `clients_daily` (and `clients_last_seen` if necessary).
+Once a new definition is integrated into the model, we can backfill two months of
+data fairly easily. Complete backfills are expensive in terms of computational cost
+and engineering effort, so cannot happen more than approximately quarterly.
 
 ## UDF Reference
 
