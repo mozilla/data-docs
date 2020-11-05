@@ -639,16 +639,38 @@ The `daily` CTE below could be removed in the case that `clients_daily` already
 provides a daily measure that can be used as basis for your new bit pattern feature.
 
 ```sql
-DECLARE start_date DATE DEFAULT '2018-11-01';
-DECLARE target_date DATE DEFAULT '2020-11-01';
+DECLARE start_date DATE DEFAULT '2020-05-01';
+DECLARE end_date DATE DEFAULT '2020-11-01';
 DECLARE target_sample_id INT64 DEFAULT 0;
 
+CREATE TEMP FUNCTION process_bits(bits BYTES) AS (
+  STRUCT(
+    bits,
+
+    -- An INT64 version of the bits, compatible with bits28 functions
+    CAST(CONCAT('0x', TO_HEX(RIGHT(bits, 4))) AS INT64) << 36 >> 36 AS bits28,
+
+    -- An INT64 version of the bits with 64 days of history
+    CAST(CONCAT('0x', TO_HEX(RIGHT(bits, 4))) AS INT64) AS bits64,
+
+    -- A field like days_since_seen from clients_last_seen.
+    udf.bits_to_days_since_seen(bits) AS days_since_active,
+
+    -- Days since first active, analogous to first_seen_date in clients_first_seen
+    udf.bits_to_days_since_first_seen(bits) AS days_since_first_active
+  )
+);
+
 CREATE OR REPLACE TABLE
-  analysis.myuser_newfeature_raw
+  analysis.<myuser>_newfeature
+PARTITION BY submission_date
+CLUSTER BY sample_id
 AS
-WITH daily AS (
+WITH
+daily AS (
   SELECT
     DATE(submission_timestamp) AS submission_date,
+    sample_id,
     client_id,
     -- BEGIN
     -- Here is where we put clients_daily-like aggregations that will be
@@ -660,64 +682,54 @@ WITH daily AS (
     telemetry.main
   WHERE
     sample_id = target_sample_id
-    AND DATE(submission_timestamp) BETWEEN start_date AND target_date
+    AND DATE(submission_timestamp) BETWEEN start_date AND end_date
   GROUP BY
     submission_date,
+    sample_id,
+    client_id ),
+alltime AS (
+  SELECT
+    sample_id,
+    client_id,
+    -- BEGIN
+    -- Here we produce bit pattern fields based on the daily aggregates from the
+    -- previous step;
+    udf.bits_from_offsets(
+      ARRAY_AGG(
+        IF(active_ticks_sum >= 8,DATE_DIFF(end_date, submission_date, DAY), NULL)
+        IGNORE NULLS
+      )
+    ) AS days_active_bits,
+    -- END
+  FROM
+    daily
+  GROUP BY
+    sample_id,
     client_id
 )
 SELECT
-  client_id,
-  -- BEGIN
-  -- Here we produce bit pattern fields based on the daily aggregates from the
-  -- previous step;
-  udf.bits_from_offsets(
-    ARRAY_AGG(
-      IF(active_ticks_sum >= 8,DATE_DIFF(target_date, submission_date, DAY), NULL)
-      IGNORE NULLS
-    )
-  ) AS days_had_8_active_ticks_bits,
-  -- END
-FROM
-  daily
-GROUP BY
-  client_id;
-
-CREATE OR REPLACE VIEW
-  analysis.myuser_newfeature
-AS
-SELECT
-  target_date - i AS submission_date,
+  end_date - i AS submission_date,
   sample_id,
   client_id,
-  -- BEGIN
-  -- Here we introduce various derived fields from the underlying BYTES.
-  -- First, we shift the BYTES field to align with the row's calculated submission_date
-  days_had_8_active_ticks_bits >> i
-    AS days_had_8_active_ticks_bits,
-  -- Here's an INT64 version of the bits, compatible with bits28 functions
-  CAST(CONCAT('0x', TO_HEX(RIGHT(days_had_8_active_ticks_bits >> i, 4))) AS INT64) << 36 >> 36
-    AS days_had_8_active_ticks_bits28,
-  -- A field like days_since_seen from clients_last_seen.
-  udf.bits_to_days_since_seen(days_had_8_active_ticks_bits >> i)
-    AS days_since_had_8_active_ticks,
-  -- First seen date, as it would appear in clients_first_seen
-  target_date - udf.bits_to_days_since_first_seen(days_had_8_active_ticks_bits)
-    AS first_had_8_active_ticks_date,
-  -- END
+  process_bits(days_active_bits >> i) AS days_active
 FROM
-  `moz-fx-data-shared-prod.analysis.klukas_usage1_raw`
+  alltime
 -- The cross join parses each input row into one row per day since the client
 -- was first seen, emulating the format of the existing clients_last_seen table.
 CROSS JOIN
-  UNNEST(GENERATE_ARRAY(0, 2048)) AS i
+  UNNEST(GENERATE_ARRAY(0, DATE_DIFF(end_date, start_date, DAY))) AS i
+WHERE
+  (days_active_bits >> i) IS NOT NULL
 ```
 
-The resultant `analysis.myuser_newfeature` view can be used on its own,
-or joined with clients_daily for validations that involve slicing on dimensions.
+This script takes about 10 minutes to run over 6 months of data as written above
+and about an hour to run over the whole history of `main_v4` (starting at 2018-11-01).
+The resultant table can be used on its own
+or joined with `clients_daily` to pull per-client dimensions.
 
 If the definition proves useful in validation, your variant of the query
 above can serve as a good starting point for Data Engineering to integrate the new
-definition into `clients_daily` (and `clients_last_seen` if necessary).
+definition into `clients_last_seen` (and `clients_daily` if necessary).
 Once a new definition is integrated into the model, we can backfill two months of
 data fairly easily. Complete backfills are expensive in terms of computational cost
 and engineering effort, so cannot happen more than approximately quarterly.
