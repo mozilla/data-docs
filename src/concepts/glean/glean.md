@@ -40,13 +40,16 @@ Any issues found with these base metrics only need be fixed in Glean to benefit 
 
 **Encourage specificity**
 
-Rather than just treating metrics as generic data points, Glean wants to know as much as possible about the things being measured.
+Rather than just treating metrics as generic data points, Glean wants to know as much as possible about the things being measured, and be opinionated about how data is measured and aggregated.
+
 From this information, it can:
 
 - Provide a well-designed API to perform specific types of measurements, which is consistent and avoids common pitfalls
 - Reject invalid data, and report them as errors
 - Store the data in a consistent way, rather than custom, ad hoc data structures
 - Provide the most appropriate visualization and analysis automatically
+
+A side-effect of this design is that Glean telemetry is write-only: it would be impossible to enforce all of these constraints and achieve all of these benefits if client code could read, modify and update data.
 
 **Follow [lean data practices](https://leandatapractices.com/)**
 
