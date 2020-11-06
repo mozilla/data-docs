@@ -667,6 +667,9 @@ PARTITION BY submission_date
 CLUSTER BY sample_id
 AS
 WITH
+-- If clients_daily already contains a measure that suffices as the basis for
+-- our new usage definition, we can skip this daily subquery and calculate
+-- alltime based on clients_daily rather than `main`.
 daily AS (
   SELECT
     DATE(submission_timestamp) AS submission_date,
@@ -724,6 +727,8 @@ WHERE
 
 This script takes about 10 minutes to run over 6 months of data as written above
 and about an hour to run over the whole history of `main_v4` (starting at 2018-11-01).
+A query over the whole history of `clients_daily` (starting in early 2016)
+can run in about an hour as well.
 The resultant table can be used on its own
 or joined with `clients_daily` to pull per-client dimensions.
 
