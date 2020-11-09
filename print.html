@@ -4508,14 +4508,15 @@ Because Glean knows more about the individual data, such as its type and the ran
 <p>Metrics that are common to all products, such as the operating system and architecture, are provided automatically in a consistent way.</p>
 <p>Any issues found with these base metrics only need be fixed in Glean to benefit all SDK-using products.</p>
 <p><strong>Encourage specificity</strong></p>
-<p>Rather than just treating metrics as generic data points, Glean wants to know as much as possible about the things being measured.
-From this information, it can:</p>
+<p>Rather than just treating metrics as generic data points, Glean wants to know as much as possible about the things being measured, and be opinionated about how data is measured and aggregated.</p>
+<p>From this information, it can:</p>
 <ul>
 <li>Provide a well-designed API to perform specific types of measurements, which is consistent and avoids common pitfalls</li>
 <li>Reject invalid data, and report them as errors</li>
 <li>Store the data in a consistent way, rather than custom, ad hoc data structures</li>
 <li>Provide the most appropriate visualization and analysis automatically</li>
 </ul>
+<p>A side-effect of this design is that Glean telemetry is write-only: it would be impossible to enforce all of these constraints and achieve all of these benefits if client code could read, modify and update data.</p>
 <p><strong>Follow <a href="https://leandatapractices.com/">lean data practices</a></strong></p>
 <p>The Glean system enforces that all measurements received <a href="https://wiki.mozilla.org/Firefox/Data_Collection">data review</a>, and it is impossible to collect measurements that haven't been declared.
 It also makes it easy to limit data collection to only what's necessary:</p>
