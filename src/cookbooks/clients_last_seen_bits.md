@@ -627,16 +627,15 @@ The operational logic required to produce a `clients_last_seen` table makes
 it unwieldy for backfilling, so it has historically been difficult for data
 scientists to experiment with new bit pattern fields on their own.
 
-Below is a sample query for producing a small `clients_last_seen`-like view
+Below are sample queries for producing a small `clients_last_seen`-like table
 that presents an experimental usage definition. In this approach, the temporary
 analysis table we create actually stores a client's whole usage history as a
 BYTES field, and then we rely on view logic to present this as per-day windows.
 Much of the logic is boilerplate; the sections that would need to change for
 your specific new field are marked between `-- BEGIN` and `-- END` comments.
 
-The example queries `main_v4` directly in order to be as generic as possible.
-The `daily` CTE below could be removed in the case that `clients_daily` already
-provides a daily measure that can be used as basis for your new bit pattern feature.
+The first example defines a new feature based on a measure that already exists
+in `clients_daily`. It takes only a few minutes to run:
 
 ```sql
 DECLARE start_date DATE DEFAULT '2020-05-01';
@@ -704,6 +703,8 @@ CROSS JOIN
 WHERE
   (days_active_bits >> i) IS NOT NULL
 ```
+
+And here is a more complex example that references `main_v4` directly:
 
 <details>
 <summary>Calculating a bit pattern field directly from `main_v4`</summary>
