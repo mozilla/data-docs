@@ -133,7 +133,7 @@ Colab can be used to easily access BigQuery and perform analyses. See the [`Tele
 
 [AI Platform Notebooks](https://cloud.google.com/ai-platform/notebooks/docs) is a managed JupyterLab service running on GCP. It gives you full control over the machine where your notebooks are running - you can install your own libraries and choose machine size depending on your needs.
 
-To start, go to [GCP console](https://console.cloud.google.com) and make sure you are in the correct project - most likely this will be your team project. Then navigate to the Notebooks page in the sidebar under AI Platform > Notebooks ([direct link](https://console.cloud.google.com/ai-platform/notebooks/list/instances)). There you can create new notebook server instances and connect to them (when your instance is ready, you'll see `Open JupyterLab` button).
+To start, go to [GCP console](https://console.cloud.google.com) and make sure you are in the correct project - most likely this will be your team project. Then navigate to the Notebooks page in the sidebar under AI Platform > Notebooks ([direct link](https://console.cloud.google.com/ai-platform/notebooks/list/instances)). There you can create new notebook server instances and connect to them (when your instance is ready, you'll see an `Open JupyterLab` button).
 
 Please note that by default JupyterLab saves notebook files only locally, so they are lost if your instance is deleted. To make sure you don't lose your work, either push your files to a Git repository (via a pre-installed Git extension) or upload them to GCS (using `gsutil` command in a terminal session).
 
