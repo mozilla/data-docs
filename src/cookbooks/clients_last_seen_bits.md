@@ -705,7 +705,9 @@ WHERE
   (days_active_bits >> i) IS NOT NULL
 ```
 
-<details><summary>Calculating a bit pattern field directly from `main_v4`</summary>
+<details>
+<summary>Calculating a bit pattern field directly from `main_v4`</summary>
+
 ```sql
 DECLARE start_date DATE DEFAULT '2020-05-01';
 DECLARE end_date DATE DEFAULT '2020-11-01';
@@ -792,6 +794,7 @@ CROSS JOIN
 WHERE
   (days_active_bits >> i) IS NOT NULL
 ```
+
 </details>
 
 This script takes about 10 minutes to run over 6 months of data as written above
