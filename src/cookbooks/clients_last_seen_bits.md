@@ -667,6 +667,74 @@ PARTITION BY submission_date
 CLUSTER BY sample_id
 AS
 WITH
+alltime AS (
+  SELECT
+    sample_id,
+    client_id,
+    -- BEGIN
+    -- Here we produce bit pattern fields based on the daily aggregates from the
+    -- previous step;
+    udf.bits_from_offsets(
+      ARRAY_AGG(
+        IF(active_hours_sum >= 1,DATE_DIFF(end_date, submission_date, DAY), NULL)
+        IGNORE NULLS
+      )
+    ) AS days_active_bits,
+    -- END
+  FROM
+    telemetry.clients_daily
+  WHERE
+    sample_id = target_sample_id
+    AND submission_date BETWEEN start_date AND end_date
+  GROUP BY
+    sample_id,
+    client_id
+)
+SELECT
+  end_date - i AS submission_date,
+  sample_id,
+  client_id,
+  process_bits(days_active_bits >> i) AS days_active
+FROM
+  alltime
+-- The cross join parses each input row into one row per day since the client
+-- was first seen, emulating the format of the existing clients_last_seen table.
+CROSS JOIN
+  UNNEST(GENERATE_ARRAY(0, DATE_DIFF(end_date, start_date, DAY))) AS i
+WHERE
+  (days_active_bits >> i) IS NOT NULL
+```
+
+<details><summary>Calculating a bit pattern field directly from `main_v4`</summary>
+```sql
+DECLARE start_date DATE DEFAULT '2020-05-01';
+DECLARE end_date DATE DEFAULT '2020-11-01';
+DECLARE target_sample_id INT64 DEFAULT 0;
+
+CREATE TEMP FUNCTION process_bits(bits BYTES) AS (
+  STRUCT(
+    bits,
+
+    -- An INT64 version of the bits, compatible with bits28 functions
+    CAST(CONCAT('0x', TO_HEX(RIGHT(bits, 4))) AS INT64) << 36 >> 36 AS bits28,
+
+    -- An INT64 version of the bits with 64 days of history
+    CAST(CONCAT('0x', TO_HEX(RIGHT(bits, 4))) AS INT64) AS bits64,
+
+    -- A field like days_since_seen from clients_last_seen.
+    udf.bits_to_days_since_seen(bits) AS days_since_active,
+
+    -- Days since first active, analogous to first_seen_date in clients_first_seen
+    udf.bits_to_days_since_first_seen(bits) AS days_since_first_active
+  )
+);
+
+CREATE OR REPLACE TABLE
+  analysis.<myuser>_newfeature
+PARTITION BY submission_date
+CLUSTER BY sample_id
+AS
+WITH
 -- If clients_daily already contains a measure that suffices as the basis for
 -- our new usage definition, we can skip this daily subquery and calculate
 -- alltime based on clients_daily rather than `main`.
@@ -724,6 +792,7 @@ CROSS JOIN
 WHERE
   (days_active_bits >> i) IS NOT NULL
 ```
+</details>
 
 This script takes about 10 minutes to run over 6 months of data as written above
 and about an hour to run over the whole history of `main_v4` (starting at 2018-11-01).
