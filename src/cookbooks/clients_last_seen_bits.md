@@ -57,7 +57,7 @@ ORDER BY
   submission_date
 ```
 
-Under the hood, `days_since_seen` is calculated using the `bits28_days_since_seen`
+Under the hood, `days_since_seen` is calculated using the `bits28.days_since_seen`
 UDF which is explained in more detail later in this article.
 
 Note that the desktop `clients_last_seen` table also has additional bit pattern
@@ -116,7 +116,7 @@ which considers a window of 14 days.
 For each client active in "week 0" (days 0 through 6), we determine retention by
 checking if they were also active in "week 1" (days 7 through 13).
 
-We provide a UDF called `bits28_retention` that returns a rich STRUCT
+We provide a UDF called `bits28.retention` that returns a rich STRUCT
 type representing activity in various windows, with all the date and bit
 offsets handled for you. You pass in a bit pattern and the corresponding `submission_date`,
 and it returns fields like:
@@ -128,7 +128,7 @@ and it returns fields like:
 Calculating GUD's retention aggregates and some other variants looks like:
 
 ```sql
--- The struct returned by bits28_retention is nested.
+-- The struct returned by bits28.retention is nested.
 -- The first level of nesting defines the beginning of our window;
 -- in our case, we want day_13 to get retention in a 2-week window.
 -- This base query uses day_13.* to make all the day_13 fields available:
@@ -140,10 +140,10 @@ Calculating GUD's retention aggregates and some other variants looks like:
 WITH base AS (
   SELECT
     *,
-    udf.bits28_retention(
+    mozfun.bits28.retention(
       days_seen_bits, submission_date
       ).day_13.*,
-    udf.bits28_retention(
+    mozfun.bits28.retention(
       days_created_profile_bits, submission_date
       ).day_13.active_on_metric_date AS is_new_profile
   FROM
@@ -194,9 +194,9 @@ same condition as the denominator plus additional constraints (`AND ...`).
 It is very easy to accidentally define a retention metric that is logically
 inconsistent and can rise above 1.
 
-Under the hood, `bits28_retention` is using a series of calls to the lower-level
-`bits28_range` function, which is explained later in this article.
-`bits28_range` is very powerful and can be used to construct novel metrics,
+Under the hood, `bits28.retention` is using a series of calls to the lower-level
+`bits28.range` function, which is explained later in this article.
+`bits28.range` is very powerful and can be used to construct novel metrics,
 but it also introduces many opportunities for off-by-one errors and passing parameters
 in incorrect order, so please fully read through this documentation before
 attempting to use the lower-level functions.
@@ -219,9 +219,9 @@ values to "bit strings":
 
 ```sql
 SELECT
-  [ udf.bits28_to_string(1),
-    udf.bits28_to_string(2),
-    udf.bits28_to_string(3) ]
+  [ mozfun.bits28.to_string(1),
+    mozfun.bits28.to_string(2),
+    mozfun.bits28.to_string(3) ]
 
 >>> ['0000000000000000000000000001',
      '0000000000000000000000000010',
@@ -238,7 +238,7 @@ If we label the rightmost bit as "offset 0", we would expect the set
 bits to be at offsets `-13` and `-6`:
 
 ```sql
-SELECT udf.bits28_to_string(8256)
+SELECT mozfun.bits28.to_string(8256)
 
 >>> '0000000000000010000001000000'
 ```
@@ -247,7 +247,7 @@ We also provide the inverse of this function to take a string representation
 of a bit pattern and return the associated integer:
 
 ```sql
-SELECT udf.bits28_from_string('0000000000000010000001000000')
+SELECT mozfun.bits28.from_string('0000000000000010000001000000')
 
 >>> 8256
 ```
@@ -255,7 +255,7 @@ SELECT udf.bits28_from_string('0000000000000010000001000000')
 Note that the leading zeros are optional for this function:
 
 ```sql
-SELECT udf.bits28_from_string('10000001000000')
+SELECT mozfun.bits28.from_string('10000001000000')
 
 >>> 8256
 ```
@@ -264,7 +264,7 @@ Finally, we can translate this into an array of concrete dates by passing
 a value for the date that corresponds to the rightmost bit:
 
 ```sql
-SELECT udf.bits28_to_dates(8256, '2020-01-28')
+SELECT mozfun.bits28.to_dates(8256, '2020-01-28')
 
 >>> ['2020-01-15', '2020-01-22']
 ```
@@ -371,7 +371,7 @@ We provide a special function to tell us how many days have elapsed since
 the most recent activity encoded in a bit pattern:
 
 ```sql
-SELECT udf.bits28_days_since_seen(udf.bits28_from_string('10000001000000'))
+SELECT mozfun.bits28.days_since_seen(mozfun.bits28.from_string('10000001000000'))
 
 >>> 6
 ```
@@ -416,7 +416,7 @@ on the right (this would be a `1` instead if the user had been active on 2020-01
 The `days_since_seen` value is now `7`, which is outside the WAU window:
 
 ```sql
-SELECT udf.bits28_days_since_seen(udf.bits28_from_string('100000010000000'))
+SELECT mozfun.bits28.days_since_seen(mozfun.bits28.from_string('100000010000000'))
 
 >>> 7
 ```
@@ -479,9 +479,9 @@ Extracting the bits for a specific week can be achieved via UDF:
 
 ```sql
 SELECT
-  -- Signature is bits28_range(offset_to_day_0, start_bit, number_of_bits)
-  udf.bits28_range(days_seen_bits, -13 + 0, 7) AS week_0_bits,
-  udf.bits28_range(days_seen_bits, -13 + 7, 7) AS week_1_bits
+  -- Signature is bits28.range(offset_to_day_0, start_bit, number_of_bits)
+  mozfun.bits28.range(days_seen_bits, -13 + 0, 7) AS week_0_bits,
+  mozfun.bits28.range(days_seen_bits, -13 + 7, 7) AS week_1_bits
 FROM
   telemetry.clients_last_seen
 ```
@@ -491,31 +491,31 @@ was active or not as:
 
 ```sql
 SELECT
-  BIT_COUNT(udf.bits28_range(days_seen_bits, -13 + 0, 7)) > 0 AS active_in_week_0
-  BIT_COUNT(udf.bits28_range(days_seen_bits, -13 + 7, 7)) > 0 AS active_in_week_1
+  BIT_COUNT(mozfun.bits28.range(days_seen_bits, -13 + 0, 7)) > 0 AS active_in_week_0
+  BIT_COUNT(mozfun.bits28.range(days_seen_bits, -13 + 7, 7)) > 0 AS active_in_week_1
 FROM
   telemetry.clients_last_seen
 ```
 
 This pattern of checking whether any bit is set within a given range is common
-enough that we provide short-hand for it in `bits28_active_in_range`.
+enough that we provide short-hand for it in `bits28.active_in_range`.
 The above query can be made a bit cleaner as:
 
 ```sql
 SELECT
-  udf.bits28_active_in_range(days_seen_bits, -13 + 0, 7) AS active_in_week_0
-  udf.bits28_active_in_range(days_seen_bits, -13 + 7, 7) AS active_in_week_1
+  mozfun.bits28.active_in_range(days_seen_bits, -13 + 0, 7) AS active_in_week_0
+  mozfun.bits28.active_in_range(days_seen_bits, -13 + 7, 7) AS active_in_week_1
 FROM
   telemetry.clients_last_seen
 ```
 
-In terms of the higher-level `bits28_retention` function discussed earlier,
+In terms of the higher-level `bits28.retention` function discussed earlier,
 here's how this client looks:
 
 ```sql
 SELECT
   submission_date,
-  udf.bits28_retention(days_seen_bits, submission_date).day_13.*
+  mozfun.bits28.retention(days_seen_bits, submission_date).day_13.*
 FROM
   telemetry.clients_last_seen
 
@@ -539,7 +539,7 @@ who are also active within the next `n` days. For example, 3-day retention would
 have a denominator of all clients active on day 0 and a numerator of all clients
 active on day 0 who were also active on days 1 or 2.
 
-To calculate `n`-day retention, we need to use the lower-level `bits28_range`
+To calculate `n`-day retention, we need to use the lower-level `bits28.range`
 function:
 
 ```sql
@@ -549,8 +549,8 @@ SET n = 3;
 WITH base AS (
   SELECT
     *,
-    udf.bits28_active_in_range(days_seen_bits, -n + 1, 1) AS seen_on_day_0,
-    udf.bits28_active_in_range(days_seen_bits, -n + 2, n - 1) AS seen_after_day_0
+    mozfun.bits28.active_in_range(days_seen_bits, -n + 1, 1) AS seen_on_day_0,
+    mozfun.bits28.active_in_range(days_seen_bits, -n + 2, n - 1) AS seen_after_day_0
   FROM
     telemetry.clients_last_seen )
 SELECT
@@ -601,8 +601,8 @@ SET offset_to_day_0 = 1 - n - cushion_days;
 WITH base AS (
   SELECT
     *,
-    udf.bits28_active_in_range(days_seen_session_start_bits, offset_to_day_0, 1) AS seen_on_day_0,
-    udf.bits28_active_in_range(days_seen_session_start_bits, offset_to_day_0 + 1, n - 1) AS seen_after_day_0
+    mozfun.bits28.active_in_range(days_seen_session_start_bits, offset_to_day_0, 1) AS seen_on_day_0,
+    mozfun.bits28.active_in_range(days_seen_session_start_bits, offset_to_day_0 + 1, n - 1) AS seen_after_day_0
   FROM
     org_mozilla_fenix.baseline_clients_last_seen )
 SELECT
@@ -623,51 +623,51 @@ GROUP BY
 
 ## UDF Reference
 
-### `bits28_to_string`
+### `bits28.to_string`
 
 Convert an INT64 field into a 28 character string representing the individual bits.
 
 ```sql
-bits28_to_string(bits INT64)
+bits28.to_string(bits INT64)
 
-SELECT udf.bits28_to_string(18)
+SELECT mozfun.bits28.to_string(18)
 >> 0000000000000000000000010010
 ```
 
-### `bits28_from_string`
+### `bits28.from_string`
 
 Convert a string representing individual bits into an INT64.
 
 ```sql
-bits28_from_string(bits STRING)
+bits28.from_string(bits STRING)
 
-SELECT udf.bits28_from_string('10010')
+SELECT mozfun.bits28.from_string('10010')
 >> 18
 ```
 
-### `bits28_to_dates`
+### `bits28.to_dates`
 
 Convert a bit pattern into an array of the dates is represents.
 
 ```sql
-bits28_to_dates(bits INT64, end_date DATE)
+bits28.to_dates(bits INT64, end_date DATE)
 
-SELECT udf.bits28_to_dates(18, '2020-01-28')
+SELECT mozfun.bits28.to_dates(18, '2020-01-28')
 >> ['2020-01-24', '2020-01-27']
 ```
 
-### `bits28_days_since_seen`
+### `bits28.days_since_seen`
 
 Return the position of the rightmost set bit in an INT64 bit pattern.
 
 ```sql
-bits28_days_since_seen(bits INT64)
+bits28.days_since_seen(bits INT64)
 
-SELECT bits28_days_since_seen(18)
+SELECT bits28.days_since_seen(18)
 >> 1
 ```
 
-### `bits28_range`
+### `bits28.range`
 
 Return an INT64 representing a range of bits from a source bit pattern.
 
@@ -677,17 +677,17 @@ the rightmost bit in the pattern.
 `n_bits` is the number of bits to consider, counting right from the bit at `start_offset`.
 
 ```sql
-bits28_range(bits INT64, offset INT64, n_bits INT64)
+bits28.range(bits INT64, offset INT64, n_bits INT64)
 
-SELECT udf.bits28_to_string(udf.bits28_range(18, 5, 6))
+SELECT mozfun.bits28.to_string(mozfun.bits28.range(18, 5, 6))
 >> '010010'
-SELECT udf.bits28_to_string(udf.bits28_range(18, 5, 2))
+SELECT mozfun.bits28.to_string(mozfun.bits28.range(18, 5, 2))
 >> '01'
-SELECT udf.bits28_to_string(udf.bits28_range(18, 5 - 2, 4))
+SELECT mozfun.bits28.to_string(mozfun.bits28.range(18, 5 - 2, 4))
 >> '0010'
 ```
 
-### `bits28_active_in_range`
+### `bits28.active_in_range`
 
 Return a boolean indicating if any bits are set in the specified range of a bit pattern.
 
@@ -697,14 +697,14 @@ the rightmost bit in the pattern.
 `n_bits` is the number of bits to consider, counting right from the bit at `start_offset`.
 
 ```sql
-bits28_active_in_range(bits INT64, start_offset INT64, n_bits INT64)
+bits28.active_in_range(bits INT64, start_offset INT64, n_bits INT64)
 ```
 
-### `bits28_retention`
+### `bits28.retention`
 
 Return a nested struct providing numerator and denominator fields for
 the standard 1-Week, 2-Week, and 3-Week retention definitions.
 
 ```sql
-bits28_retention(bits INT64, submission_date DATE)
+bits28.retention(bits INT64, submission_date DATE)
 ```
