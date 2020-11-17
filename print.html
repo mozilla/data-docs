@@ -2182,6 +2182,7 @@ and how to build new metrics from them.</p>
 <li><a href="cookbooks/clients_last_seen_bits.html#retention-using-activity-date">Retention using activity date</a></li>
 </ul>
 </li>
+<li><a href="cookbooks/clients_last_seen_bits.html#proposing-a-new-bit-pattern-field">Proposing a new bit pattern field</a></li>
 <li><a href="cookbooks/clients_last_seen_bits.html#udf-reference">UDF Reference</a>
 <ul>
 <li><a href="cookbooks/clients_last_seen_bits.html#bits28to_string"><code>bits28.to_string</code></a></li>
@@ -2679,6 +2680,184 @@ WHERE
 GROUP BY
   metric_date
 </code></pre>
+<h2><a class="header" href="#proposing-a-new-bit-pattern-field" id="proposing-a-new-bit-pattern-field">Proposing a new bit pattern field</a></h2>
+<p>The operational logic required to produce a <code>clients_last_seen</code> table makes
+it unwieldy for backfilling, so it has historically been difficult for data
+scientists to experiment with new bit pattern fields on their own.</p>
+<p>Below are sample queries for producing a small <code>clients_last_seen</code>-like table
+that presents an experimental usage definition. In this approach, the temporary
+analysis table we create actually stores a client's whole usage history as a
+BYTES field, and then we rely on view logic to present this as per-day windows.
+Much of the logic is boilerplate; the sections that would need to change for
+your specific new field are marked between <code>-- BEGIN</code> and <code>-- END</code> comments.</p>
+<p>The first example defines a new feature based on a measure that already exists
+in <code>clients_daily</code>. It takes only a few minutes to run:</p>
+<pre><code class="language-sql">DECLARE start_date DATE DEFAULT '2020-05-01';
+DECLARE end_date DATE DEFAULT '2020-11-01';
+DECLARE target_sample_id INT64 DEFAULT 0;
+
+CREATE TEMP FUNCTION process_bits(bits BYTES) AS (
+  STRUCT(
+    bits,
+
+    -- An INT64 version of the bits, compatible with bits28 functions
+    CAST(CONCAT('0x', TO_HEX(RIGHT(bits, 4))) AS INT64) &lt;&lt; 36 &gt;&gt; 36 AS bits28,
+
+    -- An INT64 version of the bits with 64 days of history
+    CAST(CONCAT('0x', TO_HEX(RIGHT(bits, 4))) AS INT64) AS bits64,
+
+    -- A field like days_since_seen from clients_last_seen.
+    udf.bits_to_days_since_seen(bits) AS days_since_active,
+
+    -- Days since first active, analogous to first_seen_date in clients_first_seen
+    udf.bits_to_days_since_first_seen(bits) AS days_since_first_active
+  )
+);
+
+CREATE OR REPLACE TABLE
+  analysis.&lt;myuser&gt;_newfeature
+PARTITION BY submission_date
+CLUSTER BY sample_id
+AS
+WITH
+alltime AS (
+  SELECT
+    sample_id,
+    client_id,
+    -- BEGIN
+    -- Here we produce bit pattern fields based on the daily aggregates from the
+    -- previous step;
+    udf.bits_from_offsets(
+      ARRAY_AGG(
+        IF(active_hours_sum &gt;= 1,DATE_DIFF(end_date, submission_date, DAY), NULL)
+        IGNORE NULLS
+      )
+    ) AS days_active_bits,
+    -- END
+  FROM
+    telemetry.clients_daily
+  WHERE
+    sample_id = target_sample_id
+    AND submission_date BETWEEN start_date AND end_date
+  GROUP BY
+    sample_id,
+    client_id
+)
+SELECT
+  end_date - i AS submission_date,
+  sample_id,
+  client_id,
+  process_bits(days_active_bits &gt;&gt; i) AS days_active
+FROM
+  alltime
+-- The cross join parses each input row into one row per day since the client
+-- was first seen, emulating the format of the existing clients_last_seen table.
+CROSS JOIN
+  UNNEST(GENERATE_ARRAY(0, DATE_DIFF(end_date, start_date, DAY))) AS i
+WHERE
+  (days_active_bits &gt;&gt; i) IS NOT NULL
+</code></pre>
+<p>And here is a more complex example that references <code>main_v4</code> directly:</p>
+<details>
+<summary>Calculating a bit pattern field directly from `main_v4`</summary>
+<pre><code class="language-sql">DECLARE start_date DATE DEFAULT '2020-05-01';
+DECLARE end_date DATE DEFAULT '2020-11-01';
+DECLARE target_sample_id INT64 DEFAULT 0;
+
+CREATE TEMP FUNCTION process_bits(bits BYTES) AS (
+  STRUCT(
+    bits,
+
+    -- An INT64 version of the bits, compatible with bits28 functions
+    CAST(CONCAT('0x', TO_HEX(RIGHT(bits, 4))) AS INT64) &lt;&lt; 36 &gt;&gt; 36 AS bits28,
+
+    -- An INT64 version of the bits with 64 days of history
+    CAST(CONCAT('0x', TO_HEX(RIGHT(bits, 4))) AS INT64) AS bits64,
+
+    -- A field like days_since_seen from clients_last_seen.
+    udf.bits_to_days_since_seen(bits) AS days_since_active,
+
+    -- Days since first active, analogous to first_seen_date in clients_first_seen
+    udf.bits_to_days_since_first_seen(bits) AS days_since_first_active
+  )
+);
+
+CREATE OR REPLACE TABLE
+  analysis.&lt;myuser&gt;_newfeature
+PARTITION BY submission_date
+CLUSTER BY sample_id
+AS
+WITH
+-- If clients_daily already contains a measure that suffices as the basis for
+-- our new usage definition, we can skip this daily subquery and calculate
+-- alltime based on clients_daily rather than `main`.
+daily AS (
+  SELECT
+    DATE(submission_timestamp) AS submission_date,
+    sample_id,
+    client_id,
+    -- BEGIN
+    -- Here is where we put clients_daily-like aggregations that will be
+    -- used as the basis for bit patterns in the next step.
+    SUM(payload.processes.parent.scalars.browser_engagement_active_ticks)
+      AS active_ticks_sum,
+    -- END
+  FROM
+    telemetry.main
+  WHERE
+    sample_id = target_sample_id
+    AND DATE(submission_timestamp) BETWEEN start_date AND end_date
+  GROUP BY
+    submission_date,
+    sample_id,
+    client_id ),
+alltime AS (
+  SELECT
+    sample_id,
+    client_id,
+    -- BEGIN
+    -- Here we produce bit pattern fields based on the daily aggregates from the
+    -- previous step;
+    udf.bits_from_offsets(
+      ARRAY_AGG(
+        IF(active_ticks_sum &gt;= 8,DATE_DIFF(end_date, submission_date, DAY), NULL)
+        IGNORE NULLS
+      )
+    ) AS days_active_bits,
+    -- END
+  FROM
+    daily
+  GROUP BY
+    sample_id,
+    client_id
+)
+SELECT
+  end_date - i AS submission_date,
+  sample_id,
+  client_id,
+  process_bits(days_active_bits &gt;&gt; i) AS days_active
+FROM
+  alltime
+-- The cross join parses each input row into one row per day since the client
+-- was first seen, emulating the format of the existing clients_last_seen table.
+CROSS JOIN
+  UNNEST(GENERATE_ARRAY(0, DATE_DIFF(end_date, start_date, DAY))) AS i
+WHERE
+  (days_active_bits &gt;&gt; i) IS NOT NULL
+</code></pre>
+</details>
+<p>This script takes about 10 minutes to run over 6 months of data as written above
+and about an hour to run over the whole history of <code>main_v4</code> (starting at 2018-11-01).
+A query over the whole history of <code>clients_daily</code> (starting in early 2016)
+can run in about an hour as well.
+The resultant table can be used on its own
+or joined with <code>clients_daily</code> to pull per-client dimensions.</p>
+<p>If the definition proves useful in validation, your variant of the query
+above can serve as a good starting point for Data Engineering to integrate the new
+definition into <code>clients_last_seen</code> (and <code>clients_daily</code> if necessary).
+Once a new definition is integrated into the model, we can backfill two months of
+data fairly easily. Complete backfills are expensive in terms of computational cost
+and engineering effort, so cannot happen more than approximately quarterly.</p>
 <h2><a class="header" href="#udf-reference" id="udf-reference">UDF Reference</a></h2>
 <h3><a class="header" href="#bits28to_string" id="bits28to_string"><code>bits28.to_string</code></a></h3>
 <p>Convert an INT64 field into a 28 character string representing the individual bits.</p>
