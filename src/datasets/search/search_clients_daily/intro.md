@@ -5,7 +5,7 @@ consider using `search_aggregates` for coarse analyses.
 ## Contents
 
 `search_clients_daily` has one row for each unique combination of:
-(`client_id`, `submission_date`, `engine`, `source`).
+(`client_id`, `submission_date`, `engine`, `source` and `type` of search).
 
 In addition to the standard search count aggregations,
 this dataset includes some descriptive data for each client.
