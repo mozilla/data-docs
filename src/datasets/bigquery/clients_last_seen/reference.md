@@ -67,12 +67,14 @@ For each bit, a 1 corresponds to the specific activity occurring on that day.
 
 ### Activity Segment/User State/Core Active Specific
 
+Please see this [section](../../../concepts/segments.md) for descriptions regarding user states/segments. 
+
 * `is_core_active_v1`: Boolean indicating if the client satisfies conditions of being core active on that day. 
 * `activity_segments_v1`: The activity segment applicable to the client that day.
-* `is_regular_user_v3`:  Boolean indicating if the client satisfies conditions of being regular user on that day.
-* `is_new_or_resurrected_v3`: Boolean indicating if the client satisfies conditions of being regular user on that day.
-* `is_weekday_regular_v1`:  Boolean indicating if the client satisfies conditions of being weekday regular user on that day.
-* `is_allweek_regular_v1`:  Boolean indicating if the client satisfies conditions of being an allweek regular user on that day. 
+* `is_regular_user_v3`:  Boolean indicating if the client satisfies conditions of being a regular user on that day.
+* `is_new_or_resurrected_v3`: Boolean indicating if the client satisfies conditions of being a regular user on that day.
+* `is_weekday_regular_v1`:  Boolean indicating if the client satisfies conditions of being a weekday regular user on that day.
+* `is_allweek_regular_v1`:  Boolean indicating if the client satisfies conditions of being a allweek regular user on that day. 
 
 ### Usage Specific
 * `days_visited_1_uri_bits`:  Each bit field represents if a client browsed at least 1 URI on that day.
@@ -93,7 +95,9 @@ Private Browsing Mode where URI counts are not recorded.
 * `new_profile_5_day_activated_v1`: Boolean indicating if a new profile has sent a ping 5 out of their first 7 days.
 * `new_profile_14_day_activated_v1`: Boolean indicating if a new profile has sent a ping 8 out of their first 14 days.
 * `new_profile_21_day_activated_v1`: Boolean indicating if a new profile has sent a ping 12 out of their first 21 days.
-* `days_since_created_profile`: Number of days since the profile creation date.
+* `days_since_created_profile`: Number of days since the profile creation date. This field is only populated when the 
+value is 27 days or less. Otherwise, it is NULL. `profile_age_in_days` can be used in the latter cases for all clients
+  who have a profile creation date. 
 
 ## Example Queries
 

@@ -165,7 +165,7 @@ WHERE
 
 Using _is_core_active_v1_:
 
-Here are two basic ways to calculate a times series that counts the number of clients qualifying as Core Active:
+Here are two basic ways to calculate a time series that counts the number of clients qualifying as Core Active:
 
 1. On a 28 day basis. Here we ask: for a given 28 day period, how many clients qualify as Core Active on that day? 
   This is equivalent to looking at a sliding 28 day window where we evaluate the 28 day history of each client on 
