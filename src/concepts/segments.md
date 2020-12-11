@@ -49,10 +49,38 @@ This user state contains clients in _Regular users v3_ who typically use the bro
 
 This user state contains clients in _Regular users v3_ who do not fit in _Weekday regulars v1_ - clients that used the browser on a weekend at least twice in the previous 27 days. DAU for this user state does have some weekly seasonality, so some of the clients in this user state use the browser on weekdays preferentially, but not exclusively.
 
+### Core Actives v1
+
+`clients_last_seen.is_core_active_v1`
+
+This user state contains clients that browsed at least 1 uri in at least 21 of the previous 28 days (including the current date). URI counts are derived from the column `scalar_parent_browser_engagement_total_uri_count_sum` in [clients_daily](../datasets/batch_view/clients_daily/reference.md) and [clients_last_seen](../datasets/bigquery/clients_last_seen/reference.md). Note that `is_core_active_v1` can be `true` on days where clients did not send a ping or browse at least 1 URI, so long as the aforesaid condition still holds. 
+
+### Activity Segments (informal)
+
+`clients_last_seen.activity_segments_v1`
+
+This column classifies each client-day based into one of four informal segments, defined below:
+
+* `infrequent_user`: client that browsed at least 1 URI in at least 1 and up to 6 days in the past 28 days.
+
+* `casual_user`: client that browsed at least 1 URI in at least 7 and up to 13 days in the past 28 days.
+
+* `regular_user`: client that browsed at least 1 URI in at least 14 and up to 20 days in the past 28 days. 
+(note that this differs from `regular_user_v3`)
+* `core_user`: client that browsed at least 1 URI in at least 21 of the past 28 days.
+* `other`: client does not meet any of the criteria above (i.e. they sent pings in at least 1 day out of the previous 
+28 but did not browse any URIs).
+
+Note that these are informal segments and are provided for convenience - one should not, for example, assume that 
+there are inherent differences between infrequent and casual users, for example. Also note that they do not divide up 
+the past 28 days evenly. One can use `clients_last_seen.days_visited_1_uri_bits` to define their own criteria if a 
+different breakdown is desired. 
+
+
 ## Writing queries with user states/segments
 
-When a user state is defined with respect to a user's _behavior_ (e.g. usage levels)
-as opposed to more stable traits (e.g. country),
+When a user state is defined with respect to a user's _behavior_ (e.g. usage levels) as opposed to more stable 
+traits (e.g. country),
 we should evaluate each user's user state eligibility
 using data collected _before_ the time period in which we want to study their actions.
 Else we run the risk of making trivial discoveries
@@ -133,6 +161,40 @@ INNER JOIN clients_last_seen cls
     AND cls.submission_date BETWEEN '2020-01-01' AND '2020-03-01'
 WHERE
     cd.submission_date BETWEEN '2020-01-01' AND '2020-03-01'
+```
+
+Using _is_core_active_v1_:
+
+Here are two basic ways to calculate a time series that counts the number of clients qualifying as Core Active:
+
+1. On a 28 day basis. Here we ask: for a given 28 day period, how many clients qualify as Core Active on that day? 
+  This is equivalent to looking at a sliding 28 day window where we evaluate the 28 day history of each client on 
+  the last day of the window and ask whether they meet the criteria. This means that they do not necessarily have to 
+  be active (either sent a ping or browsed at least 1 URI) on the last day of the window to qualify. Below we show an 
+  example of a query that returns this time series.
+  
+```lang=sql
+SELECT submission_date, 
+    COUNTIF(is_core_active_v1) as number_core_actives 
+FROM telemetry.clients_last_seen 
+WHERE submission_date >= DATE_SUB(CURRENT_DATE, INTERVAL 7 DAY) 
+GROUP BY 1 
+ORDER BY 1
+```
+
+2. On a daily basis. Here we ask: of all the users who sent a ping on a given day, how many of them qualify as Core 
+   Active? In this case, we restrict ourselves to looking only at clients who reported telemetry (sent a main ping) 
+   on a given day, and then ask how many of them qualify as core active based on their history in the most recent 
+   28 day window. This is equivalent to asking what subset of DAU qualifies as Core Active. The query here is similar 
+   to the one above, with one addition to the WHERE clause:
+
+```lang=sql
+SELECT submission_date, 
+    COUNTIF(is_core_active_v1) as number_core_actives 
+FROM telemetry.clients_last_seen 
+WHERE submission_date >= DATE_SUB(CURRENT_DATE, INTERVAL 7 DAY) AND days_since_seen = 0 
+GROUP BY 1 
+ORDER BY 1
 ```
 
 ## Obsolete user states
