@@ -181,6 +181,13 @@
 </li>
 <li><a href="#data-reference">Data Reference</a>
 <ul>
+<li><a href="#field-descriptions">Field Descriptions</a>
+<ul>
+<li><a href="#activity-segmentuser-statecore-active-specific">Activity Segment/User State/Core Active Specific</a></li>
+<li><a href="#usage-specific">Usage Specific</a></li>
+<li><a href="#new-profile-specific">New Profile Specific</a></li>
+</ul>
+</li>
 <li><a href="#example-queries">Example Queries</a>
 <ul>
 <li><a href="#compute-dau-for-non-windows-clients-for-the-last-week">Compute DAU for non-windows clients for the last week</a></li>
@@ -241,6 +248,45 @@ each <code>country</code> would be the same as if MAU were calculated only by <c
 <p>The data is available in Re:dash and BigQuery. Take a look at this full running
 <a href="https://sql.telemetry.mozilla.org/queries/62029/source#159510">example query in Re:dash</a>.</p>
 <h1><a class="header" href="#data-reference" id="data-reference">Data Reference</a></h1>
+<h2><a class="header" href="#field-descriptions" id="field-descriptions">Field Descriptions</a></h2>
+<p>The <a href="../../../cookbooks/clients_last_seen_bits.html">“*_bits” fields</a> store the relevant activity of a client in a 28 day 
+window, as a 28 bit integer. 
+For each bit, a 1 corresponds to the specific activity occurring on that day.</p>
+<h3><a class="header" href="#activity-segmentuser-statecore-active-specific" id="activity-segmentuser-statecore-active-specific">Activity Segment/User State/Core Active Specific</a></h3>
+<p>Please see this <a href="../../../concepts/segments.html">section</a> for descriptions regarding user states/segments. </p>
+<ul>
+<li><code>is_core_active_v1</code>: Boolean indicating if the client satisfies conditions of being core active on that day. </li>
+<li><code>activity_segments_v1</code>: The activity segment applicable to the client that day.</li>
+<li><code>is_regular_user_v3</code>:  Boolean indicating if the client satisfies conditions of being a regular user on that day.</li>
+<li><code>is_new_or_resurrected_v3</code>: Boolean indicating if the client satisfies conditions of being a regular user on that day.</li>
+<li><code>is_weekday_regular_v1</code>:  Boolean indicating if the client satisfies conditions of being a weekday regular user on that day.</li>
+<li><code>is_allweek_regular_v1</code>:  Boolean indicating if the client satisfies conditions of being a allweek regular user on that day. </li>
+</ul>
+<h3><a class="header" href="#usage-specific" id="usage-specific">Usage Specific</a></h3>
+<ul>
+<li><code>days_visited_1_uri_bits</code>:  Each bit field represents if a client browsed at least 1 URI on that day.</li>
+<li><code>days_since_visited_1_uri</code>: Number of days since the client browsed at least 1 URI.</li>
+<li><code>days_interacted_bits</code>:  Each bit field represents if a client had at least 1 active tick on that day. 
+This is derived from the <code>active_hours_sum</code> in clients_daily.</li>
+<li><code>days_since_interacted</code>: Number of days since the clients had at least 1 active tick. </li>
+<li><code>days_had_8_active_ticks_bits</code>:  Each bit field represents if a client had at least 8 active ticks on that day. 
+This can be used to approximate the threshold of 1 URI, and is useful for determining activity for clients using 
+Private Browsing Mode where URI counts are not recorded.</li>
+<li><code>days_since_visited_8_active_ticks</code>: Number of days since the client had at least 8 active ticks.</li>
+</ul>
+<h3><a class="header" href="#new-profile-specific" id="new-profile-specific">New Profile Specific</a></h3>
+<ul>
+<li><code>first_seen_date</code>: Date the client sent their first main ping. </li>
+<li><code>second_seen_date</code>: Date the client sent their first main ping.</li>
+<li><code>days_since_first_seen</code>: Number of days since <code>first_seen_date</code></li>
+<li><code>days_since_second_seen</code>: Number of days since <code>second_seen_date</code></li>
+<li><code>new_profile_5_day_activated_v1</code>: Boolean indicating if a new profile has sent a ping 5 out of their first 7 days.</li>
+<li><code>new_profile_14_day_activated_v1</code>: Boolean indicating if a new profile has sent a ping 8 out of their first 14 days.</li>
+<li><code>new_profile_21_day_activated_v1</code>: Boolean indicating if a new profile has sent a ping 12 out of their first 21 days.</li>
+<li><code>days_since_created_profile</code>: Number of days since the profile creation date. This field is only populated when the 
+value is 27 days or less. Otherwise, it is NULL. <code>profile_age_in_days</code> can be used in the latter cases for all clients
+who have a profile creation date. </li>
+</ul>
 <h2><a class="header" href="#example-queries" id="example-queries">Example Queries</a></h2>
 <h4><a class="header" href="#compute-dau-for-non-windows-clients-for-the-last-week" id="compute-dau-for-non-windows-clients-for-the-last-week">Compute DAU for non-windows clients for the last week</a></h4>
 <pre><code class="language-sql">SELECT

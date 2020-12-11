@@ -202,9 +202,38 @@ so that your communication is forwards compatible.</p>
 <h3><a class="header" href="#all-week-regulars-v1" id="all-week-regulars-v1">All-week regulars v1</a></h3>
 <p><code>clients_last_seen.is_allweek_regular_v1</code></p>
 <p>This user state contains clients in <em>Regular users v3</em> who do not fit in <em>Weekday regulars v1</em> - clients that used the browser on a weekend at least twice in the previous 27 days. DAU for this user state does have some weekly seasonality, so some of the clients in this user state use the browser on weekdays preferentially, but not exclusively.</p>
+<h3><a class="header" href="#core-actives-v1" id="core-actives-v1">Core Actives v1</a></h3>
+<p><code>clients_last_seen.is_core_active_v1</code></p>
+<p>This user state contains clients that browsed at least 1 uri in at least 21 of the previous 28 days (including the current date). URI counts are derived from the column <code>scalar_parent_browser_engagement_total_uri_count_sum</code> in <a href="../datasets/batch_view/clients_daily/reference.html">clients_daily</a> and <a href="../datasets/bigquery/clients_last_seen/reference.html">clients_last_seen</a>. Note that <code>is_core_active_v1</code> can be <code>true</code> on days where clients did not send a ping or browse at least 1 URI, so long as the aforesaid condition still holds. </p>
+<h3><a class="header" href="#activity-segments-informal" id="activity-segments-informal">Activity Segments (informal)</a></h3>
+<p><code>clients_last_seen.activity_segments_v1</code></p>
+<p>This column classifies each client-day based into one of four informal segments, defined below:</p>
+<ul>
+<li>
+<p><code>infrequent_user</code>: client that browsed at least 1 URI in at least 1 and up to 6 days in the past 28 days.</p>
+</li>
+<li>
+<p><code>casual_user</code>: client that browsed at least 1 URI in at least 7 and up to 13 days in the past 28 days.</p>
+</li>
+<li>
+<p><code>regular_user</code>: client that browsed at least 1 URI in at least 14 and up to 20 days in the past 28 days. 
+(note that this differs from <code>regular_user_v3</code>)</p>
+</li>
+<li>
+<p><code>core_user</code>: client that browsed at least 1 URI in at least 21 of the past 28 days.</p>
+</li>
+<li>
+<p><code>other</code>: client does not meet any of the criteria above (i.e. they sent pings in at least 1 day out of the previous 
+28 but did not browse any URIs).</p>
+</li>
+</ul>
+<p>Note that these are informal segments and are provided for convenience - one should not, for example, assume that 
+there are inherent differences between infrequent and casual users, for example. Also note that they do not divide up 
+the past 28 days evenly. One can use <code>clients_last_seen.days_visited_1_uri_bits</code> to define their own criteria if a 
+different breakdown is desired. </p>
 <h2><a class="header" href="#writing-queries-with-user-statessegments" id="writing-queries-with-user-statessegments">Writing queries with user states/segments</a></h2>
-<p>When a user state is defined with respect to a user's <em>behavior</em> (e.g. usage levels)
-as opposed to more stable traits (e.g. country),
+<p>When a user state is defined with respect to a user's <em>behavior</em> (e.g. usage levels) as opposed to more stable 
+traits (e.g. country),
 we should evaluate each user's user state eligibility
 using data collected <em>before</em> the time period in which we want to study their actions.
 Else we run the risk of making trivial discoveries
@@ -267,6 +296,36 @@ INNER JOIN clients_last_seen cls
     AND cls.submission_date BETWEEN '2020-01-01' AND '2020-03-01'
 WHERE
     cd.submission_date BETWEEN '2020-01-01' AND '2020-03-01'
+</code></pre>
+<p>Using <em>is_core_active_v1</em>:</p>
+<p>Here are two basic ways to calculate a time series that counts the number of clients qualifying as Core Active:</p>
+<ol>
+<li>On a 28 day basis. Here we ask: for a given 28 day period, how many clients qualify as Core Active on that day? 
+This is equivalent to looking at a sliding 28 day window where we evaluate the 28 day history of each client on 
+the last day of the window and ask whether they meet the criteria. This means that they do not necessarily have to 
+be active (either sent a ping or browsed at least 1 URI) on the last day of the window to qualify. Below we show an 
+example of a query that returns this time series.</li>
+</ol>
+<pre><code class="language-lang=sql">SELECT submission_date, 
+    COUNTIF(is_core_active_v1) as number_core_actives 
+FROM telemetry.clients_last_seen 
+WHERE submission_date &gt;= DATE_SUB(CURRENT_DATE, INTERVAL 7 DAY) 
+GROUP BY 1 
+ORDER BY 1
+</code></pre>
+<ol start="2">
+<li>On a daily basis. Here we ask: of all the users who sent a ping on a given day, how many of them qualify as Core 
+Active? In this case, we restrict ourselves to looking only at clients who reported telemetry (sent a main ping) 
+on a given day, and then ask how many of them qualify as core active based on their history in the most recent 
+28 day window. This is equivalent to asking what subset of DAU qualifies as Core Active. The query here is similar 
+to the one above, with one addition to the WHERE clause:</li>
+</ol>
+<pre><code class="language-lang=sql">SELECT submission_date, 
+    COUNTIF(is_core_active_v1) as number_core_actives 
+FROM telemetry.clients_last_seen 
+WHERE submission_date &gt;= DATE_SUB(CURRENT_DATE, INTERVAL 7 DAY) AND days_since_seen = 0 
+GROUP BY 1 
+ORDER BY 1
 </code></pre>
 <h2><a class="header" href="#obsolete-user-states" id="obsolete-user-states">Obsolete user states</a></h2>
 <h3><a class="header" href="#usage-regularity-v2" id="usage-regularity-v2">Usage regularity v2</a></h3>
