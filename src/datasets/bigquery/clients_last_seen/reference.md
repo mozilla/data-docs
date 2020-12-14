@@ -60,44 +60,47 @@ The data is available in Re:dash and BigQuery. Take a look at this full running
 
 # Data Reference
 
-## Field Descriptions 
-The [“*_bits” fields](../../../cookbooks/clients_last_seen_bits.md) store the relevant activity of a client in a 28 day 
-window, as a 28 bit integer. 
+## Field Descriptions
+
+The [`*_bits` fields](../../../cookbooks/clients_last_seen_bits.md) store the relevant activity of a client in a 28 day
+window, as a 28 bit integer.
 For each bit, a 1 corresponds to the specific activity occurring on that day.
 
 ### Activity Segment/User State/Core Active Specific
 
-Please see this [section](../../../concepts/segments.md) for descriptions regarding user states/segments. 
+Please see this [section](../../../concepts/segments.md) for descriptions regarding user states/segments.
 
-* `is_core_active_v1`: Boolean indicating if the client satisfies conditions of being core active on that day. 
-* `activity_segments_v1`: The activity segment applicable to the client that day.
-* `is_regular_user_v3`:  Boolean indicating if the client satisfies conditions of being a regular user on that day.
-* `is_new_or_resurrected_v3`: Boolean indicating if the client satisfies conditions of being a regular user on that day.
-* `is_weekday_regular_v1`:  Boolean indicating if the client satisfies conditions of being a weekday regular user on that day.
-* `is_allweek_regular_v1`:  Boolean indicating if the client satisfies conditions of being a allweek regular user on that day. 
+- `is_core_active_v1`: Boolean indicating if the client satisfies conditions of being core active on that day.
+- `activity_segments_v1`: The activity segment applicable to the client that day.
+- `is_regular_user_v3`: Boolean indicating if the client satisfies conditions of being a regular user on that day.
+- `is_new_or_resurrected_v3`: Boolean indicating if the client satisfies conditions of being a regular user on that day.
+- `is_weekday_regular_v1`: Boolean indicating if the client satisfies conditions of being a weekday regular user on that day.
+- `is_allweek_regular_v1`: Boolean indicating if the client satisfies conditions of being an all-week regular user on that day.
 
 ### Usage Specific
-* `days_visited_1_uri_bits`:  Each bit field represents if a client browsed at least 1 URI on that day.
-* `days_since_visited_1_uri`: Number of days since the client browsed at least 1 URI.
-* `days_interacted_bits`:  Each bit field represents if a client had at least 1 active tick on that day. 
-This is derived from the `active_hours_sum` in clients_daily.  
-* `days_since_interacted`: Number of days since the clients had at least 1 active tick. 
-* `days_had_8_active_ticks_bits`:  Each bit field represents if a client had at least 8 active ticks on that day. 
-This can be used to approximate the threshold of 1 URI, and is useful for determining activity for clients using 
-Private Browsing Mode where URI counts are not recorded.
-* `days_since_visited_8_active_ticks`: Number of days since the client had at least 8 active ticks.
+
+- `days_visited_1_uri_bits`: Each bit field represents if a client browsed at least 1 URI on that day.
+- `days_since_visited_1_uri`: Number of days since the client browsed at least 1 URI.
+- `days_interacted_bits`: Each bit field represents if a client had at least 1 active tick on that day.
+  This is derived from the `active_hours_sum` in `clients_daily`.
+- `days_since_interacted`: Number of days since the clients had at least 1 active tick.
+- `days_had_8_active_ticks_bits`: Each bit field represents if a client had at least 8 active ticks on that day.
+  This can be used to approximate the threshold of 1 URI, and is useful for determining activity for clients using
+  Private Browsing Mode where URI counts are not recorded.
+- `days_since_visited_8_active_ticks`: Number of days since the client had at least 8 active ticks.
 
 ### New Profile Specific
-* `first_seen_date`: Date the client sent their first main ping. 
-* `second_seen_date`: Date the client sent their first main ping.
-* `days_since_first_seen`: Number of days since `first_seen_date`
-* `days_since_second_seen`: Number of days since `second_seen_date`
-* `new_profile_5_day_activated_v1`: Boolean indicating if a new profile has sent a ping 5 out of their first 7 days.
-* `new_profile_14_day_activated_v1`: Boolean indicating if a new profile has sent a ping 8 out of their first 14 days.
-* `new_profile_21_day_activated_v1`: Boolean indicating if a new profile has sent a ping 12 out of their first 21 days.
-* `days_since_created_profile`: Number of days since the profile creation date. This field is only populated when the 
-value is 27 days or less. Otherwise, it is NULL. `profile_age_in_days` can be used in the latter cases for all clients
-  who have a profile creation date. 
+
+- `first_seen_date`: Date the client sent their first main ping.
+- `second_seen_date`: Date the client sent their first main ping.
+- `days_since_first_seen`: Number of days since `first_seen_date`
+- `days_since_second_seen`: Number of days since `second_seen_date`
+- `new_profile_5_day_activated_v1`: Boolean indicating if a new profile has sent a ping 5 out of their first 7 days.
+- `new_profile_14_day_activated_v1`: Boolean indicating if a new profile has sent a ping 8 out of their first 14 days.
+- `new_profile_21_day_activated_v1`: Boolean indicating if a new profile has sent a ping 12 out of their first 21 days.
+- `days_since_created_profile`: Number of days since the profile creation date. This field is only populated when the
+  value is 27 days or less. Otherwise, it is NULL. `profile_age_in_days` can be used in the latter cases for all clients
+  who have a profile creation date.
 
 ## Example Queries
 
