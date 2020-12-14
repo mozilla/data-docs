@@ -104,7 +104,7 @@ So if a user was active as a regular user v3 on e.g. the second day of a 28-day 
 
 Since many user states use the full extent of the `*_bits` column wizardry in `clients_last_seen`, you'll have to query WAU or MAU the old fashioned way:
 
-```lang=sql
+```sql
 WITH dates AS (
     SELECT *
     FROM UNNEST(GENERATE_DATE_ARRAY('2020-05-01', '2020-07-01')) as d
@@ -136,7 +136,7 @@ So beware this trap and try to only use user states on days the users are active
 
 DAU for _regular users v3_:
 
-```lang=sql
+```sql
 SELECT
     submission_date,
     COUNTIF(is_regular_user_v3) AS dau_regular_users_v3
@@ -149,7 +149,7 @@ GROUP BY submission_date
 
 DAU for _regular users v3_, but joining from a different table:
 
-```lang=sql
+```sql
 SELECT
     cd.submission_date,
     COUNTIF(is_regular_user_v3) AS dau_regular_users_v3
@@ -172,7 +172,7 @@ Here are two basic ways to calculate a time series that counts the number of cli
    be active (either sent a ping or browsed at least 1 URI) on the last day of the window to qualify. Below we show an
    example of a query that returns this time series.
 
-```lang=sql
+```sql
 SELECT submission_date,
     COUNTIF(is_core_active_v1) as number_core_actives
 FROM telemetry.clients_last_seen
@@ -187,7 +187,7 @@ ORDER BY 1
    28 day window. This is equivalent to asking what subset of DAU qualifies as Core Active. The query here is similar
    to the one above, with one addition to the WHERE clause:
 
-```lang=sql
+```sql
 SELECT submission_date,
     COUNTIF(is_core_active_v1) as number_core_actives
 FROM telemetry.clients_last_seen
