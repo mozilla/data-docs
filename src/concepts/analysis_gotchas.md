@@ -249,6 +249,10 @@ On desktop, one field to watch out for is headless mode (`environment.system.gfx
 
 Generally speaking, application versions are monotonically increasing multipart alphanumeric strings like "89.0a1" or "68.0.3".
 Build Ids are not this.
+A Build Id is a sequence of characters that identify the specific code and configuration built into a product.
+It helps identify which code changes were included in a build as well as what features may have been enabled at build time.
+For example, in Firefox Desktop, the build id is the date and time the build was built in yyyymmddhhmmss format.
 A build id might be formatted in any way and contain the time or version control system revision of the code included in the build.
 
 Do not assume the build id format does not vary between products, between channels of the same product, or over time within the same channel of the same product.
+(The build id format for Firefox Desktop has been very stable over time thus far, but even it can be different for different platforms in some respin circumstances (if e.g. only one platform's builder failed)).
