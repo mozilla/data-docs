@@ -244,3 +244,11 @@ Summary of reasons for this decision:
 In general, data coming from an application instance not run by a human is not wanted in analysis. As of this writing, [GeckoDriver](https://github.com/mozilla/geckodriver) (one of the official mechanisms to launch and control an automated version of Firefox for e.g. web compatibility testing) is [configured _not_ to send Telemetry by default](https://searchfox.org/mozilla-central/rev/baf1cd492406a9ac31d9ccb7a51c924c7fbb151f/testing/geckodriver/src/prefs.rs#154) but we can't control for other things people might do in the field.
 
 On desktop, one field to watch out for is headless mode (`environment.system.gfx.headless` in the main ping): if that field is set, you are for certain not working with a version of Firefox being operated by a real human. You can see an example of some client pings with this field set skewing the nightly numbers in [bug 1643341](https://bugzilla.mozilla.org/show_bug.cgi?id=1643341). An easy solution is to just filter out these types of clients in your analysis. You can see an example of this pattern in [this query](https://sql.telemetry.mozilla.org/queries/71781/source).
+
+## Build Ids
+
+Generally speaking, application versions are monotonically increasing multipart alphanumeric strings like "89.0a1" or "68.0.3".
+Build Ids are not this.
+A build id might be formatted in any way and contain the time or version control system revision of the code included in the build.
+
+Do not assume the build id format does not vary between products, between channels of the same product, or over time within the same channel of the same product.
