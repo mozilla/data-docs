@@ -8,6 +8,7 @@
 24-hour
 28-day
 2FA
+89.0a1
 ad-hoc
 adb
 add-on
@@ -199,6 +200,7 @@ Mocli
 mozilla.org
 MozTelemetry
 MySQL
+multipart
 multipreffer
 namespace
 namespaces
@@ -275,6 +277,7 @@ release_calendar
 relier
 reliers
 repo
+respin
 ROI
 RTMO
 runtime
@@ -366,5 +369,6 @@ WebExtension
 WebExtensions
 XPI
 XR
+yyyymmddhhmmss
 doctype
 validator
