@@ -479,6 +479,7 @@ Convenient for quick data investigations. Users are advised to join the <a href=
 </ul>
 </li>
 <li><a href="concepts/analysis_gotchas.html#pings-from-robots">Pings from Robots</a></li>
+<li><a href="concepts/analysis_gotchas.html#build-ids">Build Ids</a></li>
 </ul>
 <h2><a class="header" href="#intermittent-issues" id="intermittent-issues">Intermittent issues</a></h2>
 <p>Despite best efforts, problems may occur from time to time with the ingestion of data or the faithful creation of datasets.</p>
@@ -633,6 +634,15 @@ to standardize on using <code>submission_date</code> as opposed to client-genera
 <h2><a class="header" href="#pings-from-robots" id="pings-from-robots">Pings from Robots</a></h2>
 <p>In general, data coming from an application instance not run by a human is not wanted in analysis. As of this writing, <a href="https://github.com/mozilla/geckodriver">GeckoDriver</a> (one of the official mechanisms to launch and control an automated version of Firefox for e.g. web compatibility testing) is <a href="https://searchfox.org/mozilla-central/rev/baf1cd492406a9ac31d9ccb7a51c924c7fbb151f/testing/geckodriver/src/prefs.rs#154">configured <em>not</em> to send Telemetry by default</a> but we can't control for other things people might do in the field.</p>
 <p>On desktop, one field to watch out for is headless mode (<code>environment.system.gfx.headless</code> in the main ping): if that field is set, you are for certain not working with a version of Firefox being operated by a real human. You can see an example of some client pings with this field set skewing the nightly numbers in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1643341">bug 1643341</a>. An easy solution is to just filter out these types of clients in your analysis. You can see an example of this pattern in <a href="https://sql.telemetry.mozilla.org/queries/71781/source">this query</a>.</p>
+<h2><a class="header" href="#build-ids" id="build-ids">Build Ids</a></h2>
+<p>Generally speaking, application versions are monotonically increasing multipart alphanumeric strings like &quot;89.0a1&quot; or &quot;68.0.3&quot;.
+Build Ids are not this.
+A Build Id is a sequence of characters that is unique to a specific build of a product.
+Since the application version may not vary across shipped versions (for example, a Firefox nightly version stays the same across its entire cycle), a build id helps identify which code changes were included in a build as well as what features may have been enabled for it.
+For example, in Firefox Desktop, the build id is the date and time the build was built in yyyymmddhhmmss format.
+A build id might be formatted in any way and contain the time or version control system revision of the code included in the build.</p>
+<p>Do not assume build id's are consistent across the products we ship. A build id format may vary between products, between channels of the same product, or over time within the same channel of the same product.
+The build id format for Firefox Desktop has been very stable over time thus far, but even it can be different for different platforms in some respin circumstances (if e.g. only one platform's builder failed).</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/master/src/concepts/analysis_gotchas.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#choosing-a-desktop-product-dataset" id="choosing-a-desktop-product-dataset">Choosing a Desktop Product Dataset</a></h1>
 <p>This document will help you find the best data source for a given analysis. It focuses on <em>descriptive</em> datasets and does not cover anything attempting to explain <em>why</em> something is observed. This guide will help if you need to answer questions like:</p>
 <ul>
