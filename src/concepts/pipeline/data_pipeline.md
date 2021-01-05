@@ -96,7 +96,7 @@ The deployment scripts and configuration files of the CEP & DWL live in a [priva
 
 # Spark
 
-Once the data reaches our data lake on S3 it can be processed with Spark on Mozilla's [Databricks instance]. Databricks allows Mozilla employees to write custom analyses in notebooks, and also schedule Databricks jobs to run periodically.
+Once the data reaches our data lake on S3 it can be processed with Spark on Mozilla's Databricks instance. Databricks allows Mozilla employees to write custom analyses in notebooks, and also schedule Databricks jobs to run periodically.
 
 As mentioned earlier, most of our data lake contains data serialized to Protobuf with free-form JSON fields. Needless to say, parsing JSON is terribly slow when ingesting Terabytes of data per day. A set of [ETL jobs], written in Scala by Data Engineers and scheduled with [Airflow], create [Parquet views] of our raw data. We have a Github repository [telemetry-batch-view] that showcases this.
 
@@ -207,4 +207,3 @@ There is a vast ecosystem of tools for processing data at scale, each with their
 [redash]: https://redash.io/
 [stmo]: https://sql.telemetry.mozilla.org/
 [fork of redash]: https://github.com/mozilla/redash
-[databricks instance]: https://dbc-caf9527b-e073.cloud.databricks.com

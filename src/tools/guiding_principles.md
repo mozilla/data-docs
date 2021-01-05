@@ -32,7 +32,7 @@ transforming data (ETL) once it's in BigQuery.
 
 Once data is accessible through BigQuery, users within Mozilla also get the
 benefit of leveraging common tools for data access. Beyond the Google-provided
-BigQuery console, Mozilla provides access to instances of Redash, Databricks,
+BigQuery console, Mozilla provides access to instances of Redash,
 Tableau, and other tools either with connections to BigQuery already available
 or with concrete instructions for provisioning connections.
 

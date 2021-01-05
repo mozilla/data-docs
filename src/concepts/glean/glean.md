@@ -79,7 +79,6 @@ This includes previously manual and error-prone steps such as updating the ping 
   - There is [more documentation about accessing Glean data](accessing_glean_data.md).
 
 - _(Work in progress)_ Use events and [Amplitude](https://sso.mozilla.com/amplitude) for product analytics.
-- [Use Databricks](https://sso.mozilla.com/databricks) for deep-dive analysis.
 - For experimentation, you can use [Android experiments library](https://github.com/mozilla-mobile/android-components/blob/master/components/service/experiments/README.md), which integrates with Glean.
 
 # Contact

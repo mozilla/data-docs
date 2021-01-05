@@ -94,8 +94,3 @@ other than HTTP and HTTPS. It excludes some (but not all) `about:` pages
 e.g. `about:config` and `about:telemetry` are included.
 
 No applications of `unfiltered_uri_count` have been identified.
-
-1.  Ping `reason` for `main` pings [observed][db_notebook]
-    from Firefox 65 `release` channel users on February 21, 2019.
-
-[db_notebook]: https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/82297/revision/1554433978453

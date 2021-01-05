@@ -12,7 +12,7 @@ Here are some useful introductory materials:
 - [Spark Programming Guide](https://spark.apache.org/docs/latest/programming-guide.html)
 - [Spark SQL Programming Guide](https://spark.apache.org/docs/latest/sql-programming-guide.html)
 
-Spark can be used either from [Databricks Notebooks](https://docs.databricks.com/notebooks/index.html) or [Google's Dataproc](https://cloud.google.com/dataproc/), and works with data stored in BigQuery.
+Spark can be used from [Google's Dataproc](https://cloud.google.com/dataproc/), and works with data stored in BigQuery.
 
 There are a number of methods of both reading from and writing to BigQuery using Spark.
 
@@ -24,20 +24,11 @@ There are a number of methods of both reading from and writing to BigQuery using
 
 If you want to use Spark locally (or via an arbitrary GCP instance in the cloud), we recommend the [Storage API Connector](https://github.com/GoogleCloudPlatform/spark-bigquery-connector) for accessing BigQuery tables in Spark as it is the most modern and actively developed connector. It works well with the BigQuery client library which is useful if you need to run arbitrary SQL queries and load their results into Spark.
 
-### Using Databricks
-
-> **⚠** Databricks will be available until the end of 2020.
-
-[Databricks Notebooks](https://docs.databricks.com/notebooks/index.html) provide an interactive
-computational environment, similar to Jupyter. If you are a Mozilla employee, you should be able to access it via [`sso.mozilla.com/databricks`](https://sso.mozilla.com/databricks).
-
-The `shared_serverless_python3` cluster is configured with shared default GCP credentials, so you can immediately use the BigQuery client libraries.
-
 ### Using Dataproc
 
 > **⚠** This method requires [BigQuery Access](../cookbooks/bigquery/access.md#bigquery-access-request) to be provisioned.
 
-Dataproc is Google's managed Spark cluster service. Accessing BigQuery from there will be faster than from Databricks because it does not involve cross-cloud data transfers.
+Dataproc is Google's managed Spark cluster service. Accessing BigQuery from there will be fast because it does not involve cross-cloud data transfers.
 
 You can spin up a Dataproc cluster with Jupyter using the following command. Insert your values for `cluster-name`, `bucket-name`, and `project-id` there. Your notebooks are stored in Cloud Storage under `gs://bucket-name/notebooks/jupyter`:
 
@@ -72,6 +63,8 @@ There are two main ways to read data from BigQuery into Spark: using either the 
 query API.
 
 ### Storage API
+
+> **⚠** Databricks is shut down as of January 2021. The storage API will not work on Google Dataproc.
 
 First, using the Storage API - this bypasses BigQuery's execution engine and
 directly reads from the underlying storage.
@@ -118,8 +111,6 @@ core_pings_single_day = spark.read.format("bigquery") \
     .where("submission_timestamp >= to_date('2019-08-25') submission_timestamp < to_date('2019-08-26')") \
     .select("client_id", "experiments", "normalized_channel")
 ```
-
-You can see this code in action in [this example Python notebook on Databricks](https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/141939).
 
 A couple of things are worth noting in the above example.
 

@@ -237,7 +237,7 @@ There is a command-line interface to STMO called [St. Mocli], if you prefer writ
 
 ##### Databricks: Managed Spark Analysis
 
-Our [Databricks instance] (see [Databricks docs]) offers another notebook interface for doing analysis in Scala, SQL, Python and R.
+Our Databricks instance (see [Databricks docs]) offers another notebook interface for doing analysis in Scala, SQL, Python and R.
 
 Databricks provides an always-on shared server which is nice for quick data investigations.
 
@@ -383,7 +383,6 @@ graph LR
 [stmo]: ../../tools/stmo.md
 [jupyter]: https://jupyter.org/
 [zeppelin]: https://zeppelin.apache.org/
-[databricks instance]: https://dbc-caf9527b-e073.cloud.databricks.com
 [databricks docs]: https://docs.databricks.com/user-guide/notebooks/index.html
 [tmo]: https://telemetry.mozilla.org
 [measurement dashboard]: https://telemetry.mozilla.org/new-pipeline/dist.html
