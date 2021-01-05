@@ -137,9 +137,7 @@ ORDER BY
 Additional usage criteria may be added in the future as new columns named
 `*_*mau`, etc. where the prefix describes the usage criterion.
 
-For convenience and clarity, we make the exact data presented in the
-[2019 Key Performance Indicator Dashboard](https://dbc-caf9527b-e073.cloud.databricks.com/#job/1160/run/latestSuccess/dashboard/42765b23-7b69-4d59-b08b-ea9cf45b63df)
-available as views that do not require any aggregation:
+For convenience and clarity, we make the exact data presented in the 2019 Key Performance Indicator Dashboard available as views that do not require any aggregation:
 
 - `firefox_desktop_exact_mau28_v1`,
 - `firefox_nondesktop_exact_mau28_v1`, and
