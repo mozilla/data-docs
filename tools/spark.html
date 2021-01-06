@@ -180,7 +180,6 @@
 <li><a href="#accessing-bigquery-data-from-spark">Accessing BigQuery data from Spark</a>
 <ul>
 <li><a href="#using-the-storage-api-connector">Using the Storage API Connector</a></li>
-<li><a href="#using-databricks">Using Databricks</a></li>
 <li><a href="#using-dataproc">Using Dataproc</a></li>
 </ul>
 </li>
@@ -200,7 +199,7 @@ run general execution graphs. APIs are available in Python, Scala, R, and Java. 
 <li><a href="https://spark.apache.org/docs/latest/programming-guide.html">Spark Programming Guide</a></li>
 <li><a href="https://spark.apache.org/docs/latest/sql-programming-guide.html">Spark SQL Programming Guide</a></li>
 </ul>
-<p>Spark can be used either from <a href="https://docs.databricks.com/notebooks/index.html">Databricks Notebooks</a> or <a href="https://cloud.google.com/dataproc/">Google's Dataproc</a>, and works with data stored in BigQuery.</p>
+<p>Spark can be used from <a href="https://cloud.google.com/dataproc/">Google's Dataproc</a>, and works with data stored in BigQuery.</p>
 <p>There are a number of methods of both reading from and writing to BigQuery using Spark.</p>
 <h2><a class="header" href="#accessing-bigquery-data-from-spark" id="accessing-bigquery-data-from-spark">Accessing BigQuery data from Spark</a></h2>
 <h3><a class="header" href="#using-the-storage-api-connector" id="using-the-storage-api-connector">Using the Storage API Connector</a></h3>
@@ -208,18 +207,11 @@ run general execution graphs. APIs are available in Python, Scala, R, and Java. 
 <p><strong>⚠</strong> This method requires <a href="../cookbooks/bigquery/access.html#bigquery-access-request">BigQuery Access</a> to be provisioned.</p>
 </blockquote>
 <p>If you want to use Spark locally (or via an arbitrary GCP instance in the cloud), we recommend the <a href="https://github.com/GoogleCloudPlatform/spark-bigquery-connector">Storage API Connector</a> for accessing BigQuery tables in Spark as it is the most modern and actively developed connector. It works well with the BigQuery client library which is useful if you need to run arbitrary SQL queries and load their results into Spark.</p>
-<h3><a class="header" href="#using-databricks" id="using-databricks">Using Databricks</a></h3>
-<blockquote>
-<p><strong>⚠</strong> Databricks will be available until the end of 2020.</p>
-</blockquote>
-<p><a href="https://docs.databricks.com/notebooks/index.html">Databricks Notebooks</a> provide an interactive
-computational environment, similar to Jupyter. If you are a Mozilla employee, you should be able to access it via <a href="https://sso.mozilla.com/databricks"><code>sso.mozilla.com/databricks</code></a>.</p>
-<p>The <code>shared_serverless_python3</code> cluster is configured with shared default GCP credentials, so you can immediately use the BigQuery client libraries.</p>
 <h3><a class="header" href="#using-dataproc" id="using-dataproc">Using Dataproc</a></h3>
 <blockquote>
 <p><strong>⚠</strong> This method requires <a href="../cookbooks/bigquery/access.html#bigquery-access-request">BigQuery Access</a> to be provisioned.</p>
 </blockquote>
-<p>Dataproc is Google's managed Spark cluster service. Accessing BigQuery from there will be faster than from Databricks because it does not involve cross-cloud data transfers.</p>
+<p>Dataproc is Google's managed Spark cluster service.</p>
 <p>You can spin up a Dataproc cluster with Jupyter using the following command. Insert your values for <code>cluster-name</code>, <code>bucket-name</code>, and <code>project-id</code> there. Your notebooks are stored in Cloud Storage under <code>gs://bucket-name/notebooks/jupyter</code>:</p>
 <pre><code class="language-bash">gcloud beta dataproc clusters create cluster-name \
     --optional-components=ANACONDA,JUPYTER \
@@ -282,7 +274,6 @@ core_pings_single_day = spark.read.format(&quot;bigquery&quot;) \
     .where(&quot;submission_timestamp &gt;= to_date('2019-08-25') submission_timestamp &lt; to_date('2019-08-26')&quot;) \
     .select(&quot;client_id&quot;, &quot;experiments&quot;, &quot;normalized_channel&quot;)
 </code></pre>
-<p>You can see this code in action in <a href="https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/141939">this example Python notebook on Databricks</a>.</p>
 <p>A couple of things are worth noting in the above example.</p>
 <ul>
 <li><code>get_table</code> is necessary because an actual <em>table</em> name is required to read

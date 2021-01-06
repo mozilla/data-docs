@@ -431,7 +431,6 @@ This issue is being evaluated at this time and is under consideration for gettin
 <li><a href="tools/interfaces.html#lower-level-tools">Lower-level tools</a>
 <ul>
 <li><a href="tools/interfaces.html#sqltelemetrymozillaorg-stmo">sql.telemetry.mozilla.org (STMO)</a></li>
-<li><a href="tools/interfaces.html#databricks">Databricks</a></li>
 </ul>
 </li>
 </ul>
@@ -453,12 +452,6 @@ is an instance of the very fine <a href="https://redash.io/">Redash</a> software
 for SQL-based exploratory analysis and visualization / dashboard
 construction. Requires (surprise!) familiarity with SQL, and for your data to
 be explicitly exposed as an STMO data source. You can learn more about how to use it in <a href="tools/./stmo.html">Introduction to STMO</a>. Bugs or feature requests can be reported in Mozilla's <a href="https://github.com/mozilla/redash/issues">issue tracker</a>.</p>
-<h3><a class="header" href="#databricks" id="databricks">Databricks</a></h3>
-<blockquote>
-<p><strong>⚠</strong> Databricks will be available until the end of 2020.</p>
-</blockquote>
-<p><a href="https://dbc-caf9527b-e073.cloud.databricks.com/">Databricks</a> offers a notebook interface with shared, always-on, autoscaling cluster (attaching your notebooks to <code>shared_serverless_python3</code> is the best way to start).
-Convenient for quick data investigations. Users are advised to join the <a href="https://groups.google.com/a/mozilla.com/forum/#!forum/databricks-discuss"><code>databricks-discuss@mozilla.com</code></a> group.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/master/src/tools/interfaces.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#analysis-gotchas" id="analysis-gotchas">Analysis Gotchas</a></h1>
 <p>When you perform an analysis on any data, there are some mistakes that are easy to make:</p>
 <ul>
@@ -1619,7 +1612,6 @@ height,3.5,6.0,5.9
 <li><a href="tools/spark.html#accessing-bigquery-data-from-spark">Accessing BigQuery data from Spark</a>
 <ul>
 <li><a href="tools/spark.html#using-the-storage-api-connector">Using the Storage API Connector</a></li>
-<li><a href="tools/spark.html#using-databricks">Using Databricks</a></li>
 <li><a href="tools/spark.html#using-dataproc">Using Dataproc</a></li>
 </ul>
 </li>
@@ -1639,7 +1631,7 @@ run general execution graphs. APIs are available in Python, Scala, R, and Java. 
 <li><a href="https://spark.apache.org/docs/latest/programming-guide.html">Spark Programming Guide</a></li>
 <li><a href="https://spark.apache.org/docs/latest/sql-programming-guide.html">Spark SQL Programming Guide</a></li>
 </ul>
-<p>Spark can be used either from <a href="https://docs.databricks.com/notebooks/index.html">Databricks Notebooks</a> or <a href="https://cloud.google.com/dataproc/">Google's Dataproc</a>, and works with data stored in BigQuery.</p>
+<p>Spark can be used from <a href="https://cloud.google.com/dataproc/">Google's Dataproc</a>, and works with data stored in BigQuery.</p>
 <p>There are a number of methods of both reading from and writing to BigQuery using Spark.</p>
 <h2><a class="header" href="#accessing-bigquery-data-from-spark" id="accessing-bigquery-data-from-spark">Accessing BigQuery data from Spark</a></h2>
 <h3><a class="header" href="#using-the-storage-api-connector" id="using-the-storage-api-connector">Using the Storage API Connector</a></h3>
@@ -1647,18 +1639,11 @@ run general execution graphs. APIs are available in Python, Scala, R, and Java. 
 <p><strong>⚠</strong> This method requires <a href="tools/../cookbooks/bigquery/access.html#bigquery-access-request">BigQuery Access</a> to be provisioned.</p>
 </blockquote>
 <p>If you want to use Spark locally (or via an arbitrary GCP instance in the cloud), we recommend the <a href="https://github.com/GoogleCloudPlatform/spark-bigquery-connector">Storage API Connector</a> for accessing BigQuery tables in Spark as it is the most modern and actively developed connector. It works well with the BigQuery client library which is useful if you need to run arbitrary SQL queries and load their results into Spark.</p>
-<h3><a class="header" href="#using-databricks" id="using-databricks">Using Databricks</a></h3>
-<blockquote>
-<p><strong>⚠</strong> Databricks will be available until the end of 2020.</p>
-</blockquote>
-<p><a href="https://docs.databricks.com/notebooks/index.html">Databricks Notebooks</a> provide an interactive
-computational environment, similar to Jupyter. If you are a Mozilla employee, you should be able to access it via <a href="https://sso.mozilla.com/databricks"><code>sso.mozilla.com/databricks</code></a>.</p>
-<p>The <code>shared_serverless_python3</code> cluster is configured with shared default GCP credentials, so you can immediately use the BigQuery client libraries.</p>
 <h3><a class="header" href="#using-dataproc" id="using-dataproc">Using Dataproc</a></h3>
 <blockquote>
 <p><strong>⚠</strong> This method requires <a href="tools/../cookbooks/bigquery/access.html#bigquery-access-request">BigQuery Access</a> to be provisioned.</p>
 </blockquote>
-<p>Dataproc is Google's managed Spark cluster service. Accessing BigQuery from there will be faster than from Databricks because it does not involve cross-cloud data transfers.</p>
+<p>Dataproc is Google's managed Spark cluster service.</p>
 <p>You can spin up a Dataproc cluster with Jupyter using the following command. Insert your values for <code>cluster-name</code>, <code>bucket-name</code>, and <code>project-id</code> there. Your notebooks are stored in Cloud Storage under <code>gs://bucket-name/notebooks/jupyter</code>:</p>
 <pre><code class="language-bash">gcloud beta dataproc clusters create cluster-name \
     --optional-components=ANACONDA,JUPYTER \
@@ -1721,7 +1706,6 @@ core_pings_single_day = spark.read.format(&quot;bigquery&quot;) \
     .where(&quot;submission_timestamp &gt;= to_date('2019-08-25') submission_timestamp &lt; to_date('2019-08-26')&quot;) \
     .select(&quot;client_id&quot;, &quot;experiments&quot;, &quot;normalized_channel&quot;)
 </code></pre>
-<p>You can see this code in action in <a href="https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/141939">this example Python notebook on Databricks</a>.</p>
 <p>A couple of things are worth noting in the above example.</p>
 <ul>
 <li><code>get_table</code> is necessary because an actual <em>table</em> name is required to read
@@ -4333,7 +4317,7 @@ system capable of making an HTTP request. We also have tooling available for
 transforming data (ETL) once it's in BigQuery.</p>
 <p>Once data is accessible through BigQuery, users within Mozilla also get the
 benefit of leveraging common tools for data access. Beyond the Google-provided
-BigQuery console, Mozilla provides access to instances of Redash, Databricks,
+BigQuery console, Mozilla provides access to instances of Redash,
 Tableau, and other tools either with connections to BigQuery already available
 or with concrete instructions for provisioning connections.</p>
 <p>Some near real-time use cases can be handled via BigQuery as well, with BigQuery
@@ -4747,9 +4731,6 @@ This includes previously manual and error-prone steps such as updating the ping 
 </li>
 <li>
 <p><em>(Work in progress)</em> Use events and <a href="https://sso.mozilla.com/amplitude">Amplitude</a> for product analytics.</p>
-</li>
-<li>
-<p><a href="https://sso.mozilla.com/databricks">Use Databricks</a> for deep-dive analysis.</p>
 </li>
 <li>
 <p>For experimentation, you can use <a href="https://github.com/mozilla-mobile/android-components/blob/master/components/service/experiments/README.md">Android experiments library</a>, which integrates with Glean.</p>
@@ -6258,10 +6239,6 @@ other than HTTP and HTTPS. It excludes some (but not all) <code>about:</code> pa
 – the set of “initial pages” defined in <code>browser.js</code> are excluded, but
 e.g. <code>about:config</code> and <code>about:telemetry</code> are included.</p>
 <p>No applications of <code>unfiltered_uri_count</code> have been identified.</p>
-<ol>
-<li>Ping <code>reason</code> for <code>main</code> pings <a href="https://dbc-caf9527b-e073.cloud.databricks.com/#notebook/82297/revision/1554433978453">observed</a>
-from Firefox 65 <code>release</code> channel users on February 21, 2019.</li>
-</ol>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/master/src/concepts/engagement.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#user-statessegments" id="user-statessegments">User states/segments</a></h1>
 <p>A user state is a group of clients who fit a set of criteria at a point in time.
 The set of criteria itself can also be referred to as a &quot;user state&quot;.</p>
@@ -7457,9 +7434,7 @@ ORDER BY
 </code></pre>
 <p>Additional usage criteria may be added in the future as new columns named
 <code>*_*mau</code>, etc. where the prefix describes the usage criterion.</p>
-<p>For convenience and clarity, we make the exact data presented in the
-<a href="https://dbc-caf9527b-e073.cloud.databricks.com/#job/1160/run/latestSuccess/dashboard/42765b23-7b69-4d59-b08b-ea9cf45b63df">2019 Key Performance Indicator Dashboard</a>
-available as views that do not require any aggregation:</p>
+<p>For convenience and clarity, we make the exact data presented in the <a href="https://go.corp.mozilla.com/kpi-dash">Key Performance Indicator Dashboard</a> available as views that do not require any aggregation:</p>
 <ul>
 <li><code>firefox_desktop_exact_mau28_v1</code>,</li>
 <li><code>firefox_nondesktop_exact_mau28_v1</code>, and</li>
@@ -8502,7 +8477,6 @@ if we did not receive a ping for that <code>submission_date</code>.</p>
 <p>We impute a <code>NULL</code> <code>engine</code> and <code>source</code> for pings with no search counts.
 This ensures users who never search are included in this dataset.</p>
 <p>This dataset is large.
-Consider using Spark on <a href="https://dbc-caf9527b-e073.cloud.databricks.com">Databricks</a>.
 If you're querying this dataset from STMO,
 heavily limit the data you read using <code>submission_date</code> or <code>sample_id</code>.</p>
 <!--
@@ -10069,7 +10043,7 @@ style cerberus fill:royalblue
 <p>The data has traditionally been serialized to <a href="https://hekad.readthedocs.io/en/latest/message/index.html#stream-framing">Protobuf</a> sequence files which contain some nasty “free-form” JSON fields. Hindsight gained recently the ability to <a href="https://github.com/mozilla-services/lua_sandbox_extensions/pull/48">dump data directly in Parquet form</a> though.</p>
 <p>The deployment scripts and configuration files of the CEP &amp; DWL live in a <a href="https://github.com/mozilla-services/puppet-config/tree/02f716a3e0df1117fc2494b41e85a1416f8e2a64/pipeline">private repository</a>.</p>
 <h1><a class="header" href="#spark-2" id="spark-2">Spark</a></h1>
-<p>Once the data reaches our data lake on S3 it can be processed with Spark on Mozilla's <a href="https://dbc-caf9527b-e073.cloud.databricks.com">Databricks instance</a>. Databricks allows Mozilla employees to write custom analyses in notebooks, and also schedule Databricks jobs to run periodically.</p>
+<p>Once the data reaches our data lake on S3 it can be processed with Spark on Mozilla's Databricks instance. Databricks allows Mozilla employees to write custom analyses in notebooks, and also schedule Databricks jobs to run periodically.</p>
 <p>As mentioned earlier, most of our data lake contains data serialized to Protobuf with free-form JSON fields. Needless to say, parsing JSON is terribly slow when ingesting Terabytes of data per day. A set of <a href="https://github.com/mozilla/telemetry-batch-view">ETL jobs</a>, written in Scala by Data Engineers and scheduled with <a href="https://github.com/mozilla/telemetry-airflow/">Airflow</a>, create <a href="concepts/pipeline/../choosing_a_dataset.html">Parquet views</a> of our raw data. We have a Github repository <a href="https://github.com/mozilla/telemetry-batch-view/">telemetry-batch-view</a> that showcases this.</p>
 <h1><a class="header" href="#aggregates-dataset" id="aggregates-dataset">Aggregates Dataset</a></h1>
 <pre class="mermaid">graph TD
@@ -10303,7 +10277,7 @@ style evo fill:lightgrey
 <p>Queries can be run just once, or scheduled to run periodically to keep data up-to-date.</p>
 <p>There is a command-line interface to STMO called <a href="https://github.com/mozilla/stmocli">St. Mocli</a>, if you prefer writing SQL using your own editor and tools.</p>
 <h5><a class="header" href="#databricks-managed-spark-analysis" id="databricks-managed-spark-analysis">Databricks: Managed Spark Analysis</a></h5>
-<p>Our <a href="https://dbc-caf9527b-e073.cloud.databricks.com">Databricks instance</a> (see <a href="https://docs.databricks.com/user-guide/notebooks/index.html">Databricks docs</a>) offers another notebook interface for doing analysis in Scala, SQL, Python and R.</p>
+<p>Our Databricks instance (see <a href="https://docs.databricks.com/user-guide/notebooks/index.html">Databricks docs</a>) offers another notebook interface for doing analysis in Scala, SQL, Python and R.</p>
 <p>Databricks provides an always-on shared server which is nice for quick data investigations.</p>
 <h5><a class="header" href="#tmo-aggregate-graphs" id="tmo-aggregate-graphs">TMO: Aggregate Graphs</a></h5>
 <p><a href="https://telemetry.mozilla.org">TMO</a> provides easy visualizations of histogram and scalar measures over time. Time can be in terms of either builds or submission dates. This is the most convenient interface to the Telemetry data, as it does not require any custom code.</p>
