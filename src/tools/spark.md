@@ -28,7 +28,7 @@ If you want to use Spark locally (or via an arbitrary GCP instance in the cloud)
 
 > **⚠** This method requires [BigQuery Access](../cookbooks/bigquery/access.md#bigquery-access-request) to be provisioned.
 
-Dataproc is Google's managed Spark cluster service. Accessing BigQuery from there will be fast because it does not involve cross-cloud data transfers.
+Dataproc is Google's managed Spark cluster service.
 
 You can spin up a Dataproc cluster with Jupyter using the following command. Insert your values for `cluster-name`, `bucket-name`, and `project-id` there. Your notebooks are stored in Cloud Storage under `gs://bucket-name/notebooks/jupyter`:
 
@@ -64,7 +64,6 @@ query API.
 
 ### Storage API
 
-> **⚠** Databricks is shut down as of January 2021. The storage API will not work on Google Dataproc.
 
 First, using the Storage API - this bypasses BigQuery's execution engine and
 directly reads from the underlying storage.
