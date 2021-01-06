@@ -137,7 +137,7 @@ ORDER BY
 Additional usage criteria may be added in the future as new columns named
 `*_*mau`, etc. where the prefix describes the usage criterion.
 
-For convenience and clarity, we make the exact data presented in the 2019 Key Performance Indicator Dashboard available as views that do not require any aggregation:
+For convenience and clarity, we make the exact data presented in the [Key Performance Indicator Dashboard](https://go.corp.mozilla.com/kpi-dash) available as views that do not require any aggregation:
 
 - `firefox_desktop_exact_mau28_v1`,
 - `firefox_nondesktop_exact_mau28_v1`, and
