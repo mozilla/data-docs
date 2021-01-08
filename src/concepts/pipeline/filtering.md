@@ -17,13 +17,13 @@ data that could be filtered. This should help answer two classes of questions:
 
 ## Stages
 
-Where - Which stage of the pipeline this filtering occurs in
+__Where__ - Which stage of the pipeline this filtering occurs in
 
-What - What happens to the data when filtered here
+__What__ - What happens to the data when filtered here
 
-When - Which situations this filtering should be, and is, used in
+__When__ - Which situations this filtering should be, and is, used in
 
-How - What kind of data can be filtered at this stage
+__How__ - What kind of data can be filtered at this stage
 
 ### Edge filtering
 
@@ -34,13 +34,13 @@ What: Drops data entirely from the pipeline; there will be no traces of it downs
 
 When: Only to be used in extreme situations (e.g. PII exposure). We also use it for dropping [too-large messages](https://github.com/mozilla/gcp-ingestion/blob/master/docs/architecture/overview.md#limits) and [headers](https://github.com/mozilla/gcp-ingestion/blob/master/ingestion-edge/ingestion_edge/util.py#L95).
 
-How: Can be used to filter by URI namespaces, apps, etc.; but not anything in the payload. 
+How: Can be used to filter by URI, namespaces, apps, etc. (from the URL or from the HTTP headers); but not anything in the payload. 
 
 ### Beam Filtering
 
 Where: Filtered in the [message scrubber](https://github.com/mozilla/gcp-ingestion/blob/master/ingestion-beam/src/main/java/com/mozilla/telemetry/decoder/MessageScrubber.java).
 
-What: Causes data to be written to the error stream or to be dropped entirely.
+What: Causes data to be written to the [error stream](#querying-the-error-stream) or to be dropped entirely.
 
 When: Filter out data we absolutely know we will never need to see (e.g. data from forked applications).
 
@@ -50,7 +50,7 @@ How: Can filter out namespaces, doctypes, or URIs currently; in the extreme can 
 
 Where: During ingestion, as defined in the [payload schema](https://github.com/mozilla-services/mozilla-pipeline-schemas/).
 
-What: Causes data to be written to the error stream.
+What: Causes data to be written to the [error stream](#querying-the-error-stream).
 
 When: When trying to remove bad analysis data that we know we will never need (e.g. huge values, improper strings, etc.). Usually these indicate something went wrong with the payload.
 
@@ -62,7 +62,7 @@ Where: After ingestion to live tables, but [before copying to the stable tables]
 
 What: Allows data to exist in the live tables, but removes it from the stable tables.
 
-When: Use for data that may be needed for some analyses on recent data, but not for data that will need long-term historical analyses or for use in any downstream reporting. For example, we filter out pings from automation (e.g. CI) here, so that analysis is unaffected by them, but we can still analyze what the recent CI data looks like. We also drop duplicate pings (per the document-id).
+When: Use for data that may be needed for some analyses on recent data, but not for data that will need long-term historical analyses or for use in any downstream reporting. For example, we [filter out pings from automation](https://mozilla.github.io/glean/book/user/debugging/index.html?highlight=sourcetags#enabling-debugging-features-through-environment-variables) (e.g. CI) here, so that analysis is unaffected by them, but we can still analyze what the recent CI data looks like. We also drop duplicate pings (per the document-id).
 
 How: Can filter on any field in the schema, or any metadata.
 
