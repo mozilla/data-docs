@@ -64,7 +64,6 @@ query API.
 
 ### Storage API
 
-
 First, using the Storage API - this bypasses BigQuery's execution engine and
 directly reads from the underlying storage.
 
