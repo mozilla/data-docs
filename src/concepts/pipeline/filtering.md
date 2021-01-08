@@ -1,5 +1,9 @@
 # Filtering Data
 
+## Table of Contents
+
+<!-- toc -->
+
 ## Overview
 
 Data is filtered out of production streams at almost every stage of the pipeline.
@@ -9,7 +13,7 @@ data that could be filtered. This should help answer two classes of questions:
 1. Did my data get filtered out?
 2. We've uncovered spurious data being ingested, how should we handle that?
 
-*Note*: JSON Schema filtering is our primary method of filtering out bad data. That should be used before any other methods of dropping data from the pipeline.
+*Note*: [JSON Schema filtering](#json-schema-filtering) is our primary method of filtering out bad data. That should be used before any other methods of dropping data from the pipeline.
 
 ## Stages
 
@@ -86,7 +90,7 @@ How: Can filter on any field in the schema, or any metadata.
 
 The data engineering team has exposed some tables to make querying the error stream easier.
 
-[This dashboard](https://sql.telemetry.mozilla.org/dashboard/schema-errors) will let you choose your namespace and doctype to see
+[The schema errors dashboard](https://sql.telemetry.mozilla.org/dashboard/schema-errors) will let you choose your namespace and doctype to see
 errors over the past week.
 
 If that data is not granular enough, the error stream can be queried directly:
