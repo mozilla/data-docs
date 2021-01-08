@@ -77,8 +77,8 @@ generation of telemetry data, distinguished as “v4 telemetry” or
 “unified telemetry.”
 
 Instead of mapping FHR probes directly to telemetry, the Unified
-Telemetry project built upon the telemetry system to answer the 
-questions Mozilla had attempted to answer with FHR. 
+Telemetry project built upon the telemetry system to answer the
+questions Mozilla had attempted to answer with FHR.
 
 The [implementation of unified
 telemetry](https://bugzilla.mozilla.org/show_bug.cgi?id=1122515) and
