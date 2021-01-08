@@ -81,3 +81,25 @@ What: Allows data to exist in views, and optionally allows users to query that d
 When: Use this for data that most of the time should not be queried in Looker. Downside is too many of these will clutter the Looker explore.
 
 How: Can filter on any field in the schema, or any metadata.
+
+## Querying the Error Stream
+
+The data engineering team has exposed some tables to make querying the error stream easier.
+
+[This dashboard](https://sql.telemetry.mozilla.org/dashboard/schema-errors) will let you choose your namespace and doctype to see
+errors over the past week.
+
+If that data is not granular enough, the error stream can be queried directly:
+
+```sql
+SELECT
+  udf.parse_desktop_telemetry_uri(uri) AS parsed_uri,
+  * EXCEPT(payload),
+  udf_js.gunzip(payload) AS payload
+FROM
+  `moz-fx-data-shared-prod.payload_bytes_error.telemetry`
+WHERE
+  DATE(submission_timestamp) = "2021-01-07"
+LIMIT
+  1000
+```
