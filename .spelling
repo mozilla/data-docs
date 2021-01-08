@@ -124,6 +124,7 @@ filesystem
 firefox-data-docs
 FirefoxReality
 FireTV
+footgun
 frac
 funnelcake
 GCP
@@ -228,6 +229,7 @@ pageloads
 parquet2hive
 performant
 Pep8
+PII
 PingCentre
 Pingsender
 Placitelli
@@ -371,4 +373,5 @@ XPI
 XR
 yyyymmddhhmmss
 doctype
+doctypes
 validator
