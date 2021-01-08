@@ -56,6 +56,7 @@
     - [Schemas](concepts/pipeline/schemas.md)
     - [Channel Normalization](concepts/channels/channel_normalization.md)
     - [Sampling](concepts/sample_id.md)
+    - [Filtering](concepts/pipeline/filtering.md)
   - [SQL Style Guide](concepts/sql_style.md)
   - [Telemetry Behavior Reference](concepts/index.md)
     - [History of Telemetry](concepts/history.md)
