@@ -1,0 +1,58 @@
+name: Tests
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+
+    - name: Install
+      run: |
+        curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-dtmo
+        mdbook-dtmo --version
+    - name: Build
+      run: |
+        mdbook-dtmo build .
+
+  spell-check:
+    name: spell-check
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+
+    - name: Spell check
+      run: |
+        npm install
+        scripts/spell_check.sh
+
+  link-check:
+    name: link-check
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+
+    - name: Link check
+      run: |
+        npm install
+        scripts/link_check.sh
+
+  prettier-check:
+    name: prettier-check
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+
+    - name: Prettier check
+      run: |
+        npm install
+        npx prettier -c src/**/*md

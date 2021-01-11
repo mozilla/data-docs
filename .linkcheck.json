@@ -11,6 +11,7 @@
         { "pattern": "^https://github.com/mozilla-services/cloudops-infra" },
         { "pattern": "^https://docs.google.com" },
         { "pattern": "^https://monitor.firefox.com$" },
-        { "pattern": "^https://developer.android.com/studio/build/application-id$" }
+        { "pattern": "^https://developer.android.com/studio/build/application-id$" },
+        { "pattern": "^https://github.com" }
     ]
 }
