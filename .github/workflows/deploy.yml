@@ -29,6 +29,7 @@ jobs:
       run: |
         git config user.email "no-one@mozilla.com"
         git config user.name "GitHub Actions docs-deploy job"
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
 
     - name: Deploy to GitHub pages
       run: |
