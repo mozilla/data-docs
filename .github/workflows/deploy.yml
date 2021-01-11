@@ -1,0 +1,36 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      master
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+
+    - name: Install
+      run: |
+        curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-dtmo
+        mdbook-dtmo --version
+    - name: Build
+      run: |
+        mdbook-dtmo build .
+
+    - name: Install github-pages deploy tool
+      run: |
+        npm install -g --silent gh-pages@3.1.0
+
+    - name: Set Git config
+      run: |
+        git config user.email "no-one@mozilla.com"
+        git config user.name "GitHub Actions docs-deploy job"
+
+    - name: Deploy to GitHub pages
+      run: |
+        gh-pages --dotfiles --message "Deploy docs" --dist book
+
