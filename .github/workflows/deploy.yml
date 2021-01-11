@@ -7,21 +7,22 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: Deploy
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@master
 
-    - name: Install
+    - name: Install mdbook-dtmo
       run: |
         curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-dtmo
         mdbook-dtmo --version
+
     - name: Build
       run: |
         mdbook-dtmo build .
 
-    - name: Install github-pages deploy tool
+    - name: Install github-pages
       run: |
         npm install gh-pages@3.1.0
 
