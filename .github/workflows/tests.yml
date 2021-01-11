@@ -57,3 +57,4 @@ jobs:
       run: |
         npm install
         npx prettier -c src/**/*md
+        false
