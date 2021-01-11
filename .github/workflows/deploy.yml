@@ -34,5 +34,6 @@ jobs:
 
     - name: Deploy to GitHub pages
       run: |
+        echo "docs-origin.telemetry.mozilla.org" > book/CNAME
         npx gh-pages --dotfiles --message "Deploy docs" --dist book
 
