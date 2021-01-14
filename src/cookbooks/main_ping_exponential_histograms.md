@@ -1,6 +1,6 @@
 # Visualizing Percentiles of a Main Ping Exponential Histogram
 
-[GLAM](https://glam-stage.bespoke.nonprod.dataops.mozgcp.net/) is great if you want to check out the behaviour of a histogram over a large population across a curated set of dimensions, but what if you have a follow-up question that doesn't fit into its UI model? This tutorial will go into the guts of how to reproduce a GLAM-like view using `sql.telemetry.mozilla.org` (STMO), along with some suggestions on how to dig deeper.
+[GLAM](https://glam.telemetry.mozilla.org/) is great if you want to check out the behaviour of a histogram over a large population across a curated set of dimensions, but what if you have a follow-up question that doesn't fit into its UI model? This tutorial will go into the guts of how to reproduce a GLAM-like view using `sql.telemetry.mozilla.org` (STMO), along with some suggestions on how to dig deeper.
 
 This tutorial tries to build up an understanding and intuition of how things work on a low-level before it gets to its main act of reproducing GLAM. If you don't care about the details, you can probably skip the earlier sections in this document.
 
