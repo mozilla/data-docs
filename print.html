@@ -437,9 +437,9 @@ This issue is being evaluated at this time and is under consideration for gettin
 <h2><a class="header" href="#high-level-tools" id="high-level-tools">High-level tools</a></h2>
 <p>These web-based tools do not require specialized technical knowledge (e.g. how to write an SQL query, deep knowledge of BigQuery). This is where you should start.</p>
 <h3><a class="header" href="#mozilla-growth--usage-dashboard-gud" id="mozilla-growth--usage-dashboard-gud">Mozilla Growth &amp; Usage Dashboard (GUD)</a></h3>
-<p>The <a href="https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/">Mozilla Growth &amp; Usage Dashboard</a> (GUD) is a tool to visualize growth metrics in a standard way across Mozilla’s products. This is the first place you should look if you have a question like &quot;how many people are using X?&quot;.</p>
+<p>The <a href="https://gud.telemetry.mozilla.org/">Mozilla Growth &amp; Usage Dashboard</a> (GUD) is a tool to visualize growth metrics in a standard way across Mozilla’s products. This is the first place you should look if you have a question like &quot;how many people are using X?&quot;.</p>
 <h3><a class="header" href="#glean-aggregated-metrics-dashboard-glam" id="glean-aggregated-metrics-dashboard-glam">Glean Aggregated Metrics Dashboard (GLAM)</a></h3>
-<p>The <a href="https://glam-stage.bespoke.nonprod.dataops.mozgcp.net/">Glean Aggregated Metrics Dashboard</a> (GLAM) is an interactive dashboard that is Mozilla’s primary self-service tool for examining the distributions of values of specific individual telemetry metrics, over time and across different user populations. It is similar to GUD in that it is meant to be usable by everyone; no specific data analysis or coding skills are needed. But while GUD is focused on a relatively small number of high level, derived product metrics about user engagement (e.g. MAU, DAU, retention, etc) GLAM is focused on a diverse and plentiful set of probes and data points that engineers capture in code and transmit back from Firefox and other Mozilla products.</p>
+<p>The <a href="https://glam.telemetry.mozilla.org/">Glean Aggregated Metrics Dashboard</a> (GLAM) is an interactive dashboard that is Mozilla’s primary self-service tool for examining the distributions of values of specific individual telemetry metrics, over time and across different user populations. It is similar to GUD in that it is meant to be usable by everyone; no specific data analysis or coding skills are needed. But while GUD is focused on a relatively small number of high level, derived product metrics about user engagement (e.g. MAU, DAU, retention, etc) GLAM is focused on a diverse and plentiful set of probes and data points that engineers capture in code and transmit back from Firefox and other Mozilla products.</p>
 <p>As of this writing, GLAM is in active development but is already usable.</p>
 <h3><a class="header" href="#telemetry-measurement-dashboard" id="telemetry-measurement-dashboard">Telemetry Measurement Dashboard</a></h3>
 <p>The <a href="https://telemetry.mozilla.org/new-pipeline/dist.html">Telemetry Measurement Dashboard</a> (TMO) site is the
@@ -2263,7 +2263,7 @@ ORDER BY
 when we report a retention value for 2020-01-01, we're talking about what
 portion of clients active on 2020-01-01 are still active some number of days
 later.</p>
-<p>In particular, let's consider the &quot;1-Week Retention&quot; measure shown in <a href="https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/">GUD</a>
+<p>In particular, let's consider the &quot;1-Week Retention&quot; measure shown in <a href="https://gud.telemetry.mozilla.org/">GUD</a>
 which considers a window of 14 days.
 For each client active in &quot;week 0&quot; (days 0 through 6), we determine retention by
 checking if they were also active in &quot;week 1&quot; (days 7 through 13).</p>
@@ -2525,7 +2525,7 @@ was always the most recent day, corresponding to the rightmost bit.
 When we define forward-looking windows, however, we always choose a metric date
 some time in the past. How we number the individual bits depends on what
 metric date we choose.</p>
-<p>For example, in <a href="https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/">GUD</a>, we show a &quot;1-Week Retention&quot; which considers a window of 14 days.
+<p>For example, in <a href="https://gud.telemetry.mozilla.org/">GUD</a>, we show a &quot;1-Week Retention&quot; which considers a window of 14 days.
 For each client active in &quot;week 0&quot; (days 0 through 6), we determine retention by
 checking if they were also active in &quot;week 1&quot; (days 7 through 13).</p>
 <p>To make &quot;1-Week Retention&quot; more concrete,
@@ -2912,7 +2912,7 @@ the standard 1-Week, 2-Week, and 3-Week retention definitions.</p>
 <pre><code class="language-sql">bits28.retention(bits INT64, submission_date DATE)
 </code></pre>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/master/src/cookbooks/clients_last_seen_bits.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#visualizing-percentiles-of-a-main-ping-exponential-histogram" id="visualizing-percentiles-of-a-main-ping-exponential-histogram">Visualizing Percentiles of a Main Ping Exponential Histogram</a></h1>
-<p><a href="https://glam-stage.bespoke.nonprod.dataops.mozgcp.net/">GLAM</a> is great if you want to check out the behaviour of a histogram over a large population across a curated set of dimensions, but what if you have a follow-up question that doesn't fit into its UI model? This tutorial will go into the guts of how to reproduce a GLAM-like view using <code>sql.telemetry.mozilla.org</code> (STMO), along with some suggestions on how to dig deeper.</p>
+<p><a href="https://glam.telemetry.mozilla.org/">GLAM</a> is great if you want to check out the behaviour of a histogram over a large population across a curated set of dimensions, but what if you have a follow-up question that doesn't fit into its UI model? This tutorial will go into the guts of how to reproduce a GLAM-like view using <code>sql.telemetry.mozilla.org</code> (STMO), along with some suggestions on how to dig deeper.</p>
 <p>This tutorial tries to build up an understanding and intuition of how things work on a low-level before it gets to its main act of reproducing GLAM. If you don't care about the details, you can probably skip the earlier sections in this document.</p>
 <p>Assumptions: You have some idea of what a histogram is (if not, the <a href="https://en.wikipedia.org/wiki/Histogram">Wikipedia article</a> is a great place to start), have at least skimmed over <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/collection/histograms.html">the Firefox documentation on histograms</a>, and have read <a href="cookbooks/../tools/stmo.html">the introduction to STMO</a>.</p>
 <h2><a class="header" href="#table-of-contents-7" id="table-of-contents-7">Table of Contents</a></h2>
@@ -3533,7 +3533,7 @@ ORDER BY
 <h2><a class="header" href="#accessing-retention-metrics" id="accessing-retention-metrics">Accessing Retention Metrics</a></h2>
 <p>There are three standard methods for accessing retention metrics. These methods trade off between simplicity and flexibility.</p>
 <h3><a class="header" href="#mozilla-growth--usage-dashboard-gud-1" id="mozilla-growth--usage-dashboard-gud-1">Mozilla Growth &amp; Usage Dashboard (GUD)</a></h3>
-<p>The <a href="https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/">GUD</a> provides plots and exportable tables of both retention metrics over time. Metrics are available for most products and can be sliced by OS, language, country, and channel.</p>
+<p>The <a href="https://gud.telemetry.mozilla.org/">GUD</a> provides plots and exportable tables of both retention metrics over time. Metrics are available for most products and can be sliced by OS, language, country, and channel.</p>
 <h3><a class="header" href="#querying-smoot-usage-tables" id="querying-smoot-usage-tables">Querying Smoot Usage Tables</a></h3>
 <p>For programmatic access, the tables underlying GUD can be queried directly. For example:</p>
 <pre><code class="language-sql">SELECT
@@ -3590,7 +3590,7 @@ GROUP BY
 <p>When performing retention analysis it is important to understand that there are many reasons for retention differences between groups. Unless you are comparing two arms of a controlled experiment, in which case you can probably attribute any difference to the experimental treatment, it is impossible to make causal arguments about retention differences. For example, if you observe the users that save a large number of bookmarks tend to have higher retention than those who do not, it is more likely that the retention difference is simply a property of <em>the types of people</em> that save bookmarks, and an intervention to encourage saving more bookmarks is not necessarily likely to improve retention.</p>
 <h2><a class="header" href="#confidence-intervals" id="confidence-intervals">Confidence Intervals</a></h2>
 <p>It is good practice to always compute confidence intervals for retention metrics, especially when looking at specific slices of users or when making comparisons between different groups.</p>
-<p>The <a href="https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/">Growth and Usage Dashboard</a> provides confidence intervals automatically using a jackknife resampling method over <code>client_id</code> buckets. This confidence intervals generated using this method should be considered the &quot;standard&quot;. We show below how to compute them using the data sources described above. These methods use UDFs <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/udf_js/jackknife_ratio_ci/udf.sql">defined in bigquery-etl</a>.</p>
+<p>The <a href="https://gud.telemetry.mozilla.org/">Growth and Usage Dashboard</a> provides confidence intervals automatically using a jackknife resampling method over <code>client_id</code> buckets. This confidence intervals generated using this method should be considered the &quot;standard&quot;. We show below how to compute them using the data sources described above. These methods use UDFs <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/udf_js/jackknife_ratio_ci/udf.sql">defined in bigquery-etl</a>.</p>
 <p>We also note that it is fairly simple to calculate a confidence interval using any statistical method appropriate for proportions. The queries given above provide both numerators and denominators, so feel free to calculate confidence intervals in the manner you prefer. However, if you want to replicate the standard confidence intervals, please work from the example queries below.</p>
 <h3><a class="header" href="#querying-smoot-usage-tables-1" id="querying-smoot-usage-tables-1">Querying Smoot Usage Tables</a></h3>
 <pre><code class="language-sql">WITH bucketed AS (
@@ -4689,7 +4689,7 @@ Because Glean knows more about the individual data, such as its type and the ran
 <!-- TODO: Link to GLAM -->
 <h1><a class="header" href="#the-glean-design-principles" id="the-glean-design-principles">The Glean design principles</a></h1>
 <p><strong>Provide a consistent base of telemetry</strong></p>
-<p>A baseline of analysis is important for all our products, from counting active users to retention and session times. This is supported out-of-the-box by the SDK, and funnels directly into visualization tools like the <a href="https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/">Growth and Usage Dashboard (GUD)</a>.</p>
+<p>A baseline of analysis is important for all our products, from counting active users to retention and session times. This is supported out-of-the-box by the SDK, and funnels directly into visualization tools like the <a href="https://gud.telemetry.mozilla.org/">Growth and Usage Dashboard (GUD)</a>.</p>
 <p>Metrics that are common to all products, such as the operating system and architecture, are provided automatically in a consistent way.</p>
 <p>Any issues found with these base metrics only need be fixed in Glean to benefit all SDK-using products.</p>
 <p><strong>Encourage specificity</strong></p>
@@ -7394,7 +7394,7 @@ various usage criteria and dimensions, allowing efficient calculation of
 aggregates across arbitrary slices of those dimensions.
 The tables follow a consistent methodology which is intended as a standard
 across Mozilla for MAU analysis going forward.</p>
-<p>Note that this data model is used in the <a href="https://growth-stage.bespoke.nonprod.dataops.mozgcp.net/">Growth &amp; Usage Dashboard (GUD)</a> and that some of this documentation is replicated in the <a href="https://mozilla.github.io/gud">GUD documentation</a>.</p>
+<p>Note that this data model is used in the <a href="https://gud.telemetry.mozilla.org/">Growth &amp; Usage Dashboard (GUD)</a> and that some of this documentation is replicated in the <a href="https://mozilla.github.io/gud">GUD documentation</a>.</p>
 <h2><a class="header" href="#table-of-contents-10" id="table-of-contents-10">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/bigquery/exact_mau/reference.html#conceptual-model">Conceptual Model</a>
