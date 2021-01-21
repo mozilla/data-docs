@@ -112,7 +112,7 @@ SELECT
     os,
     COUNT(*) AS count
 FROM
-    clients_last_seen
+    mozdata.telemetry.clients_last_seen
 WHERE
     submission_date >= DATE_SUB(CURRENT_DATE, INTERVAL 1 WEEK)
     AND days_since_seen = 0
@@ -135,7 +135,7 @@ SELECT
     normalized_channel,
     COUNT(*) AS count
 FROM
-    clients_last_seen
+    mozdata.telemetry.clients_last_seen
 WHERE
     submission_date >= DATE_SUB(CURRENT_DATE, INTERVAL 1 WEEK)
     AND days_since_seen < 7
@@ -162,7 +162,7 @@ The data is partitioned by `submission_date`.
 
 As of 2019-03-25, the current version of the `clients_last_seen` dataset is
 `v1`, and the schema is visible in the BigQuery console
-[here](https://console.cloud.google.com/bigquery?p=moz-fx-data-derived-datasets&d=telemetry&t=clients_last_seen_v1&page=table).
+[here](https://console.cloud.google.com/bigquery?p=mozdata&d=telemetry&t=clients_last_seen_v1&page=table).
 
 # Code Reference
 
