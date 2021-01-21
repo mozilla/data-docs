@@ -27,25 +27,26 @@ projects to maintain BigQuery [datasets](https://cloud.google.com/bigquery/docs/
 
 | Project                         | Dataset                 | Purpose                                                                                                                                                                                                                        |
 | ------------------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `moz-fx-data-shared-prod`       |                         | All production data including full pings, imported parquet data, [BigQuery ETL](https://github.com/mozilla/bigquery-etl), and ad-hoc analysis                                                                                  |
+| `mozdata`                       |                         | The new primary home for user analysis as of February 2021; it has a short name that is easy to type and is filled with views that reference underlying tables in `moz-fx-data-shared-prod`                                    |
+|                                 | `analysis`              | User generated tables for analysis; note that this dataset is separate from `moz-fx-data-shared-prod:analysis` and `moz-fx-data-derived-datasets:analysis`; we will be sending out communication about migrating all user data to `mozdata:analysis` in the coming month |
+|                                 | telemetry               | Views into desktop telemetry pings and many derived tables; see _user-facing (unsuffixed) datasets_ below                                                                                                                      |
+|                                 | `<namespace>`           | See _user-facing (unsuffixed) datasets_ below                                                                                                                                                                                  |
+|                                 | `search`                | Search data imported from parquet (_restricted_)                                                                                                                                                                               |
+|                                 | `static`                | Static tables, often useful for data-enriching joins                                                                                                                                                                           |
+|                                 | `udf`                   | Internal persistent user-defined functions defined in SQL; see [Using UDFs](#using-udfs)                                                                                                                                       |
+|                                 | `udf_js`                | Internal user-defined functions defined in JavaScript; see [Using UDFs](#using-udfs)                                                                                                                                 |
+| `moz-fx-data-shared-prod`       |                         | All production data including full pings and derived datasets defined in [bigquery-etl](https://github.com/mozilla/bigquery-etl)                                      |
 |                                 | `<namespace>_live`      | See _live datasets_ below                                                                                                                                                                                                      |
 |                                 | `<namespace>_stable`    | See _stable datasets_ below                                                                                                                                                                                                    |
 |                                 | `<namespace>_derived`   | See _derived datasets_ below                                                                                                                                                                                                   |
-|                                 | `<namespace>`           | See _user-facing (unsuffixed) datasets_ below                                                                                                                                                                                  |
-|                                 | `analysis`              | User generated tables for analysis                                                                                                                                                                                             |
 |                                 | `backfill`              | Temporary staging area for back-fills                                                                                                                                                                                          |
 |                                 | `blpadi`                | Blocklist ping derived data(_restricted_)                                                                                                                                                                                      |
 |                                 | `payload_bytes_raw`     | Raw JSON payloads as received from clients, used for reprocessing scenarios, a.k.a. "landfill" (_restricted_)                                                                                                                  |
 |                                 | `payload_bytes_decoded` | `gzip`-compressed decoded JSON payloads, used for reprocessing scenarios                                                                                                                                                       |
 |                                 | `payload_bytes_error`   | `gzip`-compressed JSON payloads that were rejected in some phase of the pipeline; particularly useful for investigating schema validation errors                                                                               |
-|                                 | `search`                | Search data imported from parquet (_restricted_)                                                                                                                                                                               |
-|                                 | `static`                | Static tables, often useful for data-enriching joins                                                                                                                                                                           |
 |                                 | `tmp`                   | Temporary staging area for parquet data loads                                                                                                                                                                                  |
-|                                 | `udf`                   | Persistent user-defined functions defined in SQL; see [Using UDFs](#using-udfs)                                                                                                                                                |
-|                                 | `udf_js`                | Persistent user-defined functions defined in JavaScript; see [Using UDFs](#using-udfs)                                                                                                                                         |
 |                                 | `validation`            | Temporary staging area for validation                                                                                                                                                                                          |
-| `moz-fx-data-derived-datasets`  |                         | Legacy project that contains mostly views to data in `moz-fx-data-shared-prod` during a transition period; STMO currently points at this project but we will announce a transition to `moz-fx-data-shared-prod` by end of 2019 |
-|                                 | `analysis`              | User generated tables for analysis; note that this dataset is separate from `moz-fx-data-shared-prod:analysis` and users are responsible for migrating or cloning data during the transition period                            |
+| `moz-fx-data-derived-datasets`  |                         | Legacy project that contains mostly views to data in `moz-fx-data-shared-prod` during a transition period; STMO currently points at this project but we will announce a transition to `mozdata` by end of February 2021        |
 | `moz-fx-data-shar-nonprod-efed` |                         | Non-production data produced by stage ingestion infrastructure                                                                                                                                                                 |
 
 ### Table Layout and Naming
@@ -73,7 +74,7 @@ Unlike with the previous AWS-based data infrastructure, we don't have different 
 
 - "main" pings are accessible from view `telemetry.main`
 - "crash" pings are accessible from view `telemetry.crash`
-- "baseline" pings for Fenix are accessible from view `org_mozilla_fenix.baseline`
+- "baseline" pings for the release version of Firefox for Android (Fenix) are accessible from view `org_mozilla_firefox.baseline`
 
 All fields in the incoming pings are accessible in these views, and (where possible) match the nested data structures of the original JSON. Field names are converted from `camelCase` form to `snake_case` for consistency and SQL compatibility.
 
@@ -108,7 +109,7 @@ SELECT
     os,
     COUNT(*) AS count
 FROM
-    telemetry.clients_last_seen
+    mozdata.telemetry.clients_last_seen
 WHERE
     submission_date >= DATE_SUB(CURRENT_DATE, INTERVAL 1 WEEK)
     AND days_since_seen = 0
@@ -129,7 +130,7 @@ Check out the [BigQuery Standard SQL Functions & Operators](https://cloud.google
 
 You can write query results to a BigQuery table you have access via [GCP BigQuery Console](access.md#gcp-bigquery-console) or [GCP BigQuery API Access](access.md#gcp-bigquery-api-access)
 
-- Use `moz-fx-data-shared-prod.analysis` dataset.
+- Use the `mozdata.analysis` dataset.
   - Prefix your table with your username. If your username is `username@mozilla.com` create a table with `username_my_table`.
 - See [Writing query results](https://cloud.google.com/bigquery/docs/writing-results) documentation for detailed steps.
 
@@ -139,14 +140,14 @@ If a BigQuery table is not a suitable destination for your analysis results,
 we also have a GCS bucket available for storing analysis results. It is usually
 Spark jobs that will need to do this.
 
-- Use bucket `gs://moz-fx-data-prod-analysis/`
-  - Prefix object paths with your username. If your username is `username@mozilla.com`, you might store a file to `gs://moz-fx-data-prod-analysis/username/myresults.json`.
+- Use bucket `gs://mozdata-analysis/`
+  - Prefix object paths with your username. If your username is `username@mozilla.com`, you might store a file to `gs://mozdata-analysis/username/myresults.json`.
 
 ## Creating a View
 
 You can create views in BigQuery if you have access via [GCP BigQuery Console](access.md#gcp-bigquery-console) or [GCP BigQuery API Access](access.md#gcp-bigquery-api-access).
 
-- Use `moz-fx-data-shared-prod.analysis` dataset.
+- Use the `mozdata.analysis` dataset.
   - Prefix your view with your username. If your username is `username@mozilla.com` create a table with `username_my_view`.
 - See [Creating Views](https://cloud.google.com/bigquery/docs/views) documentation for detailed steps.
 
