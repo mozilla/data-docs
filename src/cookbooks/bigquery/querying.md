@@ -29,12 +29,13 @@ projects to maintain BigQuery [datasets](https://cloud.google.com/bigquery/docs/
 | ------------------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `mozdata`                       |                         | The new primary home for user analysis as of February 2021; it has a short name that is easy to type and is filled with views that reference underlying tables in `moz-fx-data-shared-prod`                                    |
 |                                 | `analysis`              | User generated tables for analysis; note that this dataset is separate from `moz-fx-data-shared-prod:analysis` and `moz-fx-data-derived-datasets:analysis`; we will be sending out communication about migrating all user data to `mozdata:analysis` in the coming month |
-|                                 | telemetry               | Views into desktop telemetry pings and many derived tables; see _user-facing (unsuffixed) datasets_ below                                                                                                                      |
+|                                 | `telemetry`             | Views into desktop telemetry pings and many derived tables; see _user-facing (unsuffixed) datasets_ below                                                                                                                      |
 |                                 | `<namespace>`           | See _user-facing (unsuffixed) datasets_ below                                                                                                                                                                                  |
 |                                 | `search`                | Search data imported from parquet (_restricted_)                                                                                                                                                                               |
 |                                 | `static`                | Static tables, often useful for data-enriching joins                                                                                                                                                                           |
 |                                 | `udf`                   | Internal persistent user-defined functions defined in SQL; see [Using UDFs](#using-udfs)                                                                                                                                       |
 |                                 | `udf_js`                | Internal user-defined functions defined in JavaScript; see [Using UDFs](#using-udfs)                                                                                                                                 |
+| `mozfun`                        |                         | The primary home for user-defined functions; see [Using UDFs](#using-udfs)        |
 | `moz-fx-data-shared-prod`       |                         | All production data including full pings and derived datasets defined in [bigquery-etl](https://github.com/mozilla/bigquery-etl)                                      |
 |                                 | `<namespace>_live`      | See _live datasets_ below                                                                                                                                                                                                      |
 |                                 | `<namespace>_stable`    | See _stable datasets_ below                                                                                                                                                                                                    |
@@ -159,10 +160,10 @@ We document a few of the most broadly useful UDFs below, but you can see the ful
 
 ## Accessing map-like fields
 
-BigQuery currently lacks native map support and our workaround is to use a STRUCT type with fields named [key, value]. We've created a UDF that provides key-based access with the signature: `udf.get_key(<struct>, <key>)`. The example below generates a count per `reason` key in the `event_map_values` field in the telemetry events table for Normandy unenrollment events from yesterday.
+BigQuery currently lacks native map support and our workaround is to use a STRUCT type with fields named [key, value]. We've created a UDF that provides key-based access with the signature: `mozfun.map.get_key(<struct>, <key>)`. The example below generates a count per `reason` key in the `event_map_values` field in the telemetry events table for Normandy unenrollment events from yesterday.
 
 ```sql
-SELECT udf.get_key(event_map_values, 'reason') AS reason,
+SELECT mozfun.map.get_key(event_map_values, 'reason') AS reason,
        COUNT(*) AS EVENTS
 FROM telemetry.events
 WHERE submission_date = DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
@@ -177,14 +178,14 @@ ORDER BY 2 DESC
 We considered many potential ways to represent histograms as BigQuery fields
 and found the most efficient encoding was actually to leave them as raw JSON
 strings. To make these strings easier to use for analysis, you can convert them
-into nested structures using `udf.json_extract_histogram`:
+into nested structures using `mozfun.hist.extract`:
 
 ```sql
 WITH
   extracted AS (
   SELECT
     submission_timestamp,
-    udf.json_extract_histogram(payload.histograms.a11y_consumers) AS a11y_consumers
+    mozfun.hist.extract(payload.histograms.a11y_consumers) AS a11y_consumers
   FROM
     telemetry.main )
   --
