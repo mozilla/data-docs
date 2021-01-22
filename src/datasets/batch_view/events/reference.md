@@ -13,11 +13,13 @@ It has the following advantages over accessing the raw ping table (`telemetry.ev
 
 The events dataset contains one row for each event submitted in an event ping for that day.
 
-The `category`, `method`, `object`, `value`, and `extra` fields of the event
-are mapped to columns named `event_category`, `event_method`, `event_object`,
+The `timestamp`, `category`, `method`, `object`, `value`, and `extra` fields of the event
+are mapped to columns named `event_timestamp`, `event_category`, `event_method`, `event_object`,
 `event_string_value`, and `event_map_values`.
 To access the `event_map_values`, you can use the `mozfun.map.get_key` UDF,
 like `SELECT mozfun.map.get_key(event_map_values, "branch") AS branch FROM telemetry.events`.
+
+Please note that `event_timestamp` refers to the time in milliseconds when the event was recorded *relative to the main process start time*, while the `timestamp` column refers to the time the ping was ingested. `event_timestamp` is useful for determining relative order of events within a single session but cannot reliably be used to determine an absolute time that an event occurred due to client clock skew and other factors.
 
 ### Example Query
 
