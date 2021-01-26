@@ -28,17 +28,18 @@ people also prefer its user interface, though note that results that you get fro
 only be shared with others who also have BigQuery access provisioned.
 
 - Visit [GCP BigQuery Console](https://console.cloud.google.com/bigquery)
-- Switch to the project provided to you during your access request e.g `moz-fx-data-bq-<team-name>`
+- Switch to `mozdata` or the project provided to you during your access request e.g `moz-fx-data-bq-<team-name>`
 - Write and run your queries
 
-Note that if you are trying to query the telemetry dataset, you will need to explicitly specify
-the project (`moz-fx-data-shared-prod`) that it lives in, since you're querying from a different one. For example:
+Note that if you are trying to query telemetry datasets from a team-specific project,
+you will need to explicitly specify
+the project (`mozdata`) that the view lives in, since you're querying from a different one. For example:
 
 ```sql
 SELECT
   client_id
 FROM
-  `moz-fx-data-shared-prod`.telemetry.main
+  mozdata.telemetry.main
 WHERE
   DATE(submission_timestamp) = '2020-04-20'
   AND sample_id = 42
@@ -64,13 +65,13 @@ Once configured, you can now use the `bq` command-line client. The following exa
 lists the tables and views in a BigQuery dataset:
 
 ```bash
-bq ls moz-fx-data-derived-datasets:telemetry
+bq ls mozdata:telemetry
 ```
 
 And here's another which gets the count of entries in `telemetry.main` on `2019-08-22` in the nightly channel:
 
 ```bash
-bq query --nouse_legacy_sql 'select count(*) from `moz-fx-data-derived-datasets.telemetry.main` where submission_date = "2019-08-22" and normalized_channel="nightly"'
+bq query --nouse_legacy_sql 'select count(*) from mozdata.telemetry.main where submission_date = "2019-08-22" and normalized_channel="nightly"'
 ```
 
 Additional examples and documentation can be found [in the BigQuery command-line reference](https://cloud.google.com/bigquery/docs/bq-command-line-tool).
