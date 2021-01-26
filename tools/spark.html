@@ -301,18 +301,20 @@ SELECT
   event_string_value,
   count(distinct client_id) AS client_count
 FROM
-  `moz-fx-data-derived-datasets.telemetry.events`
+  mozdata.telemetry.events
 WHERE
   event_category = 'normandy'
   AND event_method = 'enroll'
-  AND submission_date_s3 = '2019-06-01'
+  AND submission_date = '2019-06-01'
 GROUP BY
   event_string_value
 ORDER BY
   client_count DESC
 LIMIT 20
 &quot;&quot;&quot;
+
 query_job = bq.query(query)
+
 # Wait for query execution, then fetch results as a pandas dataframe.
 rows = query_job.result().to_dataframe()
 </code></pre>

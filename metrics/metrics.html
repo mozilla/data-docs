@@ -216,7 +216,7 @@
   submission_date,
   SUM(dau) AS dau
 FROM
-  `moz-fx-data-derived-datasets.telemetry.firefox_desktop_exact_mau28_by_dimensions_v1`
+  mozdata.telemetry.firefox_desktop_exact_mau28_by_dimensions_v1
 WHERE
   -- You define your slice using additional filters here.
   country IN ('US', 'GB', 'CA', 'FR', 'DE')

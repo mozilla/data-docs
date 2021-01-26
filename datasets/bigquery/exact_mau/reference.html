@@ -208,12 +208,6 @@ across Mozilla for MAU analysis going forward.</p>
 <li><a href="#confidence-intervals">Confidence Intervals</a></li>
 </ul>
 </li>
-<li><a href="#data-reference">Data Reference</a>
-<ul>
-<li><a href="#scheduling">Scheduling</a></li>
-<li><a href="#schema">Schema</a></li>
-</ul>
-</li>
 </ul>
 <h1><a class="header" href="#conceptual-model" id="conceptual-model">Conceptual Model</a></h1>
 <h2><a class="header" href="#metric" id="metric">Metric</a></h2>
@@ -267,7 +261,7 @@ matching the slice definition.</p>
     submission_date,
     SUM(mau) AS mau
 FROM
-    `moz-fx-data-derived-datasets.telemetry.firefox_desktop_exact_mau28_by_dimensions_v1`
+    `mozdata.telemetry.firefox_desktop_exact_mau28_by_dimensions_v1`
 GROUP BY
     submission_date
 ORDER BY
@@ -279,7 +273,7 @@ via a <code>WHERE</code> clause:</p>
     submission_date,
     SUM(mau) AS mau
 FROM
-    `moz-fx-data-derived-datasets.telemetry.firefox_desktop_exact_mau28_by_dimensions_v1`
+    `mozdata.telemetry.firefox_desktop_exact_mau28_by_dimensions_v1`
 WHERE
     country = 'US'
     AND campaign = 'whatsnew'
@@ -296,7 +290,7 @@ with the &quot;Desktop Visited 5 URI&quot; usage criterion, corresponding to aDA
     SUM(mau) AS mau,
     SUM(visited_5_uri_dau) AS adau
 FROM
-    `moz-fx-data-derived-datasets.telemetry.firefox_desktop_exact_mau28_by_dimensions_v1`
+    `mozdata.telemetry.firefox_desktop_exact_mau28_by_dimensions_v1`
 WHERE
     country = 'US'
     AND campaign = 'whatsnew'
@@ -319,7 +313,7 @@ ORDER BY
     mau,
     tier1_mau
 FROM
-    `moz-fx-data-derived-datasets.telemetry.firefox_desktop_exact_mau28_v1`
+    mozdata.telemetry.firefox_desktop_exact_mau28_v1
 </code></pre>
 <p>These views contain no dimensions and abstract away the detail that FxA
 data uses the &quot;Last Seen in Tier 1 Country&quot; usage criterion while desktop
@@ -335,7 +329,7 @@ Indeed, for desktop and non-desktop clients, the definition of &quot;Tier 1 MAU&
     submission_date,
     SUM(mau) AS mau
 FROM
-    `moz-fx-data-derived-datasets.telemetry.firefox_desktop_exact_mau28_by_dimensions_v1`
+    mozdata.telemetry.firefox_desktop_exact_mau28_by_dimensions_v1
 WHERE
     country IN ('US', 'UK', 'DE', 'FR', 'CA')
 GROUP BY
@@ -357,7 +351,7 @@ and is represented in the exact MAU table as <code>seen_in_tier1_country_mau</co
     submission_date,
     SUM(seen_in_tier1_country_mau) AS tier1_mau
 FROM
-    `moz-fx-data-derived-datasets.telemetry.firefox_accounts_exact_mau28_by_dimensions_v1`
+    mozdata.telemetry.firefox_accounts_exact_mau28_by_dimensions_v1
 GROUP BY
     submission_date
 ORDER BY
@@ -377,20 +371,6 @@ of variation and assign a confidence interval to our sums.</p>
 <p>As an example of calculating confidence intervals, see the
 <a href="https://sql.telemetry.mozilla.org/queries/61957/source">Desktop MAU KPI query in STMO</a>
 which uses a jackknife resampling technique implemented as a BigQuery UDF.</p>
-<h1><a class="header" href="#data-reference" id="data-reference">Data Reference</a></h1>
-<h2><a class="header" href="#scheduling" id="scheduling">Scheduling</a></h2>
-<p>These tables are updated daily via the
-<a href="https://github.com/mozilla-services/spark-parquet-to-bigquery">parquet to BigQuery</a>
-infrastructure in the following DAGs:</p>
-<ul>
-<li><a href="https://github.com/mozilla-services/spark-parquet-to-bigquery/blob/master/dags/reprocess_clients_daily_v6.py"><code>reprocess_clients_daily_v6</code> DAG</a>,</li>
-<li><a href="https://github.com/mozilla-services/spark-parquet-to-bigquery/blob/master/dags/incremental_telemetry_core_parquet_v3.py"><code>incremental_telemetry_core_parquet_v3</code> DAG</a>, and</li>
-<li><a href="https://github.com/mozilla-services/spark-parquet-to-bigquery/blob/master/dags/incremental_fxa_events_v1.py"><code>incremental_fxa_events_v1</code> DAG</a>.</li>
-</ul>
-<h2><a class="header" href="#schema" id="schema">Schema</a></h2>
-<p>The data is partitioned by <code>submission_date</code>.</p>
-<p>As of 2019-03-29, the current version for all Exact MAU tables is <code>v1</code>,
-and the schemas are visible via the <code>telemetry</code> dataset in <a href="https://console.cloud.google.com/bigquery?project=moz-fx-data-derived-datasets&amp;folder&amp;organizationId=442341870013&amp;p=moz-fx-data-derived-datasets&amp;d=telemetry&amp;page=dataset">the BigQuery console</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/master/src/datasets/bigquery/exact_mau/reference.md">Edit this file on GitHub.</a></footer>
                     </main>
 

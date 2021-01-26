@@ -211,7 +211,7 @@ We also include a variety of dimension information (e.g. <code>product</code>, <
   SUM(new_profiles) as new_profiles,
   SAFE_DIVIDE(SUM(day_2_7_activated), SUM(new_profiles)) as day_2_7_activation
 FROM
-  `moz-fx-data-derived-datasets.telemetry.firefox_nondesktop_day_2_7_activation`
+  mozdata.telemetry.firefox_nondesktop_day_2_7_activation
 WHERE
   cohort_date = &quot;2020-03-01&quot;
 GROUP BY 1,2

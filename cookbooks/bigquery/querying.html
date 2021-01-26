@@ -216,25 +216,30 @@ However, it has changed from using a <code>YYYYMMDD</code> string form to a <cod
 </ul>
 <h3><a class="header" href="#projects-with-bigquery-datasets" id="projects-with-bigquery-datasets">Projects with BigQuery datasets</a></h3>
 <table><thead><tr><th>Project</th><th>Dataset</th><th>Purpose</th></tr></thead><tbody>
-<tr><td><code>moz-fx-data-shared-prod</code></td><td></td><td>All production data including full pings, imported parquet data, <a href="https://github.com/mozilla/bigquery-etl">BigQuery ETL</a>, and ad-hoc analysis</td></tr>
+<tr><td><code>mozdata</code></td><td></td><td>The primary home for user analysis as of February 2021; it has a short name that is easy to type and is filled with views that reference underlying tables in <code>moz-fx-data-shared-prod</code>; data tools like STMO will issue queries in this project</td></tr>
+<tr><td></td><td><code>analysis</code></td><td>User-generated tables for analysis; note that this dataset is separate from <code>moz-fx-data-shared-prod:analysis</code> and <code>moz-fx-data-derived-datasets:analysis</code>; we will be sending out communication about migrating all user data to <code>mozdata:analysis</code> in the coming month</td></tr>
+<tr><td></td><td><code>tmp</code></td><td>User-generated tables for ephemeral analysis results; tables created here are automatically deleted after 7 days.</td></tr>
+<tr><td></td><td><code>telemetry</code></td><td>Views into legacy desktop telemetry pings and many derived tables; see <em>user-facing (unsuffixed) datasets</em> below</td></tr>
+<tr><td></td><td><code>&lt;namespace&gt;</code></td><td>See <em>user-facing (unsuffixed) datasets</em> below</td></tr>
+<tr><td></td><td><code>search</code></td><td>Search data imported from parquet (<em>restricted</em>)</td></tr>
+<tr><td></td><td><code>static</code></td><td>Static tables, often useful for data-enriching joins</td></tr>
+<tr><td></td><td><code>udf</code></td><td>Internal persistent user-defined functions defined in SQL; see <a href="#using-udfs">Using UDFs</a></td></tr>
+<tr><td></td><td><code>udf_js</code></td><td>Internal user-defined functions defined in JavaScript; see <a href="#using-udfs">Using UDFs</a></td></tr>
+<tr><td><code>mozfun</code></td><td></td><td>The primary home for user-defined functions; see <a href="#using-udfs">Using UDFs</a></td></tr>
+<tr><td><code>moz-fx-data-bq-&lt;team-name&gt;</code></td><td></td><td>Some teams have specialized needs and can be provisioned a team-specific project</td></tr>
+<tr><td><code>moz-fx-data-shared-prod</code></td><td></td><td>All production data including full pings and derived datasets defined in <a href="https://github.com/mozilla/bigquery-etl">bigquery-etl</a></td></tr>
 <tr><td></td><td><code>&lt;namespace&gt;_live</code></td><td>See <em>live datasets</em> below</td></tr>
 <tr><td></td><td><code>&lt;namespace&gt;_stable</code></td><td>See <em>stable datasets</em> below</td></tr>
 <tr><td></td><td><code>&lt;namespace&gt;_derived</code></td><td>See <em>derived datasets</em> below</td></tr>
-<tr><td></td><td><code>&lt;namespace&gt;</code></td><td>See <em>user-facing (unsuffixed) datasets</em> below</td></tr>
-<tr><td></td><td><code>analysis</code></td><td>User generated tables for analysis</td></tr>
+<tr><td></td><td><code>&lt;product&gt;_external</code></td><td>Tables that reference external resources; these may be native BigQuery tables populated by a job that queries an third-party API, or they may be <a href="https://cloud.google.com/bigquery/external-data-sources">federated data sources</a> that pull data from other GCP services like GCS at query time.</td></tr>
 <tr><td></td><td><code>backfill</code></td><td>Temporary staging area for back-fills</td></tr>
 <tr><td></td><td><code>blpadi</code></td><td>Blocklist ping derived data(<em>restricted</em>)</td></tr>
 <tr><td></td><td><code>payload_bytes_raw</code></td><td>Raw JSON payloads as received from clients, used for reprocessing scenarios, a.k.a. &quot;landfill&quot; (<em>restricted</em>)</td></tr>
 <tr><td></td><td><code>payload_bytes_decoded</code></td><td><code>gzip</code>-compressed decoded JSON payloads, used for reprocessing scenarios</td></tr>
 <tr><td></td><td><code>payload_bytes_error</code></td><td><code>gzip</code>-compressed JSON payloads that were rejected in some phase of the pipeline; particularly useful for investigating schema validation errors</td></tr>
-<tr><td></td><td><code>search</code></td><td>Search data imported from parquet (<em>restricted</em>)</td></tr>
-<tr><td></td><td><code>static</code></td><td>Static tables, often useful for data-enriching joins</td></tr>
 <tr><td></td><td><code>tmp</code></td><td>Temporary staging area for parquet data loads</td></tr>
-<tr><td></td><td><code>udf</code></td><td>Persistent user-defined functions defined in SQL; see <a href="#using-udfs">Using UDFs</a></td></tr>
-<tr><td></td><td><code>udf_js</code></td><td>Persistent user-defined functions defined in JavaScript; see <a href="#using-udfs">Using UDFs</a></td></tr>
 <tr><td></td><td><code>validation</code></td><td>Temporary staging area for validation</td></tr>
-<tr><td><code>moz-fx-data-derived-datasets</code></td><td></td><td>Legacy project that contains mostly views to data in <code>moz-fx-data-shared-prod</code> during a transition period; STMO currently points at this project but we will announce a transition to <code>moz-fx-data-shared-prod</code> by end of 2019</td></tr>
-<tr><td></td><td><code>analysis</code></td><td>User generated tables for analysis; note that this dataset is separate from <code>moz-fx-data-shared-prod:analysis</code> and users are responsible for migrating or cloning data during the transition period</td></tr>
+<tr><td><code>moz-fx-data-derived-datasets</code></td><td></td><td>Legacy project that contains mostly views to data in <code>moz-fx-data-shared-prod</code> during a transition period; STMO currently points at this project but we will announce a transition to <code>mozdata</code> by end of February 2021</td></tr>
 <tr><td><code>moz-fx-data-shar-nonprod-efed</code></td><td></td><td>Non-production data produced by stage ingestion infrastructure</td></tr>
 </tbody></table>
 <h3><a class="header" href="#table-layout-and-naming" id="table-layout-and-naming">Table Layout and Naming</a></h3>
@@ -259,7 +264,7 @@ each document namespace (corresponding to folders underneath the <a href="https:
 <ul>
 <li>&quot;main&quot; pings are accessible from view <code>telemetry.main</code></li>
 <li>&quot;crash&quot; pings are accessible from view <code>telemetry.crash</code></li>
-<li>&quot;baseline&quot; pings for Fenix are accessible from view <code>org_mozilla_fenix.baseline</code></li>
+<li>&quot;baseline&quot; pings for the release version of Firefox for Android (Fenix) are accessible from view <code>org_mozilla_firefox.baseline</code></li>
 </ul>
 <p>All fields in the incoming pings are accessible in these views, and (where possible) match the nested data structures of the original JSON. Field names are converted from <code>camelCase</code> form to <code>snake_case</code> for consistency and SQL compatibility.</p>
 <p>Any fields not present in the ping schemas are present in an <code>additional_properties</code> field containing leftover JSON. BigQuery provides <a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/json_functions">functions for parsing and manipulating JSON data via SQL</a>.</p>
@@ -285,7 +290,7 @@ WHERE
     os,
     COUNT(*) AS count
 FROM
-    telemetry.clients_last_seen
+    mozdata.telemetry.clients_last_seen
 WHERE
     submission_date &gt;= DATE_SUB(CURRENT_DATE, INTERVAL 1 WEEK)
     AND days_since_seen = 0
@@ -303,7 +308,7 @@ ORDER BY
 <h3><a class="header" href="#writing-query-results-to-a-permanent-table" id="writing-query-results-to-a-permanent-table">Writing query results to a permanent table</a></h3>
 <p>You can write query results to a BigQuery table you have access via <a href="access.html#gcp-bigquery-console">GCP BigQuery Console</a> or <a href="access.html#gcp-bigquery-api-access">GCP BigQuery API Access</a></p>
 <ul>
-<li>Use <code>moz-fx-data-shared-prod.analysis</code> dataset.
+<li>Use the <code>mozdata.analysis</code> dataset.
 <ul>
 <li>Prefix your table with your username. If your username is <code>username@mozilla.com</code> create a table with <code>username_my_table</code>.</li>
 </ul>
@@ -315,16 +320,16 @@ ORDER BY
 we also have a GCS bucket available for storing analysis results. It is usually
 Spark jobs that will need to do this.</p>
 <ul>
-<li>Use bucket <code>gs://moz-fx-data-prod-analysis/</code>
+<li>Use bucket <code>gs://mozdata-analysis/</code>
 <ul>
-<li>Prefix object paths with your username. If your username is <code>username@mozilla.com</code>, you might store a file to <code>gs://moz-fx-data-prod-analysis/username/myresults.json</code>.</li>
+<li>Prefix object paths with your username. If your username is <code>username@mozilla.com</code>, you might store a file to <code>gs://mozdata-analysis/username/myresults.json</code>.</li>
 </ul>
 </li>
 </ul>
 <h2><a class="header" href="#creating-a-view" id="creating-a-view">Creating a View</a></h2>
 <p>You can create views in BigQuery if you have access via <a href="access.html#gcp-bigquery-console">GCP BigQuery Console</a> or <a href="access.html#gcp-bigquery-api-access">GCP BigQuery API Access</a>.</p>
 <ul>
-<li>Use <code>moz-fx-data-shared-prod.analysis</code> dataset.
+<li>Use the <code>mozdata.analysis</code> dataset.
 <ul>
 <li>Prefix your view with your username. If your username is <code>username@mozilla.com</code> create a table with <code>username_my_view</code>.</li>
 </ul>
@@ -335,8 +340,8 @@ Spark jobs that will need to do this.</p>
 <p>BigQuery offers <a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/user-defined-functions">user-defined functions</a> (UDFs) that can be defined in SQL or JavaScript as part of a query or as a persistent function stored in a dataset. We have defined a suite of public persistent functions to enable transformations specific to our data formats, available in <a href="https://mozilla.github.io/bigquery-etl/"><code>mozfun</code></a>. UDFs used internally in <code>moz-fx-data-shared-prod</code> are available in datasets <code>udf</code> (for functions defined in SQL) and <code>udf_js</code> (for functions defined in JavaScript). Note that JavaScript functions are potentially much slower than those defined in SQL, so use functions in <code>udf_js</code> with some caution, likely only after performing aggregation in your query.</p>
 <p>We document a few of the most broadly useful UDFs below, but you can see the full list of <code>mozfun</code> UDFs in <a href="https://mozilla.github.io/bigquery-etl/">https://mozilla.github.io/bigquery-etl</a> and or UDFs with source code used within <code>moz-fx-data-shared-prod</code> in <a href="https://github.com/mozilla/bigquery-etl/tree/master/sql/moz-fx-data-shared-prod/udf"><code>bigquery-etl/sql/moz-fx-data-shared-prod/udf</code></a> and <a href="https://github.com/mozilla/bigquery-etl/tree/master/sql/moz-fx-data-shared-prod/udf_js"><code>bigquery-etl/sql/moz-fx-data-shared-prod/udf_js</code></a>.</p>
 <h2><a class="header" href="#accessing-map-like-fields" id="accessing-map-like-fields">Accessing map-like fields</a></h2>
-<p>BigQuery currently lacks native map support and our workaround is to use a STRUCT type with fields named [key, value]. We've created a UDF that provides key-based access with the signature: <code>udf.get_key(&lt;struct&gt;, &lt;key&gt;)</code>. The example below generates a count per <code>reason</code> key in the <code>event_map_values</code> field in the telemetry events table for Normandy unenrollment events from yesterday.</p>
-<pre><code class="language-sql">SELECT udf.get_key(event_map_values, 'reason') AS reason,
+<p>BigQuery currently lacks native map support and our workaround is to use a STRUCT type with fields named [key, value]. We've created a UDF that provides key-based access with the signature: <code>mozfun.map.get_key(&lt;struct&gt;, &lt;key&gt;)</code>. The example below generates a count per <code>reason</code> key in the <code>event_map_values</code> field in the telemetry events table for Normandy unenrollment events from yesterday.</p>
+<pre><code class="language-sql">SELECT mozfun.map.get_key(event_map_values, 'reason') AS reason,
        COUNT(*) AS EVENTS
 FROM telemetry.events
 WHERE submission_date = DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
@@ -349,12 +354,12 @@ ORDER BY 2 DESC
 <p>We considered many potential ways to represent histograms as BigQuery fields
 and found the most efficient encoding was actually to leave them as raw JSON
 strings. To make these strings easier to use for analysis, you can convert them
-into nested structures using <code>udf.json_extract_histogram</code>:</p>
+into nested structures using <code>mozfun.hist.extract</code>:</p>
 <pre><code class="language-sql">WITH
   extracted AS (
   SELECT
     submission_timestamp,
-    udf.json_extract_histogram(payload.histograms.a11y_consumers) AS a11y_consumers
+    mozfun.hist.extract(payload.histograms.a11y_consumers) AS a11y_consumers
   FROM
     telemetry.main )
   --

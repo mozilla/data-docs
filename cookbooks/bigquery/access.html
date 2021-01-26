@@ -215,15 +215,16 @@ people also prefer its user interface, though note that results that you get fro
 only be shared with others who also have BigQuery access provisioned.</p>
 <ul>
 <li>Visit <a href="https://console.cloud.google.com/bigquery">GCP BigQuery Console</a></li>
-<li>Switch to the project provided to you during your access request e.g <code>moz-fx-data-bq-&lt;team-name&gt;</code></li>
+<li>Switch to <code>mozdata</code> or the project provided to you during your access request e.g <code>moz-fx-data-bq-&lt;team-name&gt;</code></li>
 <li>Write and run your queries</li>
 </ul>
-<p>Note that if you are trying to query the telemetry dataset, you will need to explicitly specify
-the project (<code>moz-fx-data-shared-prod</code>) that it lives in, since you're querying from a different one. For example:</p>
+<p>Note that if you are trying to query telemetry datasets from a team-specific project,
+you will need to explicitly specify
+the project (<code>mozdata</code>) that the view lives in, since you're querying from a different one. For example:</p>
 <pre><code class="language-sql">SELECT
   client_id
 FROM
-  `moz-fx-data-shared-prod`.telemetry.main
+  mozdata.telemetry.main
 WHERE
   DATE(submission_timestamp) = '2020-04-20'
   AND sample_id = 42
@@ -251,10 +252,10 @@ WHERE
 </ul>
 <p>Once configured, you can now use the <code>bq</code> command-line client. The following example
 lists the tables and views in a BigQuery dataset:</p>
-<pre><code class="language-bash">bq ls moz-fx-data-derived-datasets:telemetry
+<pre><code class="language-bash">bq ls mozdata:telemetry
 </code></pre>
 <p>And here's another which gets the count of entries in <code>telemetry.main</code> on <code>2019-08-22</code> in the nightly channel:</p>
-<pre><code class="language-bash">bq query --nouse_legacy_sql 'select count(*) from `moz-fx-data-derived-datasets.telemetry.main` where submission_date = &quot;2019-08-22&quot; and normalized_channel=&quot;nightly&quot;'
+<pre><code class="language-bash">bq query --nouse_legacy_sql 'select count(*) from mozdata.telemetry.main where submission_date = &quot;2019-08-22&quot; and normalized_channel=&quot;nightly&quot;'
 </code></pre>
 <p>Additional examples and documentation can be found <a href="https://cloud.google.com/bigquery/docs/bq-command-line-tool">in the BigQuery command-line reference</a>.</p>
 <h3><a class="header" href="#api-access" id="api-access">API Access</a></h3>
