@@ -32,7 +32,7 @@ As of this writing, each main ping histogram is encoded as a JSON string inside 
 SELECT
   payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS AS histogram_json,
 FROM
-  telemetry.main
+  telemetry.main_nightly -- Use telemetry.main_1pct for a 1% sample of non-nightly data
 WHERE
   sample_id = 42
   AND normalized_channel = 'nightly'
@@ -63,7 +63,7 @@ WITH intermediate AS (
   SELECT
     udf.json_extract_histogram(payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS) AS histogram,
   FROM
-    telemetry.main
+    telemetry.main_nightly -- Use telemetry.main_1pct for a 1% sample of non-nightly data
   WHERE
     sample_id = 42
     AND normalized_channel = 'nightly'
@@ -104,7 +104,7 @@ WITH merged_histogram AS (
       ARRAY_AGG(udf.json_extract_histogram(payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS))
     ) AS spinner_visible_ms,
   FROM
-    telemetry.main
+    telemetry.main_nightly -- Use telemetry.main_1pct for a 1% sample of non-nightly data
   WHERE
     application.channel = 'nightly'
     AND normalized_os = 'Windows'
@@ -156,7 +156,7 @@ WITH per_build_day AS (
     KEY,
     SUM(value) AS value,
   FROM
-    telemetry.main,
+    telemetry.main_nightly -- Use telemetry.main_1pct for a 1% sample of non-nightly data,
     UNNEST(
       udf.json_extract_histogram(
         payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS
@@ -232,7 +232,7 @@ WITH per_build_client_day AS (
       )
     ) AS tab_switch_visible_ms
   FROM
-    telemetry.main
+    telemetry.main_nightly -- Use telemetry.main_1pct for a 1% sample of non-nightly data
   WHERE
     application.channel = 'nightly'
     AND normalized_os = 'Windows'
@@ -318,7 +318,7 @@ WITH per_build_client_day AS (
       )
     ) AS tab_switch_visible_ms
   FROM
-    telemetry.main
+    telemetry.main_nightly -- Use telemetry.main_1pct for a 1% sample of non-nightly data
   WHERE
     application.channel = 'nightly'
     AND normalized_os = 'Windows'
