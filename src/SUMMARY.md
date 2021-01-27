@@ -79,6 +79,7 @@
     - [Clients Last Seen](datasets/bigquery/clients_last_seen/reference.md)
     - [Events](datasets/batch_view/events/reference.md)
     - [Exact MAU](datasets/bigquery/exact_mau/reference.md)
+    - [Main Ping Tables](datasets/main_ping_tables.md)
     - [Main Summary](datasets/batch_view/main_summary/reference.md)
     - [Socorro Crash Reports](datasets/other/socorro_crash/reference.md)
     - [SSL Ratios (public)](datasets/other/ssl/reference.md)
