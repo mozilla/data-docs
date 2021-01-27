@@ -7,7 +7,7 @@ This tutorial tries to build up an understanding and intuition of how things wor
 Assumptions: 
     - You have some idea of what a histogram is (if not, the [Wikipedia article](https://en.wikipedia.org/wiki/Histogram) is a great place to start), have at least skimmed over [the Firefox documentation on histograms](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/collection/histograms.html)
     - You have read [the introduction to STMO](../tools/stmo.md).
-    - You understand the [Main Ping tables](../datasets/main_ping_tables.md)
+    - You understand the [main ping tables](../datasets/main_ping_tables.md) (`telemetry.main_1pct` and `telemetry.main_nightly`).
 
 ## Table of Contents
 
