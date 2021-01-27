@@ -76,7 +76,7 @@ Spark and other applications relying on the BigQuery Storage API for data access
 
 Unlike with the previous AWS-based data infrastructure, we don't have different mechanisms for accessing entire pings vs. "summary" tables. As such, there are no longer special libraries or infrastructure necessary for accessing full pings, rather each document type maps to a user-facing view that can be queried in STMO. For example:
 
-- "main" pings are accessible from view `telemetry.main` [(see docs for faster-to-query tables)](../../datasets/main_ping_tables.md)
+- "main" pings are accessible from view `telemetry.main` ([see docs for faster-to-query tables](../../datasets/main_ping_tables.md))
 - "crash" pings are accessible from view `telemetry.crash`
 - "baseline" pings for the release version of Firefox for Android (Fenix) are accessible from view `org_mozilla_firefox.baseline`
 
