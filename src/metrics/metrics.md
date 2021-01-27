@@ -74,10 +74,6 @@ New Profiles: Unique count of client ids with a given profile creation date. As 
 
 E.g. For a cohort acquired (with a profile creation date) of Mar 1, they are considered activated in day 2-7 if they show up in DAU at any time between Mar 2nd and Mar 7th.
 
-### Caveats
-
-As stated above, this measure is not currently used with Fenix or Firefox Preview. These products may send pings more frequently than for other mobile applications, and thus not be a fair comparison. Work is undergoing to make the reporting comparable and Fenix and Firefox Preview will be included once this is complete. Please see [`JIRA DS-696`](https://jira.mozilla.com/browse/DS-696) for more information and current status.
-
 ### Dashboards
 
 The [non-desktop day 2-7 dashboard](https://datastudio.google.com/u/0/reporting/1L7dsFyqjT8XZHrYprYS-HCP5_k_gZGIb/page/0iERB) tracks this measure.
