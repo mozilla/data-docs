@@ -2922,7 +2922,7 @@ the standard 1-Week, 2-Week, and 3-Week retention definitions.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/master/src/cookbooks/clients_last_seen_bits.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#visualizing-percentiles-of-a-main-ping-exponential-histogram" id="visualizing-percentiles-of-a-main-ping-exponential-histogram">Visualizing Percentiles of a Main Ping Exponential Histogram</a></h1>
 <p><a href="https://glam.telemetry.mozilla.org/">GLAM</a> is great if you want to check out the behaviour of a histogram over a large population across a curated set of dimensions, but what if you have a follow-up question that doesn't fit into its UI model? This tutorial will go into the guts of how to reproduce a GLAM-like view using <code>sql.telemetry.mozilla.org</code> (STMO), along with some suggestions on how to dig deeper.</p>
 <p>This tutorial tries to build up an understanding and intuition of how things work on a low-level before it gets to its main act of reproducing GLAM. If you don't care about the details, you can probably skip the earlier sections in this document.</p>
-<p>Assumptions: </p>
+<p>Assumptions:</p>
 <ul>
 <li>You have some idea of what a histogram is (if not, the <a href="https://en.wikipedia.org/wiki/Histogram">Wikipedia article</a> is a great place to start), have at least skimmed over <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/collection/histograms.html">the Firefox documentation on histograms</a></li>
 <li>You have read <a href="cookbooks/../tools/stmo.html">the introduction to STMO</a>.</li>
@@ -7588,9 +7588,27 @@ is one of those generated tables.</p>
 <p>As the number of telemetry probes defined in Firefox grows, so does the number of columns in <code>telemetry.main</code>. As of January 2021, we have nearly 10,000 columns, and we ingest many terabytes of main ping data per day. This combination of a very wide schema and a high data volume means that <a href="https://console.cloud.google.com/support/cases/detail/25679061?project=moz-fx-data-shared-prod">BigQuery has to reference metadata for a very large number of files</a> each time it runs a query, even if it only ends up needing to read a small fraction of those files. This has led to a problematic experience for iterative analysis use cases.</p>
 <p>To reduce the time for querying main ping data, we have included two new tables: <code>telemetry.main_1pct</code>, and <code>telemetry.main_nightly</code>. These can return results for simple queries in a matter of seconds where a logically equivalent query on <code>telemetry.main</code> may take minutes.</p>
 <h2><a class="header" href="#main-ping-sample-telemetrymain_1pct" id="main-ping-sample-telemetrymain_1pct">Main Ping Sample: <code>telemetry.main_1pct</code></a></h2>
-<p>This table includes a 1% sample across all channels from <code>telemetry.main</code>. It includes 6 months of history.</p>
+<p>This table includes a 1% sample across all channels from <code>telemetry.main</code> (<code>sample_id = 0</code>).
+It includes 6 months of history.</p>
+<p>It includes an additional <code>subsample_id</code> field that is similar to <code>sample_id</code> and allows
+efficient sampling for even smaller population sizes. The following query would reflect
+a 0.01% sample (one thousandth) of the total desktop Firefox population:</p>
+<pre><code class="language-sql">SELECT
+  COUNT(*) AS n
+FROM
+  mozdata.telemetry.main_1pct
+WHERE
+  subsample_id = 0
+  AND DATE(submission_timestamp) = '2021-01-01'
+</code></pre>
+<p>The choice of implementation for <code>subsample_id</code> is not particularly well vetted;
+it's simply chosen to be a hash that's stable, has a reasonable
+avalanche effect, and is <em>different</em> from <code>sample_id</code>.
+The definition is <code>MOD(ABS(FARM_FINGERPRINT(client_id)), 100) AS subsample_id</code>
+which is the same approach we use for choosing <code>id_bucket</code> in Exact MAU tables.</p>
 <h2><a class="header" href="#nightly-main-ping-data-telemetrymain_nightly" id="nightly-main-ping-data-telemetrymain_nightly">Nightly Main Ping Data: <code>telemetry.main_nightly</code></a></h2>
-<p>This table includes only data from the nightly release channel. It includes 6 months of history.</p>
+<p>This table includes only data from the nightly release channel (<code>normalized_channel = 'nightly'</code>).
+It includes 6 months of history.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/master/src/datasets/main_ping_tables.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#main-summary" id="main-summary">Main Summary</a></h1>
 <blockquote>
 <p><strong>⚠</strong> Since the introduction of BigQuery, we are able to represent the
