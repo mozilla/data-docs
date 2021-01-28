@@ -27,6 +27,12 @@ WHERE
   AND DATE(submission_timestamp) = '2021-01-01'
 ```
 
+The choice of implementation for `subsample_id` is not particularly well vetted;
+it's simply chosen to be a hash that's stable, has a reasonable
+avalanche effect, and is _different_ from `sample_id`.
+The definition is `MOD(ABS(FARM_FINGERPRINT(client_id)), 100) AS subsample_id`
+which is the same approach we use for choosing `id_bucket` in Exact MAU tables.
+
 ## Nightly Main Ping Data: `telemetry.main_nightly`
 
 This table includes only data from the nightly release channel (`normalized_channel = 'nightly'`).
