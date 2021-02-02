@@ -89,7 +89,7 @@ For example: [https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_
 
 ## Let us know!
 
-If this public data has proved useful to your research, or you've built a cool visualization with it, please let us know! You can email [publicdata@mozilla.com](mailto:publicdata@mozilla.com) or reach us on the [#telemetry:mozilla.org] channel on [Mozilla's instance of matrix].
+If this public data has proved useful to your research, or you've built a cool visualization with it, please let us know! You can email [`publicdata@mozilla.com`](mailto:publicdata@mozilla.com) or reach us on the [#telemetry:mozilla.org] channel on [Mozilla's instance of matrix].
 
 [bigquery]: https://cloud.google.com/bigquery
 [bigquery_console]: https://console.cloud.google.com/bigquery
