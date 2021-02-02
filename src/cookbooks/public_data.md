@@ -3,6 +3,11 @@
 A public dataset is a dataset in [BigQuery][bigquery] which is made available to the general public
 in BigQuery or through our [public HTTP endpoint][public_data_endpoint].
 
+
+## Table of Contents
+
+<!-- toc -->
+
 ## Accessing Public Data in BigQuery
 
 To access public datasets in BigQuery, a [Google Cloud Platform][gcp] (GCP) account is required.
@@ -82,6 +87,10 @@ Data files are gzipped and up to 1 GB in size. If the data exceeds 1 GB, then it
 files named `000000000000.json`, `000000000001.json`, ...
 For example: [https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/ssl_ratios/v1/files/000000000000.json](https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/ssl_ratios/v1/files/000000000000.json)
 
+## Let us know!
+
+If this public data has proved useful to your research, or you've built a cool visualization with it, please let us know! You can email [publicdata@mozilla.com](mailto:publicdata@mozilla.com) or reach us on the [#telemetry:mozilla.org] channel on [Mozilla's instance of matrix].
+
 [bigquery]: https://cloud.google.com/bigquery
 [bigquery_console]: https://console.cloud.google.com/bigquery
 [bigquery_command_line]: https://cloud.google.com/bigquery/docs/bq-command-line-tool
@@ -91,3 +100,5 @@ For example: [https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_
 [bigquery_sandbox]: https://cloud.google.com/blog/products/data-analytics/query-without-a-credit-card-introducing-bigquery-sandbox
 [public_data_endpoint]: https://public-data.telemetry.mozilla.org
 [public_data_datasets]: https://public-data.telemetry.mozilla.org/all-datasets.json
+[#telemetry:mozilla.org]: https://chat.mozilla.org/#/room/#telemetry:mozilla.org
+[mozilla's instance of matrix]: https://wiki.mozilla.org/Matrix
