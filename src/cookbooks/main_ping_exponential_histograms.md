@@ -4,7 +4,11 @@
 
 This tutorial tries to build up an understanding and intuition of how things work on a low-level before it gets to its main act of reproducing GLAM. If you don't care about the details, you can probably skip the earlier sections in this document.
 
-Assumptions: You have some idea of what a histogram is (if not, the [Wikipedia article](https://en.wikipedia.org/wiki/Histogram) is a great place to start), have at least skimmed over [the Firefox documentation on histograms](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/collection/histograms.html), and have read [the introduction to STMO](../tools/stmo.md).
+Assumptions:
+
+- You have some idea of what a histogram is (if not, the [Wikipedia article](https://en.wikipedia.org/wiki/Histogram) is a great place to start), have at least skimmed over [the Firefox documentation on histograms](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/collection/histograms.html)
+- You have read [the introduction to STMO](../tools/stmo.md).
+- You understand the [main ping tables](../datasets/main_ping_tables.md) (`telemetry.main_1pct` and `telemetry.main_nightly`).
 
 ## Table of Contents
 
@@ -32,10 +36,10 @@ As of this writing, each main ping histogram is encoded as a JSON string inside 
 SELECT
   payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS AS histogram_json,
 FROM
-  telemetry.main
+  telemetry.main_nightly -- Use telemetry.main_1pct for a 1% sample across channels
 WHERE
   sample_id = 42
-  AND normalized_channel = 'nightly'
+  AND normalized_channel = 'nightly' -- Only technically necessary if using telemetry.main or telemetry.main_1pct (see above)
   AND DATE(submission_timestamp) = '2020-04-20'
   AND payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS IS NOT NULL
 LIMIT
@@ -63,10 +67,10 @@ WITH intermediate AS (
   SELECT
     udf.json_extract_histogram(payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS) AS histogram,
   FROM
-    telemetry.main
+    telemetry.main_nightly -- Use telemetry.main_1pct for a 1% sample across channels
   WHERE
     sample_id = 42
-    AND normalized_channel = 'nightly'
+    AND normalized_channel = 'nightly' -- Only technically necessary if using telemetry.main or telemetry.main_1pct (see above)
     AND DATE(submission_timestamp) = '2020-04-20'
     AND payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS IS NOT NULL
   LIMIT
@@ -104,9 +108,9 @@ WITH merged_histogram AS (
       ARRAY_AGG(udf.json_extract_histogram(payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS))
     ) AS spinner_visible_ms,
   FROM
-    telemetry.main
+    telemetry.main_nightly -- Use telemetry.main_1pct for a 1% sample across channels
   WHERE
-    application.channel = 'nightly'
+    normalized_channel = 'nightly' -- Only technically necessary if using telemetry.main or telemetry.main_1pct (see above)
     AND normalized_os = 'Windows'
     AND DATE(submission_timestamp) = '2020-04-20'
 ),
@@ -148,27 +152,25 @@ Knowing the approximate distribution of results on a given day is sort of intere
 We can do this simply by _grouping by_ the build id field, and then merging the histograms corresponding to each:
 
 ```sql
-DECLARE four_twenty DEFAULT DATE('2020-04-20');
-
 WITH per_build_day AS (
   SELECT
     PARSE_DATETIME("%Y%m%d%H%M%S", application.build_id) AS build_id,
     KEY,
     SUM(value) AS value,
   FROM
-    telemetry.main,
+    telemetry.main_nightly -- Use telemetry.main_1pct for a 1% sample across channels,
     UNNEST(
       udf.json_extract_histogram(
         payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS
       ).VALUES
     )
   WHERE
-    application.channel = 'nightly'
+    normalized_channel = 'nightly' -- Only technically necessary if using telemetry.main or telemetry.main_1pct (see above)
     AND normalized_os = 'Windows'
-    AND application.build_id > FORMAT_DATE("%Y%m%d", DATE_SUB(four_twenty, INTERVAL 2 WEEK))
-    AND application.build_id <= FORMAT_DATE("%Y%m%d", four_twenty)
-    AND DATE(submission_timestamp) >= DATE_SUB(four_twenty, INTERVAL 2 WEEK)
-    AND DATE(submission_timestamp) <= four_twenty
+    AND application.build_id > FORMAT_DATE("%Y%m%d", DATE_SUB(CURRENT_DATE, INTERVAL 2 WEEK))
+    AND application.build_id <= FORMAT_DATE("%Y%m%d", CURRENT_DATE)
+    AND DATE(submission_timestamp) >= DATE_SUB(CURRENT_DATE, INTERVAL 2 WEEK)
+    AND DATE(submission_timestamp) <= CURRENT_DATE
   GROUP BY
     KEY,
     build_id
@@ -216,8 +218,6 @@ A solution used by GLAM is to give each client "one vote": that is, the aggregat
 We can reproduce this approach by using the [`mozfun.hist.normalize`](https://mozilla.github.io/bigquery-etl/mozfun/hist/#normalize) UDF, which explicitly takes a set of histograms and makes sure that the values for each one sum up to exactly one:
 
 ```sql
-DECLARE four_twenty DEFAULT DATE('2020-04-20');
-
 WITH per_build_client_day AS (
   SELECT
     PARSE_DATETIME("%Y%m%d%H%M%S", application.build_id) AS build_id,
@@ -232,14 +232,14 @@ WITH per_build_client_day AS (
       )
     ) AS tab_switch_visible_ms
   FROM
-    telemetry.main
+    telemetry.main_nightly -- Use telemetry.main_1pct for a 1% sample across channels
   WHERE
-    application.channel = 'nightly'
+    normalized_channel = 'nightly' -- Only technically necessary if using telemetry.main or telemetry.main_1pct (see above)
     AND normalized_os = 'Windows'
-    AND application.build_id > FORMAT_DATE("%Y%m%d", DATE_SUB(four_twenty, INTERVAL 14 DAY))
-    AND application.build_id <= FORMAT_DATE("%Y%m%d", four_twenty)
-    AND DATE(submission_timestamp) >= DATE_SUB(four_twenty, INTERVAL 14 DAY)
-    AND DATE(submission_timestamp) <= four_twenty
+    AND application.build_id > FORMAT_DATE("%Y%m%d", DATE_SUB(CURRENT_DATE, INTERVAL 14 DAY))
+    AND application.build_id <= FORMAT_DATE("%Y%m%d", CURRENT_DATE)
+    AND DATE(submission_timestamp) >= DATE_SUB(CURRENT_DATE, INTERVAL 14 DAY)
+    AND DATE(submission_timestamp) <= CURRENT_DATE
   GROUP BY
     build_id,
     client_id
@@ -302,8 +302,6 @@ OK, so we've reproduced GLAM, but that isn't particularly exciting in and of its
 We can filter our query to _just_ that group of users by adding a `AND normalized_os_version="6.1"` clause to our query above:
 
 ```sql
-DECLARE four_twenty DEFAULT DATE('2020-04-20');
-
 WITH per_build_client_day AS (
   SELECT
     PARSE_DATETIME("%Y%m%d%H%M%S", application.build_id) AS build_id,
@@ -318,15 +316,15 @@ WITH per_build_client_day AS (
       )
     ) AS tab_switch_visible_ms
   FROM
-    telemetry.main
+    telemetry.main_nightly -- Use telemetry.main_1pct for a 1% sample across channels
   WHERE
-    application.channel = 'nightly'
+    normalized_channel = 'nightly' -- Only technically necessary if using telemetry.main or telemetry.main_1pct (see above)
     AND normalized_os = 'Windows'
     AND normalized_os_version = "6.1"
-    AND application.build_id > FORMAT_DATE("%Y%m%d", DATE_SUB(four_twenty, INTERVAL 14 DAY))
-    AND application.build_id <= FORMAT_DATE("%Y%m%d", four_twenty)
-    AND DATE(submission_timestamp) >= DATE_SUB(four_twenty, INTERVAL 14 DAY)
-    AND DATE(submission_timestamp) <= four_twenty
+    AND application.build_id > FORMAT_DATE("%Y%m%d", DATE_SUB(CURRENT_DATE, INTERVAL 14 DAY))
+    AND application.build_id <= FORMAT_DATE("%Y%m%d", CURRENT_DATE)
+    AND DATE(submission_timestamp) >= DATE_SUB(CURRENT_DATE, INTERVAL 14 DAY)
+    AND DATE(submission_timestamp) <= CURRENT_DATE
   GROUP BY
     build_id,
     client_id

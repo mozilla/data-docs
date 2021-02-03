@@ -89,7 +89,7 @@ SELECT
     submission_date,
     SUM(mau) AS mau
 FROM
-    `moz-fx-data-derived-datasets.telemetry.firefox_desktop_exact_mau28_by_dimensions_v1`
+    `mozdata.telemetry.firefox_desktop_exact_mau28_by_dimensions_v1`
 GROUP BY
     submission_date
 ORDER BY
@@ -104,7 +104,7 @@ SELECT
     submission_date,
     SUM(mau) AS mau
 FROM
-    `moz-fx-data-derived-datasets.telemetry.firefox_desktop_exact_mau28_by_dimensions_v1`
+    `mozdata.telemetry.firefox_desktop_exact_mau28_by_dimensions_v1`
 WHERE
     country = 'US'
     AND campaign = 'whatsnew'
@@ -124,7 +124,7 @@ SELECT
     SUM(mau) AS mau,
     SUM(visited_5_uri_dau) AS adau
 FROM
-    `moz-fx-data-derived-datasets.telemetry.firefox_desktop_exact_mau28_by_dimensions_v1`
+    `mozdata.telemetry.firefox_desktop_exact_mau28_by_dimensions_v1`
 WHERE
     country = 'US'
     AND campaign = 'whatsnew'
@@ -151,7 +151,7 @@ SELECT
     mau,
     tier1_mau
 FROM
-    `moz-fx-data-derived-datasets.telemetry.firefox_desktop_exact_mau28_v1`
+    mozdata.telemetry.firefox_desktop_exact_mau28_v1
 ```
 
 These views contain no dimensions and abstract away the detail that FxA
@@ -173,7 +173,7 @@ SELECT
     submission_date,
     SUM(mau) AS mau
 FROM
-    `moz-fx-data-derived-datasets.telemetry.firefox_desktop_exact_mau28_by_dimensions_v1`
+    mozdata.telemetry.firefox_desktop_exact_mau28_by_dimensions_v1
 WHERE
     country IN ('US', 'UK', 'DE', 'FR', 'CA')
 GROUP BY
@@ -199,7 +199,7 @@ SELECT
     submission_date,
     SUM(seen_in_tier1_country_mau) AS tier1_mau
 FROM
-    `moz-fx-data-derived-datasets.telemetry.firefox_accounts_exact_mau28_by_dimensions_v1`
+    mozdata.telemetry.firefox_accounts_exact_mau28_by_dimensions_v1
 GROUP BY
     submission_date
 ORDER BY
@@ -222,22 +222,3 @@ of variation and assign a confidence interval to our sums.
 As an example of calculating confidence intervals, see the
 [Desktop MAU KPI query in STMO](https://sql.telemetry.mozilla.org/queries/61957/source)
 which uses a jackknife resampling technique implemented as a BigQuery UDF.
-
-# Data Reference
-
-## Scheduling
-
-These tables are updated daily via the
-[parquet to BigQuery](https://github.com/mozilla-services/spark-parquet-to-bigquery)
-infrastructure in the following DAGs:
-
-- [`reprocess_clients_daily_v6` DAG](https://github.com/mozilla-services/spark-parquet-to-bigquery/blob/master/dags/reprocess_clients_daily_v6.py),
-- [`incremental_telemetry_core_parquet_v3` DAG](https://github.com/mozilla-services/spark-parquet-to-bigquery/blob/master/dags/incremental_telemetry_core_parquet_v3.py), and
-- [`incremental_fxa_events_v1` DAG](https://github.com/mozilla-services/spark-parquet-to-bigquery/blob/master/dags/incremental_fxa_events_v1.py).
-
-## Schema
-
-The data is partitioned by `submission_date`.
-
-As of 2019-03-29, the current version for all Exact MAU tables is `v1`,
-and the schemas are visible via the `telemetry` dataset in [the BigQuery console](https://console.cloud.google.com/bigquery?project=moz-fx-data-derived-datasets&folder&organizationId=442341870013&p=moz-fx-data-derived-datasets&d=telemetry&page=dataset).
