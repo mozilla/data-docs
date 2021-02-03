@@ -1022,6 +1022,12 @@ ORDER BY 1
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/master/src/cookbooks/analysis/index.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#accessing-public-data" id="accessing-public-data">Accessing Public Data</a></h1>
 <p>A public dataset is a dataset in <a href="https://cloud.google.com/bigquery">BigQuery</a> which is made available to the general public
 in BigQuery or through our <a href="https://public-data.telemetry.mozilla.org">public HTTP endpoint</a>.</p>
+<h2><a class="header" href="#table-of-contents-3" id="table-of-contents-3">Table of Contents</a></h2>
+<ul>
+<li><a href="cookbooks/public_data.html#accessing-public-data-in-bigquery">Accessing Public Data in BigQuery</a></li>
+<li><a href="cookbooks/public_data.html#accessing-public-data-through-the-public-http-endpoint">Accessing Public Data Through the Public HTTP Endpoint</a></li>
+<li><a href="cookbooks/public_data.html#let-us-know">Let us know!</a></li>
+</ul>
 <h2><a class="header" href="#accessing-public-data-in-bigquery" id="accessing-public-data-in-bigquery">Accessing Public Data in BigQuery</a></h2>
 <p>To access public datasets in BigQuery, a <a href="https://cloud.google.com">Google Cloud Platform</a> (GCP) account is required.
 GCP also offers <a href="https://cloud.google.com/free">a free tier</a> which offers free credits to use and run queries in BigQuery. <a href="https://cloud.google.com/blog/products/data-analytics/query-without-a-credit-card-introducing-bigquery-sandbox">BigQuery sandbox</a> enables users to use BigQuery for free without requiring payment information.</p>
@@ -1095,6 +1101,8 @@ last updated</li>
 <p>Data files are gzipped and up to 1 GB in size. If the data exceeds 1 GB, then it gets split up into multiple
 files named <code>000000000000.json</code>, <code>000000000001.json</code>, ...
 For example: <a href="https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/ssl_ratios/v1/files/000000000000.json">https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/ssl_ratios/v1/files/000000000000.json</a></p>
+<h2><a class="header" href="#let-us-know" id="let-us-know">Let us know!</a></h2>
+<p>If this public data has proved useful to your research, or you've built a cool visualization with it, let us know! You can email <a href="mailto:publicdata@mozilla.com"><code>publicdata@mozilla.com</code></a> or reach us on the <a href="https://chat.mozilla.org/#/room/#telemetry:mozilla.org">#telemetry:mozilla.org</a> channel on <a href="https://wiki.mozilla.org/Matrix">Mozilla's instance of matrix</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/master/src/cookbooks/public_data.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#accessing-and-working-with-bigquery" id="accessing-and-working-with-bigquery">Accessing and working with BigQuery</a></h1>
 <p>With the transition to <a href="https://cloud.google.com">GCP</a> in 2019 having been completed, BigQuery has become Mozilla's primary data warehouse and SQL Query engine.</p>
 <p>The following topics provide an introduction to working with data that is stored
@@ -1108,7 +1116,7 @@ in <a href="https://cloud.google.com/bigquery/">BigQuery</a>:</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/master/src/cookbooks/bigquery.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#accessing-bigquery" id="accessing-bigquery">Accessing BigQuery</a></h1>
 <p>There are many methods that you can use to access BigQuery: both interactive and programmatic. This document provides some basic information and pointers on how to get started with each.</p>
 <p>It is worth pointing out that all internal access to BigQuery is logged and periodically audited by Data Engineering and Operations for cost and other purposes.</p>
-<h2><a class="header" href="#table-of-contents-3" id="table-of-contents-3">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-4" id="table-of-contents-4">Table of Contents</a></h2>
 <ul>
 <li><a href="cookbooks/bigquery/access.html#interfaces">Interfaces</a>
 <ul>
@@ -1233,7 +1241,7 @@ python -c 'from google.cloud import bigquery; print([d.dataset_id for d in bigqu
 <h2><a class="header" href="#bigquery-access-request" id="bigquery-access-request">BigQuery Access Request</a></h2>
 <p>For access to BigQuery when using the GCP Console and API, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=jthomas%40mozilla.com&amp;bug_file_loc=https%3A%2F%2Fmana.mozilla.org%2Fwiki%2Fx%2FiIPeB&amp;bug_ignored=0&amp;bug_severity=normal&amp;bug_status=NEW&amp;bug_type=task&amp;cf_fx_iteration=---&amp;cf_fx_points=---&amp;comment=Please%20grant%20me%20access%20to%20the%20BigQuery%20GCP%20console%20and%20API%20Access.%20I%20work%20on%20%3Cteam%3E.%0D%0A%0D%0AMy%20mozilla.com%20ldap%20login%20is%20%3Cyour%20ldap%20login%3E%40mozilla.com.&amp;component=Operations&amp;contenttypemethod=list&amp;contenttypeselection=text%2Fplain&amp;defined_groups=1&amp;flag_type-4=X&amp;flag_type-607=X&amp;flag_type-800=X&amp;flag_type-803=X&amp;flag_type-936=X&amp;form_name=enter_bug&amp;maketemplate=Remember%20values%20as%20bookmarkable%20template&amp;op_sys=Unspecified&amp;priority=--&amp;product=Data%20Platform%20and%20Tools&amp;qa_contact=jthomas%40mozilla.com&amp;rep_platform=Unspecified&amp;short_desc=BigQuery%20GCP%20Console%20and%20API%20Access%20for%20%3Cyour%20ldap%20login%3E%40mozilla.com&amp;target_milestone=---&amp;version=unspecified">file a bug</a>. You will be added to the appropriate Google Groups and a <a href="https://cloud.google.com/iam/docs/service-accounts">GCP Service Account</a> will be provisioned for you.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/master/src/cookbooks/bigquery/access.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#querying-bigquery-tables" id="querying-bigquery-tables">Querying BigQuery Tables</a></h1>
-<h2><a class="header" href="#table-of-contents-4" id="table-of-contents-4">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-5" id="table-of-contents-5">Table of Contents</a></h2>
 <ul>
 <li><a href="cookbooks/bigquery/querying.html#projects-datasets-and-tables-in-bigquery">Projects, Datasets, and Tables in BigQuery</a>
 <ul>
@@ -1437,7 +1445,7 @@ LIMIT
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/master/src/cookbooks/bigquery/querying.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#optimizing-bigquery-queries" id="optimizing-bigquery-queries">Optimizing BigQuery Queries</a></h1>
 <p>When you write a query using <a href="https://sql.telemetry.mozilla.org">STMO</a> or the BigQuery console, you can improve performance and reduce costs by learning how data is stored, how databases function, and what you can change about a query to take advantage of the storage structure and the data function.</p>
 <p><a href="https://cloud.google.com/bigquery/pricing#on_demand_pricing">Queries are charged by data scanned at $5 per terabyte (TB)</a> so each 200 gigabytes of data scanned will cost $1: on tables with hundreds of TBs of data (like the <a href="cookbooks/bigquery/../../datasets/pings.html#main-ping">main ping table</a> or <a href="cookbooks/bigquery/../../datasets/batch_view/clients_daily/reference.html"><code>clients_daily</code></a>), costs <strong>can add up very quickly</strong>. When trying to reduce the cost, the main thing to do is reduce the amount of data scanned: some of the advice in this article will improve your query's performance but will not scan a smaller amount of data, and thus cost the same.</p>
-<h2><a class="header" href="#table-of-contents-5" id="table-of-contents-5">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-6" id="table-of-contents-6">Table of Contents</a></h2>
 <ul>
 <li><a href="cookbooks/bigquery/optimization.html#tldr-what-to-implement-for-quick-improvements">TL;DR: What to implement for quick improvements</a>
 <ul>
@@ -2167,7 +2175,7 @@ was active and each 0 indicating a day where the client was inactive. This
 article discusses the details of how we represent usage in bit patterns,
 how to extract standard usage and retention metrics,
 and how to build new metrics from them.</p>
-<h2><a class="header" href="#table-of-contents-6" id="table-of-contents-6">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-7" id="table-of-contents-7">Table of Contents</a></h2>
 <ul>
 <li><a href="cookbooks/clients_last_seen_bits.html#calculating-dau-wau-and-mau">Calculating DAU, WAU, and MAU</a></li>
 <li><a href="cookbooks/clients_last_seen_bits.html#calculating-retention">Calculating retention</a></li>
@@ -2928,7 +2936,7 @@ the standard 1-Week, 2-Week, and 3-Week retention definitions.</p>
 <li>You have read <a href="cookbooks/../tools/stmo.html">the introduction to STMO</a>.</li>
 <li>You understand the <a href="cookbooks/../datasets/main_ping_tables.html">main ping tables</a> (<code>telemetry.main_1pct</code> and <code>telemetry.main_nightly</code>).</li>
 </ul>
-<h2><a class="header" href="#table-of-contents-7" id="table-of-contents-7">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-8" id="table-of-contents-8">Table of Contents</a></h2>
 <ul>
 <li><a href="cookbooks/main_ping_exponential_histograms.html#setting-the-stage-tab-spinners-duration">Setting the stage: tab spinners duration</a></li>
 <li><a href="cookbooks/main_ping_exponential_histograms.html#getting-client-level-data">Getting client-level data</a></li>
@@ -5430,7 +5438,7 @@ sampleid = (crc &amp; 0xFFFFFFFF) % 100
 print(&quot;Client ID {} =&gt; Sample ID {}&quot;.format(clientid, sampleid))
 </code></pre>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/master/src/concepts/sample_id.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#filtering-data" id="filtering-data">Filtering Data</a></h1>
-<h2><a class="header" href="#table-of-contents-8" id="table-of-contents-8">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-9" id="table-of-contents-9">Table of Contents</a></h2>
 <ul>
 <li><a href="concepts/pipeline/filtering.html#overview">Overview</a></li>
 <li><a href="concepts/pipeline/filtering.html#stages">Stages</a>
@@ -5507,7 +5515,7 @@ LIMIT
   1000
 </code></pre>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/master/src/concepts/pipeline/filtering.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#sql-style-guide" id="sql-style-guide">SQL Style Guide</a></h1>
-<h2><a class="header" href="#table-of-contents-9" id="table-of-contents-9">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-10" id="table-of-contents-10">Table of Contents</a></h2>
 <ul>
 <li><a href="concepts/sql_style.html#consistency">Consistency</a></li>
 <li><a href="concepts/sql_style.html#reserved-words">Reserved Words</a></li>
@@ -7402,7 +7410,7 @@ aggregates across arbitrary slices of those dimensions.
 The tables follow a consistent methodology which is intended as a standard
 across Mozilla for MAU analysis going forward.</p>
 <p>Note that this data model is used in the <a href="https://gud.telemetry.mozilla.org/">Growth &amp; Usage Dashboard (GUD)</a> and that some of this documentation is replicated in the <a href="https://mozilla.github.io/gud">GUD documentation</a>.</p>
-<h2><a class="header" href="#table-of-contents-10" id="table-of-contents-10">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-11" id="table-of-contents-11">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/bigquery/exact_mau/reference.html#conceptual-model">Conceptual Model</a>
 <ul>
@@ -7624,7 +7632,7 @@ This dataset <strong>does not include most histograms</strong>.</p>
 where possible.</p>
 <p>If you do need to query this table, make use of the <code>sample_id</code> field and
 limit to a short submission date range.</p>
-<h2><a class="header" href="#table-of-contents-11" id="table-of-contents-11">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-12" id="table-of-contents-12">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/batch_view/main_summary/reference.html#accessing-the-data">Accessing the Data</a></li>
 <li><a href="datasets/batch_view/main_summary/reference.html#data-reference">Data Reference</a>
@@ -8190,7 +8198,7 @@ you should understand how to answer questions about
 study enrollment,
 identify telemetry from clients enrolled in an experiment,
 and locate telemetry from add-on studies.</p>
-<h2><a class="header" href="#table-of-contents-12" id="table-of-contents-12">Table of contents</a></h2>
+<h2><a class="header" href="#table-of-contents-13" id="table-of-contents-13">Table of contents</a></h2>
 <ul>
 <li><a href="datasets/shield.html#dashboards">Dashboards</a></li>
 <li><a href="datasets/shield.html#experiment-slugs">Experiment slugs</a></li>
@@ -8314,7 +8322,7 @@ for these probes.</p>
 <code>search_aggregates</code> and <code>search_clients_daily</code>. After reading this article,
 you should understand the search datasets well enough to produce moderately
 complex analyses.</p>
-<h2><a class="header" href="#table-of-contents-13" id="table-of-contents-13">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-14" id="table-of-contents-14">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/search.html#terminology">Terminology</a>
 <ul>
@@ -9419,7 +9427,7 @@ where
 <p>Note about <code>os_version</code>: Previous versions of Windows have used a very small set of build numbers through their entire life cycle. However, Windows 10 gets a new build number with every major update (about every 6 months), and many more builds have been released on its insider channels. So, to prevent a huge amount of noise, queries using this field should generally filter out the build number and only use the major and minor version numbers to differentiate Windows versions, unless the build number is specifically needed.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/master/src/datasets/other/stub_installer/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#activity-stream-datasets" id="activity-stream-datasets">Activity Stream Datasets</a></h1>
 <p>This article describes the various BigQuery tables Mozilla uses to store Activity Stream data, along with some examples of how to access them.</p>
-<h2><a class="header" href="#table-of-contents-14" id="table-of-contents-14">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-15" id="table-of-contents-15">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/other/activity-stream/reference.html#what-is-activity-stream">What is Activity Stream?</a></li>
 <li><a href="datasets/other/activity-stream/reference.html#activity-stream-pings">Activity Stream Pings</a></li>
@@ -9638,7 +9646,7 @@ WHERE
 <p>The dataset is populated via the
 <a href="https://github.com/mozilla-bteam/bmo/blob/master/Bugzilla/Report/Ping/Simple.pm">simple ping service on Bugzilla</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/master/src/datasets/other/bmobugs/reference.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#firefox-accounts-data" id="firefox-accounts-data">Firefox Accounts Data</a></h1>
-<h2><a class="header" href="#table-of-contents-15" id="table-of-contents-15">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-16" id="table-of-contents-16">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/fxa.html#introduction">Introduction</a></li>
 <li><a href="datasets/fxa.html#what-is-firefox-accounts">What is Firefox Accounts?</a></li>
@@ -9713,7 +9721,7 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 </ol>
 <p>It is also possible to query the FxA server logs directly through BigQuery (ask an FxA team member for access), though virtually all analytics-related questions are more easily answered using the data sources described above.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/master/src/datasets/fxa.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#attribution-of-firefox-accounts" id="attribution-of-firefox-accounts">Attribution of Firefox Accounts</a></h1>
-<h2><a class="header" href="#table-of-contents-16" id="table-of-contents-16">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-17" id="table-of-contents-17">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/fxa_metrics/attribution.html#introduction">Introduction</a></li>
 <li><a href="datasets/fxa_metrics/attribution.html#types-of-attribution">Types of Attribution</a>
@@ -9765,7 +9773,7 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 </tbody></table>
 <p>Example amplitude charts: <a href="https://analytics.amplitude.com/mozilla-corp/chart/1ush8xd">registrations by <code>entrypoint</code></a>, <a href="https://analytics.amplitude.com/mozilla-corp/chart/y8t2k1z">logins by <code>entrypoint</code></a>, <a href="https://analytics.amplitude.com/mozilla-corp/chart/jjbkusl">registrations by <code>utm_source</code></a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/master/src/datasets/fxa_metrics/attribution.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#firefox-account-funnels" id="firefox-account-funnels">Firefox Account Funnels</a></h1>
-<h2><a class="header" href="#table-of-contents-17" id="table-of-contents-17">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-18" id="table-of-contents-18">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/fxa_metrics/funnels.html#introduction">Introduction</a></li>
 <li><a href="datasets/fxa_metrics/funnels.html#registration-funnel">Registration Funnel</a></li>
@@ -9950,7 +9958,7 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 <tr><td>Not Implemented</td><td><code>flow.settings.clients.disconnect.view</code></td><td>User viewed the dialog asking to confirm disconnection of a device.</td></tr>
 </tbody></table>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/master/src/datasets/fxa_metrics/funnels.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#fxa-email-metrics" id="fxa-email-metrics">FxA Email Metrics</a></h1>
-<h2><a class="header" href="#table-of-contents-18" id="table-of-contents-18">Table of Contents</a></h2>
+<h2><a class="header" href="#table-of-contents-19" id="table-of-contents-19">Table of Contents</a></h2>
 <ul>
 <li><a href="datasets/fxa_metrics/emails.html#introduction">Introduction</a></li>
 <li><a href="datasets/fxa_metrics/emails.html#email-templates-and-email-types">Email Templates and Email Types</a></li>
@@ -11958,7 +11966,7 @@ If there is a bug associated with your documentation, title it in the form of <c
 <p>After filing your PR, assign the appropriate person for review (GitHub will usually provide some suggestions), assuming you have permissions to do so yourself.
 If you do not have permission to assign a reviewer, see <a href="contributing/../concepts/getting_help.html">getting help</a>.</p>
 <h2><a class="header" href="#supported-plugins" id="supported-plugins">Supported Plugins</a></h2>
-<h3><a class="header" href="#table-of-contents-19" id="table-of-contents-19">Table of contents</a></h3>
+<h3><a class="header" href="#table-of-contents-20" id="table-of-contents-20">Table of contents</a></h3>
 <p>You can insert a table of contents in any article by using the <code>toc</code> shorthand. For example:</p>
 <pre><code># My fine title
 
