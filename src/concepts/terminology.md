@@ -10,6 +10,10 @@ This glossary provides definitions for commonly-used terms at Mozilla.
 
 Account Ecosystem Telemetry; see the [PRD](https://docs.google.com/document/d/1yRLiD8JuaZIIaKhs6DhXEa7aH8jwOau5yW0kHaldFQU/edit#)
 
+## Analyst
+
+See [Data Analyst](#data-analyst).
+
 ## Amplitude
 
 A third-party product used by several teams within Mozilla for analysis of user events.
@@ -24,7 +28,7 @@ A unique id identifying the client who sent a [ping](#ping).
 
 ## Data Analyst
 
-This is a common job title (sometimes just "Analyst") for someone who spends a large amount of their time analyzing data. At Mozilla, we tend not to use this term or title, favouring [Data Practitioner](#data-practitioner) or [Data Scientist](#data-scientist) instead.
+This is a common job title for someone who spends a large amount of their time analyzing data. At Mozilla, we tend not to use this term or title, favoring [Data Practitioner](#data-practitioner) or [Data Scientist](#data-scientist) instead.
 
 ## Data Engineer
 
@@ -32,7 +36,7 @@ A "Data Engineer" at Mozilla generally refers to someone on the Data Engineering
 
 ## Data Practitioner
 
-A data practitioner is someone who looks at data, identifies trends and other qualitative measurements in them, and creates charts and dashboards. It could be anyone: engineer, product manager, or even a data engineer or data scientist.
+A data practitioner is someone who looks at data, identifies trends and other qualitative measurements in them, and creates charts and dashboards. It could be anyone: engineer, product manager, data engineer or data scientist.
 
 ## Data Scientist
 
