@@ -6,7 +6,7 @@ Experiment monitoring datasets are designed to power dashboards, such as [Experi
 
 ## Experiment enrollment data
 
-`mozdata.telemetry_derived.experiment_enrollment_aggregates_live` provides enrollment, unenrollment, graduate, update and failure aggregates for experiments and branches over 5-minute intervals. This live view is also the basis of several derived tables:
+`moz-fx-data-shared-prod.telemetry_derived.experiment_enrollment_aggregates_live` provides enrollment, unenrollment, graduate, update and failure aggregates for experiments and branches over 5-minute intervals. This live view is also the basis of several derived tables:
 
 | Dataset name                                                             | Description                                                         |
 | ------------------------------------------------------------------------ | ------------------------------------------------------------------- |
@@ -18,7 +18,7 @@ Experiment monitoring datasets are designed to power dashboards, such as [Experi
 
 ## Experiment search metrics data
 
-`mozdata.telemetry_derived.experiment_search_aggregates_live_v1` provides aggregated search metrics of clients enrolled in experiments, such as the number of searches performed, the number of searches with ads and the number of ad clicks. This live view is also the basis of several derived tables:
+`moz-fx-data-shared-prod.telemetry_derived.experiment_search_aggregates_live_v1` provides aggregated search metrics of clients enrolled in experiments, such as the number of searches performed, the number of searches with ads and the number of ad clicks. This live view is also the basis of several derived tables:
 
 | Dataset name                                                    | Description                                                               |
 | --------------------------------------------------------------- | ------------------------------------------------------------------------- |
@@ -68,7 +68,7 @@ The tables derived from the experiment monitoring live tables are also [schedule
 
 ## Code reference
 
-[`mozdata.telemetry_derived.experiment_enrollment_aggregates_live`](https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/experiment_enrollment_aggregates_live/view.sql) and derived datasets are part of bigquery-etl:
+[`moz-fx-data-shared-prod.telemetry_derived.experiment_enrollment_aggregates_live`](https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/experiment_enrollment_aggregates_live/view.sql) and derived datasets are part of bigquery-etl:
 
 - [`mozdata.telemetry.experiment_enrollment_other_events_overall`](https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/experiment_enrollment_other_events_overall_v1/query.sql)
 - [`mozdata.telemetry.experiment_enrollment_cumulative_population_estimate`](https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/experiment_enrollment_cumulative_population_estimate_v1/query.sql)
@@ -76,7 +76,7 @@ The tables derived from the experiment monitoring live tables are also [schedule
 - [`mozdata.telemetry.experiment_unenrollment_overall`](https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/experiment_unenrollment_overall_v1/query.sql)
 - [`mozdata.telemetry.experiment_enrollment_daily_active_population`](https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/experiment_enrollment_daily_active_population_v1/query.sql)
 
-[`mozdata.telemetry_derived.experiment_search_aggregates_live_v1`](https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/experiment_search_aggregates_live_v1/view.sql) and derived datasets are part of bigquery-etl:
+[`moz-fx-data-shared-prod.telemetry_derived.experiment_search_aggregates_live_v1`](https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/experiment_search_aggregates_live_v1/view.sql) and derived datasets are part of bigquery-etl:
 
 - [`mozdata.telemetry.experiment_cumulative_ad_clicks`](https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/experiment_cumulative_ad_clicks_v1/query.sql)
 - [`mozdata.telemetry.experiment_cumulative_search_count`](https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/experiment_cumulative_search_count_v1/query.sql)
