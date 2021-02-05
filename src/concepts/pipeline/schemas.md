@@ -8,7 +8,7 @@ Schemas describe the structure of ingested data. They are used in the pipeline t
 and values of data, and to define a table schema in a data store. We use a repository of JSON
 Schemas to sort incoming data into [`decoded` and `error` datasets][bq-datasets]. We also generate
 BigQuery table schemas nightly from the JSON Schemas. You may also be also interested in the
-[mozilla-pipeline-schemas deploy dashboard][mps-deploys].
+[`mozilla-pipeline-schemas` deploy dashboard][mps-deploys].
 
 ```mermaid
 graph TD
@@ -63,7 +63,7 @@ This is dependent on what application you are working on. If you are working on 
 custom ping, you will often want to make changes to [`mozilla-pipeline-schemas`][mps]. If you are
 adding a new probe, then you don't have to do anything. Changes are automatically picked up by the
 [`probe-scraper`][probe-scraper] from the `histograms.json` and `scalars.yaml` files in
-mozilla-central. If you are working on Glean, then the probe-scraper will automatically pick up
+`mozilla-central`. If you are working on Glean, then the probe-scraper will automatically pick up
 changes from the `metrics.yaml`.
 
 ### When will I see new changes to the schema?
