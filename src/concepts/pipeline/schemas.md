@@ -7,7 +7,8 @@
 Schemas describe the structure of ingested data. They are used in the pipeline to validate the types
 and values of data, and to define a table schema in a data store. We use a repository of JSON
 Schemas to sort incoming data into [`decoded` and `error` datasets][bq-datasets]. We also generate
-BigQuery table schemas nightly from the JSON Schemas: you can see the current status of this job on the [`mozilla-pipeline-schemas` deploy dashboard][mps-deploys].
+BigQuery table schemas on business days from the JSON Schemas: you can see the current status of
+this job on the [`mozilla-pipeline-schemas` deploy dashboard][mps-deploys].
 
 ```mermaid
 graph TD
@@ -60,15 +61,22 @@ This section answers some basic questions about the schema deployment pipeline.
 
 This is dependent on what application you are working on.
 
-If you are working on Firefox Telemetry and are adding a new probe, then you don't have to do anything. Changes are automatically picked up by the [`probe-scraper`][probe-scraper] from the `histograms.json` and `scalars.yaml` files in `mozilla-central`. Non-probe changes (for example, modifications to the telemetry environment) will require you to make changes to [`mozilla-pipeline-schemas`][mps].
+If you are working on Firefox Telemetry and are adding a new probe, then you don't have to do
+anything. Changes are automatically picked up by the [`probe-scraper`][probe-scraper] from the
+`histograms.json` and `scalars.yaml` files in `mozilla-central`. Non-probe changes (for example,
+modifications to the telemetry environment) will require you to make changes to
+[`mozilla-pipeline-schemas`][mps].
 
-If you are working on an application using the [Glean SDK](../glean/glean.md), then the probe-scraper will automatically pick up changes from `metrics.yaml`.
+If you are working on an application using the [Glean SDK](../glean/glean.md), then the
+probe-scraper will automatically pick up changes from `metrics.yaml`.
 
 ### When will I see new changes to the schema?
 
-Schema deploys occur daily around UTC+04 when new changes are found in the
-[`generated-schemas branch of mozilla-pipeline-schemas`][https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/generated-schemas]. This means that any changes merged after UTC+04 on Friday will not propagate until Monday UTC+04. See the [`mozilla-pipeline-schemas` deploy][mps-deploys]
-dashboard for up-to-date information on the most recent deploys.
+Schema deploys happen on business days around UTC+04 when new changes are found in the
+[`generated-schemas` branch of `mozilla-pipeline-schemas`][generated-schemas]. This means that any
+changes merged after UTC+04 on Friday will not propagate until Monday UTC+04. See the
+[`mozilla-pipeline-schemas` deploy][mps-deploys] dashboard for up-to-date information on the most
+recent deploys.
 
 ### What does it mean when a schema deploy is blocked?
 
@@ -82,12 +90,13 @@ will not be picked up until the `probe-scraper` failures are resolved.
 If a new schema field is not registered in the schema repository before collection begins, it will
 be available in the `additional_properties` field of the generated table. If a new schema for a ping
 is not registered before collection begins, then it will be sorted into the error stream. Please
-[file a bug](../reporting_a_problem.md) or [reach out](../getting_help.md) if you believe your data may be affected by blocked schema
-deploys.
+[file a bug](../reporting_a_problem.md) or [reach out](../getting_help.md) if you believe your data
+may be affected by blocked schema deploys.
 
 [bq-datasets]: ../../cookbooks/bigquery/querying.md#projects-with-bigquery-datasets
 [mps-deploys]: https://protosaur.dev/mps-deploys/
 [mps]: https://github.com/mozilla-services/mozilla-pipeline-schemas
+[generated-schemas]: https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/generated-schema
 [msg]: https://github.com/mozilla/mozilla-schema-generator
 [probe-scraper]: https://github.com/mozilla/probe-scraper
 
