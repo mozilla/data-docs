@@ -1,15 +1,14 @@
 # Generated Schemas
 
+<!-- toc -->
+
 ## Overview
 
 Schemas describe the structure of ingested data. They are used in the pipeline to validate the types
-and values of data, and to define a table schema in a data store. We use a repository of JSON Schemas
-to sort incoming data into [`decoded` and `error`
-datasets](../../cookbooks/bigquery/querying.md#projects-with-bigquery-datasets). We also generate BigQuery
-table schemas nightly from the JSON Schemas.
-
-This section is intended for those who want to modify the process of generating and applying schemas
-in various components of the data pipeline.
+and values of data, and to define a table schema in a data store. We use a repository of JSON
+Schemas to sort incoming data into [`decoded` and `error` datasets][bq-datasets]. We also generate
+BigQuery table schemas nightly from the JSON Schemas. You may also be also interested in the
+[mozilla-pipeline-schemas deploy dashboard][mps-deploys].
 
 ```mermaid
 graph TD
@@ -53,6 +52,46 @@ ingestion --> |inserts into| bigquery
 
 **Figure**: _An overview of generated schemas. Click on a node to navigate to the relevant
 repository or documentation._
+
+## Schema deploys FAQ
+
+This section answers some basic questions about the schema deployment pipeline.
+
+### How do I make changes to a schema?
+
+This is dependent on what application you are working on. If you are working on Firefox Telemetry or
+custom ping, you will often want to make changes to [mozilla-pipeline-schemas][mps]. If you are
+adding a new probe, then you don't have to do anything. Changes are automatically picked up by the
+[probe-scraper][probe-scraper] from the `histograms.json` and `scalars.yaml` files in
+mozilla-central. If you are working on Glean, then the probe-scraper will automatically pick up
+changes from the `metrics.yaml`.
+
+### When will I see new changes to the schema?
+
+Schema deploys occur daily around UTC+04 when new changes are found in the
+[mozilla-schema-generator][msg]. See the [mozilla-pipeline-schemas deploy][mps-deploys] dashboard
+for up-to-date information on the most recent deploys.
+
+### What does it mean when a schema deploy is blocked?
+
+The schema deployment pipeline has a hard dependency on the [probe-scraper], a service that scours
+repositories for new metrics to include in generated schemas. When the probe-scraper fails, it will
+prevent the [mozilla-schema-generator][msg] from running. If there are new changes to the main
+branch of mozilla-pipeline-schemas, then they will not be added to the generated-schemas branch
+until the failure has been resolved. Similarly, new probes and pings in either Telemetry or Glean
+will not be picked up until the probe-scraper failures are resolved.
+
+If a new schema field is not registered in the schema repository before collection begins, it will
+be available in the `additional_properties` field of the generated table. If a new schema for a ping
+is not registered before collection begins, then it will be sorted into the error stream. Please
+file a bug or reach out in #data-help if you believe your data may be affected by blocked schema
+deploys.
+
+[bq-datasets]: ../../cookbooks/bigquery/querying.md#projects-with-bigquery-datasets
+[mps-deploys]: https://protosaur.dev/mps-deploys/
+[mps]: https://github.com/mozilla-services/mozilla-pipeline-schemas
+[msg]: https://github.com/mozilla/mozilla-schema-generator
+[probe-scraper]: https://github.com/mozilla/probe-scraper
 
 ## Schema Repository
 
@@ -246,7 +285,7 @@ The `schema_id` is derived from the value of the `$schema` property of each JSON
 The `schemas_build_id` label contains an identifier that includes the timestamp of the generated schema.
 This label may be used to trace the last deployed commit from `generated-schemas`.
 
-### Triggering `generated-schemas` push with Airflow
+### Updating generated-schemas
 
 ```mermaid
 graph TD
@@ -280,7 +319,7 @@ It may also change when the `master` branch contains new or updated schemas unde
 To manually trigger a new push, clear the state of a single task in the workflow admin UI.
 To update the schedule and dependencies, update the DAG definition.
 
-### Modifying state of the pipeline
+### Deploying schemas to production
 
 ```mermaid
 graph TD
