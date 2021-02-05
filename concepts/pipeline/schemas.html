@@ -175,14 +175,45 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#generated-schemas" id="generated-schemas">Generated Schemas</a></h1>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#schema-deploys-faq">Schema deploys FAQ</a>
+<ul>
+<li><a href="#how-do-i-make-changes-to-a-schema">How do I make changes to a schema?</a></li>
+<li><a href="#when-will-i-see-new-changes-to-the-schema">When will I see new changes to the schema?</a></li>
+<li><a href="#what-does-it-mean-when-a-schema-deploy-is-blocked">What does it mean when a schema deploy is blocked?</a></li>
+</ul>
+</li>
+<li><a href="#schema-repository">Schema Repository</a>
+<ul>
+<li><a href="#schema-transpiler">Schema Transpiler</a></li>
+<li><a href="#mozilla-schema-generator">Mozilla Schema Generator</a></li>
+</ul>
+</li>
+<li><a href="#data-ingestion">Data Ingestion</a>
+<ul>
+<li><a href="#validation">Validation</a></li>
+<li><a href="#decoding">Decoding</a>
+<ul>
+<li><a href="#name-normalization">Name Normalization</a></li>
+<li><a href="#data-structure-normalization">Data Structure Normalization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#deploying-to-bigquery">Deploying to BigQuery</a>
+<ul>
+<li><a href="#updating-generated-schemas">Updating generated-schemas</a></li>
+<li><a href="#deploying-schemas-to-production">Deploying schemas to production</a></li>
+</ul>
+</li>
+</ul>
 <h2><a class="header" href="#overview" id="overview">Overview</a></h2>
 <p>Schemas describe the structure of ingested data. They are used in the pipeline to validate the types
-and values of data, and to define a table schema in a data store. We use a repository of JSON Schemas
-to sort incoming data into <a href="../../cookbooks/bigquery/querying.html#projects-with-bigquery-datasets"><code>decoded</code> and <code>error</code>
-datasets</a>. We also generate BigQuery
-table schemas nightly from the JSON Schemas.</p>
-<p>This section is intended for those who want to modify the process of generating and applying schemas
-in various components of the data pipeline.</p>
+and values of data, and to define a table schema in a data store. We use a repository of JSON
+Schemas to sort incoming data into <a href="../../cookbooks/bigquery/querying.html#projects-with-bigquery-datasets"><code>decoded</code> and <code>error</code> datasets</a>. We also generate
+BigQuery table schemas on business days from the JSON Schemas: you can see the current status of
+this job on the <a href="https://protosaur.dev/mps-deploys/"><code>mozilla-pipeline-schemas</code> deploy dashboard</a>.</p>
 <pre class="mermaid">graph TD
 
 %% Nodes
@@ -223,6 +254,35 @@ ingestion --&gt; |inserts into| bigquery
 </pre>
 <p><strong>Figure</strong>: <em>An overview of generated schemas. Click on a node to navigate to the relevant
 repository or documentation.</em></p>
+<h2><a class="header" href="#schema-deploys-faq" id="schema-deploys-faq">Schema deploys FAQ</a></h2>
+<p>This section answers some basic questions about the schema deployment pipeline.</p>
+<h3><a class="header" href="#how-do-i-make-changes-to-a-schema" id="how-do-i-make-changes-to-a-schema">How do I make changes to a schema?</a></h3>
+<p>This is dependent on what application you are working on.</p>
+<p>If you are working on Firefox Telemetry and are adding a new probe, then you don't have to do
+anything. Changes are automatically picked up by the <a href="https://github.com/mozilla/probe-scraper"><code>probe-scraper</code></a> from the
+<code>histograms.json</code> and <code>scalars.yaml</code> files in <code>mozilla-central</code>. Non-probe changes (for example,
+modifications to the telemetry environment) will require you to make changes to
+<a href="https://github.com/mozilla-services/mozilla-pipeline-schemas"><code>mozilla-pipeline-schemas</code></a>.</p>
+<p>If you are working on an application using the <a href="../glean/glean.html">Glean SDK</a>, then the
+probe-scraper will automatically pick up changes from <code>metrics.yaml</code>.</p>
+<h3><a class="header" href="#when-will-i-see-new-changes-to-the-schema" id="when-will-i-see-new-changes-to-the-schema">When will I see new changes to the schema?</a></h3>
+<p>Schema deploys happen on business days around UTC+04 when new changes are found in the
+<a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/generated-schema"><code>generated-schemas</code> branch of <code>mozilla-pipeline-schemas</code></a>. This means that any
+changes merged after UTC+04 on Friday will not propagate until Monday UTC+04. See the
+<a href="https://protosaur.dev/mps-deploys/"><code>mozilla-pipeline-schemas</code> deploy</a> dashboard for up-to-date information on the most
+recent deploys.</p>
+<h3><a class="header" href="#what-does-it-mean-when-a-schema-deploy-is-blocked" id="what-does-it-mean-when-a-schema-deploy-is-blocked">What does it mean when a schema deploy is blocked?</a></h3>
+<p>The schema deployment pipeline has a hard dependency on the [<code>probe-scraper</code>], a service that scours
+repositories for new metrics to include in generated schemas. When the probe-scraper fails, it will
+prevent the <a href="https://github.com/mozilla/mozilla-schema-generator"><code>mozilla-schema-generator</code></a> from running. If there are new changes to the main
+branch of <code>mozilla-pipeline-schemas</code>, then they will not be added to the <code>generated-schemas</code> branch
+until the failure has been resolved. Similarly, new probes and pings in either Telemetry or Glean
+will not be picked up until the <code>probe-scraper</code> failures are resolved.</p>
+<p>If a new schema field is not registered in the schema repository before collection begins, it will
+be available in the <code>additional_properties</code> field of the generated table. If a new schema for a ping
+is not registered before collection begins, then it will be sorted into the error stream. Please
+<a href="../reporting_a_problem.html">file a bug</a> or <a href="../getting_help.html">reach out</a> if you believe your data
+may be affected by blocked schema deploys.</p>
 <h2><a class="header" href="#schema-repository" id="schema-repository">Schema Repository</a></h2>
 <pre class="mermaid">graph LR
 
@@ -375,7 +435,7 @@ a column mode from <code>REQUIRED</code> to <code>NULLABLE</code> or adding new 
 <p>The <code>schema_id</code> is derived from the value of the <code>$schema</code> property of each JSON Schema.
 The <code>schemas_build_id</code> label contains an identifier that includes the timestamp of the generated schema.
 This label may be used to trace the last deployed commit from <code>generated-schemas</code>.</p>
-<h3><a class="header" href="#triggering-generated-schemas-push-with-airflow" id="triggering-generated-schemas-push-with-airflow">Triggering <code>generated-schemas</code> push with Airflow</a></h3>
+<h3><a class="header" href="#updating-generated-schemas" id="updating-generated-schemas">Updating generated-schemas</a></h3>
 <pre class="mermaid">graph TD
 
 subgraph workflow.tmo
@@ -404,7 +464,7 @@ Generated schemas may change when <code>probe-scraper</code> finds new probes in
 It may also change when the <code>master</code> branch contains new or updated schemas under the <code>schemas/</code> directory.</p>
 <p>To manually trigger a new push, clear the state of a single task in the workflow admin UI.
 To update the schedule and dependencies, update the DAG definition.</p>
-<h3><a class="header" href="#modifying-state-of-the-pipeline" id="modifying-state-of-the-pipeline">Modifying state of the pipeline</a></h3>
+<h3><a class="header" href="#deploying-schemas-to-production" id="deploying-schemas-to-production">Deploying schemas to production</a></h3>
 <pre class="mermaid">graph TD
 subgraph mozilla-pipeline-schemas
   schemas(generated-schemas)
