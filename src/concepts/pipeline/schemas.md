@@ -60,26 +60,26 @@ This section answers some basic questions about the schema deployment pipeline.
 ### How do I make changes to a schema?
 
 This is dependent on what application you are working on. If you are working on Firefox Telemetry or
-custom ping, you will often want to make changes to [mozilla-pipeline-schemas][mps]. If you are
+custom ping, you will often want to make changes to [`mozilla-pipeline-schemas`][mps]. If you are
 adding a new probe, then you don't have to do anything. Changes are automatically picked up by the
-[probe-scraper][probe-scraper] from the `histograms.json` and `scalars.yaml` files in
+[`probe-scraper`][probe-scraper] from the `histograms.json` and `scalars.yaml` files in
 mozilla-central. If you are working on Glean, then the probe-scraper will automatically pick up
 changes from the `metrics.yaml`.
 
 ### When will I see new changes to the schema?
 
 Schema deploys occur daily around UTC+04 when new changes are found in the
-[mozilla-schema-generator][msg]. See the [mozilla-pipeline-schemas deploy][mps-deploys] dashboard
-for up-to-date information on the most recent deploys.
+[`mozilla-schema-generator`][msg]. See the [`mozilla-pipeline-schemas` deploy][mps-deploys]
+dashboard for up-to-date information on the most recent deploys.
 
 ### What does it mean when a schema deploy is blocked?
 
-The schema deployment pipeline has a hard dependency on the [probe-scraper], a service that scours
+The schema deployment pipeline has a hard dependency on the [`probe-scraper`], a service that scours
 repositories for new metrics to include in generated schemas. When the probe-scraper fails, it will
-prevent the [mozilla-schema-generator][msg] from running. If there are new changes to the main
-branch of mozilla-pipeline-schemas, then they will not be added to the generated-schemas branch
+prevent the [`mozilla-schema-generator`][msg] from running. If there are new changes to the main
+branch of `mozilla-pipeline-schemas`, then they will not be added to the `generated-schemas` branch
 until the failure has been resolved. Similarly, new probes and pings in either Telemetry or Glean
-will not be picked up until the probe-scraper failures are resolved.
+will not be picked up until the `probe-scraper` failures are resolved.
 
 If a new schema field is not registered in the schema repository before collection begins, it will
 be available in the `additional_properties` field of the generated table. If a new schema for a ping
