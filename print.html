@@ -2980,7 +2980,7 @@ Note how the first column has one bucket with no elements in it (the &quot;165&q
 <p>In general, it is best not to rely on this representation of the histogram in production code (it is quite likely to change in the future). Instead, use the <a href="https://mozilla.github.io/bigquery-etl/mozfun/hist/#extract"><code>mozfun.hist.extract</code></a> user-defined-function (UDF) and extract out the fields you need: for example, to just get the <code>sum</code> for all the histograms above, you could modify the query above to something like:</p>
 <pre><code class="language-sql">WITH intermediate AS (
   SELECT
-    udf.json_extract_histogram(payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS) AS histogram,
+    mozfun.hist.extract(payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS) AS histogram,
   FROM
     telemetry.main_nightly -- Use telemetry.main_1pct for a 1% sample across channels
   WHERE
@@ -3010,8 +3010,8 @@ FROM
 <p>Often, questions around histograms are framed as &quot;what's the 99th percentile?&quot; -- that is, what is the <em>maximum</em> value that 99% of users experience: this helps give perspective on data which may have a number of weird outliers (a.k.a the <em>Bill Gates walks into a bar and everyone inside becomes a millionaire</em> effect). Let's take an initial stab of grabbing some percentiles of the data we were looking at earlier using the <a href="https://mozilla.github.io/bigquery-etl/mozfun/hist/#merge"><code>mozfun.hist.merge</code></a> and <a href="https://mozilla.github.io/bigquery-etl/mozfun/hist/#percentiles"><code>mozfun.hist.percentiles</code></a> UDFs:</p>
 <pre><code class="language-sql">WITH merged_histogram AS (
   SELECT
-    udf.histogram_merge(
-      ARRAY_AGG(udf.json_extract_histogram(payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS))
+    mozfun.hist.merge(
+      ARRAY_AGG(mozfun.hist.extract(payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS))
     ) AS spinner_visible_ms,
   FROM
     telemetry.main_nightly -- Use telemetry.main_1pct for a 1% sample across channels
@@ -3022,7 +3022,7 @@ FROM
 ),
 percentiles AS (
   SELECT
-    udf.histogram_percentiles(spinner_visible_ms, [.05, .25, .5, .75, .95]) AS percentile_nested
+    mozfun.hist.percentiles(spinner_visible_ms, [.05, .25, .5, .75, .95]) AS percentile_nested
   FROM
     merged_histogram
 )
@@ -3044,7 +3044,7 @@ CROSS JOIN
 <tr><td>0.95</td><td>1,000</td></tr>
 </tbody></table>
 <p>So we see for this set of results that 95th percentile is <code>1000ms</code>, the 75th percentile is <code>698ms</code>, and so on.</p>
-<p>There's a bit of intermediate-to-advanced SQL in the above query, due to the fact that the <code>histogram_percentiles</code> UDF returns an <em>array</em> of results in a column (rather than a full-blown table) -- we wrangle the results into something we can handle using the <a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#unnest"><code>UNNEST</code></a> operator combined with a cross-join at the end. If you don't immediately understand this, don't worry: it's just an implementation detail.</p>
+<p>There's a bit of intermediate-to-advanced SQL in the above query, due to the fact that the <code>mozfun.hist.percentiles</code> UDF returns an <em>array</em> of results in a column (rather than a full-blown table) -- we wrangle the results into something we can handle using the <a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#unnest"><code>UNNEST</code></a> operator combined with a cross-join at the end. If you don't immediately understand this, don't worry: it's just an implementation detail.</p>
 <h2><a class="header" href="#viewing-change-of-percentiles-over-time" id="viewing-change-of-percentiles-over-time">Viewing change of percentiles over time</a></h2>
 <p>Knowing the approximate distribution of results on a given day is sort of interesting, but probably not what we really want: what we're usually interested in is the evolution of results <em>over time</em>. In particular, segmenting by <code>build_id</code> (a date-like structure in the <code>main</code> ping representing when Firefox was built) is a useful technique, as it allows us to see if changes to Firefox itself may have caused the distribution to change.</p>
 <p>We can do this simply by <em>grouping by</em> the build id field, and then merging the histograms corresponding to each:</p>
@@ -3056,7 +3056,7 @@ CROSS JOIN
   FROM
     telemetry.main_nightly -- Use telemetry.main_1pct for a 1% sample across channels,
     UNNEST(
-      udf.json_extract_histogram(
+      mozfun.hist.extract(
         payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS
       ).VALUES
     )
@@ -3088,7 +3088,7 @@ FROM
   per_build_day_as_struct
 CROSS JOIN
   UNNEST(
-    udf.histogram_percentiles(
+    mozfun.hist.percentiles(
       spinner_visible_ms,
       [.05, .25, .5, .75, .95]
     )
@@ -3107,10 +3107,10 @@ CROSS JOIN
   SELECT
     PARSE_DATETIME(&quot;%Y%m%d%H%M%S&quot;, application.build_id) AS build_id,
     client_id,
-    udf.histogram_normalize(
-      udf.histogram_merge(
+    mozfun.hist.normalize(
+      mozfun.hist.merge(
         ARRAY_AGG(
-          udf.json_extract_histogram(
+          mozfun.hist.extract(
             payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS
           )
         )
@@ -3153,7 +3153,7 @@ as_struct AS (
 percentiles AS (
   SELECT
     build_id,
-    udf.histogram_percentiles(
+    mozfun.hist.percentiles(
       spinner_visible_long_ms,
       [.05, .25, .5, .75, .95]
     ) AS percentile_nested
@@ -3170,7 +3170,7 @@ CROSS JOIN
   UNNEST(percentiles.percentile_nested);
 </code></pre>
 <p><a href="https://sql.telemetry.mozilla.org/queries/71489/source">link</a></p>
-<p>You'll notice this query groups by <code>client_id</code> in addition to <code>build_id</code> before <code>histogram_normalize</code>. Grouping by <code>client_id</code> gives each user equal representation and prevents &quot;power users&quot; from skewing the result.</p>
+<p>You'll notice this query groups by <code>client_id</code> in addition to <code>build_id</code> before <code>mozfun.hist.normalize</code>. Grouping by <code>client_id</code> gives each user equal representation and prevents &quot;power users&quot; from skewing the result.</p>
 <p>In any case, the result of this query is this graph:</p>
 <p><img src="cookbooks/../assets/exponential_histograms_tutorial/example_visualization_of_normalized_histogram_percentiles.png" alt="example visualization of normalized histogram percentiles" /></p>
 <p>Things are looking much better! The 95th percentile is still capped out at 1000, but the other percentiles are much lower.</p>
@@ -3181,10 +3181,10 @@ CROSS JOIN
   SELECT
     PARSE_DATETIME(&quot;%Y%m%d%H%M%S&quot;, application.build_id) AS build_id,
     client_id,
-    udf.histogram_normalize(
-      udf.histogram_merge(
+    mozfun.hist.normalize(
+      mozfun.hist.merge(
         ARRAY_AGG(
-          udf.json_extract_histogram(
+          mozfun.hist.extract(
             payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS
           )
         )
@@ -3228,7 +3228,7 @@ as_struct AS (
 percentiles AS (
   SELECT
     build_id,
-    udf.histogram_percentiles(
+    mozfun.hist.percentiles(
       spinner_visible_long_ms,
       [.05, .25, .5, .75, .95]
     ) AS percentile_nested
