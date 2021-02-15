@@ -89,6 +89,7 @@
     - [Accessing Heartbeat data](datasets/heartbeat.md)
     - [Accessing Shield Study data](datasets/shield.md)
     - [Dynamic telemetry](datasets/dynamic_telemetry.md)
+    - [Experiment monitoring](datasets/experiment_monitoring.md)
   - [Search Datasets](datasets/search.md)
     - [Search Aggregates](datasets/search/search_aggregates/reference.md)
     - [Search Clients Daily](datasets/search/search_clients_daily/reference.md)
