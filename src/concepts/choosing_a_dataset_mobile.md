@@ -59,7 +59,7 @@ population and therefore should not be used to make conclusions about Fennec use
 For more information on the implementation of the event pings and to view event
 descriptions for [Focus], [Firefox for FireTV], or [Firefox for Echo Show], see the following documentation:
 
-[core_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/core-ping.html
+[core_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/obsolete/core-ping.html
 [event_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/event-ping.html
 [focus]: https://github.com/mozilla-mobile/focus-android/blob/master/docs/Telemetry.md
 [firefox for firetv]: https://github.com/mozilla-mobile/firefox-tv/blob/master/docs/telemetry.md
