@@ -19,7 +19,7 @@ are mapped to columns named `event_timestamp`, `event_category`, `event_method`,
 To access the `event_map_values`, you can use the `mozfun.map.get_key` UDF,
 like `SELECT mozfun.map.get_key(event_map_values, "branch") AS branch FROM telemetry.events`.
 
-Please note that `event_timestamp` refers to the time in milliseconds when the event was recorded *relative to the main process start time*, while the `timestamp` column refers to the time the ping was ingested. `event_timestamp` is useful for determining relative order of events within a single session but cannot reliably be used to determine an absolute time that an event occurred due to client clock skew and other factors.
+Please note that `event_timestamp` refers to the time in milliseconds when the event was recorded *relative to the main process start time* (`session_start_time`), while the `timestamp` column refers to the time the ping was ingested. `event_timestamp` is useful for determining relative order of events within a single session. Adding `event_timestamp` to `session_start_time` will allow you to approximate the absolute time an event occurred, subject to client clock skew and other factors.
 
 ### Example Query
 
