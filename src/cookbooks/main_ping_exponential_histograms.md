@@ -65,7 +65,7 @@ In general, it is best not to rely on this representation of the histogram in pr
 ```sql
 WITH intermediate AS (
   SELECT
-    udf.json_extract_histogram(payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS) AS histogram,
+    mozfun.hist.extract(payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS) AS histogram,
   FROM
     telemetry.main_nightly -- Use telemetry.main_1pct for a 1% sample across channels
   WHERE
@@ -104,8 +104,8 @@ Often, questions around histograms are framed as "what's the 99th percentile?" -
 ```sql
 WITH merged_histogram AS (
   SELECT
-    udf.histogram_merge(
-      ARRAY_AGG(udf.json_extract_histogram(payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS))
+    mozfun.hist.merge(
+      ARRAY_AGG(mozfun.hist.extract(payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS))
     ) AS spinner_visible_ms,
   FROM
     telemetry.main_nightly -- Use telemetry.main_1pct for a 1% sample across channels
@@ -116,7 +116,7 @@ WITH merged_histogram AS (
 ),
 percentiles AS (
   SELECT
-    udf.histogram_percentiles(spinner_visible_ms, [.05, .25, .5, .75, .95]) AS percentile_nested
+    mozfun.hist.percentiles(spinner_visible_ms, [.05, .25, .5, .75, .95]) AS percentile_nested
   FROM
     merged_histogram
 )
@@ -143,7 +143,7 @@ Which gives us this set of results:
 
 So we see for this set of results that 95th percentile is `1000ms`, the 75th percentile is `698ms`, and so on.
 
-There's a bit of intermediate-to-advanced SQL in the above query, due to the fact that the `histogram_percentiles` UDF returns an _array_ of results in a column (rather than a full-blown table) -- we wrangle the results into something we can handle using the [`UNNEST`](https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#unnest) operator combined with a cross-join at the end. If you don't immediately understand this, don't worry: it's just an implementation detail.
+There's a bit of intermediate-to-advanced SQL in the above query, due to the fact that the `mozfun.hist.percentiles` UDF returns an _array_ of results in a column (rather than a full-blown table) -- we wrangle the results into something we can handle using the [`UNNEST`](https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#unnest) operator combined with a cross-join at the end. If you don't immediately understand this, don't worry: it's just an implementation detail.
 
 ## Viewing change of percentiles over time
 
@@ -160,7 +160,7 @@ WITH per_build_day AS (
   FROM
     telemetry.main_nightly -- Use telemetry.main_1pct for a 1% sample across channels,
     UNNEST(
-      udf.json_extract_histogram(
+      mozfun.hist.extract(
         payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS
       ).VALUES
     )
@@ -192,7 +192,7 @@ FROM
   per_build_day_as_struct
 CROSS JOIN
   UNNEST(
-    udf.histogram_percentiles(
+    mozfun.hist.percentiles(
       spinner_visible_ms,
       [.05, .25, .5, .75, .95]
     )
@@ -222,10 +222,10 @@ WITH per_build_client_day AS (
   SELECT
     PARSE_DATETIME("%Y%m%d%H%M%S", application.build_id) AS build_id,
     client_id,
-    udf.histogram_normalize(
-      udf.histogram_merge(
+    mozfun.hist.normalize(
+      mozfun.hist.merge(
         ARRAY_AGG(
-          udf.json_extract_histogram(
+          mozfun.hist.extract(
             payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS
           )
         )
@@ -268,7 +268,7 @@ as_struct AS (
 percentiles AS (
   SELECT
     build_id,
-    udf.histogram_percentiles(
+    mozfun.hist.percentiles(
       spinner_visible_long_ms,
       [.05, .25, .5, .75, .95]
     ) AS percentile_nested
@@ -287,7 +287,7 @@ CROSS JOIN
 
 [link](https://sql.telemetry.mozilla.org/queries/71489/source)
 
-You'll notice this query groups by `client_id` in addition to `build_id` before `histogram_normalize`. Grouping by `client_id` gives each user equal representation and prevents "power users" from skewing the result.
+You'll notice this query groups by `client_id` in addition to `build_id` before `mozfun.hist.normalize`. Grouping by `client_id` gives each user equal representation and prevents "power users" from skewing the result.
 
 In any case, the result of this query is this graph:
 
@@ -306,10 +306,10 @@ WITH per_build_client_day AS (
   SELECT
     PARSE_DATETIME("%Y%m%d%H%M%S", application.build_id) AS build_id,
     client_id,
-    udf.histogram_normalize(
-      udf.histogram_merge(
+    mozfun.hist.normalize(
+      mozfun.hist.merge(
         ARRAY_AGG(
-          udf.json_extract_histogram(
+          mozfun.hist.extract(
             payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS
           )
         )
@@ -353,7 +353,7 @@ as_struct AS (
 percentiles AS (
   SELECT
     build_id,
-    udf.histogram_percentiles(
+    mozfun.hist.percentiles(
       spinner_visible_long_ms,
       [.05, .25, .5, .75, .95]
     ) AS percentile_nested
