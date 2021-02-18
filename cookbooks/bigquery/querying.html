@@ -216,8 +216,8 @@ However, it has changed from using a <code>YYYYMMDD</code> string form to a <cod
 </ul>
 <h3><a class="header" href="#projects-with-bigquery-datasets" id="projects-with-bigquery-datasets">Projects with BigQuery datasets</a></h3>
 <table><thead><tr><th>Project</th><th>Dataset</th><th>Purpose</th></tr></thead><tbody>
-<tr><td><code>mozdata</code></td><td></td><td>The primary home for user analysis as of February 2021; it has a short name that is easy to type and is filled with views that reference underlying tables in <code>moz-fx-data-shared-prod</code>; data tools like STMO will issue queries in this project</td></tr>
-<tr><td></td><td><code>analysis</code></td><td>User-generated tables for analysis; note that this dataset is separate from <code>moz-fx-data-shared-prod:analysis</code> and <code>moz-fx-data-derived-datasets:analysis</code>; we will be sending out communication about migrating all user data to <code>mozdata:analysis</code> in the coming month</td></tr>
+<tr><td><code>mozdata</code></td><td></td><td>The primary home for user analysis; it has a short name that is easy to type and is filled with views that reference underlying tables in <code>moz-fx-data-shared-prod</code>; the default project for STMO and Looker</td></tr>
+<tr><td></td><td><code>analysis</code></td><td>User-generated tables for analysis; please prefix tables with your username</td></tr>
 <tr><td></td><td><code>tmp</code></td><td>User-generated tables for ephemeral analysis results; tables created here are automatically deleted after 7 days.</td></tr>
 <tr><td></td><td><code>telemetry</code></td><td>Views into legacy desktop telemetry pings and many derived tables; see <em>user-facing (unsuffixed) datasets</em> below</td></tr>
 <tr><td></td><td><code>&lt;namespace&gt;</code></td><td>See <em>user-facing (unsuffixed) datasets</em> below</td></tr>
@@ -239,7 +239,7 @@ However, it has changed from using a <code>YYYYMMDD</code> string form to a <cod
 <tr><td></td><td><code>payload_bytes_error</code></td><td><code>gzip</code>-compressed JSON payloads that were rejected in some phase of the pipeline; particularly useful for investigating schema validation errors</td></tr>
 <tr><td></td><td><code>tmp</code></td><td>Temporary staging area for parquet data loads</td></tr>
 <tr><td></td><td><code>validation</code></td><td>Temporary staging area for validation</td></tr>
-<tr><td><code>moz-fx-data-derived-datasets</code></td><td></td><td>Legacy project that contains mostly views to data in <code>moz-fx-data-shared-prod</code> during a transition period; STMO currently points at this project but we will announce a transition to <code>mozdata</code> by end of February 2021</td></tr>
+<tr><td><code>moz-fx-data-derived-datasets</code></td><td></td><td>Legacy project that was a precursor to <code>mozdata</code></td></tr>
 <tr><td><code>moz-fx-data-shar-nonprod-efed</code></td><td></td><td>Non-production data produced by stage ingestion infrastructure</td></tr>
 </tbody></table>
 <h3><a class="header" href="#table-layout-and-naming" id="table-layout-and-naming">Table Layout and Naming</a></h3>
