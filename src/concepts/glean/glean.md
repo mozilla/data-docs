@@ -2,7 +2,7 @@
 
 For Mozilla, getting reliable data from our products is critical to inform our decision making. Glean is our new product analytics & telemetry solution that provides a consistent experience and behavior across all of our products.
 
-The list of supported platforms and implementations is [available in the Glean SDK Book](https://mozilla.github.io/glean/book/dev/core/internal/implementations.html).
+The list of supported platforms and implementations is [available in the Glean SDK Book](https://mozilla.github.io/glean/dev/core/internal/implementations.html).
 
 > Note that this is different from Telemetry for Firefox Desktop ([library](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/index.html), [datasets](../choosing_a_dataset.md)), although it provides similar capabilities.
 
