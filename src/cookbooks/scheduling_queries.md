@@ -10,7 +10,7 @@ This is by far the easiest option. Any query on [STMO](../tools/stmo.md) can be 
 
 However, there are disadvantages to this approach:
 
-- Each query will run again, in its entirety. This is fine for smaller or less frequently updated dashboards but when querying a large amount of data, [this can get expensive](./bigquery/optimization.md).
+- Every time it is refreshed, STMO re-runs the query from scratch. This is fine for smaller or less frequently updated dashboards but when querying a large amount of data, [this can get expensive](./bigquery/optimization.md).
 - Aside from hand-rolled JavaScript or Python scripts, there isn't a way to run a query over the results of an STMO query.
 - Queries on STMO are not peer reviewed and are not supported by Data SRE (read: no one will be notified if your query breaks).
 
