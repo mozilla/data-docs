@@ -17,6 +17,7 @@ additional-css = ["dtmo.css", "mermaid.css"]
 additional-js = ["mermaid.min.js", "mermaid-init.js"]
 git-repository-url = "https://github.com/mozilla/data-docs"
 google-analytics = "UA-104326577-1"
+git-branch = "main"
 
 [output.html.redirect]
 "/datasets/mozetl/search_aggregates/reference.html" = "/datasets/search/search_aggregates/reference.html"
