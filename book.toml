@@ -23,6 +23,7 @@ google-analytics = "UA-104326577-1"
 "/datasets/mozetl/search_clients_daily/reference.html" = "/datasets/search/search_clients_daily/reference.html"
 "/datasets/mozetl/search_clients_last_seen/reference.html" = "/datasets/search/search_clients_last_seen/reference.html"
 "/datasets/mozetl/client_ltv/reference.html" = "/datasets/search/client_ltv/reference.html"
+"/cookbooks/bigquery-airflow.html" = "/cookbooks/scheduling_queries.html"
 
 [preprocessor.open-on-gh]
 command = "mdbook-open-on-gh"
