@@ -1,13 +1,13 @@
 # Making Datasets Publicly Available
 
 Currently, only datasets and query results that are available in BigQuery and
-defined in the [bigquery-etl][bigquery_etl] repository can be made publicly available.
-See [Scheduling BigQuery Queries in Airflow](../cookbooks/bigquery-airflow.md)
-on how to create and schedule datasets. Before data can be published, a data review is
+defined in the [BigQuery-ETL][bigquery_etl] repository can be made publicly available.
+See the [BigQuery-ETL documentation](https://mozilla.github.io/bigquery-etl/cookbooks/creating_a_derived_dataset/)
+for information on how to create and schedule datasets. Before data can be published, a data review is
 required.
 
 To make query results publicly available, a [`metadata.yaml` file][bigquery_etl_metadata]
-must be added alongside the query in [bigquery-etl][bigquery_etl]. For example:
+must be added alongside the query in BigQuery-ETL. For example:
 
 ```yaml
 friendly_name: SSL Ratios
