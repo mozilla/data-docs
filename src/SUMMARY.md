@@ -40,7 +40,7 @@
   - [Operational](cookbooks/operational/index.md)
     - [Creating a Prototype Data Project on Google Cloud Platform](cookbooks/gcp-projects.md)
     - [Creating Static Dashboards with Protosaur](cookbooks/operational/protosaur.md)
-    - [Scheduling BigQuery Queries in Airflow](cookbooks/bigquery-airflow.md)
+    - [Scheduling Queries](cookbooks/scheduling_queries.md)
     - [Building and Deploying Containers to GCR with CircleCI](cookbooks/deploying-containers.md)
     - [Publishing Datasets](cookbooks/publishing_datasets.md)
   - [Sending telemetry](datasets/new_data.md)
