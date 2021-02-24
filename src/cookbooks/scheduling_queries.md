@@ -25,3 +25,5 @@ For more information on how to use this approach, see [A quick guide to creating
 ## Scheduling Queries using GCP
 
 Finally, [you can schedule queries using GCP](https://cloud.google.com/bigquery/docs/scheduling-queries). This is generally not recommended, [reach out to the Data team](../concepts/getting_help.md) if you think you need to do this.
+
+GCP scheduled queries are to be used only for short-lived queries: queries that are active for more than 30 days will be automatically unscheduled.
