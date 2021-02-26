@@ -1377,7 +1377,7 @@ ORDER BY
 <h3><a class="header" href="#writing-query-results-to-a-permanent-table" id="writing-query-results-to-a-permanent-table">Writing query results to a permanent table</a></h3>
 <p>You can write query results to a BigQuery table you have access via <a href="cookbooks/bigquery/access.html#gcp-bigquery-console">GCP BigQuery Console</a> or <a href="cookbooks/bigquery/access.html#gcp-bigquery-api-access">GCP BigQuery API Access</a></p>
 <ul>
-<li>Use the <code>mozdata.analysis</code> dataset.
+<li>For temporary experiments use <code>mozdata.tmp</code> (it will automatically be deleted after 7 days). For longer-lived results, use the <code>mozdata.analysis</code> dataset.
 <ul>
 <li>Prefix your table with your username. If your username is <code>username@mozilla.com</code> create a table with <code>username_my_table</code>.</li>
 </ul>
