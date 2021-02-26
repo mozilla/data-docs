@@ -134,7 +134,7 @@ Check out the [BigQuery Standard SQL Functions & Operators](https://cloud.google
 
 You can write query results to a BigQuery table you have access via [GCP BigQuery Console](access.md#gcp-bigquery-console) or [GCP BigQuery API Access](access.md#gcp-bigquery-api-access)
 
-- Use the `mozdata.analysis` dataset.
+- For temporary experiments use `mozdata.tmp` (it will automatically be deleted after 7 days). For longer-lived results, use the `mozdata.analysis` dataset.
   - Prefix your table with your username. If your username is `username@mozilla.com` create a table with `username_my_table`.
 - See [Writing query results](https://cloud.google.com/bigquery/docs/writing-results) documentation for detailed steps.
 
