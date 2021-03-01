@@ -9,7 +9,7 @@ Instead, those fields remain as raw JSON and are placed in the
 
 This can happen for a variety of usually-temporary problems like:
 
-- The latest schema hasn't yet been deployed
+- The latest schema hasn't yet been deployed (see ["What does it mean when a schema deploy is blocked?"](../concepts/pipeline/schemas.html#what-does-it-mean-when-a-schema-deploy-is-blocked))
 - There is a bug in sending or receiving data
 
 Until the problem is fixed, any ingested pings with these
