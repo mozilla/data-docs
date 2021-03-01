@@ -37,6 +37,7 @@
       - [Daily Active Users (DAU and MAU)](cookbooks/dau.md)
       - [Active DAU (aDAU)](cookbooks/active_dau.md)
       - [Retention](cookbooks/retention.md)
+    - [Additional Properties](cookbooks/additional_props.md)
   - [Operational](cookbooks/operational/index.md)
     - [Creating a Prototype Data Project on Google Cloud Platform](cookbooks/gcp-projects.md)
     - [Creating Static Dashboards with Protosaur](cookbooks/operational/protosaur.md)
