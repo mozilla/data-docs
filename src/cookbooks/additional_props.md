@@ -21,6 +21,10 @@ even after the dataset has been updated to add the column.
 
 To access data that's been put into the `additional_properties` column,
 you'll have to parse the JSON.
+Be aware that when you access the `additional_properties` field, BigQuery has
+to read the entire contents, even if you're extracting just a single field.
+In the case of `main` pings, `additional_properties` can be quite large, leading
+to expensive queries.
 
 ## Example
 
