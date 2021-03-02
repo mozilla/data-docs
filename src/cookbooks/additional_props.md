@@ -14,8 +14,7 @@ This can happen for a variety of usually-temporary problems like:
 
 Until the problem is fixed, any ingested pings with these
 "unknown" data in them will place that data in the `additional_properties` column.
-And unless you convince a Data Engineer to backfill,
-these rows of the dataset will always have these data in the
+The rows of this dataset will always have these data in the
 `additional_properties` column,
 even after the dataset has been updated to add the column.
 
