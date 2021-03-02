@@ -10,7 +10,7 @@ Instead, those fields remain as raw JSON and are placed in the
 This can happen for a variety of usually-temporary problems like:
 
 - The latest schema hasn't yet been deployed (see ["What does it mean when a schema deploy is blocked?"](../concepts/pipeline/schemas.html#what-does-it-mean-when-a-schema-deploy-is-blocked))
-- [mozilla-pipeline-schemas](https://github.com/mozilla-services/mozilla-pipeline-schemas) was not updated after a change in the data which was submitted (this shouldn't happen with [Glean](../concepts/glean.md), but can happen with some legacy data, for example the legacy Firefox Desktop telemetry environment).
+- [`mozilla-pipeline-schemas`](https://github.com/mozilla-services/mozilla-pipeline-schemas) was not updated after a change in the data which was submitted (this shouldn't happen with [Glean](../concepts/glean.md), but can happen with some legacy data, for example the [legacy Firefox Desktop telemetry environment](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/data/environment.html)).
 
 Until the problem is fixed, any ingested pings with these
 "unknown" data in them will place that data in the `additional_properties` column.
