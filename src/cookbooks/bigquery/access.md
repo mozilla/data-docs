@@ -27,7 +27,7 @@ The BigQuery console is similar to STMO, but allows write access to views and ta
 people also prefer its user interface, though note that results that you get from it can
 only be shared with others who also have BigQuery access provisioned.
 
-- Visit [GCP BigQuery Console `mozdata`](https://console.cloud.google.com/bigquery?project_id=mozdata)
+- Visit [GCP BigQuery Console `mozdata`](https://console.cloud.google.com/bigquery?project=mozdata)
 - Use `mozdata` or switch to the project provided to you during your access request e.g `moz-fx-data-bq-<team-name>`
 - Write and run your queries
 
