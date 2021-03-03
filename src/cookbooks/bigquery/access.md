@@ -27,8 +27,8 @@ The BigQuery console is similar to STMO, but allows write access to views and ta
 people also prefer its user interface, though note that results that you get from it can
 only be shared with others who also have BigQuery access provisioned.
 
-- Visit [GCP BigQuery Console](https://console.cloud.google.com/bigquery)
-- Switch to `mozdata` or the project provided to you during your access request e.g `moz-fx-data-bq-<team-name>`
+- Visit [GCP BigQuery Console `mozdata`](https://console.cloud.google.com/bigquery?project_id=mozdata)
+- Use `mozdata` or switch to the project provided to you during your access request e.g `moz-fx-data-bq-<team-name>`
 - Write and run your queries
 
 Note that if you are trying to query telemetry datasets from a team-specific project,
@@ -57,9 +57,10 @@ Steps to use:
 - Install the [GCP SDK](https://cloud.google.com/sdk/)
 - Authorize `gcloud` with either your user account or provisioned service account. See documentation [here](https://cloud.google.com/sdk/docs/authorizing).
   - `gcloud auth login`
-- Set your google project to your team project
+- Set your google project to `mozdata`
+  - `gcloud config set project mozdata`
+- Set your google project to your team project if you were given one during your access request.
   - `gcloud config set project moz-fx-data-bq-<team-name>`
-  - project name will be provided for you when your account is provisioned.
 
 Once configured, you can now use the `bq` command-line client. The following example
 lists the tables and views in a BigQuery dataset:
@@ -140,4 +141,6 @@ Please note that by default JupyterLab saves notebook files only locally, so the
 
 ## BigQuery Access Request
 
-For access to BigQuery when using the GCP Console and API, [file a bug](https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=jthomas%40mozilla.com&bug_file_loc=https%3A%2F%2Fmana.mozilla.org%2Fwiki%2Fx%2FiIPeB&bug_ignored=0&bug_severity=normal&bug_status=NEW&bug_type=task&cf_fx_iteration=---&cf_fx_points=---&comment=Please%20grant%20me%20access%20to%20the%20BigQuery%20GCP%20console%20and%20API%20Access.%20I%20work%20on%20%3Cteam%3E.%0D%0A%0D%0AMy%20mozilla.com%20ldap%20login%20is%20%3Cyour%20ldap%20login%3E%40mozilla.com.&component=Operations&contenttypemethod=list&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-936=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Unspecified&priority=--&product=Data%20Platform%20and%20Tools&qa_contact=jthomas%40mozilla.com&rep_platform=Unspecified&short_desc=BigQuery%20GCP%20Console%20and%20API%20Access%20for%20%3Cyour%20ldap%20login%3E%40mozilla.com&target_milestone=---&version=unspecified). You will be added to the appropriate Google Groups and a [GCP Service Account](https://cloud.google.com/iam/docs/service-accounts) will be provisioned for you.
+For access to BigQuery when using the GCP Console and API, [file a bug](https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=jthomas%40mozilla.com&bug_file_loc=https%3A%2F%2Fmana.mozilla.org%2Fwiki%2Fx%2FiIPeB&bug_ignored=0&bug_severity=normal&bug_status=NEW&bug_type=task&cf_fx_iteration=---&cf_fx_points=---&comment=Please%20grant%20me%20access%20to%20the%20BigQuery%20GCP%20console%20and%20API%20Access.%20I%20work%20on%20%3Cteam%3E.%0D%0A%0D%0AMy%20mozilla.com%20ldap%20login%20is%20%3Cyour%20ldap%20login%3E%40mozilla.com.&component=Operations&contenttypemethod=list&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-936=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Unspecified&priority=--&product=Data%20Platform%20and%20Tools&qa_contact=jthomas%40mozilla.com&rep_platform=Unspecified&short_desc=BigQuery%20GCP%20Console%20and%20API%20Access%20for%20%3Cyour%20ldap%20login%3E%40mozilla.com&target_milestone=---&version=unspecified).
+You will be added to the appropriate Google Groups to access the `mozdata` GCP project.
+If you require access to AI Notebooks or Dataproc, please specify in the bug and a team project will be provisioned for you.
