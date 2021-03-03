@@ -1156,8 +1156,8 @@ in <a href="https://cloud.google.com/bigquery/">BigQuery</a>:</p>
 people also prefer its user interface, though note that results that you get from it can
 only be shared with others who also have BigQuery access provisioned.</p>
 <ul>
-<li>Visit <a href="https://console.cloud.google.com/bigquery">GCP BigQuery Console</a></li>
-<li>Switch to <code>mozdata</code> or the project provided to you during your access request e.g <code>moz-fx-data-bq-&lt;team-name&gt;</code></li>
+<li>Visit <a href="https://console.cloud.google.com/bigquery?project_id=mozdata">GCP BigQuery Console <code>mozdata</code></a></li>
+<li>Use <code>mozdata</code> or switch to the project provided to you during your access request e.g <code>moz-fx-data-bq-&lt;team-name&gt;</code></li>
 <li>Write and run your queries</li>
 </ul>
 <p>Note that if you are trying to query telemetry datasets from a team-specific project,
@@ -1185,10 +1185,14 @@ WHERE
 <li><code>gcloud auth login</code></li>
 </ul>
 </li>
-<li>Set your google project to your team project
+<li>Set your google project to <code>mozdata</code>
+<ul>
+<li><code>gcloud config set project mozdata</code></li>
+</ul>
+</li>
+<li>Set your google project to your team project if you were given one during your access request.
 <ul>
 <li><code>gcloud config set project moz-fx-data-bq-&lt;team-name&gt;</code></li>
-<li>project name will be provided for you when your account is provisioned.</li>
 </ul>
 </li>
 </ul>
@@ -1242,7 +1246,9 @@ python -c 'from google.cloud import bigquery; print([d.dataset_id for d in bigqu
 <p>To start, go to <a href="https://console.cloud.google.com">GCP console</a> and make sure you are in the correct project - most likely this will be your team project. Then navigate to the Notebooks page in the sidebar under AI Platform &gt; Notebooks (<a href="https://console.cloud.google.com/ai-platform/notebooks/list/instances">direct link</a>). There you can create new notebook server instances and connect to them (when your instance is ready, you'll see an <code>Open JupyterLab</code> button).</p>
 <p>Please note that by default JupyterLab saves notebook files only locally, so they are lost if your instance is deleted. To make sure you don't lose your work, either push your files to a Git repository (via a pre-installed Git extension) or upload them to GCS (using <code>gsutil</code> command in a terminal session).</p>
 <h2><a class="header" href="#bigquery-access-request" id="bigquery-access-request">BigQuery Access Request</a></h2>
-<p>For access to BigQuery when using the GCP Console and API, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=jthomas%40mozilla.com&amp;bug_file_loc=https%3A%2F%2Fmana.mozilla.org%2Fwiki%2Fx%2FiIPeB&amp;bug_ignored=0&amp;bug_severity=normal&amp;bug_status=NEW&amp;bug_type=task&amp;cf_fx_iteration=---&amp;cf_fx_points=---&amp;comment=Please%20grant%20me%20access%20to%20the%20BigQuery%20GCP%20console%20and%20API%20Access.%20I%20work%20on%20%3Cteam%3E.%0D%0A%0D%0AMy%20mozilla.com%20ldap%20login%20is%20%3Cyour%20ldap%20login%3E%40mozilla.com.&amp;component=Operations&amp;contenttypemethod=list&amp;contenttypeselection=text%2Fplain&amp;defined_groups=1&amp;flag_type-4=X&amp;flag_type-607=X&amp;flag_type-800=X&amp;flag_type-803=X&amp;flag_type-936=X&amp;form_name=enter_bug&amp;maketemplate=Remember%20values%20as%20bookmarkable%20template&amp;op_sys=Unspecified&amp;priority=--&amp;product=Data%20Platform%20and%20Tools&amp;qa_contact=jthomas%40mozilla.com&amp;rep_platform=Unspecified&amp;short_desc=BigQuery%20GCP%20Console%20and%20API%20Access%20for%20%3Cyour%20ldap%20login%3E%40mozilla.com&amp;target_milestone=---&amp;version=unspecified">file a bug</a>. You will be added to the appropriate Google Groups and a <a href="https://cloud.google.com/iam/docs/service-accounts">GCP Service Account</a> will be provisioned for you.</p>
+<p>For access to BigQuery when using the GCP Console and API, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=jthomas%40mozilla.com&amp;bug_file_loc=https%3A%2F%2Fmana.mozilla.org%2Fwiki%2Fx%2FiIPeB&amp;bug_ignored=0&amp;bug_severity=normal&amp;bug_status=NEW&amp;bug_type=task&amp;cf_fx_iteration=---&amp;cf_fx_points=---&amp;comment=Please%20grant%20me%20access%20to%20the%20BigQuery%20GCP%20console%20and%20API%20Access.%20I%20work%20on%20%3Cteam%3E.%0D%0A%0D%0AMy%20mozilla.com%20ldap%20login%20is%20%3Cyour%20ldap%20login%3E%40mozilla.com.&amp;component=Operations&amp;contenttypemethod=list&amp;contenttypeselection=text%2Fplain&amp;defined_groups=1&amp;flag_type-4=X&amp;flag_type-607=X&amp;flag_type-800=X&amp;flag_type-803=X&amp;flag_type-936=X&amp;form_name=enter_bug&amp;maketemplate=Remember%20values%20as%20bookmarkable%20template&amp;op_sys=Unspecified&amp;priority=--&amp;product=Data%20Platform%20and%20Tools&amp;qa_contact=jthomas%40mozilla.com&amp;rep_platform=Unspecified&amp;short_desc=BigQuery%20GCP%20Console%20and%20API%20Access%20for%20%3Cyour%20ldap%20login%3E%40mozilla.com&amp;target_milestone=---&amp;version=unspecified">file a bug</a>.
+You will be added to the appropriate Google Groups to access the <code>mozdata</code> GCP project.
+If you require access to AI Notebooks or Dataproc, please specify in the bug and a team project will be provisioned for you.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/cookbooks/bigquery/access.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#querying-bigquery-tables" id="querying-bigquery-tables">Querying BigQuery Tables</a></h1>
 <h2><a class="header" href="#table-of-contents-5" id="table-of-contents-5">Table of Contents</a></h2>
 <ul>
