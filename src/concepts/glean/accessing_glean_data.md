@@ -7,7 +7,7 @@ This document describes how to access Glean data from an SQL query, such as in [
 You can see a full index of how each Glean applications maps to structures in BigQuery using the [Glean Dictionary](https://dictionary.protosaur.dev/).
 
 Select the application you're interested in from the home page, then browse through the metrics and pings. You will see the appropriate table and column
-names to use when running a query. In general, you can use these types of column names directly. For example, to get a count of distinct clients in the [fenix baseline ping](https://dictionary.protosaur.dev/apps/fenix/pings/baseline), run this:
+names to use when running a query. In general, you can use these types of column names directly. For example, to get a count of distinct clients in the [Fenix baseline ping](https://dictionary.protosaur.dev/apps/fenix/pings/baseline), run this:
 
 ```sql
 -- Count unique Client IDs observed on a given day
