@@ -1,4 +1,4 @@
-# Accessing Glean data in BigQuery
+# Accessing Glean Data
 
 This document describes how to access Glean data from an SQL query, such as in [Redash](https://sql.telemetry.mozilla.org).
 
