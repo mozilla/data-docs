@@ -9,7 +9,7 @@ It includes data on the [build id](/concepts/terminology.md#build-id) and revisi
 which can help you understand what changes went into a specific version
 of the product you see in telemetry.
 
-A view of the Buildhub database is exposed as `mozdata.telemetry.buildhub2`.
+Buildhub data is exported to BigQuery as it becomes available (generally very soon after our software is released) at `mozdata.telemetry.buildhub2`.
 
 The `build` column contains a struct value
 that matches the structure of the `buildhub.json` files
