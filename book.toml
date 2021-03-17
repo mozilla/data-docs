@@ -25,6 +25,7 @@ git-branch = "main"
 "/datasets/mozetl/search_clients_last_seen/reference.html" = "/datasets/search/search_clients_last_seen/reference.html"
 "/datasets/mozetl/client_ltv/reference.html" = "/datasets/search/client_ltv/reference.html"
 "/cookbooks/bigquery-airflow.html" = "/cookbooks/scheduling_queries.html"
+"/concepts/glean/accessing_glean_data.html" = "/cookbooks/accessing_glean_data.html"
 
 [preprocessor.open-on-gh]
 command = "mdbook-open-on-gh"
