@@ -23,7 +23,7 @@
       - [Access](cookbooks/bigquery/access.md)
       - [Writing Queries](cookbooks/bigquery/querying.md)
       - [Optimization](cookbooks/bigquery/optimization.md)
-      - [Accessing Glean Data](concepts/glean/accessing_glean_data.md)
+      - [Accessing Glean Data](cookbooks/accessing_glean_data.md)
       - [Custom analysis with Spark](tools/spark.md)
     - [Introduction to STMO](tools/stmo.md)
     - [Dataset-Specific](cookbooks/dataset_specific.md)
