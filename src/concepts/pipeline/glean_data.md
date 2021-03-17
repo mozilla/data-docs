@@ -22,9 +22,8 @@ The top-level groups are:
 
 ### Built-in metrics
 
-[Core attributes sent with every ping](https://mozilla.github.io/glean/book/user/pings/index.html#glean-pings) are mapped to the `client_info` and `ping_info` sections.
-
-You can see an example of querying these metrics in the section above on [Using the Glean Dictionary](#using-the-glean-dictionary).
+[Core attributes sent with every ping](https://mozilla.github.io/glean/book/user/pings/index.html#glean-pings) are mapped to the `client_info` and `ping_info` sections. For example,
+the client id is mapped to a column called `client_info.client_id`.
 
 ### The `metrics` group
 
