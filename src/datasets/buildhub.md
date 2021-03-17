@@ -2,7 +2,7 @@
 
 [Buildhub] is a database of metadata for official Mozilla builds of
 Firefox, Thunderbird, and Fennec (legacy Firefox for Android).
-Support for the new Firefox for Android is being tracked in 
+Support for the new Firefox for Android is being tracked in
 [bug 1622948](https://bugzilla.mozilla.org/show_bug.cgi?id=1622948).
 
 It includes data on the [build id](../concepts/terminology.md#build-id) and revision,
