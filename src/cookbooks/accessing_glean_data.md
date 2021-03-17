@@ -16,7 +16,7 @@ Firefox for Android. In this case you would:
 - Go to the [Glean Dictionary](https://dictionary.protosaur.dev) home page.
 - Navigate to the [Firefox for Android application](https://dictionary.protosaur.dev/apps/fenix)
 - Under metrics, search for "top", select [`metrics.top_sites_count`](https://dictionary.protosaur.dev/apps/fenix/metrics/metrics_top_sites_count).
-- Scroll down to the bottom. Under BigQuery, you should see an entry like: "In `org_mozilla_fenix.metrics` as `metrics.metrics.counter.metrics_top_sites_count`".
+- Scroll down to the bottom. Under BigQuery, you should see an entry like: "In `org_mozilla_fenix.metrics` as `metrics.counter.metrics_top_sites_count`".
   The former corresponds to the table name whilst the latter corresponds to the column name
   You can select which channel you want to view information for and the table name will update accordingly.
 
@@ -30,3 +30,7 @@ SELECT AVG(metrics.metrics.counter.metrics_top_sites_count)
 FROM org_mozilla_fenix.metrics
 WHERE DATE(submission_timestamp) = '2021-01-01'
 ```
+
+Note that we need to qualify the column name (`metrics.counter.metrics_top_sites_count`) with
+the name of the table, otherwise the BigQuery parser gets confused.
+This can also happen with the tables and columns corresponding to the events ping.
