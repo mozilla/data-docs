@@ -22,6 +22,11 @@ A third-party product used by several teams within Mozilla for analysis of user 
 
 [BigQuery](https://cloud.google.com/bigquery) is Google Cloud's managed data warehouse. Most of the data described on this site is stored and queried using BigQuery. See [Accessing and working with BigQuery](../cookbooks/bigquery.md) for more details.
 
+## Build ID
+
+A unique identifier for a build like `20210317095331`. Often used to identify and aggregate telemetry submitted by specific versions of our software. Note that
+[the format may differ across product lines](/concepts/analysis_gotchas.html#build-ids).
+
 ## Client ID
 
 A unique id identifying the client who sent a [ping](#ping).
