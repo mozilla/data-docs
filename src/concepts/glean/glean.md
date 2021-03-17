@@ -76,7 +76,7 @@ This includes previously manual and error-prone steps such as updating the ping 
   - `org_mozilla_fenix.baseline`
   - `org_mozilla_fenix.events`
   - `org_mozilla_fenix.metrics`
-  - There is [more documentation about accessing Glean data](../cookbooks/accessing_glean_data.md).
+  - There is [more documentation about accessing Glean data](../../cookbooks/accessing_glean_data.md).
 
 - _(Work in progress)_ Use events and [Amplitude](https://sso.mozilla.com/amplitude) for product analytics.
 - For experimentation, you can use [Android experiments library](https://github.com/mozilla-mobile/android-components/blob/master/components/service/experiments/README.md), which integrates with Glean.
