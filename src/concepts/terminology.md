@@ -26,7 +26,7 @@ A third-party product used by several teams within Mozilla for analysis of user 
 
 A unique identifier for a build like `20210317095331`. 
 Often used to identify and aggregate telemetry submitted by specific versions of our software.
-Note that [the format may differ across product lines](/concepts/analysis_gotchas.md#build-ids).
+Note that [the format may differ across product lines](./analysis_gotchas.md#build-ids).
 
 ## Client ID
 
