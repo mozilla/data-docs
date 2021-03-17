@@ -55,6 +55,7 @@
     - [HTTP Edge Server Specification](concepts/pipeline/http_edge_spec.md)
     - [Event Pipeline Detail](concepts/pipeline/event_pipeline.md)
     - [Schemas](concepts/pipeline/schemas.md)
+    - [Glean Data](concepts/pipeline/glean_data.md)
     - [Channel Normalization](concepts/channels/channel_normalization.md)
     - [Sampling](concepts/sample_id.md)
     - [Filtering](concepts/pipeline/filtering.md)
