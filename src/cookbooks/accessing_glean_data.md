@@ -17,7 +17,7 @@ Firefox for Android. In this case you would:
 - Navigate to the [Firefox for Android application](https://dictionary.protosaur.dev/apps/fenix)
 - Under metrics, search for "top", select [`metrics.top_sites_count`](https://dictionary.protosaur.dev/apps/fenix/metrics/metrics_top_sites_count).
 - Scroll down to the bottom. Under BigQuery, you should see an entry like: "In `org_mozilla_fenix.metrics` as `metrics.counter.metrics_top_sites_count`".
-  The former corresponds to the table name whilst the latter corresponds to the column name
+  The former corresponds to the table name whilst the latter corresponds to the column name.
   You can select which channel you want to view information for and the table name will update accordingly.
 
 ## Writing a Query
