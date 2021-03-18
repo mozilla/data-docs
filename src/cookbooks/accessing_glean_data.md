@@ -1,7 +1,7 @@
 # Accessing Glean Data in BigQuery
 
 This document describes how to access Glean data using BigQuery, such as in [Redash](https://sql.telemetry.mozilla.org).
-This is intended for in-depth analysis: many simple questions can be more easily answered with either [GUD](../tools/interfaces.md#mozilla-growth--usage-dashboard-gud) or [GLAM](../tools/interfaces.md#glean-aggregated-metrics-dashboard-glam).
+This is intended for in-depth analysis: [GUD](../tools/interfaces.md#mozilla-growth--usage-dashboard-gud) or [GLAM](../tools/interfaces.md#glean-aggregated-metrics-dashboard-glam) can answer many simple questions.
 
 ## Using the Glean Dictionary
 
