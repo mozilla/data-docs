@@ -1,13 +1,14 @@
-# Accessing Glean data
+# Glean Data
 
-This document describes how to access Glean data from an SQL query, such as in [Redash](https://sql.telemetry.mozilla.org).
+The following describes in detail how we structure Glean data in BigQuery. For information on
+the actual software which does this, see the [Generated Schemas](schemas.md) reference.
 
-## Selecting the correct table
+## Tables
 
 Each ping type is recorded in its own table, and these tables are named using `{application_id}.{ping_type}`.
 For example, for Fenix, the application id is `org.mozilla.fenix`, so its `metrics` pings are available in the table `org_mozilla_fenix.metrics`.
 
-## Selecting columns
+## Columns
 
 Fields are nested inside BigQuery STRUCTs to organize them into groups, and we can use dot notation to specify individual subfields in a query.
 For example, columns containing Glean's built-in client information are in the `client_info` struct, so accessing its columns involves using a `client_info.` prefix.
@@ -19,21 +20,10 @@ The top-level groups are:
 - `metrics`: [Custom metrics](https://mozilla.github.io/glean/book/user/metrics/index.html) defined by the application and its libraries.
 - `events`: [Custom events](https://mozilla.github.io/glean/book/user/metrics/event.html) defined by the application and its libraries.
 
-### Built-in metrics
+### Ping and Client Info sections
 
-Accessing columns from the `client_info`, and `ping_info` group is reasonably straightforward.
-
-For example, to access the `client_id` of a ping, use the column `client_info.client_id`.
-
-```sql
--- Count unique Client IDs observed on a given day
-SELECT
-  count(distinct client_info.client_id)
-FROM
-  org_mozilla_fenix.baseline
-WHERE
-  date(submission_timestamp) = '2019-11-11'
-```
+[Core attributes sent with every ping](https://mozilla.github.io/glean/book/user/pings/index.html#glean-pings) are mapped to the [`client_info`](https://mozilla.github.io/glean/book/user/pings/index.html#the-client_info-section) and [`ping_info`](https://mozilla.github.io/glean/book/user/pings/index.html#the-ping_info-section) sections.
+For example, the client id is mapped to a column called `client_info.client_id`.
 
 ### The `metrics` group
 
