@@ -198,7 +198,7 @@ You can select which channel you want to view information for and the table name
 average of this metric on the first of January, you could write something like this:</p>
 <pre><code class="language-sql">-- Count number of pings where Fenix is the default browser
 SELECT
-  AVG(metrics.metrics.counter.metrics_top_sites_count)
+  AVG(metrics.counter.metrics_top_sites_count)
 FROM
   -- We give the table an alias so that the table name `metrics` and field name
   -- `metrics` don't conflict.
