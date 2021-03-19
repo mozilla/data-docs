@@ -29,7 +29,7 @@ average of this metric on the first of January, you could write something like t
 ```sql
 -- Count number of pings where Fenix is the default browser
 SELECT
-  AVG(metrics.metrics.counter.metrics_top_sites_count)
+  AVG(metrics.counter.metrics_top_sites_count)
 FROM
   -- We give the table an alias so that the table name `metrics` and field name
   -- `metrics` don't conflict.
