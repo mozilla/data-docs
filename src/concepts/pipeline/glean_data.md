@@ -1,7 +1,7 @@
 # Glean Data
 
-The following describes in detail how we structure Glean data in BigQuery. The actual software
-which does this is described in the [Generated Schemas](schemas.md) reference.
+The following describes in detail how we structure Glean data in BigQuery. For information on
+the actual software which does this, see the [Generated Schemas](schemas.md) reference.
 
 ## Tables
 
@@ -20,10 +20,10 @@ The top-level groups are:
 - `metrics`: [Custom metrics](https://mozilla.github.io/glean/book/user/metrics/index.html) defined by the application and its libraries.
 - `events`: [Custom events](https://mozilla.github.io/glean/book/user/metrics/event.html) defined by the application and its libraries.
 
-### Built-in metrics
+### Ping and Client Info sections
 
-[Core attributes sent with every ping](https://mozilla.github.io/glean/book/user/pings/index.html#glean-pings) are mapped to the `client_info` and `ping_info` sections. For example,
-the client id is mapped to a column called `client_info.client_id`.
+[Core attributes sent with every ping](https://mozilla.github.io/glean/book/user/pings/index.html#glean-pings) are mapped to the [`client_info`](https://mozilla.github.io/glean/book/user/pings/index.html#the-client_info-section) and [`ping_info`](https://mozilla.github.io/glean/book/user/pings/index.html#the-ping_info-section) sections.
+For example, the client id is mapped to a column called `client_info.client_id`.
 
 ### The `metrics` group
 
