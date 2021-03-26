@@ -178,14 +178,14 @@
 <ul>
 <li><a href="#experiment-enrollment-data">Experiment enrollment data</a></li>
 <li><a href="#experiment-search-metrics-data">Experiment search metrics data</a></li>
-<li><a href="#derived-tables">Derived tables</a></li>
+<li><a href="#derived-dataset">Derived dataset</a></li>
 <li><a href="#gcs-data-export">GCS data export</a></li>
-<li><a href="#scheduling">Scheduling</a></li>
+<li><a href="#implementation">Implementation</a></li>
 <li><a href="#code-reference">Code reference</a></li>
 </ul>
 <p>Experiment monitoring datasets are designed to power dashboards, such as <a href="https://grafana.telemetry.mozilla.org/d/XspgvdxZz/experiment-enrollment?orgId=1">Experiment Enrollment Grafana dashboard</a>, for monitoring experiments in real time. Currently, datasets for monitoring the number or enrollments and number of searches performed by clients enrolled in experiments are available.</p>
 <h2><a class="header" href="#experiment-enrollment-data" id="experiment-enrollment-data">Experiment enrollment data</a></h2>
-<p><code>moz-fx-data-shared-prod.telemetry_derived.experiment_enrollment_aggregates_live</code> provides enrollment, unenrollment, graduate, update and failure aggregates for experiments and branches over 5-minute intervals. This live view is also the basis of several derived tables:</p>
+<p><code>moz-fx-data-shared-prod.telemetry_derived.experiment_enrollment_aggregates_live_v1</code> provides enrollment, unenrollment, graduate, update and failure aggregates for experiments and branches over 5-minute intervals for Fenix and desktop experiments. This live view is also the basis of several derived views:</p>
 <table><thead><tr><th>Dataset name</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>mozdata.telemetry.experiment_unenrollment_overall</code></td><td>Overall number of clients that unenrolled from experiments</td></tr>
 <tr><td><code>mozdata.telemetry.experiment_enrollment_other_events_overall</code></td><td>Number of events other than <code>enroll</code> and <code>unenroll</code> sent by clients</td></tr>
@@ -194,21 +194,21 @@
 <tr><td><code>mozdata.telemetry.experiment_enrollment_daily_active_population</code></td><td>Number of daily active clients enrolled in experiments</td></tr>
 </tbody></table>
 <h2><a class="header" href="#experiment-search-metrics-data" id="experiment-search-metrics-data">Experiment search metrics data</a></h2>
-<p><code>moz-fx-data-shared-prod.telemetry_derived.experiment_search_aggregates_live_v1</code> provides aggregated search metrics of clients enrolled in experiments, such as the number of searches performed, the number of searches with ads and the number of ad clicks. This live view is also the basis of several derived tables:</p>
+<p><code>moz-fx-data-shared-prod.telemetry_derived.experiment_search_aggregates_live_v1</code> provides aggregated search metrics of clients enrolled in Fenix and desktop experiments, such as the number of searches performed, the number of searches with ads and the number of ad clicks. This live view is also the basis of several derived views:</p>
 <table><thead><tr><th>Dataset name</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>mozdata.telemetry.experiment_cumulative_ad_clicks</code></td><td>Cumulative number of ad clicks by clients enrolled in experiments</td></tr>
 <tr><td><code>mozdata.telemetry.experiment_cumulative_search_count</code></td><td>Cumulative number of searches by clients enrolled in experiments</td></tr>
 <tr><td><code>mozdata.telemetry.experiment_cumulative_search_with_ads_count</code></td><td>Cumulative number of searches with ads by clients enrolled in experiments</td></tr>
 </tbody></table>
-<h2><a class="header" href="#derived-tables" id="derived-tables">Derived tables</a></h2>
-<p>Derived tables all have the same schema:</p>
+<h2><a class="header" href="#derived-dataset" id="derived-dataset">Derived dataset</a></h2>
+<p>The derived views have the following schema:</p>
 <table><thead><tr><th>Column name</th><th>Type</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>time</code></td><td><code>TIMESTAMP</code></td><td>Timestamp when value was recorded</td></tr>
 <tr><td><code>branch</code></td><td><code>STRING</code></td><td>Experiment branch</td></tr>
 <tr><td><code>experiment</code></td><td><code>STRING</code></td><td>Experiment slug</td></tr>
 <tr><td><code>value</code></td><td><code>INT64</code></td><td>Aggregated value</td></tr>
 </tbody></table>
-<p>As an example of how these derived tables can be used, the following query determines the number of cumulative clients enrolled
+<p>As an example of how these views can be used, the following query determines the number of cumulative clients enrolled
 in a the <code>multi-stage-aboutwelcome-set-default-as-first-screen</code> experiment to date in each branch of a study:</p>
 <pre><code class="language-sql">SELECT
     branch,
@@ -219,30 +219,39 @@ GROUP BY 1
 ORDER BY 2
 </code></pre>
 <h2><a class="header" href="#gcs-data-export" id="gcs-data-export">GCS data export</a></h2>
-<p>As some dashboard solutions, such as the Experimenter console, might not have access to BigQuery, data from derived experiment monitoring tables is also exported as JSON to <code>monitoring/</code> in the <code>mozanalysis</code> bucket in <code>moz-fx-data-experiments</code>. JSON files are named like: <code>&lt;experiment_slug&gt;_&lt;monitoring_dataset_name&gt;.json</code>, for example: <code>gs://mozanalysis/monitoring/bug-1683348-rollout-tab-modal-print-ui-roll-out-release-84-85_experiment_unenrollment_overall.json</code></p>
+<p>As some dashboard solutions, such as the Experimenter console, might not have access to BigQuery, data from derived experiment monitoring views is also exported as JSON to <code>monitoring/</code> in the <code>mozanalysis</code> bucket in <code>moz-fx-data-experiments</code>. JSON files are named like: <code>&lt;experiment_slug&gt;_&lt;monitoring_dataset_name&gt;.json</code>, for example: <code>gs://mozanalysis/monitoring/bug-1683348-rollout-tab-modal-print-ui-roll-out-release-84-85_experiment_unenrollment_overall.json</code></p>
 <p>A script for exporting this data is <a href="https://github.com/mozilla/telemetry-airflow/blob/ad3d678cb45c7ac67cb96a46efb6b4e731b856f0/dags/experiments_live.py#L70">scheduled to run via Airflow</a> every 5 minutes.</p>
-<h2><a class="header" href="#scheduling" id="scheduling">Scheduling</a></h2>
-<p>To keep cost low for populating the monitoring live tables, several jobs have been set up for each enrollments and search metrics monitoring live tables:</p>
+<h2><a class="header" href="#implementation" id="implementation">Implementation</a></h2>
+<p>To keep the cost low for retrieving live monitoring data, <a href="https://cloud.google.com/bigquery/docs/materialized-views-intro">BigQuery materialized views</a> have been set up. These materialized views read delta changes from the base live tables to compute up-to-date results every 5 minutes.</p>
+<p>As materialized views do not support <code>UNION ALL</code>, separate materialized views are deployed for legacy desktop telemetry and every Fenix related dataset.</p>
+<p>Materialized views for experiment enrollment events:</p>
 <ul>
-<li><a href="https://github.com/mozilla/bigquery-etl/blob/master/dags/bqetl_experiments_hourly.py">Hourly jobs</a> that materialize data from the live tables from the past hour and write it to the hourly-partitioned <code>telemetry_derived.experiment_enrollment_aggregates_hourly_v1</code> and <code>telemetry_derived.experiment_search_aggregates_hourly_v1</code> tables. The jobs are scheduled with some lag (30 minutes) to account for BigQuery sink delays.</li>
-<li><a href="https://github.com/mozilla/bigquery-etl/blob/master/dags/bqetl_experiments_daily.py">Daily jobs</a> for updating <code>telemetry_derived.experiment_enrollment_aggregates_v1</code> and <code>telemetry_derived.experiment_search_aggregates_v1</code> to finalize numbers from the stable tables.</li>
-<li><a href="https://github.com/mozilla/telemetry-airflow/blob/ad3d678cb45c7ac67cb96a46efb6b4e731b856f0/dags/experiments_live.py#L18">Jobs scheduled to run every 5 minutes</a> that dump experiment enrollment aggregates and experiment search metrics aggregates that are very recent and have not been processed by the hourly job yet into <code>telemetry_derived.experiment_enrollment_aggregates_recents_v1</code> and <code>telemetry_derived.experiment_search_aggregates_recents_v1</code>.</li>
+<li><code>org_mozilla_fenix_derived.experiment_events_live_v1</code></li>
+<li><code>org_mozilla_firefox_derived.experiment_events_live_v1</code></li>
+<li><code>org_mozilla_firefox_beta_derived.experiment_events_live_v1</code></li>
+<li><code>telemetry_derived.experiment_events_live_v1</code></li>
 </ul>
-<p>The tables derived from the experiment monitoring live tables are also <a href="https://github.com/mozilla/telemetry-airflow/blob/ad3d678cb45c7ac67cb96a46efb6b4e731b856f0/dags/experiments_live.py#L18">scheduled to run every 5 minutes together with the data export script</a>.</p>
+<p>The <code>moz-fx-data-shared-prod.telemetry_derived.experiment_enrollment_aggregates_live_v1</code> view combines data of the past 2 days from all of the materialized views for experiment enrollments with data older than 2 days from <code>telemetry_derived.experiment_enrollment_aggregates_v1</code>.</p>
+<p>Materialized view for search metrics:</p>
+<ul>
+<li><code>org_mozilla_fenix_derived.experiment_search_events_live_v1</code></li>
+<li><code>org_mozilla_firefox_derived.experiment_search_events_live_v1</code></li>
+<li><code>org_mozilla_firefox_beta_derived.experiment_search_events_live_v1</code></li>
+<li><code>telemetry_derived.experiment_search_events_live_v1</code></li>
+</ul>
+<p>The <code>moz-fx-data-shared-prod.telemetry_derived.experiment_search_aggregates_live_v1</code> view combines data of the past 2 days from all of the materialized views for search metrics with data older than 2 days from <code>telemetry_derived.search_aggregates_v1</code>.</p>
 <h2><a class="header" href="#code-reference" id="code-reference">Code reference</a></h2>
-<p><a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/experiment_enrollment_aggregates_live/view.sql"><code>moz-fx-data-shared-prod.telemetry_derived.experiment_enrollment_aggregates_live</code></a> and derived datasets are part of bigquery-etl:</p>
 <ul>
-<li><a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/experiment_enrollment_other_events_overall_v1/query.sql"><code>mozdata.telemetry.experiment_enrollment_other_events_overall</code></a></li>
-<li><a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/experiment_enrollment_cumulative_population_estimate_v1/query.sql"><code>mozdata.telemetry.experiment_enrollment_cumulative_population_estimate</code></a></li>
-<li><a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/experiment_enrollment_overall_v1/query.sql"><code>mozdata.telemetry.experiment_enrollment_overall</code></a></li>
-<li><a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/experiment_unenrollment_overall_v1/query.sql"><code>mozdata.telemetry.experiment_unenrollment_overall</code></a></li>
-<li><a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/experiment_enrollment_daily_active_population_v1/query.sql"><code>mozdata.telemetry.experiment_enrollment_daily_active_population</code></a></li>
+<li><a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/experiment_enrollment_aggregates_live_v1/view.sql"><code>moz-fx-data-shared-prod.telemetry_derived.experiment_enrollment_aggregates_live_v1</code></a></li>
+<li><a href="https://github.com/mozilla/bigquery-etl/tree/master/sql/moz-fx-data-shared-prod/org_mozilla_fenix_derived/experiment_events_live_v1/init.sql"><code>org_mozilla_fenix_derived.experiment_events_live_v1</code></a></li>
+<li><a href="https://github.com/mozilla/bigquery-etl/tree/master/sql/moz-fx-data-shared-prod/org_mozilla_firefox_derived/experiment_events_live_v1/init.sql"><code>org_mozilla_firefox_derived.experiment_events_live_v1</code></a></li>
+<li><a href="https://github.com/mozilla/bigquery-etl/tree/master/sql/moz-fx-data-shared-prod/org_mozilla_firefox_beta_derived/experiment_events_live_v1/init.sql"><code>org_mozilla_firefox_beta_derived.experiment_events_live_v1</code></a></li>
 </ul>
-<p><a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/experiment_search_aggregates_live_v1/view.sql"><code>moz-fx-data-shared-prod.telemetry_derived.experiment_search_aggregates_live_v1</code></a> and derived datasets are part of bigquery-etl:</p>
+<p>-<a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/experiment_search_aggregates_live_v1/view.sql"><code>moz-fx-data-shared-prod.telemetry_derived.experiment_search_aggregates_live_v1</code></a></p>
 <ul>
-<li><a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/experiment_cumulative_ad_clicks_v1/query.sql"><code>mozdata.telemetry.experiment_cumulative_ad_clicks</code></a></li>
-<li><a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/experiment_cumulative_search_count_v1/query.sql"><code>mozdata.telemetry.experiment_cumulative_search_count</code></a></li>
-<li><a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/experiment_cumulative_search_with_ads_count_v1/query.sql"><code>mozdata.telemetry.experiment_cumulative_search_with_ads_count</code></a></li>
+<li><a href="https://github.com/mozilla/bigquery-etl/tree/master/sql/moz-fx-data-shared-prod/org_mozilla_fenix_derived/experiment_search_events_live_v1/init.sql"><code>org_mozilla_fenix_derived.experiment_search_events_live_v1</code></a></li>
+<li><a href="https://github.com/mozilla/bigquery-etl/tree/master/sql/moz-fx-data-shared-prod/org_mozilla_firefox_derived/experiment_search_events_live_v1/init.sql"><code>org_mozilla_firefox_derived.experiment_search_events_live_v1</code></a></li>
+<li><a href="https://github.com/mozilla/bigquery-etl/tree/master/sql/moz-fx-data-shared-prod/org_mozilla_firefox_beta_derived/experiment_search_events_live_v1/init.sql"><code>org_mozilla_firefox_beta_derived.experiment_search_events_live_v1</code></a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/experiment_monitoring.md">Edit this file on GitHub.</a></footer>
                     </main>
