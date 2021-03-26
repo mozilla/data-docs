@@ -60,7 +60,7 @@ A script for exporting this data is [scheduled to run via Airflow](https://githu
 
 To keep the cost low for retrieving live monitoring data, [BigQuery materialized views](https://cloud.google.com/bigquery/docs/materialized-views-intro) have been set up. These materialized views read delta changes from the base live tables to compute up-to-date results every 5 minutes.
 
-As materialized views do not support `UNION ALL`, separate materialized views are deployed for legacy desktop telemetry and every Fenix related datasets:
+As materialized views do not support `UNION ALL`, separate materialized views are deployed for legacy desktop telemetry and every Fenix related dataset.
 
 Materialized views for experiment enrollment events:
 
