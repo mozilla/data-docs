@@ -15,7 +15,7 @@ You can locate us in the [#telemetry:mozilla.org] channel on [Mozilla's instance
 You can ask questions (and get answers!) in [`#data-help`] on Mozilla Internal's
 Slack. See also [`#data`] for general data-related discussion.
 
-[fx-data-dev]: https://mail.mozilla.org/listinfo/fx-data-dev
+[fx-data-dev]: https://groups.google.com/a/mozilla.org/g/fx-data-dev
 [fx-data-platform]: mailto:fx-data-platform@mozilla.com
 [#telemetry:mozilla.org]: https://chat.mozilla.org/#/room/#telemetry:mozilla.org
 [mozilla's instance of matrix]: https://wiki.mozilla.org/Matrix
