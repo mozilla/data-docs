@@ -1,6 +1,6 @@
 # Events
 
-The `telemetry.events` and `telemetry.events_1pct `derived datasets
+The `telemetry.events` and `telemetry.events_1pct` derived datasets
 make it easier to analyze the desktop Firefox [event ping][event_ping].
 It has the following advantages over accessing the raw ping table (`telemetry.event`):
 
