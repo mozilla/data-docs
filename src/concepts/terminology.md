@@ -154,7 +154,7 @@ A service for creating queries and dashboards. See [STMO under analysis tools](.
 
 As you use Firefox, Telemetry measures and collects non-personal information, such as performance, hardware, usage and customizations. It then sends this information to Mozilla on a daily basis and we use it to improve Firefox.
 
-### WAU
+## WAU
 
 The number of unique profiles active at least once during the 7-day window
 ending on the specified day.
