@@ -88,7 +88,7 @@ Intuitively, how many days per week do users use the product? Among profiles act
 
 In general: a metric is anything that you want to (and can) measure. This differs from a dimension which is a qualitative attribute of data.
 
-In the context of [Glean](#glean), a metric refers to an instrumented measure for a specific aspect of the product (similar to a [probe](#probe) in Firefox).
+In the context of [Glean](#glean), a metric refers to an instrumented measure for a specific aspect of the product (similar to a [probe](#probe) in Firefox Telemetry).
 
 ## MAU
 
