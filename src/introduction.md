@@ -23,12 +23,6 @@ This documentation is divided into the following sections:
 This section provides a **quick introduction** to analyzing telemetry data.
 After reading these articles, you will be able to confidently perform analysis
 over telemetry data.
-
-### [Standard Metrics](metrics/index.md)
-
-This section provides an overview of standard metrics used at Mozilla. Here you'll
-find the definitions and descriptions for each.
-
 ### [Cookbooks & Tutorials](cookbooks/index.md)
 
 This section contains tutorials presented in a simple problem/solution format, organized by topic.
