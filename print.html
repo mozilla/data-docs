@@ -304,7 +304,8 @@ Note that <a href="concepts/./analysis_gotchas.html#build-ids">the format may di
 <h2><a class="header" href="#intensity" id="intensity">Intensity</a></h2>
 <p>Intuitively, how many days per week do users use the product? Among profiles active at least once in the week ending on the date specified, the number of days on average they were active during that one-week window.</p>
 <h2><a class="header" href="#metric" id="metric">Metric</a></h2>
-<p>A metric is anything that you want to (and can) measure. This differs from a dimension which is a qualitative attribute of data.</p>
+<p>In general: a metric is anything that you want to (and can) measure. This differs from a dimension which is a qualitative attribute of data.</p>
+<p>In the context of <a href="concepts/terminology.html#glean">Glean</a>, a metric refers to an instrumented measure for a specific aspect of the product (similar to a <a href="concepts/terminology.html#probe">probe</a> in Firefox Telemetry).</p>
 <h2><a class="header" href="#mau" id="mau">MAU</a></h2>
 <p>Monthly Active Users - the number of unique profiles active in the 28-day period ending on a given day. The number of unique profiles active at least once during the 28-day window
 ending on the specified day.</p>
@@ -325,6 +326,7 @@ The bulk of the data that is handled by this pipeline is Firefox Telemetry data.
 <li>When a probe started being collected</li>
 <li>Whether data from this probe is collected in the release channel</li>
 </ul>
+<p>Newer measurements implemented using <a href="concepts/terminology.html#glean">Glean</a> are referred to as <a href="concepts/terminology.html#metrics">metrics</a> instead of probes, but the basic outline is the same. Details about Glean Metrics are collected inside the <a href="https://dictionary.protosaur.dev">Glean Dictionary</a>.</p>
 <h2><a class="header" href="#profile" id="profile">Profile</a></h2>
 <p>All of the changes a user makes in Firefox, like the home page, what toolbars you use, installed addons, saved passwords and your bookmarks, are all stored in a special folder, called a profile. Telemetry stores archived and pending pings in the profile directory as well as metadata like the <a href="concepts/terminology.html#client-id">client id</a>. See also <a href="concepts/./profile/profile_creation.html">Profile Creation</a></p>
 <h2><a class="header" href="#query" id="query">Query</a></h2>
