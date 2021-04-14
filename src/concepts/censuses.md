@@ -1,6 +1,6 @@
 ## Legacy Census Metrics
 
-> **⚠** The information in this document is obsolete: see the [metrics section](../metrics/metrics.md) for currently-used metrics measuring our users. This content was originally included in the [Project Smoot existing metrics report][smootv1] (Mozilla internal link).
+> **⚠** The information in this document is obsolete. This content was originally included in the [Project Smoot existing metrics report][smootv1] (Mozilla internal link).
 
 [smootv1]: https://mozilla-private.report/smoot-existing-metrics/book/05_overview.html
 
