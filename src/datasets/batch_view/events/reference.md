@@ -20,7 +20,7 @@ are mapped to columns named `event_timestamp`, `event_category`, `event_method`,
 To access the `event_map_values`, you can use the `mozfun.map.get_key` UDF,
 like `SELECT mozfun.map.get_key(event_map_values, "branch") AS branch FROM telemetry.events`.
 
-Please note that `event_timestamp` refers to the time in milliseconds when the event was recorded *relative to the main process start time* (`session_start_time`), while the `timestamp` column refers to the time the ping was ingested. `event_timestamp` is useful for determining relative order of events within a single session. Adding `event_timestamp` to `session_start_time` will allow you to approximate the absolute time an event occurred, subject to client clock skew and other factors.
+Please note that `event_timestamp` refers to the time in milliseconds when the event was recorded _relative to the main process start time_ (`session_start_time`), while the `timestamp` column refers to the time the ping was ingested. `event_timestamp` is useful for determining relative order of events within a single session. Adding `event_timestamp` to `session_start_time` will allow you to approximate the absolute time an event occurred, subject to client clock skew and other factors.
 
 ### Sample of events: `telemetry.events_1pct`
 
@@ -33,7 +33,6 @@ BigQuery is also better able to estimate the amount of data it will scan when
 querying `events_1pct`, so queries on `events_1pct` may be able to succeed where
 the equivalent query on `events` with a `sample_id = 0` filter would be rejected
 due to the query appearing to scan many TB of data.
-
 
 ### Example Query
 
