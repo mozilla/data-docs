@@ -102,6 +102,7 @@
     - [Activity Stream](datasets/other/activity-stream/reference.md)
     - [bmobugs](datasets/other/bmobugs/reference.md)
     - [Build metadata](datasets/buildhub.md)
+    - [Release information](datasets/releases.md)
   - [Firefox Accounts Datasets](datasets/fxa.md)
     - [Firefox Account Attribution](datasets/fxa_metrics/attribution.md)
     - [Firefox Account Funnel Metrics](datasets/fxa_metrics/funnels.md)
