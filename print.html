@@ -5358,7 +5358,7 @@ data that could be filtered. This should help answer two classes of questions:</
 (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1678497">to be removed, but capability to remain</a>).</p>
 <p>What: Drops data entirely from the pipeline; there will be no traces of it downstream from the edge server.</p>
 <p>When: Only to be used in extreme situations (e.g. PII exposure). We also use it for dropping <a href="https://github.com/mozilla/gcp-ingestion/blob/master/docs/architecture/overview.md#limits">too-large messages</a> and <a href="https://github.com/mozilla/gcp-ingestion/blob/master/ingestion-edge/ingestion_edge/util.py#L95">headers</a>.</p>
-<p>How: Can be used to filter by URI, namespaces, apps, etc. (from the URL or from the HTTP headers); but not anything in the payload. </p>
+<p>How: Can be used to filter by URI, namespaces, apps, etc. (from the URL or from the HTTP headers); but not anything in the payload.</p>
 <h3><a class="header" href="#beam-filtering" id="beam-filtering">Beam Filtering</a></h3>
 <p>Where: Filtered in the <a href="https://github.com/mozilla/gcp-ingestion/blob/master/ingestion-beam/src/main/java/com/mozilla/telemetry/decoder/MessageScrubber.java">message scrubber</a>.</p>
 <p>What: Causes data to be written to the <a href="concepts/pipeline/filtering.html#querying-the-error-stream">error stream</a> or to be dropped entirely.</p>
@@ -8206,6 +8206,7 @@ associated with the add-on studies instead.</p>
 This page is intended as a partial historical reference
 for these probes.</p>
 <table><thead><tr><th>Start date</th><th>Study</th><th>Probe type</th><th>Probe names</th><th>Documentation</th></tr></thead><tbody>
+<tr><td>2020-11</td><td><a href="https://github.com/mozilla-extensions/dnssec-interference">DNSSEC interference study</a></td><td>custom ping</td><td><code>dnssec-study-v1</code> ping</td><td>https://github.com/mozilla-extensions/dnssec-interference/blob/master/TELEMETRY.md</td></tr>
 <tr><td>2020-08</td><td><a href="https://github.com/mozilla-extensions/doh-resolver-usage-study">DoH Resolver Usage Study</a></td><td>event</td><td><code>doh.study.resolverusage#resolve.domains</code></td><td>https://github.com/mozilla-extensions/doh-resolver-usage-study/blob/master/docs/TELEMETRY.md</td></tr>
 <tr><td>2020-06</td><td><a href="https://github.com/mozilla-extensions/login-study">Google Accounts Login Check</a></td><td>custom ping</td><td><a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/pull/561"><code>normandy-login-study</code></a> ping ingested to the <code>telemetry.normandy_login_study</code> table</td><td>https://github.com/mozilla-extensions/login-study/blob/master/login-check-metrics.md</td></tr>
 <tr><td>2020-04</td><td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1623996">HTTP Upgrade</a></td><td>scalar</td><td><code>httpsUpgradeStudy.https</code>, <code>httpsUpgradeStudy.nonupgradable</code>, <code>httpsUpgradeStudy.upgradable</code></td><td>https://bugzilla.mozilla.org/show_bug.cgi?id=1629585</td></tr>

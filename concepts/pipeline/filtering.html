@@ -209,7 +209,7 @@ data that could be filtered. This should help answer two classes of questions:</
 (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1678497">to be removed, but capability to remain</a>).</p>
 <p>What: Drops data entirely from the pipeline; there will be no traces of it downstream from the edge server.</p>
 <p>When: Only to be used in extreme situations (e.g. PII exposure). We also use it for dropping <a href="https://github.com/mozilla/gcp-ingestion/blob/master/docs/architecture/overview.md#limits">too-large messages</a> and <a href="https://github.com/mozilla/gcp-ingestion/blob/master/ingestion-edge/ingestion_edge/util.py#L95">headers</a>.</p>
-<p>How: Can be used to filter by URI, namespaces, apps, etc. (from the URL or from the HTTP headers); but not anything in the payload. </p>
+<p>How: Can be used to filter by URI, namespaces, apps, etc. (from the URL or from the HTTP headers); but not anything in the payload.</p>
 <h3><a class="header" href="#beam-filtering" id="beam-filtering">Beam Filtering</a></h3>
 <p>Where: Filtered in the <a href="https://github.com/mozilla/gcp-ingestion/blob/master/ingestion-beam/src/main/java/com/mozilla/telemetry/decoder/MessageScrubber.java">message scrubber</a>.</p>
 <p>What: Causes data to be written to the <a href="#querying-the-error-stream">error stream</a> or to be dropped entirely.</p>
