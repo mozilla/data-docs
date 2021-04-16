@@ -23,6 +23,7 @@ This documentation is divided into the following sections:
 This section provides a **quick introduction** to analyzing telemetry data.
 After reading these articles, you will be able to confidently perform analysis
 over telemetry data.
+
 ### [Cookbooks & Tutorials](cookbooks/index.md)
 
 This section contains tutorials presented in a simple problem/solution format, organized by topic.

@@ -13,17 +13,17 @@ data that could be filtered. This should help answer two classes of questions:
 1. Did my data get filtered out?
 2. We've uncovered spurious data being ingested, how should we handle that?
 
-*Note*: [JSON Schema filtering](#json-schema-filtering) is our primary method of filtering out bad data. That should be used before any other methods of dropping data from the pipeline.
+_Note_: [JSON Schema filtering](#json-schema-filtering) is our primary method of filtering out bad data. That should be used before any other methods of dropping data from the pipeline.
 
 ## Stages
 
-__Where__ - Which stage of the pipeline this filtering occurs in
+**Where** - Which stage of the pipeline this filtering occurs in
 
-__What__ - What happens to the data when filtered here
+**What** - What happens to the data when filtered here
 
-__When__ - Which situations this filtering should be, and is, used in
+**When** - Which situations this filtering should be, and is, used in
 
-__How__ - What kind of data can be filtered at this stage
+**How** - What kind of data can be filtered at this stage
 
 ### Edge filtering
 
@@ -34,7 +34,7 @@ What: Drops data entirely from the pipeline; there will be no traces of it downs
 
 When: Only to be used in extreme situations (e.g. PII exposure). We also use it for dropping [too-large messages](https://github.com/mozilla/gcp-ingestion/blob/master/docs/architecture/overview.md#limits) and [headers](https://github.com/mozilla/gcp-ingestion/blob/master/ingestion-edge/ingestion_edge/util.py#L95).
 
-How: Can be used to filter by URI, namespaces, apps, etc. (from the URL or from the HTTP headers); but not anything in the payload. 
+How: Can be used to filter by URI, namespaces, apps, etc. (from the URL or from the HTTP headers); but not anything in the payload.
 
 ### Beam Filtering
 
