@@ -2,7 +2,8 @@
 
 ## Table of Contents
 
-This glossary provides definitions for commonly-used terms at Mozilla.
+This glossary provides definitions for some common terms used in the Mozilla data universe.
+If you're new to Mozilla, you may also find the [general glossary](https://wiki.mozilla.org/Glossary) on `wiki.mozilla.org` helpful.
 
 <!-- toc -->
 
