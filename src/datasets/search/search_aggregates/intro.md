@@ -22,9 +22,14 @@ Unless otherwise noted, these columns are taken directly from `main_summary`.
 - `app_version`
 - `distribution_id` - `NULL` means the standard Firefox build
 - `search_cohort` - `NULL` except for small segments relating to search experimentation
+- `default_search_engine`
+- `default_private_search_engine`
+- `os` - e.g. `Linux`, `Windows_NT`, `Darwin` ...
+- `os_version`
+- `is_default_browser`
 
-There are five aggregation columns:
-`sap`, `tagged-sap`, and `tagged-follow-on`, `organic` and `unknown`.
+There are ten aggregation columns:
+`sap`, `tagged-sap`, `tagged-follow-on`,`organic`, `unknown`, `ad_click`, `ad_click_organic`, `search_with_ads`, `search_with_ads_organic`, and `client_count`.
 Each of these columns represent different types of searches.
 For more details, see the [search data documentation]
 
