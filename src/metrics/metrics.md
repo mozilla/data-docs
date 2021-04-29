@@ -50,7 +50,7 @@ GROUP BY
   submission_date
 ```
 
-You can run this query on [STMO](https://sql.telemetry.mozilla.org/queries/72012/source).
+You can run this query on [`STMO#72012`](https://sql.telemetry.mozilla.org/queries/72012/source).
 
 ---
 
@@ -97,7 +97,7 @@ GROUP BY 1,2
 ORDER BY 1
 ```
 
-[link](https://sql.telemetry.mozilla.org/queries/72054/source)
+[`STMO#72054`](https://sql.telemetry.mozilla.org/queries/72054/source)
 
 ---
 

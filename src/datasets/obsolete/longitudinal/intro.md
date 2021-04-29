@@ -11,7 +11,7 @@ Each column represents a field from the main ping.
 Most fields contain **arrays of values**, with one value for each ping associated with a `client_id`.
 Using arrays give you access to the raw data from each ping,
 but can be difficult to work with from SQL.
-Here's a [query showing some sample data](https://sql.telemetry.mozilla.org/queries/4188#table)
+Here's a [query showing some sample data (`STMO#4188`)](https://sql.telemetry.mozilla.org/queries/4188#table)
 to help illustrate.
 
 #### Background and Caveats
@@ -31,7 +31,7 @@ Please note that this dataset only contains release (or opt-out) histograms and 
 
 The `longitudinal` is available in STMO,
 though it can be difficult to work with the array values in SQL.
-Take a look at this [example query](https://sql.telemetry.mozilla.org/queries/4189/source).
+Take a look at [`STMO#4189`](https://sql.telemetry.mozilla.org/queries/4189/source).
 
 The data is stored as a parquet table in S3 at the following address.
 
