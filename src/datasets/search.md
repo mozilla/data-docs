@@ -133,7 +133,7 @@ These codes also occasionally change so there will be gaps in the data.
 
 Additionally, changes to search engine URL formats can cause problems with our data collection.
 See
-[this query](https://sql.telemetry.mozilla.org/queries/47631/source#128887)
+[`STMO#128887`](https://sql.telemetry.mozilla.org/queries/47631/source#128887)
 for a notable example.
 
 ## Limited historical data

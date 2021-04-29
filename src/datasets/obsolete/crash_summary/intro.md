@@ -17,7 +17,7 @@ s3://telemetry-parquet/crash_summary/v1/
 ```
 
 `crash_summary` is accessible through STMO.
-Here's an [example query](https://sql.telemetry.mozilla.org/queries/4793/source).
+Here's an [example query (`STMO#4793`)](https://sql.telemetry.mozilla.org/queries/4793/source).
 
 #### Further Reading
 

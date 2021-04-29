@@ -98,4 +98,4 @@ Data can also be accessed through the public HTTP endpoint: [https://public-data
 ## Code Reference
 
 You can find the query that generates the SSL dataset
-[here](https://sql.telemetry.mozilla.org/queries/49323/source#table).
+[`STMO#49323`](https://sql.telemetry.mozilla.org/queries/49323/source#table).

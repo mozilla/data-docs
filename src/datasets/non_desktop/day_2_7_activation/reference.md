@@ -41,7 +41,7 @@ GROUP BY 1,2
 ORDER BY 1
 ```
 
-[Link to query in STMO](https://sql.telemetry.mozilla.org/queries/72054)
+[`STMO#72054`](https://sql.telemetry.mozilla.org/queries/72054)
 
 ## Scheduling
 
