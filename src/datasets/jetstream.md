@@ -12,14 +12,14 @@ Jetstream is also run after pushes to the [`jetstream-config`] repository.
 Jetstream publishes tables to the dataset `moz-fx-data-experiments.mozanalysis`.
 
 Experiments are analyzed using the concept of analysis windows. Analysis
-windows describe an interval marked from each client’s day of
-enrollment. The “day 0” analysis window aggregates data from the days
+windows describe an interval marked from each client's day of
+enrollment. The "day 0" analysis window aggregates data from the days
 that each client enrolled in the experiment. Because the intervals are
 demarcated from enrollment, they are not calendar dates; for some
 clients in an experiment, day 0 could be a Tuesday, and for others a
 Saturday.
 
-The week 0 analysis window aggregates data from each client’s days 0
+The week 0 analysis window aggregates data from each client's days 0
 through 6, the week 1 window aggregates data from days 7 through 13, and
 so on.
 
@@ -30,8 +30,8 @@ client has enrolled, and week 0 results are available a week after the
 enrollment period closes. Results for each window are published as soon
 as complete data is available for all enrolled clients.
 
-The “overall” window, published after the experiment has ended, is a
-window beginning on each client’s day 0 that spans the longest period
+The "overall" window, published after the experiment has ended, is a
+window beginning on each client's day 0 that spans the longest period
 for which all clients have complete data.
 
 Jetstream computes statistics over several metrics by default, including
@@ -61,12 +61,12 @@ Statistics tables have the schema:
 
 | Column name            | Type                | Description                                                                                                                                                                                                                      |
 | ---------------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `segment`              | `STRING`            | The segment of the population being analyzed. “all” for the entire population.                                                                                                                                                   |
+| `segment`              | `STRING`            | The segment of the population being analyzed. "all" for the entire population.                                                                                                                                                   |
 | `metric`               | `STRING`            | The slug of the metric, like `active_ticks` or `retained`                                                                                                                                                                        |
-| `statistic`            | `STRING`            | The slug of the statistic that was used to summarize the metric, like “mean” or “deciles”                                                                                                                                        |
-| `parameter`            | `NUMERIC` (decimal) | A statistic-dependent quantity. For two-dimensional statistics like “decile,” this represents the x axis of the plot. For one-dimensional statistics, this is NULL.                                                              |
+| `statistic`            | `STRING`            | The slug of the statistic that was used to summarize the metric, like "mean" or "deciles"                                                                                                                                        |
+| `parameter`            | `NUMERIC` (decimal) | A statistic-dependent quantity. For two-dimensional statistics like "decile," this represents the x axis of the plot. For one-dimensional statistics, this is NULL.                                                              |
 | `comparison`           | `STRING`            | If this row represents a comparison between two branches, this row describes what kind of comparison, like `difference` or `relative_uplift`. If this row represents a measurement of a single branch, then this column is NULL. |
-| `comparison_to_branch` | `STRING`            | If this row represents a comparison between two branches, this row describes which branch is being compared to. For simple A/B tests, this will be “control.”                                                                    |
+| `comparison_to_branch` | `STRING`            | If this row represents a comparison between two branches, this row describes which branch is being compared to. For simple A/B tests, this will be "control."                                                                    |
 | `ci_width`             | `FLOAT64`           | A value between 0 and 1 describing the width of the confidence interval represented by the lower and upper columns. Valued at 0.95 for 95% confidence intervals.                                                                 |
 | `point`                | `FLOAT64`           | The point estimate of the statistic for the metric given the parameter.                                                                                                                                                          |
 | `lower`                | `FLOAT64`           | The lower bound of the confidence interval for the estimate.                                                                                                                                                                     |
@@ -79,7 +79,7 @@ point.
 The available segments in a table should be derived from inspection of
 the table.
 
-[Jetstream’s Github wiki][jetstream-wiki] has a description of each statistic and
+[Jetstream's Github wiki][jetstream-wiki] has a description of each statistic and
 comparison.
 
 ### Examples
@@ -150,7 +150,7 @@ columns:
 
 | Column name             | Type     | Description                                                                              |
 | ----------------------- | -------- | ---------------------------------------------------------------------------------------- |
-| `client_id`             | `STRING` | Client’s telemetry `client_id`                                                           |
+| `client_id`             | `STRING` | Client's telemetry `client_id`                                                           |
 | `branch`                | `STRING` | Branch client enrolled in                                                                |
 | `enrollment_date`       | `DATE`   | First date that the client enrolled in the branch                                        |
 | `num_enrollment_events` | `INT64`  | Number of times a client enrolled in the given branch                                    |
@@ -170,6 +170,31 @@ without any tagged branch in that dataset over that analysis window.
 
 Each segment associated with the experiment defines an additional boolean column.
 
+## Enrollment tables
+
+Enrollment tables contain enrollment information per `client_id` for which
+an `enroll` event has been received. An enrollment table for a specific experiment
+is created once after the enrollment period has completed. The enrollment table
+is then re-used in sub-sequent analysis runs.
+
+Enrollment tables are named like:
+
+`enrollments_<slug>`
+
+Enrollment tables have flexible schemas, but every table contains the columns:
+
+| Column name             | Type     | Description                                           |
+| ----------------------- | -------- | ----------------------------------------------------- |
+| `client_id`             | `STRING` | Client's telemetry `client_id`                        |
+| `branch`                | `STRING` | Branch client enrolled in                             |
+| `enrollment_date`       | `DATE`   | First date that the client enrolled in the branch     |
+| `num_enrollment_events` | `INT64`  | Number of times a client enrolled in the given branch |
+
+The combination of `(client_id, branch)` is unique.
+
+Each segment defines an additional non-NULL boolean column per segment which is set to
+`true` if the client is in the segment and `false` otherwise.
+
 ## Scheduling
 
 Jetstream is updated nightly by telemetry-airflow.
@@ -180,3 +205,7 @@ It is invoked by the [`jetstream` DAG](https://github.com/mozilla/telemetry-airf
 Jetstream's datasets are generated by invoking [Jetstream].
 Data scientists can configure Jetstream or trigger a Jetstream invocation
 by interacting with the [`jetstream-config`] repository.
+
+## Documentation
+
+Additional documentation about Jetstream can be found in the [Jetstream Experimenter Docs](https://experimenter.info/jetstream/jetstream).
