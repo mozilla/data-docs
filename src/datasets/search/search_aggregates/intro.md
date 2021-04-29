@@ -31,7 +31,7 @@ Unless otherwise noted, these columns are taken directly from `main_summary`.
 There are ten aggregation columns:
 `sap`, `tagged-sap`, `tagged-follow-on`,`organic`, `unknown`, `ad_click`, `ad_click_organic`, `search_with_ads`, `search_with_ads_organic`, and `client_count`.
 Each of these columns represent different types of searches.
-For more details, see the [search data documentation]
+For more details, see the [search data documentation].
 
 <!--
 #### Further Reading
