@@ -80,6 +80,7 @@
     - [Socorro Crash Reports](datasets/other/socorro_crash/reference.md)
     - [SSL Ratios (public)](datasets/other/ssl/reference.md)
     - [Telemetry Aggregates](datasets/batch_view/telemetry_aggregates/reference.md)
+    - [GLAM Aggregates](datasets/glam.md)
   - [Experiment Datasets](tools/experiments.md)
     - [Jetstream](datasets/jetstream.md)
     - [Accessing Heartbeat data](datasets/heartbeat.md)
