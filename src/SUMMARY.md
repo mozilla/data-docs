@@ -5,6 +5,7 @@
   - [Gaining Access](concepts/gaining_access.md)
   - [Analysis Quick Start](concepts/analysis_intro.md)
   - [Tools for Data Analysis](tools/interfaces.md)
+    - [GLAM](tools/glam.md)
   - [Common Analysis Gotchas](concepts/analysis_gotchas.md)
   - [Choosing a Desktop Dataset](concepts/choosing_a_dataset.md)
   - [Choosing a Mobile Dataset](concepts/choosing_a_dataset_mobile.md)
