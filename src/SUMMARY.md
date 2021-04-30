@@ -25,7 +25,7 @@
       - [Working with Normandy events](cookbooks/normandy_events.md)
       - [Working with Crash Pings](cookbooks/crash_pings.md)
       - [Working with Bit Patterns in Clients Last Seen](cookbooks/clients_last_seen_bits.md)
-      - [Visualizing Percentiles of an Main Ping Exponential Histogram](cookbooks/main_ping_exponential_histograms.md)
+      - [Visualizing Percentiles of a Main Ping Exponential Histogram](cookbooks/main_ping_exponential_histograms.md)
     - [Real-time](cookbooks/realtime.md)
       - [Seeing Your Own Pings](cookbooks/view_pings_cep.md)
     - [Metrics](cookbooks/metrics.md)
