@@ -12,13 +12,13 @@ You can visit GLAM at [glam.telemetry.mozilla.org](https://glam.telemetry.mozill
 
 ![](../assets/GLAM_screenshots/front-page.png)
 
-The front page includes 2 main sections: the search bar and the random probe explorer. Fuzzy tech search is impemented to let users search not only by the probe title, but also by the full description.
+The front page includes 2 main sections: the search bar and the random probe explorer. Fuzzy tech search is implemented to let users search not only by the probe title, but also by the full description.
 
 GLAM is currently serving data for Firefox Desktop and Firefox for Android.
 
 ### Individual probe/metric page
 
-Clicking on a probe or metric name takes you to the individual explorer, where most of the analysis happens. As this page is packed with data, we make sure that it's self-documented as much as possible: every button, surface, menu item, is tooltipped with description and links.
+Clicking on a probe or metric name takes you to the individual explorer, where most of the analysis happens. As this page is packed with data, we make sure that it's self-documented as much as possible: every button, surface, menu item, is tool-tipped with description and links.
 
 ![](../assets/GLAM_screenshots/probe-page.png)
 
@@ -35,7 +35,7 @@ Clicking on a probe or metric name takes you to the individual explorer, where m
 
 **(5)** Probe or metric distribution and percentiles over time:
 
-- `Percentiles` shows the percentitles of the probe over time. To perform analysis, set a reference point by clicking on a target date, then hover along the graph to see the recorded differences. See attached tooltips on the page for more instruction.
+- `Percentiles` shows the percentiles of the probe over time. To perform analysis, set a reference point by clicking on a target date, then hover along the graph to see the recorded differences. See attached tooltips on the page for more instruction.
 - The `compare` violin plot shows the comparison between 2 (vertical) normal distributions
 - `Summary` table provides the exact numeric values of the percentiles of the median changes between Build IDs.
 
@@ -45,7 +45,7 @@ Clicking on a probe or metric name takes you to the individual explorer, where m
 
 For more information about the datasets that power GLAM, see [GLAM Datasets](../datasets/glam.md).
 
-If you have a question that can't be easily answered by the GLAM GUI, you can access the raw GLAM datasets using [`sql.telemetry.mozilla.org`](sql.telemetry.mozilla.org).
+If you have a question that can't be easily answered by the GLAM GUI, you can access the raw GLAM datasets using [`sql.telemetry.mozilla.org`](../tools/stmo.md).
 
 ## Getting help
 
