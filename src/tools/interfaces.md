@@ -16,10 +16,12 @@ The [Mozilla Growth & Usage Dashboard](https://gud.telemetry.mozilla.org/) (GUD)
 
 The [Glean Aggregated Metrics Dashboard](https://glam.telemetry.mozilla.org/) (GLAM) is an interactive dashboard that is Mozilla’s primary self-service tool for examining the distributions of values of specific individual telemetry metrics, over time and across different user populations. It is similar to GUD in that it is meant to be usable by everyone; no specific data analysis or coding skills are needed. But while GUD is focused on a relatively small number of high level, derived product metrics about user engagement (e.g. MAU, DAU, retention, etc) GLAM is focused on a diverse and plentiful set of probes and data points that engineers capture in code and transmit back from Firefox and other Mozilla products.
 
+For more information on how to use GLAM, see [Introduction to GLAM](../cookbooks/glam.md).
+
 ### Telemetry Measurement Dashboard
 
 The [Telemetry Measurement Dashboard](https://telemetry.mozilla.org/new-pipeline/dist.html) (TMO) site is the
-'venerable standby' of Firefox telemetry analysis tools. It is the predecessor to GLAM (see above) and is still maintained until GLAM is considered production ready.
+'venerable standby' of Firefox telemetry analysis tools. It is the predecessor to GLAM (see above) and is still lightly maintained until we are sure that GLAM covers all of its use cases.
 
 ## Lower-level tools
 
