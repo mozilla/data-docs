@@ -35,7 +35,7 @@ Clicking on a probe or metric name takes you to the individual explorer, where m
 
 **`(5)`** Probe or metric distribution and percentiles over time:
 
-- `Percentiles` shows the percentiles of the probe over time. To perform analysis, set a reference point by clicking on a target date, then hover along the graph to see the recorded differences. See attached tooltips on the page for more instruction.
+- `Percentiles` shows the percentiles of the probe over time. To perform analysis, set a reference point by clicking on a target date, then hover along the graph to see the recorded differences. See attached `tooltips` on the page for more instruction.
 - The `compare` violin plot shows the comparison between two (vertical) normal distributions
 - `Summary` table provides the exact numeric values of the percentiles of the median changes between Build IDs.
 
