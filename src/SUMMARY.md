@@ -13,6 +13,7 @@
 - [Tutorials & Cookbooks](cookbooks/index.md)
   - [Analysis](cookbooks/analysis/index.md)
     - [Accessing Public Data](cookbooks/public_data.md)
+    - [Introduction to GLAM](cookbooks/glam.md)
     - [Accessing and working with BigQuery](cookbooks/bigquery.md)
       - [Access](cookbooks/bigquery/access.md)
       - [Writing Queries](cookbooks/bigquery/querying.md)
