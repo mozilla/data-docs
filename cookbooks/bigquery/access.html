@@ -259,7 +259,7 @@ lists the tables and views in a BigQuery dataset:</p>
 <pre><code class="language-bash">bq ls mozdata:telemetry
 </code></pre>
 <p>And here's another which gets the count of entries in <code>telemetry.main</code> on <code>2019-08-22</code> in the nightly channel:</p>
-<pre><code class="language-bash">bq query --nouse_legacy_sql 'select count(*) from mozdata.telemetry.main where submission_date = &quot;2019-08-22&quot; and normalized_channel=&quot;nightly&quot;'
+<pre><code class="language-bash">bq query --nouse_legacy_sql 'select count(*) from mozdata.telemetry.main where date(submission_timestamp) = &quot;2019-08-22&quot; and normalized_channel=&quot;nightly&quot;'
 </code></pre>
 <p>Additional examples and documentation can be found <a href="https://cloud.google.com/bigquery/docs/bq-command-line-tool">in the BigQuery command-line reference</a>.</p>
 <h3><a class="header" href="#api-access" id="api-access">API Access</a></h3>
