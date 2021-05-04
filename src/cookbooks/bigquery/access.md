@@ -72,7 +72,7 @@ bq ls mozdata:telemetry
 And here's another which gets the count of entries in `telemetry.main` on `2019-08-22` in the nightly channel:
 
 ```bash
-bq query --nouse_legacy_sql 'select count(*) from mozdata.telemetry.main where submission_date = "2019-08-22" and normalized_channel="nightly"'
+bq query --nouse_legacy_sql 'select count(*) from mozdata.telemetry.main where date(submission_timestamp) = "2019-08-22" and normalized_channel="nightly"'
 ```
 
 Additional examples and documentation can be found [in the BigQuery command-line reference](https://cloud.google.com/bigquery/docs/bq-command-line-tool).
