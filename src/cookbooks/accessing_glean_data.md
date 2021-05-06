@@ -89,7 +89,7 @@ WHERE
 SELECT * FROM events
 ```
 
-The extra fields are stored as a structure. For more information on accessing those, see [accessing map-like fields in the querying documentation](./querying.md#accessing-map-like-fields).
+The extra fields are stored as a structure. For more information on accessing those, see [accessing map-like fields in the querying documentation](./bigquery/querying.md#accessing-map-like-fields).
 
 [glean dictionary]: https://dictionary.telemetry.mozilla.org
 [firefox for android application]: https://dictionary.telemetry.mozilla.org/apps/fenix
