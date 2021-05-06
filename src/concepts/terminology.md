@@ -122,7 +122,7 @@ You can search for details about probes by using the [Probe Dictionary](https://
 - When a probe started being collected
 - Whether data from this probe is collected in the release channel
 
-Newer measurements implemented using [Glean](#glean) are referred to as [metrics](#metrics) instead of probes, but the basic outline is the same. Details about Glean Metrics are collected inside the [Glean Dictionary](https://dictionary.protosaur.dev).
+Newer measurements implemented using [Glean](#glean) are referred to as [metrics](#metrics) instead of probes, but the basic outline is the same. Details about Glean Metrics are collected inside the [Glean Dictionary](https://dictionary.telemetry.mozilla.org).
 
 ## Profile
 

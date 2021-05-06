@@ -9,14 +9,14 @@ The data that Glean applications generates maps cleanly to structures we create 
 BigQuery: see the section on [Glean Data](../concepts/pipeline/glean_data.md) in the data pipeline
 reference.
 
-You can use the [Glean Dictionary](https://dictionary.protosaur.dev/) to access these mappings
+You can use the [Glean Dictionary](https://dictionary.telemetry.mozilla.org/) to access these mappings
 when writing queries.
 For example, say you wanted to get a count of top sites as measured in Firefox for Android.
 In this case you would:
 
-- Go to the [Glean Dictionary](https://dictionary.protosaur.dev) home page.
-- Navigate to the [Firefox for Android application](https://dictionary.protosaur.dev/apps/fenix)
-- Under metrics, search for "top", select [`metrics.top_sites_count`](https://dictionary.protosaur.dev/apps/fenix/metrics/metrics_top_sites_count).
+- Go to the [Glean Dictionary](https://dictionary.telemetry.mozilla.org) home page.
+- Navigate to the [Firefox for Android application](https://dictionary.telemetry.mozilla.org/apps/fenix)
+- Under metrics, search for "top", select [`metrics.top_sites_count`](https://dictionary.telemetry.mozilla.org/apps/fenix/metrics/metrics_top_sites_count).
 - Scroll down to the bottom. Under BigQuery, you should see an entry like: "In `org_mozilla_fenix.metrics` as `metrics.counter.metrics_top_sites_count`".
   The former corresponds to the table name whilst the latter corresponds to the column name.
   You can select which channel you want to view information for and the table name will update accordingly.
