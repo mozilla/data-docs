@@ -177,23 +177,27 @@
                         <h1><a class="header" href="#accessing-glean-data-in-bigquery" id="accessing-glean-data-in-bigquery">Accessing Glean Data in BigQuery</a></h1>
 <p>This document describes how to access Glean data using BigQuery, such as in <a href="https://sql.telemetry.mozilla.org">Redash</a>.
 This is intended for in-depth analysis: <a href="../tools/interfaces.html#mozilla-growth--usage-dashboard-gud">GUD</a> or <a href="../tools/interfaces.html#glean-aggregated-metrics-dashboard-glam">GLAM</a> can answer many simple questions.</p>
-<h2><a class="header" href="#using-the-glean-dictionary" id="using-the-glean-dictionary">Using the Glean Dictionary</a></h2>
 <p>The data that Glean applications generates maps cleanly to structures we create in
 BigQuery: see the section on <a href="../concepts/pipeline/glean_data.html">Glean Data</a> in the data pipeline
-reference.</p>
-<p>You can use the <a href="https://dictionary.protosaur.dev/">Glean Dictionary</a> to access these mappings
+reference. The exact method to use depends on the metric type you want to access.</p>
+<ul>
+<li><a href="#counter-boolean-and-most-other-metrics">Counter, boolean, and most other metrics</a></li>
+<li><a href="#event-metrics">Event metrics</a></li>
+</ul>
+<h2><a class="header" href="#counter-boolean-and-most-other-metrics" id="counter-boolean-and-most-other-metrics">Counter, boolean, and most other metrics</a></h2>
+<p>Most metrics Glean collects map to a single column in a BigQuery table.
+The <a href="https://dictionary.telemetry.mozilla.org">Glean Dictionary</a> shows the mapping to access these mappings
 when writing queries.
 For example, say you wanted to get a count of top sites as measured in Firefox for Android.
-In this case you would:</p>
+You can get the information you need to build your query by following this procedure:</p>
 <ul>
-<li>Go to the <a href="https://dictionary.protosaur.dev">Glean Dictionary</a> home page.</li>
-<li>Navigate to the <a href="https://dictionary.protosaur.dev/apps/fenix">Firefox for Android application</a></li>
+<li>Go to the <a href="https://dictionary.telemetry.mozilla.org">Glean Dictionary</a> home page.</li>
+<li>Navigate to the <a href="https://dictionary.telemetry.mozilla.org/apps/fenix">Firefox for Android application</a></li>
 <li>Under metrics, search for &quot;top&quot;, select <a href="https://dictionary.protosaur.dev/apps/fenix/metrics/metrics_top_sites_count"><code>metrics.top_sites_count</code></a>.</li>
 <li>Scroll down to the bottom. Under BigQuery, you should see an entry like: &quot;In <code>org_mozilla_fenix.metrics</code> as <code>metrics.counter.metrics_top_sites_count</code>&quot;.
 The former corresponds to the table name whilst the latter corresponds to the column name.
 You can select which channel you want to view information for and the table name will update accordingly.</li>
 </ul>
-<h2><a class="header" href="#writing-a-query" id="writing-a-query">Writing a Query</a></h2>
 <p>With this information in hand, you can now proceed to writing a query. For example, to get the
 average of this metric on the first of January, you could write something like this:</p>
 <pre><code class="language-sql">-- Count number of pings where Fenix is the default browser
@@ -213,6 +217,38 @@ Another option is to explicitly qualify the table when selecting the column (so 
 FROM org_mozilla_fenix.metrics
 WHERE DATE(submission_timestamp) = '2021-01-01'
 </code></pre>
+<h2><a class="header" href="#event-metrics" id="event-metrics">Event metrics</a></h2>
+<p>Event metrics are stored slightly differently: since each ping sent by a Glean application sends a <em>group</em> of metrics, they are mapped into a set of records within a single column.
+To query them individually, you need to unnest them into their own table.
+For example, let's say you wanted to investigate the foreground metrics for tab engine.
+You can get the information you need to build your query by following this procedure:</p>
+<ul>
+<li>Go to the <a href="https://dictionary.telemetry.mozilla.org">Glean Dictionary</a> home page.</li>
+<li>Navigate to the <a href="https://dictionary.telemetry.mozilla.org/apps/fenix">Firefox for Android application</a></li>
+<li>Under metrics, search for &quot;foreground&quot;, select <a href="https://dictionary.telemetry.mozilla.org/apps/fenix/metrics/engine_tab_foreground_metrics"><code>engine_tab.foreground_metrics</code></a>.</li>
+<li>Scroll down to the bottom until you see &quot;Access&quot;. Under BigQuery, you should see an entry like: &quot;In <code>org_mozilla_fenix.events</code>&quot;.</li>
+</ul>
+<p>This tells you the BigQuery table in which this data is stored.
+With this information, plus knowledge of the metric's category (<code>engine_tab</code>) and name (<code>foreground_metrics</code>) we now know enough to write a simple query:</p>
+<pre><code class="language-sql">WITH events AS (
+SELECT
+    submission_timestamp,
+    client_info.client_id,
+    event.timestamp AS event_timestamp,
+    event.category AS event_category,
+    event.name AS event_name,
+    event.extra AS event_extra,
+FROM org_mozilla_fenix.events AS e
+CROSS JOIN UNNEST(e.events) AS event
+WHERE
+    submission_timestamp = '2021-05-03'
+    AND sample_id = 42 -- 1% sample for development
+    AND event.category = 'engine_tab'
+    AND event.name = 'foreground_metrics'
+)
+SELECT * FROM events
+</code></pre>
+<p>The extra fields are stored as a structure. For more information on accessing those, see <a href="./bigquery/querying.html#accessing-map-like-fields">accessing map-like fields in the querying documentation</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/cookbooks/accessing_glean_data.md">Edit this file on GitHub.</a></footer>
                     </main>
 

@@ -176,7 +176,9 @@
                     <main>
                         <h1><a class="header" href="#glean-data" id="glean-data">Glean Data</a></h1>
 <p>The following describes in detail how we structure Glean data in BigQuery. For information on
-the actual software which does this, see the <a href="schemas.html">Generated Schemas</a> reference.</p>
+the actual software which does this, see the <a href="schemas.html">Generated Schemas</a> reference.
+This document intended as a reference, if you want a tutorial on how best to access Glean Data in BigQuery,
+see <a href="../../cookbooks/accessing_glean_data.html">Accessing Glean Data</a>.</p>
 <h2><a class="header" href="#tables" id="tables">Tables</a></h2>
 <p>Each ping type is recorded in its own table, and these tables are named using <code>{application_id}.{ping_type}</code>.
 For example, for Fenix, the application id is <code>org.mozilla.fenix</code>, so its <code>metrics</code> pings are available in the table <code>org_mozilla_fenix.metrics</code>.</p>
@@ -205,20 +207,32 @@ For example, the client id is mapped to a column called <code>client_info.client
       - metrics
 </code></pre>
 <p>It would be available in the column <code>metrics.boolean.browser_is_default</code>.</p>
-<pre><code class="language-sql">-- Count number of pings where Fenix is the default browser
-SELECT
-  COUNT(*),
-  COUNTIF(metrics.boolean.browser_is_default)
-FROM
-  -- We give the table an alias so that the table name `metrics` and field name
-  -- `metrics` don't conflict.
-  org_mozilla_fenix.metrics AS m
-WHERE
-  date(submission_timestamp) = '2019-11-11'
-</code></pre>
 <h3><a class="header" href="#the-events-group" id="the-events-group">The <code>events</code> group</a></h3>
-<p>Custom events in the <code>events</code> section have a different structure.</p>
-<p>Documentation TBD. <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1606836">See bug 1606836</a></p>
+<p>Events are stored as a set of records in a single column called &quot;events&quot;: there might be many events sent as part of a single ping.
+Each record has the following fields which allow you to filter for the specific metrics of interest:</p>
+<ul>
+<li>category (maps to the metric category)</li>
+<li>name (maps to the metric name)</li>
+</ul>
+<p>For example, suppose you had the following <code>event</code> metric defined in a <code>metrics.yaml</code> file (again, abridged for clarity):</p>
+<pre><code class="language-yaml">engine_tab:
+  foreground_metrics:
+    type: event
+    description: |
+      Event collecting data about the state of tabs when the app comes back to
+      the foreground.
+        extra_keys:
+    extra_keys:
+      background_active_tabs:
+        description: |
+          Number of active tabs (with an engine session assigned) when the app
+          went to the background.
+        ...
+</code></pre>
+<p>In this case the event's <code>category</code> would be <code>engine_tab</code> and its name would be <code>foreground_metrics</code>.</p>
+<p>You can use the record's <code>timestamp</code> and <code>extra</code> fields to get the event's timestamp and specifics related
+to the event.
+For a complete example, see <a href="../../cookbooks/accessing_glean_data.html#event-metrics">&quot;event metrics&quot; under Accessing Glean Data</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/concepts/pipeline/glean_data.md">Edit this file on GitHub.</a></footer>
                     </main>
 
