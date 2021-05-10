@@ -8692,11 +8692,16 @@ Unless otherwise noted, these columns are taken directly from <code>main_summary
 <li><code>app_version</code></li>
 <li><code>distribution_id</code> - <code>NULL</code> means the standard Firefox build</li>
 <li><code>search_cohort</code> - <code>NULL</code> except for small segments relating to search experimentation</li>
+<li><code>default_search_engine</code></li>
+<li><code>default_private_search_engine</code></li>
+<li><code>os</code> - e.g. <code>Linux</code>, <code>Windows_NT</code>, <code>Darwin</code> ...</li>
+<li><code>os_version</code></li>
+<li><code>is_default_browser</code></li>
 </ul>
-<p>There are five aggregation columns:
-<code>sap</code>, <code>tagged-sap</code>, and <code>tagged-follow-on</code>, <code>organic</code> and <code>unknown</code>.
+<p>There are ten aggregation columns:
+<code>sap</code>, <code>tagged-sap</code>, <code>tagged-follow-on</code>,<code>organic</code>, <code>unknown</code>, <code>ad_click</code>, <code>ad_click_organic</code>, <code>search_with_ads</code>, <code>search_with_ads_organic</code>, and <code>client_count</code>.
 Each of these columns represent different types of searches.
-For more details, see the <a href="datasets/search/search_aggregates/../../search.html">search data documentation</a></p>
+For more details, see the <a href="datasets/search/search_aggregates/../../search.html">search data documentation</a>.</p>
 <!--
 #### Further Reading
 -->
