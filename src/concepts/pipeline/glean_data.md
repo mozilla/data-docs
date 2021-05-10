@@ -2,6 +2,8 @@
 
 The following describes in detail how we structure Glean data in BigQuery. For information on
 the actual software which does this, see the [Generated Schemas](schemas.md) reference.
+This document intended as a reference, if you want a tutorial on how best to access Glean Data in BigQuery,
+see [Accessing Glean Data](../../cookbooks/accessing_glean_data.md).
 
 ## Tables
 
@@ -43,21 +45,34 @@ browser:
 
 It would be available in the column `metrics.boolean.browser_is_default`.
 
-```sql
--- Count number of pings where Fenix is the default browser
-SELECT
-  COUNT(*),
-  COUNTIF(metrics.boolean.browser_is_default)
-FROM
-  -- We give the table an alias so that the table name `metrics` and field name
-  -- `metrics` don't conflict.
-  org_mozilla_fenix.metrics AS m
-WHERE
-  date(submission_timestamp) = '2019-11-11'
-```
-
 ### The `events` group
 
-Custom events in the `events` section have a different structure.
+Events are stored as a set of records in a single column called "events": there might be many events sent as part of a single ping.
+Each record has the following fields which allow you to filter for the specific metrics of interest:
 
-Documentation TBD. [See bug 1606836](https://bugzilla.mozilla.org/show_bug.cgi?id=1606836)
+- category (maps to the metric category)
+- name (maps to the metric name)
+
+For example, suppose you had the following `event` metric defined in a `metrics.yaml` file (again, abridged for clarity):
+
+```yaml
+engine_tab:
+  foreground_metrics:
+    type: event
+    description: |
+      Event collecting data about the state of tabs when the app comes back to
+      the foreground.
+        extra_keys:
+    extra_keys:
+      background_active_tabs:
+        description: |
+          Number of active tabs (with an engine session assigned) when the app
+          went to the background.
+        ...
+```
+
+In this case the event's `category` would be `engine_tab` and its name would be `foreground_metrics`.
+
+You can use the record's `timestamp` and `extra` fields to get the event's timestamp and specifics related
+to the event.
+For a complete example, see ["event metrics" under Accessing Glean Data](../../cookbooks/accessing_glean_data.md#event-metrics).
