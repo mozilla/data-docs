@@ -75,3 +75,4 @@ In this case the event's `category` would be `engine_tab` and its name would be 
 
 You can use the record's `timestamp` and `extra` fields to get the event's timestamp and specifics related
 to the event.
+For a complete example, see ["event metrics" under Accessing Glean Data](../../cookbooks/accessing_glean_data.md#event-metrics).

@@ -65,26 +65,21 @@ This tells you the BigQuery table in which this data is stored.
 With this information, plus knowledge of the metric's category (`engine_tab`) and name (`foreground_metrics`) we now know enough to write a simple query:
 
 ```sql
-WITH sample AS (
+WITH events AS (
 SELECT
     submission_timestamp,
     client_info.client_id,
-    events AS events_array
+    event.timestamp AS event_timestamp,
+    event.category AS event_category,
+    event.name AS event_name,
+    event.extra AS event_extra,
 FROM org_mozilla_fenix.events AS e
+CROSS JOIN UNNEST(e.events) AS event
 WHERE
     submission_timestamp = '2021-05-03'
     AND sample_id = 42 -- 1% sample for development
-), events AS (
-SELECT
-    submission_timestamp,
-    e.timestamp AS event_timestamp,
-    e.category AS event_category,
-    e.name AS event_name,
-    e.extra AS event_extra
-FROM sample CROSS JOIN UNNEST(sample.events_array) AS e
-WHERE
-    e.category = 'engine_tab'
-    AND e.name = 'foreground_metrics'
+    AND event.category = 'engine_tab'
+    AND event.name = 'foreground_metrics'
 )
 SELECT * FROM events
 ```
