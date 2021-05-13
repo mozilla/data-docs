@@ -183,7 +183,11 @@
 </li>
 <li><a href="#data-reference">Data Reference</a>
 <ul>
-<li><a href="#example-queries">Example Queries</a></li>
+<li><a href="#example-queries">Example Queries</a>
+<ul>
+<li><a href="#daily-us-sap-searches">Daily US sap searches</a></li>
+</ul>
+</li>
 <li><a href="#scheduling">Scheduling</a></li>
 <li><a href="#schema">Schema</a></li>
 </ul>
@@ -228,44 +232,54 @@ For more details, see the <a href="../../search.html">search data documentation<
 -->
 <h1><a class="header" href="#data-reference" id="data-reference">Data Reference</a></h1>
 <h2><a class="header" href="#example-queries" id="example-queries">Example Queries</a></h2>
-<p><a href="https://sql.telemetry.mozilla.org/queries/51140/source">This query</a>
-calculates daily US searches.
-If you have trouble viewing this query,
-it's likely you don't have the proper permissions.
-For more details see the <a href="../../search.html">search data documentation</a>.</p>
+<h3><a class="header" href="#daily-us-sap-searches" id="daily-us-sap-searches">Daily US sap searches</a></h3>
+<pre><code class="language-sql">SELECT 
+    submission_date,
+    SUM(SAP) AS search_counts
+FROM search.search_aggregates
+WHERE 
+    country = 'US'
+    AND submission_date BETWEEN '2019-01-01' AND '2019-01-07'
+GROUP BY submission_date
+ORDER BY submission_date
+</code></pre>
+<p><a href="https://sql.telemetry.mozilla.org/queries/51140/source">link to query on STMO</a></p>
 <h2><a class="header" href="#scheduling" id="scheduling">Scheduling</a></h2>
 <p>This job is
 <a href="https://github.com/mozilla/bigquery-etl/blob/ad84a15d580333b41d36cfe8331e51238f3bafa1/dags/bqetl_search.py#L40">scheduled on airflow</a>
 to run daily.</p>
 <h2><a class="header" href="#schema" id="schema">Schema</a></h2>
-<p>As of 2019-11-27,
+<p>As of 2021-04-29,
 the current version of <code>search_aggregates</code> is <code>v8</code>,
 and has a schema as follows.
-The dataset is backfilled through 2016-03-11</p>
+The dataset is backfilled through 2016-03-11.</p>
 <pre><code>root
  |-- submission_date: date (nullable = true)
  |-- submission_date_s3: date (nullable = true)
  |-- country: string (nullable = true)
  |-- engine: string (nullable = true)
+ |-- normalized_engine: string (nullable = true)
  |-- source: string (nullable = true)
  |-- app_version: string (nullable = true)
  |-- distribution_id: string (nullable = true)
  |-- locale: string (nullable = true)
  |-- search_cohort: string (nullable = true)
  |-- addon_version: string (nullable = true)
- |-- tagged-sap: long (nullable = true)
- |-- tagged-follow-on: long (nullable = true)
+ |-- tagged_sap: long (nullable = true)
+ |-- tagged_follow_on: long (nullable = true)
  |-- sap: long (nullable = true)
  |-- organic: long (nullable = true)
  |-- search_with_ads: long (nullable = true)
+ |-- search_with_ads_organic: long (nullable = true)
  |-- ad_click: long (nullable = true)
+ |-- ad_click_organic: long (nullable = true)
  |-- unknown: long (nullable = true)
  |-- client_count: long (nullable = true)
  |-- default_search_engine: string (nullable = true)
  |-- default_private_search_engine: string (nullable = true)
  |-- os: string (nullable = true)
  |-- os_version: string (nullable = true)
- |-- addon_version: string (nullable = true)
+ |-- is_default_browser: boolean (nullable = true)
 </code></pre>
 <h1><a class="header" href="#code-reference" id="code-reference">Code Reference</a></h1>
 <p>The <code>search_aggregates</code> job is
