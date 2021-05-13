@@ -10,11 +10,20 @@
 
 ## Example Queries
 
-[This query](https://sql.telemetry.mozilla.org/queries/51140/source)
-calculates daily US searches.
-If you have trouble viewing this query,
-it's likely you don't have the proper permissions.
-For more details see the [search data documentation].
+### Daily US sap searches
+```sql
+SELECT 
+    submission_date,
+    SUM(SAP) AS search_counts
+FROM search.search_aggregates
+WHERE 
+    country = 'US'
+    AND submission_date BETWEEN '2019-01-01' AND '2019-01-07'
+GROUP BY submission_date
+ORDER BY submission_date
+```
+[link to query on STMO](https://sql.telemetry.mozilla.org/queries/51140/source)
+
 
 ## Scheduling
 
@@ -23,11 +32,10 @@ This job is
 to run daily.
 
 ## Schema
-
-As of 2019-11-27,
+As of 2021-04-29,
 the current version of `search_aggregates` is `v8`,
 and has a schema as follows.
-The dataset is backfilled through 2016-03-11
+The dataset is backfilled through 2016-03-11.
 
 ```
 root
@@ -35,25 +43,28 @@ root
  |-- submission_date_s3: date (nullable = true)
  |-- country: string (nullable = true)
  |-- engine: string (nullable = true)
+ |-- normalized_engine: string (nullable = true)
  |-- source: string (nullable = true)
  |-- app_version: string (nullable = true)
  |-- distribution_id: string (nullable = true)
  |-- locale: string (nullable = true)
  |-- search_cohort: string (nullable = true)
  |-- addon_version: string (nullable = true)
- |-- tagged-sap: long (nullable = true)
- |-- tagged-follow-on: long (nullable = true)
+ |-- tagged_sap: long (nullable = true)
+ |-- tagged_follow_on: long (nullable = true)
  |-- sap: long (nullable = true)
  |-- organic: long (nullable = true)
  |-- search_with_ads: long (nullable = true)
+ |-- search_with_ads_organic: long (nullable = true)
  |-- ad_click: long (nullable = true)
+ |-- ad_click_organic: long (nullable = true)
  |-- unknown: long (nullable = true)
  |-- client_count: long (nullable = true)
  |-- default_search_engine: string (nullable = true)
  |-- default_private_search_engine: string (nullable = true)
  |-- os: string (nullable = true)
  |-- os_version: string (nullable = true)
- |-- addon_version: string (nullable = true)
+ |-- is_default_browser: boolean (nullable = true)
 ```
 
 # Code Reference
