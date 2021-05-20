@@ -3,8 +3,8 @@ It's quick and easy to query, but the data are coarse.
 In particular, this dataset allows you to segment
 by a limited number of client characteristics which are relevant to search markets.
 However, it is not possible to normalize by client count.
-If you need fine-grained data, consider using `search_clients_daily`
-which breaks down search counts by client
+If you need fine-grained data, consider using `search_clients_engines_sources_daily`
+which breaks down search counts by client, engine, and source.
 
 ## Contents
 

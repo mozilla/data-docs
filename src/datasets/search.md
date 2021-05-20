@@ -3,7 +3,7 @@
 ## Introduction
 
 This article introduces the datasets we maintain for search analyses:
-`search_aggregates` and `search_clients_daily`. After reading this article,
+`search_aggregates` and `search_clients_engines_sources_daily`. After reading this article,
 you should understand the search datasets well enough to produce moderately
 complex analyses.
 
@@ -67,7 +67,7 @@ If an SAP query is tagged, any follow-on query should also be tagged.
 We report five types of searches in our search datasets:
 `sap`, `tagged-sap`, `tagged-follow-on`, `organic`, and `unknown`.
 These aggregates show up as columns in the
-`search_aggregates` and `search_clients_daily` datasets.
+`search_aggregates` and `search_clients_engines_sources_daily` datasets.
 Our search datasets are all derived from `main_summary`.
 The aggregate columns are derived from the `SEARCH_COUNTS` histogram.
 
