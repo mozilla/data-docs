@@ -1,4 +1,4 @@
-# Search Clients Daily
+# Search Clients Engines Sources Daily
 
 <!-- toc -->
 
@@ -23,7 +23,7 @@ This dataset is scheduled on Airflow
 
 ## Schema
 
-As of 2019-11-27, the current version of `search_clients_daily` is `v8`,
+As of 2019-11-27, the current version of the underlying `search_clients_daily` is `v8`,
 and has a schema as follows.
 It's backfilled through 2016-03-12
 
@@ -78,7 +78,7 @@ root
 
 # Code Reference
 
-The `search_clients_daily` job is
+The `search_clients_engines_sources_daily` job is
 [defined in `bigquery-etl`](https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/search_derived/search_clients_daily_v8/query.sql)
 
 [search data documentation]: ../../search.md

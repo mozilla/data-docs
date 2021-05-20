@@ -90,7 +90,7 @@
     - [Experiment monitoring](datasets/experiment_monitoring.md)
   - [Search Datasets](datasets/search.md)
     - [Search Aggregates](datasets/search/search_aggregates/reference.md)
-    - [Search Clients Daily](datasets/search/search_clients_daily/reference.md)
+    - [Search Clients Engines Sources Daily](datasets/search/search_clients_engines_sources_daily/reference.md)
     - [Search Clients Last Seen](datasets/search/search_clients_last_seen/reference.md)
     - [Client LTV](datasets/search/client_ltv/reference.md)
   - [Non-Desktop Datasets](datasets/non_desktop.md)

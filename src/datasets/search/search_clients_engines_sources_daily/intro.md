@@ -1,10 +1,10 @@
-`search_clients_daily` is designed to enable client-level search analyses.
+`search_clients_engines_sources_daily` is designed to enable client-level search analyses.
 Querying this dataset can be slow;
 consider using `search_aggregates` for coarse analyses.
 
 ## Contents
 
-`search_clients_daily` has one row for each unique combination of:
+`search_clients_engines_sources_daily` has one row for each unique combination of:
 (`client_id`, `submission_date`, `engine`, `source`).
 
 In addition to the standard search count aggregations,
@@ -24,7 +24,7 @@ For more details, see the [search data documentation]
 
 ## Background and Caveats
 
-`search_clients_daily` does not include
+`search_clients_engines_sources_daily` does not include
 (`client_id` `submission_date`) pairs
 if we did not receive a ping for that `submission_date`.
 
