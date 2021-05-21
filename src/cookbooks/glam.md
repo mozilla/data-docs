@@ -8,7 +8,7 @@ Access to GLAM is currently limited to Mozilla employees and designated contribu
 
 ## How to use GLAM
 
-You can visit GLAM at [`glam.telemetry.mozilla.org`](https://glam.telemetry.mozilla.org). As of this writing, Mozilla LDAP credentials are required to access it.
+You can visit GLAM at [`glam.telemetry.mozilla.org`](https://glam.telemetry.mozilla.org).
 
 ### Front page
 
