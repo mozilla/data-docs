@@ -1,7 +1,8 @@
 # Mozilla Data Documentation
 
-This documentation helps Mozilla's developers and data scientists analyze and interpret the data gathered
-by the Mozilla Telemetry system.
+This documentation was written to help Mozillians analyze and interpret data collected by our products, such as
+[Firefox](https://www.mozilla.org/firefox) and [Mozilla VPN](https://www.mozilla.org/products/vpn/). Mozilla refers
+to the systems that collect and process this data as [Telemetry](./concepts/terminology.md#telemetry).
 
 At [Mozilla](https://www.mozilla.org), our data-gathering and data-handling practices are anchored in our
 [Data Privacy Principles](https://www.mozilla.org/en-US/privacy/principles/) and elaborated in the
@@ -20,9 +21,7 @@ This documentation is divided into the following sections:
 
 ### [Getting Started](concepts/getting_started.md)
 
-This section provides a **quick introduction** to analyzing telemetry data.
-After reading these articles, you will be able to confidently perform analysis
-over telemetry data.
+This section provides a **quick introduction** to Mozilla's Telemetry data: it should help you understand how this data is collected and how to begin analyzing it.
 
 ### [Cookbooks & Tutorials](cookbooks/index.md)
 
@@ -43,7 +42,7 @@ You do not need to read this section end-to-end.
 ### [Historical Reference](historical/index.md)
 
 This section contains some documentation of things that used to be part of the Mozilla Data Platform, but are no
-longer. You can generally safely ignore this section, it is intended only to answer questions like "what happened to X?".
+longer. You can generally ignore this section, it is intended only to answer questions like "what happened to X?".
 
 You can find the [fully-rendered documentation here](https://docs.telemetry.mozilla.org),
 rendered with [mdBook](https://github.com/rust-lang/mdBook), and hosted on Github pages.
