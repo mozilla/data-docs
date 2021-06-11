@@ -1,6 +1,6 @@
 # Analyzing data from SHIELD studies
 
-This article introduces the datasets that are useful for analyzing SHIELD studies.
+This article introduces the datasets that are useful for analyzing studies in Firefox.
 After reading this article,
 you should understand how to answer questions about
 study enrollment,
@@ -25,16 +25,34 @@ The slug is also used to identify the experiment in most telemetry.
 The slug for pref-flip experiments is defined in the recipe by a field named `slug`;
 the slug for add-on experiments is defined in the recipe by a field named `name`.
 
-You can determine the slug for a particular experiment by consulting
-[this summary table](https://metrics.mozilla.com/~sguha/report/normandy_recipes.html)
-or the list of active recipes at
-https://normandy.cdn.mozilla.net/api/v1/recipe/signed/.
+You can find the slug associated with an experiment in Experimenter.
 
 ## Tables
 
-These tables are accessible from BigQuery and Databricks.
+### `experiments` map (ping tables)
 
-### `experiments` column
+Ping tables and some derived tables include an `experiments` column
+which is a mapping from an experiment slug to a struct of information
+about the client's state in an experiment in which they are enrolled.
+
+The struct will include the fields `branch` and `enrollment_id`,
+the latter of which is a unique identifier computed at the time of enrollment
+to allow counting the number of physical clients that enroll,
+even in the presence of client_id sharing.
+
+You can collect rows from enrolled clients using syntax like:
+
+```sql
+SELECT
+  ... some fields ...,
+  mozfun.map.get_key(experiments, 'some-experiment-slug-12345').branch
+FROM
+  telemetry.main
+WHERE
+  mozfun.map.get_key(experiments, 'some-experiment-slug-12345') IS NOT NULL
+```
+
+### `experiments` column (some derived tables)
 
 [`main_summary`](batch_view/main_summary/reference.md),
 [`clients_daily`](batch_view/clients_daily/reference.md),
@@ -47,38 +65,20 @@ You can collect rows from enrolled clients using query syntax like:
 ```sql
 SELECT
   ... some fields ...,
-  udf.get_key(experiments, 'some-experiment-slug-12345') AS branch
+  mozfun.map.get_key(experiments, 'some-experiment-slug-12345') AS branch
 FROM
   telemetry.clients_daily
 WHERE
-  udf.get_key(experiments, 'some-experiment-slug-12345') IS NOT NULL
+  mozfun.map.get_key(experiments, 'some-experiment-slug-12345') IS NOT NULL
 ```
-
-### `experiments`
-
-The `experiments` table is a subset of rows from `main_summary`
-reflecting pings from clients that are currently enrolled in an experiment.
-The `experiments` table has additional string-type
-`experiment_id` and `experiment_branch` columns,
-and is partitioned by `experiment_id`, which makes it efficient to query.
-
-Experiments deployed to large fractions of the release channel
-may have the `isHighVolume` flag set in the Normandy recipe;
-those experiments will not be aggregated into the `experiments` table.
-
-Please note that the `experiments` table cannot be used
-for calculating retention for periods extending beyond
-the end of the experiment.
-Once a client is unenrolled from an experiment,
-subsequent pings will not be captured by the `experiments` table.
 
 ### `events`
 
 The [`events` table](batch_view/events/reference.md) includes
-Normandy enrollment and unenrollment events
-for both pref-flip and add-on studies.
+Normandy and Nimbus enrollment and unenrollment events
+for all kinds of studies.
 
-Normandy events have event category `normandy`.
+Normandy and Nimbus events both have event category `normandy`.
 The event value will contain the experiment slug.
 
 The event schema is described
@@ -88,7 +88,7 @@ The `events` table is updated daily.
 
 ### `telemetry.shield_study_addon`
 
-The `telemetry.shield_study_addon` table contains SHIELD telemetry from add-on experiments,
+The `telemetry.shield_study_addon` table contains SHIELD telemetry from legacy add-on experiments,
 i.e. key-value pairs sent with the
 `browser.study.sendTelemetry()` method from the
 [SHIELD study add-on utilities](https://github.com/mozilla/shield-studies-addon-utils/)
@@ -113,7 +113,7 @@ less than 1 hour.
 ### `telemetry.shield_study`
 
 The `telemetry.shield_study` dataset includes
-enrollment and unenrollment events for add-on experiments only,
+enrollment and unenrollment events for legacy add-on experiments only,
 sent by the [SHIELD study add-on utilities](https://github.com/mozilla/shield-studies-addon-utils/).
 
 The `study_name` attribute of the `payload` column will contain the identifier
