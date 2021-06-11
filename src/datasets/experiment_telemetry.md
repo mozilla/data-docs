@@ -38,7 +38,7 @@ about the client's state in an experiment in which they are enrolled.
 The struct will include the fields `branch` and `enrollment_id`,
 the latter of which is a unique identifier computed at the time of enrollment
 to allow counting the number of physical clients that enroll,
-even in the presence of client_id sharing.
+even in the presence of `client_id` sharing.
 
 You can collect rows from enrolled clients using syntax like:
 
