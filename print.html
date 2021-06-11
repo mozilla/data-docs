@@ -695,7 +695,7 @@ It includes the most recent values in a 28 day window for all columns in the
 <tr><td>Firefox Reality</td><td>Android</td><td><code>FirefoxReality</code></td><td><code>org_mozilla_vrbrowser</code></td><td>Headset VR browser</td></tr>
 <tr><td>Reference Browser</td><td>Android</td><td></td><td><code>org_mozilla_reference_browser</code></td><td>GeckoView integration testbed</td></tr>
 </tbody></table>
-<p>Some other app names are documented in the <a href="https://mozilla.github.io/bigquery-etl/mozfun/norm/#product_info-udf">ETL documentation</a>.</p>
+<p>Some other app names are documented in the <a href="https://mozilla.github.io/bigquery-etl/mozfun/norm.html#product_info-udf">ETL documentation</a>.</p>
 <p>Firefox Lite was formerly known as Rocket. It is only available in certain countries in Asia Pacific. For more information on Firefox Lite data, see the <a href="https://github.com/mozilla-tw/FirefoxLite/blob/master/docs/telemetry.md">telemetry documentation</a>.</p>
 <p>Focus is known as the privacy-focused mobile browser that blocks trackers by default. It does not store a browsing history.</p>
 <p>Klar is the known release name for Focus in Germany.</p>
@@ -2866,7 +2866,7 @@ LIMIT
 <p>In this representation, <code>bucket_count</code> and <code>range</code> represent the number of buckets and the range of possible values. <code>histogram_type</code> is an enumerated value that describes whether the histogram has linear, exponential, or categorical buckets; the values are <a href="https://searchfox.org/mozilla-central/rev/0c682c4f01442c3de0fa6cd286e9cadc8276b45f/toolkit/components/telemetry/core/nsITelemetry.idl#18-32">defined in the Firefox source code</a>.
 <code>values</code> represents the number of instances in each of the buckets while <code>sum</code> represents the sum total of all histogram values recorded.
 Note how the first column has one bucket with no elements in it (the &quot;165&quot; bucket), this is because Firefox adds a zero-count bucket on the left and right edges of the data (unless that would be one of the extremes and that bucket already has a count in it, as is the case for the &quot;1000&quot; bucket in the last two examples).</p>
-<p>In general, it is best not to rely on this representation of the histogram in production code (it is quite likely to change in the future). Instead, use the <a href="https://mozilla.github.io/bigquery-etl/mozfun/hist/#extract"><code>mozfun.hist.extract</code></a> user-defined-function (UDF) and extract out the fields you need: for example, to just get the <code>sum</code> for all the histograms above, you could modify the query above to something like:</p>
+<p>In general, it is best not to rely on this representation of the histogram in production code (it is quite likely to change in the future). Instead, use the <a href="https://mozilla.github.io/bigquery-etl/mozfun/hist.html#extract"><code>mozfun.hist.extract</code></a> user-defined-function (UDF) and extract out the fields you need: for example, to just get the <code>sum</code> for all the histograms above, you could modify the query above to something like:</p>
 <pre><code class="language-sql">WITH intermediate AS (
   SELECT
     mozfun.hist.extract(payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS) AS histogram,
@@ -2896,7 +2896,7 @@ FROM
 <p>Note that these are the same values in the JSON histogram above.</p>
 <p>Obviously this by itself is not particularly useful or meaningful - generally we are interested in <em>aggregate</em> behaviour across a larger set of clients. Let's look at how we might get that.</p>
 <h2><a class="header" href="#getting-percentiles-from-a-set-of-histograms" id="getting-percentiles-from-a-set-of-histograms">Getting percentiles from a set of histograms</a></h2>
-<p>Often, questions around histograms are framed as &quot;what's the 99th percentile?&quot; -- that is, what is the <em>maximum</em> value that 99% of users experience: this helps give perspective on data which may have a number of weird outliers (a.k.a the <em>Bill Gates walks into a bar and everyone inside becomes a millionaire</em> effect). Let's take an initial stab of grabbing some percentiles of the data we were looking at earlier using the <a href="https://mozilla.github.io/bigquery-etl/mozfun/hist/#merge"><code>mozfun.hist.merge</code></a> and <a href="https://mozilla.github.io/bigquery-etl/mozfun/hist/#percentiles"><code>mozfun.hist.percentiles</code></a> UDFs:</p>
+<p>Often, questions around histograms are framed as &quot;what's the 99th percentile?&quot; -- that is, what is the <em>maximum</em> value that 99% of users experience: this helps give perspective on data which may have a number of weird outliers (a.k.a the <em>Bill Gates walks into a bar and everyone inside becomes a millionaire</em> effect). Let's take an initial stab of grabbing some percentiles of the data we were looking at earlier using the <a href="https://mozilla.github.io/bigquery-etl/mozfun/hist.html#merge"><code>mozfun.hist.merge</code></a> and <a href="https://mozilla.github.io/bigquery-etl/mozfun/hist.html#percentiles"><code>mozfun.hist.percentiles</code></a> UDFs:</p>
 <pre><code class="language-sql">WITH merged_histogram AS (
   SELECT
     mozfun.hist.merge(
@@ -2991,7 +2991,7 @@ CROSS JOIN
 <h2><a class="header" href="#percentiles-from-client-normalized-histograms" id="percentiles-from-client-normalized-histograms">Percentiles from client-normalized histograms</a></h2>
 <p>The example above basically created one <em>giant</em> histogram and then gathered the percentiles out of each one. But histograms are not created equal! At the extreme end of things for the tab spinner, consider a user on an extremely old computer with various kinds of malware installed, constantly interacting with complex and slow web sites. Such a condition is going to trigger the tab spinner frequently, and for long periods. But it is not representative of the overall population, and probably shouldn't <em>overtly</em> influence our decision-making process.</p>
 <p>A solution used by GLAM is to give each client &quot;one vote&quot;: that is, the aggregate histogram for a client over a day must sum up to one. Even in the extreme case where all tab spinner measurements fall between <code>658ms</code> and <code>1000ms</code> (the range of the highest bucket), the <em>maximum</em> number for that bucket is just &quot;1&quot;.</p>
-<p>We can reproduce this approach by using the <a href="https://mozilla.github.io/bigquery-etl/mozfun/hist/#normalize"><code>mozfun.hist.normalize</code></a> UDF, which explicitly takes a set of histograms and makes sure that the values for each one sum up to exactly one:</p>
+<p>We can reproduce this approach by using the <a href="https://mozilla.github.io/bigquery-etl/mozfun/hist.html#normalize"><code>mozfun.hist.normalize</code></a> UDF, which explicitly takes a set of histograms and makes sure that the values for each one sum up to exactly one:</p>
 <pre><code class="language-sql">WITH per_build_client_day AS (
   SELECT
     PARSE_DATETIME(&quot;%Y%m%d%H%M%S&quot;, application.build_id) AS build_id,
@@ -3617,7 +3617,7 @@ However, for presenting dashboards and other types of data visualization, a stat
 <h2><a class="header" href="#bigquery-etl" id="bigquery-etl">bigquery-etl</a></h2>
 <p>Mozilla's Data Engineering maintains a repository called <a href="https://github.com/mozilla/bigquery-etl">bigquery-etl</a> which can incrementally create datasets based on an SQL query using our Airflow infrastructure. This requires a little bit more work to set up than scheduling a query on STMO, but has the advantage of being more cost effective, reliable, and amenable to further exploration.</p>
 <p>Also, since the procedure for scheduling a query in this way is submitting a pull request against the bigquery-etl repository, this is an easy route to getting peer review from the extended Data Team.</p>
-<p>For more information on how to use this approach, see <a href="https://mozilla.github.io/bigquery-etl/cookbooks/creating_a_derived_dataset/">A quick guide to creating a derived dataset with bigquery-etl</a>.</p>
+<p>For more information on how to use this approach, see <a href="https://mozilla.github.io/bigquery-etl/cookbooks/creating_a_derived_dataset.html">A quick guide to creating a derived dataset with bigquery-etl</a>.</p>
 <h2><a class="header" href="#scheduling-queries-using-gcp" id="scheduling-queries-using-gcp">Scheduling Queries using GCP</a></h2>
 <p>Finally, <a href="https://cloud.google.com/bigquery/docs/scheduling-queries">you can schedule queries using GCP</a>. This is generally not recommended, <a href="cookbooks/../concepts/getting_help.html">reach out to the Data team</a> if you think you need to do this.</p>
 <p>GCP scheduled queries are to be used only for short-lived queries: queries that are active for more than 30 days will be automatically unscheduled.</p>
@@ -3695,7 +3695,7 @@ to start the conversation.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/cookbooks/deploying-containers.md">Edit this file on GitHub.</a></footer><h1><a class="header" href="#making-datasets-publicly-available" id="making-datasets-publicly-available">Making Datasets Publicly Available</a></h1>
 <p>Currently, only datasets and query results that are available in BigQuery and
 defined in the <a href="https://github.com/mozilla/bigquery-etl">bigquery-etl</a> repository can be made publicly available.
-See the <a href="https://mozilla.github.io/bigquery-etl/cookbooks/creating_a_derived_dataset/">bigquery-etl documentation</a>
+See the <a href="https://mozilla.github.io/bigquery-etl/cookbooks/creating_a_derived_dataset.html">bigquery-etl documentation</a>
 for information on how to create and schedule datasets. Before data can be published, a data review is
 required.</p>
 <p>To make query results publicly available, a <a href="https://github.com/mozilla/bigquery-etl#query-metadata"><code>metadata.yaml</code> file</a>
@@ -9550,7 +9550,7 @@ For Fenix this could be <a href="https://github.com/mozilla-mobile/fenix/blob/ma
 </ol>
 <h2><a class="header" href="#accessing-the-data-11" id="accessing-the-data-11">Accessing the Data</a></h2>
 <p>While it is possible to build queries that access this events data directly, the Data Platform instead recommends using a set of stored procedures we have available.
-These procedures create BigQuery views that hide the complexity of the event representation. The <a href="https://mozilla.github.io/bigquery-etl/mozfun/event_analysis/"><code>mozfun</code> library documentation</a>
+These procedures create BigQuery views that hide the complexity of the event representation. The <a href="https://mozilla.github.io/bigquery-etl/mozfun/event_analysis.html"><code>mozfun</code> library documentation</a>
 has information about these procedures and examples of their usage.</p>
 <h2><a class="header" href="#data-reference-19" id="data-reference-19">Data Reference</a></h2>
 <h3><a class="header" href="#example-queries-14" id="example-queries-14">Example Queries</a></h3>
