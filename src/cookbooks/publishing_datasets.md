@@ -2,7 +2,7 @@
 
 Currently, only datasets and query results that are available in BigQuery and
 defined in the [bigquery-etl][bigquery_etl] repository can be made publicly available.
-See the [bigquery-etl documentation](https://mozilla.github.io/bigquery-etl/cookbooks/creating_a_derived_dataset/)
+See the [bigquery-etl documentation](https://mozilla.github.io/bigquery-etl/cookbooks/creating_a_derived_dataset.html)
 for information on how to create and schedule datasets. Before data can be published, a data review is
 required.
 
