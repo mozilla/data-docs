@@ -18,7 +18,7 @@ Mobile products may send either legacy telemetry (see "Legacy ping tables" below
 | Firefox Reality       | Android | `FirefoxReality`   | `org_mozilla_vrbrowser`                                                                                   | Headset VR browser                     |
 | Reference Browser     | Android |                    | `org_mozilla_reference_browser`                                                                           | GeckoView integration testbed          |
 
-Some other app names are documented in the [ETL documentation](https://mozilla.github.io/bigquery-etl/mozfun/norm/#product_info-udf).
+Some other app names are documented in the [ETL documentation](https://mozilla.github.io/bigquery-etl/mozfun/norm.html#product_info-udf).
 
 Firefox Lite was formerly known as Rocket. It is only available in certain countries in Asia Pacific. For more information on Firefox Lite data, see the [telemetry documentation][fxlite].
 
