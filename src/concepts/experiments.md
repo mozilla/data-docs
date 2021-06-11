@@ -4,7 +4,7 @@
 
 Nimbus is Firefox's cross-platform experimentation tool.
 
-You can learn more about Nimbus at [https://experimenter.info].
+You can learn more about Nimbus at <https://experimenter.info>.
 
 [Jetstream](datasets/jetstream.md) analyzes Nimbus experiments. Results appear in [Experimenter](https://experimenter.services.mozilla.com).
 
