@@ -2,8 +2,7 @@
 
 [![Build Status](https://github.com/mozilla/data-docs/workflows/Build/badge.svg)](https://github.com/mozilla/data-docs/actions?query=workflow%3ABuild)
 
-This document is intended to help Mozilla's developers and data scientists
-analyze and interpret the data gathered by the Firefox Telemetry system.
+This documentation was written to help Mozillians analyze and interpret data collected by our products, such as [Firefox](https://www.mozilla.org/firefox) and [Mozilla VPN](https://www.mozilla.org/products/vpn/).
 
 At [Mozilla](https://www.mozilla.org), our data-gathering and data-handling
 practices are anchored in our
