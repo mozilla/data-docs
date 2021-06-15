@@ -4,55 +4,39 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Common Analysis Gotchas - Mozilla Data Documentation</title>
-        
-        
-
+                
 
         <!-- Custom HTML head -->
         
-
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
-        <link rel="icon" href="../favicon.svg">
-        
-        
-        <link rel="shortcut icon" href="../favicon.png">
-        
-        <link rel="stylesheet" href="../css/variables.css">
+                <link rel="icon" href="../favicon.svg">
+                        <link rel="shortcut icon" href="../favicon.png">
+                <link rel="stylesheet" href="../css/variables.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
+                <link rel="stylesheet" href="../css/print.css" media="print">
         
-        <link rel="stylesheet" href="../css/print.css" media="print">
-        
-
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../fonts/fonts.css">
         
-        <link rel="stylesheet" href="../fonts/fonts.css">
-        
-
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
         <link rel="stylesheet" href="../tomorrow-night.css">
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+                <link rel="stylesheet" href="../dtmo.css">
+                <link rel="stylesheet" href="../mermaid.css">
         
-        <link rel="stylesheet" href="../dtmo.css">
-        
-        <link rel="stylesheet" href="../mermaid.css">
-        
-
-        
-        <!-- MathJax -->
+                <!-- MathJax -->
         <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        
-    </head>
+            </head>
     <body>
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
@@ -102,8 +86,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction.html">Mozilla Data Documentation</a></li><li class="chapter-item expanded "><a href="../concepts/getting_started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/terminology.html"><strong aria-hidden="true">1.1.</strong> Terminology</a></li><li class="chapter-item expanded "><a href="../concepts/gaining_access.html"><strong aria-hidden="true">1.2.</strong> Gaining Access</a></li><li class="chapter-item expanded "><a href="../concepts/analysis_intro.html"><strong aria-hidden="true">1.3.</strong> Analysis Quick Start</a></li><li class="chapter-item expanded "><a href="../tools/interfaces.html"><strong aria-hidden="true">1.4.</strong> Tools for Data Analysis</a></li><li class="chapter-item expanded "><a href="../concepts/analysis_gotchas.html" class="active"><strong aria-hidden="true">1.5.</strong> Common Analysis Gotchas</a></li><li class="chapter-item expanded "><a href="../concepts/choosing_a_dataset.html"><strong aria-hidden="true">1.6.</strong> Choosing a Desktop Dataset</a></li><li class="chapter-item expanded "><a href="../concepts/choosing_a_dataset_mobile.html"><strong aria-hidden="true">1.7.</strong> Choosing a Mobile Dataset</a></li><li class="chapter-item expanded "><a href="../concepts/getting_help.html"><strong aria-hidden="true">1.8.</strong> Getting Help</a></li><li class="chapter-item expanded "><a href="../concepts/reporting_a_problem.html"><strong aria-hidden="true">1.9.</strong> Reporting a problem</a></li></ol></li><li class="chapter-item expanded "><a href="../cookbooks/index.html"><strong aria-hidden="true">2.</strong> Tutorials &amp; Cookbooks</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cookbooks/analysis/index.html"><strong aria-hidden="true">2.1.</strong> Analysis</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cookbooks/public_data.html"><strong aria-hidden="true">2.1.1.</strong> Accessing Public Data</a></li><li class="chapter-item expanded "><a href="../cookbooks/glam.html"><strong aria-hidden="true">2.1.2.</strong> Introduction to GLAM</a></li><li class="chapter-item expanded "><a href="../cookbooks/bigquery.html"><strong aria-hidden="true">2.1.3.</strong> Accessing and working with BigQuery</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cookbooks/bigquery/access.html"><strong aria-hidden="true">2.1.3.1.</strong> Access</a></li><li class="chapter-item expanded "><a href="../cookbooks/bigquery/querying.html"><strong aria-hidden="true">2.1.3.2.</strong> Writing Queries</a></li><li class="chapter-item expanded "><a href="../cookbooks/bigquery/optimization.html"><strong aria-hidden="true">2.1.3.3.</strong> Optimization</a></li><li class="chapter-item expanded "><a href="../cookbooks/accessing_glean_data.html"><strong aria-hidden="true">2.1.3.4.</strong> Accessing Glean Data</a></li><li class="chapter-item expanded "><a href="../cookbooks/additional_props.html"><strong aria-hidden="true">2.1.3.5.</strong> Accessing Additional Properties</a></li><li class="chapter-item expanded "><a href="../tools/spark.html"><strong aria-hidden="true">2.1.3.6.</strong> Custom analysis with Spark</a></li></ol></li><li class="chapter-item expanded "><a href="../tools/stmo.html"><strong aria-hidden="true">2.1.4.</strong> Introduction to STMO</a></li><li class="chapter-item expanded "><a href="../cookbooks/dataset_specific.html"><strong aria-hidden="true">2.1.5.</strong> Dataset-Specific</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cookbooks/normandy_events.html"><strong aria-hidden="true">2.1.5.1.</strong> Working with Normandy events</a></li><li class="chapter-item expanded "><a href="../cookbooks/crash_pings.html"><strong aria-hidden="true">2.1.5.2.</strong> Working with Crash Pings</a></li><li class="chapter-item expanded "><a href="../cookbooks/clients_last_seen_bits.html"><strong aria-hidden="true">2.1.5.3.</strong> Working with Bit Patterns in Clients Last Seen</a></li><li class="chapter-item expanded "><a href="../cookbooks/main_ping_exponential_histograms.html"><strong aria-hidden="true">2.1.5.4.</strong> Visualizing Percentiles of a Main Ping Exponential Histogram</a></li></ol></li><li class="chapter-item expanded "><a href="../cookbooks/realtime.html"><strong aria-hidden="true">2.1.6.</strong> Real-time</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cookbooks/view_pings_cep.html"><strong aria-hidden="true">2.1.6.1.</strong> Seeing Your Own Pings</a></li></ol></li><li class="chapter-item expanded "><a href="../cookbooks/metrics.html"><strong aria-hidden="true">2.1.7.</strong> Metrics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cookbooks/dau.html"><strong aria-hidden="true">2.1.7.1.</strong> Daily Active Users (DAU and MAU)</a></li><li class="chapter-item expanded "><a href="../cookbooks/active_dau.html"><strong aria-hidden="true">2.1.7.2.</strong> Active DAU (aDAU)</a></li><li class="chapter-item expanded "><a href="../cookbooks/retention.html"><strong aria-hidden="true">2.1.7.3.</strong> Retention</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../cookbooks/operational/index.html"><strong aria-hidden="true">2.2.</strong> Operational</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cookbooks/gcp-projects.html"><strong aria-hidden="true">2.2.1.</strong> Creating a Prototype Data Project on Google Cloud Platform</a></li><li class="chapter-item expanded "><a href="../cookbooks/operational/protosaur.html"><strong aria-hidden="true">2.2.2.</strong> Creating Static Dashboards with Protosaur</a></li><li class="chapter-item expanded "><a href="../cookbooks/scheduling_queries.html"><strong aria-hidden="true">2.2.3.</strong> Scheduling Queries</a></li><li class="chapter-item expanded "><a href="../cookbooks/deploying-containers.html"><strong aria-hidden="true">2.2.4.</strong> Building and Deploying Containers to GCR with CircleCI</a></li><li class="chapter-item expanded "><a href="../cookbooks/publishing_datasets.html"><strong aria-hidden="true">2.2.5.</strong> Publishing Datasets</a></li></ol></li><li class="chapter-item expanded "><a href="../datasets/new_data.html"><strong aria-hidden="true">2.3.</strong> Sending telemetry</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cookbooks/client_guidelines.html"><strong aria-hidden="true">2.3.1.</strong> Implementing Experiments</a></li><li class="chapter-item expanded "><a href="../cookbooks/events_best_practices.html"><strong aria-hidden="true">2.3.2.</strong> Sending Events</a></li><li class="chapter-item expanded "><a href="../cookbooks/new_ping.html"><strong aria-hidden="true">2.3.3.</strong> Sending a Custom Ping</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../reference/index.html"><strong aria-hidden="true">3.</strong> Data Platform Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../tools/guiding_principles.html"><strong aria-hidden="true">3.1.</strong> Guiding Principles for Data Infrastructure</a></li><li class="chapter-item expanded "><a href="../concepts/glean/glean.html"><strong aria-hidden="true">3.2.</strong> Glean overview</a></li><li class="chapter-item expanded "><a href="../concepts/pipeline/gcp_data_pipeline.html"><strong aria-hidden="true">3.3.</strong> Overview of Mozilla's Data Pipeline</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/pipeline/http_edge_spec.html"><strong aria-hidden="true">3.3.1.</strong> HTTP Edge Server Specification</a></li><li class="chapter-item expanded "><a href="../concepts/pipeline/event_pipeline.html"><strong aria-hidden="true">3.3.2.</strong> Event Pipeline Detail</a></li><li class="chapter-item expanded "><a href="../concepts/pipeline/schemas.html"><strong aria-hidden="true">3.3.3.</strong> Schemas</a></li><li class="chapter-item expanded "><a href="../concepts/pipeline/glean_data.html"><strong aria-hidden="true">3.3.4.</strong> Glean Data</a></li><li class="chapter-item expanded "><a href="../concepts/channels/channel_normalization.html"><strong aria-hidden="true">3.3.5.</strong> Channel Normalization</a></li><li class="chapter-item expanded "><a href="../concepts/sample_id.html"><strong aria-hidden="true">3.3.6.</strong> Sampling</a></li><li class="chapter-item expanded "><a href="../concepts/pipeline/filtering.html"><strong aria-hidden="true">3.3.7.</strong> Filtering</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/sql_style.html"><strong aria-hidden="true">3.4.</strong> SQL Style Guide</a></li><li class="chapter-item expanded "><a href="../concepts/index.html"><strong aria-hidden="true">3.5.</strong> Telemetry Behavior Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/history.html"><strong aria-hidden="true">3.5.1.</strong> History of Telemetry</a></li><li class="chapter-item expanded "><a href="../concepts/profile/index.html"><strong aria-hidden="true">3.5.2.</strong> Profile Behavior</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/profile/profile_creation.html"><strong aria-hidden="true">3.5.2.1.</strong> Profile Creation</a></li><li class="chapter-item expanded "><a href="../concepts/profile/realworldusage.html"><strong aria-hidden="true">3.5.2.2.</strong> Real World Usage</a></li><li class="chapter-item expanded "><a href="../concepts/profile/profilehistory.html"><strong aria-hidden="true">3.5.2.3.</strong> Profile History</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/engagement.html"><strong aria-hidden="true">3.5.3.</strong> Engagement metrics</a></li><li class="chapter-item expanded "><a href="../concepts/segments.html"><strong aria-hidden="true">3.5.4.</strong> User states/Segments</a></li></ol></li><li class="chapter-item expanded "><a href="../tools/projects.html"><strong aria-hidden="true">3.6.</strong> Project Glossary</a></li></ol></li><li class="chapter-item expanded "><a href="../datasets/reference.html"><strong aria-hidden="true">4.</strong> Dataset Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datasets/pings.html"><strong aria-hidden="true">4.1.</strong> Pings</a></li><li class="chapter-item expanded "><a href="../datasets/derived.html"><strong aria-hidden="true">4.2.</strong> Derived Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datasets/active_profiles.html"><strong aria-hidden="true">4.2.1.</strong> Active Profiles</a></li><li class="chapter-item expanded "><a href="../datasets/batch_view/addons/reference.html"><strong aria-hidden="true">4.2.2.</strong> Addons</a></li><li class="chapter-item expanded "><a href="../datasets/other/addons_daily/reference.html"><strong aria-hidden="true">4.2.3.</strong> Addons Daily</a></li><li class="chapter-item expanded "><a href="../datasets/other/asn_aggregates/reference.html"><strong aria-hidden="true">4.2.4.</strong> Autonomous System Aggregates</a></li><li class="chapter-item expanded "><a href="../datasets/other/attitudes_daily/reference.html"><strong aria-hidden="true">4.2.5.</strong> Attitudes Daily</a></li><li class="chapter-item expanded "><a href="../datasets/batch_view/clients_daily/reference.html"><strong aria-hidden="true">4.2.6.</strong> Clients Daily</a></li><li class="chapter-item expanded "><a href="../datasets/bigquery/clients_last_seen/reference.html"><strong aria-hidden="true">4.2.7.</strong> Clients Last Seen</a></li><li class="chapter-item expanded "><a href="../datasets/batch_view/events/reference.html"><strong aria-hidden="true">4.2.8.</strong> Events</a></li><li class="chapter-item expanded "><a href="../datasets/bigquery/exact_mau/reference.html"><strong aria-hidden="true">4.2.9.</strong> Exact MAU</a></li><li class="chapter-item expanded "><a href="../datasets/main_ping_tables.html"><strong aria-hidden="true">4.2.10.</strong> Main Ping Tables</a></li><li class="chapter-item expanded "><a href="../datasets/batch_view/main_summary/reference.html"><strong aria-hidden="true">4.2.11.</strong> Main Summary</a></li><li class="chapter-item expanded "><a href="../datasets/other/socorro_crash/reference.html"><strong aria-hidden="true">4.2.12.</strong> Socorro Crash Reports</a></li><li class="chapter-item expanded "><a href="../datasets/other/ssl/reference.html"><strong aria-hidden="true">4.2.13.</strong> SSL Ratios (public)</a></li><li class="chapter-item expanded "><a href="../datasets/batch_view/telemetry_aggregates/reference.html"><strong aria-hidden="true">4.2.14.</strong> Telemetry Aggregates</a></li><li class="chapter-item expanded "><a href="../datasets/glam.html"><strong aria-hidden="true">4.2.15.</strong> GLAM Aggregates</a></li></ol></li><li class="chapter-item expanded "><a href="../tools/experiments.html"><strong aria-hidden="true">4.3.</strong> Experiment Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datasets/jetstream.html"><strong aria-hidden="true">4.3.1.</strong> Jetstream</a></li><li class="chapter-item expanded "><a href="../datasets/heartbeat.html"><strong aria-hidden="true">4.3.2.</strong> Accessing Heartbeat data</a></li><li class="chapter-item expanded "><a href="../datasets/shield.html"><strong aria-hidden="true">4.3.3.</strong> Accessing Shield Study data</a></li><li class="chapter-item expanded "><a href="../datasets/dynamic_telemetry.html"><strong aria-hidden="true">4.3.4.</strong> Dynamic telemetry</a></li><li class="chapter-item expanded "><a href="../datasets/experiment_monitoring.html"><strong aria-hidden="true">4.3.5.</strong> Experiment monitoring</a></li></ol></li><li class="chapter-item expanded "><a href="../datasets/search.html"><strong aria-hidden="true">4.4.</strong> Search Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datasets/search/search_aggregates/reference.html"><strong aria-hidden="true">4.4.1.</strong> Search Aggregates</a></li><li class="chapter-item expanded "><a href="../datasets/search/search_clients_engines_sources_daily/reference.html"><strong aria-hidden="true">4.4.2.</strong> Search Clients Engines Sources Daily</a></li><li class="chapter-item expanded "><a href="../datasets/search/search_clients_last_seen/reference.html"><strong aria-hidden="true">4.4.3.</strong> Search Clients Last Seen</a></li><li class="chapter-item expanded "><a href="../datasets/search/client_ltv/reference.html"><strong aria-hidden="true">4.4.4.</strong> Client LTV</a></li></ol></li><li class="chapter-item expanded "><a href="../datasets/non_desktop.html"><strong aria-hidden="true">4.5.</strong> Non-Desktop Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datasets/non_desktop/day_2_7_activation/reference.html"><strong aria-hidden="true">4.5.1.</strong> Day 2-7 Activation</a></li><li class="chapter-item expanded "><a href="../datasets/non_desktop/google_play_store/reference.html"><strong aria-hidden="true">4.5.2.</strong> Google Play Store</a></li><li class="chapter-item expanded "><a href="../datasets/non_desktop/apple_app_store/reference.html"><strong aria-hidden="true">4.5.3.</strong> Apple App Store</a></li><li class="chapter-item expanded "><a href="../datasets/non_desktop/events_daily/reference.html"><strong aria-hidden="true">4.5.4.</strong> Events Daily</a></li></ol></li><li class="chapter-item expanded "><a href="../datasets/other.html"><strong aria-hidden="true">4.6.</strong> Other Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datasets/other/hgpush/reference.html"><strong aria-hidden="true">4.6.1.</strong> hgpush</a></li><li class="chapter-item expanded "><a href="../datasets/other/stub_installer/reference.html"><strong aria-hidden="true">4.6.2.</strong> Stub installer ping</a></li><li class="chapter-item expanded "><a href="../datasets/other/activity-stream/reference.html"><strong aria-hidden="true">4.6.3.</strong> Activity Stream</a></li><li class="chapter-item expanded "><a href="../datasets/other/bmobugs/reference.html"><strong aria-hidden="true">4.6.4.</strong> bmobugs</a></li><li class="chapter-item expanded "><a href="../datasets/buildhub.html"><strong aria-hidden="true">4.6.5.</strong> Build metadata</a></li><li class="chapter-item expanded "><a href="../datasets/releases.html"><strong aria-hidden="true">4.6.6.</strong> Release information</a></li></ol></li><li class="chapter-item expanded "><a href="../datasets/fxa.html"><strong aria-hidden="true">4.7.</strong> Firefox Accounts Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datasets/fxa_metrics/attribution.html"><strong aria-hidden="true">4.7.1.</strong> Firefox Account Attribution</a></li><li class="chapter-item expanded "><a href="../datasets/fxa_metrics/funnels.html"><strong aria-hidden="true">4.7.2.</strong> Firefox Account Funnel Metrics</a></li><li class="chapter-item expanded "><a href="../datasets/fxa_metrics/emails.html"><strong aria-hidden="true">4.7.3.</strong> Firefox Account Email Metrics</a></li></ol></li><li class="chapter-item expanded "><a href="../datasets/static.html"><strong aria-hidden="true">4.8.</strong> Static Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datasets/static/normalized_os.html"><strong aria-hidden="true">4.8.1.</strong> Normalized OS Names And Versions</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../historical/index.html"><strong aria-hidden="true">5.</strong> Historical Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/pipeline/data_pipeline.html"><strong aria-hidden="true">5.1.</strong> Previous AWS Pipeline Overview</a></li><li class="chapter-item expanded "><a href="../concepts/pipeline/data_pipeline_detail.html"><strong aria-hidden="true">5.2.</strong> In-depth AWS Data Pipeline Detail</a></li><li class="chapter-item expanded "><a href="../metrics/index.html"><strong aria-hidden="true">5.3.</strong> Metrics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../metrics/definitions.html"><strong aria-hidden="true">5.3.1.</strong> Definitions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../metrics/metrics.html"><strong aria-hidden="true">5.3.1.1.</strong> Metrics</a></li><li class="chapter-item expanded "><a href="../metrics/usage.html"><strong aria-hidden="true">5.3.1.2.</strong> Usage Criteria</a></li><li class="chapter-item expanded "><a href="../metrics/dimensions.html"><strong aria-hidden="true">5.3.1.3.</strong> Slicing Dimensions</a></li></ol></li><li class="chapter-item expanded "><a href="../metrics/policy.html"><strong aria-hidden="true">5.3.2.</strong> Metrics Standardization and Policy</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/censuses.html"><strong aria-hidden="true">5.4.</strong> Legacy Census Metrics</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete.html"><strong aria-hidden="true">5.5.</strong> Obsolete Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datasets/obsolete/churn/reference.html"><strong aria-hidden="true">5.5.1.</strong> Churn</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/client_count/reference.html"><strong aria-hidden="true">5.5.2.</strong> Client Count</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/client_count_daily/reference.html"><strong aria-hidden="true">5.5.3.</strong> Client Count Daily</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/crash_aggregates/reference.html"><strong aria-hidden="true">5.5.4.</strong> Crash Aggregates</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/crash_summary/reference.html"><strong aria-hidden="true">5.5.5.</strong> Crash Summary</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/error_aggregates/reference.html"><strong aria-hidden="true">5.5.6.</strong> Error Aggregates</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/first_shutdown_summary/reference.html"><strong aria-hidden="true">5.5.7.</strong> First Shutdown Summary</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/heavy_users/reference.html"><strong aria-hidden="true">5.5.8.</strong> Heavy Users</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/longitudinal/reference.html"><strong aria-hidden="true">5.5.9.</strong> Longitudinal</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/retention/reference.html"><strong aria-hidden="true">5.5.10.</strong> Retention</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/sync_summary/reference.html"><strong aria-hidden="true">5.5.11.</strong> Sync Summary</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/update/reference.html"><strong aria-hidden="true">5.5.12.</strong> Update</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../contributing/index.html"><strong aria-hidden="true">6.</strong> Contributing</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../contributing/style_guide.html"><strong aria-hidden="true">6.1.</strong> Style Guide</a></li><li class="chapter-item expanded "><a href="../contributing/structure.html"><strong aria-hidden="true">6.2.</strong> Structure</a></li></ol></li></ol>
-            </div>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction.html">Mozilla Data Documentation</a></li><li class="chapter-item expanded "><a href="../concepts/getting_started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/terminology.html"><strong aria-hidden="true">1.1.</strong> Terminology</a></li><li class="chapter-item expanded "><a href="../concepts/gaining_access.html"><strong aria-hidden="true">1.2.</strong> Gaining Access</a></li><li class="chapter-item expanded "><a href="../concepts/analysis_intro.html"><strong aria-hidden="true">1.3.</strong> Analysis Quick Start</a></li><li class="chapter-item expanded "><a href="../tools/interfaces.html"><strong aria-hidden="true">1.4.</strong> Tools for Data Analysis</a></li><li class="chapter-item expanded "><a href="../concepts/analysis_gotchas.html" class="active"><strong aria-hidden="true">1.5.</strong> Common Analysis Gotchas</a></li><li class="chapter-item expanded "><a href="../concepts/choosing_a_dataset.html"><strong aria-hidden="true">1.6.</strong> Choosing a Desktop Dataset</a></li><li class="chapter-item expanded "><a href="../concepts/choosing_a_dataset_mobile.html"><strong aria-hidden="true">1.7.</strong> Choosing a Mobile Dataset</a></li><li class="chapter-item expanded "><a href="../concepts/getting_help.html"><strong aria-hidden="true">1.8.</strong> Getting Help</a></li><li class="chapter-item expanded "><a href="../concepts/reporting_a_problem.html"><strong aria-hidden="true">1.9.</strong> Reporting a problem</a></li></ol></li><li class="chapter-item expanded "><a href="../cookbooks/index.html"><strong aria-hidden="true">2.</strong> Tutorials &amp; Cookbooks</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cookbooks/analysis/index.html"><strong aria-hidden="true">2.1.</strong> Analysis</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cookbooks/public_data.html"><strong aria-hidden="true">2.1.1.</strong> Accessing Public Data</a></li><li class="chapter-item expanded "><a href="../cookbooks/glam.html"><strong aria-hidden="true">2.1.2.</strong> Introduction to GLAM</a></li><li class="chapter-item expanded "><a href="../cookbooks/bigquery.html"><strong aria-hidden="true">2.1.3.</strong> Accessing and working with BigQuery</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cookbooks/bigquery/access.html"><strong aria-hidden="true">2.1.3.1.</strong> Access</a></li><li class="chapter-item expanded "><a href="../cookbooks/bigquery/querying.html"><strong aria-hidden="true">2.1.3.2.</strong> Writing Queries</a></li><li class="chapter-item expanded "><a href="../cookbooks/bigquery/optimization.html"><strong aria-hidden="true">2.1.3.3.</strong> Optimization</a></li><li class="chapter-item expanded "><a href="../cookbooks/accessing_glean_data.html"><strong aria-hidden="true">2.1.3.4.</strong> Accessing Glean Data</a></li><li class="chapter-item expanded "><a href="../cookbooks/additional_props.html"><strong aria-hidden="true">2.1.3.5.</strong> Accessing Additional Properties</a></li><li class="chapter-item expanded "><a href="../tools/spark.html"><strong aria-hidden="true">2.1.3.6.</strong> Custom analysis with Spark</a></li></ol></li><li class="chapter-item expanded "><a href="../tools/stmo.html"><strong aria-hidden="true">2.1.4.</strong> Introduction to STMO</a></li><li class="chapter-item expanded "><a href="../cookbooks/dataset_specific.html"><strong aria-hidden="true">2.1.5.</strong> Dataset-Specific</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cookbooks/normandy_events.html"><strong aria-hidden="true">2.1.5.1.</strong> Working with Normandy events</a></li><li class="chapter-item expanded "><a href="../cookbooks/crash_pings.html"><strong aria-hidden="true">2.1.5.2.</strong> Working with Crash Pings</a></li><li class="chapter-item expanded "><a href="../cookbooks/clients_last_seen_bits.html"><strong aria-hidden="true">2.1.5.3.</strong> Working with Bit Patterns in Clients Last Seen</a></li><li class="chapter-item expanded "><a href="../cookbooks/main_ping_exponential_histograms.html"><strong aria-hidden="true">2.1.5.4.</strong> Visualizing Percentiles of a Main Ping Exponential Histogram</a></li></ol></li><li class="chapter-item expanded "><a href="../cookbooks/realtime.html"><strong aria-hidden="true">2.1.6.</strong> Real-time</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cookbooks/view_pings_cep.html"><strong aria-hidden="true">2.1.6.1.</strong> Seeing Your Own Pings</a></li></ol></li><li class="chapter-item expanded "><a href="../cookbooks/metrics.html"><strong aria-hidden="true">2.1.7.</strong> Metrics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cookbooks/dau.html"><strong aria-hidden="true">2.1.7.1.</strong> Daily Active Users (DAU and MAU)</a></li><li class="chapter-item expanded "><a href="../cookbooks/active_dau.html"><strong aria-hidden="true">2.1.7.2.</strong> Active DAU (aDAU)</a></li><li class="chapter-item expanded "><a href="../cookbooks/retention.html"><strong aria-hidden="true">2.1.7.3.</strong> Retention</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../cookbooks/operational/index.html"><strong aria-hidden="true">2.2.</strong> Operational</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cookbooks/gcp-projects.html"><strong aria-hidden="true">2.2.1.</strong> Creating a Prototype Data Project on Google Cloud Platform</a></li><li class="chapter-item expanded "><a href="../cookbooks/operational/protosaur.html"><strong aria-hidden="true">2.2.2.</strong> Creating Static Dashboards with Protosaur</a></li><li class="chapter-item expanded "><a href="../cookbooks/scheduling_queries.html"><strong aria-hidden="true">2.2.3.</strong> Scheduling Queries</a></li><li class="chapter-item expanded "><a href="../cookbooks/deploying-containers.html"><strong aria-hidden="true">2.2.4.</strong> Building and Deploying Containers to GCR with CircleCI</a></li><li class="chapter-item expanded "><a href="../cookbooks/publishing_datasets.html"><strong aria-hidden="true">2.2.5.</strong> Publishing Datasets</a></li></ol></li><li class="chapter-item expanded "><a href="../datasets/new_data.html"><strong aria-hidden="true">2.3.</strong> Sending telemetry</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cookbooks/client_guidelines.html"><strong aria-hidden="true">2.3.1.</strong> Implementing Experiments</a></li><li class="chapter-item expanded "><a href="../cookbooks/events_best_practices.html"><strong aria-hidden="true">2.3.2.</strong> Sending Events</a></li><li class="chapter-item expanded "><a href="../cookbooks/new_ping.html"><strong aria-hidden="true">2.3.3.</strong> Sending a Custom Ping</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../reference/index.html"><strong aria-hidden="true">3.</strong> Data Platform Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../tools/guiding_principles.html"><strong aria-hidden="true">3.1.</strong> Guiding Principles for Data Infrastructure</a></li><li class="chapter-item expanded "><a href="../concepts/glean/glean.html"><strong aria-hidden="true">3.2.</strong> Glean overview</a></li><li class="chapter-item expanded "><a href="../concepts/pipeline/gcp_data_pipeline.html"><strong aria-hidden="true">3.3.</strong> Overview of Mozilla's Data Pipeline</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/pipeline/http_edge_spec.html"><strong aria-hidden="true">3.3.1.</strong> HTTP Edge Server Specification</a></li><li class="chapter-item expanded "><a href="../concepts/pipeline/event_pipeline.html"><strong aria-hidden="true">3.3.2.</strong> Event Pipeline Detail</a></li><li class="chapter-item expanded "><a href="../concepts/pipeline/schemas.html"><strong aria-hidden="true">3.3.3.</strong> Schemas</a></li><li class="chapter-item expanded "><a href="../concepts/pipeline/glean_data.html"><strong aria-hidden="true">3.3.4.</strong> Glean Data</a></li><li class="chapter-item expanded "><a href="../concepts/channels/channel_normalization.html"><strong aria-hidden="true">3.3.5.</strong> Channel Normalization</a></li><li class="chapter-item expanded "><a href="../concepts/sample_id.html"><strong aria-hidden="true">3.3.6.</strong> Sampling</a></li><li class="chapter-item expanded "><a href="../concepts/pipeline/filtering.html"><strong aria-hidden="true">3.3.7.</strong> Filtering</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/sql_style.html"><strong aria-hidden="true">3.4.</strong> SQL Style Guide</a></li><li class="chapter-item expanded "><a href="../concepts/index.html"><strong aria-hidden="true">3.5.</strong> Telemetry Behavior Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/history.html"><strong aria-hidden="true">3.5.1.</strong> History of Telemetry</a></li><li class="chapter-item expanded "><a href="../concepts/profile/index.html"><strong aria-hidden="true">3.5.2.</strong> Profile Behavior</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/profile/profile_creation.html"><strong aria-hidden="true">3.5.2.1.</strong> Profile Creation</a></li><li class="chapter-item expanded "><a href="../concepts/profile/realworldusage.html"><strong aria-hidden="true">3.5.2.2.</strong> Real World Usage</a></li><li class="chapter-item expanded "><a href="../concepts/profile/profilehistory.html"><strong aria-hidden="true">3.5.2.3.</strong> Profile History</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/engagement.html"><strong aria-hidden="true">3.5.3.</strong> Engagement metrics</a></li><li class="chapter-item expanded "><a href="../concepts/segments.html"><strong aria-hidden="true">3.5.4.</strong> User states/Segments</a></li></ol></li><li class="chapter-item expanded "><a href="../tools/projects.html"><strong aria-hidden="true">3.6.</strong> Project Glossary</a></li></ol></li><li class="chapter-item expanded "><a href="../datasets/reference.html"><strong aria-hidden="true">4.</strong> Dataset Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datasets/pings.html"><strong aria-hidden="true">4.1.</strong> Pings</a></li><li class="chapter-item expanded "><a href="../datasets/derived.html"><strong aria-hidden="true">4.2.</strong> Derived Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datasets/active_profiles.html"><strong aria-hidden="true">4.2.1.</strong> Active Profiles</a></li><li class="chapter-item expanded "><a href="../datasets/batch_view/addons/reference.html"><strong aria-hidden="true">4.2.2.</strong> Addons</a></li><li class="chapter-item expanded "><a href="../datasets/other/addons_daily/reference.html"><strong aria-hidden="true">4.2.3.</strong> Addons Daily</a></li><li class="chapter-item expanded "><a href="../datasets/other/asn_aggregates/reference.html"><strong aria-hidden="true">4.2.4.</strong> Autonomous System Aggregates</a></li><li class="chapter-item expanded "><a href="../datasets/other/attitudes_daily/reference.html"><strong aria-hidden="true">4.2.5.</strong> Attitudes Daily</a></li><li class="chapter-item expanded "><a href="../datasets/batch_view/clients_daily/reference.html"><strong aria-hidden="true">4.2.6.</strong> Clients Daily</a></li><li class="chapter-item expanded "><a href="../datasets/bigquery/clients_last_seen/reference.html"><strong aria-hidden="true">4.2.7.</strong> Clients Last Seen</a></li><li class="chapter-item expanded "><a href="../datasets/batch_view/events/reference.html"><strong aria-hidden="true">4.2.8.</strong> Events</a></li><li class="chapter-item expanded "><a href="../datasets/bigquery/exact_mau/reference.html"><strong aria-hidden="true">4.2.9.</strong> Exact MAU</a></li><li class="chapter-item expanded "><a href="../datasets/main_ping_tables.html"><strong aria-hidden="true">4.2.10.</strong> Main Ping Tables</a></li><li class="chapter-item expanded "><a href="../datasets/batch_view/main_summary/reference.html"><strong aria-hidden="true">4.2.11.</strong> Main Summary</a></li><li class="chapter-item expanded "><a href="../datasets/other/socorro_crash/reference.html"><strong aria-hidden="true">4.2.12.</strong> Socorro Crash Reports</a></li><li class="chapter-item expanded "><a href="../datasets/other/ssl/reference.html"><strong aria-hidden="true">4.2.13.</strong> SSL Ratios (public)</a></li><li class="chapter-item expanded "><a href="../datasets/batch_view/telemetry_aggregates/reference.html"><strong aria-hidden="true">4.2.14.</strong> Telemetry Aggregates</a></li><li class="chapter-item expanded "><a href="../datasets/glam.html"><strong aria-hidden="true">4.2.15.</strong> GLAM Aggregates</a></li></ol></li><li class="chapter-item expanded "><a href="../tools/experiments.html"><strong aria-hidden="true">4.3.</strong> Experiment Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datasets/jetstream.html"><strong aria-hidden="true">4.3.1.</strong> Jetstream</a></li><li class="chapter-item expanded "><a href="../datasets/heartbeat.html"><strong aria-hidden="true">4.3.2.</strong> Accessing Heartbeat data</a></li><li class="chapter-item expanded "><a href="../datasets/shield.html"><strong aria-hidden="true">4.3.3.</strong> Accessing Shield Study data</a></li><li class="chapter-item expanded "><a href="../datasets/dynamic_telemetry.html"><strong aria-hidden="true">4.3.4.</strong> Dynamic telemetry</a></li><li class="chapter-item expanded "><a href="../datasets/experiment_monitoring.html"><strong aria-hidden="true">4.3.5.</strong> Experiment monitoring</a></li></ol></li><li class="chapter-item expanded "><a href="../datasets/search.html"><strong aria-hidden="true">4.4.</strong> Search Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datasets/search/search_aggregates/reference.html"><strong aria-hidden="true">4.4.1.</strong> Search Aggregates</a></li><li class="chapter-item expanded "><a href="../datasets/search/search_clients_engines_sources_daily/reference.html"><strong aria-hidden="true">4.4.2.</strong> Search Clients Engines Sources Daily</a></li><li class="chapter-item expanded "><a href="../datasets/search/search_clients_last_seen/reference.html"><strong aria-hidden="true">4.4.3.</strong> Search Clients Last Seen</a></li><li class="chapter-item expanded "><a href="../datasets/search/client_ltv/reference.html"><strong aria-hidden="true">4.4.4.</strong> Client LTV</a></li></ol></li><li class="chapter-item expanded "><a href="../datasets/non_desktop.html"><strong aria-hidden="true">4.5.</strong> Non-Desktop Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datasets/non_desktop/day_2_7_activation/reference.html"><strong aria-hidden="true">4.5.1.</strong> Day 2-7 Activation</a></li><li class="chapter-item expanded "><a href="../datasets/non_desktop/google_play_store/reference.html"><strong aria-hidden="true">4.5.2.</strong> Google Play Store</a></li><li class="chapter-item expanded "><a href="../datasets/non_desktop/apple_app_store/reference.html"><strong aria-hidden="true">4.5.3.</strong> Apple App Store</a></li><li class="chapter-item expanded "><a href="../datasets/non_desktop/events_daily/reference.html"><strong aria-hidden="true">4.5.4.</strong> Events Daily</a></li></ol></li><li class="chapter-item expanded "><a href="../datasets/other.html"><strong aria-hidden="true">4.6.</strong> Other Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datasets/other/hgpush/reference.html"><strong aria-hidden="true">4.6.1.</strong> hgpush</a></li><li class="chapter-item expanded "><a href="../datasets/other/stub_installer/reference.html"><strong aria-hidden="true">4.6.2.</strong> Stub installer ping</a></li><li class="chapter-item expanded "><a href="../datasets/other/activity-stream/reference.html"><strong aria-hidden="true">4.6.3.</strong> Activity Stream</a></li><li class="chapter-item expanded "><a href="../datasets/other/bmobugs/reference.html"><strong aria-hidden="true">4.6.4.</strong> bmobugs</a></li><li class="chapter-item expanded "><a href="../datasets/buildhub.html"><strong aria-hidden="true">4.6.5.</strong> Build metadata</a></li><li class="chapter-item expanded "><a href="../datasets/releases.html"><strong aria-hidden="true">4.6.6.</strong> Release information</a></li></ol></li><li class="chapter-item expanded "><a href="../datasets/fxa.html"><strong aria-hidden="true">4.7.</strong> Firefox Accounts Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datasets/fxa_metrics/attribution.html"><strong aria-hidden="true">4.7.1.</strong> Firefox Account Attribution</a></li><li class="chapter-item expanded "><a href="../datasets/fxa_metrics/funnels.html"><strong aria-hidden="true">4.7.2.</strong> Firefox Account Funnel Metrics</a></li><li class="chapter-item expanded "><a href="../datasets/fxa_metrics/emails.html"><strong aria-hidden="true">4.7.3.</strong> Firefox Account Email Metrics</a></li></ol></li><li class="chapter-item expanded "><a href="../datasets/static.html"><strong aria-hidden="true">4.8.</strong> Static Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datasets/static/normalized_os.html"><strong aria-hidden="true">4.8.1.</strong> Normalized OS Names And Versions</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../historical/index.html"><strong aria-hidden="true">5.</strong> Historical Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concepts/pipeline/data_pipeline.html"><strong aria-hidden="true">5.1.</strong> Previous AWS Pipeline Overview</a></li><li class="chapter-item expanded "><a href="../concepts/pipeline/data_pipeline_detail.html"><strong aria-hidden="true">5.2.</strong> In-depth AWS Data Pipeline Detail</a></li><li class="chapter-item expanded "><a href="../metrics/index.html"><strong aria-hidden="true">5.3.</strong> Metrics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../metrics/definitions.html"><strong aria-hidden="true">5.3.1.</strong> Definitions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../metrics/metrics.html"><strong aria-hidden="true">5.3.1.1.</strong> Metrics</a></li><li class="chapter-item expanded "><a href="../metrics/usage.html"><strong aria-hidden="true">5.3.1.2.</strong> Usage Criteria</a></li><li class="chapter-item expanded "><a href="../metrics/dimensions.html"><strong aria-hidden="true">5.3.1.3.</strong> Slicing Dimensions</a></li></ol></li><li class="chapter-item expanded "><a href="../metrics/policy.html"><strong aria-hidden="true">5.3.2.</strong> Metrics Standardization and Policy</a></li></ol></li><li class="chapter-item expanded "><a href="../concepts/censuses.html"><strong aria-hidden="true">5.4.</strong> Legacy Census Metrics</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete.html"><strong aria-hidden="true">5.5.</strong> Obsolete Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datasets/obsolete/churn/reference.html"><strong aria-hidden="true">5.5.1.</strong> Churn</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/client_count/reference.html"><strong aria-hidden="true">5.5.2.</strong> Client Count</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/client_count_daily/reference.html"><strong aria-hidden="true">5.5.3.</strong> Client Count Daily</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/crash_aggregates/reference.html"><strong aria-hidden="true">5.5.4.</strong> Crash Aggregates</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/crash_summary/reference.html"><strong aria-hidden="true">5.5.5.</strong> Crash Summary</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/error_aggregates/reference.html"><strong aria-hidden="true">5.5.6.</strong> Error Aggregates</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/first_shutdown_summary/reference.html"><strong aria-hidden="true">5.5.7.</strong> First Shutdown Summary</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/heavy_users/reference.html"><strong aria-hidden="true">5.5.8.</strong> Heavy Users</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/longitudinal/reference.html"><strong aria-hidden="true">5.5.9.</strong> Longitudinal</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/retention/reference.html"><strong aria-hidden="true">5.5.10.</strong> Retention</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/sync_summary/reference.html"><strong aria-hidden="true">5.5.11.</strong> Sync Summary</a></li><li class="chapter-item expanded "><a href="../datasets/obsolete/update/reference.html"><strong aria-hidden="true">5.5.12.</strong> Update</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../contributing/index.html"><strong aria-hidden="true">6.</strong> Contributing</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../contributing/style_guide.html"><strong aria-hidden="true">6.1.</strong> Style Guide</a></li><li class="chapter-item expanded "><a href="../contributing/structure.html"><strong aria-hidden="true">6.2.</strong> Structure</a></li></ol></li></ol>            </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
@@ -127,33 +110,27 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
-                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
-                    </div>
+                                            </div>
 
                     <h1 class="menu-title">Mozilla Data Documentation</h1>
 
                     <div class="right-buttons">
-                        
-                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                                                <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
-                        
-                        <a href="https://github.com/mozilla/data-docs" title="Git repository" aria-label="Git repository">
+                                                                        <a href="https://github.com/mozilla/data-docs" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+                                                
                     </div>
                 </div>
 
-                
-                <div id="search-wrapper" class="hidden">
+                                <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -162,7 +139,6 @@
                     </div>
                 </div>
                 
-
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
@@ -174,7 +150,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#analysis-gotchas" id="analysis-gotchas">Analysis Gotchas</a></h1>
+                        <h1 id="analysis-gotchas"><a class="header" href="#analysis-gotchas">Analysis Gotchas</a></h1>
 <p>When you perform an analysis on any data, there are some mistakes that are easy to make:</p>
 <ul>
 <li>Do you know what question that you hope to answer?</li>
@@ -182,7 +158,7 @@
 <li>Is your result &quot;real&quot;? How precisely can you state your conclusion?</li>
 </ul>
 <p>This section is not about those traps. Instead, it is about quirks and pitfalls that are specific to Mozilla's data systems.</p>
-<h2><a class="header" href="#table-of-contents" id="table-of-contents">Table of Contents</a></h2>
+<h2 id="table-of-contents"><a class="header" href="#table-of-contents">Table of Contents</a></h2>
 <ul>
 <li><a href="#intermittent-issues">Intermittent issues</a></li>
 <li><a href="#notable-historic-events">Notable historic events</a></li>
@@ -200,11 +176,11 @@
 <li><a href="#pings-from-robots">Pings from Robots</a></li>
 <li><a href="#build-ids">Build Ids</a></li>
 </ul>
-<h2><a class="header" href="#intermittent-issues" id="intermittent-issues">Intermittent issues</a></h2>
+<h2 id="intermittent-issues"><a class="header" href="#intermittent-issues">Intermittent issues</a></h2>
 <p>Despite best efforts, problems may occur from time to time with the ingestion of data or the faithful creation of datasets.</p>
 <p>Issues undergoing investigation are marked with the <code>[data-quality]</code> whiteboard tag in Bugzilla. See <a href="https://bugzilla.mozilla.org/buglist.cgi?bug_status=UNCONFIRMED&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;classification=Client%20Software&amp;classification=Developer%20Infrastructure&amp;classification=Components&amp;classification=Server%20Software&amp;classification=Other&amp;priority=P1&amp;priority=P2&amp;priority=P3&amp;priority=--&amp;product=Data%20Platform%20and%20Tools&amp;resolution=---&amp;status_whiteboard=%5Bdata-quality%5D&amp;status_whiteboard_type=allwordssubstr&amp;list_id=15179084">currently open issues</a>.</p>
 <p>Especially severe problems with production data are announced on the <code>fx-data-dev</code> mailing list (see <a href="getting_help.html">getting help</a>). Subscribing to this mailing list is recommended if you are a current or aspiring data practitioner.</p>
-<h2><a class="header" href="#notable-historic-events" id="notable-historic-events">Notable historic events</a></h2>
+<h2 id="notable-historic-events"><a class="header" href="#notable-historic-events">Notable historic events</a></h2>
 <p>When you start to evaluate trends, be aware of events from the past that may invite comparisons with history. Here are a few to keep in mind:</p>
 <ul>
 <li><strong>Feb 16 2021 - Feb 25 2021</strong> - <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1694764">A small number of stub installer pings may have been discarded due to URI deduplication</a>.</li>
@@ -243,14 +219,14 @@ or <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1501329">Bug 1501329</a
 for these two days.</li>
 <li><strong>March 2016</strong> - Unified Telemetry launched.</li>
 </ul>
-<h2><a class="header" href="#pseudo-replication" id="pseudo-replication">Pseudo-replication</a></h2>
+<h2 id="pseudo-replication"><a class="header" href="#pseudo-replication">Pseudo-replication</a></h2>
 <p>Telemetry data is a collection of pings.
 A single main-ping represents a single subsession.
 Some clients have more subsessions than others.</p>
 <p>When you say <a href="https://mzl.la/2q75dbF">&quot;63% of beta 53 has Firefox set as its default browser&quot;</a>, you need to specify that it is 63% of <em>pings</em> because it represents only around 46% of clients.
 (Apparently users with Firefox Beta 53 set as their default browser submitted
 more main-pings than users who did not).</p>
-<h2><a class="header" href="#profiles-vs-users" id="profiles-vs-users">Profiles vs Users</a></h2>
+<h2 id="profiles-vs-users"><a class="header" href="#profiles-vs-users">Profiles vs Users</a></h2>
 <p>You may have noticed that the term &quot;clients&quot; and not &quot;users&quot; was applied in the above-listed section because of all the things can be counted, users is not one of them:</p>
 <p>Users can have multiple Firefox profiles that runs on the same system at
 the same time (like developers).</p>
@@ -263,7 +239,7 @@ This is generally close enough to the idea of a so-called &quot;user&quot; that 
 where the distinction matters.</p>
 <p>When in doubt, be precise. You count <em>clients</em>.</p>
 <p><a href="./profile/index.html">This article</a> describes the concept of &quot;profiles&quot; in detail.</p>
-<h2><a class="header" href="#opt-in-versus-opt-out" id="opt-in-versus-opt-out">Opt-in versus Opt-out</a></h2>
+<h2 id="opt-in-versus-opt-out"><a class="header" href="#opt-in-versus-opt-out">Opt-in versus Opt-out</a></h2>
 <p>Mozilla does not collect the same information from everyone.</p>
 <p>Every profile that does not have Telemetry disabled sends &quot;opt-out&quot; Telemetry, which
 includes:</p>
@@ -276,7 +252,7 @@ includes:</p>
 opts into sending this information by installing any pre-release version of Firefox:
 Beta, Nightly or Developer Edition (the latter is similar to Beta).</p>
 <p>If you want to encourage users to collect good information for Mozilla, ask them to install a Beta release.</p>
-<h2><a class="header" href="#trusting-dates" id="trusting-dates">Trusting Dates</a></h2>
+<h2 id="trusting-dates"><a class="header" href="#trusting-dates">Trusting Dates</a></h2>
 <p>Do not assume that the time reported by an instance of Firefox desktop is correct. The situation is somewhat better on mobile devices, but you should still be cautious.</p>
 <p>Any timestamp recorded by the user is subject to &quot;clock skew.&quot;
 The user's clock can be set (purposefully or accidentally) to any time at all.
@@ -303,7 +279,7 @@ may confuse certain expiration-date-checking code.</p>
 </ul>
 <p><em>Note</em> <code>submission_date</code> does not appear in the <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/common-ping.html">ping documentation</a>
 because it is added in post-processing.</p>
-<h2><a class="header" href="#date-formats" id="date-formats">Date Formats</a></h2>
+<h2 id="date-formats"><a class="header" href="#date-formats">Date Formats</a></h2>
 <p>Not all dates and times are created equal.
 Most of the dates and times in Telemetry pings are <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a>.
 Most are full timestamps, though their resolution may differ from per-second to per-day.</p>
@@ -320,13 +296,13 @@ the following formats: <code>%Y-%m-%d</code> or <code>%Y%m%d</code>.</p>
 <p><strong>Tip:</strong> If you want to parse <code>metadata/Date</code> to become a usable date in SQL:
 <code>SAFE.PARSE_TIMESTAMP('%a, %d %b %Y %T %Z', REPLACE(metadata.header.date, 'GMT+00:00', 'GMT'))</code>
 Alternatively, you can use the already parsed version that is available in user-facing views (<code>metatdata.header.parsed_date</code>)</p>
-<h2><a class="header" href="#delays" id="delays">Delays</a></h2>
+<h2 id="delays"><a class="header" href="#delays">Delays</a></h2>
 <p>There is an inherent delay between Telemetry data being created on the client and it being received by Mozilla.
 Most Telemetry data produced by desktop Firefox is represented in the main ping. It is sent at the beginning of a client's <em>next</em> Firefox session.
 If the user shuts down Firefox for the weekend, Firefox does not receive any data that has been generated on Friday data until Monday morning.</p>
 <p>Generally speaking, data from two days ago is usually fairly representative.</p>
 <p>If you'd like to read more about this subject, there is a series of blog posts <a href="https://chuttenblog.wordpress.com/2017/02/09/data-science-is-hard-client-delays-for-crash-pings/">here</a>, <a href="https://chuttenblog.wordpress.com/2017/07/12/latency-improvements-or-yet-another-satisfying-graph/">here</a> and <a href="https://chuttenblog.wordpress.com/2017/09/12/two-days-or-how-long-until-the-data-is-in/">here</a>.</p>
-<h3><a class="header" href="#pingsender" id="pingsender">Pingsender</a></h3>
+<h3 id="pingsender"><a class="header" href="#pingsender">Pingsender</a></h3>
 <p>Pingsender greatly reduces any delay before sending pings to Mozilla.
 However, only some types of pings are sent by Pingsender.
 <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1310703">Bug 1310703</a> introduced Pingsender for crash pings and was merged in Firefox 54,
@@ -339,7 +315,7 @@ Other types of pings are not sent with Pingsender.
 This is usually okay because Firefox is expected to continue to run long
 enough to send these pings.</p>
 <p>Mobile clients do not have Pingsender. Therefore, a delay occurs as described in <a href="https://sql.telemetry.mozilla.org/queries/49867#134105">this query</a>.</p>
-<h3><a class="header" href="#submission-date" id="submission-date">Submission Date</a></h3>
+<h3 id="submission-date"><a class="header" href="#submission-date">Submission Date</a></h3>
 <p><code>submission_date</code> or <code>submission_timestamp</code> represents the server time at which a ping is received from a client. It is used as a partitioning column (useful for both query optimization and restricting the range of data under consideration) and should be considered reliable.</p>
 <p>In <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1422892">bug 1422892</a> it was decided
 to standardize on using <code>submission_date</code> as opposed to client-generated dates.</p>
@@ -351,10 +327,10 @@ to standardize on using <code>submission_date</code> as opposed to client-genera
 <li>good for daily processing</li>
 <li>and usually good enough</li>
 </ul>
-<h2><a class="header" href="#pings-from-robots" id="pings-from-robots">Pings from Robots</a></h2>
+<h2 id="pings-from-robots"><a class="header" href="#pings-from-robots">Pings from Robots</a></h2>
 <p>In general, data coming from an application instance not run by a human is not wanted in analysis. As of this writing, <a href="https://github.com/mozilla/geckodriver">GeckoDriver</a> (one of the official mechanisms to launch and control an automated version of Firefox for e.g. web compatibility testing) is <a href="https://searchfox.org/mozilla-central/rev/baf1cd492406a9ac31d9ccb7a51c924c7fbb151f/testing/geckodriver/src/prefs.rs#154">configured <em>not</em> to send Telemetry by default</a> but we can't control for other things people might do in the field.</p>
 <p>On desktop, one field to watch out for is headless mode (<code>environment.system.gfx.headless</code> in the main ping): if that field is set, you are for certain not working with a version of Firefox being operated by a real human. You can see an example of some client pings with this field set skewing the nightly numbers in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1643341">bug 1643341</a>. An easy solution is to just filter out these types of clients in your analysis. You can see an example of this pattern in <a href="https://sql.telemetry.mozilla.org/queries/71781/source">this query</a>.</p>
-<h2><a class="header" href="#build-ids" id="build-ids">Build Ids</a></h2>
+<h2 id="build-ids"><a class="header" href="#build-ids">Build Ids</a></h2>
 <p>Generally speaking, application versions are monotonically increasing multipart alphanumeric strings like &quot;89.0a1&quot; or &quot;68.0.3&quot;.
 Build Ids are not this.
 A Build Id is a sequence of characters that is unique to a specific build of a product.
@@ -368,43 +344,33 @@ The build id format for Firefox Desktop has been very stable over time thus far,
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
-                            <a rel="prev" href="../tools/interfaces.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                                    <a rel="prev" href="../tools/interfaces.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
-
-                        
-                            <a rel="next" href="../concepts/choosing_a_dataset.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                                    <a rel="next" href="../concepts/choosing_a_dataset.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
-
                         <div style="clear: both"></div>
                     </nav>
                 </div>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
-                    <a rel="prev" href="../tools/interfaces.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                    <a rel="prev" href="../tools/interfaces.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
-
-                
-                    <a rel="next" href="../concepts/choosing_a_dataset.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                    <a rel="next" href="../concepts/choosing_a_dataset.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
-            </nav>
+                            </nav>
 
         </div>
 
         
-
-        
-        <!-- Google Analytics Tag -->
+                <!-- Google Analytics Tag -->
         <script type="text/javascript">
             var localAddrs = ["localhost", "127.0.0.1", ""];
 
@@ -421,35 +387,24 @@ The build id format for Firefox Desktop has been very stable over time thus far,
             }
         </script>
         
-
         
-
-        
-        <script type="text/javascript">
+                <script type="text/javascript">
             window.playground_copyable = true;
         </script>
         
-
         
-
-        
-        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+                <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
         
-
         <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
+                <script type="text/javascript" src="../mermaid.min.js"></script>
+                <script type="text/javascript" src="../mermaid-init.js"></script>
         
-        <script type="text/javascript" src="../mermaid.min.js"></script>
         
-        <script type="text/javascript" src="../mermaid-init.js"></script>
-        
-
-        
-
     </body>
 </html>
