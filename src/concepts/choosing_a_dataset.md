@@ -6,7 +6,7 @@ This document will help you find the best data source for a given analysis. It f
 - How many crashes occur each day?
 - How many users have installed a specific add-on?
 
-If you want to know whether a causal link occurs between two events, you can learn more about [experimentation data](experiments.md).
+If you want to know whether a causal link occurs between two events, consider running an [experiment](experiments.md).
 
 There are two types of datasets that you might want to use: those based on raw pings and those derived from them.
 
