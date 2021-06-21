@@ -1,5 +1,7 @@
 # Client Implementation Guidelines for Experiments
 
+**Note**: This guidance is useful for implementing Normandy experiments. To ship experiments with the Nimbus platform, please see the guidance for engineers at <https://experimenter.info/>.
+
 There are three supported approaches for enabling experimental features for Firefox:
 
 - [Firefox Prefs](#prefs)

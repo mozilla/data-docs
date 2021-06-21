@@ -68,5 +68,5 @@ ORDER BY 1, 2, 3
 ```
 
 [normandy-doc]: https://firefox-source-docs.mozilla.org/toolkit/components/normandy/normandy/data-collection.html#enrollment
-[shield_study]: ../datasets/shield.md#telemetryshield_study
+[shield_study]: ../datasets/experiment_telemetry.md#telemetryshield_study
 [`addon-utils`]: https://github.com/mozilla/shield-studies-addon-utils
