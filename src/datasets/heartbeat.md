@@ -38,7 +38,7 @@ Heartbeat data is available in the `telemetry.heartbeat` table in BigQuery.
 
 Its structure matches the [heartbeat ping schema].
 
-[heartbeat]: https://docs.telemetry.mozilla.org/tools/experiments.html#heartbeat
+[heartbeat]: ../concepts/experiments.md#heartbeat
 [hbping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/heartbeat-ping.html
 [show-heartbeat]: https://mozilla.github.io/normandy/user/actions/show-heartbeat.html
 [heartbeat ping schema]: https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/8b0641ebb8aad570b79e811ae10fd81c718af48f/schemas/telemetry/heartbeat/heartbeat.4.schema.json
