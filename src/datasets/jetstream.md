@@ -72,8 +72,9 @@ Statistics tables have the schema:
 | `lower`                | `FLOAT64`           | The lower bound of the confidence interval for the estimate.                                                                                                                                                                     |
 | `upper`                | `FLOAT64`           | The upper bound of the confidence interval for the estimate.                                                                                                                                                                     |
 | `window_index`         | `INT64`             | (views only) A base-1 index reflecting the analysis window from which the row is drawn (i.e. day 1, day 2, …).                                                                                                                   |
+| `analysis_basis`       | `STRING`            | Analysis basis statistic result is based on. Currently, `analysis_basis` can be either `enrollments` or `exposures`.                                                                                                             |
 
-Each combination of `(segment, metric, statistic, parameter, comparison, comparison_to_branch, ci_width)` uniquely describes a single data
+Each combination of `(segment, metric, statistic, parameter, comparison, comparison_to_branch, ci_width, analysis_basis)` uniquely describes a single data
 point.
 
 The available segments in a table should be derived from inspection of
@@ -143,7 +144,7 @@ diagnostics.
 
 Aggregate tables are named like:
 
-`<slug>_{day,week,overall}_<index>`
+`<slug>_<analysis_basis>_{day,week,overall}_<index>`
 
 Aggregate tables have flexible schemas. Every table contains the
 columns:
@@ -153,7 +154,9 @@ columns:
 | `client_id`             | `STRING` | Client's telemetry `client_id`                                                           |
 | `branch`                | `STRING` | Branch client enrolled in                                                                |
 | `enrollment_date`       | `DATE`   | First date that the client enrolled in the branch                                        |
+| `exposure_date`         | `DATE`   | First date that the client saw the exposure event (Optional)                             |
 | `num_enrollment_events` | `INT64`  | Number of times a client enrolled in the given branch                                    |
+| `num_exposure_events`   | `INT64`  | Number of times a client has seen the exposure event                                     |
 | `analysis_window_start` | `INT64`  | The day after enrollment that this analysis window began; day 0 is the day of enrollment |
 | `analysis_window_end`   | `INT64`  | The day after enrollment that this analysis window terminated (inclusive)                |
 
