@@ -85,4 +85,4 @@ Read through [Analysis Interfaces](../tools/interfaces.md) for more information 
 [problem_client]: https://mozilla.report/post/projects%2Fproblematic_client.kp
 [histogram simulator]: https://telemetry.mozilla.org/histogram-simulator
 [prefs]: https://medium.com/georg-fritzsche/data-preference-changes-in-firefox-58-2d5df9c428b5
-[add_probes]: https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Adding_a_new_Telemetry_probe
+[add_probes]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/start/adding-a-new-probe.html
