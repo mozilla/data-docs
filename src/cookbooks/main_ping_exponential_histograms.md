@@ -60,7 +60,7 @@ In this representation, `bucket_count` and `range` represent the number of bucke
 `values` represents the number of instances in each of the buckets while `sum` represents the sum total of all histogram values recorded.
 Note how the first column has one bucket with no elements in it (the "165" bucket), this is because Firefox adds a zero-count bucket on the left and right edges of the data (unless that would be one of the extremes and that bucket already has a count in it, as is the case for the "1000" bucket in the last two examples).
 
-In general, it is best not to rely on this representation of the histogram in production code (it is quite likely to change in the future). Instead, use the [`mozfun.hist.extract`](https://mozilla.github.io/bigquery-etl/mozfun/hist.html#extract) user-defined-function (UDF) and extract out the fields you need: for example, to just get the `sum` for all the histograms above, you could modify the query above to something like:
+In general, it is best not to rely on this representation of the histogram in production code (it is quite likely to change in the future). Instead, use the [`mozfun.hist.extract`](https://mozilla.github.io/bigquery-etl/mozfun/hist/#extract-udf) user-defined-function (UDF) and extract out the fields you need: for example, to just get the `sum` for all the histograms above, you could modify the query above to something like:
 
 ```sql
 WITH intermediate AS (
@@ -99,7 +99,7 @@ Obviously this by itself is not particularly useful or meaningful - generally we
 
 ## Getting percentiles from a set of histograms
 
-Often, questions around histograms are framed as "what's the 99th percentile?" -- that is, what is the _maximum_ value that 99% of users experience: this helps give perspective on data which may have a number of weird outliers (a.k.a the _Bill Gates walks into a bar and everyone inside becomes a millionaire_ effect). Let's take an initial stab of grabbing some percentiles of the data we were looking at earlier using the [`mozfun.hist.merge`](https://mozilla.github.io/bigquery-etl/mozfun/hist.html#merge) and [`mozfun.hist.percentiles`](https://mozilla.github.io/bigquery-etl/mozfun/hist.html#percentiles) UDFs:
+Often, questions around histograms are framed as "what's the 99th percentile?" -- that is, what is the _maximum_ value that 99% of users experience: this helps give perspective on data which may have a number of weird outliers (a.k.a the _Bill Gates walks into a bar and everyone inside becomes a millionaire_ effect). Let's take an initial stab of grabbing some percentiles of the data we were looking at earlier using the [`mozfun.hist.merge`](https://mozilla.github.io/bigquery-etl/mozfun/hist/#merge-udf) and [`mozfun.hist.percentiles`](https://mozilla.github.io/bigquery-etl/mozfun/hist/#percentiles-udf) UDFs:
 
 ```sql
 WITH merged_histogram AS (
@@ -215,7 +215,7 @@ The example above basically created one _giant_ histogram and then gathered the 
 
 A solution used by GLAM is to give each client "one vote": that is, the aggregate histogram for a client over a day must sum up to one. Even in the extreme case where all tab spinner measurements fall between `658ms` and `1000ms` (the range of the highest bucket), the _maximum_ number for that bucket is just "1".
 
-We can reproduce this approach by using the [`mozfun.hist.normalize`](https://mozilla.github.io/bigquery-etl/mozfun/hist.html#normalize) UDF, which explicitly takes a set of histograms and makes sure that the values for each one sum up to exactly one:
+We can reproduce this approach by using the [`mozfun.hist.normalize`](https://mozilla.github.io/bigquery-etl/mozfun/hist/#normalize-udf) UDF, which explicitly takes a set of histograms and makes sure that the values for each one sum up to exactly one:
 
 ```sql
 WITH per_build_client_day AS (
