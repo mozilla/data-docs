@@ -26,7 +26,6 @@ subgraph Data Tools
 events_table --> redash
 mobile_events_table --> redash
 main_summary --> redash(fa:fa-bar-chart Redash)
-pipeline -->|on request| amplitude(fa:fa-bar-chart Amplitude)
 end
 
 style fx_code fill:#f94,stroke-width:0px
@@ -39,7 +38,6 @@ style main_summary fill:lightblue,stroke-width:0px
 style events_table fill:lightblue,stroke-width:0px
 style mobile_events_table fill:lightblue,stroke-width:0px
 style redash fill:salmon,stroke-width:0px
-style amplitude fill:salmon,stroke-width:0px
 ```
 
 # Overview
@@ -134,8 +132,3 @@ On the pipeline side, the event data is made available in different datasets:
 # Data tooling
 
 The above datasets are all accessible through [STMO](../../tools/stmo.md) and [Spark jobs](../../tools/spark.md).
-
-For product analytics based on event data, we have [Amplitude](https://sso.mozilla.com/amplitude)
-(hosted by the IT data team). We can connect our event data sources data to Amplitude.
-We have an active connector to Amplitude for mobile events, which can push event data over
-daily. For Firefox Desktop events this will be available soon.
