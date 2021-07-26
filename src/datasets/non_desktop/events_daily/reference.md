@@ -37,7 +37,7 @@ This approach makes some queries fast and easy, but has some limits:
 ## Accessing the Data
 
 While it is possible to build queries that access this events data directly, the Data Platform instead recommends using a set of stored procedures we have available.
-These procedures create BigQuery views that hide the complexity of the event representation. The [`mozfun` library documentation](https://mozilla.github.io/bigquery-etl/mozfun/event_analysis.html)
+These procedures create BigQuery views that hide the complexity of the event representation. The [`mozfun` library documentation](https://mozilla.github.io/bigquery-etl/mozfun/event_analysis/)
 has information about these procedures and examples of their usage.
 
 ## Data Reference
