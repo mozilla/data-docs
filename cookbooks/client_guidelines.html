@@ -184,14 +184,14 @@
 <p>For instance, to set an observer:</p>
 <pre><code class="language-js">Services.obs.addObserver(this, &quot;final-ui-startup&quot;, true);
 </code></pre>
-<p>In this example, <code>this</code> would implement an <code>observe(subject, topic, data)</code> function which will be called when <code>final-ui-startup</code> is observed. See the <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIObserverService#addObserver()">Observer documentation</a> for more information.</p>
+<p>In this example, <code>this</code> would implement an <code>observe(subject, topic, data)</code> function which will be called when <code>final-ui-startup</code> is observed. See the <a href="https://searchfox.org/mozilla-central/rev/59e797b66f5ce8a27ede0e7677688931be7aed20/xpcom/ds/nsIObserverService.idl#24-39">Observer documentation</a> for more information.</p>
 <ul>
 <li>It must be possible to enable/disable the feature at runtime, via a pref change.</li>
 </ul>
 <p>This is similar to the observer pattern above:</p>
 <pre><code class="language-js">Services.prefs.addObserver(&quot;pref_name&quot;, this);
 </code></pre>
-<p>More information is available in the <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIPrefService">Preference service documentation</a>.</p>
+<p>More information is available in the <a href="https://searchfox.org/mozilla-central/source/modules/libpref/nsIPrefService.idl">Preference service documentation</a>.</p>
 <ul>
 <li>
 <p>Never use <code>Services.prefs.prefHasUserValue()</code>, or any other function specific to <code>user branch</code> prefs.</p>
@@ -225,7 +225,7 @@
 <p>For the moment, the <a href="https://github.com/mozilla/shield-studies-addon-utils/">SHIELD Study Add-on Utilities</a> may be used if the extension needs to control the lifecycle of the study, but using one extension per experimental treatment makes this unnecessary and is preferred. The APIs provided by the SHIELD Study Add-on Utilities will be available as privileged APIs shipped with Firefox soon.</p>
 <h1 id="development-and-testing"><a class="header" href="#development-and-testing">Development and Testing</a></h1>
 <h2 id="testing-built-in-features"><a class="header" href="#testing-built-in-features">Testing Built-in Features</a></h2>
-<p>Firefox features go through standard development and testing processes. See the <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide">Firefox developer guide</a> for more information.</p>
+<p>Firefox features go through standard development and testing processes. See the <a href="https://firefox-source-docs.mozilla.org/">Firefox developer guide</a> for more information.</p>
 <h2 id="testing-extensions"><a class="header" href="#testing-extensions">Testing Extensions</a></h2>
 <p>Extensions do not need to go through the same process, but should take advantage of Mozilla CI and bug tracking systems:</p>
 <ol>
@@ -244,7 +244,7 @@
 <li>Extension is shipped via <a href="https://github.com/mozilla/normandy">Normandy</a>.</li>
 </ol>
 <h2 id="example-extensions-testing-workflow"><a class="header" href="#example-extensions-testing-workflow">Example Extensions Testing Workflow</a></h2>
-<p>Note that for the below to work you only need <a href="https://www.mercurial-scm.org/">Mercurial</a> installed, but if you want to do local testing you must be set up to <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide/Build_Instructions">build Firefox</a>. You don't need to build Firefox from source; <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide/Build_Instructions/Artifact_builds">artifact builds</a> are sufficient.</p>
+<p>Note that for the below to work you only need <a href="https://www.mercurial-scm.org/">Mercurial</a> installed, but if you want to do local testing you must be set up to <a href="https://firefox-source-docs.mozilla.org/setup/index.html">build Firefox</a>. You don't need to build Firefox from source; <a href="https://firefox-source-docs.mozilla.org/contributing/build/artifact_builds.html">artifact builds</a> are sufficient.</p>
 <p>In order to use Mozilla CI (AKA &quot;<a href="https://firefox-source-docs.mozilla.org/tools/try/">Tryserver</a>&quot;), you must have a full clone of the <code>mozilla-central</code> repository:</p>
 <pre><code class="language-bash">hg clone https://hg.mozilla.org/mozilla-central
 cd mozilla-central

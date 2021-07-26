@@ -663,7 +663,7 @@ It includes the most recent values in a 28 day window for all columns in the
 <tr><td>Firefox Reality</td><td>Android</td><td><code>FirefoxReality</code></td><td><code>org_mozilla_vrbrowser</code></td><td>Headset VR browser</td></tr>
 <tr><td>Reference Browser</td><td>Android</td><td></td><td><code>org_mozilla_reference_browser</code></td><td>GeckoView integration testbed</td></tr>
 </tbody></table>
-<p>Some other app names are documented in the <a href="https://mozilla.github.io/bigquery-etl/mozfun/norm.html#product_info-udf">ETL documentation</a>.</p>
+<p>Some other app names are documented in the <a href="https://mozilla.github.io/bigquery-etl/mozfun/norm/#product_info-udf">ETL documentation</a>.</p>
 <p>Firefox Lite was formerly known as Rocket. It is only available in certain countries in Asia Pacific. For more information on Firefox Lite data, see the <a href="https://github.com/mozilla-tw/FirefoxLite/blob/master/docs/telemetry.md">telemetry documentation</a>.</p>
 <p>Focus is known as the privacy-focused mobile browser that blocks trackers by default. It does not store a browsing history.</p>
 <p>Klar is the known release name for Focus in Germany.</p>
@@ -2835,7 +2835,7 @@ LIMIT
 <p>In this representation, <code>bucket_count</code> and <code>range</code> represent the number of buckets and the range of possible values. <code>histogram_type</code> is an enumerated value that describes whether the histogram has linear, exponential, or categorical buckets; the values are <a href="https://searchfox.org/mozilla-central/rev/0c682c4f01442c3de0fa6cd286e9cadc8276b45f/toolkit/components/telemetry/core/nsITelemetry.idl#18-32">defined in the Firefox source code</a>.
 <code>values</code> represents the number of instances in each of the buckets while <code>sum</code> represents the sum total of all histogram values recorded.
 Note how the first column has one bucket with no elements in it (the &quot;165&quot; bucket), this is because Firefox adds a zero-count bucket on the left and right edges of the data (unless that would be one of the extremes and that bucket already has a count in it, as is the case for the &quot;1000&quot; bucket in the last two examples).</p>
-<p>In general, it is best not to rely on this representation of the histogram in production code (it is quite likely to change in the future). Instead, use the <a href="https://mozilla.github.io/bigquery-etl/mozfun/hist.html#extract"><code>mozfun.hist.extract</code></a> user-defined-function (UDF) and extract out the fields you need: for example, to just get the <code>sum</code> for all the histograms above, you could modify the query above to something like:</p>
+<p>In general, it is best not to rely on this representation of the histogram in production code (it is quite likely to change in the future). Instead, use the <a href="https://mozilla.github.io/bigquery-etl/mozfun/hist/#extract-udf"><code>mozfun.hist.extract</code></a> user-defined-function (UDF) and extract out the fields you need: for example, to just get the <code>sum</code> for all the histograms above, you could modify the query above to something like:</p>
 <pre><code class="language-sql">WITH intermediate AS (
   SELECT
     mozfun.hist.extract(payload.histograms.FX_TAB_SWITCH_SPINNER_VISIBLE_MS) AS histogram,
@@ -2865,7 +2865,7 @@ FROM
 <p>Note that these are the same values in the JSON histogram above.</p>
 <p>Obviously this by itself is not particularly useful or meaningful - generally we are interested in <em>aggregate</em> behaviour across a larger set of clients. Let's look at how we might get that.</p>
 <h2 id="getting-percentiles-from-a-set-of-histograms"><a class="header" href="#getting-percentiles-from-a-set-of-histograms">Getting percentiles from a set of histograms</a></h2>
-<p>Often, questions around histograms are framed as &quot;what's the 99th percentile?&quot; -- that is, what is the <em>maximum</em> value that 99% of users experience: this helps give perspective on data which may have a number of weird outliers (a.k.a the <em>Bill Gates walks into a bar and everyone inside becomes a millionaire</em> effect). Let's take an initial stab of grabbing some percentiles of the data we were looking at earlier using the <a href="https://mozilla.github.io/bigquery-etl/mozfun/hist.html#merge"><code>mozfun.hist.merge</code></a> and <a href="https://mozilla.github.io/bigquery-etl/mozfun/hist.html#percentiles"><code>mozfun.hist.percentiles</code></a> UDFs:</p>
+<p>Often, questions around histograms are framed as &quot;what's the 99th percentile?&quot; -- that is, what is the <em>maximum</em> value that 99% of users experience: this helps give perspective on data which may have a number of weird outliers (a.k.a the <em>Bill Gates walks into a bar and everyone inside becomes a millionaire</em> effect). Let's take an initial stab of grabbing some percentiles of the data we were looking at earlier using the <a href="https://mozilla.github.io/bigquery-etl/mozfun/hist/#merge-udf"><code>mozfun.hist.merge</code></a> and <a href="https://mozilla.github.io/bigquery-etl/mozfun/hist/#percentiles-udf"><code>mozfun.hist.percentiles</code></a> UDFs:</p>
 <pre><code class="language-sql">WITH merged_histogram AS (
   SELECT
     mozfun.hist.merge(
@@ -2960,7 +2960,7 @@ CROSS JOIN
 <h2 id="percentiles-from-client-normalized-histograms"><a class="header" href="#percentiles-from-client-normalized-histograms">Percentiles from client-normalized histograms</a></h2>
 <p>The example above basically created one <em>giant</em> histogram and then gathered the percentiles out of each one. But histograms are not created equal! At the extreme end of things for the tab spinner, consider a user on an extremely old computer with various kinds of malware installed, constantly interacting with complex and slow web sites. Such a condition is going to trigger the tab spinner frequently, and for long periods. But it is not representative of the overall population, and probably shouldn't <em>overtly</em> influence our decision-making process.</p>
 <p>A solution used by GLAM is to give each client &quot;one vote&quot;: that is, the aggregate histogram for a client over a day must sum up to one. Even in the extreme case where all tab spinner measurements fall between <code>658ms</code> and <code>1000ms</code> (the range of the highest bucket), the <em>maximum</em> number for that bucket is just &quot;1&quot;.</p>
-<p>We can reproduce this approach by using the <a href="https://mozilla.github.io/bigquery-etl/mozfun/hist.html#normalize"><code>mozfun.hist.normalize</code></a> UDF, which explicitly takes a set of histograms and makes sure that the values for each one sum up to exactly one:</p>
+<p>We can reproduce this approach by using the <a href="https://mozilla.github.io/bigquery-etl/mozfun/hist/#normalize-udf"><code>mozfun.hist.normalize</code></a> UDF, which explicitly takes a set of histograms and makes sure that the values for each one sum up to exactly one:</p>
 <pre><code class="language-sql">WITH per_build_client_day AS (
   SELECT
     PARSE_DATETIME(&quot;%Y%m%d%H%M%S&quot;, application.build_id) AS build_id,
@@ -3586,7 +3586,7 @@ However, for presenting dashboards and other types of data visualization, a stat
 <h2 id="bigquery-etl"><a class="header" href="#bigquery-etl">bigquery-etl</a></h2>
 <p>Mozilla's Data Engineering maintains a repository called <a href="https://github.com/mozilla/bigquery-etl">bigquery-etl</a> which can incrementally create datasets based on an SQL query using our Airflow infrastructure. This requires a little bit more work to set up than scheduling a query on STMO, but has the advantage of being more cost effective, reliable, and amenable to further exploration.</p>
 <p>Also, since the procedure for scheduling a query in this way is submitting a pull request against the bigquery-etl repository, this is an easy route to getting peer review from the extended Data Team.</p>
-<p>For more information on how to use this approach, see <a href="https://mozilla.github.io/bigquery-etl/cookbooks/creating_a_derived_dataset.html">A quick guide to creating a derived dataset with bigquery-etl</a>.</p>
+<p>For more information on how to use this approach, see <a href="https://mozilla.github.io/bigquery-etl/cookbooks/creating_a_derived_dataset/">A quick guide to creating a derived dataset with bigquery-etl</a>.</p>
 <h2 id="scheduling-queries-using-gcp"><a class="header" href="#scheduling-queries-using-gcp">Scheduling Queries using GCP</a></h2>
 <p>Finally, <a href="https://cloud.google.com/bigquery/docs/scheduling-queries">you can schedule queries using GCP</a>. This is generally not recommended, <a href="cookbooks/../concepts/getting_help.html">reach out to the Data team</a> if you think you need to do this.</p>
 <p>GCP scheduled queries are to be used only for short-lived queries: queries that are active for more than 30 days will be automatically unscheduled.</p>
@@ -3664,14 +3664,14 @@ to start the conversation.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/cookbooks/deploying-containers.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="making-datasets-publicly-available"><a class="header" href="#making-datasets-publicly-available">Making Datasets Publicly Available</a></h1>
 <p>Currently, only datasets and query results that are available in BigQuery and
 defined in the <a href="https://github.com/mozilla/bigquery-etl">bigquery-etl</a> repository can be made publicly available.
-See the <a href="https://mozilla.github.io/bigquery-etl/cookbooks/creating_a_derived_dataset.html">bigquery-etl documentation</a>
+See the <a href="https://mozilla.github.io/bigquery-etl/cookbooks/creating_a_derived_dataset/">bigquery-etl documentation</a>
 for information on how to create and schedule datasets. Before data can be published, a data review is
 required.</p>
 <p>To make query results publicly available, a <a href="https://github.com/mozilla/bigquery-etl#query-metadata"><code>metadata.yaml</code> file</a>
 must be added alongside the query in bigquery-etl. For example:</p>
 <pre><code class="language-yaml">friendly_name: SSL Ratios
 description: &gt;-
-  Percentages of page loads Firefox users have performed that were 
+  Percentages of page loads Firefox users have performed that were
   conducted over SSL broken down by country.
 owners:
   - example@mozilla.com
@@ -3760,14 +3760,14 @@ infrastructure. See <a href="datasets/../cookbooks/new_ping.html">this cookbook<
 <p>For instance, to set an observer:</p>
 <pre><code class="language-js">Services.obs.addObserver(this, &quot;final-ui-startup&quot;, true);
 </code></pre>
-<p>In this example, <code>this</code> would implement an <code>observe(subject, topic, data)</code> function which will be called when <code>final-ui-startup</code> is observed. See the <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIObserverService#addObserver()">Observer documentation</a> for more information.</p>
+<p>In this example, <code>this</code> would implement an <code>observe(subject, topic, data)</code> function which will be called when <code>final-ui-startup</code> is observed. See the <a href="https://searchfox.org/mozilla-central/rev/59e797b66f5ce8a27ede0e7677688931be7aed20/xpcom/ds/nsIObserverService.idl#24-39">Observer documentation</a> for more information.</p>
 <ul>
 <li>It must be possible to enable/disable the feature at runtime, via a pref change.</li>
 </ul>
 <p>This is similar to the observer pattern above:</p>
 <pre><code class="language-js">Services.prefs.addObserver(&quot;pref_name&quot;, this);
 </code></pre>
-<p>More information is available in the <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIPrefService">Preference service documentation</a>.</p>
+<p>More information is available in the <a href="https://searchfox.org/mozilla-central/source/modules/libpref/nsIPrefService.idl">Preference service documentation</a>.</p>
 <ul>
 <li>
 <p>Never use <code>Services.prefs.prefHasUserValue()</code>, or any other function specific to <code>user branch</code> prefs.</p>
@@ -3801,7 +3801,7 @@ infrastructure. See <a href="datasets/../cookbooks/new_ping.html">this cookbook<
 <p>For the moment, the <a href="https://github.com/mozilla/shield-studies-addon-utils/">SHIELD Study Add-on Utilities</a> may be used if the extension needs to control the lifecycle of the study, but using one extension per experimental treatment makes this unnecessary and is preferred. The APIs provided by the SHIELD Study Add-on Utilities will be available as privileged APIs shipped with Firefox soon.</p>
 <h1 id="development-and-testing"><a class="header" href="#development-and-testing">Development and Testing</a></h1>
 <h2 id="testing-built-in-features"><a class="header" href="#testing-built-in-features">Testing Built-in Features</a></h2>
-<p>Firefox features go through standard development and testing processes. See the <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide">Firefox developer guide</a> for more information.</p>
+<p>Firefox features go through standard development and testing processes. See the <a href="https://firefox-source-docs.mozilla.org/">Firefox developer guide</a> for more information.</p>
 <h2 id="testing-extensions"><a class="header" href="#testing-extensions">Testing Extensions</a></h2>
 <p>Extensions do not need to go through the same process, but should take advantage of Mozilla CI and bug tracking systems:</p>
 <ol>
@@ -3820,7 +3820,7 @@ infrastructure. See <a href="datasets/../cookbooks/new_ping.html">this cookbook<
 <li>Extension is shipped via <a href="https://github.com/mozilla/normandy">Normandy</a>.</li>
 </ol>
 <h2 id="example-extensions-testing-workflow"><a class="header" href="#example-extensions-testing-workflow">Example Extensions Testing Workflow</a></h2>
-<p>Note that for the below to work you only need <a href="https://www.mercurial-scm.org/">Mercurial</a> installed, but if you want to do local testing you must be set up to <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide/Build_Instructions">build Firefox</a>. You don't need to build Firefox from source; <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide/Build_Instructions/Artifact_builds">artifact builds</a> are sufficient.</p>
+<p>Note that for the below to work you only need <a href="https://www.mercurial-scm.org/">Mercurial</a> installed, but if you want to do local testing you must be set up to <a href="https://firefox-source-docs.mozilla.org/setup/index.html">build Firefox</a>. You don't need to build Firefox from source; <a href="https://firefox-source-docs.mozilla.org/contributing/build/artifact_builds.html">artifact builds</a> are sufficient.</p>
 <p>In order to use Mozilla CI (AKA &quot;<a href="https://firefox-source-docs.mozilla.org/tools/try/">Tryserver</a>&quot;), you must have a full clone of the <code>mozilla-central</code> repository:</p>
 <pre><code class="language-bash">hg clone https://hg.mozilla.org/mozilla-central
 cd mozilla-central
@@ -4566,9 +4566,6 @@ This includes previously manual and error-prone steps such as updating the ping 
 </ul>
 </li>
 <li>
-<p><em>(Work in progress)</em> Use events and <a href="https://sso.mozilla.com/amplitude">Amplitude</a> for product analytics.</p>
-</li>
-<li>
 <p>For experimentation, you can use <a href="https://github.com/mozilla-mobile/android-components/blob/master/components/service/experiments/README.md">Android experiments library</a>, which integrates with Glean.</p>
 </li>
 </ul>
@@ -4833,7 +4830,6 @@ subgraph Data Tools
 events_table --&gt; redash
 mobile_events_table --&gt; redash
 main_summary --&gt; redash(fa:fa-bar-chart Redash)
-pipeline --&gt;|on request| amplitude(fa:fa-bar-chart Amplitude)
 end
 
 style fx_code fill:#f94,stroke-width:0px
@@ -4846,7 +4842,6 @@ style main_summary fill:lightblue,stroke-width:0px
 style events_table fill:lightblue,stroke-width:0px
 style mobile_events_table fill:lightblue,stroke-width:0px
 style redash fill:salmon,stroke-width:0px
-style amplitude fill:salmon,stroke-width:0px
 </pre>
 <h1 id="overview-2"><a class="header" href="#overview-2">Overview</a></h1>
 <p>Across the different Firefox teams there is a common need for a more fine grained understanding of
@@ -4920,10 +4915,6 @@ its event payload for Firefox versions before 62.</li>
 </ul>
 <h1 id="data-tooling"><a class="header" href="#data-tooling">Data tooling</a></h1>
 <p>The above datasets are all accessible through <a href="concepts/pipeline/../../tools/stmo.html">STMO</a> and <a href="concepts/pipeline/../../tools/spark.html">Spark jobs</a>.</p>
-<p>For product analytics based on event data, we have <a href="https://sso.mozilla.com/amplitude">Amplitude</a>
-(hosted by the IT data team). We can connect our event data sources data to Amplitude.
-We have an active connector to Amplitude for mobile events, which can push event data over
-daily. For Firefox Desktop events this will be available soon.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/concepts/pipeline/event_pipeline.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="generated-schemas"><a class="header" href="#generated-schemas">Generated Schemas</a></h1>
 <ul>
 <li><a href="concepts/pipeline/schemas.html#overview">Overview</a></li>
@@ -5315,7 +5306,7 @@ The full list is:</p>
 <ul>
 <li><code>release</code></li>
 <li><code>beta</code></li>
-<li><code>aurora</code> (this is <code>dev-edition</code>, and <a href="https://developer.mozilla.org/en-US/Firefox/Developer_Edition">is just a beta repack</a>)</li>
+<li><code>aurora</code> (this is <code>dev-edition</code>, and <a href="https://www.mozilla.org/en-US/firefox/developer/">is just a beta repack</a>)</li>
 <li><code>nightly</code></li>
 <li><code>esr</code></li>
 </ul>
@@ -6734,7 +6725,7 @@ If you do need to work with raw ping data, be aware that the volume of data can 
 Try to limit the size of your data by controlling the date range, and start off using a sample.</p>
 <h2 id="further-reading"><a class="header" href="#further-reading">Further Reading</a></h2>
 <p>You can find <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/index.html">the complete ping documentation</a> in the Firefox source documentation.
-To augment our data collection, see <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Adding_a_new_Telemetry_probe">Collecting New Data</a> and the
+To augment our data collection, see <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/start/adding-a-new-probe.html">Collecting New Data</a> and the
 <a href="https://wiki.mozilla.org/Firefox/Data_Collection">Data Collection Policy</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/pings.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="derived-datasets-1"><a class="header" href="#derived-datasets-1">Derived Datasets</a></h1>
 <p>See <a href="datasets/../concepts/choosing_a_dataset.html">Choosing a Dataset</a>
@@ -9420,7 +9411,7 @@ For Fenix this could be <a href="https://github.com/mozilla-mobile/fenix/blob/ma
 </ol>
 <h2 id="accessing-the-data-10"><a class="header" href="#accessing-the-data-10">Accessing the Data</a></h2>
 <p>While it is possible to build queries that access this events data directly, the Data Platform instead recommends using a set of stored procedures we have available.
-These procedures create BigQuery views that hide the complexity of the event representation. The <a href="https://mozilla.github.io/bigquery-etl/mozfun/event_analysis.html"><code>mozfun</code> library documentation</a>
+These procedures create BigQuery views that hide the complexity of the event representation. The <a href="https://mozilla.github.io/bigquery-etl/mozfun/event_analysis/"><code>mozfun</code> library documentation</a>
 has information about these procedures and examples of their usage.</p>
 <h2 id="data-reference-18"><a class="header" href="#data-reference-18">Data Reference</a></h2>
 <h3 id="example-queries-13"><a class="header" href="#example-queries-13">Example Queries</a></h3>
