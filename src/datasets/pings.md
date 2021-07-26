@@ -186,7 +186,7 @@ To augment our data collection, see [Collecting New Data][addprobe] and the
 [preferences]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/preferences.html
 [stmo]: https://sql.telemetry.mozilla.org/
 [dataset]: https://mozilla.github.io/python_moztelemetry/api.html#module-moztelemetry.dataset
-[addprobe]: https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Adding_a_new_Telemetry_probe
+[addprobe]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/start/adding-a-new-probe.html
 [datacollection]: https://wiki.mozilla.org/Firefox/Data_Collection
 [pingsender]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/pingsender.html
 [coverage_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/coverage-ping.html
