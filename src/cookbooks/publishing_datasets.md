@@ -2,7 +2,7 @@
 
 Currently, only datasets and query results that are available in BigQuery and
 defined in the [bigquery-etl][bigquery_etl] repository can be made publicly available.
-See the [bigquery-etl documentation](https://mozilla.github.io/bigquery-etl/cookbooks/creating_a_derived_dataset.html)
+See the [bigquery-etl documentation](https://mozilla.github.io/bigquery-etl/cookbooks/creating_a_derived_dataset/)
 for information on how to create and schedule datasets. Before data can be published, a data review is
 required.
 
@@ -12,7 +12,7 @@ must be added alongside the query in bigquery-etl. For example:
 ```yaml
 friendly_name: SSL Ratios
 description: >-
-  Percentages of page loads Firefox users have performed that were 
+  Percentages of page loads Firefox users have performed that were
   conducted over SSL broken down by country.
 owners:
   - example@mozilla.com
