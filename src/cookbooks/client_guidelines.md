@@ -147,15 +147,15 @@ Note that you must have Level 1 commit access to use tryserver. If you are inter
 Also note that this requires an investment time to set up just as CircleCI or Travis-CI would, so it's not really appropriate for short-term projects. Use tryserver directly instead.
 
 [feature-gate-docs]: https://firefox-source-docs.mozilla.org/toolkit/components/featuregates/featuregates/index.html
-[firefox-dev-docs]: https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide
+[firefox-dev-docs]: https://firefox-source-docs.mozilla.org/
 [mercurial]: https://www.mercurial-scm.org/
 [taskcluster-integration-poc]: https://github.com/biancadanforth/taskcluster-integration-poc/
-[firefox-build-docs]: https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide/Build_Instructions
-[firefox-artifact-build]: https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide/Build_Instructions/Artifact_builds
+[firefox-build-docs]: https://firefox-source-docs.mozilla.org/setup/index.html
+[firefox-artifact-build]: https://firefox-source-docs.mozilla.org/contributing/build/artifact_builds.html
 [try-server-docs]: https://firefox-source-docs.mozilla.org/tools/try/
-[observer-docs]: https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIObserverService#addObserver()
+[observer-docs]: https://searchfox.org/mozilla-central/rev/59e797b66f5ce8a27ede0e7677688931be7aed20/xpcom/ds/nsIObserverService.idl#24-39
 [normandy-docs]: https://github.com/mozilla/normandy
-[pref-service-docs]: https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIPrefService
+[pref-service-docs]: https://searchfox.org/mozilla-central/source/modules/libpref/nsIPrefService.idl
 [multipreffer-docs]: https://github.com/nhnt11/multipreffer
 [firefox-peer-list]: https://wiki.mozilla.org/Modules/All#Firefox
 [artifact-bug]: https://bugzilla.mozilla.org/show_bug.cgi?id=1435403

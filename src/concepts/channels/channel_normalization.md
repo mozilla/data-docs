@@ -19,7 +19,7 @@ The full list is:
 
 For more information on this topic, see the [Firefox Release Process page][fx_release_process].
 
-[deved]: https://developer.mozilla.org/en-US/Firefox/Developer_Edition
+[deved]: https://www.mozilla.org/en-US/firefox/developer/
 [fx_release_process]: https://wiki.mozilla.org/Release_Management/Release_Process
 
 ## App Update Channel
