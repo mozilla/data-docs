@@ -396,9 +396,9 @@ This issue is being evaluated at this time and is under consideration for gettin
 <ul>
 <li><a href="tools/interfaces.html#high-level-tools">High-level tools</a>
 <ul>
+<li><a href="tools/interfaces.html#looker">Looker</a></li>
 <li><a href="tools/interfaces.html#mozilla-growth--usage-dashboard-gud">Mozilla Growth &amp; Usage Dashboard (GUD)</a></li>
 <li><a href="tools/interfaces.html#glean-aggregated-metrics-dashboard-glam">Glean Aggregated Metrics Dashboard (GLAM)</a></li>
-<li><a href="tools/interfaces.html#telemetry-measurement-dashboard">Telemetry Measurement Dashboard</a></li>
 </ul>
 </li>
 <li><a href="tools/interfaces.html#lower-level-tools">Lower-level tools</a>
@@ -406,25 +406,39 @@ This issue is being evaluated at this time and is under consideration for gettin
 <li><a href="tools/interfaces.html#sqltelemetrymozillaorg-stmo">sql.telemetry.mozilla.org (STMO)</a></li>
 </ul>
 </li>
+<li><a href="tools/interfaces.html#deprecated-tools">Deprecated tools</a>
+<ul>
+<li><a href="tools/interfaces.html#telemetry-measurement-dashboard">Telemetry Measurement Dashboard</a></li>
+</ul>
+</li>
 </ul>
 <h2 id="high-level-tools"><a class="header" href="#high-level-tools">High-level tools</a></h2>
 <p>These web-based tools do not require specialized technical knowledge (e.g. how to write an SQL query, deep knowledge of BigQuery). This is where you should start.</p>
+<h3 id="looker"><a class="header" href="#looker">Looker</a></h3>
+<p>In 2020, Mozilla chose <a href="https://looker.com/">Looker</a> as its primary tool for analyzing data.
+It allows data exploration and visualization by experts and non-experts alike.</p>
+<p>As of this writing, <a href="https://mozilla.cloud.looker.com/">Mozilla's Looker deployment</a> is an active work in progress.
+You can see the current status on the <a href="https://mana.mozilla.org/wiki/display/DATA/Looker+Deploy+Working+Group">Looker Deploy Working Group</a> on Mana (LDAP access required).</p>
 <h3 id="mozilla-growth--usage-dashboard-gud"><a class="header" href="#mozilla-growth--usage-dashboard-gud">Mozilla Growth &amp; Usage Dashboard (GUD)</a></h3>
 <p>The <a href="https://gud.telemetry.mozilla.org/">Mozilla Growth &amp; Usage Dashboard</a> (GUD) is a tool to visualize growth metrics in a standard way across Mozilla’s products. This is the first place you should look if you have a question like &quot;how many people are using X?&quot;.</p>
 <h3 id="glean-aggregated-metrics-dashboard-glam"><a class="header" href="#glean-aggregated-metrics-dashboard-glam">Glean Aggregated Metrics Dashboard (GLAM)</a></h3>
 <p>The <a href="https://glam.telemetry.mozilla.org/">Glean Aggregated Metrics Dashboard</a> (GLAM) is an interactive dashboard that is Mozilla’s primary self-service tool for examining the distributions of values of specific individual telemetry metrics, over time and across different user populations. It is similar to GUD in that it is meant to be usable by everyone; no specific data analysis or coding skills are needed. But while GUD is focused on a relatively small number of high level, derived product metrics about user engagement (e.g. MAU, DAU, retention, etc) GLAM is focused on a diverse and plentiful set of probes and data points that engineers capture in code and transmit back from Firefox and other Mozilla products.</p>
 <p>For more information on how to use GLAM, see <a href="tools/../cookbooks/glam.html">Introduction to GLAM</a>.</p>
-<h3 id="telemetry-measurement-dashboard"><a class="header" href="#telemetry-measurement-dashboard">Telemetry Measurement Dashboard</a></h3>
-<p>The <a href="https://telemetry.mozilla.org/new-pipeline/dist.html">Telemetry Measurement Dashboard</a> (TMO) site is the
-'venerable standby' of Firefox telemetry analysis tools. It is the predecessor to GLAM (see above) and is still lightly maintained until we are sure that GLAM covers all of its use cases.</p>
 <h2 id="lower-level-tools"><a class="header" href="#lower-level-tools">Lower-level tools</a></h2>
 <p>These tools require more specialized knowledge to use.</p>
 <h3 id="sqltelemetrymozillaorg-stmo"><a class="header" href="#sqltelemetrymozillaorg-stmo">sql.telemetry.mozilla.org (STMO)</a></h3>
 <p>The <a href="https://sql.telemetry.mozilla.org"><code>sql.telemetry.mozilla.org</code></a> (STMO) site
 is an instance of the very fine <a href="https://redash.io/">Redash</a> software, allowing
 for SQL-based exploratory analysis and visualization / dashboard
-construction. Requires (surprise!) familiarity with SQL, and for your data to
-be explicitly exposed as an STMO data source. You can learn more about how to use it in <a href="tools/./stmo.html">Introduction to STMO</a>. Bugs or feature requests can be reported in Mozilla's <a href="https://github.com/mozilla/redash/issues">issue tracker</a>.</p>
+construction.
+Requires (surprise!) familiarity with SQL, and for your data to be explicitly exposed as an STMO data source.
+You can learn more about how to use it in <a href="tools/./stmo.html">Introduction to STMO</a>.</p>
+<p>Note that while STMO is not yet considered deprecated, Looker is the preferred solution for producing data visualizations and dashboards at Mozilla (where possible).</p>
+<h2 id="deprecated-tools"><a class="header" href="#deprecated-tools">Deprecated tools</a></h2>
+<p>These tools are still available, but are generally not recommended.</p>
+<h3 id="telemetry-measurement-dashboard"><a class="header" href="#telemetry-measurement-dashboard">Telemetry Measurement Dashboard</a></h3>
+<p>The <a href="https://telemetry.mozilla.org/new-pipeline/dist.html">Telemetry Measurement Dashboard</a> (TMO) site is the 'venerable standby' of Firefox telemetry analysis tools.
+It is the predecessor to GLAM (see above) and is still lightly maintained until we are sure that GLAM covers all of its use cases.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/tools/interfaces.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="analysis-gotchas"><a class="header" href="#analysis-gotchas">Analysis Gotchas</a></h1>
 <p>When you perform an analysis on any data, there are some mistakes that are easy to make:</p>
 <ul>
@@ -1679,6 +1693,9 @@ rows = query_job.result().to_dataframe()
 or to <a href="tools/../cookbooks/bigquery/querying.html#writing-results-to-gcs-object-store">Google Cloud Storage</a>.</p>
 <p>You can also save data to the <a href="https://docs.databricks.com/user-guide/databricks-file-system.html#dbfs">Databricks Filesystem</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/tools/spark.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h2 id="introduction-to-stmo"><a class="header" href="#introduction-to-stmo">Introduction to STMO</a></h2>
+<blockquote>
+<p><strong>⚠</strong> As of August 2021, <a href="tools/../tools/interfaces.html#looker">Looker</a> is considered the preferred solution for data exploration and visualization at Mozilla where possible. If you have any questions about where or when to use STMO, see <a href="tools/../concepts/getting_help.html">getting help</a>.</p>
+</blockquote>
 <p><a href="https://sql.telemetry.mozilla.org"><code>sql.telemetry.mozilla.org</code></a> (STMO) is Mozilla's installation of the <a href="https://redash.io/">Redash</a> data analysis and dashboarding tool. As the name and URL imply, the effective use of this tool requires familiarity with <a href="https://en.wikipedia.org/wiki/SQL">SQL</a>, with which all of the tool's data extraction and analysis are performed.</p>
 <p>Access to STMO is limited to Mozilla employees and designated contributors. For more information, see <a href="tools/../concepts/gaining_access.html">gaining access</a>.</p>
 <h2 id="stmo-concepts"><a class="header" href="#stmo-concepts">STMO Concepts</a></h2>
