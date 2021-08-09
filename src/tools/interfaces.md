@@ -8,6 +8,14 @@ This is a starting point for making sense of the tools used for analyzing Mozill
 
 These web-based tools do not require specialized technical knowledge (e.g. how to write an SQL query, deep knowledge of BigQuery). This is where you should start.
 
+### Looker
+
+In 2020, Mozilla chose [Looker](https://looker.com/) as its primary tool for analyzing data.
+It allows data exploration and visualization by experts and non-experts alike.
+
+As of this writing, [Mozilla's Looker deployment](https://mozilla.cloud.looker.com/) is an active work in progress.
+You can see the current status on the [Looker Deploy Working Group](https://mana.mozilla.org/wiki/display/DATA/Looker+Deploy+Working+Group) on Mana (LDAP access required).
+
 ### Mozilla Growth & Usage Dashboard (GUD)
 
 The [Mozilla Growth & Usage Dashboard](https://gud.telemetry.mozilla.org/) (GUD) is a tool to visualize growth metrics in a standard way across Mozilla’s products. This is the first place you should look if you have a question like "how many people are using X?".
@@ -18,11 +26,6 @@ The [Glean Aggregated Metrics Dashboard](https://glam.telemetry.mozilla.org/) (G
 
 For more information on how to use GLAM, see [Introduction to GLAM](../cookbooks/glam.md).
 
-### Telemetry Measurement Dashboard
-
-The [Telemetry Measurement Dashboard](https://telemetry.mozilla.org/new-pipeline/dist.html) (TMO) site is the
-'venerable standby' of Firefox telemetry analysis tools. It is the predecessor to GLAM (see above) and is still lightly maintained until we are sure that GLAM covers all of its use cases.
-
 ## Lower-level tools
 
 These tools require more specialized knowledge to use.
@@ -32,5 +35,17 @@ These tools require more specialized knowledge to use.
 The [`sql.telemetry.mozilla.org`](https://sql.telemetry.mozilla.org) (STMO) site
 is an instance of the very fine [Redash](https://redash.io/) software, allowing
 for SQL-based exploratory analysis and visualization / dashboard
-construction. Requires (surprise!) familiarity with SQL, and for your data to
-be explicitly exposed as an STMO data source. You can learn more about how to use it in [Introduction to STMO](./stmo.md). Bugs or feature requests can be reported in Mozilla's [issue tracker](https://github.com/mozilla/redash/issues).
+construction.
+Requires (surprise!) familiarity with SQL, and for your data to be explicitly exposed as an STMO data source.
+You can learn more about how to use it in [Introduction to STMO](./stmo.md).
+
+Note that while STMO is not yet considered deprecated, Looker is the preferred solution for producing data visualizations and dashboards at Mozilla (where possible).
+
+## Deprecated tools
+
+These tools are still available, but are generally not recommended.
+
+### Telemetry Measurement Dashboard
+
+The [Telemetry Measurement Dashboard](https://telemetry.mozilla.org/new-pipeline/dist.html) (TMO) site is the 'venerable standby' of Firefox telemetry analysis tools.
+It is the predecessor to GLAM (see above) and is still lightly maintained until we are sure that GLAM covers all of its use cases.

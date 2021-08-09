@@ -1,5 +1,7 @@
 ## Introduction to STMO
 
+> **⚠** As of August 2021, [Looker](../tools/interfaces.md#looker) is considered the preferred solution for data exploration and visualization at Mozilla where possible. If you have any questions about where or when to use STMO, see [getting help](../concepts/getting_help.md).
+
 [`sql.telemetry.mozilla.org`](https://sql.telemetry.mozilla.org) (STMO) is Mozilla's installation of the [Redash](https://redash.io/) data analysis and dashboarding tool. As the name and URL imply, the effective use of this tool requires familiarity with [SQL](https://en.wikipedia.org/wiki/SQL), with which all of the tool's data extraction and analysis are performed.
 
 Access to STMO is limited to Mozilla employees and designated contributors. For more information, see [gaining access](../concepts/gaining_access.md).
