@@ -11,19 +11,20 @@
 ## Example Queries
 
 ### Daily US sap searches
+
 ```sql
-SELECT 
+SELECT
     submission_date,
     SUM(SAP) AS search_counts
 FROM search.search_aggregates
-WHERE 
+WHERE
     country = 'US'
     AND submission_date BETWEEN '2019-01-01' AND '2019-01-07'
 GROUP BY submission_date
 ORDER BY submission_date
 ```
-[link to query on STMO](https://sql.telemetry.mozilla.org/queries/51140/source)
 
+[link to query on STMO](https://sql.telemetry.mozilla.org/queries/51140/source)
 
 ## Scheduling
 
@@ -32,6 +33,7 @@ This job is
 to run daily.
 
 ## Schema
+
 As of 2021-04-29,
 the current version of `search_aggregates` is `v8`,
 and has a schema as follows.
