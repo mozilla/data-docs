@@ -209,11 +209,11 @@ For more details, see the <a href="../../search.html">search data documentation<
 <h1 id="data-reference"><a class="header" href="#data-reference">Data Reference</a></h1>
 <h2 id="example-queries"><a class="header" href="#example-queries">Example Queries</a></h2>
 <h3 id="daily-us-sap-searches"><a class="header" href="#daily-us-sap-searches">Daily US sap searches</a></h3>
-<pre><code class="language-sql">SELECT 
+<pre><code class="language-sql">SELECT
     submission_date,
     SUM(SAP) AS search_counts
 FROM search.search_aggregates
-WHERE 
+WHERE
     country = 'US'
     AND submission_date BETWEEN '2019-01-01' AND '2019-01-07'
 GROUP BY submission_date

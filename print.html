@@ -8574,11 +8574,11 @@ For more details, see the <a href="datasets/search/search_aggregates/../../searc
 <h1 id="data-reference-12"><a class="header" href="#data-reference-12">Data Reference</a></h1>
 <h2 id="example-queries-6"><a class="header" href="#example-queries-6">Example Queries</a></h2>
 <h3 id="daily-us-sap-searches"><a class="header" href="#daily-us-sap-searches">Daily US sap searches</a></h3>
-<pre><code class="language-sql">SELECT 
+<pre><code class="language-sql">SELECT
     submission_date,
     SUM(SAP) AS search_counts
 FROM search.search_aggregates
-WHERE 
+WHERE
     country = 'US'
     AND submission_date BETWEEN '2019-01-01' AND '2019-01-07'
 GROUP BY submission_date
