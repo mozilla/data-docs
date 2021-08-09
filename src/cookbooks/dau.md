@@ -110,9 +110,7 @@ each user session:
 
 A given client is considered "active" for a given mobile product on a given day if we receive at
 least one of the above pings. Otherwise, the definitions of DAU and MAU for individual mobile products
-are identical to those used for desktop Firefox. See
-[Choosing a Mobile Product Dataset](../concepts/choosing_a_dataset_mobile.md) for an
-overview of the various products and which telemetry approach they use.
+are identical to those used for desktop Firefox.
 
 _Note:_ As of March 2020, Fenix (the new Firefox for Android) is using a modified definition of usage
 which considers a user active for a given day based on any `baseline` or `metrics` ping

@@ -1,7 +1,7 @@
 # Accessing Glean Data in BigQuery
 
 This document describes how to access Glean data using BigQuery, such as in [Redash](https://sql.telemetry.mozilla.org).
-This is intended for in-depth analysis: [GUD](../tools/interfaces.md#mozilla-growth--usage-dashboard-gud) or [GLAM](../tools/interfaces.md#glean-aggregated-metrics-dashboard-glam) can answer many simple questions.
+This is intended for in-depth analysis: [GUD](../introduction/tools.md#mozilla-growth--usage-dashboard-gud) or [GLAM](../introduction/tools.md#glean-aggregated-metrics-dashboard-glam) can answer many simple questions.
 
 The data that Glean applications generates maps cleanly to structures we create in
 BigQuery: see the section on [Glean Data](../concepts/pipeline/glean_data.md) in the data pipeline

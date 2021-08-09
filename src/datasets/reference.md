@@ -1,8 +1,6 @@
 # Dataset Reference
 
-After completing [Choosing a Dataset](../concepts/choosing_a_dataset.md)
-you should have a high level understanding of what questions each dataset is able to answer.
-This section contains references that focus on a single dataset each.
+This section contains reference material on the datasets we store in BigQuery.
 Reading this section front to back is not recommended.
 Instead, identify a dataset you'd like to understand better and read through
 the relevant documentation.

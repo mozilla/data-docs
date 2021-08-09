@@ -1,4 +1,4 @@
 # Derived Datasets
 
-See [Choosing a Dataset](../concepts/choosing_a_dataset.md)
+See [Accessing Desktop Data](../cookbooks/bigquery/accessing_desktop_data.md)
 for a discussion on the differences between pings and derived datasets.

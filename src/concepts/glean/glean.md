@@ -4,7 +4,7 @@ For Mozilla, getting reliable data from our products is critical to inform our d
 
 The list of supported platforms and implementations is [available in the Glean SDK Book](https://mozilla.github.io/glean/dev/core/internal/implementations.html).
 
-> Note that this is different from Telemetry for Firefox Desktop ([library](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/index.html), [datasets](../choosing_a_dataset.md)), although it provides similar capabilities.
+> Note that this is different from [Telemetry for Firefox Desktop](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/index.html) although it provides similar capabilities.
 
 Contents:
 

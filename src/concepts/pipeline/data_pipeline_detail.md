@@ -186,7 +186,7 @@ Spark Streaming is used to read from Kafka and perform [low-latency ETL and aggr
 
 Batch processing is done using [Spark]. Production ETL code is written in both [Python][python_mozetl] and [Scala][telemetry-batch-view].
 
-There are [Python][py_dataset] and [Scala][moztelemetry] libraries for reading data from the Data Lake in [Heka-framed protobuf][heka_protobuf] form, though it is much easier and more performant to make use of a [derived dataset](../../concepts/choosing_a_dataset.md) whenever possible.
+There are [Python][py_dataset] and [Scala][moztelemetry] libraries for reading data from the Data Lake in [Heka-framed protobuf][heka_protobuf] form, though it is much easier and more performant to make use of a derived dataset whenever possible.
 
 Datasets in parquet format can be read natively by Spark, either using Spark SQL or by reading data directly from S3.
 
@@ -221,11 +221,11 @@ graph TD
 
 Most of the data analysis tooling has been developed with the goal of being "self-serve". This means that people should be able to access and analyze data on their own, without involving data engineers or operations. Thus can data access scale beyond a small set of people with specialized knowledge of the entire pipeline.
 
-The use of these self-serve tools is described in the [Getting Started] article. This section focuses on how these tools integrate with the platform infrastructure.
+The use of these self-serve tools is described in the tutorials section of this site. This section focuses on how these tools integrate with the platform infrastructure.
 
 ##### STMO: SQL Analysis
 
-[STMO] is a customized [Redash] installation that provides self-serve access to a a variety of different [datasets](../../concepts/choosing_a_dataset.md). From here, you can query data in the Parquet Data Lake as well as various RDBMS data sources.
+[STMO] is a customized [Redash] installation that provides self-serve access to a a variety of different datasets. From here, you can query data in the Parquet Data Lake as well as various RDBMS data sources.
 
 STMO interfaces with the data lake using both [Presto] and Amazon [Athena]. Each has its own data source in STMO. Since Athena does not support user-defined functions, datasets with HyperLogLog columns, such as [`client_count_daily`](../../datasets/obsolete/client_count_daily/reference.md), are only available via Presto..
 
@@ -401,7 +401,6 @@ graph LR
 [hslog]: https://mozilla-services.github.io/lua_sandbox_extensions/moz_logging/
 [python_mozetl]: https://github.com/mozilla/python_mozetl
 [telemetry-batch-view]: https://github.com/mozilla/telemetry-batch-view
-[getting started]: ../../concepts/analysis_intro.md
 [st. mocli]: https://github.com/mozilla/stmocli
 [kafka]: https://kafka.apache.org/
 [spark]: https://spark.apache.org/docs/latest/index.html
