@@ -1,5 +1,22 @@
 # What Data does Mozilla Collect?
 
+Mozilla, like many other organizations, relies on data to make product decisions.
+However, _unlike_ many other organizations, Mozilla balances its goal of collecting useful, high-quality data with giving its users meaningful choice and control over their own data.
+Our approach to data is most succinctly described by the [Mozilla Privacy Principles](https://www.mozilla.org/privacy/principles/).
+If you want to know what Mozilla thinks about data, the Principles will tell you that.
+
+From those principles come [Mozilla's Privacy Notices](https://www.mozilla.org/privacy/).
+They differ from product to product because the data each product deals with is different.
+If you want to know what kinds of data each Mozilla product collects and what we do with it, the Privacy Notices will tell you that.
+
+From the Principles and the Notices Mozilla derives operational processes to allow it to make decisions about what data it can collect, store, and publish.
+Here are a few of them:
+
+- [Data Collection](https://wiki.mozilla.org/Data_Collection): Mozilla's policies around data collection
+- [Data Publishing](https://wiki.mozilla.org/Data_Publishing): How Mozilla publishes (a subset of) of the data it collects for the public benefit
+
+If you want to know how we ensure the data Mozilla collects, store, and publish abide by the Privacy Notices and the Principles, these processes will tell you that.
+
 The data Mozilla collects can roughly be categorized into three categories: product telemetry, usage logs and website telemetry.
 
 ## Product Telemetry
