@@ -1,3 +1,3 @@
 # Getting started
 
-This section contains some basic information on how to get started with Mozilla's data.
+This section contains some basic tutorials on how to get up and running with Mozilla's data.
