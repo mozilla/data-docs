@@ -153,7 +153,7 @@ In Firefox, [Sessions](#sessions) are split into subsessions after every 24-hour
 
 ## STMO (sql.telemetry.mozilla.org)
 
-A service for creating queries and dashboards. See [STMO under analysis tools](../tools/interfaces.md#sqltelemetrymozillaorg-stmo).
+A service for creating queries and dashboards. See [STMO under analysis tools](../introduction/tools.md#sqltelemetrymozillaorg-stmo).
 
 ## Telemetry
 

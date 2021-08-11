@@ -20,6 +20,10 @@ google-analytics = "UA-104326577-1"
 git-branch = "main"
 
 [output.html.redirect]
+"/concepts/analysis_intro.html" = "/introduction/what_data.html"
+"/concepts/choosing_a_dataset.html" = "/cookbooks/bigquery/accessing_desktop_data.html"
+"/concepts/getting_started.html" = "/introduction/index.html"
+"/tools/interfaces.html" = "/introduction/tools.html"
 "/datasets/mozetl/search_aggregates/reference.html" = "/datasets/search/search_aggregates/reference.html"
 "/datasets/mozetl/search_clients_daily/reference.html" = "/datasets/search/search_clients_engines_sources_daily/reference.html"
 "/datasets/search/search_clients_daily/reference.html" = "/datasets/search/search_clients_engines_sources_daily/reference.html"
@@ -27,6 +31,7 @@ git-branch = "main"
 "/datasets/mozetl/client_ltv/reference.html" = "/datasets/search/client_ltv/reference.html"
 "/cookbooks/bigquery-airflow.html" = "/cookbooks/scheduling_queries.html"
 "/concepts/glean/accessing_glean_data.html" = "/cookbooks/accessing_glean_data.html"
+"/concepts/choosing_a_dataset_mobile.html" = "/datasets/obsolete/legacy_mobile/reference.html"
 "/datasets/other/attitudes_daily/reference.html" = "/datasets/obsolete/attitudes_daily/reference.html"
 
 [preprocessor.open-on-gh]

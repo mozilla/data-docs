@@ -37,7 +37,7 @@ is an instance of the very fine [Redash](https://redash.io/) software, allowing
 for SQL-based exploratory analysis and visualization / dashboard
 construction.
 Requires (surprise!) familiarity with SQL, and for your data to be explicitly exposed as an STMO data source.
-You can learn more about how to use it in [Introduction to STMO](./stmo.md).
+You can learn more about how to use it in [Introduction to STMO](../tools/stmo.md).
 
 Note that while STMO is not yet considered deprecated, Looker is the preferred solution for producing data visualizations and dashboards at Mozilla (where possible).
 

@@ -1,6 +1,6 @@
 ## Introduction to STMO
 
-> **⚠** As of August 2021, [Looker](../tools/interfaces.md#looker) is considered the preferred solution for data exploration and visualization at Mozilla where possible. If you have any questions about where or when to use STMO, see [getting help](../concepts/getting_help.md).
+> **⚠** As of August 2021, [Looker](../introduction/tools.md#looker) is considered the preferred solution for data exploration and visualization at Mozilla where possible. If you have any questions about where or when to use STMO, see [getting help](../concepts/getting_help.md).
 
 [`sql.telemetry.mozilla.org`](https://sql.telemetry.mozilla.org) (STMO) is Mozilla's installation of the [Redash](https://redash.io/) data analysis and dashboarding tool. As the name and URL imply, the effective use of this tool requires familiarity with [SQL](https://en.wikipedia.org/wiki/SQL), with which all of the tool's data extraction and analysis are performed.
 
@@ -48,10 +48,7 @@ refers to Google's [BigQuery](https://cloud.google.com/bigquery/) data warehouse
 
 Other available data sources include _Crash DB_, _Tiles_, _Sync Stats_, _Push_,
 _Test Pilot_, and even a _Redash metadata_ which connects to STMO's
-own Redash database. If you want to learn more about all available data sets and how
-to locate one that is suited for your development environment, see the [Choosing a
-dataset](../concepts/choosing_a_dataset.md) page. If you have questions regarding data sets or would like to know if specific data is or can be made available
-in STMO, see the [getting help](../concepts/getting_help.md) topic for more information on how to get in touch.
+own Redash database.
 
 ## Create an Example Dashboard
 

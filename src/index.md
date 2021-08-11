@@ -19,7 +19,7 @@ You can locate the source for this documentation in the [data-docs repository](h
 
 This documentation is divided into the following sections:
 
-### [Getting Started](concepts/getting_started.md)
+### [Introduction](introduction/index.md)
 
 This section provides a **quick introduction** to Mozilla's Telemetry data: it should help you understand how this data is collected and how to begin analyzing it.
 

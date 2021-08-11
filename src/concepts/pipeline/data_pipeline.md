@@ -98,7 +98,7 @@ The deployment scripts and configuration files of the CEP & DWL live in a [priva
 
 Once the data reaches our data lake on S3 it can be processed with Spark on Mozilla's Databricks instance. Databricks allows Mozilla employees to write custom analyses in notebooks, and also schedule Databricks jobs to run periodically.
 
-As mentioned earlier, most of our data lake contains data serialized to Protobuf with free-form JSON fields. Needless to say, parsing JSON is terribly slow when ingesting Terabytes of data per day. A set of [ETL jobs], written in Scala by Data Engineers and scheduled with [Airflow], create [Parquet views] of our raw data. We have a Github repository [telemetry-batch-view] that showcases this.
+As mentioned earlier, most of our data lake contains data serialized to Protobuf with free-form JSON fields. Needless to say, parsing JSON is terribly slow when ingesting Terabytes of data per day. A set of [ETL jobs], written in Scala by Data Engineers and scheduled with [Airflow], create Parquet views of our raw data. We have a Github repository [telemetry-batch-view] that showcases this.
 
 # Aggregates Dataset
 
@@ -199,7 +199,6 @@ There is a vast ecosystem of tools for processing data at scale, each with their
 [emr]: https://github.com/mozilla/emr-bootstrap-spark/
 [etl jobs]: https://github.com/mozilla/telemetry-batch-view
 [airflow]: https://github.com/mozilla/telemetry-airflow/
-[parquet views]: ../choosing_a_dataset.md
 [telemetry-batch-view]: https://github.com/mozilla/telemetry-batch-view/
 [http service]: https://github.com/mozilla/python_mozaggregator/#api
 [tmo]: https://telemetry.mozilla.org/

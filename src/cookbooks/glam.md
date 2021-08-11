@@ -2,7 +2,7 @@
 
 GLAM was built to help Mozillians answer their data questions without needing data analysis or coding skills. It contains a visualization layer meant to answer most "easy" questions about how a probe or metric has changed over build ids and releases.
 
-GLAM is one of several high-level data tools that we provide at Mozilla. For more information, see [Tools for Data Analysis](../tools/interfaces.md).
+GLAM is one of several high-level data tools that we provide at Mozilla. For more information, see [Tools for Data Analysis](../introduction/tools.md).
 
 Access to GLAM is currently limited to Mozilla employees and designated contributors (this [may change in the future](https://bugzilla.mozilla.org/show_bug.cgi?id=1712353)). For more information, see [gaining access](../concepts/gaining_access.md).
 

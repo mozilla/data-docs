@@ -1,4 +1,4 @@
-# Getting Started
+# Introduction
 
 This section is an introductory guide to analyzing Telemetry data:
 it should give you enough knowledge and understanding to begin exploring our systems.

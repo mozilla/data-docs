@@ -1,38 +1,10 @@
-# Choosing a Mobile Product Dataset
+# Legacy Mobile Datasets
 
-## Products Overview
+Modern mobile products use the [Glean SDK] and are thus documented by the [Glean Dictionary].
+This documentation documents some details about accessing data for legacy products based on other technology.
 
-Mobile products may send either legacy telemetry (see "Legacy ping tables" below), Glean telemetry, or both.
-
-| Marketing name        | OS      | Legacy `app_name`  | Glean dataset                                                                                             | Notes                                  |
-| --------------------- | ------- | ------------------ | --------------------------------------------------------------------------------------------------------- | -------------------------------------- |
-| Firefox for Android   | Android |                    | `org_mozilla_firefox` (release), `org_mozilla_firefox_beta` (beta), `org_mozilla_fenix` (nightly)         | formerly Fenix; uses Glean (see below) |
-| Firefox Android (old) | iOS     | `Fennec`           |                                                                                                           | End-of-life; replaced by above         |
-| Firefox iOS           | iOS     | `Fennec`           | `org_mozilla_ios_firefox` (release), `org_mozilla_ios_firefoxbeta` (beta), `org_mozilla_ios_fennec` (dev) |                                        |
-| Focus Android         | Android | `Focus`            |                                                                                                           | Privacy browser                        |
-| Focus iOS             | iOS     | `Focus`            |                                                                                                           | Privacy browser                        |
-| Klar                  | Android | `Klar`             |                                                                                                           | German Focus release                   |
-| Firefox for Fire TV   | Android | `FirefoxForFireTV` | `org_mozilla_tv_firefox `                                                                                 |                                        |
-| Firefox for Echo Show | Android | `FirefoxConnect`   | `org_mozilla_connect_firefox`                                                                             |                                        |
-| Firefox Lite          | Android | `Zerda`            |                                                                                                           | Formerly Rocket (See below)            |
-| Firefox Reality       | Android | `FirefoxReality`   | `org_mozilla_vrbrowser`                                                                                   | Headset VR browser                     |
-| Reference Browser     | Android |                    | `org_mozilla_reference_browser`                                                                           | GeckoView integration testbed          |
-
-Some other app names are documented in the [ETL documentation](https://mozilla.github.io/bigquery-etl/mozfun/norm/#product_info-udf).
-
-Firefox Lite was formerly known as Rocket. It is only available in certain countries in Asia Pacific. For more information on Firefox Lite data, see the [telemetry documentation][fxlite].
-
-Focus is known as the privacy-focused mobile browser that blocks trackers by default. It does not store a browsing history.
-
-Klar is the known release name for Focus in Germany.
-
-For more information on how telemetry is sent for iOS apps, see the [telemetry documentation][ios].
-
-Some telemetry is also sent by non-Mozilla forks of our browsers.
-When consulting legacy telemetry, filter on app name to make sure that you are looking at only the app for which you want to analyze data.
-
-[fxlite]: https://github.com/mozilla-tw/FirefoxLite/blob/master/docs/telemetry.md
-[ios]: https://github.com/mozilla-mobile/telemetry-ios
+[glean sdk]: ../../../concepts/glean/glean.md
+[glean dictionary]: https://dictionary.telemetry.mozilla.org
 
 ## Legacy ping tables
 
@@ -108,7 +80,3 @@ Each app uses a unique set of release channels. Most apps include a `nightly`, `
 
 As soon as the `release` version is published, beta users work with the same version
 of the app as users who have received the final released version. Both versions of the software become indistinguishable from each other unless you perform a query that flags them by `client_id`. Beta releases have `normalized_channel` tagged as `release`. If you want to filter for beta users, you can only identify the beta users by checking for a higher version number than the version number and date that have been assigned to the official release.
-
-### Glean
-
-Most of Mozilla's newer mobile apps, including Fenix, have been adapted to use _Glean_, the new telemetry SDK. Glean now sends `baseline`, `metrics`, and `events` pings instead of `core` and `event` pings. For more information, see the [Glean Overview](./glean/glean.md).

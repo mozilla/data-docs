@@ -38,7 +38,7 @@ file an issue in the [Datasets: General component](https://bugzilla.mozilla.org/
 
 ### Problems with tools
 
-There are Bugzilla components for several of the [tools](../tools/interfaces.md) that
+There are Bugzilla components for several of the [tools](../introduction/tools.md) that
 comprise the [Data Platform](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools).
 File a bug in the specific component that most closely matches the tool in question.
 
