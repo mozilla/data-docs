@@ -24,6 +24,7 @@ Especially severe problems with production data are announced on the `fx-data-de
 
 When you start to evaluate trends, be aware of events from the past that may invite comparisons with history. Here are a few to keep in mind:
 
+- **Aug 23 2021 - Aug 29 2021** - [Approximately 1/251 of pings were improperly labeled as coming from Kansas City, US][bug1729069].
 - **Feb 16 2021 - Feb 25 2021** - [A small number of stub installer pings may have been discarded due to URI deduplication][bug1694764].
 - **August 6, 2020** - [Pings with "automation" tag in X-Source-Tags will no longer appear in stable tables][bq1215]
   This is particularly relevant for removing pings related to automated testing of Fenix.
@@ -75,6 +76,7 @@ When you start to evaluate trends, be aware of events from the past that may inv
 [bug1630096]: https://bugzilla.mozilla.org/show_bug.cgi?id=1630096
 [bug1653244]: https://bugzilla.mozilla.org/show_bug.cgi?id=1653244
 [bug1694764]: https://bugzilla.mozilla.org/show_bug.cgi?id=1694764
+[bug1729069]: https://bugzilla.mozilla.org/show_bug.cgi?id=1729069
 
 ## Pseudo-replication
 
