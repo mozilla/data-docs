@@ -172,6 +172,31 @@ in a number of ways as described in the [Accessing BigQuery] article.
 
 Data analysis is most commonly done using [SQL queries][stmo] or using [Spark].
 
+## Handling Sensitive Data
+
+Some data is more sensitive than others and introduces more risk around how it
+is handled. We characterize sensitivity of data broadly into four categories
+as described on the [Data Collection wiki page][collection categories].
+
+Sensitive data — by which we mean category 3 and 4 data — increases the
+level of risk and so warrants extra care. For such data, we apply three main
+mitigation measures:
+
+**Limited access**
+Access to sensitive data is limited to individuals or groups with clearly
+articulated need. Access is also limited in time, so access expires by default.
+
+**Limited retention**
+Sensitive data is kept for a finite period of time after which it is
+automatically deleted. For example, data containing search terms is only
+kept for a short period of time.
+
+**Sanitization and aggregation of data**
+Where data has the potential to be personally identifiable, we have best
+effort (and improving over time) ETL jobs that scrub incoming data of
+potentially identifying information, which reduces risk. When possible, we
+build and work with aggregate datasets rather than individual-level data.
+
 [collect data]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/index.html
 [histograms]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/histograms.html
 [scalars]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/scalars.html
@@ -179,6 +204,7 @@ Data analysis is most commonly done using [SQL queries][stmo] or using [Spark].
 [events]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html
 [probes]: ../../datasets/new_data.md
 [collection policy]: https://wiki.mozilla.org/Firefox/Data_Collection
+[collection categories]: https://wiki.mozilla.org/Data_Collection#Data_Collection_Categories
 [subsessions]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/sessions.html#subsessions
 [main ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html
 [ping types]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/pings.html#ping-types
