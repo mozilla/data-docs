@@ -178,7 +178,7 @@ Some data is more sensitive than others and introduces more risk around how it
 is handled. We characterize sensitivity of data broadly into four categories
 as described on the [Data Collection wiki page][collection categories].
 
-Sensitive data -- by which we mean category 3 and 4 data -- increases the
+Sensitive data — by which we mean category 3 and 4 data — increases the
 level of risk and so warrants extra care. For such data, we apply three main
 mitigation measures:
 
