@@ -4509,6 +4509,25 @@ applications (such as <a href="https://telemetry.mozilla.org/">measurement</a> a
 <p>Once the data reaches our data warehouse in BigQuery it can be processed
 in a number of ways as described in the <a href="concepts/pipeline/../../cookbooks/bigquery.html">Accessing BigQuery</a> article.</p>
 <p>Data analysis is most commonly done using <a href="https://sql.telemetry.mozilla.org/">SQL queries</a> or using <a href="concepts/pipeline/../../tools/spark.html">Spark</a>.</p>
+<h2 id="handling-sensitive-data"><a class="header" href="#handling-sensitive-data">Handling Sensitive Data</a></h2>
+<p>Some data is more sensitive than others and introduces more risk around how it
+is handled. We characterize sensitivity of data broadly into four categories
+as described on the <a href="https://wiki.mozilla.org/Data_Collection#Data_Collection_Categories">Data Collection wiki page</a>.</p>
+<p>Sensitive data — by which we mean category 3 and 4 data — increases the
+level of risk and so warrants extra care. For such data, we apply three main
+mitigation measures:</p>
+<p><strong>Limited access</strong>
+Access to sensitive data is limited to individuals or groups with clearly
+articulated need. Access is also limited in time, so access expires by default.</p>
+<p><strong>Limited retention</strong>
+Sensitive data is kept for a finite period of time after which it is
+automatically deleted. For example, data containing search terms is only
+kept for a short period of time.</p>
+<p><strong>Sanitization and aggregation of data</strong>
+Where data has the potential to be personally identifiable, we have best
+effort (and improving over time) ETL jobs that scrub incoming data of
+potentially identifying information, which reduces risk. When possible, we
+build and work with aggregate datasets rather than individual-level data.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/concepts/pipeline/gcp_data_pipeline.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="http-edge-server-specification"><a class="header" href="#http-edge-server-specification">HTTP Edge Server Specification</a></h1>
 <p>This document specifies the behavior of the server that accepts submissions from
 any HTTP client e.g. Firefox telemetry.</p>
