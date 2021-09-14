@@ -154,19 +154,20 @@
 <p>When the stub installer completes with almost any result, it generates a ping containing some data about the system and about how the installation went. This ping isn't part of Firefox unified telemetry, it's a bespoke system; we can't use the telemetry client code when it isn't installed yet.</p>
 <p>No ping is sent if the installer exits early because initial system requirements checks fail.</p>
 <h2 id="how-its-processed"><a class="header" href="#how-its-processed">How it’s processed</a></h2>
-<p>They are formed and sent from NSIS code (!) in the stub installer, in the <a href="https://searchfox.org/mozilla-central/source/browser/installer/windows/nsis/stub.nsi">SendPing subroutine</a>.</p>
-<p>They are processed into Redshift by <a href="https://github.com/whd/dsmo_load"><code>dsmo_load</code></a>.</p>
+<p>Installer pings are formed and sent from NSIS code (!) in the stub installer, in the <a href="https://searchfox.org/mozilla-central/source/browser/installer/windows/nsis/stub.nsi">SendPing subroutine</a>.</p>
+<p>Like any other ping, they are processed into <a href="../../../cookbooks/bigquery/querying.html#structure-of-ping-tables-in-bigquery">ping tables</a>.</p>
 <h2 id="how-to-access-the-data"><a class="header" href="#how-to-access-the-data">How to access the data</a></h2>
-<p>The Redshift tables are accessible from the <code>DSMO-RS</code> data source in <a href="https://sql.telemetry.mozilla.org/">STMO</a>.</p>
-<p>The canonical documentation is in <a href="https://searchfox.org/mozilla-central/source/toolkit/components/telemetry/docs/data/install-ping.rst">this tree</a>.</p>
-<p>There are three tables produced every day (you can see them in Redshift as <code>{tablename}_YYYYMMDD</code>:</p>
-<ul>
-<li><code>download_stats_YYYYMMDD</code> (<a href="https://github.com/whd/dsmo_load/blob/master/hindsight/hs_run/output/dsmo_redshift.lua">source</a>)</li>
-<li><code>download_stats_funnelcake_YYYYMMDD</code> (<a href="https://github.com/whd/dsmo_load/blob/master/hindsight/hs_run/output/dsmo_funnelcake_redshift.lua">source</a>)</li>
-<li><code>download_stats_errors_YYYYMMDD</code> (<a href="https://github.com/whd/dsmo_load/blob/master/hindsight/hs_run/output/dsmo_errors_redshift.lua">source</a>)</li>
-</ul>
-<p>The funnelcake tables aggregate funnelcake builds, which have additional metadata for tracking distribution experiments. <a href="https://wiki.mozilla.org/Funnelcake">More on Funnelcake</a>.</p>
-<p><code>download_stats</code> (without the date appended) and <code>download_stats_year</code> are views that union all (or a year's worth) of the per-day tables together, which makes e.g. <code>SELECT * LIMIT 10</code> operations on them quite slow.</p>
+<p>You can access this data in BigQuery under <code>firefox_installer.install</code>.
+The following query, for example, gives you the number of successful installs per normalized country code on April 20th, 2021:</p>
+<pre><code class="language-sql">SELECT normalized_country_code,
+       succeeded,
+       count(*)
+FROM firefox_installer.install
+WHERE DATE(submission_timestamp) = '2021-04-20'
+GROUP BY normalized_country_code,
+         succeeded
+</code></pre>
+<p><a href="https://sql.telemetry.mozilla.org/queries/81648/source"><code>STMO#81648</code></a></p>
 <p>Note about <code>os_version</code>: Previous versions of Windows have used a very small set of build numbers through their entire life cycle. However, Windows 10 gets a new build number with every major update (about every 6 months), and many more builds have been released on its insider channels. So, to prevent a huge amount of noise, queries using this field should generally filter out the build number and only use the major and minor version numbers to differentiate Windows versions, unless the build number is specifically needed.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/other/stub_installer/reference.md">Edit this file on GitHub.</a></footer>
                     </main>
