@@ -2,9 +2,6 @@
 
 Addon usage by client, partitioned by day.
 
-This documentation is a work in progress. Work is
-being tracked in [bug 1364172](https://bugzilla.mozilla.org/show_bug.cgi?id=1364172)
-
 ## Data Reference
 
 This dataset contains one or more records for every entry in the main ping table
