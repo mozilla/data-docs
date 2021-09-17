@@ -16,7 +16,7 @@ SELECT
   submission_timestamp,
   document_id
 FROM
-  telemetry_live.main_v4 -- or crash, event, core, etc
+  `moz-fx-data-shared-prod.telemetry_live.main_v4` -- or crash, event, core, etc
 WHERE
   submission_timestamp > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 3 HOUR)
   AND client_id = '<your_client_id>'
