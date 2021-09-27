@@ -20,9 +20,9 @@ Searches can be split into three major classes: _sap_, _follow-on_, and _organic
 SAP searches result from a direct interaction with a `search access point` (SAP), which is part of the Firefox UI. These searches are often called SAP searches.
 There are currently 8 SAPs:
 
-- `urlbar` - entering a search query in the Awesomebar. Searches typed into the search bar in the middle of the browser window will also be recorded as urlbar searches.
-- `urlbar_searchmode` - selecting a search partner icon while entering a search query in the Awesomebar or tagging the search partner (i.e. @duckduckgo) before entering search query via Awesomebar (Note: Formerly called `alias` [added](https://bugzilla.mozilla.org/show_bug.cgi?id=1499193) as of Firefox 64.)
-- `searchbar` - the main search bar (on the top RHS of browser window); not present by default for new profiles on Firefox 57+. "Searchmode" searches via the searchbar are logged as regular searchbar searches.
+- `urlbar` - entering a search query in the Awesomebar. Searches typed into the search bar in the middle of the browser window will also be recorded as `urlbar` searches.
+- `urlbar_searchmode` - selecting a search partner icon while entering a search query in the Awesomebar or tagging the search partner (i.e. `@duckduckgo`) before entering search query via Awesomebar (Note: Formerly called `alias` [added](https://bugzilla.mozilla.org/show_bug.cgi?id=1499193) as of Firefox 64.)
+- `searchbar` - the main search bar (on the top right corner of browser window); not present by default for new profiles on Firefox 57+. "Searchmode" searches via the searchbar are logged as regular searchbar searches.
 - `newtab` - the search bar on the `about:newtab` page (not active in Firefox 92)
 - `abouthome` - the search bar on the `about:home` page (not active in Firefox 92)
 - `contextmenu` - highlight text, right click, and select "Search [search engine] for [highlighted text]" from the context menu.
