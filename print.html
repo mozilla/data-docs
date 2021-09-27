@@ -8420,19 +8420,17 @@ complex analyses.</p>
 <h1 id="terminology-1"><a class="header" href="#terminology-1">Terminology</a></h1>
 <h2 id="direct-vs-follow-on-search"><a class="header" href="#direct-vs-follow-on-search">Direct vs Follow-on Search</a></h2>
 <p>Searches can be split into three major classes: <em>sap</em>, <em>follow-on</em>, and <em>organic</em>.</p>
-<p>SAP searches result from a direct interaction with a <code>search access point</code> (SAP),
-which is part of the Firefox UI.
-These searches are often called SAP searches.
-There are currently 7 SAPs:</p>
+<p>SAP searches result from a direct interaction with a <code>search access point</code> (SAP), which is part of the Firefox UI. These searches are often called SAP searches.
+There are currently 8 SAPs:</p>
 <ul>
-<li><code>urlbar</code> - entering a search query in the Awesomebar</li>
-<li><code>searchbar</code> - the main search bar; not present by default for new profiles on Firefox 57+</li>
-<li><code>newtab</code> - the search bar on the <code>about:newtab</code> page</li>
-<li><code>abouthome</code> - the search bar on the <code>about:home</code> page</li>
-<li><code>contextmenu</code> - selecting text and clicking &quot;Search&quot; from the context menu</li>
+<li><code>urlbar</code> - entering a search query in the Awesomebar. Searches typed into the search bar in the middle of the browser window will also be recorded as <code>urlbar</code> searches.</li>
+<li><code>urlbar_searchmode</code> - selecting a search partner icon while entering a search query in the Awesomebar or tagging the search partner (i.e. <code>@duckduckgo</code>) before entering search query via Awesomebar (was formerly called <code>alias</code> <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1499193">added</a> as of Firefox 64.)</li>
+<li><code>searchbar</code> - the main search bar (on the top right corner of browser window); not present by default for new profiles on Firefox 57+. <code>Searchmode</code> searches via the <code>searchbar</code> are logged as regular <code>searchbar</code> searches.</li>
+<li><code>newtab</code> - the search bar on the <code>about:newtab</code> page (not active in Firefox 92)</li>
+<li><code>abouthome</code> - the search bar on the <code>about:home</code> page (not active in Firefox 92)</li>
+<li><code>contextmenu</code> - highlight text, right click, and select &quot;Search [search engine] for [highlighted text]&quot; from the context menu.</li>
 <li><code>system</code> - starting Firefox from the command line with an option that immediately makes a search</li>
 <li><code>webextension</code> - initiated from a web extension (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1492233">added</a> as of Firefox 63)</li>
-<li><code>alias</code> - initiated from a search keyword (like @google) (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1499193">added</a> as of Firefox 64)</li>
 </ul>
 <p>Users will often interact with the Search Engine Results Page (SERP)
 to create &quot;downstream&quot; queries.
