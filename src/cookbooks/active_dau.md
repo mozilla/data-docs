@@ -3,7 +3,7 @@
 An **Active User** is defined as a client who has `total_daily_uri` >= 5 URI for a given date.
 
 - Dates are defined by `submission_date` (_not_ by [client activity date](https://bugzilla.mozilla.org/show_bug.cgi?id=1422892)).
-- A client's `total_daily_uri` is defined as their sum of `scalar_parent_browser_engagement_total_uri_count` for a given date<sup>[1](#total_uri_count)</sup>.
+- A client's `total_daily_uri` is defined as their sum of `scalar_parent_browser_engagement_total_uri_count` for a given date[^1].
 
 **Active DAU** (aDAU) is the number of Active Users on a given day.
 
@@ -77,33 +77,4 @@ ORDER BY
   submission_date_s3
 ```
 
-[`main_summary`](../datasets/batch_view/main_summary/reference.md) can also be used for getting aDAU. Below is an example query using a 1% sample over March 2018 using `main_summary`:
-
-```sql
-SELECT
-  submission_date_s3,
-  COUNT(*) * 100 AS visited_5_uri_dau
-FROM (
-  SELECT
-    submission_date_s3,
-    client_id,
-    SUM(scalar_parent_browser_engagement_total_uri_count) >= 5 AS visited_5_uri
-  FROM
-    telemetry.main_summary
-  WHERE
-    sample_id = '51'
-    -- In BigQuery use yyyy-MM-DD, e.g. '2018-03-01'
-    AND submission_date_s3 >= '20180301'
-    AND submission_date_s3 < '20180401'
-  GROUP BY
-    submission_date_s3,
-    client_id)
-WHERE
-  visited_5_uri
-GROUP BY
-  submission_date_s3
-ORDER BY
-  submission_date_s3
-```
-
-<span id="total_uri_count">**1**</span>: Note, the probe measuring `scalar_parent_browser_engagement_total_uri_count` only exists in clients with Firefox 50 and up. Clients on earlier versions of Firefox won't be counted as an Active User (regardless of their use). Similarly, `scalar_parent_browser_engagement_total_uri_count` doesn't increment when a client is in Private Browsing mode, so that won't be included as well.
+[^1]: Note, the probe measuring `scalar_parent_browser_engagement_total_uri_count` only exists in clients with Firefox 50 and up. Clients on earlier versions of Firefox won't be counted as an Active User (regardless of their use). Similarly, `scalar_parent_browser_engagement_total_uri_count` doesn't increment when a client is in Private Browsing mode, so that won't be included as well.
