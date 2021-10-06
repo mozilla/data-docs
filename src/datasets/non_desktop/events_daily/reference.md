@@ -4,7 +4,7 @@
 
 ## Introduction
 
-`org_mozilla_firefox.events_daily` is designed to answer questions about events. These include:
+`fenix_derived.events_daily` is designed to answer questions about events. These include:
 
 - Funnels
 - Event Counts
@@ -22,14 +22,14 @@
 
 For Fenix, we aggregate the events ping data _only_. If you're looking for events in other pings, you'll need to query them directly.
 
-Included in this data is a set of dimensional information about the user, also derived from the events ping. The full list of fields is available [in the query](https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/org_mozilla_firefox_derived/events_daily_v1/query.sql#L48).
+Included in this data is a set of dimensional information about the user, also derived from the events ping. The full list of fields is available [in the query](https://github.com/mozilla/bigquery-etl/blob/main/sql/moz-fx-data-shared-prod/fenix_derived/events_daily_v1/query.sql).
 
 ## Limitations
 
 This approach makes some queries fast and easy, but has some limits:
 
 1. Each product is limited to at most 1 Million unique event types
-2. Each event property is limited to at most 1 Million values. As a result, [some Fenix event properties are not included in this table](https://github.com/mozilla/bigquery-etl/blob/ad84a15d580333b41d36cfe8331e51238f3bafa1/sql/moz-fx-data-shared-prod/org_mozilla_firefox_derived/event_types_v1/query.sql#L89).
+2. Each event property is limited to at most 1 Million values. As a result, [some Fenix event properties are not included in this table](https://github.com/mozilla/bigquery-etl/blob/b4d43c3d458853bcf638eac6a0daf8a207b98afe/sql/moz-fx-data-shared-prod/fenix_derived/event_types_history_v1/query.sql#L124).
 3. Queries do not know the amount of time that passed between events, only that they occurred on the same day
    _Note_: This can be alleviated by sessionizing and splitting the events string using a `session_start` event.
    For Fenix this could be [`events.app_opened_all_startup`](https://github.com/mozilla-mobile/fenix/blob/master/app/metrics.yaml#L11).
@@ -54,11 +54,11 @@ SELECT
   COUNT(*) AS client_count,
   SUM(count) AS event_count
 FROM
-  `moz-fx-data-shared-prod`.org_mozilla_firefox.events_daily
+  `moz-fx-data-shared-prod`.fenix.events_daily
 CROSS JOIN
   UNNEST(mozfun.event_analysis.extract_event_counts(events))
 JOIN
-  `moz-fx-data-shared-prod`.org_mozilla_firefox.event_types
+  `moz-fx-data-shared-prod`.fenix.event_types
   USING (index)
 WHERE
   submission_date >= DATE_SUB(current_date, INTERVAL 28 DAY)
@@ -106,8 +106,8 @@ root
 
 ## Code Reference
 
-The job is [defined in `bigquery-etl`](https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/org_mozilla_firefox_derived/events_daily_v1/query.sql).
-The job for updating `event_types` is [also defined in `bigquery-etl`](https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/org_mozilla_firefox_derived/event_types_v1/query.sql).
+The job is [defined in `bigquery-etl`](https://github.com/mozilla/bigquery-etl/blob/main/sql/moz-fx-data-shared-prod/fenix_derived/events_daily_v1/query.sql).
+The job for updating `event_types` is [also defined in `bigquery-etl`](https://github.com/mozilla/bigquery-etl/blob/main/sql/moz-fx-data-shared-prod/fenix_derived/event_types_v1/query.sql).
 
 ## Background and Caveats
 
