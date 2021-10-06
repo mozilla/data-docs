@@ -4,7 +4,7 @@
 
 ## Introduction
 
-`fenix_derived.events_daily` is designed to answer questions about events. These include:
+`fenix.events_daily` is designed to answer questions about events. These include:
 
 - Funnels
 - Event Counts
