@@ -9353,7 +9353,7 @@ GROUP BY
 <li><a href="datasets/non_desktop/events_daily/reference.html#background-and-caveats">Background and Caveats</a></li>
 </ul>
 <h2 id="introduction-17"><a class="header" href="#introduction-17">Introduction</a></h2>
-<p><code>org_mozilla_firefox.events_daily</code> is designed to answer questions about events. These include:</p>
+<p><code>fenix.events_daily</code> is designed to answer questions about events. These include:</p>
 <ul>
 <li>Funnels</li>
 <li>Event Counts</li>
@@ -9369,12 +9369,12 @@ The strings are aggregated and comma-separated, giving a single ordered string t
 events on that day.</li>
 </ol>
 <p>For Fenix, we aggregate the events ping data <em>only</em>. If you're looking for events in other pings, you'll need to query them directly.</p>
-<p>Included in this data is a set of dimensional information about the user, also derived from the events ping. The full list of fields is available <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/org_mozilla_firefox_derived/events_daily_v1/query.sql#L48">in the query</a>.</p>
+<p>Included in this data is a set of dimensional information about the user, also derived from the events ping. The full list of fields is available <a href="https://github.com/mozilla/bigquery-etl/blob/main/sql/moz-fx-data-shared-prod/fenix_derived/events_daily_v1/query.sql">in the query</a>.</p>
 <h2 id="limitations"><a class="header" href="#limitations">Limitations</a></h2>
 <p>This approach makes some queries fast and easy, but has some limits:</p>
 <ol>
 <li>Each product is limited to at most 1 Million unique event types</li>
-<li>Each event property is limited to at most 1 Million values. As a result, <a href="https://github.com/mozilla/bigquery-etl/blob/ad84a15d580333b41d36cfe8331e51238f3bafa1/sql/moz-fx-data-shared-prod/org_mozilla_firefox_derived/event_types_v1/query.sql#L89">some Fenix event properties are not included in this table</a>.</li>
+<li>Each event property is limited to at most 1 Million values. As a result, <a href="https://github.com/mozilla/bigquery-etl/blob/b4d43c3d458853bcf638eac6a0daf8a207b98afe/sql/moz-fx-data-shared-prod/fenix_derived/event_types_history_v1/query.sql#L124">some Fenix event properties are not included in this table</a>.</li>
 <li>Queries do not know the amount of time that passed between events, only that they occurred on the same day
 <em>Note</em>: This can be alleviated by sessionizing and splitting the events string using a <code>session_start</code> event.
 For Fenix this could be <a href="https://github.com/mozilla-mobile/fenix/blob/master/app/metrics.yaml#L11"><code>events.app_opened_all_startup</code></a>.</li>
@@ -9393,11 +9393,11 @@ has information about these procedures and examples of their usage.</p>
   COUNT(*) AS client_count,
   SUM(count) AS event_count
 FROM
-  `moz-fx-data-shared-prod`.org_mozilla_firefox.events_daily
+  `moz-fx-data-shared-prod`.fenix.events_daily
 CROSS JOIN
   UNNEST(mozfun.event_analysis.extract_event_counts(events))
 JOIN
-  `moz-fx-data-shared-prod`.org_mozilla_firefox.event_types
+  `moz-fx-data-shared-prod`.fenix.event_types
   USING (index)
 WHERE
   submission_date &gt;= DATE_SUB(current_date, INTERVAL 28 DAY)
@@ -9436,8 +9436,8 @@ GROUP BY
     |  |- value: string
 </code></pre>
 <h2 id="code-reference-14"><a class="header" href="#code-reference-14">Code Reference</a></h2>
-<p>The job is <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/org_mozilla_firefox_derived/events_daily_v1/query.sql">defined in <code>bigquery-etl</code></a>.
-The job for updating <code>event_types</code> is <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/org_mozilla_firefox_derived/event_types_v1/query.sql">also defined in <code>bigquery-etl</code></a>.</p>
+<p>The job is <a href="https://github.com/mozilla/bigquery-etl/blob/main/sql/moz-fx-data-shared-prod/fenix_derived/events_daily_v1/query.sql">defined in <code>bigquery-etl</code></a>.
+The job for updating <code>event_types</code> is <a href="https://github.com/mozilla/bigquery-etl/blob/main/sql/moz-fx-data-shared-prod/fenix_derived/event_types_v1/query.sql">also defined in <code>bigquery-etl</code></a>.</p>
 <h2 id="background-and-caveats-8"><a class="header" href="#background-and-caveats-8">Background and Caveats</a></h2>
 <p>See <a href="https://docs.google.com/presentation/d/1hY82h_hP-pJd1j_7PsPPHn469XIQ7p4BfTH3aqRpYTk">this presentation</a> for background.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/non_desktop/events_daily/reference.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="other-datasets"><a class="header" href="#other-datasets">Other Datasets</a></h1>
