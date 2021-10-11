@@ -24,6 +24,7 @@ Especially severe problems with production data are announced on the `fx-data-de
 
 When you start to evaluate trends, be aware of events from the past that may invite comparisons with history. Here are a few to keep in mind:
 
+- **Sep 30 2021 - Oct 06 2021** - [Submissions from some countries were rejected][bug1733953].
 - **Sep 30 2021 - Oct 04 2021** - [Submissions from clients on some older platforms were dropped][bug1733953].
 - **Aug 23 2021 - Aug 29 2021** - [Approximately 1/251 of pings were improperly labeled as coming from Kansas City, US][bug1729069].
 - **Aug 05 2021 - Aug 31 2021** - Drop in search metrics (`tagged_sap`, `tagged_follow_on`, `search_with_ads`, `ad_click`) in Fenix due to probe expiry. [Incident report](https://docs.google.com/document/d/1C29HmYponPcqtX4yR4QA7uBkhhkAM76WqMW3PQBnL_g/edit) and [query](https://sql.telemetry.mozilla.org/queries/82098/source#203423).
