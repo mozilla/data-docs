@@ -215,8 +215,9 @@ experiment of a given period type, named like:</p>
 <tr><td><code>lower</code></td><td><code>FLOAT64</code></td><td>The lower bound of the confidence interval for the estimate.</td></tr>
 <tr><td><code>upper</code></td><td><code>FLOAT64</code></td><td>The upper bound of the confidence interval for the estimate.</td></tr>
 <tr><td><code>window_index</code></td><td><code>INT64</code></td><td>(views only) A base-1 index reflecting the analysis window from which the row is drawn (i.e. day 1, day 2, …).</td></tr>
+<tr><td><code>analysis_basis</code></td><td><code>STRING</code></td><td>Analysis basis statistic result is based on. Currently, <code>analysis_basis</code> can be either <code>enrollments</code> or <code>exposures</code>.</td></tr>
 </tbody></table>
-<p>Each combination of <code>(segment, metric, statistic, parameter, comparison, comparison_to_branch, ci_width)</code> uniquely describes a single data
+<p>Each combination of <code>(segment, metric, statistic, parameter, comparison, comparison_to_branch, ci_width, analysis_basis)</code> uniquely describes a single data
 point.</p>
 <p>The available segments in a table should be derived from inspection of
 the table.</p>
@@ -269,14 +270,16 @@ tables are derived from the aggregate tables. The aggregate tables are
 less useful without additional processing but they may be useful for
 diagnostics.</p>
 <p>Aggregate tables are named like:</p>
-<p><code>&lt;slug&gt;_{day,week,overall}_&lt;index&gt;</code></p>
+<p><code>&lt;slug&gt;_&lt;analysis_basis&gt;_{day,week,overall}_&lt;index&gt;</code></p>
 <p>Aggregate tables have flexible schemas. Every table contains the
 columns:</p>
 <table><thead><tr><th>Column name</th><th>Type</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>client_id</code></td><td><code>STRING</code></td><td>Client's telemetry <code>client_id</code></td></tr>
 <tr><td><code>branch</code></td><td><code>STRING</code></td><td>Branch client enrolled in</td></tr>
 <tr><td><code>enrollment_date</code></td><td><code>DATE</code></td><td>First date that the client enrolled in the branch</td></tr>
+<tr><td><code>exposure_date</code></td><td><code>DATE</code></td><td>First date that the client saw the exposure event (Optional)</td></tr>
 <tr><td><code>num_enrollment_events</code></td><td><code>INT64</code></td><td>Number of times a client enrolled in the given branch</td></tr>
+<tr><td><code>num_exposure_events</code></td><td><code>INT64</code></td><td>Number of times a client has seen the exposure event</td></tr>
 <tr><td><code>analysis_window_start</code></td><td><code>INT64</code></td><td>The day after enrollment that this analysis window began; day 0 is the day of enrollment</td></tr>
 <tr><td><code>analysis_window_end</code></td><td><code>INT64</code></td><td>The day after enrollment that this analysis window terminated (inclusive)</td></tr>
 </tbody></table>
