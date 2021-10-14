@@ -42,8 +42,12 @@ There are Bugzilla components for several of the [tools](../introduction/tools.m
 comprise the [Data Platform](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools).
 File a bug in the specific component that most closely matches the tool in question.
 
-Operational bugs, such as services being unavailable, need to be filed either in
-the component for the service itself or in the [Operations component](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&component=Operations).
+Operational issues, such as services being unavailable, need to be filed in the [Data SRE Jira Project](https://mozilla-hub.atlassian.net/secure/CreateIssue.jspa?pid=10058).
+
+- The ticket should contain the following information:
+  - Service details
+  - Steps to reproduce
+  - Impact to users
 
 ### Other issues
 
