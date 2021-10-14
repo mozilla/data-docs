@@ -49,10 +49,11 @@ the component for the service itself or in the [Operations component](https://bu
 
 When in doubt, file issues in the [General component](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&component=General).
 
-### Reporting a problem using Jira (Mozilla Internal)
+### Report a problem using Jira (Mozilla Internal)
 
 You can file a Jira ticket using this [link](https://mozilla-hub.atlassian.net/secure/CreateIssue.jspa?pid=10058).
-* The ticket should contain the following information:
-    * Service details
-    * Steps to reproduce
-    * Impact to users
+
+- The ticket should contain the following information:
+  - Service details
+  - Steps to reproduce
+  - Impact to users
