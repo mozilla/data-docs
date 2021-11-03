@@ -139,6 +139,24 @@ To start, go to [GCP console](https://console.cloud.google.com) and make sure yo
 
 Please note that by default JupyterLab saves notebook files only locally, so they are lost if your instance is deleted. To make sure you don't lose your work, either push your files to a Git repository (via a pre-installed Git extension) or upload them to GCS (using `gsutil` command in a terminal session).
 
+#### Notebooks Access to workgroup-confidential Datasets
+
+If you are a member of a restricted access workgroup, you can provision AI notebooks in the [`mozdata GCP project`](https://console.cloud.google.com/vertex-ai/workbench/list/instances?project=mozdata&supportedpurview=project) that can read workgroup-confidential data.
+
+> **⚠** You must provision AI notebooks in `mozdata` using a nonstandard service account specific to your workgroup, see below.
+
+When you create a notebook server, under "Advanced Options" / "Permissions", deselect "Use Compute Engine Default Service Account" and replace it with the service account associated with your workgroup. You may need to type this service account manually as it will not be available from a drop-down menu to all users. The ID of the service account matches the following pattern:
+
+`WORKGROUP-SUBGROUP@mozdata.iam.gserviceaccount.com`
+
+For example, if you are member of `workgroup:search-terms/aggregated`, use `search-terms-aggregated@mozdata.iam.gserviceaccount.com`.
+
+This notebook server should have access to any restricted access datasets that are accessible to `workgroup:search-terms/aggregated`. Additionally, this notebooks server will not have write access to the standard `mozdata.analysis` dataset, but will instead have write access to a workgroup-specific dataset that looks like the following:
+
+`mozdata.WORKGROUP_SUBGROUP_analysis`
+
+In the example above this maps to `mozdata.search_terms_aggregated_analysis`.
+
 ## BigQuery Access Request
 
 For access to BigQuery when using the GCP Console and API, [file a bug](https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=jthomas%40mozilla.com&bug_file_loc=https%3A%2F%2Fmana.mozilla.org%2Fwiki%2Fx%2FiIPeB&bug_ignored=0&bug_severity=normal&bug_status=NEW&bug_type=task&cf_fx_iteration=---&cf_fx_points=---&comment=Please%20grant%20me%20access%20to%20the%20BigQuery%20GCP%20console%20and%20API%20Access.%20I%20work%20on%20%3Cteam%3E.%0D%0A%0D%0AMy%20mozilla.com%20ldap%20login%20is%20%3Cyour%20ldap%20login%3E%40mozilla.com.&component=Operations&contenttypemethod=list&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-936=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Unspecified&priority=--&product=Data%20Platform%20and%20Tools&qa_contact=jthomas%40mozilla.com&rep_platform=Unspecified&short_desc=BigQuery%20GCP%20Console%20and%20API%20Access%20for%20%3Cyour%20ldap%20login%3E%40mozilla.com&target_milestone=---&version=unspecified).
