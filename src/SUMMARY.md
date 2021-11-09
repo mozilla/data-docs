@@ -16,6 +16,7 @@
     - [Data Analysis Tools](cookbooks/analysis/tools.md)
       - [Introduction to GLAM](cookbooks/glam.md)
       - [Introduction to STMO](tools/stmo.md)
+      - [Introduction to Looker](cookbooks/looker/intro.md)
     - [Accessing Public Data](cookbooks/public_data.md)
     - [Accessing and working with BigQuery](cookbooks/bigquery.md)
       - [Access](cookbooks/bigquery/access.md)

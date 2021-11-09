@@ -13,8 +13,7 @@ These web-based tools do not require specialized technical knowledge (e.g. how t
 In 2020, Mozilla chose [Looker](https://looker.com/) as its primary tool for analyzing data.
 It allows data exploration and visualization by experts and non-experts alike.
 
-As of this writing, [Mozilla's Looker deployment](https://mozilla.cloud.looker.com/) is an active work in progress.
-You can see the current status on the [Looker Deploy Working Group](https://mana.mozilla.org/wiki/display/DATA/Looker+Deploy+Working+Group) on Mana (LDAP access required).
+For a brief introduction to Looker, see [Introduction to Looker](../cookbooks/looker/intro.md).
 
 ### Mozilla Growth & Usage Dashboard (GUD)
 
