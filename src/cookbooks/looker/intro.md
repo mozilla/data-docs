@@ -49,8 +49,10 @@ If your application uses [Glean] to collect data, one very viable workflow is to
 
 The following video demonstrates this workflow in detail:
 
+<center>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/B635wgZy7Iw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
+</center>
+  
 [glean]: ../../concepts/glean/glean.md
 [glean dictionary]: ../analysis/glean_dictionary.md
 
