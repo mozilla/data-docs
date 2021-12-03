@@ -7,6 +7,13 @@ This article introduces the datasets we maintain for search analyses:
 you should understand the search datasets well enough to produce moderately
 complex analyses.
 
+Additionally, see the `Building Intuition` search dashboards for applications to search datasets. Listed in recommended order of consumption:
+
+- [Building Intuition: Search Monetization](https://mozilla.cloud.looker.com/dashboards-next/312), an overview of how search partnerships generate revenue
+- [Building Intuition: Search Mechanics](https://mozilla.cloud.looker.com/dashboards-next/314), an in-depth look at the search types described below + searches with ads and ad clicks, with special attention to search behavior in important subgroups of the population
+- [Building Intuition: Search Analyses](https://mozilla.cloud.looker.com/dashboards-next/319), a mapping of the search datasets to corresponding Looker Explores
+- [Building Intuition: Search Access Points](https://mozilla.cloud.looker.com/dashboards-next/256), an overview of search, ad impressions, and ad clicks across the different search access points (SAPs) built into the browser
+
 ## Table of Contents
 
 <!-- toc -->
