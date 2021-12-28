@@ -33,6 +33,7 @@ git-branch = "main"
 "/concepts/glean/accessing_glean_data.html" = "/cookbooks/accessing_glean_data.html"
 "/concepts/choosing_a_dataset_mobile.html" = "/datasets/obsolete/legacy_mobile/reference.html"
 "/datasets/other/attitudes_daily/reference.html" = "/datasets/obsolete/attitudes_daily/reference.html"
+"/datasets/non_desktop/events_daily/reference.html" = "/datasets/bigquery/events_daily/reference.html"
 
 [preprocessor.open-on-gh]
 command = "mdbook-open-on-gh"

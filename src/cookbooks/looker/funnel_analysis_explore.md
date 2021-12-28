@@ -11,4 +11,4 @@ You can see a quick demo of how to use this explore to answer a simple Firefox f
 This explore also exists for Mozilla VPN and other products (and you can use the same Glean Dictionary-based workflow to fill it out).
 For Firefox Desktop, this explore is currently using legacy (non-Glean data) and you will need to use the [probe dictionary](../analysis/probe_dictionary.md) to look up event metadata instead.
 
-Under the hood, the funnel analysis explore uses the [`events_daily`](../../datasets/non_desktop/events_daily/reference.md) dataset.
+Under the hood, the funnel analysis explore uses the [`events_daily`](../../datasets/bigquery/events_daily/reference.md) dataset.
