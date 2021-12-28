@@ -143,7 +143,6 @@
     - [Longitudinal](datasets/obsolete/longitudinal/reference.md)
     - [Retention](datasets/obsolete/retention/reference.md)
     - [Sync Summary](datasets/obsolete/sync_summary/reference.md)
-    - [Update](datasets/obsolete/update/reference.md)
 - [Contributing](contributing/index.md)
   - [Style Guide](contributing/style_guide.md)
   - [Structure](contributing/structure.md)
