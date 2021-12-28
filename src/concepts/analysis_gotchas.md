@@ -199,7 +199,7 @@ Alternatively, you can use the already parsed version that is available in user-
 
 [iso 8601]: https://en.wikipedia.org/wiki/ISO_8601
 [msref]: ../datasets/batch_view/main_summary/reference.md#time-formats
-[rfc 7231]: http://tools.ietf.org/html/rfc7231#section-7.1.1.1
+[rfc 7231]: https://datatracker.ietf.org/doc/html/rfc7231#section-7.1.1.1
 
 ## Delays
 
