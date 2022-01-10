@@ -170,7 +170,13 @@ applications (such as [measurement][tmo] and [stability][mc] dashboards,
 Once the data reaches our data warehouse in BigQuery it can be processed
 in a number of ways as described in the [Accessing BigQuery] article.
 
-Data analysis is most commonly done using [SQL queries][stmo] or using [Spark].
+Data analysis is most commonly done using [Looker][looker] or using [SQL queries][stmo].
+
+In summary, the following diagram illustrates how Recording, Ingestion, Transformation, Scheduling and Analytics
+fit together:
+
+![](../../assets/analytics_and_ingestion.jpg)
+
 
 ## Handling Sensitive Data
 
@@ -230,3 +236,4 @@ build and work with aggregate datasets rather than individual-level data.
 [norm]: ../channels/channel_normalization.md
 [bqe]: https://github.com/mozilla/bigquery-etl
 [gcp-ingestion]: https://github.com/mozilla/gcp-ingestion
+[looker]: https://mozilla.cloud.looker.com
