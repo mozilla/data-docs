@@ -19,6 +19,7 @@
       - [Using the Funnel Analysis Explore](cookbooks/looker/funnel_analysis_explore.md)
     - [Other Data Analysis Tools](cookbooks/analysis/tools.md)
       - [Introduction to GLAM](cookbooks/glam.md)
+      - [Introduction to Operational Monitoring](cookbooks/operational_monitoring.md)
       - [Introduction to STMO](tools/stmo.md)
     - [Accessing Public Data](cookbooks/public_data.md)
     - [Accessing and working with BigQuery](cookbooks/bigquery.md)
