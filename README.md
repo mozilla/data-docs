@@ -64,7 +64,7 @@ the `.spelling` file in the code repository.
 For things like dataset names or field names, `code blocks` should be preferred. Things like
 project names or common technical terms should be added to the `.spelling` file.
 
-The [markdown-spell-check](https://www.npmjs.com/package/markdown-spellcheck) package checks spelling as part of the build process. To run it locally, install [node.js](https://nodejs.org/en/) (if not already installed) and run `npm install` at the root of the repository. Then run the `scripts/link_check.sh` script.
+The [markdown-spell-check](https://www.npmjs.com/package/markdown-spellcheck) package checks spelling as part of the build process. To run it locally, install [node.js](https://nodejs.org/en/) (if not already installed) and run `npm install` at the root of the repository. Then run the `scripts/spell_check.sh` script.
 
 You may also remove the `--report` parameter to begin an interactive fixing session. In this
 case, it is highly recommended to also add the `--no-suggestions` parameter, which greatly
