@@ -280,7 +280,10 @@ applications (such as <a href="https://telemetry.mozilla.org/">measurement</a> a
 <h2 id="data-analysis"><a class="header" href="#data-analysis">Data Analysis</a></h2>
 <p>Once the data reaches our data warehouse in BigQuery it can be processed
 in a number of ways as described in the <a href="../../cookbooks/bigquery.html">Accessing BigQuery</a> article.</p>
-<p>Data analysis is most commonly done using <a href="https://sql.telemetry.mozilla.org/">SQL queries</a> or using <a href="../../tools/spark.html">Spark</a>.</p>
+<p>Data analysis is most commonly done using <a href="https://mozilla.cloud.looker.com">Looker</a> or using <a href="https://sql.telemetry.mozilla.org/">SQL queries</a>.</p>
+<p>In summary, the following diagram illustrates how Recording, Ingestion, Transformation, Scheduling and Analytics
+fit together:</p>
+<p><img src="../../assets/analytics_and_ingestion.jpg" alt="" /></p>
 <h2 id="handling-sensitive-data"><a class="header" href="#handling-sensitive-data">Handling Sensitive Data</a></h2>
 <p>Some data is more sensitive than others and introduces more risk around how it
 is handled. We characterize sensitivity of data broadly into four categories
