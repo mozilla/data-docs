@@ -114,6 +114,7 @@ WHERE
 ```
 
 ### (sponsored) Topsite Tiles Dismissals
+Topsite Tiles dismissal corresponds to `BLOCK` event [reference](https://firefox-source-docs.mozilla.org/browser/components/newtab/docs/v2-system-addon/data_events.html#blocking-a-site). The `DELETE` event is fired when the user deletes that tile from their topsites, it's more like "forget" about this site for DELETE, `DELETE` doesn't apply to sponsored tiles since they're not from user's browsing history; whereas `BLOCK` event means don't show this tile in TopSites, but the URL remains in the browsing history.
 
 ```sql
 SELECT
