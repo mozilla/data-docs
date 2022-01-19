@@ -31,9 +31,9 @@ Clicking on a probe or metric name takes you to the individual explorer, where m
 - `View SQL Query`: if you want to dig more deeply into the data than the GLAM UI allows, “View SQL Query” parses SQL that can be copied and then pasted into our [STMO Redash instance](../tools/stmo.md).
 - `Export to JSON`: exports JSON data to be used in Jupyter notebook or similar services.
 
-**`(3)`** `Time Horizon` lets users choose how much data they want to investigate: week, month, quarter, or all (note that we only keep data from the last three versions.)
+**`(3)`** A set of dimensions (qualitative attributes of data) to subset on
 
-**`(4)`** A set of dimensions (qualitative attributes of data) to subset on
+**`(4)`** `Time Horizon` lets users choose how much data they want to investigate: week, month, quarter, or all (note that we only keep data from the last three versions.)
 
 **`(5)`** Probe or metric distribution and percentiles over time:
 
