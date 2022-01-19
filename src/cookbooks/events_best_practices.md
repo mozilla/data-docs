@@ -83,7 +83,7 @@ Another factor that can add to confusion is the fact that other events can share
 | --------- | ---------- | -------- | -------------------- | ----- | ----- |
 | ...       | `normandy` | `update` | `preference_rollout` |       | ...   |
 
-which can further confuser users.
+which can further confuse users.
 
 [1]: Events do have name fields, but they aren't included in the event records and thus are not present in the resulting dataset. Also, If a user defines an event in `Events.yaml` without specifying a list of acceptable methods, the method will default to the name of the event for records created by that event.
 
