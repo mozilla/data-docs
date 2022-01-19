@@ -113,6 +113,24 @@ WHERE
     DATE(submission_timestamp) = '20200601'
 ```
 
+### (sponsored) Topsite Tiles Dismissals
+
+```sql
+SELECT
+    DATE(submission_timestamp) AS date, 
+    count(*)
+FROM
+    `moz-fx-data-shared-prod.activity_stream.events`
+WHERE
+    source = 'TOP_SITES' 
+    AND event = 'BLOCK' 
+    AND DATE(submission_timestamp) = '20220101'
+    AND value LIKE '%"card_type":"spoc"%' 
+GROUP BY 1
+ORDER BY 1
+```
+
+
 ### Snippet impressions, blocks, clicks, and dismissals
 
 Note: Which snippet message a record corresponds to can be identified by the `message_id` (check with Marketing for snippet recipes published).
