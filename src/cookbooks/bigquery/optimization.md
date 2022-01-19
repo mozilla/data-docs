@@ -172,7 +172,7 @@ Another way to improve query performance is to select a subset of data on a fiel
 For example, if you wanted to get all of ages greater than age 40 in the table above, you might query like this:
 
 ```sql
-SELECT age FROM people WHERE age > 45
+SELECT age FROM people WHERE age > 40
 ```
 
 This would scan all of the `age` field, starting from `27`, then `45`, and ending with `5`.
