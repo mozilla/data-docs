@@ -313,7 +313,7 @@ WHERE country == 'US'
 <h4 id="data-ordering-clustering"><a class="header" href="#data-ordering-clustering">Data Ordering (clustering)</a></h4>
 <p>Another way to improve query performance is to select a subset of data on a field that the data is ordered by. In BigQuery, this is called &quot;clustering&quot;. A clustered field is one which is sorted in the underlying data.</p>
 <p>For example, if you wanted to get all of ages greater than age 40 in the table above, you might query like this:</p>
-<pre><code class="language-sql">SELECT age FROM people WHERE age &gt; 45
+<pre><code class="language-sql">SELECT age FROM people WHERE age &gt; 40
 </code></pre>
 <p>This would scan all of the <code>age</code> field, starting from <code>27</code>, then <code>45</code>, and ending with <code>5</code>.</p>
 <p>However, if instead data was sorted on that field, the table would look like this:</p>

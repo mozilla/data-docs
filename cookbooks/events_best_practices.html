@@ -213,7 +213,7 @@ AND object in [...,]
 <table><thead><tr><th>timestamp</th><th>category</th><th>method</th><th>object</th><th>value</th><th>extra</th></tr></thead><tbody>
 <tr><td>...</td><td><code>normandy</code></td><td><code>update</code></td><td><code>preference_rollout</code></td><td></td><td>...</td></tr>
 </tbody></table>
-<p>which can further confuser users.</p>
+<p>which can further confuse users.</p>
 <p>[1]: Events do have name fields, but they aren't included in the event records and thus are not present in the resulting dataset. Also, If a user defines an event in <code>Events.yaml</code> without specifying a list of acceptable methods, the method will default to the name of the event for records created by that event.</p>
 <h4 id="suggested-convention"><a class="header" href="#suggested-convention">Suggested Convention:</a></h4>
 <p>To simplify things in the future, we suggest adding the event name to the category field using dot notation when designing new events:</p>

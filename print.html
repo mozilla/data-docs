@@ -635,8 +635,8 @@ For Firefox Desktop, this explore is currently using legacy (non-Glean data) and
 <li><code>View SQL Query</code>: if you want to dig more deeply into the data than the GLAM UI allows, “View SQL Query” parses SQL that can be copied and then pasted into our <a href="cookbooks/../tools/stmo.html">STMO Redash instance</a>.</li>
 <li><code>Export to JSON</code>: exports JSON data to be used in Jupyter notebook or similar services.</li>
 </ul>
-<p><strong><code>(3)</code></strong> <code>Time Horizon</code> lets users choose how much data they want to investigate: week, month, quarter, or all (note that we only keep data from the last three versions.)</p>
-<p><strong><code>(4)</code></strong> A set of dimensions (qualitative attributes of data) to subset on</p>
+<p><strong><code>(3)</code></strong> A set of dimensions (qualitative attributes of data) to subset on</p>
+<p><strong><code>(4)</code></strong> <code>Time Horizon</code> lets users choose how much data they want to investigate: week, month, quarter, or all (note that we only keep data from the last three versions.)</p>
 <p><strong><code>(5)</code></strong> Probe or metric distribution and percentiles over time:</p>
 <ul>
 <li><code>Percentiles</code> shows the percentiles of the probe over time. To perform analysis, set a reference point by clicking on a target date, then hover along the graph to see the recorded differences. See attached <code>tooltips</code> on the page for more instruction.</li>
@@ -1619,7 +1619,7 @@ WHERE country == 'US'
 <h4 id="data-ordering-clustering"><a class="header" href="#data-ordering-clustering">Data Ordering (clustering)</a></h4>
 <p>Another way to improve query performance is to select a subset of data on a field that the data is ordered by. In BigQuery, this is called &quot;clustering&quot;. A clustered field is one which is sorted in the underlying data.</p>
 <p>For example, if you wanted to get all of ages greater than age 40 in the table above, you might query like this:</p>
-<pre><code class="language-sql">SELECT age FROM people WHERE age &gt; 45
+<pre><code class="language-sql">SELECT age FROM people WHERE age &gt; 40
 </code></pre>
 <p>This would scan all of the <code>age</code> field, starting from <code>27</code>, then <code>45</code>, and ending with <code>5</code>.</p>
 <p>However, if instead data was sorted on that field, the table would look like this:</p>
@@ -3866,7 +3866,7 @@ AND object in [...,]
 <table><thead><tr><th>timestamp</th><th>category</th><th>method</th><th>object</th><th>value</th><th>extra</th></tr></thead><tbody>
 <tr><td>...</td><td><code>normandy</code></td><td><code>update</code></td><td><code>preference_rollout</code></td><td></td><td>...</td></tr>
 </tbody></table>
-<p>which can further confuser users.</p>
+<p>which can further confuse users.</p>
 <p>[1]: Events do have name fields, but they aren't included in the event records and thus are not present in the resulting dataset. Also, If a user defines an event in <code>Events.yaml</code> without specifying a list of acceptable methods, the method will default to the name of the event for records created by that event.</p>
 <h4 id="suggested-convention"><a class="header" href="#suggested-convention">Suggested Convention:</a></h4>
 <p>To simplify things in the future, we suggest adding the event name to the category field using dot notation when designing new events:</p>
