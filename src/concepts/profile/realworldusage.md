@@ -142,7 +142,7 @@ There’s no 100% reliable identifier or signature of cloned client IDs. However
  
 Generally, cloned client IDs may exhibit the following behavior:
 - Client ID has activity in multiple countries at once (but this also captures people that travel between countries or use VPN).
-- Client ID has multiple distinct, overlapping profile histories over the same time span (e.g. investigate the previous subsession id, subsession id, and profile subsession counter).
+- Client ID has multiple distinct, overlapping profile histories over the same time span (e.g. chain together main pings using the previous subsession id and subsession id fields, with profile subsession counter as reference. Each client id should, in theory, have a single unbroken chain of main pings. If a client id has overlapping history branches over the same time period, that can be a marker of cloned profiles).
 - Client ID has multiple machine specs at once.
 - Client ID has multiple versions at once (but this also captures clients who upgrade their browser).
 - …
