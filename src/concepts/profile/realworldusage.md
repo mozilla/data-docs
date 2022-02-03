@@ -147,7 +147,7 @@ Generally, cloned client IDs may exhibit the following behavior:
 - Client ID has multiple versions at once (but this also captures clients who upgrade their browser).
 - …
  
-Within an experiment, enrollment criteria may restrict client behavior to prevent the previous cloned ID behaviors. Additionally, the following may be indicative of clones within experiments:
+Typical experiment enrollment criteria may restrict client behavior in such a way that complicates the detection of cloned clients (e.g. prevents enrolled clients from exhibiting mismatched versions/ countries). Additionally, the following may be indicative of clones within an experiment:
 - Client ID sends multiple enrollment pings as measured by multiple enrollment IDs (these should be unique to a singular enrollment event). 
 - Client ID is in both branches (subset of above case).
 - …
