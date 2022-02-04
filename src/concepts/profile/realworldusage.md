@@ -135,3 +135,19 @@ In this case, since the Firefox profile is being copied over, both the new and t
 And since the profile contains any unsent Telemetry pings, we may receive duplicated submissions of pings from the same client ID.
 
 If the Firefox binary / installer was downloaded, there will be a download and install event. If it was migrated via USB stick, it will only have an install event.
+
+## How might cloned client IDs be detected by telemetry?
+
+There’s no 100% reliable identifier or signature of cloned client IDs. However, several signatures may help identify some of the potential clones while perhaps misidentifying some non-clones or failing to identify all clones.
+ 
+Generally, cloned client IDs may exhibit the following behavior:
+- Client ID has activity in multiple countries at once (but this also captures people that travel between countries or use VPN).
+- Client ID has multiple distinct, overlapping profile histories over the same time span (e.g. chain together main pings using the previous subsession id and subsession id fields, with profile subsession counter as reference. Each client id should, in theory, have a single unbroken chain of main pings. If a client id has overlapping history branches over the same time period, that can be a marker of cloned profiles).
+- Client ID has multiple machine specs at once.
+- Client ID has multiple versions at once (but this also captures clients who upgrade their browser).
+- …
+ 
+Typical experiment enrollment criteria may restrict client behavior in such a way that complicates the detection of cloned clients (e.g. prevents enrolled clients from exhibiting mismatched versions/ countries). Additionally, the following may be indicative of clones within an experiment:
+- Client ID sends multiple enrollment pings as measured by multiple enrollment IDs (these should be unique to a singular enrollment event). 
+- Client ID is in both branches (subset of above case).
+- …
