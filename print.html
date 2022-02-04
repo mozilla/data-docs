@@ -6284,6 +6284,22 @@ For instance, we will see another ping with the <code>profile_subsession_count</
 <p>In this case, since the Firefox profile is being copied over, both the new and the old machine will have profiles with the same client ID. Again, the profile on the new computer will revert back to the point in its history where it was copied.
 And since the profile contains any unsent Telemetry pings, we may receive duplicated submissions of pings from the same client ID.</p>
 <p>If the Firefox binary / installer was downloaded, there will be a download and install event. If it was migrated via USB stick, it will only have an install event.</p>
+<h2 id="how-might-cloned-client-ids-be-detected-by-telemetry"><a class="header" href="#how-might-cloned-client-ids-be-detected-by-telemetry">How might cloned client IDs be detected by telemetry?</a></h2>
+<p>There’s no 100% reliable identifier or signature of cloned client IDs. However, several signatures may help identify some of the potential clones while perhaps misidentifying some non-clones or failing to identify all clones.</p>
+<p>Generally, cloned client IDs may exhibit the following behavior:</p>
+<ul>
+<li>Client ID has activity in multiple countries at once (but this also captures people that travel between countries or use VPN).</li>
+<li>Client ID has multiple distinct, overlapping profile histories over the same time span (e.g. chain together main pings using the previous subsession id and subsession id fields, with profile subsession counter as reference. Each client id should, in theory, have a single unbroken chain of main pings. If a client id has overlapping history branches over the same time period, that can be a marker of cloned profiles).</li>
+<li>Client ID has multiple machine specs at once.</li>
+<li>Client ID has multiple versions at once (but this also captures clients who upgrade their browser).</li>
+<li>…</li>
+</ul>
+<p>Typical experiment enrollment criteria may restrict client behavior in such a way that complicates the detection of cloned clients (e.g. prevents enrolled clients from exhibiting mismatched versions/ countries). Additionally, the following may be indicative of clones within an experiment:</p>
+<ul>
+<li>Client ID sends multiple enrollment pings as measured by multiple enrollment IDs (these should be unique to a singular enrollment event). </li>
+<li>Client ID is in both branches (subset of above case).</li>
+<li>…</li>
+</ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/concepts/profile/realworldusage.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="profile-history-1"><a class="header" href="#profile-history-1">Profile History</a></h1>
 <p>A profile's history is simply the progression of that profile's subsessions over its lifetime. We can see this in our main pings by checking:</p>
 <ul>
