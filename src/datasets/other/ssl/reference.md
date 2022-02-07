@@ -17,24 +17,37 @@ that 20% (6 loads) of the total loads (30 loads) were SSL unless you know that t
 
 If you're reluctant, for product reasons, to share the numbers 10 and 20, this gets tricky.
 
-So what we've done is normalize the whole batch of 30 down to 1. That means we tell you that
+So what we've done is normalize the whole batch of 30 down to 1.0. That means we tell you that
 50% of one-third of the loads (0.333...) was SSL and 5% of the other two-thirds of the loads
 (0.666...) was SSL. Then you can figure out the overall 20% figure by this calculation:
 
-`0.5 * 0.333 + 0.05 * 0.666 = 0.2`
+`(0.5 * 0.333 + 0.05 * 0.666) / (0.333 + 0.666) = 0.2`
 
-For this dataset the same rule applies. To combine rows' ratios (to, for example, see what the
+Notice that you must divide by the sum of the normalized pageloads (0.333 + 0.666) in order to
+"unnormalize" the result into the true ratio. (In this toy example we're summing across all
+dimensions so the sum of all included normalized pageloads was 1.0.)
+
+For this dataset the same system applies. To combine rows' ratios (to, for example, see what the
 SSL ratio was across all `os` and `country` for a given `submission_date`), you must first
-multiply them by the rows' `normalized_pageviews` values.
+multiply them by the rows' `normalized_pageviews` values. Then you must divide them by the sum
+of the rows' `normalized_pageviews` values to "unnormalize" and get the true ratio.
 
 Or, in JavaScript:
 
 ```js
 let rows = query_result.data.rows;
-let ratioForDateInQuestion = rows
+let normalizedRatioForDateInQuestion = rows
   .filter((row) => row.submission_date == dateInQuestion)
   .reduce((row, acc) => acc + row.normalized_pageloads * row.ratio, 0);
+let normalizedPageloadSumForDateInQuestion = rows
+  .filter((row) => row.submission_date == dateInQuestion)
+  .reduce((row, acc) => acc + row.normalized_pageloads, 0);
+let trueRatio = normalizedRatioForDateInQuestion / normalizedPageloadSumForDateInQuestion;
 ```
+
+Remember that the normalization in this dataset is done across all dimensions
+(`os`, `country`) per `submission_date`. Summing `ratio` (or `reporting_ratio`)
+across different `submission_date` values will not give correct information.
 
 ## Schema
 
