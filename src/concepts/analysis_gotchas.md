@@ -24,6 +24,7 @@ Especially severe problems with production data are announced on the `fx-data-de
 
 When you start to evaluate trends, be aware of events from the past that may invite comparisons with history. Here are a few to keep in mind:
 
+- **Dec 1 2021 - Jan 23 2022** - [Search values in Android Focus from core telemetry fell][jirado673].
 - **Nov 16, 2021** - [Submissions were rejected from 17:44 to 18:10 UTC][jirads1843].
 - **Nov 4, 2021** - [CORS headers added to support receiving submissions from Glean.js websites][bug1676676].
 - **Sep 30 2021 - Oct 06 2021** - [Submissions from some countries were rejected][bug1733953].
@@ -85,6 +86,7 @@ When you start to evaluate trends, be aware of events from the past that may inv
 [bug1733953]: https://bugzilla.mozilla.org/show_bug.cgi?id=1733953
 [bug1676676]: https://bugzilla.mozilla.org/show_bug.cgi?id=1676676
 [jirads1843]: https://mozilla-hub.atlassian.net/browse/DS-1843
+[jirado673]: https://mozilla-hub.atlassian.net/browse/DO-673
 
 ## Pseudo-replication
 
