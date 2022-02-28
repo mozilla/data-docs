@@ -73,6 +73,7 @@
     - [Engagement metrics](concepts/engagement.md)
     - [User states/Segments](concepts/segments.md)
   - [Experimentation](concepts/experiments.md)
+  - [External Data Integration](concepts/external_data_integration.md)
   - [Project Glossary](tools/projects.md)
 - [Dataset Reference](datasets/reference.md)
   - [Pings](datasets/pings.md)
