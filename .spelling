@@ -107,6 +107,7 @@ DNSSEC
 docs.telemetry.mozilla.org
 Dockerfile
 dropdown
+DSRE
 DTMO
 DWL
 DXR
@@ -127,6 +128,11 @@ filesystem
 firefox-data-docs
 FirefoxReality
 FireTV
+Fivetran
+fivetran.com
+Fivetran_Dev
+fivetran-discussion
+Fivetran_Prod
 footgun
 frac
 funnelcake
@@ -260,6 +266,7 @@ preprocessors
 Prefs
 prefs
 prepended
+private-bigquery-etl
 productionization
 protobuf
 protodash
