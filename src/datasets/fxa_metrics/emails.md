@@ -57,3 +57,31 @@ Only emails sent by the FxA auth server are represented in the tables below. TBD
 | `verifySecondaryCodeEmail`             | `secondary_email`        | Sent to verify the addition of a secondary email via code.                                                                                                                                                                                                                 |
 | `unblockCodeEmail`                     | `unblock`                | Sent to verify or unblock an account via code that has reached the login attempt rate limit.                                                                                                                                                                               |
 | `verifyPrimaryEmail`                   | `verify`                 | Sent to users with an unverified primary email, meaning an unverified account, when they attempt an action requiring a verified account.                                                                                                                                   |
+
+
+### Subscription Platform
+
+The `email_type` is [still being determined](https://github.com/mozilla/fxa/issues/12098) for Subscription Platform emails.
+
+| `email_template`                         | `email_type`             | Description & Notes                                                                                                                                                                                                                                                        |
+| ---------------------------------------- | -------------------------| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `downloadSubscription`                   |                          | Sent to users after they successfully add a subscription
+| `subscriptionAccountDeletion`            |                          | Sent when a user with an active subscription deletes their Firefox account
+| `subscriptionAccountFinishSetup`         |                          | Sent to a user after they purchased the product through the password-less flow without an existing Firefox account
+| `subscriptionAccountReminderFirst`       |                          | Sent to a user to remind them to finish setting up a Firefox account after they signed up through the password-less flow without an existing account
+| `subscriptionAccountReminderSecond`      |                          | Sent as a final reminder to a user to remind them to finish setting up a Firefox account as they signed up through the password-less flow without an existing account
+| `subscriptionCancellation`               |                          | Sent when a user cancels their subscription
+| `subscriptionDowngrade`                  |                          | Sent when a user downgrades their subscription
+| `subscriptionFailedPaymentsCancellation` |                          | Sent when failed payments result in cancellation of user subscription
+| `subscriptionFirstInvoice`               |                          | Sent to inform a user that their first payment is currently being processed
+| `subscriptionFirstInvoiceDiscount`       |                          | Sent to inform a user that their first payment, with a discount coupon, is currently being processed
+| `subscriptionPaymentExpired`             |                          | Sent whenever a user has a single subscription and their card will expire at the end of the month, triggered by a Stripe webhook
+| `subscriptionPaymentFailed`              |                          | Sent when there is a problem with the latest payment
+| `subscriptionPaymentProviderCancelled`   |                          | Sent when a problem is detected with the payment method
+| `subscriptionReactivation`               |                          | Sent when a user reactivates their subscription
+| `subscriptionRenewalReminder`            |                          | Sent to remind a user of an upcoming automatic subscription renewal X days out from charge (X being what is set in the Stripe dashboard)
+| `subscriptionSubsequentInvoice`          |                          | Sent when the latest subscription payment is received
+| `subscriptionSubsequentInvoiceDiscount`  |                          | Sent when the latest subscription payment is received (coupon)
+| `subscriptionUpgrade`                    |                          | Sent when a user upgrades their subscription
+| `subscriptionsPaymentExpired`            |                          | Sent whenever a user has multiple subscriptions and their card will expire at the end of the month
+| `subscriptionsPaymentProviderCancelled`  |                          | Sent when a user has multiple subscriptions and a problem has been detected with payment method
