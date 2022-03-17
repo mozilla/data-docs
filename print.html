@@ -10397,6 +10397,7 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 <li><a href="datasets/fxa_metrics/emails.html#email-templates-and-email-types">Email Templates and Email Types</a>
 <ul>
 <li><a href="datasets/fxa_metrics/emails.html#firefox-accounts">Firefox Accounts</a></li>
+<li><a href="datasets/fxa_metrics/emails.html#subscription-platform">Subscription Platform</a></li>
 </ul>
 </li>
 </ul>
@@ -10447,6 +10448,30 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 <tr><td><code>verifySecondaryCodeEmail</code></td><td><code>secondary_email</code></td><td>Sent to verify the addition of a secondary email via code.</td></tr>
 <tr><td><code>unblockCodeEmail</code></td><td><code>unblock</code></td><td>Sent to verify or unblock an account via code that has reached the login attempt rate limit.</td></tr>
 <tr><td><code>verifyPrimaryEmail</code></td><td><code>verify</code></td><td>Sent to users with an unverified primary email, meaning an unverified account, when they attempt an action requiring a verified account.</td></tr>
+</tbody></table>
+<h3 id="subscription-platform"><a class="header" href="#subscription-platform">Subscription Platform</a></h3>
+<p>The <code>email_type</code> is <a href="https://github.com/mozilla/fxa/issues/12098">still being determined</a> for Subscription Platform emails.</p>
+<table><thead><tr><th><code>email_template</code></th><th><code>email_type</code></th><th>Description &amp; Notes</th></tr></thead><tbody>
+<tr><td><code>downloadSubscription</code></td><td></td><td>Sent to users after they successfully add a subscription</td></tr>
+<tr><td><code>subscriptionAccountDeletion</code></td><td></td><td>Sent when a user with an active subscription deletes their Firefox account</td></tr>
+<tr><td><code>subscriptionAccountFinishSetup</code></td><td></td><td>Sent to a user after they purchased the product through the password-less flow without an existing Firefox account</td></tr>
+<tr><td><code>subscriptionAccountReminderFirst</code></td><td></td><td>Sent to a user to remind them to finish setting up a Firefox account after they signed up through the password-less flow without an existing account</td></tr>
+<tr><td><code>subscriptionAccountReminderSecond</code></td><td></td><td>Sent as a final reminder to a user to remind them to finish setting up a Firefox account as they signed up through the password-less flow without an existing account</td></tr>
+<tr><td><code>subscriptionCancellation</code></td><td></td><td>Sent when a user cancels their subscription</td></tr>
+<tr><td><code>subscriptionDowngrade</code></td><td></td><td>Sent when a user downgrades their subscription</td></tr>
+<tr><td><code>subscriptionFailedPaymentsCancellation</code></td><td></td><td>Sent when failed payments result in cancellation of user subscription</td></tr>
+<tr><td><code>subscriptionFirstInvoice</code></td><td></td><td>Sent to inform a user that their first payment is currently being processed</td></tr>
+<tr><td><code>subscriptionFirstInvoiceDiscount</code></td><td></td><td>Sent to inform a user that their first payment, with a discount coupon, is currently being processed</td></tr>
+<tr><td><code>subscriptionPaymentExpired</code></td><td></td><td>Sent whenever a user has a single subscription and their card will expire at the end of the month, triggered by a Stripe webhook</td></tr>
+<tr><td><code>subscriptionPaymentFailed</code></td><td></td><td>Sent when there is a problem with the latest payment</td></tr>
+<tr><td><code>subscriptionPaymentProviderCancelled</code></td><td></td><td>Sent when a problem is detected with the payment method</td></tr>
+<tr><td><code>subscriptionReactivation</code></td><td></td><td>Sent when a user reactivates their subscription</td></tr>
+<tr><td><code>subscriptionRenewalReminder</code></td><td></td><td>Sent to remind a user of an upcoming automatic subscription renewal X days out from charge (X being what is set in the Stripe dashboard)</td></tr>
+<tr><td><code>subscriptionSubsequentInvoice</code></td><td></td><td>Sent when the latest subscription payment is received</td></tr>
+<tr><td><code>subscriptionSubsequentInvoiceDiscount</code></td><td></td><td>Sent when the latest subscription payment is received (coupon)</td></tr>
+<tr><td><code>subscriptionUpgrade</code></td><td></td><td>Sent when a user upgrades their subscription</td></tr>
+<tr><td><code>subscriptionsPaymentExpired</code></td><td></td><td>Sent whenever a user has multiple subscriptions and their card will expire at the end of the month</td></tr>
+<tr><td><code>subscriptionsPaymentProviderCancelled</code></td><td></td><td>Sent when a user has multiple subscriptions and a problem has been detected with payment method</td></tr>
 </tbody></table>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/fxa_metrics/emails.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="static-datasets"><a class="header" href="#static-datasets">Static Datasets</a></h1>
 <p>Tables containing static data exist in the <code>static</code> dataset in BigQuery.
