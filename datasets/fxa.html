@@ -158,23 +158,14 @@
 <li><a href="#metrics-taxonomies">Metrics Taxonomies</a></li>
 </ul>
 <h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
-<p>This article provides an overview of Firefox Accounts metrics: what is measured and how. See the other articles in this chapter for more details about the specific measurements that are available for analysis.</p>
+<p>This article provides an overview of Firefox accounts metrics: what is measured and how. See the other articles in this chapter for more details about the specific measurements that are available for analysis.</p>
+<p>The <a href="https://mozilla.github.io/ecosystem-platform/reference/metrics">Firefox accounts documentation</a> maintains additional detail, as well as the source code, for the metrics described here.</p>
 <h2 id="what-is-firefox-accounts"><a class="header" href="#what-is-firefox-accounts">What is Firefox Accounts?</a></h2>
-<p><a href="https://www.mozilla.org/en-US/firefox/accounts/">Firefox Accounts</a> is Mozilla's authentication solution for account-based end-user services and features. At the time of writing, sync is by far the most popular account-relying service. Below is a partial list of current FxA-relying services (by the time you are reading this others will likely have been added; we will endeavor to update the list periodically):</p>
+<p><a href="https://www.mozilla.org/en-US/firefox/accounts/">Firefox accounts</a> is Mozilla's authentication solution for account-based end-user services and features. At the time of writing, sync is by far the most popular account-relying service. Below is a partial list of current FxA-relying services:</p>
 <ul>
 <li><a href="https://support.mozilla.org/en-US/kb/how-do-i-set-sync-my-computer">Sync</a>
 <ul>
 <li>Requires FxA.</li>
-</ul>
-</li>
-<li><a href="https://send.firefox.com/">Firefox Send</a>
-<ul>
-<li>FxA Optional; Required to send large files.</li>
-</ul>
-</li>
-<li><a href="https://lockwise.firefox.com/">Lockwise</a>
-<ul>
-<li>Requires FxA and sync.</li>
 </ul>
 </li>
 <li><a href="https://addons.mozilla.org/en-US/firefox/">AMO</a>
@@ -192,6 +183,11 @@
 <li>Required to receive email alerts. Not required for email scans.</li>
 </ul>
 </li>
+<li><a href="https://relay.firefox.com/">Relay</a>
+<ul>
+<li>Required to use the service</li>
+</ul>
+</li>
 <li><a href="https://wiki.mozilla.org/IAM/Frequently_asked_questions">Mozilla IAM</a>
 <ul>
 <li>Optional authentication method among others.</li>
@@ -202,27 +198,16 @@
 <p>Note that in addition to being the most commonly used relier of FxA, sync is also unique in its integration with FxA - unlike the other reliers in the list above, sync is currently <strong>not</strong> an FxA oauth client. When someone signs into an oauth client using Firefox, nothing in the browser changes - more specifically, client-side telemetry probes such as <a href="https://telemetry.mozilla.org/probe-dictionary/?detailView=histogram%2FFXA_CONFIGURED"><code>FXA_CONFIGURED</code></a> do not change state. Thus at the present time the only way to measure usage of FxA oauth reliers is to use the FxA server-side measures described below.</p>
 <p>One more thing: China runs its own stack for sync, but Chinese sign-ups for oauth reliers still go through the &quot;one and only&quot; oauth server. This means that Chinese users who want to use both sync and an oauth service (e.g. Monitor) will have to register for two accounts. It also means that only metrics for Chinese oauth users will show up in the datasets described below; any sync-related measures will not. At present, you must contact those responsible for maintaining the FxA stack in China for metrics on Chinese sync users.</p>
 <h2 id="metrics-background"><a class="header" href="#metrics-background">Metrics Background</a></h2>
-<p>Unlike most telemetry described in these docs, FxA metrics are logged server-side. There are many <a href="https://github.com/mozilla/fxa/tree/main/packages">FxA &quot;servers&quot;</a> that handle different aspects of account authentication and management. The metrics of most interest to data analysts are logged by the FxA auth server, content server and oauth server. Each server writes their metrics into their log stream, and some post-processing scripts combine the metrics events from all three servers into datasets that are available in Databricks, BigQuery, STMO and Amplitude.</p>
+<p>Unlike most telemetry described in these docs, FxA metrics are logged server-side. There are many <a href="https://github.com/mozilla/fxa/tree/main/packages">FxA &quot;servers&quot;</a> that handle different aspects of account authentication and management. The metrics of most interest to data analysts are logged by the FxA auth server, content server and oauth server. Each server writes their metrics into their log stream, and some post-processing scripts combine the metrics events from all three servers into datasets that are available in BigQuery.</p>
 <p>In general, metrics logged by the <a href="https://github.com/mozilla/fxa/tree/main/packages/fxa-auth-server">FxA auth server</a> reflect authentication events such as account creation, logins to existing accounts, etc.
 Metrics logged by the <a href="https://github.com/mozilla/fxa/tree/main/packages/fxa-content-server">FxA content server</a> reflect user interaction and progression through the FxA web UI - form views, form engagement, form submission, etc.
 The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs metrics events when oauth clients (Monitor, Lockwise, etc) create and check authentication tokens.</p>
 <h2 id="metrics-taxonomies"><a class="header" href="#metrics-taxonomies">Metrics Taxonomies</a></h2>
 <p>There are two overlapping taxonomies or sets of FxA event metrics.</p>
-<p><a href="https://github.com/mozilla/fxa-auth-server/blob/master/docs/metrics-events.md"><strong>Flow Metrics</strong></a>: these are an older set of metrics events that can be queried through redshift and via the <code>FxA Activity Metrics</code> data source in STMO. The <a href="https://github.com/mozilla/fxa-activity-metrics/">STMO import jobs</a> are run once a day. See <a href="https://github.com/mozilla/fxa-auth-server/blob/master/docs/metrics-events.md">this documentation</a> for detailed description of the types of flow events that are logged and the tables that contain them (note this documentation does not contain an exhaustive list of all flow metrics but is generally still accurate about the ones that are described). Note there are 50% and 10% sampled versions of the major tables, which contain more historical data than their complete counterparts. Complete tables go back 3 months, 50% tables go back 6 months, and 10% tables go back 24 months. Sampling is done at the level of the FxA user id <code>uid</code> (i.e. integer(<code>uid</code>) % 100).</p>
-<p><a href="https://analytics.amplitude.com/mozilla-corp/manage/project/178231/advanced/events"><strong>Amplitude Events</strong></a>: FxA started to send metrics events to amplitude circa October 2017. The <a href="https://github.com/mozilla/fxa-amplitude-send">code responsible for batching events to amplitude</a> over HTTP is run in more-or-less real-time. Amplitude events can be queried through the <a href="https://analytics.amplitude.com/mozilla-corp/space/vj9qof9">amplitude UI</a> as well as various views in <code>moz-fx-data-shared-prod.firefox_accounts</code> dataset in BigQuery that maintain copies of the events that are sent to Amplitude. <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/firefox_accounts/fxa_content_auth_events/view.sql"><code>moz-fx-data-shared-prod.firefox_accounts.fxa_content_auth_events</code></a> is probably the easiest BigQuery view to use, though it does not contain email bounce events and (at the time of writing) only contains data starting at 2019-03-01.</p>
-<p>Note that the BigQuery <a href="https://github.com/mozilla/bigquery-etl/tree/master/sql">ETL jobs</a> run daily while real-time data is accessible through the amplitude UI.</p>
+<p><a href="https://github.com/mozilla/fxa-auth-server/blob/master/docs/metrics-events.md"><strong>Flow Metrics</strong></a>: these are an older set of metrics events that can be queried through the <code>firefox_accounts</code> dataset in the <code>mozdata</code> project in BigQuery. See <a href="https://github.com/mozilla/fxa-auth-server/blob/master/docs/metrics-events.md">this documentation</a> for detailed description of the types of flow events that are logged and the tables that contain them (note this documentation does not contain an exhaustive list of all flow metrics but is generally still accurate about the ones that are described).</p>
+<p><strong>Amplitude Events</strong>: FxA started to send metrics events to amplitude circa October 2017 and ended around June 2020. While we stopped using Amplitude, the term Amplitude Events lives on to reference this set of events. Amplitude events can be queried through the <code>moz-fx-data-shared-prod.firefox_accounts</code> dataset in BigQuery. <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/firefox_accounts/fxa_content_auth_events/view.sql"><code>moz-fx-data-shared-prod.firefox_accounts.fxa_content_auth_events</code></a> is probably the easiest BigQuery view to use, though it does not contain email bounce events.</p>
+<p>Note that the BigQuery <a href="https://github.com/mozilla/bigquery-etl/tree/master/sql">ETL jobs</a> run daily.</p>
 <p>FxA's amplitude metrics were originally just re-configured and re-named versions of the flow metrics. However things have since diverged a bit and there are now metrics events that only have an amplitude version but no corresponding flow event, and vice-versa. If you are wondering whether a certain event is logged its likely you will have to check both data sources.</p>
-<p><strong>Generally speaking, one should first try to use the amplitude metrics rather than the flow events</strong> for these reasons:</p>
-<ol>
-<li>For quick answers to simple questions the amplitude UI is often more efficient than writing SQL.
-<ul>
-<li>The caveat here is that is can sometimes be <em>too</em> easy to build a chart in amplitude - it doesn't exactly encourage the careful consideration that having to write a query out by hand implicitly encourages.</li>
-</ul>
-</li>
-<li>By-country data is currently not available in redshift.</li>
-<li>There have been outages in the redshift data that have not affected the amplitude data.</li>
-<li>Querying redshift is (generally) slower.</li>
-</ol>
 <p>It is also possible to query the FxA server logs directly through BigQuery (ask an FxA team member for access), though virtually all analytics-related questions are more easily answered using the data sources described above.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/fxa.md">Edit this file on GitHub.</a></footer>
                     </main>

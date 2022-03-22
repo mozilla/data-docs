@@ -167,12 +167,8 @@
 <h3 id="service-attribution"><a class="header" href="#service-attribution">Service Attribution</a></h3>
 <p>There is a variable called <code>service</code> that we use to (1) attribute users to the relying services of FxA that they have authenticated with and (2) attribute individual events to the services they are associated with. <strong>Except in the case of sync</strong>, <code>service</code> is a mapping from the oauth <code>client_id</code> of the relying service/product to a human readable string. Note that this mapping is currently maintained by hand, and is done after the events have been logged by the server. Currently, mapping to the human-readable <code>service</code> variable is only done for amplitude metrics, where it is treated as a user property. There is also a <code>service</code> variable in the <code>activity_events</code> and <code>flow_metadata</code> STMO tables (FxA Activity Metrics data source), however it only contains the opaque oauth <code>client_id</code>, not the human-readable string. A table of some of the most common oauth <code>client_id</code>s along with their corresponding <code>service</code> mapping is shown below. This is not a complete list.</p>
 <table><thead><tr><th><code>service</code></th><th>oauth <code>client_id</code></th><th>Description</th></tr></thead><tbody>
-<tr><td><code>lockbox</code></td><td><code>e7ce535d93522896</code></td><td>Lockwise App for Android</td></tr>
-<tr><td><code>lockbox</code></td><td><code>98adfa37698f255b</code></td><td>Lockwise App for iOS</td></tr>
 <tr><td><code>fenix</code></td><td><code>a2270f727f45f648</code></td><td>Sync implementation for Fenix</td></tr>
 <tr><td><code>fx-monitor</code></td><td><code>802d56ef2a9af9fa</code></td><td>Firefox Monitor (<a href="https://monitor.firefox.com">website</a>)</td></tr>
-<tr><td><code>send</code></td><td><code>1f30e32975ae5112</code></td><td>Firefox Send (<a href="https://send.firefox.com/">website</a>)</td></tr>
-<tr><td><code>send</code></td><td><code>20f7931c9054d833</code></td><td>Firefox Send (android app)</td></tr>
 <tr><td><code>pocket-mobile</code></td><td><code>7377719276ad44ee</code></td><td>Pocket Mobile App</td></tr>
 <tr><td><code>pocket-web</code></td><td><code>749818d3f2e7857f</code></td><td>Pocket Website</td></tr>
 <tr><td><code>firefox-addons</code></td><td><code>3a1f53aabe17ba32</code></td><td><code>addons.mozilla.org</code></td></tr>
@@ -183,8 +179,6 @@
 <tr><td><code>fxa-content</code></td><td><code>ea3ca969f8c6bb0d</code></td><td>Oauth ID used when a user is signing in with cached credentials (i.e. does not have to re-enter username/password) and when the user is logging into the FxA settings page.</td></tr>
 <tr><td><code>mozilla-email-preferences</code></td><td><code>c40f32fd2938f0b6</code></td><td>Oauth ID used when a user is signing in to modify their marketing email preferences (e.g., to opt-out.)</td></tr>
 </tbody></table>
-<p>In amplitude, there is also a <code>fxa_services_used</code> user property which maintains an array of all the services a user has authenticated with.</p>
-<p>Some amplitude charts segmenting by service can be found <a href="https://analytics.amplitude.com/mozilla-corp/notebook/detelo9">here</a>.</p>
 <h3 id="funnel-attribution-entrypoint-and-utm-parameters"><a class="header" href="#funnel-attribution-entrypoint-and-utm-parameters">Funnel Attribution (entrypoint and utm parameters)</a></h3>
 <p>We can also attribute users to where they began the authentication process, be it from a website or an application. Attribution is done through query parameters appended to links that point at <code>accounts.firefox.com</code> (which hosts the actual authentication process). These parameters are logged along with with any metrics events that the user generates during the authentication flow. The table below lists the query parameters that are currently in use, along with the values associated with some of the most common funnels. Note that only <code>entrypoint</code> is typically logged for flows beginning within the browser. Web-based entrypoints are listed first, followed by entrypoints that are found within the browser chrome itself.</p>
 <p>See the <a href="https://mozilla.github.io/ecosystem-platform/relying-parties/metrics-for-relying-parties">Metrics for Relying Parties</a> documentation for more implementational detail on utm/entrypoint parameters.</p>
@@ -198,9 +192,7 @@
 <tr><td><code>preferences</code></td><td>NA</td><td>The &quot;sign into sync&quot; button found in the sync section in desktop preferences.</td></tr>
 <tr><td><code>synced-tabs</code></td><td>NA</td><td>The &quot;sign into sync&quot; button found in synced-tabs section under the library menu.</td></tr>
 <tr><td><code>sendtab</code></td><td>NA</td><td>The &quot;sign into sync&quot; button found in the &quot;send tab to device&quot; menu accessible by right-clicking on a tab.</td></tr>
-<tr><td><code>lockbox-addon</code></td><td>NA</td><td>The &quot;sign into sync&quot; button found within the the Lockwise desktop extension. This is likely to change once Lockwise becomes fully integrated into the browser.</td></tr>
 </tbody></table>
-<p>Example amplitude charts: <a href="https://analytics.amplitude.com/mozilla-corp/chart/1ush8xd">registrations by <code>entrypoint</code></a>, <a href="https://analytics.amplitude.com/mozilla-corp/chart/y8t2k1z">logins by <code>entrypoint</code></a>, <a href="https://analytics.amplitude.com/mozilla-corp/chart/jjbkusl">registrations by <code>utm_source</code></a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/fxa_metrics/attribution.md">Edit this file on GitHub.</a></footer>
                     </main>
 
