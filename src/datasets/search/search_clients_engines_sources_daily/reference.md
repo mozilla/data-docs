@@ -24,8 +24,8 @@ This dataset is scheduled on Airflow
 ## Schema
 
 As of 2022-03-25, the current version of the underlying `search_clients_daily` is `v8`,
-and has a schema as follows. 
-Generally recommend using [Data Catalog in GCP](https://console.cloud.google.com/datacatalog?project=mozdata&qSystems=BIGQUERY) for the most updated schema.
+with schema as follows. 
+Generally, see [Data Catalog in GCP](https://console.cloud.google.com/datacatalog?project=mozdata&qSystems=BIGQUERY) for the most up-to-date schema.
 It's backfilled through 2016-03-12. 
 
 ```

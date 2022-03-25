@@ -70,7 +70,7 @@ If an SAP query is tagged, any follow-on query should also be tagged.
 # Standard Search Aggregates
 
 We report nine types of searches in our search datasets:
-`sap`, `tagged-sap`, `tagged-follow-on`, `search_with_ads`, `search_with_ads_organic`, `ad_click`, `ad_click_organic`, `organic`, and `unknown` (although the earlist available date for each varies).
+`sap`, `tagged-sap`, `tagged-follow-on`, `search_with_ads`, `search_with_ads_organic`, `ad_click`, `ad_click_organic`, `organic`, and `unknown` (although the earliest available date for each varies).
 These aggregates show up as columns in the
 `search_aggregates` and `search_clients_engines_sources_daily` datasets.
 Our search datasets are all derived from `main_summary`.
