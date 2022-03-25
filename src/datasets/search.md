@@ -144,3 +144,11 @@ There is no `tagged-*` search data available before this.
 
 [`followonsearch` addon]: https://github.com/mozilla/followonsearch
 [search permissions template]: https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=rharter%40mozilla.com&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&comment=Please%20add%20the%20following%20user%20to%20the%20Search%20group%3A%0D%0A%0D%0AMozilla%20email%20address%3A%0D%0AGithub%20handle%3A&component=Datasets%3A%20Search&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=--&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&short_desc=Add%20user%20to%20search%20user%20groups&target_milestone=---&version=unspecified
+
+## AdBlocker Addon
+
+When speaking of search metrics, people sometimes have the adblockers addon in mind. These type of information is available in `telemetry.addons_daily` and `telemetry.clients_daily`. Below we give two example queries around them, for more details please go visit the related section for these two tables. 
+
+1. [AdBlockers DAU, and ad click to sap ratio in last 7 days](https://sql.telemetry.mozilla.org/queries/84938/source)
+2. [Popular AdBlockers average DAU in last 7 days](https://sql.telemetry.mozilla.org/queries/84939/source)
+
