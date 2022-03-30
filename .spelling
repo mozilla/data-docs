@@ -57,6 +57,7 @@ bmobugs
 boolean
 booleans
 bugzilla
+build_id
 Buildhub
 CamelCase
 CEP
@@ -86,6 +87,7 @@ DataFrame
 DataFrames
 Dataproc
 DAU
+data_sources
 Dataflow
 dataset
 datasets
@@ -236,6 +238,9 @@ onboarding
 operationalizes
 ORM-like
 OpenStack
+operational_monitoring
+opmon
+OpMon
 optout
 pageloads
 parquet2hive
@@ -295,6 +300,7 @@ repo
 respin
 ROI
 rollout
+rollouts
 RTMO
 runtime
 S3
@@ -323,6 +329,7 @@ struct
 structs
 sql.telemetry.mozilla.org
 subfields
+submission_date
 subsession
 subsessions
 SurveyGizmo
@@ -338,6 +345,7 @@ timestamps
 tryserver
 TMO
 TODO
+TOML
 Topsite
 Topsites
 TOTP
