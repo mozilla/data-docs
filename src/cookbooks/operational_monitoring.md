@@ -1,126 +1,211 @@
-# Introduction to Operational Monitoring
+# Operational Monitoring (OpMon)
 
-Operational monitoring is a general term that refers to monitoring the health of software.
+Operational Monitoring (OpMon) is a self-service tool that aggregates and summarizes operational metrics that indicate the health of software. 
+OpMon can be used to continuously monitor rollouts, experiments (including experiments with continuous enrollments) or the population of a specific product (for example, Firefox Desktop).
+OpMon automatically generated Looker dashboards that will provide insights into whether landing code changed certain metrics in a meaningful way.
 
-However, Mozilla's internal Operational Monitoring tooling supports a couple of specific use cases:
+A couple of specific use cases are supported:
 
 1. Monitoring build over build. This is typically for Nightly where one build may contain changes that a previous build doesn't and we want to see if those changes affected certain metrics.
 2. Monitoring by submission date over time. This is helpful for a rollout in Release for example, where we want to make sure there are no performance or stability regressions over time as a new build rolls out.
 
 The monitoring dashboards produced for these use cases are available in [Looker](https://mozilla.cloud.looker.com/folders/494).
+OpMon does not emit real-time results. Dashboards and related datasets get updated on a daily basis. 
 
 Access to the Looker Operational Monitoring dashboards is currently limited to Mozilla employees and designated contributors. For more information, see [gaining access](../concepts/gaining_access.md).
 
-## How to use Operational Monitoring
+## Configuring a Operational Monitoring project
 
-An operational monitoring project is defined using a project definition JSON file in combination with 2 other JSON files.
+To add or update a project configuration, open a pull request against [opmon-config](https://github.com/mozilla/opmon-config). 
+CI checks will validate the columns, data sources, and SQL syntax. Once CI completes, the pull request can be merged and results for the new project will be available within the next 24 hours.
 
-In order to create a new project to be monitored:
+Project configurations files are written in [TOML](https://toml.io/en/). To reuse configurations across multiple projects, project configurations can reference configurations from definition files.
+The definitions files are platform-specific and located in the `definitions/` directory of [opmon-config](https://github.com/mozilla/opmon-config). Platform-specifc configuration files follow the same format as project configuration files.
 
-1. A new `<project_name>.json` file must be added to the `operational_monitoring` GCS bucket at `gs://operational_monitoring/projects`. This bucket is currently inside the GCP project `emtwo-252813`.
-2. `probes.json` and `dimensions.json` must exist at `gs://operational_monitoring`.
+If the project is used to monitor a rollout or experiment, then the configuration files should have the same name as the slug that has been assigned in [Experimenter](https://experimenter.services.mozilla.com/).
+Generally, configuration files have four main sections: [project], [data_sources], [probes], and [dimensions].
 
-Once a project is defined, a dashboard will be generated for it within the next 24 hours on the next ETL run.
+Examples of every value you can specify in each section are given below. **You do not need to, and should not, specify everything!**
+OpMon will take values from Experimenter (for rollouts and experiments) and combine them with a reasonable set of defaults.
 
-Examples of each file can be found below:
+Lines starting with a `#` are comments and have no effect.
 
-#### `dimensions.json`
+### `[project]` section
 
-Each key in `dimensions.json` is the name of a dimension that will appear as a dropdown in the generated dashboards and can be referenced in the `<project_name>.json` file below.
+This part of the configuration file is optional and allows to:
+* specify the probes that should be analyzed
+* define the clients that should be monitored
+* indicate if/how the client population should be segmented, and
+* override some values from Experimenter
 
-```
-{
-  "cores_count": {
-    "source": ["mozdata.telemetry.main_nightly"],
-    "sql": "environment.system.cpu.cores"
-  },
-  "os": {
-    "source": ["mozdata.telemetry.main_nightly", "mozdata.telemetry.crash"],
-    "sql": "normalized_os"
-  }
-  ...
-}
-```
+``` toml
+[project]
+# A custom, descriptive name of the project.
+# This will be used as the generated Looker dashboard title.
+name = "Win32k Lockdown Experiment V2"
 
-For each dimension, the following fields exist:
+# The name of the platform this project targets.
+# For example, "firefox_desktop", "fenix", "firefox_ios", ...
+platform = "firefox_desktop"
 
-- `source`: The BigQuery table name to be queried.
-- `sql`: The SQL used in the `select` clause for this probe.
+# Specifies the type of monitoring desired as described above. 
+# Either "submission_date" (to monitor each day) or "build_id" (to monitor build over build)
+xaxis = "submission_date"
 
-#### `probes.json`
+# Both start_date and end_date can be overridden, otherwise the dates configured in
+# Experimenter will be used as defaults.
+start_date = "2022-01-01"
 
-Each key in `probes.json` is the name of a probe that will be used in the generated dashboards and can be referenced in the `<project_name>.json` file below.
+# Metrics, that are based on probes, to compute.
+# Defined as a list of strings. These strings are the "slug" of the metric, which is the
+# name of the metric definition section in either the project configuration or the platform-specific
+# configuration file.
+probes = [
+    'shutdown_hangs',
+    'oom_crashes',
+    'main_crashes',
+    'startup_crashes'
+]
 
-```
-{
-  "CONTENT_SHUTDOWN_CRASHES": {
-    "source": "mozdata.telemetry.crash",
-    "category": "stability",
-    "type": "scalar",
-    "sql": "IF(REGEXP_CONTAINS(payload.process_type, 'content') AND REGEXP_CONTAINS(payload.metadata.ipc_channel_error, 'ShutDownKill'), 1, 0)"
-  },
-  "CONTENT_PROCESS_COUNT": {
-    "source": "mozdata.telemetry.main_nightly",
-    "category": "performance",
-    "type": "histogram",
-    "sql": "payload.histograms.content_process_count"
-  },
- ...
-}
-```
+# This section specifies the clients that should be monitored.
+[project.population]
 
-For each probe, the following fields exist:
+# "Slug"/name fo the data source definition section in either the project configuration or the platform-specific
+# configuration file. This data source refers to a database table.
+data_source = "main"
 
-- `source`: The BigQuery table name to be queried.
-- `category`: This can be any string value. It's currently not being used but in the future, this could be used to visually group different probes by category.
-- `type`: This is used to determine the method of aggregation to be applied.
-- `sql`: The SQL used in the `select` clause for this probe.
+# The name of the branches that have been configured for a rollout or experiment.
+# If defined, this configuration overrides boolean_pref.
+branches = ["enabled", "disabled"]
 
-#### `<project_name>.json`
+# A SQL snippet that results in a boolean representing whether a client is included in the rollout or experiment or not.
+boolean_pref = "environment.settings.fission_enabled"
 
-Each project file has an associated Looker dashboard that is generated. Each item under `probes` will be displayed as one tile/graph in the dashboard.
+# The channel the clients should be monitored from: "release", "beta", or "nightly".
+channel = "beta"
 
-```
-{
-  "name": "Fission Release Rollout",
-  "slug": "bug-1732206-rollout-fission-release-rollout-release-94-95",
-  "channel": "release",
-  "boolean_pref": "environment.settings.fission_enabled",
-  "xaxis": "submission_date",
-  "start_date": "2021-11-09",
-  "analysis": [
-    {
-      "source": "mozdata.telemetry.main_1pct",
-      "dimensions": ["cores_count", "os"],
-      "probes": [
-        "CONTENT_PROCESS_COUNT",
-      ]
-    }, {
-      "source": "mozdata.telemetry.crash",
-      "dimensions": ["cores_count", "os"],
-      "probes": [
-        "CONTENT_SHUTDOWN_CRASHES",
-      ]
-    }
-  ]
-}
+# If set to "true", the rollout and experiment configurations will be ignored and instead
+# the entire client population (regardless of whether they are part of the experiment or rollout)
+# will be monitored.
+# This option is useful if the project is not associated to a rollout or experiment and the general 
+# client population of a product should be monitored.
+monitor_entire_population = false
+
+# References to dimension slugs that are used to segment the client population.
+# Defined as a list of strings. These strings are the "slug" of the dimension, which is the
+# name of the dimension definition section in either the project configuration or the platform-specific
+# configuration file.
+dimensions = ["os"]
 ```
 
-- `name`: Name that will be used as the generated Looker dashboard title.
-- `slug`: The slug associated with the rollout that is being monitored.
-- `channel`: `release`, `beta`, or `nightly`. The channel the rollout is running in.
-- `boolean_pref`: A SQL snippet that results in a boolean representing whether a user is included in the rollout or not (note: if this is not included, the slug is used to check instead).
-- `xaxis`: `submission_date` or `build_id`. specifies the type of monitoring desired as described above.
-- `start_date`: `yyyy-mm-dd`, specifies the oldest submission date or build id to be processed (where build id is cast to date). If not set, defaults to the previous 30 days.
-- `analysis`: An array of objects with the fields `source`, `dimensions`, and `probes` where each object represents data that will be pulled out from a different source.
-  - `source`: The BigQuery table name to be queried.
-  - `dimensions`: The dimensions of interest, referenced from `dimensions.json`.
-  - `probes`: The probes of interest, referenced from `probes.json`
+### `[data_sources]` section
+
+Data sources specify the tables data should be queried from.
+
+In most cases, it is not necessary to define project-specific data sources, instead data sources can be specified and referenced from the
+platform-specific configurations.
+
+```toml
+[data_sources]
+
+[data_sources.main]
+# FROM expression - often just a fully-qualified table name. Sometimes a subquery.
+from_expression = "mozdata.telemetry.main"
+
+# SQL snippet specifying the submission_date column
+submission_date_column = "DATE(submission_timestamp)"
+
+[data_sources.events_memory]
+# FROM expression - subquery
+from_expression = """
+    (
+        SELECT
+            *
+        FROM `moz-fx-data-shared-prod.telemetry.events`
+        WHERE 
+            event_category = 'memory_watcher'
+    )
+"""
+submission_date_column = "DATE(submission_date)"
+```
+
+### `[probes]` section
+
+The probes sections allows to specify metrics based on probes that should be monitored.
+
+In most cases, it is not necessary to define project-specific probes, instead probes can be specified and referenced from the
+platform-specific configurations.
+
+A new probe can be defined by adding a new section with a name like:
+
+`[probes.<new_probe_slug>]`
+
+```toml
+[probes]
+
+[probes.memory_pressure_count]
+
+# The data source to use. Use the slug of a data source defined in a platform-specific config,
+# or else define a new data source (see above).
+data_source = "events_memory"
+
+# A clause of a SELECT expression
+select_expression = "SAFE_CAST(SPLIT(event_string_value, ',')[OFFSET(1)] AS NUMERIC)"
+
+# Type of the probe to be evaluated.
+# This is used to determine the method of aggregation to be applied.
+# Either "scalar" or "histogram".
+type = "scalar"
+
+# A friendly metric name displayed in dashboards.
+friendly_name = "Memory Pressure Count"
+
+# A description that will be displayed by dashboards.
+description = "Number of memory pressure events"
+
+# This can be any string value. It's currently not being used but in the future, this could be used to visually group different probes by category.
+category = "performance"
+```
+
+### `[dimensions]` section
+
+Dimensions define how the client population should be segmented.
+
+For example:
+
+```toml
+[dimensions]
+
+[dimensions.os]
+# The data source to use. Use the slug of a data source defined in a platform-specific config,
+# or else define a new data source (see above).
+data_source = "main"
+
+# SQL snippet referencing a field whose values should be used to segment the client population.
+select_expression = "normalized_os"
+```
+
+The `os` dimension will result in the client population being segmented by operation system. For each dimension a filter is being added to the resulting 
+dashboard which allows to, for example, only show results for all Windows clients. 
+
+
+## Data Products
+
+
+
+
+## Experiments vs OpMon
+
+The requirements for operational monitoring are related to, but mostly distinct from, those for experiments and staged rollouts:
+* With an A/B experiment, the goal is to determine with confidence whether a single change (i.e. the treatment) has an expected impact on a metric or small number of metrics. The change is only applied to a sample of clients for a fixed period of time.
+* With operational monitoring, a project team is making many changes over a long but indeterminate period of time and must identify if any one change or set of changes (e.g., changes in a given Nightly build) moves a metric in the target population. An identified metric impact may result in a change being backed out, but may also be used to guide future project work.
+
+OpMon can be used to monitor experiments. Especially, for experiments with continuous enrollments or no fixed end date, OpMon will provide insights that would otherwise not be available. Other experiments, that are interested in looking at operational metrics could also benefit from OpMon.
 
 ## Going Deeper
 
-To get a deeper understanding of what happens under the hood, please see the [developer documentation](https://github.com/mozilla/bigquery-etl/blob/main/bigquery_etl/operational_monitoring/README.md).
+To get a deeper understanding of what happens under the hood, please see the [developer documentation](https://github.com/mozilla/opmon).
 
 ## Getting Help
 
-If you have further questions, please reach out on the #GLAM slack channel.
+If you have further questions, please reach out on the [#data-help](https://mozilla.slack.com/archives/C4D5ZA91B) Slack channel.
