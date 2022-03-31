@@ -20,7 +20,7 @@ To add or update a project configuration, open a pull request against [opmon-con
 CI checks will validate the columns, data sources, and SQL syntax. Once CI completes, the pull request can be merged and results for the new project will be available within the next 24 hours.
 
 Project configurations files are written in [TOML](https://toml.io/en/). To reuse configurations across multiple projects, project configurations can reference configurations from definition files.
-These definitions files are platform-specific and located in the `definitions/` directory of [opmon-config](https://github.com/mozilla/opmon-config). Platform-specific configuration files follow the same format and structure as project configuration files.
+These definitions files are platform-specific and located in the [`definitions/` directory of opmon-config](https://github.com/mozilla/opmon-config/tree/main/definitions). Platform-specific configuration files follow the same format and structure as project configuration files.
 
 If the project is used to monitor a rollout or experiment, then the configuration files should have the same name as the slug that has been assigned in [Experimenter](https://experimenter.services.mozilla.com/).
 Generally, configuration files have four main sections: `[project]`, `[data_sources]`, `[probes]`, and `[dimensions]`. All of these sections are optional.
@@ -66,15 +66,16 @@ start_date = "2022-01-01"
 # See [probes] section on how these metrics get defined.
 probes = [
     'shutdown_hangs',
-    'oom_crashes',
     'main_crashes',
-    'startup_crashes'
+    'startup_crashes',
+    'memory_unique_content_startup',
+    'perf_page_load_time_ms'
 ]
 
 # This section specifies the clients that should be monitored.
 [project.population]
 
-# Slug/name fo the data source definition section in either the project configuration or the platform-specific
+# Slug/name of the data source definition section in either the project configuration or the platform-specific
 # configuration file. This data source refers to a database table.
 # See [data_sources] section on how this gets defined.
 data_source = "main"
@@ -192,6 +193,26 @@ select_expression = "normalized_os"
 
 The `os` dimension will result in the client population being segmented by operation system. For each dimension a filter is being added to the resulting
 dashboard which allows to, for example, only show results for all Windows clients.
+
+## Reading Results
+
+Generated dashboards are available in [Looker](https://mozilla.cloud.looker.com/folders/494).
+
+![](../assets/opmon_results.png)
+
+Dashboards have filters for selecting a percentile and for filtering based on the dimensions that have been configured.
+For each metric results are visualized on separate tiles, with results being grouped by branches. Depending on the project configuration, the x-axis will either be by submission date or by Build ID.
+
+Results are visualized as line charts with confidence intervals. Since Looker does only support simple line chart visualizations, the upper and lower bounds of the confidence intervals are shown in lighter colors while the median value for a specific branch is shown in a darker color.
+
+Results are divided into different percentiles that can be changed through the dashboard filter:
+
+- The 50th percentile represents the median value across all clients for a metric
+- The 90th/95th/99th/... percentile are referring to the top 10%/5%/1%/... based on the measured metric. For example, in the screenshot above the 80th percentile is selected, so the top 20% of clients based on the _Perf Page Load Time Ms_ metric that are enrolled in the _enabled_ branch have a load time of around 6,600 ms.
+
+Usually places where the confidence intervals of different branches have a gap between them - if the higher bound of one metric is below the lower bound of another metric - means there is a high likelihood that there is an actual difference between the measurement for the groups.
+
+Each dashboard tile also allows to explore the data for a specific metric in more detail by clicking on _Explore from here_.
 
 ## Data Products
 
