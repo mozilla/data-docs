@@ -170,6 +170,7 @@ HyperLogLog
 IAM
 IPv4
 IPv6
+ISO3166
 ISO8601
 i.e.
 implementational
@@ -192,6 +193,7 @@ LDAP
 lifecycle
 Lockbox
 Lockwise
+LookML
 lookups
 LTV
 LTVs
