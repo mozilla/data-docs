@@ -15,7 +15,8 @@ WHERE
   DATE(submission_timestamp) >= date_trunc(current_date(), DAY)
   AND submission_timestamp < TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), HOUR)
   AND metadata.geo.country = 'CA'
-  AND sample_id = 18
+  -- Live tables are not clustered on sample_id, so we would get no benefit from using a 1% sample
+  -- AND sample_id = 18
 GROUP BY 1,2
 ORDER BY 1,2
 ```
