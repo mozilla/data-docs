@@ -159,6 +159,8 @@ In the example above this maps to `mozdata.search_terms_aggregated_analysis`.
 
 ## BigQuery Access Request
 
+> **⚠**  If you are a member of certain staff groups such as Data Engineering or Data Science you do not need to request BigQuery access specifically; it is automatically granted.
+
 For access to BigQuery when using the GCP Console and API, [file a bug (requires access to Mozilla Jira)](https://mozilla-hub.atlassian.net/secure/CreateIssueDetails!init.jspa?pid=10058&issuetype=10007&priority=3&customfield_10014=DSRE-87&summary=BigQuery%20GCP%20Console%20and%20API%20Access%20for%20YOUR_EMAIL_HERE&description=My%20request%20information%0A%3D%3D%3D%3D%3D%3D%3D%3D%0Amozilla.com%20ldap%20login%3A%0Ateam%3A%0Aaccess%20required%3A%20BigQuery%20GCP%20console%20and%20API%20Access%3B%20ENTER%20OTHER%20ACCESS%20REQUESTS%20HERE%0A%0APost%20request%0A%3D%3D%3D%3D%3D%3D%3D%3D%0ASee%20GCP%20console%20and%20other%20access%20methods%20docs%20here%3A%20https%3A%2F%2Fdocs.telemetry.mozilla.org%2Fcookbooks%2Fbigquery).
 You will be added to the appropriate Google Groups to access the `mozdata` GCP project.
 If you require access to AI Notebooks or Dataproc, please specify in the bug and a team project will be provisioned for you.
