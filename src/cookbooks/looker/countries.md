@@ -65,7 +65,7 @@ You can do this via a bigquery-etl pull request for example: https://github.com/
 If you are satisfied that the `country_code` field is appropriately normalized, move on to Step Two! 
 
 
-# Step Two - Accessing Standard Country Data
+## Step Two - Accessing Standard Country Data
 
 Standard country data is contained in the `mozdata.static.country_codes_v1` table and by extension the 
 `shared/views/countries` Looker View.
