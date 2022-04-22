@@ -90,4 +90,4 @@ For much more helpful advice on technical writing, you may wish to review the [O
 ## Colophon
 
 You can find more context for these guidelines in
-[this literature review](http://blog.harterrt.com/lit-review.html) and [this follow-up on organization and audience](https://wlach.github.io/blog/2020/05/a-principled-reorganization-of-docs-telemetry-mozilla-org/).
+[this literature review](http://blog.harterrt.com/lit-review.html) and [this follow-up on organization and audience](https://wrla.ch/blog/2020/05/a-principled-reorganization-of-docs-telemetry-mozilla-org/).
