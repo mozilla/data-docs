@@ -15,7 +15,7 @@ jobs:
 
     - name: Install mdbook-dtmo
       run: |
-        curl -LSfs https://japaric.github.io/trust/install.sh | sh -s -- --git badboy/mdbook-dtmo
+        scripts/crate.sh --repo badboy/mdbook-dtmo --to ~/.cargo/bin
         mdbook-dtmo --version
 
     - name: Build
