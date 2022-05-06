@@ -25,9 +25,9 @@ Additionally, see the `Building Intuition` search dashboards for applications to
 
 Searches can be split into three major classes: _sap_, _follow-on_, and _organic_.
 
-SAP searches result from a direct interaction with a `search access point` (SAP), which is part of the Firefox UI. These searches are often called SAP searches. Please refer to [Search telemetry doc](https://firefox-source-docs.mozilla.org/browser/search/telemetry.html#browsersearchtelemetry-jsm) for the most recent status around `search access points` since much development has been around it**.
+SAP searches result from a direct interaction with a `search access point` (SAP), which is part of the Firefox UI. These searches are often called SAP searches. Please refer to [Search telemetry doc](https://firefox-source-docs.mozilla.org/browser/search/telemetry.html#browsersearchtelemetry-jsm) for the most recent status around `search access points` since much development has been around it.
 
-There are multiple SAPs on Firefox browser, and please see [here](- [Search Access Points](https://mozilla.cloud.looker.com/dashboards-next/256), an overview of search, ad impressions, and ad clicks across the different search access points (SAPs) built into the browser) for illustration. However, when you query them as `source` field in search tables, you will see more including: 
+There are multiple SAPs on Firefox browser, and please see [here](https://mozilla.cloud.looker.com/dashboards-next/256) for illustration. However, when you query them as `source` field in search tables, you will see more including: 
 
 - `urlbar` - entering a search query in the Awesomebar. Searches typed into the search bar in the middle of the browser window will also be recorded as `urlbar` searches.
 - `urlbar-searchmode` - selecting a search partner icon while entering a search query in the Awesomebar or tagging the search partner (i.e. `@duckduckgo`) before entering search query via Awesomebar (was formerly called `alias` [added](https://bugzilla.mozilla.org/show_bug.cgi?id=1499193) as of Firefox 64.)
