@@ -1,4 +1,3 @@
-
 # Search metrics
 
 Search metrics are delivered in main pings and often reflect usage over the course of many previous hours, so there is inherent delay (which makes it more reasonable to call `introday` search metrics instead of `almost realy-time` search metrics. Below is the query to give the hourly `sap` search metrics per each major search engine since the start of current day in `CA` based on `1%` of the sample from `telemetry_live` dataset. 
