@@ -73,6 +73,9 @@ Of course, linking to other resources as part of other documentation is always o
   - Use **visual markup** like **bold text**, `code blocks`, and section headers.
   - Avoid long paragraphs: short paragraphs that describe one concept each makes finding important information easier.
   - When writing longer articles with many sections, use a [table of contents](./index.md#table-of-contents) to help people quickly navigate to a section of interest.
+- Use self-explanatory link descriptions.
+  - **Do not** use `here` or `this` as the description for an external link. It is repetitive across a site and does not explain where it leads to.
+  - For links to queries on Redash use `STMO#<query id>`. This makes it consistent across the documentation and provides a hint about how old / new a query might be (newer queries have higher numeric IDs)
 
 ## Writing style
 
