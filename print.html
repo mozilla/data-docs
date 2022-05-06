@@ -4674,22 +4674,23 @@ keep individuals empowered, safe, and independent on the Internet.</p>
 <li><a href="concepts/glean/glean.html#references">References</a></li>
 </ul>
 <h1 id="overview-1"><a class="header" href="#overview-1">Overview</a></h1>
-<p><img src="concepts/glean/../../assets/Glean_overview.jpg" alt="drawing" /></p>
+<p><img src="concepts/glean/../../assets/glean-overview.png" alt="An overview of the Glean project: On the left the product core records data using the Glean SDK. The Glean SDK then sends out this data to the Data Platform. The analysis tools (redash, Looker, GLAM, Debug View) to the right receive the data from the data platform" /></p>
 <p>The <strong>Glean SDK</strong> performs measurements and sends data from our products.
-It provides a set of <strong><a href="https://mozilla.github.io/glean/book/user/metrics">metric types</a></strong> for individual measurements that are carefully designed to avoid common pitfalls with measurement.
+It provides a set of <strong><a href="https://mozilla.github.io/glean/book/reference/metrics/index.html">metric types</a></strong> for individual measurements that are carefully designed to avoid common pitfalls with measurement.
 Metrics are then rolled up into <strong><a href="https://mozilla.github.io/glean/book/user/pings">pings</a></strong> to send over the network.
 There are a number of built-in pings that are sent on predefined schedules, but it also possible to send custom pings at any desired cadence.</p>
 <p>The <strong>Data Platform</strong> validates and stores these pings in database tables.
 A fault tolerant design allows data to be retained in the event of problems such as traffic spikes or invalid data.
+See <a href="concepts/glean/../pipeline/gcp_data_pipeline.html">An overview of Mozilla’s Data Pipeline</a> for details.
 Derived and cleaned data can also be automatically created at this stage.</p>
 <p>The <strong>Analysis Tools</strong> are used to query and visualize the data.
+This includes <a href="https://sql.telemetry.mozilla.org/">Redash</a>, <a href="https://mozilla.cloud.looker.com/">Looker</a>, <a href="https://glam.telemetry.mozilla.org/">GLAM</a> and the <a href="https://debug-ping-preview.firebaseapp.com/">Debug Ping View</a>.
 Because Glean knows more about the individual data, such as its type and the ranges of acceptable values, it can in many cases provide the most appropriate visualization automatically.</p>
-<!-- TODO: Link to GLAM -->
 <h1 id="the-glean-design-principles"><a class="header" href="#the-glean-design-principles">The Glean design principles</a></h1>
 <p><strong>Provide a consistent base of telemetry</strong></p>
 <p>A baseline of analysis is important for all our products, from counting active users to retention and session times. This is supported out-of-the-box by the SDK, and funnels directly into visualization tools like the <a href="https://gud.telemetry.mozilla.org/">Growth and Usage Dashboard (GUD)</a>.</p>
 <p>Metrics that are common to all products, such as the operating system and architecture, are provided automatically in a consistent way.</p>
-<p>Any issues found with these base metrics only need be fixed in Glean to benefit all SDK-using products.</p>
+<p>Any issues found with these base metrics only need to be fixed in Glean to benefit all SDK-using products.</p>
 <p><strong>Encourage specificity</strong></p>
 <p>Rather than just treating metrics as generic data points, Glean wants to know as much as possible about the things being measured, and be opinionated about how data is measured and aggregated.</p>
 <p>From this information, it can:</p>
@@ -4716,10 +4717,13 @@ This includes previously manual and error-prone steps such as updating the ping 
 <h1 id="how-to-use-glean"><a class="header" href="#how-to-use-glean">How to use Glean</a></h1>
 <ul>
 <li>
-<p><a href="https://mozilla.github.io/glean/book/user/adding-glean-to-your-project.html">Integrate the Glean SDK / library</a> into your product.</p>
+<p><a href="https://mozilla.github.io/glean/book/user/adding-glean-to-your-project/index.html">Integrate the Glean SDK</a> into your product.</p>
 </li>
 <li>
-<p><a href="https://sql.telemetry.mozilla.org/">Use Redash</a> to write SQL queries &amp; build dashboards using your products datasets, e.g.:</p>
+<p><a href="https://mozilla.cloud.looker.com/">Use Looker</a> to build Explores and Dashboards using your product's datasets.</p>
+</li>
+<li>
+<p>If Looker does not provide the necessary Explores you can resort to <a href="https://sql.telemetry.mozilla.org/">using Redash</a> to write SQL queries &amp; build dashboards using your products datasets, e.g.:</p>
 <ul>
 <li><code>org_mozilla_fenix.baseline</code></li>
 <li><code>org_mozilla_fenix.events</code></li>
@@ -4728,7 +4732,7 @@ This includes previously manual and error-prone steps such as updating the ping 
 </ul>
 </li>
 <li>
-<p>For experimentation, you can use <a href="https://github.com/mozilla-mobile/android-components/blob/master/components/service/experiments/README.md">Android experiments library</a>, which integrates with Glean.</p>
+<p>For experimentation, you can use <a href="https://github.com/mozilla/application-services/blob/main/components/nimbus/README.md">Nimbus SDK</a>, which integrates with Glean.</p>
 </li>
 </ul>
 <h1 id="contact"><a class="header" href="#contact">Contact</a></h1>
@@ -4742,7 +4746,6 @@ This includes previously manual and error-prone steps such as updating the ping 
 <li>The <a href="https://github.com/mozilla/glean/">Glean SDK</a> implementation.</li>
 <li><a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&amp;component=Glean%3A%20SDK">Reporting issues &amp; bugs for the Glean SDK</a>.</li>
 <li>Datasets documentation (TBD)</li>
-<li><a href="https://debug-ping-preview.firebaseapp.com/">Glean Debug pings viewer</a></li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/concepts/glean/glean.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="an-overview-of-mozillas-data-pipeline"><a class="header" href="#an-overview-of-mozillas-data-pipeline">An overview of Mozilla’s Data Pipeline</a></h1>
 <p>This post describes the architecture of Mozilla’s data pipeline,
