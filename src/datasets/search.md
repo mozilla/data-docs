@@ -39,7 +39,7 @@ There are multiple SAPs on Firefox browser, and please see [here](https://mozill
 - `system` - starting Firefox from the command line with an option that immediately makes a search
 - `webextension` - initiated from a web extension ([added](https://bugzilla.mozilla.org/show_bug.cgi?id=1492233) as of Firefox 63)
 
-**Note: Search telemetry involves so the actual `source` name used for a specific search access point may change per different versions of Firefox. For example, to catch SAP searches performed in Awesomebar after Firefox 94, you will need to use `source in ("urlbar", "urlbar-searchmode", "urlbar-handoff")`. 
+Note: Search telemetry involves so the actual `source` name used for a specific search access point may change per different versions of Firefox. For example, to catch SAP searches performed in Awesomebar after Firefox 94, you will need to use `source in ("urlbar", "urlbar-searchmode", "urlbar-handoff")`. 
 
 Users will often interact with the Search Engine Results Page (SERP)
 to create "downstream" queries.
