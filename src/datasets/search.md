@@ -25,21 +25,23 @@ Additionally, see the `Building Intuition` search dashboards for applications to
 
 Searches can be split into three major classes: _sap_, _follow-on_, and _organic_.
 
-SAP searches result from a direct interaction with a `search access point` (SAP), which is part of the Firefox UI. These searches are often called SAP searches. Please refer to [Search telemetry doc](https://firefox-source-docs.mozilla.org/browser/search/telemetry.html#browsersearchtelemetry-jsm) for the most recent status around `search access points` since much development has been around it.
+SAP searches result from a direct interaction with a search access point, which is part of the Firefox UI. These searches are often called SAP searches.
 
-There are multiple SAPs on Firefox browser, and please see [here](https://mozilla.cloud.looker.com/dashboards-next/256) for illustration. However, when you query them as `source` field in search tables, you will see more including: 
+Please refer to [Search telemetry doc](https://firefox-source-docs.mozilla.org/browser/search/telemetry.html#browsersearchtelemetry-jsm) for the most recent status around `search access points` since much development has been around it.
+
+There are multiple SAPs on Firefox browser, and please see [here](https://mozilla.cloud.looker.com/dashboards-next/256) for illustration. However, when  query them as `source` field in search tables, you may see following:
 
 - `urlbar` - entering a search query in the Awesomebar. Searches typed into the search bar in the middle of the browser window will also be recorded as `urlbar` searches.
 - `urlbar-searchmode` - selecting a search partner icon while entering a search query in the Awesomebar or tagging the search partner (i.e. `@duckduckgo`) before entering search query via Awesomebar (was formerly called `alias` [added](https://bugzilla.mozilla.org/show_bug.cgi?id=1499193) as of Firefox 64.)
-- `urlbar-handoff` - often referred to as new tab search. Searches by typing into the search box in the middle of the browser window will be attributed to the `urlbar-handoff` starting in Firefox 94. See more in [probe dictionary](https://probes.telemetry.mozilla.org/?search=urlbar&view=detail&probeId=scalar%2Fbrowser.search.content.urlbar_handoff) and [bug here](https://bugzilla.mozilla.org/show_bug.cgi?id=1732429). 
-- `newtab` - referred to new tab search on `about:newtab` page. 
-- `abouthome` - referred to new tab search on `about:home` page. 
+- `urlbar-handoff` - often referred to as new tab search. Searches by typing into the search box in the middle of the browser window will be attributed to the `urlbar-handoff` starting in Firefox 94. See more in [probe dictionary](https://probes.telemetry.mozilla.org/?search=urlbar&view=detail&probeId=scalar%2Fbrowser.search.content.urlbar_handoff) and [bug here](https://bugzilla.mozilla.org/show_bug.cgi?id=1732429).
+- `newtab` - referred to new tab search on `about:newtab` page.
+- `abouthome` - referred to new tab search on `about:home` page.
 - `searchbar` - the main search bar (on the top right corner of browser window); not present by default for new profiles on Firefox 57+. `Searchmode` searches via the `searchbar` are logged as regular `searchbar` searches.
 - `contextmenu` - highlight text, right click, and select "Search [search engine] for [highlighted text]" from the context menu.
-- `system` - starting Firefox from the command line with an option that immediately makes a search
-- `webextension` - initiated from a web extension ([added](https://bugzilla.mozilla.org/show_bug.cgi?id=1492233) as of Firefox 63)
+- `system` - starting Firefox from the command line with an option that immediately makes a search.
+- `webextension` - initiated from a web extension ([added](https://bugzilla.mozilla.org/show_bug.cgi?id=1492233) as of Firefox 63).
 
-Note: Search telemetry involves so the actual `source` name used for a specific search access point may change per different versions of Firefox. For example, to catch SAP searches performed in Awesomebar after Firefox 94, you will need to use `source in ("urlbar", "urlbar-searchmode", "urlbar-handoff")`. 
+Note: Search telemetry involves so the actual `source` name used for a specific search access point may change per different versions of Firefox. For example, to catch SAP searches performed in Awesomebar after Firefox 94, you will need to use `source in ("urlbar", "urlbar-searchmode", "urlbar-handoff")`.
 
 Users will often interact with the Search Engine Results Page (SERP)
 to create "downstream" queries.
