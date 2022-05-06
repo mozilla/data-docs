@@ -31,15 +31,15 @@ There are multiple SAPs on Firefox browser, and please see [here](- [Search Acce
 
 - `urlbar` - entering a search query in the Awesomebar. Searches typed into the search bar in the middle of the browser window will also be recorded as `urlbar` searches.
 - `urlbar-searchmode` - selecting a search partner icon while entering a search query in the Awesomebar or tagging the search partner (i.e. `@duckduckgo`) before entering search query via Awesomebar (was formerly called `alias` [added](https://bugzilla.mozilla.org/show_bug.cgi?id=1499193) as of Firefox 64.)
-- `urlbar-handoff` - often referred to as new tab search. Searches by typing into the search bar in the middle of the browser window will be attributed to the urlbar handoff SAP starting in Firefox 94. See more in [probe dictionary](https://probes.telemetry.mozilla.org/?search=urlbar&view=detail&probeId=scalar%2Fbrowser.search.content.urlbar_handoff) and [bug1732429](https://bugzilla.mozilla.org/show_bug.cgi?id=1732429). 
-- `newtab` - referred to new tab search on "about:newtab" page. 
-- `abouthome` - referred to new tab search on "about:home" page. 
+- `urlbar-handoff` - often referred to as new tab search. Searches by typing into the search box in the middle of the browser window will be attributed to the `urlbar-handoff` starting in Firefox 94. See more in [probe dictionary](https://probes.telemetry.mozilla.org/?search=urlbar&view=detail&probeId=scalar%2Fbrowser.search.content.urlbar_handoff) and [bug1732429](https://bugzilla.mozilla.org/show_bug.cgi?id=1732429). 
+- `newtab` - referred to new tab search on `about:newtab` page. 
+- `abouthome` - referred to new tab search on `about:home` page. 
 - `searchbar` - the main search bar (on the top right corner of browser window); not present by default for new profiles on Firefox 57+. `Searchmode` searches via the `searchbar` are logged as regular `searchbar` searches.
 - `contextmenu` - highlight text, right click, and select "Search [search engine] for [highlighted text]" from the context menu.
 - `system` - starting Firefox from the command line with an option that immediately makes a search
 - `webextension` - initiated from a web extension ([added](https://bugzilla.mozilla.org/show_bug.cgi?id=1492233) as of Firefox 63)
 
-**Note: Search telemetry involves so the actual `source` name used for a specific search access point may change per different versions of Firefox. For example, to catch SAP searches performed in urlbar after Firefox 94, you will need to use `source in ("urlbar", "urlbar-searchmode", "urlbar-handoff")`. 
+**Note: Search telemetry involves so the actual `source` name used for a specific search access point may change per different versions of Firefox. For example, to catch SAP searches performed in Awesomebar after Firefox 94, you will need to use `source in ("urlbar", "urlbar-searchmode", "urlbar-handoff")`. 
 
 Users will often interact with the Search Engine Results Page (SERP)
 to create "downstream" queries.
