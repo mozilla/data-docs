@@ -2,15 +2,15 @@
 
 ## Introduction
 
-Firefox Suggest is a `monetizable feature` in the Firefox `urlbar`. Suggest provides real-time recommendations as users type in the `urlbar`. The recommendations include URLs from the user's browsing history, open tabs and bookmarks, as well as URLs for sponsored and non-sponsored content from third party partners like Ad Marketplace and Wikipedia.
+Firefox Suggest is a `monetizable feature` in the Firefox urlbar. Suggest provides real-time recommendations as users type in the urlbar. The recommendations include URLs from the user's browsing history, open tabs and bookmarks, as well as URLs for sponsored and non-sponsored content from third party partners like Ad Marketplace and Wikipedia.
 
-Firefox Suggestions compete directly with Search Engine Suggestions for user attention and clicks in the `urlbar`. A holistic analysis of the `urlbar` should include data from all the sources providing recommendations to the `urlbar`, including Firefox Suggestions, Search Engine Suggestions, auto-fill, etc.
+Firefox Suggestions compete directly with Search Engine Suggestions for user attention and clicks in the urlbar. A holistic analysis of the urlbar should include data from all the sources providing recommendations to the urlbar, including Firefox Suggestions, Search Engine Suggestions, auto-fill, etc.
 
 This section will include information about Firefox Suggest data. See [Search Datasets](https://docs.telemetry.mozilla.org/datasets/search.html) for documentation on Search Engine Data.
 
 ## Data Collection
 
-Firefox Suggestions may be served to the `urlbar` from Firefox itself, or by a Mozilla-owned service called Merino. When users opt in to sharing their search query data, Firefox sends the search queries to Merino, and Merino responds with recommendations.
+Firefox Suggestions may be served to the urlbar from Firefox itself, or by a Mozilla-owned service called Merino. When users opt in to sharing their search query data, Firefox sends the search queries to Merino, and Merino responds with recommendations.
 
 In addition to the search queries, we collect Category 1 and 2 telemetry data from Firefox about how users are interacting with Suggest.
 
@@ -18,10 +18,10 @@ In addition to the search queries, we collect Category 1 and 2 telemetry data fr
 
 Interactions data related to Firefox Suggest is collected in the following ways.
 
-1. Interactions with Firefox Suggestions in the `urlbar` (i.e., clicks, impressions, blocks, clicks on help links) are collected using the standard (legacy) Telemetry system as Scalars and Events.
+1. Interactions with Firefox Suggestions in the urlbar (i.e., clicks, impressions, blocks, clicks on help links) are collected using the standard (legacy) Telemetry system as Scalars and Events.
   Full documentation of the probes is [here](https://firefox-source-docs.mozilla.org/browser/urlbar/firefox-suggest-telemetry.html). The Scalars are available in [Clients Daily](https://docs.telemetry.mozilla.org/datasets/batch_view/clients_daily/reference.html).
 
-2. Interactions with Firefox Suggestions in the `urlbar` (i.e., clicks, impressions, blocks) are collected using Custom Contextual Services Pings.
+2. Interactions with Firefox Suggestions in the urlbar (i.e., clicks, impressions, blocks) are collected using Custom Contextual Services Pings.
   The Custom Contextual Services Pings contain additional information not available in the standard Scalars and Events, such as the advertiser that provided the recommendation, if any. This data has a much shorter retention period than the data collecting in (1) above. It also does not contain the Firefox Desktop Client ID, and is not join-able by design to any datasets outside of Contextual Services. Full documentation of the probes is [here](https://firefox-source-docs.mozilla.org/browser/urlbar/firefox-suggest-telemetry.html#contextual-services-pings).
 
 3. [Preference Settings](about:preferences) are collected using the standard (legacy) Telemetry system in the Environment.
