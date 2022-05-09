@@ -184,7 +184,7 @@ Each column represents a field from the main ping.
 Most fields contain <strong>arrays of values</strong>, with one value for each ping associated with a <code>client_id</code>.
 Using arrays give you access to the raw data from each ping,
 but can be difficult to work with from SQL.
-Here's a <a href="https://sql.telemetry.mozilla.org/queries/4188#table">query showing some sample data</a>
+Here's a <a href="https://sql.telemetry.mozilla.org/queries/4188#table">query showing some sample data (<code>STMO#4188</code>)</a>
 to help illustrate.</p>
 <h4 id="background-and-caveats"><a class="header" href="#background-and-caveats">Background and Caveats</a></h4>
 <p>Think of the longitudinal table as wide and short.
@@ -199,7 +199,7 @@ and down-samples to 1% of all clients to reduce query computation time and save 
 <h4 id="accessing-the-data"><a class="header" href="#accessing-the-data">Accessing the Data</a></h4>
 <p>The <code>longitudinal</code> is available in STMO,
 though it can be difficult to work with the array values in SQL.
-Take a look at this <a href="https://sql.telemetry.mozilla.org/queries/4189/source">example query</a>.</p>
+Take a look at <a href="https://sql.telemetry.mozilla.org/queries/4189/source"><code>STMO#4189</code></a>.</p>
 <p>The data is stored as a parquet table in S3 at the following address.</p>
 <pre><code>s3://telemetry-parquet/longitudinal/
 </code></pre>

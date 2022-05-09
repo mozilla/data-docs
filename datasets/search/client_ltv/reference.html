@@ -210,7 +210,7 @@
 <p>LTV is broken down by engine, so the LTV for a user who searches on multiple engines must be interpreted in context. <strong>LTV is only available for Google and Bing on Firefox Desktop</strong> at this time.</p>
 <p>We <strong>do</strong> have the ability to calculate a dollar value per user, however the (unnormalized) table is restricted to those with proper revenue access. For more information, see <a href="../../../concepts/getting_help.html">Getting Help</a>.</p>
 <h1 id="example-queries"><a class="header" href="#example-queries">Example Queries</a></h1>
-<p><em>Percent of users we predict will click an ad in the <strong>next</strong> 365 days by Engine.</em> (<a href="https://sql.telemetry.mozilla.org/queries/74878/source">source</a>)</p>
+<p><em>Percent of users we predict will click an ad in the <strong>next</strong> 365 days by Engine.</em> (<a href="https://sql.telemetry.mozilla.org/queries/74878/source"><code>STMO#74878</code></a>)</p>
 <pre><code class="language-sql">SELECT
   engine,
   AVG(IF(pred_num_days_seeing_ads &gt; 0, 1, 0)) as pct_predicted_ad_viewers_next_year,
@@ -222,7 +222,7 @@ WHERE
 GROUP BY
   1
 </code></pre>
-<p><em>LTV Value of Users Over Lifetime (by <code>days_since_created_profile</code>) of Users Active in Past 7 Days</em> (<a href="https://sql.telemetry.mozilla.org/queries/74867/source#187036">source</a>)</p>
+<p><em>LTV Value of Users Over Lifetime (by <code>days_since_created_profile</code>) of Users Active in Past 7 Days</em> (<a href="https://sql.telemetry.mozilla.org/queries/74867/source#187036"><code>STMO#187036</code></a>)</p>
 <pre><code class="language-sql">SELECT
   days_since_created_profile,
   SUM(normalized_ltv_ad_clicks_current) AS sum_normalized_ltv_ad_clicks_current,
@@ -296,7 +296,7 @@ The dataset is backfilled through 2020-09-14.</p>
 <li><a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/revenue_derived/client_ltv_normalized/query.sql"><code>client_ltv</code> view</a> (for broad use)</li>
 </ul>
 <h1 id="model-performance"><a class="header" href="#model-performance">Model Performance</a></h1>
-<p>There is additionally a dataset, <code>ltv_daily_model_perf</code>, that tracks the LTV model's prediction performance each day it is re-trained. For a given day, one could check the performance with the following <a href="https://sql.telemetry.mozilla.org/queries/75244/source#187873">query</a>:</p>
+<p>There is additionally a dataset, <code>ltv_daily_model_perf</code>, that tracks the LTV model's prediction performance each day it is re-trained. For a given day, one could check the performance with the following <a href="https://sql.telemetry.mozilla.org/queries/75244/source#187873">query (<code>STMO#187873</code>)</a>:</p>
 <pre><code class="language-sql">SELECT
   active_days,
   actual,

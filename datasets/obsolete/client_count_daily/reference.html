@@ -202,14 +202,13 @@ The HyperLogLog variable is a far more efficient way to count distinct elements 
 but comes with some complexity.
 To find the cardinality of an HLL use <code>cardinality(cast(hll AS HLL))</code>.
 To find the union of two HLL's over different dates, use <code>merge(cast(hll AS HLL))</code>.
-The <a href="https://sql.telemetry.mozilla.org/queries/81/source#129">Firefox ER Reporting Query</a>
+The <a href="https://sql.telemetry.mozilla.org/queries/81/source#129">Firefox ER Reporting Query (<code>STMO#81</code>)</a>
 is a good example to review.
 Finally, Roberto has a relevant write-up
 <a href="https://ravitillo.wordpress.com/2016/04/12/measuring-product-engagment-at-scale/">here</a>.</p>
 <h4 id="accessing-the-data"><a class="header" href="#accessing-the-data">Accessing the Data</a></h4>
 <p>The data is available in STMO.
-Take a look at this
-<a href="https://sql.telemetry.mozilla.org/queries/81/source#129">example query</a>.</p>
+Take a look at <a href="https://sql.telemetry.mozilla.org/queries/81/source#129"><code>STMO#81</code></a>.</p>
 <h4 id="further-reading"><a class="header" href="#further-reading">Further Reading</a></h4>
 <h1 id="data-reference"><a class="header" href="#data-reference">Data Reference</a></h1>
 <h2 id="example-queries"><a class="header" href="#example-queries">Example Queries</a></h2>

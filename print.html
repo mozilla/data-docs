@@ -2192,7 +2192,7 @@ FROM telemetry.crash
 WHERE date(submission_timestamp) &gt;= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY)
 GROUP BY crash_date
 </code></pre>
-<p><a href="https://sql.telemetry.mozilla.org/queries/67925/">Link to query in STMO</a>.</p>
+<p><a href="https://sql.telemetry.mozilla.org/queries/67925/"><code>STMO#67925</code></a>.</p>
 <p>Although the total crash counts is not always useful, you may want to restrict
 a query to a channel or some other dimensions, and also facet the results. Therefore, you can add a few more fields to the SQL:</p>
 <pre><code class="language-sql">SELECT date(submission_timestamp) AS crash_date,
@@ -2204,7 +2204,7 @@ WHERE date(submission_timestamp) &gt;= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY)
 GROUP BY normalized_os,
          crash_date
 </code></pre>
-<p><a href="https://sql.telemetry.mozilla.org/queries/67927/">Link to query in STMO</a></p>
+<p><a href="https://sql.telemetry.mozilla.org/queries/67927/"><code>STMO#67927</code></a></p>
 <p>These are just initial examples. You can query across all the fields in
 a telemetry crash ping, which provides useful information about the crashes themselves. You can view a summary of the available fields in the STMO schema browser, referring to <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/data/crash-ping.html">the documentation on the Firefox crash ping</a>
 for more information where necessary.</p>
@@ -3019,7 +3019,7 @@ WHERE
 LIMIT
   3
 </code></pre>
-<p><a href="https://sql.telemetry.mozilla.org/queries/71333/source">link</a></p>
+<p><a href="https://sql.telemetry.mozilla.org/queries/71333/source"><code>STMO#71333</code></a></p>
 <p>Running this query on STMO, we get the following output:</p>
 <table><thead><tr><th><code>histogram_json</code></th></tr></thead><tbody>
 <tr><td><code>{&quot;bucket_count&quot;:20,&quot;histogram_type&quot;:0,&quot;sum&quot;:118,&quot;range&quot;:[1,1000],&quot;values&quot;:{&quot;80&quot;:0,&quot;115&quot;:1,&quot;165&quot;:0}}</code></td></tr>
@@ -3049,7 +3049,7 @@ SELECT
 FROM
   intermediate;
 </code></pre>
-<p><a href="https://sql.telemetry.mozilla.org/queries/71408/source">link</a></p>
+<p><a href="https://sql.telemetry.mozilla.org/queries/71408/source"><code>STMO#71408</code></a></p>
 <p>Which yields:</p>
 <table><thead><tr><th><code>sum</code></th><th><code>bucket_count</code></th></tr></thead><tbody>
 <tr><td>118</td><td>20</td></tr>
@@ -3086,7 +3086,7 @@ FROM
 CROSS JOIN
   UNNEST(percentiles.percentile_nested);
 </code></pre>
-<p><a href="https://sql.telemetry.mozilla.org/queries/71410/source">link</a></p>
+<p><a href="https://sql.telemetry.mozilla.org/queries/71410/source"><code>STMO#71410</code></a></p>
 <p>Which gives us this set of results:</p>
 <table><thead><tr><th>Percentile</th><th>Value</th></tr></thead><tbody>
 <tr><td>0.05</td><td>13</td></tr>
@@ -3146,8 +3146,8 @@ CROSS JOIN
     )
   )
 </code></pre>
-<p><a href="https://sql.telemetry.mozilla.org/queries/71472/source">link</a></p>
-<p>As an implementation note, observe that we don't use <code>histogram_merge</code> here as we do above: doing so would require using <a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators#array_agg"><code>ARRAY_AGG</code></a> which can break down when processing large amounts of data. Instead we create an intermediate result (the <code>per_build_day</code> <code>WITH</code> statement) and then reprocess it into a structured representation. If you're curious what the version using <code>histogram_merge</code> would look like, see <a href="https://sql.telemetry.mozilla.org/queries/71413/source">this example</a>.</p>
+<p><a href="https://sql.telemetry.mozilla.org/queries/71472/source"><code>STMO#71472</code></a></p>
+<p>As an implementation note, observe that we don't use <code>histogram_merge</code> here as we do above: doing so would require using <a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators#array_agg"><code>ARRAY_AGG</code></a> which can break down when processing large amounts of data. Instead we create an intermediate result (the <code>per_build_day</code> <code>WITH</code> statement) and then reprocess it into a structured representation. If you're curious what the version using <code>histogram_merge</code> would look like, see <a href="https://sql.telemetry.mozilla.org/queries/71413/source"><code>STMO#71413</code></a>.</p>
 <p>In any case, rendering the data this query returns, we get a chart like this:</p>
 <p><img src="cookbooks/../assets/exponential_histograms_tutorial/example_visualization_of_histogram_percentiles.png" alt="example visualization of histogram percentiles" /></p>
 <p>You'll note that the 75th and the 95th percentiles are often the same. Which is to say: in 25% of cases, the value was somewhere between <code>698ms</code> and <code>1000ms</code>. Does this mean that 25% of the time people are seeing a <em>very</em> long-running tab spinner? <em>No!</em> It actually points to a flaw in our methodology, which GLAM was explicitly designed to address. For the last part our tutorial, let's look into how it does it, and how to reproduce its approach.</p>
@@ -3221,7 +3221,7 @@ FROM
 CROSS JOIN
   UNNEST(percentiles.percentile_nested);
 </code></pre>
-<p><a href="https://sql.telemetry.mozilla.org/queries/71489/source">link</a></p>
+<p><a href="https://sql.telemetry.mozilla.org/queries/71489/source"><code>STMO#71489</code></a></p>
 <p>You'll notice this query groups by <code>client_id</code> in addition to <code>build_id</code> before <code>mozfun.hist.normalize</code>. Grouping by <code>client_id</code> gives each user equal representation and prevents &quot;power users&quot; from skewing the result.</p>
 <p>In any case, the result of this query is this graph:</p>
 <p><img src="cookbooks/../assets/exponential_histograms_tutorial/example_visualization_of_normalized_histogram_percentiles.png" alt="example visualization of normalized histogram percentiles" /></p>
@@ -3296,7 +3296,7 @@ FROM
 CROSS JOIN
   UNNEST(percentiles.percentile_nested);
 </code></pre>
-<p><a href="https://sql.telemetry.mozilla.org/queries/71437/source">link</a></p>
+<p><a href="https://sql.telemetry.mozilla.org/queries/71437/source"><code>STMO#71437</code></a></p>
 <p>If we do this, we see this chart:</p>
 <p><img src="cookbooks/../assets/exponential_histograms_tutorial/example_visualization_of_normalized_histogram_percentiles_for_Windows_7.png" alt="example visualization of normalized histogram percentiles for Windows 7" /></p>
 <p>As you can see, both the 75th and 100th percentile are now in the highest bucket, and the 50th percentile is much higher as well. From this we can intuit that the user experience for these users is likely considerably worse, which is exactly what we would have expected.</p>
@@ -5096,8 +5096,8 @@ using the <a href="https://github.com/mozilla-mobile/telemetry-ios"><code>teleme
 <ul>
 <li><a href="concepts/pipeline/../../datasets/batch_view/main_summary/reference.html"><code>main_summary</code></a> has a row for each main ping and includes
 its event payload for Firefox versions before 62.</li>
-<li><a href="concepts/pipeline/../../datasets/batch_view/events/reference.html"><code>events</code></a> contains a row for each event received from main pings and event pings. See <a href="https://sql.telemetry.mozilla.org/queries/52582/source">this sample query</a>.</li>
-<li><code>telemetry_mobile_event_parquet</code> contains a row for each mobile event ping. See <a href="https://sql.telemetry.mozilla.org/queries/52581/source">this sample query</a>.</li>
+<li><a href="concepts/pipeline/../../datasets/batch_view/events/reference.html"><code>events</code></a> contains a row for each event received from main pings and event pings. See <a href="https://sql.telemetry.mozilla.org/queries/52582/source"><code>STMO#52582</code></a>.</li>
+<li><code>telemetry_mobile_event_parquet</code> contains a row for each mobile event ping. See <a href="https://sql.telemetry.mozilla.org/queries/52581/source"><code>STMO#52581</code></a>.</li>
 <li><code>focus_events_longitudinal</code> currently contains events from Firefox Focus.</li>
 </ul>
 <h1 id="data-tooling"><a class="header" href="#data-tooling">Data tooling</a></h1>
@@ -5671,7 +5671,7 @@ LIMIT
 <li><strong>Sep 30 2021 - Oct 06 2021</strong> - <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1733953">Submissions from some countries were rejected</a>.</li>
 <li><strong>Sep 30 2021 - Oct 04 2021</strong> - <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1733953">Submissions from clients on some older platforms were dropped</a>.</li>
 <li><strong>Aug 23 2021 - Aug 29 2021</strong> - <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1729069">Approximately 1/251 of pings were improperly labeled as coming from Kansas City, US</a>.</li>
-<li><strong>Aug 05 2021 - Aug 31 2021</strong> - Drop in search metrics (<code>tagged_sap</code>, <code>tagged_follow_on</code>, <code>search_with_ads</code>, <code>ad_click</code>) in Fenix due to probe expiry. <a href="https://docs.google.com/document/d/1C29HmYponPcqtX4yR4QA7uBkhhkAM76WqMW3PQBnL_g/edit">Incident report</a> and <a href="https://sql.telemetry.mozilla.org/queries/82098/source#203423">query</a>.</li>
+<li><strong>Aug 05 2021 - Aug 31 2021</strong> - Drop in search metrics (<code>tagged_sap</code>, <code>tagged_follow_on</code>, <code>search_with_ads</code>, <code>ad_click</code>) in Fenix due to probe expiry. <a href="https://docs.google.com/document/d/1C29HmYponPcqtX4yR4QA7uBkhhkAM76WqMW3PQBnL_g/edit">Incident report</a> and <a href="https://sql.telemetry.mozilla.org/queries/82098/source#203423"><code>STMO#203423</code></a>.</li>
 <li><strong>Feb 16 2021 - Feb 25 2021</strong> - <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1694764">A small number of stub installer pings may have been discarded due to URI deduplication</a>.</li>
 <li><strong>August 6, 2020</strong> - <a href="https://github.com/mozilla/bigquery-etl/pull/1215">Pings with &quot;automation&quot; tag in X-Source-Tags will no longer appear in stable tables</a>
 This is particularly relevant for removing pings related to automated testing of Fenix.</li>
@@ -5803,7 +5803,7 @@ merged in Firefox 56, which was included in release on Sept 28, 2017.
 Other types of pings are not sent with Pingsender.
 This is usually okay because Firefox is expected to continue to run long
 enough to send these pings.</p>
-<p>Mobile clients do not have Pingsender. Therefore, a delay occurs as described in <a href="https://sql.telemetry.mozilla.org/queries/49867#134105">this query</a>.</p>
+<p>Mobile clients do not have Pingsender. Therefore, a delay occurs as described in <a href="https://sql.telemetry.mozilla.org/queries/49867#134105"><code>STMO#49867</code></a>.</p>
 <h3 id="submission-date"><a class="header" href="#submission-date">Submission Date</a></h3>
 <p><code>submission_date</code> or <code>submission_timestamp</code> represents the server time at which a ping is received from a client. It is used as a partitioning column (useful for both query optimization and restricting the range of data under consideration) and should be considered reliable.</p>
 <p>In <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1422892">bug 1422892</a> it was decided
@@ -5818,7 +5818,7 @@ to standardize on using <code>submission_date</code> as opposed to client-genera
 </ul>
 <h2 id="pings-from-robots"><a class="header" href="#pings-from-robots">Pings from Robots</a></h2>
 <p>In general, data coming from an application instance not run by a human is not wanted in analysis. As of this writing, <a href="https://github.com/mozilla/geckodriver">GeckoDriver</a> (one of the official mechanisms to launch and control an automated version of Firefox for e.g. web compatibility testing) is <a href="https://searchfox.org/mozilla-central/rev/baf1cd492406a9ac31d9ccb7a51c924c7fbb151f/testing/geckodriver/src/prefs.rs#154">configured <em>not</em> to send Telemetry by default</a> but we can't control for other things people might do in the field.</p>
-<p>On desktop, one field to watch out for is headless mode (<code>environment.system.gfx.headless</code> in the main ping): if that field is set, you are for certain not working with a version of Firefox being operated by a real human. You can see an example of some client pings with this field set skewing the nightly numbers in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1643341">bug 1643341</a>. An easy solution is to just filter out these types of clients in your analysis. You can see an example of this pattern in <a href="https://sql.telemetry.mozilla.org/queries/71781/source">this query</a>.</p>
+<p>On desktop, one field to watch out for is headless mode (<code>environment.system.gfx.headless</code> in the main ping): if that field is set, you are for certain not working with a version of Firefox being operated by a real human. You can see an example of some client pings with this field set skewing the nightly numbers in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1643341">bug 1643341</a>. An easy solution is to just filter out these types of clients in your analysis. You can see an example of this pattern in <a href="https://sql.telemetry.mozilla.org/queries/71781/source"><code>STMO#71781</code></a>.</p>
 <h2 id="build-ids"><a class="header" href="#build-ids">Build Ids</a></h2>
 <p>Generally speaking, application versions are monotonically increasing multipart alphanumeric strings like &quot;89.0a1&quot; or &quot;68.0.3&quot;.
 Build Ids are not this.
@@ -7081,7 +7081,7 @@ It delivers the Telemetry Environment as well as Histograms and Scalars for all
 process types that collect data in Firefox. It has several variants each with
 specific delivery characteristics:</p>
 <table><thead><tr><th>Reason</th><th>Sent when</th><th>Notes</th></tr></thead><tbody>
-<tr><td>shutdown</td><td>Firefox session ends cleanly</td><td>Accounts for about <a href="https://sql.telemetry.mozilla.org/queries/3434">80%</a> of all &quot;main&quot; pings. Sent by Pingsender immediately after Firefox shuts down, subject to conditions: Firefox 55+, if the OS isn't also shutting down, and if this isn't the client's first session. If Pingsender fails or isn't used, the ping is sent by Firefox at the beginning of the next Firefox session.</td></tr>
+<tr><td>shutdown</td><td>Firefox session ends cleanly</td><td>Accounts for about 80% of all &quot;main&quot; pings (<a href="https://sql.telemetry.mozilla.org/queries/3434"><code>STMO#3434</code></a>). Sent by Pingsender immediately after Firefox shuts down, subject to conditions: Firefox 55+, if the OS isn't also shutting down, and if this isn't the client's first session. If Pingsender fails or isn't used, the ping is sent by Firefox at the beginning of the next Firefox session.</td></tr>
 <tr><td>daily</td><td>It has been more than 24 hours since the last &quot;main&quot; ping, and it is around local midnight</td><td>In long-lived Firefox sessions we might go days without receiving a &quot;shutdown&quot; ping. Thus the &quot;daily&quot; ping is sent to ensure we occasionally hear from long-lived sessions.</td></tr>
 <tr><td>environment-change</td><td>Telemetry Environment changes</td><td>Is sent immediately when triggered by Firefox (Installing or removing an addon or changing a monitored user preference are common ways for the Telemetry Environment to change)</td></tr>
 <tr><td>aborted-session</td><td>Firefox session doesn't end cleanly</td><td>Sent by Firefox at the beginning of the next Firefox session.</td></tr>
@@ -7372,7 +7372,7 @@ The DAG defined in <a href="https://github.com/mozilla/bigquery-etl/blob/master/
 <h4 id="accessing-the-data"><a class="header" href="#accessing-the-data">Accessing the Data</a></h4>
 <p>The <code>addons_daily</code> table is accessible through STMO using the
 <code>Telemetry (BigQuery)</code> data source.</p>
-<p>Here's an <a href="https://sql.telemetry.mozilla.org/queries/71007/source">example query</a>.</p>
+<p>See <a href="https://sql.telemetry.mozilla.org/queries/71007/source"><code>STMO#71007</code></a> for an example.</p>
 <h1 id="data-reference-1"><a class="header" href="#data-reference-1">Data Reference</a></h1>
 <h2 id="example-queries-1"><a class="header" href="#example-queries-1">Example Queries</a></h2>
 <h4 id="dau-wau-and-mau-for-ublock-origin"><a class="header" href="#dau-wau-and-mau-for-ublock-origin">DAU, WAU and MAU for uBlock Origin</a></h4>
@@ -7600,7 +7600,7 @@ if MAU were calculated by <code>country</code> and <code>channel</code>, then th
 each <code>country</code> would be the same as if MAU were calculated only by <code>channel</code>.</p>
 <h4 id="accessing-the-data-2"><a class="header" href="#accessing-the-data-2">Accessing the Data</a></h4>
 <p>The data is available in Re:dash and BigQuery. Take a look at this full running
-<a href="https://sql.telemetry.mozilla.org/queries/62029/source#159510">example query in Re:dash</a>.</p>
+<a href="https://sql.telemetry.mozilla.org/queries/62029/source#159510">example query in Re:dash (<code>STMO#159510</code>)</a>.</p>
 <h1 id="data-reference-3"><a class="header" href="#data-reference-3">Data Reference</a></h1>
 <h2 id="field-descriptions"><a class="header" href="#field-descriptions">Field Descriptions</a></h2>
 <p>The <a href="datasets/bigquery/clients_last_seen/../../../cookbooks/clients_last_seen_bits.html"><code>*_bits</code> fields</a> store the relevant activity of a client in a 28 day
@@ -7732,7 +7732,7 @@ WHERE event_category = 'pwmgr'
   AND submission_date='2020-04-20'
   AND sample_id=0
 </code></pre>
-<p><a href="https://sql.telemetry.mozilla.org/queries/73401/source">link</a></p>
+<p><a href="https://sql.telemetry.mozilla.org/queries/73401/source"><code>STMO#73401</code></a></p>
 <h2 id="scheduling-6"><a class="header" href="#scheduling-6">Scheduling</a></h2>
 <p>The events dataset is updated daily.
 The job is scheduled on <a href="https://github.com/mozilla/telemetry-airflow">Airflow</a>.
@@ -8006,8 +8006,8 @@ hash of their <code>client_id</code> (or <code>user_id</code>), with the effect 
 randomly assigned to one and only one bucket. If we sum MAU numbers for each
 bucket individually, we can use resampling techniques to determine the magnitude
 of variation and assign a confidence interval to our sums.</p>
-<p>As an example of calculating confidence intervals, see the
-<a href="https://sql.telemetry.mozilla.org/queries/61957/source">Desktop MAU KPI query in STMO</a>
+<p>As an example of calculating confidence intervals, see
+<a href="https://sql.telemetry.mozilla.org/queries/61957/source"><code>STMO#61957</code></a>
 which uses a jackknife resampling technique implemented as a BigQuery UDF.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/bigquery/exact_mau/reference.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="main-ping-tables"><a class="header" href="#main-ping-tables">Main Ping Tables</a></h1>
 <p>As described in the <a href="https://docs.telemetry.mozilla.org/concepts/pipeline/schemas.html">pipeline schemas deployment docs</a>,
@@ -8069,7 +8069,7 @@ limit to a short submission date range.</p>
 </ul>
 <h2 id="accessing-the-data-4"><a class="header" href="#accessing-the-data-4">Accessing the Data</a></h2>
 <p>The <code>main_summary</code> table is accessible through STMO.
-Here's an <a href="https://sql.telemetry.mozilla.org/queries/4201/source">example query</a>.</p>
+See <a href="https://sql.telemetry.mozilla.org/queries/4201/source"><code>STMO#4201</code></a> for an example.</p>
 <h2 id="data-reference-5"><a class="header" href="#data-reference-5">Data Reference</a></h2>
 <h3 id="example-queries-5"><a class="header" href="#example-queries-5">Example Queries</a></h3>
 <p>Compare the search volume for different search source values:</p>
@@ -8196,7 +8196,7 @@ WHERE crash_date='20180520'
 GROUP BY 1,
          2
 </code></pre>
-<p><a href="https://sql.telemetry.mozilla.org/queries/53884/source">STMO Source</a></p>
+<p><a href="https://sql.telemetry.mozilla.org/queries/53884/source"><code>STMO#53884</code></a></p>
 <h3 id="scheduling-9"><a class="header" href="#scheduling-9">Scheduling</a></h3>
 <p>The job is schedule on a nightly basis on airflow.
 The dag is available under <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/socorro_import.py"><code>mozilla/telemetry-airflow:/dags/socorro_import.py</code></a>.</p>
@@ -8317,7 +8317,7 @@ across different <code>submission_date</code> values will not give correct infor
 Data can also be accessed through the public HTTP endpoint: <a href="https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/ssl_ratios/v1/files">https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/ssl_ratios/v1/files</a></p>
 <h2 id="code-reference-8"><a class="header" href="#code-reference-8">Code Reference</a></h2>
 <p>You can find the query that generates the SSL dataset
-<a href="https://sql.telemetry.mozilla.org/queries/49323/source#table">here</a>.</p>
+<a href="https://sql.telemetry.mozilla.org/queries/49323/source#table"><code>STMO#49323</code></a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/other/ssl/reference.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="telemetry-aggregates-reference"><a class="header" href="#telemetry-aggregates-reference">Telemetry Aggregates Reference</a></h1>
 <ul>
 <li><a href="datasets/batch_view/telemetry_aggregates/reference.html#introduction">Introduction</a>
@@ -9076,7 +9076,7 @@ The list of partner codes is incomplete and only covers a few top partners.
 These codes also occasionally change so there will be gaps in the data.</p>
 <p>Additionally, changes to search engine URL formats can cause problems with our data collection.
 See
-<a href="https://sql.telemetry.mozilla.org/queries/47631/source#128887">this query</a>
+<a href="https://sql.telemetry.mozilla.org/queries/47631/source#128887"><code>STMO#128887</code></a>
 for a notable example.</p>
 <h2 id="limited-historical-data"><a class="header" href="#limited-historical-data">Limited historical data</a></h2>
 <p>The <a href="https://github.com/mozilla/followonsearch"><code>followonsearch</code> addon</a> was first deployed in 2017-06.
@@ -9140,7 +9140,7 @@ For more details, see the <a href="datasets/search/search_aggregates/../../searc
 #### Further Reading
 -->
 <h2 id="gotcha"><a class="header" href="#gotcha">Gotcha</a></h2>
-<p>Although <code>search_aggregates</code> table is created on top of <code>search_clients_engines_sources_daily</code>, you may expect the total search metrics reported to match exactly. It's actually not the case. In case you notice the total number reported in <code>search_aggregates</code> higher than <code>search_clients_engines_sources_daily</code>, it's most likely due to <a href="https://mana.mozilla.org/wiki/display/DATA/Shredder">Shredder</a>. <code>search_aggregates</code> table is aggregated beyond the client level, so shredder doesn’t have to touch it. But <code>search_clients_engines_sources_daily</code> contains <code>client_id</code> and is subject to shredder. It's expected to lose up to 1% of rows every month as Firefox responds to clients' deletion requests, which would reduce count in <code>search_clients_engines_soruces</code> but not in <code>search_aggregates</code>. An example query to show such a difference can be found <a href="https://sql.telemetry.mozilla.org/queries/84302/source">here</a>. </p>
+<p>Although <code>search_aggregates</code> table is created on top of <code>search_clients_engines_sources_daily</code>, you may expect the total search metrics reported to match exactly. It's actually not the case. In case you notice the total number reported in <code>search_aggregates</code> higher than <code>search_clients_engines_sources_daily</code>, it's most likely due to <a href="https://mana.mozilla.org/wiki/display/DATA/Shredder">Shredder</a>. <code>search_aggregates</code> table is aggregated beyond the client level, so shredder doesn’t have to touch it. But <code>search_clients_engines_sources_daily</code> contains <code>client_id</code> and is subject to shredder. It's expected to lose up to 1% of rows every month as Firefox responds to clients' deletion requests, which would reduce count in <code>search_clients_engines_soruces</code> but not in <code>search_aggregates</code>. An example query to show such a difference can be found in <a href="https://sql.telemetry.mozilla.org/queries/84302/source"><code>STMO#84302</code></a>.</p>
 <h1 id="data-reference-12"><a class="header" href="#data-reference-12">Data Reference</a></h1>
 <h2 id="example-queries-7"><a class="header" href="#example-queries-7">Example Queries</a></h2>
 <h3 id="daily-us-sap-searches"><a class="header" href="#daily-us-sap-searches">Daily US sap searches</a></h3>
@@ -9154,7 +9154,7 @@ WHERE
 GROUP BY submission_date
 ORDER BY submission_date
 </code></pre>
-<p><a href="https://sql.telemetry.mozilla.org/queries/51140/source">link to query on STMO</a></p>
+<p><a href="https://sql.telemetry.mozilla.org/queries/51140/source"><code>STMO#51140</code></a></p>
 <h2 id="scheduling-13"><a class="header" href="#scheduling-13">Scheduling</a></h2>
 <p>This job is
 <a href="https://github.com/mozilla/bigquery-etl/blob/ad84a15d580333b41d36cfe8331e51238f3bafa1/dags/bqetl_search.py#L40">scheduled on airflow</a>
@@ -9246,7 +9246,7 @@ heavily limit the data you read using <code>submission_date</code> or <code>samp
 -->
 <h1 id="data-reference-13"><a class="header" href="#data-reference-13">Data Reference</a></h1>
 <h2 id="example-queries-8"><a class="header" href="#example-queries-8">Example Queries</a></h2>
-<p><a href="https://sql.telemetry.mozilla.org/queries/51141/source">This query</a>
+<p><a href="https://sql.telemetry.mozilla.org/queries/51141/source"><code>STMO#51141</code></a>
 calculates searches per <code>normalized_channel</code> for US clients on an arbitrary day.
 If you have trouble viewing this query,
 it's likely you don't have the proper permissions.
@@ -9397,11 +9397,11 @@ Any client who was active over the past year will be included.</p>
 -->
 <h1 id="data-reference-14"><a class="header" href="#data-reference-14">Data Reference</a></h1>
 <h2 id="example-queries-9"><a class="header" href="#example-queries-9">Example Queries</a></h2>
-<p><a href="https://sql.telemetry.mozilla.org/queries/70349/source#177176">This retention query</a>
+<p><a href="https://sql.telemetry.mozilla.org/queries/70349/source#177176"><code>STMO#70349</code></a>
 gives the WoW retention of users in different segments. Similar to GUD, a user is
 considered retained if they do they same activity the next week. Note here the
 outage from Armagaddon, and the outage for ad click telemetry in October.</p>
-<p><a href="https://sql.telemetry.mozilla.org/queries/70348/source#177160">This query</a>
+<p><a href="https://sql.telemetry.mozilla.org/queries/70348/source#177160"><code>STMO#70348</code></a>
 shows the amount of different search activity taken by clients. We can use it
 to determine the % of clients who partake in each activity, regardless of their
 baseline amount of activity.</p>
@@ -9524,7 +9524,7 @@ It's backfilled through 2020-01-01</p>
 <p>LTV is broken down by engine, so the LTV for a user who searches on multiple engines must be interpreted in context. <strong>LTV is only available for Google and Bing on Firefox Desktop</strong> at this time.</p>
 <p>We <strong>do</strong> have the ability to calculate a dollar value per user, however the (unnormalized) table is restricted to those with proper revenue access. For more information, see <a href="datasets/search/client_ltv/../../../concepts/getting_help.html">Getting Help</a>.</p>
 <h1 id="example-queries-10"><a class="header" href="#example-queries-10">Example Queries</a></h1>
-<p><em>Percent of users we predict will click an ad in the <strong>next</strong> 365 days by Engine.</em> (<a href="https://sql.telemetry.mozilla.org/queries/74878/source">source</a>)</p>
+<p><em>Percent of users we predict will click an ad in the <strong>next</strong> 365 days by Engine.</em> (<a href="https://sql.telemetry.mozilla.org/queries/74878/source"><code>STMO#74878</code></a>)</p>
 <pre><code class="language-sql">SELECT
   engine,
   AVG(IF(pred_num_days_seeing_ads &gt; 0, 1, 0)) as pct_predicted_ad_viewers_next_year,
@@ -9536,7 +9536,7 @@ WHERE
 GROUP BY
   1
 </code></pre>
-<p><em>LTV Value of Users Over Lifetime (by <code>days_since_created_profile</code>) of Users Active in Past 7 Days</em> (<a href="https://sql.telemetry.mozilla.org/queries/74867/source#187036">source</a>)</p>
+<p><em>LTV Value of Users Over Lifetime (by <code>days_since_created_profile</code>) of Users Active in Past 7 Days</em> (<a href="https://sql.telemetry.mozilla.org/queries/74867/source#187036"><code>STMO#187036</code></a>)</p>
 <pre><code class="language-sql">SELECT
   days_since_created_profile,
   SUM(normalized_ltv_ad_clicks_current) AS sum_normalized_ltv_ad_clicks_current,
@@ -9610,7 +9610,7 @@ The dataset is backfilled through 2020-09-14.</p>
 <li><a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/revenue_derived/client_ltv_normalized/query.sql"><code>client_ltv</code> view</a> (for broad use)</li>
 </ul>
 <h1 id="model-performance"><a class="header" href="#model-performance">Model Performance</a></h1>
-<p>There is additionally a dataset, <code>ltv_daily_model_perf</code>, that tracks the LTV model's prediction performance each day it is re-trained. For a given day, one could check the performance with the following <a href="https://sql.telemetry.mozilla.org/queries/75244/source#187873">query</a>:</p>
+<p>There is additionally a dataset, <code>ltv_daily_model_perf</code>, that tracks the LTV model's prediction performance each day it is re-trained. For a given day, one could check the performance with the following <a href="https://sql.telemetry.mozilla.org/queries/75244/source#187873">query (<code>STMO#187873</code>)</a>:</p>
 <pre><code class="language-sql">SELECT
   active_days,
   actual,
@@ -9676,7 +9676,7 @@ WHERE
 GROUP BY 1,2
 ORDER BY 1
 </code></pre>
-<p><a href="https://sql.telemetry.mozilla.org/queries/72054">Link to query in STMO</a></p>
+<p><a href="https://sql.telemetry.mozilla.org/queries/72054"><code>STMO#72054</code></a></p>
 <h2 id="scheduling-16"><a class="header" href="#scheduling-16">Scheduling</a></h2>
 <p>This dataset is scheduled on Airflow (<a href="https://github.com/mozilla/telemetry-airflow/blob/59effc6ead0b764a9ef3d30f40fbdb4b0b3394ec/dags/copy_deduplicate.py#L337">source</a>).</p>
 <h2 id="schema-12"><a class="header" href="#schema-12">Schema</a></h2>
@@ -9801,7 +9801,7 @@ GROUP BY
 ORDER BY
   Store_Visits DESC
 </code></pre>
-<p><a href="https://sql.telemetry.mozilla.org/queries/74289/source">link to query on STMO</a></p>
+<p><a href="https://sql.telemetry.mozilla.org/queries/74289/source"><code>STMO#74289</code></a></p>
 <h3 id="calculate-google-play-store-activity-for-a-given-day-by-source-and-app"><a class="header" href="#calculate-google-play-store-activity-for-a-given-day-by-source-and-app">Calculate Google Play Store activity for a given day by source and app</a></h3>
 <pre><code class="language-sql">SELECT
   Date,
@@ -9819,7 +9819,7 @@ GROUP BY
 ORDER BY
   package_name, Store_Visits
 </code></pre>
-<p><a href="https://sql.telemetry.mozilla.org/queries/74288/source">link to query on STMO</a></p>
+<p><a href="https://sql.telemetry.mozilla.org/queries/74288/source"><code>STMO#74288</code></a></p>
 <h2 id="scheduling-17"><a class="header" href="#scheduling-17">Scheduling</a></h2>
 <p>The job to retrieve the raw data from the Google Play Store can be found in <a href="https://github.com/mozilla/play-store-export">the <code>play-store-export</code> repository</a> and it is scheduled in <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/play_store_export.py">airflow</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/non_desktop/google_play_store/reference.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="apple-app-store"><a class="header" href="#apple-app-store">Apple App Store</a></h1>
@@ -9913,7 +9913,7 @@ WHERE
 GROUP BY
   date, app_name
 </code></pre>
-<p><a href="https://sql.telemetry.mozilla.org/queries/74291/source">link to query on STMO</a></p>
+<p><a href="https://sql.telemetry.mozilla.org/queries/74291/source"><code>STMO#74291</code></a></p>
 <h3 id="calculate-apple-app-store-activity-for-a-given-day-and-app-by-source"><a class="header" href="#calculate-apple-app-store-activity-for-a-given-day-and-app-by-source">Calculate Apple App Store Activity for a given day and app by source</a></h3>
 <pre><code class="language-sql">SELECT
   date,
@@ -9932,7 +9932,7 @@ WHERE
 GROUP BY
   date, app_name, source
 </code></pre>
-<p><a href="https://sql.telemetry.mozilla.org/queries/74290/source">link to query on STMO</a></p>
+<p><a href="https://sql.telemetry.mozilla.org/queries/74290/source"><code>STMO#74290</code></a></p>
 <h2 id="scheduling-18"><a class="header" href="#scheduling-18">Scheduling</a></h2>
 <p>The job to retrieve the raw data from the Apple App Store can be found in <a href="https://github.com/mozilla/app-store-analytics-export">the <code>app-store-analytics-export</code> repository</a>. The exported results are individual metrics grouped by a single dimension. These exports are initially loaded into the <a href="https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&amp;p=moz-fx-data-marketing-prod&amp;d=apple_app_store_exported&amp;page=dataset"><code>apple_app_store_exported</code></a> data source. The exports are scheduled in <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/app_store_analytics.py"><code>airflow</code></a>. The job to create the derived tables found in <a href="https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&amp;p=moz-fx-data-marketing-prod&amp;d=apple_app_store&amp;page=dataset"><code>moz-fx-data-marketing-prod.apple_app_store</code></a> can be found in <a href="https://github.com/mozilla/bigquery-etl/tree/master/sql/moz-fx-data-marketing-prod/apple_app_store"><code>bigquery-etl</code> under <code>apple_app_store</code></a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/non_desktop/apple_app_store/reference.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="other-datasets"><a class="header" href="#other-datasets">Other Datasets</a></h1>
@@ -10714,7 +10714,7 @@ reported by Android Fennec clients is the Android SDK version instead of the And
 The <code>normalized_os_version</code> table can be used to map the sent version to the &quot;display version&quot;
 of the OS.</p>
 <p>The table uses a regular expression to look up the OS version so <code>REGEXP_CONTAINS</code> should be used.
-An example query can be found here: <a href="https://sql.telemetry.mozilla.org/queries/67040/source">https://sql.telemetry.mozilla.org/queries/67040/source</a></p>
+An example query can be found in <a href="https://sql.telemetry.mozilla.org/queries/67040/source"><code>STMO#67040</code></a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/static/normalized_os.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="historical-reference-1"><a class="header" href="#historical-reference-1">Historical Reference</a></h1>
 <p>This section contains some documentation of things that used to be part of the Mozilla Data Platform, but are no
 longer. You can generally safely ignore this section, it is intended only to answer questions like &quot;what happened to X?&quot;.</p>
@@ -11241,7 +11241,7 @@ WHERE
 GROUP BY
   submission_date
 </code></pre>
-<p>You can run this query on <a href="https://sql.telemetry.mozilla.org/queries/72012/source">STMO</a>.</p>
+<p>You can run this query on <a href="https://sql.telemetry.mozilla.org/queries/72012/source"><code>STMO#72012</code></a>.</p>
 <hr />
 <h2 id="day-2-7-activation"><a class="header" href="#day-2-7-activation">Day 2-7 Activation</a></h2>
 <h3 id="overview-6"><a class="header" href="#overview-6">Overview</a></h3>
@@ -11270,7 +11270,7 @@ WHERE
 GROUP BY 1,2
 ORDER BY 1
 </code></pre>
-<p><a href="https://sql.telemetry.mozilla.org/queries/72054/source">link</a></p>
+<p><a href="https://sql.telemetry.mozilla.org/queries/72054/source"><code>STMO#72054</code></a></p>
 <hr />
 <p>Reference below.</p>
 <p>{{Metric name}}</p>
@@ -11392,7 +11392,7 @@ ready. At each wakeup, the single most-overdue task is triggered, if one
 exists. <code>UpdateTimerManager</code> then sleeps at least two minutes or until
 the next task is scheduled.</p>
 <p>Failures are ignored.</p>
-<p>The raw data is available in BigQuery (see an example <a href="https://sql.telemetry.mozilla.org/queries/66481">ADI query in Redash</a>).</p>
+<p>The raw data is available in BigQuery (see <a href="https://sql.telemetry.mozilla.org/queries/66481"><code>STMO#66481</code></a>).</p>
 <p>Telemetry only reports whether blocklist checking is enabled or disabled
 on the client; there is no data in telemetry about blocklist fetches,
 age, or update failures.</p>
@@ -11485,7 +11485,7 @@ The DAS is completed by ~300 Firefox users every day, allowing us to measure lon
 <p>The <code>attitudes_daily</code> table is accessible through STMO using the
 <code>Telemetry (BigQuery)</code> data source.
 The full table name is <code>moz-fx-data-shared-prod.telemetry.attitudes_daily</code>.</p>
-<p>Here's an <a href="https://sql.telemetry.mozilla.org/queries/63937/source#163424">example query</a>.</p>
+<p>Here's an <a href="https://sql.telemetry.mozilla.org/queries/63937/source#163424">example query (<code>STMO#163424</code>)</a>.</p>
 <h1 id="data-reference-20"><a class="header" href="#data-reference-20">Data Reference</a></h1>
 <p>The DAS shows the user the following four statements, all having the same possible responses of &quot;Agree&quot;, &quot;Disagree&quot; or &quot;Neutral or not sure&quot;.
 Each question has an identifier in the <code>attitudes_daily</code> table as the <code>question_key</code>field (shown in parentheses after each statement below)</p>
@@ -11819,14 +11819,13 @@ The HyperLogLog variable is a far more efficient way to count distinct elements 
 but comes with some complexity.
 To find the cardinality of an HLL use <code>cardinality(cast(hll AS HLL))</code>.
 To find the union of two HLL's over different dates, use <code>merge(cast(hll AS HLL))</code>.
-The <a href="https://sql.telemetry.mozilla.org/queries/81/source#129">Firefox ER Reporting Query</a>
+The <a href="https://sql.telemetry.mozilla.org/queries/81/source#129">Firefox ER Reporting Query (<code>STMO#81</code>)</a>
 is a good example to review.
 Finally, Roberto has a relevant write-up
 <a href="https://ravitillo.wordpress.com/2016/04/12/measuring-product-engagment-at-scale/">here</a>.</p>
 <h4 id="accessing-the-data-13"><a class="header" href="#accessing-the-data-13">Accessing the Data</a></h4>
 <p>The data is available in STMO.
-Take a look at this
-<a href="https://sql.telemetry.mozilla.org/queries/81/source#129">example query</a>.</p>
+Take a look at <a href="https://sql.telemetry.mozilla.org/queries/81/source#129"><code>STMO#81</code></a>.</p>
 <h4 id="further-reading-1"><a class="header" href="#further-reading-1">Further Reading</a></h4>
 <h1 id="data-reference-22"><a class="header" href="#data-reference-22">Data Reference</a></h1>
 <h2 id="example-queries-18"><a class="header" href="#example-queries-18">Example Queries</a></h2>
@@ -12085,7 +12084,7 @@ though only a subset of all crash ping fields are included.</p>
 <pre><code>s3://telemetry-parquet/crash_summary/v1/
 </code></pre>
 <p><code>crash_summary</code> is accessible through STMO.
-Here's an <a href="https://sql.telemetry.mozilla.org/queries/4793/source">example query</a>.</p>
+Here's an <a href="https://sql.telemetry.mozilla.org/queries/4793/source">example query (<code>STMO#4793</code>)</a>.</p>
 <h4 id="further-reading-3"><a class="header" href="#further-reading-3">Further Reading</a></h4>
 <p>The technical documentation for <code>crash_summary</code> is located in the
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/docs/CrashSummary.md">telemetry-batch-view documentation</a>.</p>
@@ -12195,7 +12194,7 @@ filter for <code>experiment_id is null</code> and <code>experiment_branch is nul
 <h1 id="data-reference-25"><a class="header" href="#data-reference-25">Data Reference</a></h1>
 <h2 id="example-queries-21"><a class="header" href="#example-queries-21">Example Queries</a></h2>
 <p>Getting a large number of different crash measures across many platforms and channels
-(<a href="https://sql.telemetry.mozilla.org/queries/4769/source">view on STMO</a>):</p>
+(<a href="https://sql.telemetry.mozilla.org/queries/4769/source"><code>STMO#4769</code></a>):</p>
 <pre><code class="language-sql">SELECT window_start,
        build_id,
        channel,
@@ -12218,7 +12217,7 @@ FROM error_aggregates_v2
 GROUP BY window_start, channel, build_id, version, os_name
 </code></pre>
 <p>Get the number of <code>main_crashes</code> on Windows over a small interval
-(<a href="https://sql.telemetry.mozilla.org/queries/51677">view on STMO</a>):</p>
+(<a href="https://sql.telemetry.mozilla.org/queries/51677"><code>STMO#51677</code></a>):</p>
 <pre><code class="language-sql">SELECT window_start as time, sum(main_crashes) AS main_crashes
 FROM error_aggregates_v2
   WHERE application = 'Firefox'
@@ -12386,8 +12385,8 @@ into account.</li>
 <h2 id="example-queries-22"><a class="header" href="#example-queries-22">Example Queries</a></h2>
 <p>Example queries:</p>
 <ul>
-<li><a href="https://sql.telemetry.mozilla.org/queries/47041/source#127382">Join <code>heavy_users</code> with <code>main_summary</code> to get distribution of <code>max_concurrent_tab_count</code> for heavy vs. non-heavy users</a></li>
-<li><a href="https://sql.telemetry.mozilla.org/queries/47044/source#127385">Join <code>heavy_users</code> with <code>longitudinal</code> to get crash rates for heavy vs. non-heavy users</a></li>
+<li><a href="https://sql.telemetry.mozilla.org/queries/47041/source#127382">Join <code>heavy_users</code> with <code>main_summary</code> to get distribution of <code>max_concurrent_tab_count</code> for heavy vs. non-heavy users (<code>STMO#47041</code>)</a></li>
+<li><a href="https://sql.telemetry.mozilla.org/queries/47044/source#127385">Join <code>heavy_users</code> with <code>longitudinal</code> to get crash rates for heavy vs. non-heavy users (<code>STMO#47044</code>)</a></li>
 </ul>
 <h2 id="schema-21"><a class="header" href="#schema-21">Schema</a></h2>
 <p>As of 2017-10-05, the current version of the <code>heavy_users</code> dataset is <code>v1</code>, and has a schema as follows:</p>
@@ -12486,7 +12485,7 @@ Each column represents a field from the main ping.
 Most fields contain <strong>arrays of values</strong>, with one value for each ping associated with a <code>client_id</code>.
 Using arrays give you access to the raw data from each ping,
 but can be difficult to work with from SQL.
-Here's a <a href="https://sql.telemetry.mozilla.org/queries/4188#table">query showing some sample data</a>
+Here's a <a href="https://sql.telemetry.mozilla.org/queries/4188#table">query showing some sample data (<code>STMO#4188</code>)</a>
 to help illustrate.</p>
 <h4 id="background-and-caveats-13"><a class="header" href="#background-and-caveats-13">Background and Caveats</a></h4>
 <p>Think of the longitudinal table as wide and short.
@@ -12501,7 +12500,7 @@ and down-samples to 1% of all clients to reduce query computation time and save 
 <h4 id="accessing-the-data-19"><a class="header" href="#accessing-the-data-19">Accessing the Data</a></h4>
 <p>The <code>longitudinal</code> is available in STMO,
 though it can be difficult to work with the array values in SQL.
-Take a look at this <a href="https://sql.telemetry.mozilla.org/queries/4189/source">example query</a>.</p>
+Take a look at <a href="https://sql.telemetry.mozilla.org/queries/4189/source"><code>STMO#4189</code></a>.</p>
 <p>The data is stored as a parquet table in S3 at the following address.</p>
 <pre><code>s3://telemetry-parquet/longitudinal/
 </code></pre>
@@ -12996,6 +12995,12 @@ so make it easy to identify important information.
 <li>Use <strong>visual markup</strong> like <strong>bold text</strong>, <code>code blocks</code>, and section headers.</li>
 <li>Avoid long paragraphs: short paragraphs that describe one concept each makes finding important information easier.</li>
 <li>When writing longer articles with many sections, use a <a href="contributing/./index.html#table-of-contents">table of contents</a> to help people quickly navigate to a section of interest.</li>
+</ul>
+</li>
+<li>Use self-explanatory link descriptions.
+<ul>
+<li><strong>Do not</strong> use <code>here</code> or <code>this</code> as the description for an external link. It is repetitive across a site and does not explain where it leads to.</li>
+<li>For links to queries on Redash use <code>STMO#&lt;query id&gt;</code>. This makes it consistent across the documentation and provides a hint about how old / new a query might be (newer queries have higher numeric IDs)</li>
 </ul>
 </li>
 </ul>

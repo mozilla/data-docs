@@ -207,7 +207,7 @@ For more details, see the <a href="../../search.html">search data documentation<
 #### Further Reading
 -->
 <h2 id="gotcha"><a class="header" href="#gotcha">Gotcha</a></h2>
-<p>Although <code>search_aggregates</code> table is created on top of <code>search_clients_engines_sources_daily</code>, you may expect the total search metrics reported to match exactly. It's actually not the case. In case you notice the total number reported in <code>search_aggregates</code> higher than <code>search_clients_engines_sources_daily</code>, it's most likely due to <a href="https://mana.mozilla.org/wiki/display/DATA/Shredder">Shredder</a>. <code>search_aggregates</code> table is aggregated beyond the client level, so shredder doesn’t have to touch it. But <code>search_clients_engines_sources_daily</code> contains <code>client_id</code> and is subject to shredder. It's expected to lose up to 1% of rows every month as Firefox responds to clients' deletion requests, which would reduce count in <code>search_clients_engines_soruces</code> but not in <code>search_aggregates</code>. An example query to show such a difference can be found <a href="https://sql.telemetry.mozilla.org/queries/84302/source">here</a>. </p>
+<p>Although <code>search_aggregates</code> table is created on top of <code>search_clients_engines_sources_daily</code>, you may expect the total search metrics reported to match exactly. It's actually not the case. In case you notice the total number reported in <code>search_aggregates</code> higher than <code>search_clients_engines_sources_daily</code>, it's most likely due to <a href="https://mana.mozilla.org/wiki/display/DATA/Shredder">Shredder</a>. <code>search_aggregates</code> table is aggregated beyond the client level, so shredder doesn’t have to touch it. But <code>search_clients_engines_sources_daily</code> contains <code>client_id</code> and is subject to shredder. It's expected to lose up to 1% of rows every month as Firefox responds to clients' deletion requests, which would reduce count in <code>search_clients_engines_soruces</code> but not in <code>search_aggregates</code>. An example query to show such a difference can be found in <a href="https://sql.telemetry.mozilla.org/queries/84302/source"><code>STMO#84302</code></a>.</p>
 <h1 id="data-reference"><a class="header" href="#data-reference">Data Reference</a></h1>
 <h2 id="example-queries"><a class="header" href="#example-queries">Example Queries</a></h2>
 <h3 id="daily-us-sap-searches"><a class="header" href="#daily-us-sap-searches">Daily US sap searches</a></h3>
@@ -221,7 +221,7 @@ WHERE
 GROUP BY submission_date
 ORDER BY submission_date
 </code></pre>
-<p><a href="https://sql.telemetry.mozilla.org/queries/51140/source">link to query on STMO</a></p>
+<p><a href="https://sql.telemetry.mozilla.org/queries/51140/source"><code>STMO#51140</code></a></p>
 <h2 id="scheduling"><a class="header" href="#scheduling">Scheduling</a></h2>
 <p>This job is
 <a href="https://github.com/mozilla/bigquery-etl/blob/ad84a15d580333b41d36cfe8331e51238f3bafa1/dags/bqetl_search.py#L40">scheduled on airflow</a>

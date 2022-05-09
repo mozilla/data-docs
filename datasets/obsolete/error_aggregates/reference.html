@@ -200,7 +200,7 @@ filter for <code>experiment_id is null</code> and <code>experiment_branch is nul
 <h1 id="data-reference"><a class="header" href="#data-reference">Data Reference</a></h1>
 <h2 id="example-queries"><a class="header" href="#example-queries">Example Queries</a></h2>
 <p>Getting a large number of different crash measures across many platforms and channels
-(<a href="https://sql.telemetry.mozilla.org/queries/4769/source">view on STMO</a>):</p>
+(<a href="https://sql.telemetry.mozilla.org/queries/4769/source"><code>STMO#4769</code></a>):</p>
 <pre><code class="language-sql">SELECT window_start,
        build_id,
        channel,
@@ -223,7 +223,7 @@ FROM error_aggregates_v2
 GROUP BY window_start, channel, build_id, version, os_name
 </code></pre>
 <p>Get the number of <code>main_crashes</code> on Windows over a small interval
-(<a href="https://sql.telemetry.mozilla.org/queries/51677">view on STMO</a>):</p>
+(<a href="https://sql.telemetry.mozilla.org/queries/51677"><code>STMO#51677</code></a>):</p>
 <pre><code class="language-sql">SELECT window_start as time, sum(main_crashes) AS main_crashes
 FROM error_aggregates_v2
   WHERE application = 'Firefox'

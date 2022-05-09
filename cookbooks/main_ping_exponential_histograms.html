@@ -189,7 +189,7 @@ WHERE
 LIMIT
   3
 </code></pre>
-<p><a href="https://sql.telemetry.mozilla.org/queries/71333/source">link</a></p>
+<p><a href="https://sql.telemetry.mozilla.org/queries/71333/source"><code>STMO#71333</code></a></p>
 <p>Running this query on STMO, we get the following output:</p>
 <table><thead><tr><th><code>histogram_json</code></th></tr></thead><tbody>
 <tr><td><code>{&quot;bucket_count&quot;:20,&quot;histogram_type&quot;:0,&quot;sum&quot;:118,&quot;range&quot;:[1,1000],&quot;values&quot;:{&quot;80&quot;:0,&quot;115&quot;:1,&quot;165&quot;:0}}</code></td></tr>
@@ -219,7 +219,7 @@ SELECT
 FROM
   intermediate;
 </code></pre>
-<p><a href="https://sql.telemetry.mozilla.org/queries/71408/source">link</a></p>
+<p><a href="https://sql.telemetry.mozilla.org/queries/71408/source"><code>STMO#71408</code></a></p>
 <p>Which yields:</p>
 <table><thead><tr><th><code>sum</code></th><th><code>bucket_count</code></th></tr></thead><tbody>
 <tr><td>118</td><td>20</td></tr>
@@ -256,7 +256,7 @@ FROM
 CROSS JOIN
   UNNEST(percentiles.percentile_nested);
 </code></pre>
-<p><a href="https://sql.telemetry.mozilla.org/queries/71410/source">link</a></p>
+<p><a href="https://sql.telemetry.mozilla.org/queries/71410/source"><code>STMO#71410</code></a></p>
 <p>Which gives us this set of results:</p>
 <table><thead><tr><th>Percentile</th><th>Value</th></tr></thead><tbody>
 <tr><td>0.05</td><td>13</td></tr>
@@ -316,8 +316,8 @@ CROSS JOIN
     )
   )
 </code></pre>
-<p><a href="https://sql.telemetry.mozilla.org/queries/71472/source">link</a></p>
-<p>As an implementation note, observe that we don't use <code>histogram_merge</code> here as we do above: doing so would require using <a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators#array_agg"><code>ARRAY_AGG</code></a> which can break down when processing large amounts of data. Instead we create an intermediate result (the <code>per_build_day</code> <code>WITH</code> statement) and then reprocess it into a structured representation. If you're curious what the version using <code>histogram_merge</code> would look like, see <a href="https://sql.telemetry.mozilla.org/queries/71413/source">this example</a>.</p>
+<p><a href="https://sql.telemetry.mozilla.org/queries/71472/source"><code>STMO#71472</code></a></p>
+<p>As an implementation note, observe that we don't use <code>histogram_merge</code> here as we do above: doing so would require using <a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators#array_agg"><code>ARRAY_AGG</code></a> which can break down when processing large amounts of data. Instead we create an intermediate result (the <code>per_build_day</code> <code>WITH</code> statement) and then reprocess it into a structured representation. If you're curious what the version using <code>histogram_merge</code> would look like, see <a href="https://sql.telemetry.mozilla.org/queries/71413/source"><code>STMO#71413</code></a>.</p>
 <p>In any case, rendering the data this query returns, we get a chart like this:</p>
 <p><img src="../assets/exponential_histograms_tutorial/example_visualization_of_histogram_percentiles.png" alt="example visualization of histogram percentiles" /></p>
 <p>You'll note that the 75th and the 95th percentiles are often the same. Which is to say: in 25% of cases, the value was somewhere between <code>698ms</code> and <code>1000ms</code>. Does this mean that 25% of the time people are seeing a <em>very</em> long-running tab spinner? <em>No!</em> It actually points to a flaw in our methodology, which GLAM was explicitly designed to address. For the last part our tutorial, let's look into how it does it, and how to reproduce its approach.</p>
@@ -391,7 +391,7 @@ FROM
 CROSS JOIN
   UNNEST(percentiles.percentile_nested);
 </code></pre>
-<p><a href="https://sql.telemetry.mozilla.org/queries/71489/source">link</a></p>
+<p><a href="https://sql.telemetry.mozilla.org/queries/71489/source"><code>STMO#71489</code></a></p>
 <p>You'll notice this query groups by <code>client_id</code> in addition to <code>build_id</code> before <code>mozfun.hist.normalize</code>. Grouping by <code>client_id</code> gives each user equal representation and prevents &quot;power users&quot; from skewing the result.</p>
 <p>In any case, the result of this query is this graph:</p>
 <p><img src="../assets/exponential_histograms_tutorial/example_visualization_of_normalized_histogram_percentiles.png" alt="example visualization of normalized histogram percentiles" /></p>
@@ -466,7 +466,7 @@ FROM
 CROSS JOIN
   UNNEST(percentiles.percentile_nested);
 </code></pre>
-<p><a href="https://sql.telemetry.mozilla.org/queries/71437/source">link</a></p>
+<p><a href="https://sql.telemetry.mozilla.org/queries/71437/source"><code>STMO#71437</code></a></p>
 <p>If we do this, we see this chart:</p>
 <p><img src="../assets/exponential_histograms_tutorial/example_visualization_of_normalized_histogram_percentiles_for_Windows_7.png" alt="example visualization of normalized histogram percentiles for Windows 7" /></p>
 <p>As you can see, both the 75th and 100th percentile are now in the highest bucket, and the 50th percentile is much higher as well. From this we can intuit that the user experience for these users is likely considerably worse, which is exactly what we would have expected.</p>
