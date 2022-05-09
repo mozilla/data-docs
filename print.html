@@ -9175,8 +9175,8 @@ For example, we include <code>country</code> and <code>channel</code> for each r
 In the event that a client sends multiple pings on a given <code>submission_date</code>
 we choose an arbitrary value from the pings for that (<code>client_id</code>, <code>submission_date</code>),
 unless otherwise noted.</p>
-<p>There are five standard search count aggregation columns:
-<code>sap</code>, <code>tagged-sap</code>, and <code>tagged-follow-on</code>, <code>organic</code> and <code>unknown</code>.
+<p>There are multiple standard search count aggregation columns:
+<code>sap</code>, <code>tagged-sap</code>, <code>tagged-follow-on</code>, <code>organic</code>, <code>unknown</code>, <code>ad_click</code>, <code>ad_click_organic</code>, <code>search_with_ads</code>, and <code>search_with_ads_organic</code> with varying dates the metrics became available. 
 Note that, if there were no such searches in a row's segment
 (i.e. the count would be 0),
 the column value is <code>null</code>.
