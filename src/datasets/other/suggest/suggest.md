@@ -39,4 +39,4 @@ Interactions data related to Firefox Suggest is collected in the following ways.
   We collect data about Merino's response times and response types in Firefox using the standard (legacy) Telemetry system as Histograms. Full documentation of the probes is [here](https://firefox-source-docs.mozilla.org/browser/urlbar/firefox-suggest-telemetry.html#histograms).
 
 3. Service and operational data on Merino
-  We also collect data about Merino as a service from Merino directly. Full documentation of the data is here. 
+  We also collect data about Merino as a service from Merino directly. Full documentation of the data is [here](https://mozilla-services.github.io/merino/data.html). 
