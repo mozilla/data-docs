@@ -86,6 +86,7 @@ The search code module inside Firefox (formerly implemented as an addon until ve
 
 Firefox's search module attempts to count all tagged searches by looking for Mozilla partner codes in the URL of requests to partner search engines. To do this, it relies on a whitelist of partner codes and URL formats. The list of partner codes is incomplete and only covers a few top partners. These codes also occasionally change so there will be gaps in the data.
 
+
 Additionally, changes to search engine URL formats can cause problems with our data collection. See [this query](https://sql.telemetry.mozilla.org/queries/47631/source#128887) for a notable example.
 
 ## Limited historical data

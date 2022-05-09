@@ -35,4 +35,4 @@ The `normalized_os_version` table can be used to map the sent version to the "di
 of the OS.
 
 The table uses a regular expression to look up the OS version so `REGEXP_CONTAINS` should be used.
-An example query can be found here: <https://sql.telemetry.mozilla.org/queries/67040/source>
+An example query can be found in [`STMO#67040`](https://sql.telemetry.mozilla.org/queries/67040/source).

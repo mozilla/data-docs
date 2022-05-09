@@ -12,4 +12,4 @@ The `attitudes_daily` table is accessible through STMO using the
 `Telemetry (BigQuery)` data source.
 The full table name is `moz-fx-data-shared-prod.telemetry.attitudes_daily`.
 
-Here's an [example query](https://sql.telemetry.mozilla.org/queries/63937/source#163424).
+Here's an [example query (`STMO#163424`)](https://sql.telemetry.mozilla.org/queries/63937/source#163424).

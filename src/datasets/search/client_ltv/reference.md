@@ -8,7 +8,7 @@
 
 # Example Queries
 
-_Percent of users we predict will click an ad in the **next** 365 days by Engine._ ([source](https://sql.telemetry.mozilla.org/queries/74878/source))
+_Percent of users we predict will click an ad in the **next** 365 days by Engine._ ([`STMO#74878`](https://sql.telemetry.mozilla.org/queries/74878/source))
 
 ```sql
 SELECT
@@ -23,7 +23,7 @@ GROUP BY
   1
 ```
 
-_LTV Value of Users Over Lifetime (by `days_since_created_profile`) of Users Active in Past 7 Days_ ([source](https://sql.telemetry.mozilla.org/queries/74867/source#187036))
+_LTV Value of Users Over Lifetime (by `days_since_created_profile`) of Users Active in Past 7 Days_ ([`STMO#187036`](https://sql.telemetry.mozilla.org/queries/74867/source#187036))
 
 ```sql
 SELECT
@@ -105,7 +105,7 @@ root
 
 # Model Performance
 
-There is additionally a dataset, `ltv_daily_model_perf`, that tracks the LTV model's prediction performance each day it is re-trained. For a given day, one could check the performance with the following [query](https://sql.telemetry.mozilla.org/queries/75244/source#187873):
+There is additionally a dataset, `ltv_daily_model_perf`, that tracks the LTV model's prediction performance each day it is re-trained. For a given day, one could check the performance with the following [query (`STMO#187873`)](https://sql.telemetry.mozilla.org/queries/75244/source#187873):
 
 ```sql
 SELECT

@@ -24,7 +24,7 @@ GROUP BY submission_date
 ORDER BY submission_date
 ```
 
-[link to query on STMO](https://sql.telemetry.mozilla.org/queries/51140/source)
+[`STMO#51140`](https://sql.telemetry.mozilla.org/queries/51140/source)
 
 ## Scheduling
 
