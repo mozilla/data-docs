@@ -8988,99 +8988,49 @@ complex analyses.</p>
 <h1 id="terminology-1"><a class="header" href="#terminology-1">Terminology</a></h1>
 <h2 id="direct-vs-follow-on-search"><a class="header" href="#direct-vs-follow-on-search">Direct vs Follow-on Search</a></h2>
 <p>Searches can be split into three major classes: <em>sap</em>, <em>follow-on</em>, and <em>organic</em>.</p>
-<p>SAP searches result from a direct interaction with a <code>search access point</code> (SAP), which is part of the Firefox UI. These searches are often called SAP searches.
-There are currently 8 SAPs:</p>
+<p>SAP searches result from a direct interaction with a <strong>search access point (SAP)</strong>, locations on the Firefox UI where clients can enter search queries. Searches that originate from these SAPs are often called SAP searches. For the most recent list of search access points, see <a href="https://firefox-source-docs.mozilla.org/browser/search/telemetry.html#browsersearchtelemetry-jsm">Search telemetry doc</a> as SAPs continue to be developed over time.</p>
+<p>The Firefox browser has multiple SAPs available at the same time. For visuals noting the location of Firefox SAPs, see <a href="https://mozilla.cloud.looker.com/dashboards-next/256">here</a>. These SAPs are recorded in the <code>source</code> field in search tables, and include the following:</p>
 <ul>
 <li><code>urlbar</code> - entering a search query in the Awesomebar. Searches typed into the search bar in the middle of the browser window will also be recorded as <code>urlbar</code> searches.</li>
-<li><code>urlbar_searchmode</code> - selecting a search partner icon while entering a search query in the Awesomebar or tagging the search partner (i.e. <code>@duckduckgo</code>) before entering search query via Awesomebar (was formerly called <code>alias</code> <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1499193">added</a> as of Firefox 64.)</li>
+<li><code>urlbar-searchmode</code> - selecting a search partner icon while entering a search query in the Awesomebar or tagging the search partner (i.e. <code>@duckduckgo</code>) before entering search query via Awesomebar (was formerly called <code>alias</code> <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1499193">added</a> as of Firefox 64.)</li>
+<li><code>urlbar-handoff</code> - often referred to as new tab search. Searches by typing into the search box in the middle of the browser window will be attributed to the <code>urlbar-handoff</code> starting in Firefox 94. See more in <a href="https://probes.telemetry.mozilla.org/?search=urlbar&amp;view=detail&amp;probeId=scalar%2Fbrowser.search.content.urlbar_handoff">probe dictionary</a> and <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1732429">bug here</a>.</li>
+<li><code>newtab</code> - referred to new tab search on <code>about:newtab</code> page.</li>
+<li><code>abouthome</code> - referred to new tab search on <code>about:home</code> page.</li>
 <li><code>searchbar</code> - the main search bar (on the top right corner of browser window); not present by default for new profiles on Firefox 57+. <code>Searchmode</code> searches via the <code>searchbar</code> are logged as regular <code>searchbar</code> searches.</li>
-<li><code>newtab</code> - the search bar on the <code>about:newtab</code> page (not active in Firefox 92)</li>
-<li><code>abouthome</code> - the search bar on the <code>about:home</code> page (not active in Firefox 92)</li>
 <li><code>contextmenu</code> - highlight text, right click, and select &quot;Search [search engine] for [highlighted text]&quot; from the context menu.</li>
-<li><code>system</code> - starting Firefox from the command line with an option that immediately makes a search</li>
-<li><code>webextension</code> - initiated from a web extension (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1492233">added</a> as of Firefox 63)</li>
+<li><code>system</code> - starting Firefox from the command line with an option that immediately makes a search.</li>
+<li><code>webextension</code> - initiated from a web extension (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1492233">added</a> as of Firefox 63).</li>
 </ul>
-<p>Users will often interact with the Search Engine Results Page (SERP)
-to create &quot;downstream&quot; queries.
-These queries are called <code>follow-on queries</code>.
-These are sometimes also referred to as <strong>in-content queries</strong>
-since they are initiated from the content of the page itself
-and not from the Firefox UI.</p>
+<p>Note: Search telemetry evolves so the actual <code>source</code> name used for a specific search access point may vary between different versions of Firefox. For example, to catch SAP searches performed in Awesomebar after Firefox 94, you will need to use <code>source in (&quot;urlbar&quot;, &quot;urlbar-searchmode&quot;, &quot;urlbar-handoff&quot;)</code>.</p>
+<p>Users will often interact with the Search Engine Results Page (SERP) to create &quot;downstream&quot; queries. These queries are called <strong>follow-on queries</strong> but may also be referred to as <strong>in-content queries</strong> since they are initiated from the content of the page itself and not from the Firefox UI.</p>
 <p>For example, follow-on queries can be caused by:</p>
 <ul>
 <li>Revising a query (<code>restaurants</code> becomes <code>restaurants near me</code>)</li>
 <li>Clicking on the &quot;next&quot; button</li>
 <li>Accepting spelling suggestions</li>
 </ul>
-<p>Finally, we track the number of <em>organic</em> searches. These would be searches initiated directly
-from a search engine provider, not through a search access point.</p>
+<p>Finally, we track the number of <em>organic</em> searches. These searches are not via SAPs and are instead entered directly via a search engine provider, typically by visiting the provider's website and entering a search query through their website's interface.</p>
 <h2 id="tagged-vs-untagged-searches"><a class="header" href="#tagged-vs-untagged-searches">Tagged vs Untagged Searches</a></h2>
-<p>Our partners (search engines) attribute queries to Mozilla using <strong>partner codes</strong>.
-When a user issues a query through one of our SAPs,
-we include our partner code in the URL of the resulting search.</p>
-<p><strong>Tagged queries</strong> are queries that <strong>include one of our partner codes</strong>.</p>
-<p><strong>Untagged queries</strong> are queries that <strong>do not include one of our partner codes</strong>.
-If a query is untagged,
-it's usually because we do not have a partner deal for that search engine and region
-(or it is an organic search that did not start from an SAP).</p>
-<p>If an SAP query is tagged, any follow-on query should also be tagged.</p>
+<p>Our partners (search engines) attribute queries to Mozilla using <strong>partner codes</strong>. When a user issues a query through one of our SAPs, we include our partner code in the URL of the resulting search.</p>
+<p><strong>Tagged queries</strong> are queries that <strong>include one of our partner codes</strong>. If a SAP query is tagged, any follow-on query should also be tagged.</p>
+<p><strong>Untagged queries</strong> are queries that <strong>do not include one of our partner codes</strong>. If a query is untagged, it's usually because we do not have a partner deal for that search engine and region (or it is an organic search that did not start from an SAP).</p>
 <h1 id="standard-search-aggregates"><a class="header" href="#standard-search-aggregates">Standard Search Aggregates</a></h1>
-<p>We report five types of searches in our search datasets:
-<code>sap</code>, <code>tagged-sap</code>, <code>tagged-follow-on</code>, <code>organic</code>, and <code>unknown</code>.
-These aggregates show up as columns in the
-<code>search_aggregates</code> and <code>search_clients_engines_sources_daily</code> datasets.
-Our search datasets are all derived from <code>main_summary</code>.
-The aggregate columns are derived from the <code>SEARCH_COUNTS</code> histogram.</p>
-<p>The <strong><code>sap</code> column counts all SAP (or direct) searches</strong>.
-<code>sap</code> search counts are collected via
-<a href="https://firefox-source-docs.mozilla.org/browser/browser/BrowserUsageTelemetry.html#search-telemetry">probes</a>
-within the Firefox UI
-These counts are <strong>very reliable, but do not count follow-on queries</strong>.</p>
-<p>In 2017-06 we deployed the <a href="https://github.com/mozilla/followonsearch"><code>followonsearch</code> addon</a>, which adds probes for <code>tagged-sap</code> and <code>tagged-follow-on</code> searches.
-These columns <strong>attempt to count all tagged searches</strong>
-by looking for Mozilla partner codes in the URL of requests to partner search engines.
-These search counts are critical to understanding revenue
-since they exclude untagged searches and include follow-on searches.
-However, these search counts have <strong>important caveats affecting their reliability</strong>.
-See <a href="datasets/search.html#in-content-telemetry-issues">In Content Telemetry Issues</a> for more information.</p>
-<p>In 2018, we
-<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1475571">incorporated</a> this code
-into the product (as of version 61) and also started tracking so-called
-&quot;organic&quot; searches that weren't initiated through a search access point (sap).
-This data has the same caveats as those for follow on searches, above.</p>
-<p>We also started tracking &quot;unknown&quot; searches, which generally correspond
-to clients submitting random/unknown search data to our servers as part
-of their telemetry payload. This category can generally safely be ignored, unless its value
-is extremely high (which indicates a bug in either Firefox or the aggregation code
-which creates our datasets).</p>
-<p>In <code>main_summary</code>, all of these searches are stored in <code>search_counts.count</code>,
-<strong>which makes it easy to over count searches</strong>.
-However, in general, please avoid using <code>main_summary</code> for search analyses --
-it's slow and you will need to duplicate much of the work done to make
-analyses of our search datasets tractable.</p>
+<p>We report five types of searches in our search datasets: <code>sap</code>, <code>tagged-sap</code>, <code>tagged-follow-on</code>, <code>organic</code>, and <code>unknown</code>. These aggregates show up as columns in the <code>search_aggregates</code> and <code>search_clients_engines_sources_daily</code> datasets. Our search datasets are all derived from <code>main_summary</code>. The aggregate columns are derived from the <code>SEARCH_COUNTS</code> histogram.</p>
+<p>The <strong><code>sap</code> column counts all SAP (or direct) searches</strong>. <code>sap</code> search counts are collected via <a href="https://firefox-source-docs.mozilla.org/browser/browser/BrowserUsageTelemetry.html#search-telemetry">probes</a> within the Firefox UI These counts are <strong>very reliable, but do not count follow-on queries</strong>.</p>
+<p>In 2017-06 we deployed the <a href="https://github.com/mozilla/followonsearch"><code>followonsearch</code> addon</a>, which adds probes for <code>tagged-sap</code> and <code>tagged-follow-on</code> searches. These columns <strong>attempt to count all tagged searches</strong> by looking for Mozilla partner codes in the URL of requests to partner search engines. These search counts are critical to understanding revenue since they exclude untagged searches and include follow-on searches. However, these search counts have <strong>important caveats affecting their reliability</strong>. See <a href="datasets/search.html#in-content-telemetry-issues">In Content Telemetry Issues</a> for more information.</p>
+<p>In 2018, we <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1475571">incorporated</a> this code into the product (as of version 61) and also started tracking so-called &quot;organic&quot; searches that weren't initiated through a search access point (sap). This data has the same caveats as those for follow on searches, above.</p>
+<p>We also started tracking &quot;unknown&quot; searches, which generally correspond to clients submitting random/unknown search data to our servers as part of their telemetry payload. This category can generally safely be ignored, unless its value is extremely high (which indicates a bug in either Firefox or the aggregation code which creates our datasets).</p>
+<p>In <code>main_summary</code>, all of these searches are stored in <code>search_counts.count</code>, <strong>which makes it easy to over count searches</strong>. However, in general, please avoid using <code>main_summary</code> for search analyses -- it's slow and you will need to duplicate much of the work done to make analyses of our search datasets tractable.</p>
 <h2 id="outlier-filtering"><a class="header" href="#outlier-filtering">Outlier Filtering</a></h2>
-<p>We remove search count observations representing more than
-10,000 searches for a single search engine in a single ping.</p>
+<p>We remove search count observations representing more than 10,000 searches for a single search engine in a single ping.</p>
 <h1 id="in-content-telemetry-issues"><a class="header" href="#in-content-telemetry-issues">In Content Telemetry Issues</a></h1>
-<p>The search code module inside Firefox (formerly implemented
-as an addon until version 60) implements the probe used to measure <code>tagged-sap</code> and
-<code>tagged-follow-on</code> searches and also tracks organic searches. This probe is critical
-to understanding our revenue. It's the only tool that gives us a view of follow-on searches
-and differentiates between tagged and untagged queries.
-However, it comes with some notable caveats.</p>
+<p>The search code module inside Firefox (formerly implemented as an addon until version 60) implements the probe used to measure <code>tagged-sap</code> and
+<code>tagged-follow-on</code> searches and also tracks organic searches. This probe is critical to understanding our revenue. It's the only tool that gives us a view of follow-on searches and differentiates between tagged and untagged queries. However, it comes with some notable caveats.</p>
 <h2 id="relies-on-whitelists"><a class="header" href="#relies-on-whitelists">Relies on whitelists</a></h2>
-<p>Firefox's search module attempts to count all tagged searches
-by looking for Mozilla partner codes in the URL of requests to partner search engines.
-To do this, it relies on a whitelist of partner codes and URL formats.
-The list of partner codes is incomplete and only covers a few top partners.
-These codes also occasionally change so there will be gaps in the data.</p>
-<p>Additionally, changes to search engine URL formats can cause problems with our data collection.
-See
-<a href="https://sql.telemetry.mozilla.org/queries/47631/source#128887"><code>STMO#128887</code></a>
-for a notable example.</p>
+<p>Firefox's search module attempts to count all tagged searches by looking for Mozilla partner codes in the URL of requests to partner search engines. To do this, it relies on a whitelist of partner codes and URL formats. The list of partner codes is incomplete and only covers a few top partners. These codes also occasionally change so there will be gaps in the data.</p>
+<p>Additionally, changes to search engine URL formats can cause problems with our data collection. See <a href="https://sql.telemetry.mozilla.org/queries/47631/source#128887">this query</a> for a notable example.</p>
 <h2 id="limited-historical-data"><a class="header" href="#limited-historical-data">Limited historical data</a></h2>
-<p>The <a href="https://github.com/mozilla/followonsearch"><code>followonsearch</code> addon</a> was first deployed in 2017-06.
-There is no <code>tagged-*</code> search data available before this.</p>
+<p>The <a href="https://github.com/mozilla/followonsearch"><code>followonsearch</code> addon</a> was first deployed in 2017-06. There is no <code>tagged-*</code> search data available before this.</p>
 <p><code>default_private_search_engine</code> is only available starting 2019-11-19.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/search.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="search-aggregates"><a class="header" href="#search-aggregates">Search Aggregates</a></h1>
 <ul>
