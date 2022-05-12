@@ -194,6 +194,7 @@ lifecycle
 Lockbox
 Lockwise
 LookML
+lookml-generator
 lookups
 LTV
 LTVs
@@ -213,6 +214,7 @@ metadata
 metastore
 Miroglio
 Mocli
+Mozfun
 mozilla.org
 Mozillians
 MozTelemetry
