@@ -96,3 +96,16 @@ The [`followonsearch` addon] was first deployed in 2017-06. There is no `tagged-
 
 [`followonsearch` addon]: https://github.com/mozilla/followonsearch
 [search permissions template]: https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=rharter%40mozilla.com&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&comment=Please%20add%20the%20following%20user%20to%20the%20Search%20group%3A%0D%0A%0D%0AMozilla%20email%20address%3A%0D%0AGithub%20handle%3A&component=Datasets%3A%20Search&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=--&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&short_desc=Add%20user%20to%20search%20user%20groups&target_milestone=---&version=unspecified
+
+# Address Bar & Search Overviews Related resource
+
+- Address Bar Overview gives an overview about Firefox's address bar (aka: the Awesome Bar), by Marco Bonardo [[Presentation](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=3cfa519d-d8cc-4b9d-a432-adff012b7bb9) / [Slides](https://docs.google.com/presentation/d/1Li7uBp8HJ2trTLkj8Qx_bt7nIGQyU-QyniTCo9VSesY/edit#slide=id.g82d2da351e_5_3617)]
+
+- Address Bar Results Ranking gives a deep-dive on how results are ranked and displayed in Firefox's address bar, by Marco Bonardo
+[Presentation / [Slides](https://docs.google.com/presentation/d/1r3Y70Qhpdp5Cd51hdIiX9W2AE9Tq-W8CXfumyFaNdW4/edit#slide=id.g82d2da351e_5_3617). 
+
+- Search Engines Overview is an overview about how Search engines are included in Firefox, by Mark Banner [[Presentation](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=c0dd7221-a31f-449c-a874-adfd012609de) / [Slides](https://docs.google.com/presentation/d/1ibE04t8dm1ZpxJVRpVDupPnG_UOEhgEWaePS2C5BHQY/edit#slide=id.g832b271044_1_1173)]. 
+
+- Search Engine Configuration gives a deep-dive on how Search engines are configured and deployed in Firefox, by Mark Banner
+[[Presentation](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=774320a1-cd71-49a4-bf36-ae210156dcd5) / [Slides](https://docs.google.com/presentation/d/1Jg7ct3G7IU7iqunuByOyLvIXwV8nYCOqyIPENTOpW9Y/edit#slide=id.g832b271044_1_1173)]. 
+
