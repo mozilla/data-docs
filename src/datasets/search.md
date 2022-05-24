@@ -103,7 +103,5 @@ The [`followonsearch` addon] was first deployed in 2017-06. There is no `tagged-
 - Address Bar Results Ranking by Marco Bonardo [[Slides](https://docs.google.com/presentation/d/1r3Y70Qhpdp5Cd51hdIiX9W2AE9Tq-W8CXfumyFaNdW4/edit#slide=id.g82d2da351e_5_3617)] - deep-dive on how results are ranked and displayed in Firefox's address bar
 
 - Search Engines Overview is an overview about how Search engines are included in Firefox, by Mark Banner [[Presentation](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=c0dd7221-a31f-449c-a874-adfd012609de) / [Slides](https://docs.google.com/presentation/d/1ibE04t8dm1ZpxJVRpVDupPnG_UOEhgEWaePS2C5BHQY/edit#slide=id.g832b271044_1_1173)]. 
-
-- Search Engine Configuration gives a deep-dive on how Search engines are configured and deployed in Firefox, by Mark Banner
-[[Presentation](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=774320a1-cd71-49a4-bf36-ae210156dcd5) / [Slides](https://docs.google.com/presentation/d/1Jg7ct3G7IU7iqunuByOyLvIXwV8nYCOqyIPENTOpW9Y/edit#slide=id.g832b271044_1_1173)]. 
+- Search Engine Configuration by Mark Banner [[Presentation](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=774320a1-cd71-49a4-bf36-ae210156dcd5) / [Slides](https://docs.google.com/presentation/d/1Jg7ct3G7IU7iqunuByOyLvIXwV8nYCOqyIPENTOpW9Y/edit#slide=id.g832b271044_1_1173)] - deep-dive on how search engines are configured and deployed in Firefox
 
