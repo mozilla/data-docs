@@ -24,7 +24,7 @@ Especially severe problems with production data are announced on the `fx-data-de
 
 When you start to evaluate trends, be aware of events from the past that may invite comparisons with history. Here are a few to keep in mind:
 
-- **May 15 2022** - [Fixed potential under report `search_with_ads`][bug1673868].
+- **May 15 2022** - [Fixed potential under report `search_with_ads`][bug 1673868].
   Ad impressions were not tracked for SERP that took longer than 1 second to load. This was initially uncovered by QA for ad impressions on DuckDuckGo SERP. The fix addresses for all search partners and is not limited to DuckDuckGo.
 - **Dec 1 2021 - Jan 23 2022** - [Search values in Android Focus from core telemetry fell][jirado673].
 - **Nov 16, 2021** - [Submissions were rejected from 17:44 to 18:10 UTC][jirads1843].
