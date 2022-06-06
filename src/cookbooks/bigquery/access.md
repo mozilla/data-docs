@@ -21,8 +21,6 @@ All users with access to [STMO](../../tools/stmo.md) can access BigQuery using t
 
 ### BigQuery Console
 
-> **⚠** This method requires [BigQuery Access](#bigquery-access-request) to be provisioned.
-
 The BigQuery console is similar to STMO, but allows write access to views and tables. Some
 people also prefer its user interface, though note that results that you get from it can
 only be shared with others who also have BigQuery access provisioned.
@@ -50,8 +48,6 @@ For more details, see [Google's Documentation on the GCP Console](https://cloud.
 
 ### Using the `bq` Command-Line Tool
 
-> **⚠** This method requires [BigQuery Access](#bigquery-access-request) to be provisioned.
-
 Steps to use:
 
 - Install the [GCP SDK](https://cloud.google.com/sdk/)
@@ -78,8 +74,6 @@ bq query --nouse_legacy_sql 'select count(*) from mozdata.telemetry.main where d
 Additional examples and documentation can be found [in the BigQuery command-line reference](https://cloud.google.com/bigquery/docs/bq-command-line-tool).
 
 ### API Access
-
-> **⚠** This method requires [BigQuery Access](#bigquery-access-request) to be provisioned.
 
 For advanced use cases involving programmatic access -- including automated workloads, ETL, [BigQuery Storage API](https://cloud.google.com/bigquery/docs/reference/storage/).
 
@@ -123,15 +117,11 @@ python -c 'from google.cloud import bigquery; print([d.dataset_id for d in bigqu
 
 ### Colaboratory
 
-> **⚠** This method requires [BigQuery Access](#bigquery-access-request) to be provisioned.
-
 [Colaboratory](https://colab.research.google.com) (Colab) is Jupyter notebook environment, managed by Google and running in the cloud. Notebooks are stored in Google Drive and can be shared in a similar way to Google Docs.
 
 Colab can be used to easily access BigQuery and perform analyses. See the [`Telemetry Hello World` notebook](https://colab.research.google.com/drive/1uXmrPnqzDATiCVH2RNJKD8obIZuofFHx) for an interactive example. Under the hood, it uses the BigQuery API to read and write to BigQuery tables, so access needs to be explicitly provisioned.
 
 ### AI Platform Notebooks
-
-> **⚠** This method requires [BigQuery Access](#bigquery-access-request) to be provisioned.
 
 [AI Platform Notebooks](https://cloud.google.com/ai-platform/notebooks/docs) is a managed JupyterLab service running on GCP. It gives you full control over the machine where your notebooks are running - you can install your own libraries and choose machine size depending on your needs.
 
@@ -159,8 +149,7 @@ In the example above this maps to `mozdata.search_terms_aggregated_analysis`.
 
 ## BigQuery Access Request
 
-> **⚠**  If you are a member of the Data Engineering or Data Science staff groups you do not need to request BigQuery access specifically; it is automatically granted.
+> **⚠**  Access to BigQuery via the `mozdata` GCP project is granted to Mozilla Staff by default; only file an access request if you need other specific access such as via a teams project
 
-For access to BigQuery when using the GCP Console and API, [file a bug (requires access to Mozilla Jira)](https://mozilla-hub.atlassian.net/secure/CreateIssueDetails!init.jspa?pid=10058&issuetype=10007&priority=3&customfield_10014=DSRE-87&summary=BigQuery%20GCP%20Console%20and%20API%20Access%20for%20YOUR_EMAIL_HERE&description=My%20request%20information%0A%3D%3D%3D%3D%3D%3D%3D%3D%0Amozilla.com%20ldap%20login%3A%0Ateam%3A%0Aaccess%20required%3A%20BigQuery%20GCP%20console%20and%20API%20Access%3B%20ENTER%20OTHER%20ACCESS%20REQUESTS%20HERE%0A%0APost%20request%0A%3D%3D%3D%3D%3D%3D%3D%3D%0ASee%20GCP%20console%20and%20other%20access%20methods%20docs%20here%3A%20https%3A%2F%2Fdocs.telemetry.mozilla.org%2Fcookbooks%2Fbigquery).
-You will be added to the appropriate Google Groups to access the `mozdata` GCP project.
+For access to BigQuery using projects other than `mozdata`, [file a bug (requires access to Mozilla Jira)](https://mozilla-hub.atlassian.net/secure/CreateIssueDetails!init.jspa?pid=10058&issuetype=10007&priority=3&customfield_10014=DSRE-87&summary=BigQuery%20GCP%20Console%20and%20API%20Access%20for%20YOUR_EMAIL_HERE&description=My%20request%20information%0A%3D%3D%3D%3D%3D%3D%3D%3D%0Amozilla.com%20ldap%20login%3A%0Ateam%3A%0Aaccess%20required%3A%20BigQuery%20GCP%20console%20and%20API%20Access%3B%20ENTER%20OTHER%20ACCESS%20REQUESTS%20HERE%0A%0APost%20request%0A%3D%3D%3D%3D%3D%3D%3D%3D%0ASee%20GCP%20console%20and%20other%20access%20methods%20docs%20here%3A%20https%3A%2F%2Fdocs.telemetry.mozilla.org%2Fcookbooks%2Fbigquery).
 If you require access to AI Notebooks or Dataproc, please specify in the bug and a team project will be provisioned for you.
