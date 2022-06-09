@@ -822,6 +822,10 @@ probes = [
     'perf_page_load_time_ms'
 ]
 
+alerts = [
+    &quot;ci_diffs&quot;
+]
+
 # This section specifies the clients that should be monitored.
 [project.population]
 
@@ -925,6 +929,63 @@ select_expression = &quot;normalized_os&quot;
 </code></pre>
 <p>The <code>os</code> dimension will result in the client population being segmented by operation system. For each dimension a filter is being added to the resulting
 dashboard which allows to, for example, only show results for all Windows clients.</p>
+<h3 id="alerts-section"><a class="header" href="#alerts-section"><code>[alerts]</code> Section</a></h3>
+<p>Different types of alerts can be defined for probes:</p>
+<pre><code class="language-toml">[alerts]
+
+[alerts.ci_diffs]
+# Alert for large differences between branches:
+# an alert is triggered if confidence interval of different branches
+# do not overlap
+type = &quot;ci_overlap&quot;
+probes = [      # probes to monitor
+    &quot;gc_ms&quot;,
+    &quot;startup_crashes&quot;,
+]
+percentiles = [50, 90]  # percentiles to monitor
+
+[alerts.crash_tresholds]
+# Thresholds based aler:
+# an alert is triggered if defined thresholds are exceeded/subceeded
+type = &quot;threshold&quot;
+probes = [  # probes to monitor
+    &quot;oom_crashes&quot;,
+    &quot;gpu_crashes&quot;
+]
+percentiles = [50, 90]  # percentiles to monitor
+min = [0, 0]    # lower thresholds for each percentile
+max = [2, 10]   # upper thresholds for each percentile
+
+[alerts.historical_diff]
+# Deviation from historical data:
+# an alert is triggered if the average of the specified window deviates
+# from the average of the previous window
+type = &quot;avg_diff&quot;
+probes = [  # probes to monitor
+    &quot;memory_total&quot;,
+]
+window_size = 7 # window size in days
+max_relative_change = 0.5   # relative change that when exceeded triggers an alert
+percentiles = [50, 90]  # percentiles to monitor
+</code></pre>
+<p>Currently, there are 3 different types of alerts:</p>
+<ul>
+<li><strong>Large differences between branches:</strong> Whenever the confidence intervals of different branches for a specific metric no longer overlap, it indicates that there is potentially some significant difference.</li>
+<li><strong>Thresholds:</strong> Comparing the values of a metric to a user-defined threshold.</li>
+<li><strong>Deviation from historical data:</strong> Detect anomalous behaviour of a metric based on previously collected data.</li>
+</ul>
+<h4 id="large-differences-between-branches"><a class="header" href="#large-differences-between-branches">Large differences between branches</a></h4>
+<p>The OpMon dashboards show the values for specific metrics as a line chart with confidence intervals. Each line represents the metric values for a different branch. Whenever the confidence intervals of the branches do not overlap, it is considered a critical change. See:</p>
+<p><img src="cookbooks/../assets/opmon_alerting_branch_differences.png" alt="" /></p>
+<h4 id="thresholds"><a class="header" href="#thresholds">Thresholds</a></h4>
+<p>In some cases the expected value of a metric is known and any large deviation from that expected value is considered a critical change. Fixed thresholds can be used to specify when a value is too large or too low. See:</p>
+<p><img src="cookbooks/../assets/opmon_alerting_thresholds.png" alt="" /></p>
+<h4 id="deviation-from-historical-data"><a class="header" href="#deviation-from-historical-data">Deviation from historical data</a></h4>
+<p>An alert should be triggered for certain metrics if their value deviates significantly from historical records. Sudden changes could, for example, happen after a new version gets released. See:</p>
+<p><img src="cookbooks/../assets/opmon_alerting_historical_diff.png" alt="" /></p>
+<p>It is not always possible to define a specific threshold, so instead previously recorded data should be used to detect significant deviations.</p>
+<p>This check is the most complicated and computation-intensive one with potentially the highest number of false positives. There are a lot of different anomaly detection algorithms out there, but OpMon uses an approach which compares the average value of a metric of the past <code>n</code> days to the average value of the <code>n</code> days before. If the relative difference between these two values exceeds a defined threshold an alert will be triggered.</p>
+<p>The main downside of this approach is that whenever spikes happen, alerts will be sent even after the spike has gone down since it will inflate the average values for a while.</p>
 <h2 id="reading-results"><a class="header" href="#reading-results">Reading Results</a></h2>
 <p>Generated dashboards are available in <a href="https://mozilla.cloud.looker.com/folders/494">Looker</a>.</p>
 <p><img src="cookbooks/../assets/opmon_results.png" alt="" /></p>
@@ -938,6 +999,12 @@ For each metric results are visualized on separate tiles, with results being gro
 </ul>
 <p>Usually places where the confidence intervals of different branches have a gap between them - if the higher bound of one metric is below the lower bound of another metric - means there is a high likelihood that there is an actual difference between the measurement for the groups.</p>
 <p>Each dashboard tile also allows to explore the data for a specific metric in more detail by clicking on <em>Explore from here</em>.</p>
+<h2 id="subscribing-to-alerts"><a class="header" href="#subscribing-to-alerts">Subscribing to Alerts</a></h2>
+<p>If alerts have been configured for a OpMon project, then the generated dashboard will show any triggered alerts in a table at the bottom of the dashboard:</p>
+<p><img src="cookbooks/../assets/opmon_alerts.png" alt="" /></p>
+<p>To receive email or Slack notification whenever new alerts are being triggered, click on the <em>Alerts</em> icon that is in the right corner of the <em>Alerts</em> table.
+Configure the alert by setting the condition, email addresses or Slack channels alerts should be sent to and the frequency of when checks should be performed:</p>
+<p><img src="cookbooks/../assets/opmon_alert_config.png" alt="" /></p>
 <h2 id="data-products"><a class="header" href="#data-products">Data Products</a></h2>
 <p>OpMon writes monitoring results and metadata to BigQuery. OpMon runs as part of the nightly ETL job (see <a href="cookbooks/operational_monitoring.html#scheduling">Scheduling</a> below).</p>
 <h3 id="result-tables"><a class="header" href="#result-tables">Result Tables</a></h3>
