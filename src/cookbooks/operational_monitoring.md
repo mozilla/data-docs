@@ -72,6 +72,10 @@ probes = [
     'perf_page_load_time_ms'
 ]
 
+alerts = [
+    "ci_diffs"
+]
+
 # This section specifies the clients that should be monitored.
 [project.population]
 
@@ -194,6 +198,79 @@ select_expression = "normalized_os"
 The `os` dimension will result in the client population being segmented by operation system. For each dimension a filter is being added to the resulting
 dashboard which allows to, for example, only show results for all Windows clients.
 
+### `[alerts]` Section
+
+Different types of alerts can be defined for probes:
+
+```toml
+[alerts]
+
+[alerts.ci_diffs]
+# Alert for large differences between branches:
+# an alert is triggered if confidence interval of different branches
+# do not overlap
+type = "ci_overlap"
+probes = [      # probes to monitor
+    "gc_ms",
+    "startup_crashes",
+]
+percentiles = [50, 90]  # percentiles to monitor
+
+[alerts.crash_tresholds]
+# Thresholds based aler:
+# an alert is triggered if defined thresholds are exceeded/subceeded
+type = "threshold"
+probes = [  # probes to monitor
+    "oom_crashes",
+    "gpu_crashes"
+]
+percentiles = [50, 90]  # percentiles to monitor
+min = [0, 0]    # lower thresholds for each percentile
+max = [2, 10]   # upper thresholds for each percentile
+
+[alerts.historical_diff]
+# Deviation from historical data:
+# an alert is triggered if the average of the specified window deviates
+# from the average of the previous window
+type = "avg_diff"
+probes = [  # probes to monitor
+    "memory_total",
+]
+window_size = 7 # window size in days
+max_relative_change = 0.5   # relative change that when exceeded triggers an alert
+percentiles = [50, 90]  # percentiles to monitor
+```
+
+Currently, there are 3 different types of alerts:
+
+- **Large differences between branches:** Whenever the confidence intervals of different branches for a specific metric no longer overlap, it indicates that there is potentially some significant difference.
+- **Thresholds:** Comparing the values of a metric to a user-defined threshold.
+- **Deviation from historical data:** Detect anomalous behaviour of a metric based on previously collected data.
+
+#### Large differences between branches
+
+The OpMon dashboards show the values for specific metrics as a line chart with confidence intervals. Each line represents the metric values for a different branch. Whenever the confidence intervals of the branches do not overlap, it is considered a critical change. See:
+
+![](../assets/opmon_alerting_branch_differences.png)
+
+#### Thresholds
+
+In some cases the expected value of a metric is known and any large deviation from that expected value is considered a critical change. Fixed thresholds can be used to specify when a value is too large or too low. See:
+
+![](../assets/opmon_alerting_thresholds.png)
+
+#### Deviation from historical data
+
+An alert should be triggered for certain metrics if their value deviates significantly from historical records. Sudden changes could, for example, happen after a new version gets released. See:
+
+![](../assets/opmon_alerting_historical_diff.png)
+
+It is not always possible to define a specific threshold, so instead previously recorded data should be used to detect significant deviations.
+
+This check is the most complicated and computation-intensive one with potentially the highest number of false positives. There are a lot of different anomaly detection algorithms out there, but OpMon uses an approach which compares the average value of a metric of the past `n` days to the average value of the `n` days before. If the relative difference between these two values exceeds a defined threshold an alert will be triggered.
+
+The main downside of this approach is that whenever spikes happen, alerts will be sent even after the spike has gone down since it will inflate the average values for a while.
+
 ## Reading Results
 
 Generated dashboards are available in [Looker](https://mozilla.cloud.looker.com/folders/494).
@@ -213,6 +290,17 @@ Results are divided into different percentiles that can be changed through the d
 Usually places where the confidence intervals of different branches have a gap between them - if the higher bound of one metric is below the lower bound of another metric - means there is a high likelihood that there is an actual difference between the measurement for the groups.
 
 Each dashboard tile also allows to explore the data for a specific metric in more detail by clicking on _Explore from here_.
+
+## Subscribing to Alerts
+
+If alerts have been configured for a OpMon project, then the generated dashboard will show any triggered alerts in a table at the bottom of the dashboard:
+
+![](../assets/opmon_alerts.png)
+
+To receive email or Slack notification whenever new alerts are being triggered, click on the _Alerts_ icon that is in the right corner of the _Alerts_ table.
+Configure the alert by setting the condition, email addresses or Slack channels alerts should be sent to and the frequency of when checks should be performed:
+
+![](../assets/opmon_alert_config.png)
 
 ## Data Products
 
