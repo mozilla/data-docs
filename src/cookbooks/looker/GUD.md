@@ -25,3 +25,14 @@ This dashboard contains:
 - The visualization of Ad clicks counts. 
 
 ![Usage dashboard](../../assets/Looker_screenshots/usage_dashboard.jpg)
+
+## Browser views
+
+If you want to explore each individual view for the browsers, find the location in the relevant `browser name` folder in Looker. The image below shows the location of the views for Firefox Focus for Android:
+
+	Shared > Browsers > Mobile > _Browser_Name_ > Usage
+
+![](../../assets/Looker_screenshots/browsers_usage.png)
+
+## Source
+The dashboards and views for growth and usage are based on the active_users_aggregates tables that contain the dimensions and metrics as calculated from the `clients_last_seen` tables both for mobile and desktop.
