@@ -28,11 +28,15 @@ This dashboard contains:
 
 ## Browser views
 
-If you want to explore each individual view for the browsers, find the location in the relevant `browser name` folder in Looker. The image below shows the location of the views for Firefox Focus for Android:
+If you want to explore each individual view for the browsers, find the location in the relevant `browser name` folder in Looker.
 
 	Shared > Browsers > Mobile > _Browser_Name_ > Usage
+
+![](../../assets/Looker_screenshots/browser_metrics.jpg)
+
+The example below shows the location of the views for Firefox Focus for Android:
 
 ![](../../assets/Looker_screenshots/browsers_usage.png)
 
 ## Source
-The dashboards and views for growth and usage are based on the active_users_aggregates tables that contain the dimensions and metrics as calculated from the `clients_last_seen` tables both for mobile and desktop.
+The dashboards and views for growth and usage are based on the `telemetry.active_users_aggregates` table, which contains the dimensions and metrics for desktop and mobile, as calculated from the `clients_last_seen` tables.
