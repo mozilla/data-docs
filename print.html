@@ -171,8 +171,9 @@ and feel free to <a href="https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to
 <h3 id="data-platform-reference"><a class="header" href="#data-platform-reference"><a href="reference/index.html">Data Platform Reference</a></a></h3>
 <p>This section contains detailed reference material on the Mozilla data platform, including links to other resources where appropriate.</p>
 <h3 id="dataset-reference"><a class="header" href="#dataset-reference"><a href="datasets/reference.html">Dataset Reference</a></a></h3>
-<p>Describes all available data we have from our products.
-For each dataset, we include a description of the dataset's purpose,
+<p>In-depth references for some of the major datasets we maintain for our
+products.</p>
+<p>For each dataset, we include a description of the dataset's purpose,
 what data is included, how the data is collected,
 and how you can change or augment the dataset.
 You do not need to read this section end-to-end.</p>
@@ -310,11 +311,11 @@ If you're new to Mozilla, you may also find the <a href="https://wiki.mozilla.or
 <li><a href="concepts/terminology.html#wau">WAU</a></li>
 </ul>
 <h2 id="aet"><a class="header" href="#aet">AET</a></h2>
-<p>Account Ecosystem Telemetry; see the <a href="https://docs.google.com/document/d/1yRLiD8JuaZIIaKhs6DhXEa7aH8jwOau5yW0kHaldFQU/edit#">PRD</a></p>
+<p>Account Ecosystem Telemetry (never fully launched); see the <a href="https://docs.google.com/document/d/1yRLiD8JuaZIIaKhs6DhXEa7aH8jwOau5yW0kHaldFQU/edit#">PRD</a></p>
 <h2 id="analyst"><a class="header" href="#analyst">Analyst</a></h2>
 <p>See <a href="concepts/terminology.html#data-analyst">Data Analyst</a>.</p>
 <h2 id="amplitude"><a class="header" href="#amplitude">Amplitude</a></h2>
-<p>A third-party product used by several teams within Mozilla for analysis of user events.</p>
+<p>A third-party product formerly used by several teams within Mozilla for analysis of user events.</p>
 <h2 id="bigquery"><a class="header" href="#bigquery">BigQuery</a></h2>
 <p><a href="https://cloud.google.com/bigquery">BigQuery</a> is Google Cloud's managed data warehouse. Most of the data described on this site is stored and queried using BigQuery. See <a href="concepts/../cookbooks/bigquery.html">Accessing and working with BigQuery</a> for more details.</p>
 <h2 id="build-id"><a class="header" href="#build-id">Build ID</a></h2>
@@ -1548,6 +1549,9 @@ account has sufficient access, you can have your user credentials mimic a
 service account by running:</p>
 <pre><code class="language-bash">gcloud auth application-default login
 </code></pre>
+<p>Or activate both personal credentials and application default credentials in one command:</p>
+<pre><code class="language-bash">gcloud auth login --update-adc
+</code></pre>
 <p>Once you've followed the browser flow to grant access, you should be able to,
 for example, access BigQuery from Python:</p>
 <pre><code class="language-bash">pip install google-cloud-bigquery
@@ -1612,8 +1616,8 @@ control access to tables and views.</p>
 </blockquote>
 <h3 id="caveats"><a class="header" href="#caveats">Caveats</a></h3>
 <ul>
-<li>The date partition field (e.g., <code>submission_date_s3</code>, <code>submission_date</code>) is mostly used as a partitioning column.
-However, it has changed from using a <code>YYYYMMDD</code> string form to a <code>DATE</code> type that uses string literals in the more standards-friendly <code>YYYY-MM-DD</code> form.
+<li>Most tables are partitioned by date and you can scan much less data by filtering on the partition field
+(usually <code>submission_timestamp</code> or <code>submission_date</code>).
 These dates are always in UTC.</li>
 <li>Unqualified queries can become very costly very easily. Restrictions have been placed on large tables to avoid accidental querying &quot;all data for all time&quot;. You must use the date partition fields for large tables (like <code>main_summary</code> or <code>clients_daily</code>).</li>
 <li>Read the <a href="cookbooks/bigquery/./optimization.html"><em>Query Optimization Cookbook</em></a> that includes recommendations on how to reduce cost and improve query performance.</li>
@@ -1849,9 +1853,9 @@ population (without sampling).
 <li>Many of our tables are configured to use <em>clustering</em> in which case a <code>LIMIT</code> clause does effectively limit the amount of data that needs to be scanned. To check whether your <code>LIMIT</code> and <code>WHERE</code> clauses are actually improving performance, you should see a lower value reported for actual &quot;Data Scanned&quot; by a query compared to the prediction (&quot;This query will process X bytes&quot;) in STMO or the BigQuery UI.</li>
 </ul>
 </li>
-<li>Do not treat WITH clauses as prepared statements
+<li>Do not treat <code>WITH</code> clauses as prepared statements
 <ul>
-<li>WITH clauses are used primarily for readability because they are not materialized: if a query appears in more than one WITH clause, it executes in each clause. Do not rely on them to optimize your query!</li>
+<li><code>WITH</code> clauses are used primarily for readability because they are not materialized: if a query appears in more than one <code>WITH</code> clause, it executes in each clause. Do not rely on them to optimize your query!</li>
 </ul>
 </li>
 </ul>
@@ -7145,11 +7149,13 @@ starting a new project using anything in this section.</p>
 <table><thead><tr><th>Name and repo</th><th>Description</th></tr></thead><tbody>
 </tbody></table>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/tools/projects.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="dataset-reference-1"><a class="header" href="#dataset-reference-1">Dataset Reference</a></h1>
-<p>This section contains reference material on the datasets we store in BigQuery.
+<p>This section contains reference material on some of the major datasets we store in BigQuery.
 Reading this section front to back is not recommended.
 Instead, identify a dataset you'd like to understand better and read through
 the relevant documentation.
 After reading the tutorial, you should know all you need about the dataset.</p>
+<p>Also see more detailed <a href="https://mozilla.github.io/bigquery-etl/mozdata/introduction/">per-table docs</a>
+that are generated alongside ETL code in the <code>bigquery-etl</code> repository.</p>
 <p>Each tutorial should include:</p>
 <ul>
 <li>Introduction

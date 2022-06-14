@@ -253,6 +253,9 @@ account has sufficient access, you can have your user credentials mimic a
 service account by running:</p>
 <pre><code class="language-bash">gcloud auth application-default login
 </code></pre>
+<p>Or activate both personal credentials and application default credentials in one command:</p>
+<pre><code class="language-bash">gcloud auth login --update-adc
+</code></pre>
 <p>Once you've followed the browser flow to grant access, you should be able to,
 for example, access BigQuery from Python:</p>
 <pre><code class="language-bash">pip install google-cloud-bigquery

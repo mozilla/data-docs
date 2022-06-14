@@ -216,9 +216,9 @@ population (without sampling).
 <li>Many of our tables are configured to use <em>clustering</em> in which case a <code>LIMIT</code> clause does effectively limit the amount of data that needs to be scanned. To check whether your <code>LIMIT</code> and <code>WHERE</code> clauses are actually improving performance, you should see a lower value reported for actual &quot;Data Scanned&quot; by a query compared to the prediction (&quot;This query will process X bytes&quot;) in STMO or the BigQuery UI.</li>
 </ul>
 </li>
-<li>Do not treat WITH clauses as prepared statements
+<li>Do not treat <code>WITH</code> clauses as prepared statements
 <ul>
-<li>WITH clauses are used primarily for readability because they are not materialized: if a query appears in more than one WITH clause, it executes in each clause. Do not rely on them to optimize your query!</li>
+<li><code>WITH</code> clauses are used primarily for readability because they are not materialized: if a query appears in more than one <code>WITH</code> clause, it executes in each clause. Do not rely on them to optimize your query!</li>
 </ul>
 </li>
 </ul>
