@@ -33,7 +33,9 @@ This section contains detailed reference material on the Mozilla data platform, 
 
 ### [Dataset Reference](datasets/reference.md)
 
-Describes all available data we have from our products.
+In-depth references for some of the major datasets we maintain for our
+products.
+
 For each dataset, we include a description of the dataset's purpose,
 what data is included, how the data is collected,
 and how you can change or augment the dataset.

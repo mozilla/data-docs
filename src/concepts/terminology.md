@@ -9,7 +9,7 @@ If you're new to Mozilla, you may also find the [general glossary](https://wiki.
 
 ## AET
 
-Account Ecosystem Telemetry; see the [PRD](https://docs.google.com/document/d/1yRLiD8JuaZIIaKhs6DhXEa7aH8jwOau5yW0kHaldFQU/edit#)
+Account Ecosystem Telemetry (never fully launched); see the [PRD](https://docs.google.com/document/d/1yRLiD8JuaZIIaKhs6DhXEa7aH8jwOau5yW0kHaldFQU/edit#)
 
 ## Analyst
 
@@ -17,7 +17,7 @@ See [Data Analyst](#data-analyst).
 
 ## Amplitude
 
-A third-party product used by several teams within Mozilla for analysis of user events.
+A third-party product formerly used by several teams within Mozilla for analysis of user events.
 
 ## BigQuery
 
