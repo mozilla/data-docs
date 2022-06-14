@@ -26,14 +26,14 @@ Find in this dashboard:
 
 ![Usage dashboard](../../assets/Looker_screenshots/browsers_usage.jpg)
 
-## Browser views
+## Browser Looks
 
-If you want to explore each individual view for the browsers, find the location in the relevant `browser name` folder in Looker.
+If you want to explore each individual visualization in Looker for the browsers, find the location in each relevant `browser name` folder.
 
 	Shared > Browsers > Mobile > (Browser Name) > Usage
 	Shared > Browsers > Desktop > Usage
 
-The example below shows the location of the views for Firefox Focus for Android:
+The example below shows the location of the Looks for Firefox Focus for Android:
 
 ![](../../assets/Looker_screenshots/browsers_usage_views.jpg)
 
