@@ -17,6 +17,7 @@
       - [Introduction to Looker](cookbooks/looker/intro.md)
       - [Normalizing Country Data](cookbooks/looker/countries.md)
       - [Normalizing Browser Version Data](cookbooks/looker/browser_versions.md)
+      - [Using Growth and Usage Dashboards](cookbooks/looker/growth_usage_dashboards.md)
       - [Using the Event Counts Explore](cookbooks/looker/event_counts_explore.md)
       - [Using the Funnel Analysis Explore](cookbooks/looker/funnel_analysis_explore.md)
     - [Other Data Analysis Tools](cookbooks/analysis/tools.md)
