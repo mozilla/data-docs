@@ -28,10 +28,13 @@ Find in this dashboard:
 
 ## Browser Looks
 
-If you want to explore each individual visualization in Looker for the browsers, find the location in each relevant `browser name` folder.
+If you want to explore each individual visualization in Looker for the browsers, find them in the `Usage` folder inside the relevant `browser name` folder:
 
-	Shared > Browsers > Mobile > (Browser Name) > Usage
 	Shared > Browsers > Desktop > Usage
+	Shared > Browsers > Mobile > Firefox Focus for Android > Usage
+	Shared > Browsers > Mobile > Firefox Focus for iOS > Usage
+	Shared > Browsers > Mobile > Firefox for Android > Usage
+	Shared > Browsers > Mobile > Firefox for iOS > Usage
 
 The example below shows the location of the Looks for Firefox Focus for Android:
 
@@ -40,4 +43,4 @@ The example below shows the location of the Looks for Firefox Focus for Android:
 ## Source
 The dashboards and views for growth and usage are based on the `moz-fx-data-shared-prod.telemetry.active_users_aggregates` table, which contains the dimensions and metrics for desktop and mobile, as calculated from the `clients_last_seen` and `mobile_search_clients_daily_v1` tables.
 
-	Note. The dashboards have been migrated to Looker from the previous GUD Dashboard at https://mozilla.github.io/gud/ as part of the Looker on-boarding and with the purpose of enhancement with new dimensions of analysis and improve performance.
+	Note. The dashboards have been migrated to Looker from the previous GUD Dashboard at https://mozilla.github.io/gud/ as part of the Looker on-boarding and with the purpose of enhancement with new dimensions of analysis and improved performance.
