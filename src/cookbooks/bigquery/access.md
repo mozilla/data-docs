@@ -103,6 +103,12 @@ service account by running:
 gcloud auth application-default login
 ```
 
+Or activate both personal credentials and application default credentials in one command:
+
+```bash
+gcloud auth login --update-adc
+```
+
 Once you've followed the browser flow to grant access, you should be able to,
 for example, access BigQuery from Python:
 

@@ -34,8 +34,8 @@ These are still worth doing!
 - For clustered tables, the data size prediction won't take into account benefits from `LIMIT`s and `WHERE` clauses on clustering fields, so you'll need to compare to the actual "Data Scanned" after the query is run.
 - Applying a `LIMIT` clause to a `SELECT *` query might not affect the amount of data read, depending on the table structure.
   - Many of our tables are configured to use _clustering_ in which case a `LIMIT` clause does effectively limit the amount of data that needs to be scanned. To check whether your `LIMIT` and `WHERE` clauses are actually improving performance, you should see a lower value reported for actual "Data Scanned" by a query compared to the prediction ("This query will process X bytes") in STMO or the BigQuery UI.
-- Do not treat WITH clauses as prepared statements
-  - WITH clauses are used primarily for readability because they are not materialized: if a query appears in more than one WITH clause, it executes in each clause. Do not rely on them to optimize your query!
+- Do not treat `WITH` clauses as prepared statements
+  - `WITH` clauses are used primarily for readability because they are not materialized: if a query appears in more than one `WITH` clause, it executes in each clause. Do not rely on them to optimize your query!
 
 ## Some Explanations
 

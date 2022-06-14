@@ -1,10 +1,13 @@
 # Dataset Reference
 
-This section contains reference material on the datasets we store in BigQuery.
+This section contains reference material on some of the major datasets we store in BigQuery.
 Reading this section front to back is not recommended.
 Instead, identify a dataset you'd like to understand better and read through
 the relevant documentation.
 After reading the tutorial, you should know all you need about the dataset.
+
+Also see more detailed [per-table docs](https://mozilla.github.io/bigquery-etl/mozdata/introduction/)
+that are generated alongside ETL code in the `bigquery-etl` repository.
 
 Each tutorial should include:
 
