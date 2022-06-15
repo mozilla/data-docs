@@ -110,7 +110,7 @@ been able to serve their real-time needs.
 
 While the Activity Stream case study above serves as an encouraging example of
 the flexibility of the pipeline to accept custom payloads, we hope to insulate
-most data producers in the future from having to interact directly with HTTP
+most data producers from having to interact directly with HTTP
 requests and JSON Schema definitions at all. The state of the art for analytics
 at Mozilla is
 [Glean](../concepts/glean/glean.md), a set of
@@ -120,8 +120,8 @@ analytics data.
 Glean sits on top of structured ingestion, but provides helpful
 abstractions &mdash; instead of building JSON payloads and making HTTP requests, your
 application declares logical metrics and makes calls to a generated SDK
-idiomatic to your application's language. Support is emerging not only for a
-wide range of language SDKs, but also for a variety of prebuilt reporting tools
+idiomatic to your application's language. Support exists not only for a
+wide range of language SDKs but also for a variety of prebuilt reporting tools
 that understand Glean schemas such that your application's metrics are
 automatically processed and presented.
 
@@ -246,10 +246,8 @@ external tables.
 If you already have well-structured data being produced to Stackdriver or GCS,
 it may be minimal effort to set up BigQuery Transfer Service to import that data
 or even to modify your existing server application to additionally issue
-BigQuery load jobs. Google does not yet provide an integration with Cloud SQL,
-but there has been significant interest within Mozilla for that feature and we
-may look into providing a standard solution for ingesting Cloud SQL databases to
-BigQuery in 2020.
+BigQuery load jobs. For relational data in Cloud SQL instances, we can pull
+data into BigQuery via federated queries.
 
 And don't forget about the possibility of hooking into the core telemetry
 pipeline through _structured ingestion_ as discussed earlier.
@@ -297,19 +295,8 @@ messages that contain user identifiers.
 
 ### Access controls in BigQuery
 
-BigQuery provides 3 levels for organizing data: _tables_ live within _datasets_
-inside _projects_. Fully qualified table references look like
-`<project>.<dataset>.<table>`; a query that references
-`moz-fx-data-shared-prod.telemetry_live.main_v4` is looking for a table named
-`main_v4` in a dataset named `telemetry_live` defined in GCP project
-`moz-fx-data-shared-prod`.
-
-At the time of writing, BigQuery's access controls primarily function at the
-dataset level, which has implications for how you choose to name tables and
-group them into datasets. If all of your data can use the same access policy,
-then a single dataset is sufficient and can hold all of your tables, but you may
-still choose to use multiple datasets for logical organization of related
-tables.
+BigQuery's main access controls can be specified at the dataset or individual
+table level.
 
 You can also publish SQL views which are essentially prebuilt queries that are
 presented alongside tables in BigQuery. View logic is executed at query time, so
@@ -322,6 +309,8 @@ Views, however, can also be _authorized_ so that specific groups of users can
 run queries who would not normally be allowed to read the underlying tables.
 This allows view authors to provide finer-grained controls and to hide specific
 columns or rows.
+Note that BigQuery also more recently supports column-level access controls for
+tables, so this is another option for more granular control.
 
 ## Pub/Sub
 
@@ -408,10 +397,7 @@ and become expensive. In those cases, it may be better to materialize the
 results of the view into a derived table. See the [Scheduling BigQuery Queries
 in Airflow](https://docs.telemetry.mozilla.org/cookbooks/bigquery-airflow.html)
 cookbook for a walk-through of how to define a query in `bigquery-etl` and
-get it scheduled to run nightly on the data platform's Airflow instance. We hope
-to simplify that process in 2020 and provide better support for being able to
-access and write data in arbitrary GCP projects rather than just in the data
-pipeline's `shared-prod` project.
+get it scheduled to run nightly on the data platform's Airflow instance.
 
 ## Final Thoughts
 
