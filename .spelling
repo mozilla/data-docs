@@ -384,6 +384,8 @@ unnesting
 unnormalize
 unnormalized
 Unnormalized
+unpause
+unpaused
 unsuffixed
 unversioned
 up-to-date
@@ -408,6 +410,7 @@ workgroup
 WAU
 WebExtension
 WebExtensions
+WTMO
 XPI
 XR
 yyyymmddhhmmss
