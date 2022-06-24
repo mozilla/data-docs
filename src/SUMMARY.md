@@ -67,6 +67,7 @@
     - [Filtering](concepts/pipeline/filtering.md)
   - [Common Analysis Gotchas](concepts/analysis_gotchas.md)
   - [SQL Style Guide](concepts/sql_style.md)
+  - [Airflow Gotcha's](concepts/airflow_gotchas.md)
   - [Telemetry Behavior Reference](concepts/index.md)
     - [History of Telemetry](concepts/history.md)
     - [Profile Behavior](concepts/profile/index.md)
