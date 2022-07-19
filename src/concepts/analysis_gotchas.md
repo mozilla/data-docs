@@ -24,9 +24,10 @@ Especially severe problems with production data are announced on the `fx-data-de
 
 When you start to evaluate trends, be aware of events from the past that may invite comparisons with history. Here are a few to keep in mind:
 
-- **May 15 2022** - [Fixed potential under report `search_with_ads`][bug1673868].
+- **May 24 - Jun 10, 2022** - `search_with_ads` drops on Firefox Desktop globally. Upon [investigation](https://docs.google.com/document/d/1wdU1O6Anmqs87PdyYXympTXHznoskU6pVdSgTS6ilpA/edit), the issue is believed to be related to Google's core algorithm update in May 2022.
+- **May 15, 2022** - [Fixed potential under report `search_with_ads`][bug1673868].
   Ad impressions were not tracked for SERP that took longer than 1 second to load. This was initially uncovered by QA for ad impressions on DuckDuckGo SERP. The fix addresses for all search partners and is not limited to DuckDuckGo.
-- **Dec 1 2021 - Jan 23 2022** - [Search values in Android Focus from core telemetry fell][jirado673].
+- **Dec 1, 2021 - Jan 23, 2022** - [Search values in Android Focus from core telemetry fell][jirado673].
 - **Nov 16, 2021** - [Submissions were rejected from 17:44 to 18:10 UTC][jirads1843].
 - **Nov 4, 2021** - [CORS headers added to support receiving submissions from Glean.js websites][bug1676676].
 - **Sep 30 2021 - Oct 06 2021** - [Submissions from some countries were rejected][bug1733953].
