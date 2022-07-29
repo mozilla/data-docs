@@ -793,6 +793,13 @@ For Firefox Desktop, this explore is currently using legacy (non-Glean data) and
 <li><code>Summary</code> table provides the exact numeric values of the percentiles of the median changes between Build IDs.</li>
 </ul>
 <p><strong><code>(6)</code></strong> shows the volume of clients with each given Build ID</p>
+<h2 id="differences-between-glam-and-telemetrymozillaorg-dashboard"><a class="header" href="#differences-between-glam-and-telemetrymozillaorg-dashboard">Differences between GLAM and <code>telemetry.mozilla.org</code> dashboard</a></h2>
+<p>GLAM is aggregated per client, <code>telemetry.mozilla.org</code> (TMO) is aggregated per ping. This will cause different movements in the visualization between the two systems. Notably:</p>
+<ul>
+<li>Because GLAM normalizes the aggregations by client ID, a single client weighs equally to all other clients, regardless of how many samples that client sends.</li>
+<li>Reversely, TMO does not normalize by client ID, so if a single client sends a lot of pings, that client will impact the distribution more heavily. This can result in some changes appearing bigger on TMO.</li>
+</ul>
+<p>As of July 2022, TMO serves only Firefox Desktop (telemetry) data, while GLAM supports Firefox Desktop (both telemetry and Glean), Firefox for Android (Fenix), with ongoing efforts to integrate Firefox iOS and more products that use Glean as their telemetry system.</p>
 <h2 id="going-deeper-1"><a class="header" href="#going-deeper-1">Going deeper</a></h2>
 <p>For more information about the datasets that power GLAM, see <a href="cookbooks/../datasets/glam.html">GLAM Datasets</a>.</p>
 <p>If you have a question that can't be easily answered by the GLAM GUI, you can access the raw GLAM datasets using <a href="cookbooks/../tools/stmo.html"><code>sql.telemetry.mozilla.org</code></a>.</p>
