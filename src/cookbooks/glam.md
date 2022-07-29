@@ -43,6 +43,15 @@ Clicking on a probe or metric name takes you to the individual explorer, where m
 
 **`(6)`** shows the volume of clients with each given Build ID
 
+## Differences between GLAM and `telemetry.mozilla.org` dashboard
+
+GLAM is aggregated per client, `telemetry.mozilla.org` (TMO) is aggregated per ping. This will cause different movements in the visualization between the two systems. Notably:
+
+- Because GLAM normalizes the aggregations by client ID, a single client weighs equally to all other clients, regardless of how many samples that client sends.
+- Reversely, TMO does not normalize by client ID, so if a single client sends a lot of pings, that client will impact the distribution more heavily. This can result in some changes appearing bigger on TMO.
+
+As of July 2022, TMO serves only Firefox Desktop (telemetry) data, while GLAM supports Firefox Desktop (both telemetry and Glean), Firefox for Android (Fenix), with ongoing efforts to integrate Firefox iOS and more products that use Glean as their telemetry system.
+
 ## Going deeper
 
 For more information about the datasets that power GLAM, see [GLAM Datasets](../datasets/glam.md).
