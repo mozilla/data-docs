@@ -24,6 +24,10 @@ Especially severe problems with production data are announced on the `fx-data-de
 
 When you start to evaluate trends, be aware of events from the past that may invite comparisons with history. Here are a few to keep in mind:
 
+- **July 19 - August 3, 2022** - [Fenix v103 seeing an increase in `null` values in `client_info` fields](https://bugzilla.mozilla.org/show_bug.cgi?id=1781085).
+  Glean failed to properly collect data for the `client_info` fields `android_sdk_version`, `device_model`, `device_manufacturer` and `locale`.
+  This has been fixed in subsequent releases and is fixed in Fenix 103.2 and all later releases.
+  No backfill.
 - **May 24 - Jun 10, 2022** - `search_with_ads` drops on Firefox Desktop globally. Upon [investigation](https://docs.google.com/document/d/1wdU1O6Anmqs87PdyYXympTXHznoskU6pVdSgTS6ilpA/edit), the issue is believed to be related to Google's core algorithm update in May 2022.
 - **May 15, 2022** - [Fixed potential under report `search_with_ads`][bug1673868].
   Ad impressions were not tracked for SERP that took longer than 1 second to load. This was initially uncovered by QA for ad impressions on DuckDuckGo SERP. The fix addresses for all search partners and is not limited to DuckDuckGo.
