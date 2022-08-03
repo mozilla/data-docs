@@ -191,12 +191,13 @@ behaviour (Environment, New Profiles, Updates, Crashes).</p>
 It delivers the Telemetry Environment as well as Histograms and Scalars for all
 process types that collect data in Firefox. It has several variants each with
 specific delivery characteristics:</p>
-<table><thead><tr><th>Reason</th><th>Sent when</th><th>Notes</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Reason</th><th>Sent when</th><th>Notes</th></tr></thead><tbody>
 <tr><td>shutdown</td><td>Firefox session ends cleanly</td><td>Accounts for about 80% of all &quot;main&quot; pings (<a href="https://sql.telemetry.mozilla.org/queries/3434"><code>STMO#3434</code></a>). Sent by Pingsender immediately after Firefox shuts down, subject to conditions: Firefox 55+, if the OS isn't also shutting down, and if this isn't the client's first session. If Pingsender fails or isn't used, the ping is sent by Firefox at the beginning of the next Firefox session.</td></tr>
 <tr><td>daily</td><td>It has been more than 24 hours since the last &quot;main&quot; ping, and it is around local midnight</td><td>In long-lived Firefox sessions we might go days without receiving a &quot;shutdown&quot; ping. Thus the &quot;daily&quot; ping is sent to ensure we occasionally hear from long-lived sessions.</td></tr>
 <tr><td>environment-change</td><td>Telemetry Environment changes</td><td>Is sent immediately when triggered by Firefox (Installing or removing an addon or changing a monitored user preference are common ways for the Telemetry Environment to change)</td></tr>
 <tr><td>aborted-session</td><td>Firefox session doesn't end cleanly</td><td>Sent by Firefox at the beginning of the next Firefox session.</td></tr>
 </tbody></table>
+</div>
 <p>It was introduced in Firefox 38.</p>
 <h3 id="first-shutdown-ping"><a class="header" href="#first-shutdown-ping">&quot;first-shutdown&quot; ping</a></h3>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/first-shutdown-ping.html">&quot;first-shutdown&quot; ping</a> is identical to the &quot;main&quot;
@@ -248,7 +249,7 @@ only the <a href="https://firefox-source-docs.mozilla.org/toolkit/components/tel
 <h3 id="coverage-ping"><a class="header" href="#coverage-ping">&quot;coverage&quot; ping</a></h3>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/coverage-ping.html">coverage ping</a> (<a href="https://blog.mozilla.org/data/2018/08/20/effectively-measuring-search-in-firefox/">announcement</a>)
 is a periodic census intended to estimate telemetry opt-out rates.</p>
-<p>We estimate that <a href="https://metrics.mozilla.com/%7Erharter/reports/coverage/index.html">93% of release channel
+<p>We estimate that <a href="https://metrics.mozilla.com/~rharter/reports/coverage/index.html">93% of release channel
 profiles</a>
 have telemetry enabled (and are therefore included in DAU).</p>
 <h2 id="pingsender"><a class="header" href="#pingsender">Pingsender</a></h2>
@@ -270,7 +271,7 @@ in <a href="../cookbooks/new_ping.html">the &quot;Ingestion Metadata&quot; secti
 these fields are documented here, instead of in the source tree docs.</p>
 <p>As of September 28, 2018, members of the <code>meta</code> key on main pings include:</p>
 <!-- table generated via `scripts/new_ping_metadata_table.py > src/cookbooks/new_ping_metadata_table.md` -->
-<table><thead><tr><th>field</th><th>description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>field</th><th>description</th></tr></thead><tbody>
 <tr><td><code>additional_properties</code></td><td>A JSON string containing any payload properties not present in the schema</td></tr>
 <tr><td><code>document_id</code></td><td>The document ID specified in the URI when the client sent this message</td></tr>
 <tr><td><code>normalized_app_name</code></td><td>Set to &quot;Other&quot; if this message contained an unrecognized app name</td></tr>
@@ -300,6 +301,7 @@ these fields are documented here, instead of in the source tree docs.</p>
 <tr><td><code>metadata.isp.name</code></td><td>The name of the Internet Service Provider</td></tr>
 <tr><td><code>metadata.isp.organization</code></td><td>The name of a specific business entity when available; otherwise the ISP name</td></tr>
 </tbody></table>
+</div>
 <h2 id="analysis"><a class="header" href="#analysis">Analysis</a></h2>
 <p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html">main ping</a> includes histograms, scalars, and other performance and diagnostic data.
 Since Firefox 62, it <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1460595">no longer contains event data</a>; events are now sent in a separate <code>event</code> ping.</p>
@@ -318,7 +320,7 @@ Try to limit the size of your data by controlling the date range, and start off 
 <p>You can find <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/index.html">the complete ping documentation</a> in the Firefox source documentation.
 To augment our data collection, see <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/start/adding-a-new-probe.html">Collecting New Data</a> and the
 <a href="https://wiki.mozilla.org/Firefox/Data_Collection">Data Collection Policy</a>.</p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/pings.md">Edit this file on GitHub.</a></footer>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/pings.md">Edit this page on GitHub.</a></footer>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

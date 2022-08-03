@@ -152,15 +152,16 @@
                         <h1 id="projects"><a class="header" href="#projects">Projects</a></h1>
 <p>Below are a number of trailheads that lead into the projects and code that comprise the Firefox Data Platform.</p>
 <h2 id="telemetry-apis"><a class="header" href="#telemetry-apis">Telemetry APIs</a></h2>
-<table><thead><tr><th>Name and repo</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Name and repo</th><th>Description</th></tr></thead><tbody>
 <tr><td><a href="https://github.com/mozilla/python_moztelemetry"><code>python_moztelemetry</code></a></td><td>Python APIs for Mozilla Telemetry</td></tr>
 <tr><td><a href="https://github.com/mozilla/moztelemetry"><code>moztelemetry</code></a></td><td>Scala APIs for Mozilla Telemetry</td></tr>
 <tr><td><a href="https://github.com/mozilla/spark-hyperloglog"><code>spark-hyperloglog</code></a></td><td>Algebird's HyperLogLog support for Apache Spark</td></tr>
 <tr><td><a href="https://github.com/mozilla/mozanalysis"><code>mozanalysis</code></a></td><td>A library for Mozilla experiments analysis</td></tr>
 <tr><td><a href="https://github.com/mozilla-mobile/android-components/tree/master/components/service/glean"><code>glean</code></a></td><td>A client-side mobile Telemetry SDK for collecting metrics and sending them to Mozilla's Telemetry service</td></tr>
 </tbody></table>
+</div>
 <h2 id="etl-code-and-datasets"><a class="header" href="#etl-code-and-datasets">ETL code and Datasets</a></h2>
-<table><thead><tr><th>Name and repo</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Name and repo</th><th>Description</th></tr></thead><tbody>
 <tr><td><a href="https://github.com/mozilla/bigquery-etl"><code>bigquery-etl</code></a></td><td>SQL ETL code for building derived datasets in BigQuery</td></tr>
 <tr><td><a href="https://github.com/mozilla/telemetry-batch-view"><code>telemetry-batch-view</code></a></td><td>Scala ETL code for derived datasets</td></tr>
 <tr><td><a href="https://github.com/mozilla/python_mozetl"><code>python_mozetl</code></a></td><td>Python ETL code for derived datasets</td></tr>
@@ -168,9 +169,10 @@
 <tr><td><a href="https://github.com/mozilla/python_mozaggregator"><code>python_mozaggregator</code></a></td><td>Aggregation job for <code>telemetry.mozilla.org</code> aggregates</td></tr>
 <tr><td><a href="https://github.com/mozilla/telemetry-streaming"><code>telemetry-streaming</code></a></td><td>Spark Streaming ETL jobs for Mozilla Telemetry</td></tr>
 </tbody></table>
+</div>
 <p>See also <a href="https://docs.telemetry.mozilla.org"><code>data-docs</code></a> for documentation on datasets.</p>
 <h2 id="infrastructure"><a class="header" href="#infrastructure">Infrastructure</a></h2>
-<table><thead><tr><th>Name and repo</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Name and repo</th><th>Description</th></tr></thead><tbody>
 <tr><td><a href="https://github.com/mozilla-services/mozilla-pipeline-schemas"><code>mozilla-pipeline-schemas</code></a></td><td>JSON and Parquet Schemas for Mozilla Telemetry and other structured data</td></tr>
 <tr><td><a href="https://github.com/mozilla/gcp-ingestion"><code>gcp-ingestion</code></a></td><td>Documentation and implementation of the Mozilla telemetry ingestion system on Google Cloud Platform</td></tr>
 <tr><td><a href="https://github.com/mozilla/jsonschema-transpiler"><code>jsonschema-transpiler</code></a></td><td>Convert JSON Schema into BigQuery table definitions</td></tr>
@@ -183,8 +185,9 @@
 <tr><td><a href="https://github.com/mozilla/parquet2hive"><code>parquet2hive</code></a></td><td>Hive import statement generator for Parquet datasets</td></tr>
 <tr><td><a href="https://github.com/mozilla-services/edge-validator"><code>edge-validator</code></a></td><td>A service endpoint for validating incoming data</td></tr>
 </tbody></table>
+</div>
 <h2 id="data-applications"><a class="header" href="#data-applications">Data applications</a></h2>
-<table><thead><tr><th>Name and repo</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Name and repo</th><th>Description</th></tr></thead><tbody>
 <tr><td><a href="https://github.com/mozilla/telemetry-dashboard"><code>telemetry.mozilla.org</code></a></td><td>Main entry point for viewing <a href="https://telemetry.mozilla.org">aggregate Telemetry data</a></td></tr>
 <tr><td><a href="https://github.com/mozilla/GUD">Growth &amp; Usage dashboard</a></td><td>Dashboard for questions about <a href="https://gud.telemetry.mozilla.org">product growth and usage</a></td></tr>
 <tr><td><a href="https://github.com/mozilla/glam">Glean Aggregate Metrics</a></td><td>Aggregate info about probes and measures</td></tr>
@@ -204,26 +207,29 @@
 <tr><td><a href="https://github.com/mozilla/stmoab">St. Moab</a></td><td>Automatically generate Redash dashboard for A/B experiments</td></tr>
 <tr><td><a href="http://iodide.telemetry.mozilla.org/">Iodide</a> (<a href="https://github.com/iodide-project/iodide">code</a>)</td><td>Literate scientific computing and communication for the web</td></tr>
 </tbody></table>
+</div>
 <h2 id="legacy-projects"><a class="header" href="#legacy-projects">Legacy projects</a></h2>
 <p>Projects in this section are less active, but may not be officially
 deprecated. Please check with the <code>fx-data-dev</code> mailing list before
 starting a new project using anything in this section.</p>
-<table><thead><tr><th>Name and repo</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Name and repo</th><th>Description</th></tr></thead><tbody>
 <tr><td><a href="https://github.com/mozilla/telemetry-next-node"><code>telemetry-next-node</code></a></td><td>A <code>node.js</code> package for accessing Telemetry Aggregates data</td></tr>
 <tr><td><a href="https://github.com/mozilla/emr-bootstrap-spark"><code>emr-bootstrap-spark</code></a></td><td>AWS bootstrap scripts for Spark.</td></tr>
 <tr><td><a href="https://github.com/mozilla/emr-bootstrap-presto"><code>emr-bootstrap-presto</code></a></td><td>AWS bootstrap scripts for Presto.</td></tr>
 </tbody></table>
+</div>
 <h2 id="reference-materials"><a class="header" href="#reference-materials">Reference materials</a></h2>
 <h3 id="public"><a class="header" href="#public">Public</a></h3>
-<table><thead><tr><th>Name and repo</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Name and repo</th><th>Description</th></tr></thead><tbody>
 <tr><td><a href="https://github.com/mozilla/data-docs"><code>data-docs</code></a></td><td>All the info you need to <a href="https://docs.telemetry.mozilla.org">answer questions about Firefox users with data</a></td></tr>
 <tr><td>Firefox source docs</td><td><a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/">Mozilla Source Tree Docs - Telemetry section</a></td></tr>
 <tr><td><a href="https://github.com/mozilla/mozilla-reports"><code>reports.t.m.o</code></a></td><td>Knowledge repository for <a href="https://mozilla.report">public reports</a></td></tr>
 </tbody></table>
+</div>
 <h3 id="non-public"><a class="header" href="#non-public">Non-public</a></h3>
-<table><thead><tr><th>Name and repo</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Name and repo</th><th>Description</th></tr></thead><tbody>
 </tbody></table>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/tools/projects.md">Edit this file on GitHub.</a></footer>
+</div><footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/tools/projects.md">Edit this page on GitHub.</a></footer>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

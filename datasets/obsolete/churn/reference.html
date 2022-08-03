@@ -185,11 +185,12 @@ every week and can be tracked over time using the <code>acquisition_date</code> 
 weeks since acquisition or <code>current_week</code>.</p>
 <p>The following example demonstrates the current logic for generating this
 dataset. Each column represents the days since some arbitrary starting date.</p>
-<table><thead><tr><th>client</th><th>00</th><th>01</th><th>02</th><th>03</th><th>04</th><th>05</th><th>06</th><th>07</th><th>08</th><th>09</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>client</th><th>00</th><th>01</th><th>02</th><th>03</th><th>04</th><th>05</th><th>06</th><th>07</th><th>08</th><th>09</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th></tr></thead><tbody>
 <tr><td>A</td><td>X</td><td></td><td></td><td></td><td></td><td></td><td></td><td>X</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
 <tr><td>B</td><td></td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
 <tr><td>C</td><td>X</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>X</td></tr>
 </tbody></table>
+</div>
 <p>All three clients are part of the same cohort. Client A is retained for weeks 0
 and 1 since there is activity in both periods. A client only needs to show up
 once in the period to be counted as retained. Client B is acquired in week 0 and
@@ -198,11 +199,12 @@ considered churned on week 1. However, a client that is churned can become
 retained again. Client C is considered churned on week 1 but retained on week 2.</p>
 <p>The following table summarizes the above daily activity into the following view
 where every column represents the current week since acquisition date..</p>
-<table><thead><tr><th>client</th><th>0</th><th>1</th><th>2</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>client</th><th>0</th><th>1</th><th>2</th></tr></thead><tbody>
 <tr><td>A</td><td>X</td><td>X</td><td></td></tr>
 <tr><td>B</td><td>X</td><td></td><td></td></tr>
 <tr><td>C</td><td>X</td><td></td><td>X</td></tr>
 </tbody></table>
+</div>
 <p>The clients are then grouped into cohorts by attributes. An attribute describes
 a property about the cohort such as the country of origin or the binary
 distribution channel. Each group also contains descriptive aggregates of
@@ -250,13 +252,14 @@ available in parquet for consumption by columnar data engines at
 <h2 id="example-queries"><a class="header" href="#example-queries">Example Queries</a></h2>
 <p>This section walks through a typical query to generate data suitable for
 visualization.</p>
-<table><thead><tr><th>field</th><th>type</th><th>description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>field</th><th>type</th><th>description</th></tr></thead><tbody>
 <tr><td><code>cohort_date</code></td><td>common, attribute</td><td>The start date bucket of the cohort. This is week the client was acquired.</td></tr>
 <tr><td><code>elapsed_periods</code></td><td>common, attribute</td><td>The number of periods that have elapsed since the cohort date. In this dataset, the retention period is 7 days.</td></tr>
 <tr><td><code>channel</code></td><td>attribute</td><td>Part of the release train model. An attribute that distinguishes cohorts.</td></tr>
 <tr><td><code>geo</code></td><td>filter attribute</td><td>Country code. Used to filter out all countries other than the 'US'</td></tr>
 <tr><td><code>n_profiles</code></td><td>metric</td><td>Count of users in a cohort. Use sum to aggregate.</td></tr>
 </tbody></table>
+</div>
 <p>First the fields are extracted and aliased for consistency. <code>cohort_date</code> and
 <code>elapsed_periods</code> are common to most retention queries and are useful concepts
 for building on other datasets.</p>
@@ -301,13 +304,14 @@ analysis.</p>
 ),
 </code></pre>
 <p>The table will have the following structure. The table is sorted by the first three columns for demonstration.</p>
-<table><thead><tr><th><code>channel</code></th><th><code>cohort_date</code></th><th><code>elapsed_periods</code></th><th><code>n_profiles</code></th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th><code>channel</code></th><th><code>cohort_date</code></th><th><code>elapsed_periods</code></th><th><code>n_profiles</code></th></tr></thead><tbody>
 <tr><td>release</td><td>20170101</td><td>0</td><td>100</td></tr>
 <tr><td>release</td><td>20170101</td><td>1</td><td>90</td></tr>
 <tr><td>release</td><td>20170101</td><td>2</td><td>80</td></tr>
 <tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
 <tr><td>beta</td><td>20170128</td><td>10</td><td>25</td></tr>
 </tbody></table>
+</div>
 <p>Finally, retention is calculated through the number of profiles at the time of
 the <code>elapsed_period</code> relative to the initial period. This data can be imported
 into a pivot table for further analysis.</p>
@@ -326,13 +330,14 @@ into a pivot table for further analysis.</p>
     )
 )
 </code></pre>
-<table><thead><tr><th><code>channel</code></th><th><code>cohort_date</code></th><th><code>elapsed_periods</code></th><th><code>n_profiles</code></th><th><code>total_n_profiles</code></th><th><code>percentage_n_profiles</code></th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th><code>channel</code></th><th><code>cohort_date</code></th><th><code>elapsed_periods</code></th><th><code>n_profiles</code></th><th><code>total_n_profiles</code></th><th><code>percentage_n_profiles</code></th></tr></thead><tbody>
 <tr><td>release</td><td>20170101</td><td>0</td><td>100</td><td>100</td><td>1.0</td></tr>
 <tr><td>release</td><td>20170101</td><td>1</td><td>90</td><td>100</td><td>0.9</td></tr>
 <tr><td>release</td><td>20170101</td><td>2</td><td>80</td><td>100</td><td>0.8</td></tr>
 <tr><td>...</td><td>....</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
 <tr><td>beta</td><td>20170128</td><td>10</td><td>25</td><td>50</td><td>0.5</td></tr>
 </tbody></table>
+</div>
 <p>Obtain the results.</p>
 <pre><code class="language-sql">SELECT *
 FROM results
@@ -372,7 +377,7 @@ for more examples.</p>
 <a href="https://github.com/mozilla/python_mozetl/tree/9217335652cad46940a51c7c2784cc5c6d3a00f4"><code>mozilla/python_mozetl</code></a>. The job can
 be found in
 <a href="https://github.com/mozilla/python_mozetl/blob/9217335652cad46940a51c7c2784cc5c6d3a00f4/mozetl/engagement/churn/job.py#L1-L27"><code>mozetl/engagement/churn</code></a>.</p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/obsolete/churn/reference.md">Edit this file on GitHub.</a></footer>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/obsolete/churn/reference.md">Edit this page on GitHub.</a></footer>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

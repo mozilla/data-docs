@@ -191,11 +191,12 @@ LIMIT
 </code></pre>
 <p><a href="https://sql.telemetry.mozilla.org/queries/71333/source"><code>STMO#71333</code></a></p>
 <p>Running this query on STMO, we get the following output:</p>
-<table><thead><tr><th><code>histogram_json</code></th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th><code>histogram_json</code></th></tr></thead><tbody>
 <tr><td><code>{&quot;bucket_count&quot;:20,&quot;histogram_type&quot;:0,&quot;sum&quot;:118,&quot;range&quot;:[1,1000],&quot;values&quot;:{&quot;80&quot;:0,&quot;115&quot;:1,&quot;165&quot;:0}}</code></td></tr>
 <tr><td><code>{&quot;bucket_count&quot;:20,&quot;histogram_type&quot;:0,&quot;sum&quot;:19145,&quot;range&quot;:[1,1000],&quot;values&quot;:{&quot;237&quot;:0,&quot;340&quot;:1,&quot;1000&quot;:1}}</code></td></tr>
 <tr><td><code>{&quot;bucket_count&quot;:20,&quot;histogram_type&quot;:0,&quot;sum&quot;:1996,&quot;range&quot;:[1,1000],&quot;values&quot;:{&quot;698&quot;:0,&quot;1000&quot;:1}}</code></td></tr>
 </tbody></table>
+</div>
 <p>In this representation, <code>bucket_count</code> and <code>range</code> represent the number of buckets and the range of possible values. <code>histogram_type</code> is an enumerated value that describes whether the histogram has linear, exponential, or categorical buckets; the values are <a href="https://searchfox.org/mozilla-central/rev/0c682c4f01442c3de0fa6cd286e9cadc8276b45f/toolkit/components/telemetry/core/nsITelemetry.idl#18-32">defined in the Firefox source code</a>.
 <code>values</code> represents the number of instances in each of the buckets while <code>sum</code> represents the sum total of all histogram values recorded.
 Note how the first column has one bucket with no elements in it (the &quot;165&quot; bucket), this is because Firefox adds a zero-count bucket on the left and right edges of the data (unless that would be one of the extremes and that bucket already has a count in it, as is the case for the &quot;1000&quot; bucket in the last two examples).</p>
@@ -221,11 +222,12 @@ FROM
 </code></pre>
 <p><a href="https://sql.telemetry.mozilla.org/queries/71408/source"><code>STMO#71408</code></a></p>
 <p>Which yields:</p>
-<table><thead><tr><th><code>sum</code></th><th><code>bucket_count</code></th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th><code>sum</code></th><th><code>bucket_count</code></th></tr></thead><tbody>
 <tr><td>118</td><td>20</td></tr>
 <tr><td>19145</td><td>20</td></tr>
 <tr><td>1996</td><td>20</td></tr>
 </tbody></table>
+</div>
 <p>Note that these are the same values in the JSON histogram above.</p>
 <p>Obviously this by itself is not particularly useful or meaningful - generally we are interested in <em>aggregate</em> behaviour across a larger set of clients. Let's look at how we might get that.</p>
 <h2 id="getting-percentiles-from-a-set-of-histograms"><a class="header" href="#getting-percentiles-from-a-set-of-histograms">Getting percentiles from a set of histograms</a></h2>
@@ -258,13 +260,14 @@ CROSS JOIN
 </code></pre>
 <p><a href="https://sql.telemetry.mozilla.org/queries/71410/source"><code>STMO#71410</code></a></p>
 <p>Which gives us this set of results:</p>
-<table><thead><tr><th>Percentile</th><th>Value</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Percentile</th><th>Value</th></tr></thead><tbody>
 <tr><td>0.05</td><td>13</td></tr>
 <tr><td>0.25</td><td>56</td></tr>
 <tr><td>0.50</td><td>165</td></tr>
 <tr><td>0.75</td><td>698</td></tr>
 <tr><td>0.95</td><td>1,000</td></tr>
 </tbody></table>
+</div>
 <p>So we see for this set of results that 95th percentile is <code>1000ms</code>, the 75th percentile is <code>698ms</code>, and so on.</p>
 <p>There's a bit of intermediate-to-advanced SQL in the above query, due to the fact that the <code>mozfun.hist.percentiles</code> UDF returns an <em>array</em> of results in a column (rather than a full-blown table) -- we wrangle the results into something we can handle using the <a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#unnest"><code>UNNEST</code></a> operator combined with a cross-join at the end. If you don't immediately understand this, don't worry: it's just an implementation detail.</p>
 <h2 id="viewing-change-of-percentiles-over-time"><a class="header" href="#viewing-change-of-percentiles-over-time">Viewing change of percentiles over time</a></h2>
@@ -470,7 +473,7 @@ CROSS JOIN
 <p>If we do this, we see this chart:</p>
 <p><img src="../assets/exponential_histograms_tutorial/example_visualization_of_normalized_histogram_percentiles_for_Windows_7.png" alt="example visualization of normalized histogram percentiles for Windows 7" /></p>
 <p>As you can see, both the 75th and 100th percentile are now in the highest bucket, and the 50th percentile is much higher as well. From this we can intuit that the user experience for these users is likely considerably worse, which is exactly what we would have expected.</p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/cookbooks/main_ping_exponential_histograms.md">Edit this file on GitHub.</a></footer>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/cookbooks/main_ping_exponential_histograms.md">Edit this page on GitHub.</a></footer>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

@@ -182,9 +182,10 @@
 <h2 id="notable-historic-events"><a class="header" href="#notable-historic-events">Notable historic events</a></h2>
 <p>When you start to evaluate trends, be aware of events from the past that may invite comparisons with history. Here are a few to keep in mind:</p>
 <ul>
-<li><strong>May 15 2022</strong> - <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1673868">Fixed potential under report <code>search_with_ads</code></a>.
+<li><strong>May 24 - Jun 10, 2022</strong> - <code>search_with_ads</code> drops on Firefox Desktop globally. Upon <a href="https://docs.google.com/document/d/1wdU1O6Anmqs87PdyYXympTXHznoskU6pVdSgTS6ilpA/edit">investigation</a>, the issue is believed to be related to Google's core algorithm update in May 2022.</li>
+<li><strong>May 15, 2022</strong> - <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1673868">Fixed potential under report <code>search_with_ads</code></a>.
 Ad impressions were not tracked for SERP that took longer than 1 second to load. This was initially uncovered by QA for ad impressions on DuckDuckGo SERP. The fix addresses for all search partners and is not limited to DuckDuckGo.</li>
-<li><strong>Dec 1 2021 - Jan 23 2022</strong> - <a href="https://mozilla-hub.atlassian.net/browse/DO-673">Search values in Android Focus from core telemetry fell</a>.</li>
+<li><strong>Dec 1, 2021 - Jan 23, 2022</strong> - <a href="https://mozilla-hub.atlassian.net/browse/DO-673">Search values in Android Focus from core telemetry fell</a>.</li>
 <li><strong>Nov 16, 2021</strong> - <a href="https://mozilla-hub.atlassian.net/browse/DS-1843">Submissions were rejected from 17:44 to 18:10 UTC</a>.</li>
 <li><strong>Nov 4, 2021</strong> - <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1676676">CORS headers added to support receiving submissions from Glean.js websites</a>.</li>
 <li><strong>Sep 30 2021 - Oct 06 2021</strong> - <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1733953">Submissions from some countries were rejected</a>.</li>
@@ -347,7 +348,7 @@ For example, in Firefox Desktop, the build id is the date and time the build was
 A build id might be formatted in any way and contain the time or version control system revision of the code included in the build.</p>
 <p>Do not assume build id's are consistent across the products we ship. A build id format may vary between products, between channels of the same product, or over time within the same channel of the same product.
 The build id format for Firefox Desktop has been very stable over time thus far, but even it can be different for different platforms in some respin circumstances (if e.g. only one platform's builder failed).</p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/concepts/analysis_gotchas.md">Edit this file on GitHub.</a></footer>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/concepts/analysis_gotchas.md">Edit this page on GitHub.</a></footer>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

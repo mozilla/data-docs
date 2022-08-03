@@ -177,7 +177,7 @@
 <h2 id="email-templates-and-email-types"><a class="header" href="#email-templates-and-email-types">Email Templates and Email Types</a></h2>
 <p>Only emails sent by the FxA auth server are represented in the tables below. TBD on marketing emails.</p>
 <h3 id="firefox-accounts"><a class="header" href="#firefox-accounts">Firefox Accounts</a></h3>
-<table><thead><tr><th><code>email_template</code></th><th><code>email_type</code></th><th>Description &amp; Notes</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th><code>email_template</code></th><th><code>email_type</code></th><th>Description &amp; Notes</th></tr></thead><tbody>
 <tr><td><code>postAddTwoStepAuthenticationEmail</code></td><td><code>2fa</code></td><td>Sent to users after they successfully add 2 factor authentication to their account (TOTP)</td></tr>
 <tr><td><code>postRemoveTwoStepAuthenticationEmail</code></td><td><code>2fa</code></td><td>Sent to users after they successfully REMOVE 2 factor authentication from their account (TOTP)</td></tr>
 <tr><td><code>postConsumeRecoveryCodeEmail</code></td><td><code>2fa</code></td><td>Sent to users after they successfully use a recovery code to login to their account after not being able to use their second factor.</td></tr>
@@ -208,9 +208,10 @@
 <tr><td><code>unblockCodeEmail</code></td><td><code>unblock</code></td><td>Sent to verify or unblock an account via code that has reached the login attempt rate limit.</td></tr>
 <tr><td><code>verifyPrimaryEmail</code></td><td><code>verify</code></td><td>Sent to users with an unverified primary email, meaning an unverified account, when they attempt an action requiring a verified account.</td></tr>
 </tbody></table>
+</div>
 <h3 id="subscription-platform"><a class="header" href="#subscription-platform">Subscription Platform</a></h3>
 <p>The <code>email_type</code> is <a href="https://github.com/mozilla/fxa/issues/12098">still being determined</a> for Subscription Platform emails.</p>
-<table><thead><tr><th><code>email_template</code></th><th><code>email_type</code></th><th>Description &amp; Notes</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th><code>email_template</code></th><th><code>email_type</code></th><th>Description &amp; Notes</th></tr></thead><tbody>
 <tr><td><code>downloadSubscription</code></td><td></td><td>Sent to users after they successfully add a subscription</td></tr>
 <tr><td><code>subscriptionAccountDeletion</code></td><td></td><td>Sent when a user with an active subscription deletes their Firefox account</td></tr>
 <tr><td><code>subscriptionAccountFinishSetup</code></td><td></td><td>Sent to a user after they purchased the product through the password-less flow without an existing Firefox account</td></tr>
@@ -232,7 +233,7 @@
 <tr><td><code>subscriptionsPaymentExpired</code></td><td></td><td>Sent whenever a user has multiple subscriptions and their card will expire at the end of the month</td></tr>
 <tr><td><code>subscriptionsPaymentProviderCancelled</code></td><td></td><td>Sent when a user has multiple subscriptions and a problem has been detected with payment method</td></tr>
 </tbody></table>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/fxa_metrics/emails.md">Edit this file on GitHub.</a></footer>
+</div><footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/fxa_metrics/emails.md">Edit this page on GitHub.</a></footer>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

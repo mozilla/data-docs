@@ -161,28 +161,31 @@
 <p>Experiment monitoring datasets are designed to power dashboards, such as <a href="https://mozilla.cloud.looker.com/dashboards/216">Experiment Enrollment Grafana dashboard</a>, for monitoring experiments in real time. Currently, datasets for monitoring the number or enrollments and number of searches performed by clients enrolled in experiments are available.</p>
 <h2 id="experiment-enrollment-data"><a class="header" href="#experiment-enrollment-data">Experiment enrollment data</a></h2>
 <p><code>moz-fx-data-shared-prod.telemetry_derived.experiment_enrollment_aggregates_live_v1</code> provides enrollment, unenrollment, graduate, update and failure aggregates for experiments and branches over 5-minute intervals for Fenix and desktop experiments. This live view is also the basis of several derived views:</p>
-<table><thead><tr><th>Dataset name</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Dataset name</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>mozdata.telemetry.experiment_unenrollment_overall</code></td><td>Overall number of clients that unenrolled from experiments</td></tr>
 <tr><td><code>mozdata.telemetry.experiment_enrollment_other_events_overall</code></td><td>Number of events other than <code>enroll</code> and <code>unenroll</code> sent by clients</td></tr>
 <tr><td><code>mozdata.telemetry.experiment_enrollment_cumulative_population_estimate</code></td><td>Cumulative number of clients enrolled in experiments</td></tr>
 <tr><td><code>mozdata.telemetry.experiment_enrollment_overall</code></td><td>Overall number of clients enrolled in experiments</td></tr>
 <tr><td><code>mozdata.telemetry.experiment_enrollment_daily_active_population</code></td><td>Number of daily active clients enrolled in experiments</td></tr>
 </tbody></table>
+</div>
 <h2 id="experiment-search-metrics-data"><a class="header" href="#experiment-search-metrics-data">Experiment search metrics data</a></h2>
 <p><code>moz-fx-data-shared-prod.telemetry_derived.experiment_search_aggregates_live_v1</code> provides aggregated search metrics of clients enrolled in Fenix and desktop experiments, such as the number of searches performed, the number of searches with ads and the number of ad clicks. This live view is also the basis of several derived views:</p>
-<table><thead><tr><th>Dataset name</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Dataset name</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>mozdata.telemetry.experiment_cumulative_ad_clicks</code></td><td>Cumulative number of ad clicks by clients enrolled in experiments</td></tr>
 <tr><td><code>mozdata.telemetry.experiment_cumulative_search_count</code></td><td>Cumulative number of searches by clients enrolled in experiments</td></tr>
 <tr><td><code>mozdata.telemetry.experiment_cumulative_search_with_ads_count</code></td><td>Cumulative number of searches with ads by clients enrolled in experiments</td></tr>
 </tbody></table>
+</div>
 <h2 id="derived-dataset"><a class="header" href="#derived-dataset">Derived dataset</a></h2>
 <p>The derived views have the following schema:</p>
-<table><thead><tr><th>Column name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Column name</th><th>Type</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>time</code></td><td><code>TIMESTAMP</code></td><td>Timestamp when value was recorded</td></tr>
 <tr><td><code>branch</code></td><td><code>STRING</code></td><td>Experiment branch</td></tr>
 <tr><td><code>experiment</code></td><td><code>STRING</code></td><td>Experiment slug</td></tr>
 <tr><td><code>value</code></td><td><code>INT64</code></td><td>Aggregated value</td></tr>
 </tbody></table>
+</div>
 <p>As an example of how these views can be used, the following query determines the number of cumulative clients enrolled
 in a the <code>multi-stage-aboutwelcome-set-default-as-first-screen</code> experiment to date in each branch of a study:</p>
 <pre><code class="language-sql">SELECT
@@ -228,7 +231,7 @@ ORDER BY 2
 <li><a href="https://github.com/mozilla/bigquery-etl/tree/master/sql/moz-fx-data-shared-prod/org_mozilla_firefox_derived/experiment_search_events_live_v1/init.sql"><code>org_mozilla_firefox_derived.experiment_search_events_live_v1</code></a></li>
 <li><a href="https://github.com/mozilla/bigquery-etl/tree/master/sql/moz-fx-data-shared-prod/org_mozilla_firefox_beta_derived/experiment_search_events_live_v1/init.sql"><code>org_mozilla_firefox_beta_derived.experiment_search_events_live_v1</code></a></li>
 </ul>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/experiment_monitoring.md">Edit this file on GitHub.</a></footer>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/experiment_monitoring.md">Edit this page on GitHub.</a></footer>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

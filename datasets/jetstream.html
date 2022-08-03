@@ -202,7 +202,7 @@ directly without additional transformations.</p>
 experiment of a given period type, named like:</p>
 <p><code>statistics_&lt;slug&gt;_{daily, weekly, overall}</code></p>
 <p>Statistics tables have the schema:</p>
-<table><thead><tr><th>Column name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Column name</th><th>Type</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>segment</code></td><td><code>STRING</code></td><td>The segment of the population being analyzed. &quot;all&quot; for the entire population.</td></tr>
 <tr><td><code>metric</code></td><td><code>STRING</code></td><td>The slug of the metric, like <code>active_ticks</code> or <code>retained</code></td></tr>
 <tr><td><code>statistic</code></td><td><code>STRING</code></td><td>The slug of the statistic that was used to summarize the metric, like &quot;mean&quot; or &quot;deciles&quot;</td></tr>
@@ -216,6 +216,7 @@ experiment of a given period type, named like:</p>
 <tr><td><code>window_index</code></td><td><code>INT64</code></td><td>(views only) A base-1 index reflecting the analysis window from which the row is drawn (i.e. day 1, day 2, …).</td></tr>
 <tr><td><code>analysis_basis</code></td><td><code>STRING</code></td><td>Analysis basis statistic result is based on. Currently, <code>analysis_basis</code> can be either <code>enrollments</code> or <code>exposures</code>.</td></tr>
 </tbody></table>
+</div>
 <p>Each combination of <code>(segment, metric, statistic, parameter, comparison, comparison_to_branch, ci_width, analysis_basis)</code> uniquely describes a single data
 point.</p>
 <p>The available segments in a table should be derived from inspection of
@@ -272,7 +273,7 @@ diagnostics.</p>
 <p><code>&lt;slug&gt;_&lt;analysis_basis&gt;_{day,week,overall}_&lt;index&gt;</code></p>
 <p>Aggregate tables have flexible schemas. Every table contains the
 columns:</p>
-<table><thead><tr><th>Column name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Column name</th><th>Type</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>client_id</code></td><td><code>STRING</code></td><td>Client's telemetry <code>client_id</code></td></tr>
 <tr><td><code>branch</code></td><td><code>STRING</code></td><td>Branch client enrolled in</td></tr>
 <tr><td><code>enrollment_date</code></td><td><code>DATE</code></td><td>First date that the client enrolled in the branch</td></tr>
@@ -282,6 +283,7 @@ columns:</p>
 <tr><td><code>analysis_window_start</code></td><td><code>INT64</code></td><td>The day after enrollment that this analysis window began; day 0 is the day of enrollment</td></tr>
 <tr><td><code>analysis_window_end</code></td><td><code>INT64</code></td><td>The day after enrollment that this analysis window terminated (inclusive)</td></tr>
 </tbody></table>
+</div>
 <p>The combination of <code>(client_id, branch)</code> is unique.</p>
 <p>Each metric associated with the experiment defines an additional
 (arbitrarily-typed) column.</p>
@@ -299,12 +301,13 @@ is then re-used in sub-sequent analysis runs.</p>
 <p>Enrollment tables are named like:</p>
 <p><code>enrollments_&lt;slug&gt;</code></p>
 <p>Enrollment tables have flexible schemas, but every table contains the columns:</p>
-<table><thead><tr><th>Column name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Column name</th><th>Type</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>client_id</code></td><td><code>STRING</code></td><td>Client's telemetry <code>client_id</code></td></tr>
 <tr><td><code>branch</code></td><td><code>STRING</code></td><td>Branch client enrolled in</td></tr>
 <tr><td><code>enrollment_date</code></td><td><code>DATE</code></td><td>First date that the client enrolled in the branch</td></tr>
 <tr><td><code>num_enrollment_events</code></td><td><code>INT64</code></td><td>Number of times a client enrolled in the given branch</td></tr>
 </tbody></table>
+</div>
 <p>The combination of <code>(client_id, branch)</code> is unique.</p>
 <p>Each segment defines an additional non-NULL boolean column per segment which is set to
 <code>true</code> if the client is in the segment and <code>false</code> otherwise.</p>
@@ -317,7 +320,7 @@ Data scientists can configure Jetstream or trigger a Jetstream invocation
 by interacting with the <a href="https://github.com/mozilla/jetstream-config"><code>jetstream-config</code></a> repository.</p>
 <h2 id="documentation"><a class="header" href="#documentation">Documentation</a></h2>
 <p>Additional documentation about Jetstream can be found in the <a href="https://experimenter.info/jetstream/jetstream">Jetstream Experimenter Docs</a>.</p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/jetstream.md">Edit this file on GitHub.</a></footer>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/jetstream.md">Edit this page on GitHub.</a></footer>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

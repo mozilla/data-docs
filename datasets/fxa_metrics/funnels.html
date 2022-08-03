@@ -183,7 +183,7 @@
 <p>We are also in the process of developing funnels for paying subscribers. We will add documentation on that once the work is is closer to complete.</p>
 <h2 id="registration-funnel"><a class="header" href="#registration-funnel">Registration Funnel</a></h2>
 <p>While there are some variations, the typical registration funnel is comprised of the steps described in the chart below. Except where noted, these events are emitted by the FxA content server.</p>
-<table><thead><tr><th>Step</th><th>Amplitude Event</th><th>Flow Event</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Step</th><th>Amplitude Event</th><th>Flow Event</th><th>Description</th></tr></thead><tbody>
 <tr><td>1</td><td><code>fxa_email_first - view</code></td><td><code>flow.enter-email.view</code></td><td>View (impression) of the form that the user enters their email address into to start the process. Note that this form can be hosted by FxA, or hosted by the relying party. In the latter case, the relier is responsible for handing the user's email address off to the FxA funnel. See &quot;counting top of funnel events&quot; below.</td></tr>
 <tr><td>2</td><td><code>fxa_reg - view</code></td><td><code>flow.signup.view</code></td><td>View of the registration form. If the user got to this step via step 1, FxA has detected that their email address is not present in the DB, and thus a new account can be created. The user creates their password and enters their age.</td></tr>
 <tr><td>3</td><td><code>fxa_reg - engage</code></td><td><code>flow.signup.engage</code></td><td>A user focuses/clicks on one of the registration form fields.</td></tr>
@@ -197,6 +197,7 @@
 <tr><td>11</td><td><code>fxa_reg - email_confirmed</code></td><td><code>account.verified</code></td><td>This event is emitted by the auth server. A user has successfully verified their account. They should now be able to use it.</td></tr>
 <tr><td>12</td><td><code>fxa_reg - complete</code></td><td><code>flow.complete</code></td><td>The account registration process is complete. Note there are NO actions required of the user to advance from step 8 to step 9; there should be virtually no drop-off there. The flow event is identical for registration and login.</td></tr>
 </tbody></table>
+</div>
 <p>The chart above provides the most detailed version of the registration funnel that can currently be constructed. However, it should not be considered the &quot;canonical&quot; version of the funnel - depending on the question it may make sense to omit some of the steps. For example, at the time of writing some browser entrypoints (e.g. <code>menupanel</code>) link directly to step 2 and skip the initial email form. Having both steps 7 and 8 may also be redundant in some cases, etc. Also, as noted above, you may want to omit the &quot;choose what to sync&quot; steps if you do not care about the users' actions there.</p>
 <h2 id="login-funnel"><a class="header" href="#login-funnel">Login Funnel</a></h2>
 <p>The login funnel describes the steps required for an existing FxA user to login to their account. With some exceptions, most of the steps here are parallel to the registration funnel (but named differently).</p>
@@ -205,7 +206,7 @@
 <li>A user is logging into sync with an account that is more than 4 hours old.</li>
 <li>A user is logging into an oauth relier that uses encryption keys, if the user had not logged into their account in the previous 72? (check this) hours.</li>
 </ol>
-<table><thead><tr><th>Step</th><th>Amplitude Event</th><th>Flow Event</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Step</th><th>Amplitude Event</th><th>Flow Event</th><th>Description</th></tr></thead><tbody>
 <tr><td>1</td><td><code>fxa_email_first - view</code></td><td><code>flow.enter-email.view</code></td><td>Similar to the registration funnel, a view (impression) of the form that the user enters their email address into to start the process. Note that this form can be hosted by FxA, or hosted by the relying party. In the latter case, the relier is responsible for handing the user's email address off to the FxA funnel. See &quot;counting top of funnel events&quot; below.</td></tr>
 <tr><td>2</td><td><code>fxa_login - view</code></td><td><code>flow.signin.view</code></td><td>View of the login form. If the user got to this step via step 1, FxA has detected that their email address IS present in the DB, and thus an existing account can be logged into. The user enters their password on this form.</td></tr>
 <tr><td>3</td><td><code>fxa_login - engage</code></td><td><code>flow.signup.engage</code></td><td>A user focuses/clicks on the login form field</td></tr>
@@ -216,6 +217,7 @@
 <tr><td>8</td><td><code>fxa_login - email_confirmed</code></td><td><code>account.confirmed</code></td><td>This event is emitted by the auth server. A user has successfully confirmed the login via email.</td></tr>
 <tr><td>9</td><td><code>fxa_login - complete</code></td><td><code>flow.complete</code></td><td>The account registration process is complete. Note there are NO actions required of the user to advance from step 8 to step 9; there should be virtually no drop-off there. The flow event is identical for registration and login.</td></tr>
 </tbody></table>
+</div>
 <p>Note again that you may want to check whether the service you are analyzing requires email confirmation on login.</p>
 <h2 id="branches-off-the-login-funnel-password-reset-account-recovery-2fa"><a class="header" href="#branches-off-the-login-funnel-password-reset-account-recovery-2fa">Branches off the Login Funnel: Password Reset, Account Recovery, 2FA.</a></h2>
 <p>Some additional funnels are &quot;branches&quot; off the main login funnel above:</p>
@@ -237,7 +239,7 @@
 <p>Thus the recovery codes. If a user (1) sets up recovery codes via settings (and stores them somewhere accessible) (2) tries to reset their password and (3) enters a valid recovery code during the password reset process, sync data can be restored without risking the &quot;bad scenario&quot; above.</p>
 <h4 id="password-reset-funnel-without-recovery-key"><a class="header" href="#password-reset-funnel-without-recovery-key">Password Reset Funnel Without Recovery Key</a></h4>
 <p><em>Note: There may be other places where a user can initiate the password reset process, but I think that its most common during login. In any case, the steps starting at 2 should all be the same.</em></p>
-<table><thead><tr><th>Step</th><th>Amplitude Event</th><th>Flow Event</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Step</th><th>Amplitude Event</th><th>Flow Event</th><th>Description</th></tr></thead><tbody>
 <tr><td>1</td><td><code>fxa_login - view</code></td><td><code>flow.signin.view</code></td><td>View of the login form, which contains the &quot;Forgot Password&quot; Link.</td></tr>
 <tr><td>2</td><td><code>fxa_login - forgot_password</code></td><td><code>flow.signin.forgot-password</code></td><td>User clicks on the &quot;Forgot Password&quot; Link.</td></tr>
 <tr><td>3</td><td>Not Implemented</td><td><code>flow.reset-password.view</code></td><td>View of the form asking the user to confirm that they want to reset.</td></tr>
@@ -249,9 +251,10 @@
 <tr><td>8</td><td>Not Implemented</td><td><code>flow.complete-reset-password.submit</code></td><td>User submits the form to create a new password.</td></tr>
 <tr><td>9</td><td><code>fxa_login - forgot_complete</code></td><td><code>flow.complete</code> (the auth server also emits <code>account.reset</code>)</td><td>User has completed the password reset funnel.</td></tr>
 </tbody></table>
+</div>
 <h4 id="password-reset-funnel-with-recovery-key"><a class="header" href="#password-reset-funnel-with-recovery-key">Password Reset Funnel With Recovery Key</a></h4>
 <p><em>Note we still need to implement amplitude events for the recovery code part of this funnel. The funnel is identical to the one above up until step 6.</em></p>
-<table><thead><tr><th>Step</th><th>Amplitude Event</th><th>Flow Event</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Step</th><th>Amplitude Event</th><th>Flow Event</th><th>Description</th></tr></thead><tbody>
 <tr><td>1</td><td><code>fxa_login - view</code></td><td><code>flow.signin.view</code></td><td>View of the login form, which contains the &quot;Forgot Password&quot; Link.</td></tr>
 <tr><td>2</td><td><code>fxa_login - forgot_pwd</code></td><td><code>flow.signin.forgot-password</code></td><td>User clicks on the &quot;Forgot Password&quot; Link.</td></tr>
 <tr><td>3</td><td>Not Implemented</td><td><code>flow.reset-password.view</code></td><td>View of the form asking the user to confirm that they want to reset.</td></tr>
@@ -268,40 +271,44 @@
 <tr><td>13</td><td><code>fxa_login - forgot_password_recovery_key_success</code></td><td><code>flow.account-recovery-reset-password.recovery-key-consume.success</code></td><td></td></tr>
 <tr><td>14</td><td><code>fxa_login - forgot_complete</code></td><td><code>flow.complete</code> (the auth server also emits <code>account.reset</code>)</td><td>User has completed the password reset funnel.</td></tr>
 </tbody></table>
+</div>
 <h3 id="login-with-2fa-totp"><a class="header" href="#login-with-2fa-totp">Login with 2FA (TOTP)</a></h3>
 <p>Users can setup two factor authentication (2FA) on account login. 2FA is implemented via time-based one-time password (TOTP). If a user has set up 2FA (via settings), they will be required to enter a pass code generated by their second factor whenever they login to their account.</p>
 <p>Users are also provisioned a set of recovery codes as part of the 2FA setup process. These are one-time use codes that can be used to login to an account if a user loses access to their second factor. <strong>Note that these 2FA recovery codes are different than the account recovery keys described above</strong>.</p>
 <h4 id="login-with-2fatotp-funnel-no-recovery-code"><a class="header" href="#login-with-2fatotp-funnel-no-recovery-code">Login with 2FA/TOTP Funnel (No Recovery Code)</a></h4>
 <p><em>This funnel starts after the <code>fxa_login - success</code> / <code>account.login</code> step of the login funnel</em></p>
-<table><thead><tr><th>Step</th><th>Amplitude Event</th><th>Flow Event</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Step</th><th>Amplitude Event</th><th>Flow Event</th><th>Description</th></tr></thead><tbody>
 <tr><td>1</td><td><code>fxa_login - totp_code_view</code></td><td><code>flow.signin-totp-code.view</code></td><td>View of the TOTP form.</td></tr>
 <tr><td>2</td><td><code>fxa_login - totp_code_engage</code></td><td><code>flow.signin-totp-code.engage</code></td><td>Click on the TOTP form.</td></tr>
 <tr><td>3</td><td><code>fxa_login - totp_code_submit</code></td><td><code>flow.signin-totp-code.submit</code></td><td>Submission of the TOTP form.</td></tr>
 <tr><td>4</td><td><code>fxa_login - totp_code_success</code></td><td><code>flow.signin-totp-code.success</code></td><td>Successful submission of the TOTP form. Auth server also emits <code>totpToken.verified</code></td></tr>
 </tbody></table>
+</div>
 <h4 id="login-with-2fatotp-funnel-w-recovery-code"><a class="header" href="#login-with-2fatotp-funnel-w-recovery-code">Login with 2FA/TOTP Funnel w/ Recovery Code</a></h4>
 <p><em>This funnel starts after user clicks to use a recovery code during the TOTP funnel.</em></p>
-<table><thead><tr><th>Step</th><th>Amplitude Event</th><th>Flow Event</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Step</th><th>Amplitude Event</th><th>Flow Event</th><th>Description</th></tr></thead><tbody>
 <tr><td>1</td><td><code>fxa_login - totp_code_view</code></td><td><code>flow.signin-totp-code.view</code></td><td>View of the TOTP form.</td></tr>
 <tr><td>2</td><td>Not Implemented</td><td><code>flow.sign_in_recovery_code.view</code></td><td>View of the TOTP recovery code form.</td></tr>
 <tr><td>3</td><td>Not Implemented</td><td><code>recoveryCode.verified</code> (auth server)</td><td>User submitted a valid recovery code.</td></tr>
 </tbody></table>
+</div>
 <h2 id="connect-another-device--sms"><a class="header" href="#connect-another-device--sms">Connect Another Device / SMS</a></h2>
 <p>Sync is most valuable to users who have multiple devices connected to their account. Thus after a user completes a sync login or registration funnel, they are shown the &quot;connect another device&quot; form. This Call to Action contains a form for a phone number, as well as links to the Google Play and Apple stores where users can download mobile versions of Firefox. If a user submits a valid phone number (associated with a country that our service supports), then we send them an SMS message with links to their mobile phone's app store.</p>
 <p>At one point, at least for iOS, the SMS message contained a deep link that pre-filled the user's email address on the sign-in form once they installed the mobile browser. There is some uncertainty about whether this still works...</p>
 <h3 id="sms-funnel"><a class="header" href="#sms-funnel">SMS Funnel</a></h3>
 <p><em>This funnel begins either (1) after a user has completed the login or registration funnel, or (2) if they click on &quot;connect another device&quot; from the FxA toolbar menu within the desktop browser (provided they are signed in). In the latter case the <code>signin</code> segment of the flow event will be omitted.</em></p>
-<table><thead><tr><th>Step</th><th>Amplitude Event</th><th>Flow Event</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Step</th><th>Amplitude Event</th><th>Flow Event</th><th>Description</th></tr></thead><tbody>
 <tr><td>1</td><td><code>fxa_connect_device - view</code> (<code>connect_device_flow</code> = <code>sms</code>)</td><td><code>flow.signin.sms.view</code></td><td>User viewed the SMS form.</td></tr>
 <tr><td>2</td><td><code>fxa_connect_device - engage</code> (<code>connect_device_flow</code> = <code>sms</code>)</td><td><code>flow.signin.sms.engage</code></td><td>User clicked somewhere on the SMS form.</td></tr>
 <tr><td>3</td><td><code>fxa_connect_device - submit</code> (<code>connect_device_flow</code> = <code>sms</code>)</td><td><code>flow.signin.sms.submit</code></td><td>User submitted the SMS form.</td></tr>
 <tr><td>4</td><td>Not Implemented</td><td><code>sms.region.{country_code}</code></td><td>An SMS was sent to a number with the two letter <code>country_code</code>.</td></tr>
 <tr><td>5</td><td>Not Implemented</td><td><code>flow.sms.sent.view</code></td><td>User views the message confirming that the SMS has been sent.</td></tr>
 </tbody></table>
+</div>
 <p>The SMS form also contains app store links. If they are clicked, flow events <code>flow.signin.sms.link.app-store.android</code> or <code>flow.signin.sms.link.app-store.ios</code> will be logged.</p>
 <h2 id="settings"><a class="header" href="#settings">Settings</a></h2>
 <p>A variety of metrics are logged that reflect user interaction with the settings page (https://accounts.firefox.com/settings). The chart below outlines some of these events (this may not be an exhaustive list).</p>
-<table><thead><tr><th>Amplitude Event</th><th>Flow Event</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Amplitude Event</th><th>Flow Event</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>fxa_pref - view</code></td><td><code>flow.settings.view</code></td><td>User viewed the settings page.</td></tr>
 <tr><td><code>fxa_pref - two_step_authentication_view</code></td><td><code>flow.settings.two-step-authentication.view</code></td><td>User viewed 2FA settings.</td></tr>
 <tr><td>Not Implemented</td><td><code>flow.settings.two-step-authentication.recovery-codes.view</code></td><td>User viewed their 2FA recovery codes. These are only viewable one time only, after a user sets up 2FA, or after they generate new codes.</td></tr>
@@ -327,7 +334,7 @@
 <tr><td>Not Implemented</td><td><code>flow.settings.clients.engage</code></td><td>User clicked somewhere the list of clients connected to their account.</td></tr>
 <tr><td>Not Implemented</td><td><code>flow.settings.clients.disconnect.view</code></td><td>User viewed the dialog asking to confirm disconnection of a device.</td></tr>
 </tbody></table>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/fxa_metrics/funnels.md">Edit this file on GitHub.</a></footer>
+</div><footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/fxa_metrics/funnels.md">Edit this page on GitHub.</a></footer>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

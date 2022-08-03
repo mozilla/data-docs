@@ -161,10 +161,11 @@
 <p>A separate connector is set up in Fivetran for each external service data should be imported from. The imports get triggered via Airflow which will have different DAGs with a specific schedule. Fivetran will dump the data into our data warehouse. Once the first Airflow-triggered import is done, Airflow can trigger the ETL process which will write the extracted data to a different location in our data warehouse.</p>
 <h3 id="environments"><a class="header" href="#environments">Environments</a></h3>
 <p>We have production and development environments in Fivetran.</p>
-<table><thead><tr><th>Environment</th><th>Description</th><th>Fivetran Warehouse</th><th>GCP Destination Project</th><th>Access</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Environment</th><th>Description</th><th>Fivetran Warehouse</th><th>GCP Destination Project</th><th>Access</th></tr></thead><tbody>
 <tr><td>Development</td><td>This environment allows developers to test their connectors during development, quickly deploy changes and make changes to imported data.</td><td><strong>Fivetran_Dev</strong></td><td><code>dev-fivetran</code></td><td>Anyone in data engineering</td></tr>
 <tr><td>Production</td><td>This environment has connectors deployed that are used in production. Access to connectors and imported data is restricted.</td><td><strong>Fivetran_Prod</strong></td><td><code>moz-fx-data-bq-fivetran</code></td><td>Only automation has access. If access to the data is required a ticket needs to be filed with SRE.</td></tr>
 </tbody></table>
+</div>
 <p>To prevent Fivetran from having access to our data warehouse, separate GCP projects have been provisioned for Fivetran to dump imported data into. The data can be transformed and moved to different projects and datasets using bigquery-etl.</p>
 <p>When working in the <strong>Fivetran_Dev</strong> environment, data is written to the <code>dev-fivetran</code> GCP project in BigQuery. All datasets are by default accessible to data engineers. So when working with sensitive data, it might be necessary to manually update the access permissions to the dataset. Ensure that the Fivetran service account has the necessary permissions to write data to the dataset when making updates.</p>
 <p>Once the development has finished, either manually delete previously created datasets or set an expiration date so that the datasets will be removed automatically after some time.</p>
@@ -232,7 +233,7 @@ A detailed guide of how to create a new custom connector step by step, best prac
 <li><a href="https://mozilla.slack.com/archives/C4D5ZA91B"><strong>#data-help</strong></a> - for questions about the data imported from external services and derived datasets</li>
 <li><a href="https://mozilla.slack.com/archives/C02GZTFM08M"><strong>#fivetran-discussion</strong></a> - for questions regarding the development of custom connectors or setting up connectors</li>
 </ul>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/concepts/external_data_integration_using_fivetran.md">Edit this file on GitHub.</a></footer>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/concepts/external_data_integration_using_fivetran.md">Edit this page on GitHub.</a></footer>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

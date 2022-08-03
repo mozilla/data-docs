@@ -334,7 +334,7 @@ WHERE
   AND exception_class = 'org.everit.json.schema.ValidationException'
 LIMIT 5
 </code></pre>
-<table><thead><tr><th>Column</th><th>Example Value</th><th>Notes</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Column</th><th>Example Value</th><th>Notes</th></tr></thead><tbody>
 <tr><td><code>document_namespace</code></td><td>telemetry</td><td></td></tr>
 <tr><td><code>document_type</code></td><td>main</td><td></td></tr>
 <tr><td><code>document_version</code></td><td>null</td><td>The version in the <code>telemetry</code> namespace is generated after validation</td></tr>
@@ -343,6 +343,7 @@ LIMIT 5
 <tr><td><code>exception_class</code></td><td><code>org.everit.json.schema.ValidationException </code></td><td>Java <a href="https://github.com/everit-org/json-schema">JSON Schema Validator</a> library</td></tr>
 <tr><td><code>job_name</code></td><td><code>decoder-0-0121192636-9c56ac6a</code></td><td>Name of the Dataflow job that can be used to determine the version of the schema artifact</td></tr>
 </tbody></table>
+</div>
 <h3 id="decoding"><a class="header" href="#decoding">Decoding</a></h3>
 <p>The BigQuery schemas are used to normalize relevant payload data and determine additional
 properties. Normalization involves renaming field names and transforming certain types of data.
@@ -375,13 +376,14 @@ accommodate BigQuery limitations in data representation. All transformations are
 <a href="https://github.com/mozilla/gcp-ingestion/blob/master/ingestion-beam/src/main/java/com/mozilla/telemetry/transforms/PubsubMessageToTableRow.java"><code>ingestion-beam</code> under
 <code>com.mozilla.telemtry.transforms.PubsubMessageToTableRow</code></a>.</p>
 <p>The following transformations are currently applied:</p>
-<table><thead><tr><th>Transformation</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Transformation</th><th>Description</th></tr></thead><tbody>
 <tr><td>Map Types</td><td>JSON objects that contain an unbounded number of keys with a shared value type are represented as a <a href="../../cookbooks/bigquery/querying.html#accessing-map-like-fields">repeated structure containing a <code>key</code> and <code>value</code> column</a>.</td></tr>
 <tr><td>Nested Arrays</td><td>Nested lists are represented using a structure containing a repeated <code>list</code> column.</td></tr>
 <tr><td>Tuples to Anonymous Structures</td><td>A <a href="https://json-schema.org/understanding-json-schema/reference/array.html#tuple-validation">tuple of items</a> is represented as an anonymous structure with column names starting at <code>_0</code> up to <code>_{n}</code> where <code>n</code> is the length of the tuple.</td></tr>
 <tr><td>JSON to String coercion</td><td>A sub-tree in a JSON document will be coerced to string if specified in the BigQuery schema. One example is of transformation is to <a href="../../cookbooks/bigquery/querying.html#accessing-histograms">represent histograms in the main ping</a>.</td></tr>
 <tr><td>Boolean to Integer coercion</td><td>A boolean may be cast into an integer type.</td></tr>
 </tbody></table>
+</div>
 <p>Additional properties are fields within the ingested JSON document that are not found in the schema.
 When all transformations are completed, any fields that were not traversed in the schema will be
 reconstituted into the <a href="../../cookbooks/bigquery/querying.html#structure-of-ping-tables-in-bigquery">top-level <code>additional_properties</code>
@@ -466,7 +468,7 @@ The artifact is first used update the table schemas in the <code>nonprod</code> 
 This staging step will stop on schema incompatible changes, such as removing a schema or a column in a schema.
 Once the tables are up to date, the Dataflow job will be drained and redeployed so it is writing to the updated tables.
 Once schemas have successfully deployed to the <code>nonprod</code> project, then it may be manually promoted to production by an operator.</p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/concepts/pipeline/schemas.md">Edit this file on GitHub.</a></footer>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/concepts/pipeline/schemas.md">Edit this page on GitHub.</a></footer>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

@@ -191,7 +191,7 @@ These dates are always in UTC.</li>
 <li>There is not any native map support available in BigQuery. Instead, structs are used with fields [key, value]. Convenience functions are available to access the like key-value maps, as described <a href="#accessing-map-like-fields">below</a>.</li>
 </ul>
 <h3 id="projects-with-bigquery-datasets"><a class="header" href="#projects-with-bigquery-datasets">Projects with BigQuery datasets</a></h3>
-<table><thead><tr><th>Project</th><th>Dataset</th><th>Purpose</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Project</th><th>Dataset</th><th>Purpose</th></tr></thead><tbody>
 <tr><td><code>mozdata</code></td><td></td><td>The primary home for user analysis; it has a short name that is easy to type and is filled with views that reference underlying tables in <code>moz-fx-data-shared-prod</code>; the default project for STMO and Looker</td></tr>
 <tr><td></td><td><code>analysis</code></td><td>User-generated tables for analysis; please prefix tables with your username</td></tr>
 <tr><td></td><td><code>tmp</code></td><td>User-generated tables for ephemeral analysis results; tables created here are automatically deleted after 7 days.</td></tr>
@@ -218,6 +218,7 @@ These dates are always in UTC.</li>
 <tr><td><code>moz-fx-data-derived-datasets</code></td><td></td><td>Legacy project that was a precursor to <code>mozdata</code></td></tr>
 <tr><td><code>moz-fx-data-shar-nonprod-efed</code></td><td></td><td>Non-production data produced by stage ingestion infrastructure</td></tr>
 </tbody></table>
+</div>
 <h3 id="table-layout-and-naming"><a class="header" href="#table-layout-and-naming">Table Layout and Naming</a></h3>
 <p>Under the single <code>moz-fx-data-shared-prod</code> project,
 each document namespace (corresponding to folders underneath the <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/master/schemas">schemas directory of <code>mozilla-pipeline-schemas</code></a>) has four BigQuery datasets provisioned with the following properties:</p>
@@ -352,7 +353,7 @@ WHERE
 LIMIT
   10
 </code></pre>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/cookbooks/bigquery/querying.md">Edit this file on GitHub.</a></footer>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/cookbooks/bigquery/querying.md">Edit this page on GitHub.</a></footer>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

@@ -402,7 +402,7 @@ Result tables are named like:</p>
 <p><code>&lt;slug&gt;</code> is referring to the slug that has been set for the project and a separate table is created for each <code>data_type</code> (scalar and histogram). The schema for result tables is flexible and slightly different for each data type.</p>
 <p>Views for each tables are also created in the <code>operational_monitoring</code> dataset. These views will compute the percentiles based on the generated results and are used by the Looker dashboards.</p>
 <h4 id="scalar-result-tables"><a class="header" href="#scalar-result-tables">Scalar result tables</a></h4>
-<table><thead><tr><th>Column name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Column name</th><th>Type</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>submission_date</code></td><td><code>DATE</code></td><td>Date the monitoring results are for</td></tr>
 <tr><td><code>client_id</code></td><td><code>STRING</code></td><td>Client's telemetry <code>client_id</code></td></tr>
 <tr><td><code>branch</code></td><td><code>STRING</code></td><td>Branch client is enrolled in</td></tr>
@@ -411,9 +411,10 @@ Result tables are named like:</p>
 <tr><td><code>agg_type</code></td><td><code>STRING</code></td><td>The type of aggregation used (<code>MAX</code>, <code>SUM</code>)</td></tr>
 <tr><td><code>value</code></td><td><code>FLOAT</code></td><td>The result value</td></tr>
 </tbody></table>
+</div>
 <p>The result table will have additional columns for each dimension that has been defined.</p>
 <h4 id="histogram-result-tables"><a class="header" href="#histogram-result-tables">Histogram Result Tables</a></h4>
-<table><thead><tr><th>Column name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Column name</th><th>Type</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>submission_date</code></td><td><code>DATE</code></td><td>Date the monitoring results are for</td></tr>
 <tr><td><code>client_id</code></td><td><code>STRING</code></td><td>Client's telemetry <code>client_id</code></td></tr>
 <tr><td><code>branch</code></td><td><code>STRING</code></td><td>Branch client is enrolled in</td></tr>
@@ -421,10 +422,11 @@ Result tables are named like:</p>
 <tr><td><code>probe</code></td><td><code>STRING</code></td><td>Slug of the probe-based metric the results are for</td></tr>
 <tr><td><code>value</code></td><td><code>RECORD</code></td><td>This record is a histogram</td></tr>
 </tbody></table>
+</div>
 <p>The result table will have additional columns for each dimension that has been defined.</p>
 <h3 id="metadata"><a class="header" href="#metadata">Metadata</a></h3>
 <p>The table <code>projects_v1</code> in <code>operational_monitoring_derived</code> contains metadata about the configured projects that is required for generating the dashboards. The table is updated after each ETL run for a specific project.</p>
-<table><thead><tr><th>Column name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Column name</th><th>Type</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>slug</code></td><td><code>STRING</code></td><td>Project slug</td></tr>
 <tr><td><code>name</code></td><td><code>STRING</code></td><td>Descriptive name of the project used as dashboard title</td></tr>
 <tr><td><code>xaxis</code></td><td><code>STRING</code></td><td>Specifies which column should be used as x-axis (either &quot;submission_date&quot; or &quot;build_id&quot;)</td></tr>
@@ -434,6 +436,7 @@ Result tables are named like:</p>
 <tr><td><code>end_date</code></td><td><code>DATE</code></td><td>Date for when monitoring should end for the project</td></tr>
 <tr><td><code>probes</code></td><td><code>RECORD</code></td><td>Repeated record with the probe slug and aggregation type</td></tr>
 </tbody></table>
+</div>
 <h3 id="scheduling"><a class="header" href="#scheduling">Scheduling</a></h3>
 <p>OpMon is updated nightly by telemetry-airflow. It is invoked by the <a href="https://github.com/mozilla/telemetry-airflow/blob/main/dags/operational_monitoring.py">operational_monitoring DAG</a>.</p>
 <h2 id="experiments-vs-opmon"><a class="header" href="#experiments-vs-opmon">Experiments vs OpMon</a></h2>
@@ -447,7 +450,7 @@ Result tables are named like:</p>
 <p>To get a deeper understanding of what happens under the hood, please see the <a href="https://github.com/mozilla/opmon">opmon repository and developer documentation</a>.</p>
 <h2 id="getting-help"><a class="header" href="#getting-help">Getting Help</a></h2>
 <p>If you have further questions, please reach out on the <a href="https://mozilla.slack.com/archives/C4D5ZA91B">#data-help</a> Slack channel.</p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/cookbooks/operational_monitoring.md">Edit this file on GitHub.</a></footer>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/cookbooks/operational_monitoring.md">Edit this page on GitHub.</a></footer>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
