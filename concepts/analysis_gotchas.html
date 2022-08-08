@@ -182,6 +182,10 @@
 <h2 id="notable-historic-events"><a class="header" href="#notable-historic-events">Notable historic events</a></h2>
 <p>When you start to evaluate trends, be aware of events from the past that may invite comparisons with history. Here are a few to keep in mind:</p>
 <ul>
+<li><strong>July 19 - August 3, 2022</strong> - <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1781085">Fenix v103 seeing an increase in <code>null</code> values in <code>client_info</code> fields</a>.
+Glean failed to properly collect data for the <code>client_info</code> fields <code>android_sdk_version</code>, <code>device_model</code>, <code>device_manufacturer</code> and <code>locale</code>.
+This has been fixed in subsequent releases and is fixed in Fenix 103.2 and all later releases.
+No backfill.</li>
 <li><strong>May 24 - Jun 10, 2022</strong> - <code>search_with_ads</code> drops on Firefox Desktop globally. Upon <a href="https://docs.google.com/document/d/1wdU1O6Anmqs87PdyYXympTXHznoskU6pVdSgTS6ilpA/edit">investigation</a>, the issue is believed to be related to Google's core algorithm update in May 2022.</li>
 <li><strong>May 15, 2022</strong> - <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1673868">Fixed potential under report <code>search_with_ads</code></a>.
 Ad impressions were not tracked for SERP that took longer than 1 second to load. This was initially uncovered by QA for ad impressions on DuckDuckGo SERP. The fix addresses for all search partners and is not limited to DuckDuckGo.</li>
