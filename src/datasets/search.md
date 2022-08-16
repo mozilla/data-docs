@@ -99,7 +99,7 @@ The [`followonsearch` addon] was first deployed in 2017-06. There is no `tagged-
 
 ## `AdBlocker` Addon
 
-When speaking of search metrics, people sometimes have the `adblockers` addon in mind. These type of information is available in `telemetry.addons_daily` and `telemetry.clients_daily`. Below we give two example queries around them, for more details please go visit the related section for these two tables. 
+When speaking of search metrics, people sometimes have the `adblockers` addon in mind. These type of information is available in `telemetry.addons_daily` and `telemetry.clients_daily`. Below we give two example queries around them, for more details please go visit the related section for these two tables.
 
 1. [`AdBlockers` DAU, and ad click to sap ratio in last 7 days](https://sql.telemetry.mozilla.org/queries/84938/source)
 2. [Popular `AdBlockers` average DAU in last 7 days](https://sql.telemetry.mozilla.org/queries/84939/source)
