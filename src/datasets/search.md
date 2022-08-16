@@ -61,7 +61,7 @@ Our partners (search engines) attribute queries to Mozilla using **partner codes
 
 # Standard Search Aggregates
 
-We report five types of searches in our search datasets: `sap`, `tagged-sap`, `tagged-follow-on`, `organic`, and `unknown`. These aggregates show up as columns in the `search_aggregates` and `search_clients_engines_sources_daily` datasets. Our search datasets are all derived from `main_summary`. The aggregate columns are derived from the `SEARCH_COUNTS` histogram.
+We report nine types of searches in our search datasets: `sap`, `tagged-sap`, `tagged-follow-on`, `search_with_ads`, `search_with_ads_organic`, `ad_click`, `ad_click_organic`, `organic`, and `unknown` (although the earliest available date for each varies). These aggregates show up as columns in the`search_aggregates` and `search_clients_engines_sources_daily` datasets. Our search datasets are all derived from `main_summary`. The aggregate columns are derived from the `SEARCH_COUNTS` histogram.
 
 The **`sap` column counts all SAP (or direct) searches**. `sap` search counts are collected via [probes](https://firefox-source-docs.mozilla.org/browser/browser/BrowserUsageTelemetry.html#search-telemetry) within the Firefox UI These counts are **very reliable, but do not count follow-on queries**.
 
@@ -96,6 +96,13 @@ The [`followonsearch` addon] was first deployed in 2017-06. There is no `tagged-
 
 [`followonsearch` addon]: https://github.com/mozilla/followonsearch
 [search permissions template]: https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=rharter%40mozilla.com&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&comment=Please%20add%20the%20following%20user%20to%20the%20Search%20group%3A%0D%0A%0D%0AMozilla%20email%20address%3A%0D%0AGithub%20handle%3A&component=Datasets%3A%20Search&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-800=X&flag_type-803=X&flag_type-916=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=Linux&priority=--&product=Data%20Platform%20and%20Tools&rep_platform=x86_64&short_desc=Add%20user%20to%20search%20user%20groups&target_milestone=---&version=unspecified
+
+## `AdBlocker` Addon
+
+When speaking of search metrics, people sometimes have the `adblockers` addon in mind. These type of information is available in `telemetry.addons_daily` and `telemetry.clients_daily`. Below we give two example queries around them, for more details please go visit the related section for these two tables.
+
+1. [`AdBlockers` DAU, and ad click to sap ratio in last 7 days](https://sql.telemetry.mozilla.org/queries/84938/source)
+2. [Popular `AdBlockers` average DAU in last 7 days](https://sql.telemetry.mozilla.org/queries/84939/source)
 
 # Address Bar & Search Overviews
 

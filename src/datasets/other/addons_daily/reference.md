@@ -46,6 +46,36 @@ ORDER BY
     4 DESC
 ```
 
+#### `AdClicks:SAP` ratio for Popular Add-ons around `adblocker`
+
+```sql
+SELECT
+    addon_id,
+    ANY_VALUE(name) as name,
+    AVG(dau) as avg_dau,
+    SAFE_DIVIDE(SUM(ad_clicks.total), SUM(sap_searches.total)) as adclick_sap_ratio
+FROM
+    telemetry.addons_daily
+WHERE
+    submission_date >= DATE_SUB(CURRENT_DATE, INTERVAL 7 DAY)
+    AND is_system = false
+    AND addon_id in ('uBlock0@raymondhill.net', --  'Ublock user'
+                     '{d10d0bf8-f5b5-c8b4-a8b2-2b9879e08c5d}', -- 'ABP user'
+                     'jid1-NIfFY2CA8fy1tg@jetpack', --'Adblock user', 
+                     '{73a6fe31-595d-460b-a920-fcc0f8843232}', --'NoScript user', 
+                     'firefox@ghostery.com', --'Ghostery user'
+                     'adblockultimate@adblockultimate.net', --'AdblockUltimate user'
+                     'jid1-MnnxcxisBPnSXQ@jetpack' -- '$PrivacyBadger user'
+                     )
+GROUP BY
+    1
+HAVING
+    avg(dau) > 1000
+ORDER BY
+    4 DESC
+
+```
+
 ## Scheduling
 
 This dataset is updated daily via the

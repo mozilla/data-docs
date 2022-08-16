@@ -23,9 +23,10 @@ This dataset is scheduled on Airflow
 
 ## Schema
 
-As of 2019-11-27, the current version of the underlying `search_clients_daily` is `v8`,
-and has a schema as follows.
-It's backfilled through 2016-03-12
+As of 2022-03-25, the current version of the underlying `search_clients_daily` is `v8`,
+with schema as follows. 
+Generally, see [Data Catalog in GCP](https://console.cloud.google.com/datacatalog?project=mozdata&qSystems=BIGQUERY) for the most up-to-date schema.
+It's backfilled through 2016-03-12. 
 
 ```
 root
@@ -62,11 +63,11 @@ root
  |-- tagged_sap: long (nullable = true)
  |-- tagged_follow_on: long (nullable = true)
  |-- sap: long (nullable = true)
- |-- tagged_sap: long (nullable = true)
- |-- tagged_follow_on: long (nullable = true)
  |-- organic: long (nullable = true)
  |-- search_with_ads: long (nullable = true)
+ |-- search_with_ads_organic: long (nullable = true)
  |-- ad_click: long (nullable = true)
+ |-- ad_click_organic: long (nullable = true)
  |-- unknown: long (nullable = true)
  |-- normalized_engine: string (nullable = true)
  |-- user_pref_browser_search_region: string (nullable = true)
@@ -74,6 +75,45 @@ root
  |-- experiments: map (nullable = true)
  |    |-- key: string
  |    |-- value: string
+ |-- scalar_parent_urlbar_searchmode_bookmarkmenu_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_handoff_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_keywordoffer_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_oneoff_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_other_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_shortcut_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_tabmenu_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_tabtosearch_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_tabtosearch_onboard_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_topsites_newtab_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_topsites_urlbar_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_touchbar_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_typed_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
 ```
 
 # Code Reference
