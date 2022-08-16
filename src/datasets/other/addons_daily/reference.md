@@ -46,7 +46,7 @@ ORDER BY
     4 DESC
 ```
 
-#### AdClicks:SAP ratio for Popular Add-ons around adblocker
+#### `AdClicks:SAP` ratio for Popular Add-ons around `adblocker`
 
 ```sql
 SELECT
