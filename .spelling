@@ -54,9 +54,11 @@ Bing
 blocklist
 bmiroglio
 bmobugs
+Bonardo
 boolean
 booleans
 bugzilla
+build_id
 Buildhub
 CamelCase
 CEP
@@ -86,6 +88,7 @@ DataFrame
 DataFrames
 Dataproc
 DAU
+data_sources
 Dataflow
 dataset
 datasets
@@ -109,6 +112,7 @@ Dockerfile
 dropdown
 DSRE
 DTMO
+DuckDuckGo
 DWL
 DXR
 DynamoDB
@@ -168,6 +172,7 @@ HyperLogLog
 IAM
 IPv4
 IPv6
+ISO3166
 ISO8601
 i.e.
 implementational
@@ -190,6 +195,8 @@ LDAP
 lifecycle
 Lockbox
 Lockwise
+LookML
+lookml-generator
 lookups
 LTV
 LTVs
@@ -209,6 +216,7 @@ metadata
 metastore
 Miroglio
 Mocli
+Mozfun
 mozilla.org
 Mozillians
 MozTelemetry
@@ -236,9 +244,13 @@ onboarding
 operationalizes
 ORM-like
 OpenStack
+operational_monitoring
+opmon
+OpMon
 optout
 pageloads
 parquet2hive
+Perf
 performant
 Pep8
 PII
@@ -295,6 +307,7 @@ repo
 respin
 ROI
 rollout
+rollouts
 RTMO
 runtime
 S3
@@ -323,6 +336,7 @@ struct
 structs
 sql.telemetry.mozilla.org
 subfields
+submission_date
 subsession
 subsessions
 SurveyGizmo
@@ -338,6 +352,7 @@ timestamps
 tryserver
 TMO
 TODO
+TOML
 Topsite
 Topsites
 TOTP
@@ -369,15 +384,19 @@ unnesting
 unnormalize
 unnormalized
 Unnormalized
+unpause
+unpaused
 unsuffixed
 unversioned
 up-to-date
 uri
 URIs
+urlbar
 utm
 UUID
 VR
 v1
+v103
 v2
 v3
 v4
@@ -392,6 +411,7 @@ workgroup
 WAU
 WebExtension
 WebExtensions
+WTMO
 XPI
 XR
 yyyymmddhhmmss

@@ -16,8 +16,8 @@ projects to maintain BigQuery [datasets](https://cloud.google.com/bigquery/docs/
 
 ### Caveats
 
-- The date partition field (e.g., `submission_date_s3`, `submission_date`) is mostly used as a partitioning column.
-  However, it has changed from using a `YYYYMMDD` string form to a `DATE` type that uses string literals in the more standards-friendly `YYYY-MM-DD` form.
+- Most tables are partitioned by date and you can scan much less data by filtering on the partition field
+  (usually `submission_timestamp` or `submission_date`).
   These dates are always in UTC.
 - Unqualified queries can become very costly very easily. Restrictions have been placed on large tables to avoid accidental querying "all data for all time". You must use the date partition fields for large tables (like `main_summary` or `clients_daily`).
 - Read the [_Query Optimization Cookbook_](./optimization.md) that includes recommendations on how to reduce cost and improve query performance.

@@ -8,7 +8,7 @@
 
 This article provides an overview of Firefox accounts metrics: what is measured and how. See the other articles in this chapter for more details about the specific measurements that are available for analysis.
 
-The [Firefox accounts documentation](https://mozilla.github.io/ecosystem-platform/reference/metrics) maintains additional detail, as well as the source code, for the metrics described here.
+The [Firefox accounts documentation](https://mozilla.github.io/ecosystem-platform/relying-parties/reference/metrics-for-relying-parties) maintains additional detail, as well as the source code, for the metrics described here.
 
 ## What is Firefox Accounts?
 

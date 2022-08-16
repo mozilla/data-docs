@@ -2,7 +2,7 @@
 
 <!-- toc -->
 
-Experiment monitoring datasets are designed to power dashboards, such as [Experiment Enrollment Grafana dashboard](https://grafana.telemetry.mozilla.org/d/XspgvdxZz/experiment-enrollment?orgId=1), for monitoring experiments in real time. Currently, datasets for monitoring the number or enrollments and number of searches performed by clients enrolled in experiments are available.
+Experiment monitoring datasets are designed to power dashboards, such as [Experiment Enrollment Grafana dashboard](https://mozilla.cloud.looker.com/dashboards/216), for monitoring experiments in real time. Currently, datasets for monitoring the number or enrollments and number of searches performed by clients enrolled in experiments are available.
 
 ## Experiment enrollment data
 

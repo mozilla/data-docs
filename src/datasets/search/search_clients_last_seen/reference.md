@@ -10,12 +10,12 @@
 
 ## Example Queries
 
-[This retention query](https://sql.telemetry.mozilla.org/queries/70349/source#177176)
+[`STMO#70349`](https://sql.telemetry.mozilla.org/queries/70349/source#177176)
 gives the WoW retention of users in different segments. Similar to GUD, a user is
 considered retained if they do they same activity the next week. Note here the
 outage from Armagaddon, and the outage for ad click telemetry in October.
 
-[This query](https://sql.telemetry.mozilla.org/queries/70348/source#177160)
+[`STMO#70348`](https://sql.telemetry.mozilla.org/queries/70348/source#177160)
 shows the amount of different search activity taken by clients. We can use it
 to determine the % of clients who partake in each activity, regardless of their
 baseline amount of activity.

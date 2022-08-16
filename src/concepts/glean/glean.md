@@ -12,21 +12,26 @@ Contents:
 
 # Overview
 
-![drawing](../../assets/Glean_overview.jpg)
+![An overview of the Glean project: On the left the product core records data using the Glean SDK. The Glean SDK then sends out this data to the Data Platform. The analysis tools (redash, Looker, GLAM, Debug View) to the right receive the data from the data platform](../../assets/glean-overview.png)
 
 The **Glean SDK** performs measurements and sends data from our products.
-It provides a set of **[metric types](https://mozilla.github.io/glean/book/user/metrics)** for individual measurements that are carefully designed to avoid common pitfalls with measurement.
+It provides a set of **[metric types](https://mozilla.github.io/glean/book/reference/metrics/index.html)** for individual measurements that are carefully designed to avoid common pitfalls with measurement.
 Metrics are then rolled up into **[pings](https://mozilla.github.io/glean/book/user/pings)** to send over the network.
 There are a number of built-in pings that are sent on predefined schedules, but it also possible to send custom pings at any desired cadence.
 
 The **Data Platform** validates and stores these pings in database tables.
 A fault tolerant design allows data to be retained in the event of problems such as traffic spikes or invalid data.
+See [An overview of Mozilla’s Data Pipeline](../pipeline/gcp_data_pipeline.md) for details.
 Derived and cleaned data can also be automatically created at this stage.
 
 The **Analysis Tools** are used to query and visualize the data.
+This includes [Redash], [Looker], [GLAM] and the [Debug Ping View][gdv].
 Because Glean knows more about the individual data, such as its type and the ranges of acceptable values, it can in many cases provide the most appropriate visualization automatically.
 
-<!-- TODO: Link to GLAM -->
+[Redash]: https://sql.telemetry.mozilla.org/
+[Looker]: https://mozilla.cloud.looker.com/
+[GLAM]: https://glam.telemetry.mozilla.org/
+[gdv]: https://debug-ping-preview.firebaseapp.com/
 
 # The Glean design principles
 
@@ -36,7 +41,7 @@ A baseline of analysis is important for all our products, from counting active u
 
 Metrics that are common to all products, such as the operating system and architecture, are provided automatically in a consistent way.
 
-Any issues found with these base metrics only need be fixed in Glean to benefit all SDK-using products.
+Any issues found with these base metrics only need to be fixed in Glean to benefit all SDK-using products.
 
 **Encourage specificity**
 
@@ -70,15 +75,16 @@ This includes previously manual and error-prone steps such as updating the ping 
 
 # How to use Glean
 
-- [Integrate the Glean SDK / library](https://mozilla.github.io/glean/book/user/adding-glean-to-your-project.html) into your product.
-- [Use Redash](https://sql.telemetry.mozilla.org/) to write SQL queries & build dashboards using your products datasets, e.g.:
+- [Integrate the Glean SDK](https://mozilla.github.io/glean/book/user/adding-glean-to-your-project/index.html) into your product.
+- [Use Looker](https://mozilla.cloud.looker.com/) to build Explores and Dashboards using your product's datasets.
+- If Looker does not provide the necessary Explores you can resort to [using Redash](https://sql.telemetry.mozilla.org/) to write SQL queries & build dashboards using your products datasets, e.g.:
 
   - `org_mozilla_fenix.baseline`
   - `org_mozilla_fenix.events`
   - `org_mozilla_fenix.metrics`
   - There is [more documentation about accessing Glean data](../../cookbooks/accessing_glean_data.md).
 
-- For experimentation, you can use [Android experiments library](https://github.com/mozilla-mobile/android-components/blob/master/components/service/experiments/README.md), which integrates with Glean.
+- For experimentation, you can use [Nimbus SDK](https://github.com/mozilla/application-services/blob/main/components/nimbus/README.md), which integrates with Glean.
 
 # Contact
 
@@ -91,4 +97,3 @@ This includes previously manual and error-prone steps such as updating the ping 
 - The [Glean SDK](https://github.com/mozilla/glean/) implementation.
 - [Reporting issues & bugs for the Glean SDK](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&component=Glean%3A%20SDK).
 - Datasets documentation (TBD)
-- [Glean Debug pings viewer](https://debug-ping-preview.firebaseapp.com/)
