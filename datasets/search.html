@@ -180,6 +180,7 @@ complex analyses.</p>
 <ul>
 <li><a href="#relies-on-whitelists">Relies on whitelists</a></li>
 <li><a href="#limited-historical-data">Limited historical data</a></li>
+<li><a href="#adblocker-addon"><code>AdBlocker</code> Addon</a></li>
 </ul>
 </li>
 <li><a href="#address-bar--search-overviews">Address Bar &amp; Search Overviews</a></li>
@@ -214,7 +215,7 @@ complex analyses.</p>
 <p><strong>Tagged queries</strong> are queries that <strong>include one of our partner codes</strong>. If a SAP query is tagged, any follow-on query should also be tagged.</p>
 <p><strong>Untagged queries</strong> are queries that <strong>do not include one of our partner codes</strong>. If a query is untagged, it's usually because we do not have a partner deal for that search engine and region (or it is an organic search that did not start from an SAP).</p>
 <h1 id="standard-search-aggregates"><a class="header" href="#standard-search-aggregates">Standard Search Aggregates</a></h1>
-<p>We report five types of searches in our search datasets: <code>sap</code>, <code>tagged-sap</code>, <code>tagged-follow-on</code>, <code>organic</code>, and <code>unknown</code>. These aggregates show up as columns in the <code>search_aggregates</code> and <code>search_clients_engines_sources_daily</code> datasets. Our search datasets are all derived from <code>main_summary</code>. The aggregate columns are derived from the <code>SEARCH_COUNTS</code> histogram.</p>
+<p>We report nine types of searches in our search datasets: <code>sap</code>, <code>tagged-sap</code>, <code>tagged-follow-on</code>, <code>search_with_ads</code>, <code>search_with_ads_organic</code>, <code>ad_click</code>, <code>ad_click_organic</code>, <code>organic</code>, and <code>unknown</code> (although the earliest available date for each varies). These aggregates show up as columns in the<code>search_aggregates</code> and <code>search_clients_engines_sources_daily</code> datasets. Our search datasets are all derived from <code>main_summary</code>. The aggregate columns are derived from the <code>SEARCH_COUNTS</code> histogram.</p>
 <p>The <strong><code>sap</code> column counts all SAP (or direct) searches</strong>. <code>sap</code> search counts are collected via <a href="https://firefox-source-docs.mozilla.org/browser/browser/BrowserUsageTelemetry.html#search-telemetry">probes</a> within the Firefox UI These counts are <strong>very reliable, but do not count follow-on queries</strong>.</p>
 <p>In 2017-06 we deployed the <a href="https://github.com/mozilla/followonsearch"><code>followonsearch</code> addon</a>, which adds probes for <code>tagged-sap</code> and <code>tagged-follow-on</code> searches. These columns <strong>attempt to count all tagged searches</strong> by looking for Mozilla partner codes in the URL of requests to partner search engines. These search counts are critical to understanding revenue since they exclude untagged searches and include follow-on searches. However, these search counts have <strong>important caveats affecting their reliability</strong>. See <a href="#in-content-telemetry-issues">In Content Telemetry Issues</a> for more information.</p>
 <p>In 2018, we <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1475571">incorporated</a> this code into the product (as of version 61) and also started tracking so-called &quot;organic&quot; searches that weren't initiated through a search access point (sap). This data has the same caveats as those for follow on searches, above.</p>
@@ -231,6 +232,12 @@ complex analyses.</p>
 <h2 id="limited-historical-data"><a class="header" href="#limited-historical-data">Limited historical data</a></h2>
 <p>The <a href="https://github.com/mozilla/followonsearch"><code>followonsearch</code> addon</a> was first deployed in 2017-06. There is no <code>tagged-*</code> search data available before this.</p>
 <p><code>default_private_search_engine</code> is only available starting 2019-11-19.</p>
+<h2 id="adblocker-addon"><a class="header" href="#adblocker-addon"><code>AdBlocker</code> Addon</a></h2>
+<p>When speaking of search metrics, people sometimes have the <code>adblockers</code> addon in mind. These type of information is available in <code>telemetry.addons_daily</code> and <code>telemetry.clients_daily</code>. Below we give two example queries around them, for more details please go visit the related section for these two tables.</p>
+<ol>
+<li><a href="https://sql.telemetry.mozilla.org/queries/84938/source"><code>AdBlockers</code> DAU, and ad click to sap ratio in last 7 days</a></li>
+<li><a href="https://sql.telemetry.mozilla.org/queries/84939/source">Popular <code>AdBlockers</code> average DAU in last 7 days</a></li>
+</ol>
 <h1 id="address-bar--search-overviews"><a class="header" href="#address-bar--search-overviews">Address Bar &amp; Search Overviews</a></h1>
 <ul>
 <li>Address Bar Overview by Marco Bonardo [<a href="https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=3cfa519d-d8cc-4b9d-a432-adff012b7bb9">Presentation</a> / <a href="https://docs.google.com/presentation/d/1Li7uBp8HJ2trTLkj8Qx_bt7nIGQyU-QyniTCo9VSesY/edit#slide=id.g82d2da351e_5_3617">Slides</a>] - an overview of Firefox's address bar (aka: the Awesomebar)</li>

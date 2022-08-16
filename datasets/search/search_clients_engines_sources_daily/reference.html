@@ -179,9 +179,9 @@ For example, we include <code>country</code> and <code>channel</code> for each r
 In the event that a client sends multiple pings on a given <code>submission_date</code>
 we choose an arbitrary value from the pings for that (<code>client_id</code>, <code>submission_date</code>),
 unless otherwise noted.</p>
-<p>There are multiple standard search count aggregation columns:
-<code>sap</code>, <code>tagged-sap</code>, <code>tagged-follow-on</code>, <code>organic</code>, <code>unknown</code>, <code>ad_click</code>, <code>ad_click_organic</code>, <code>search_with_ads</code>, and <code>search_with_ads_organic</code> with varying dates the metrics became available. 
-Note that, if there were no such searches in a row's segment
+<p>There were originally five standard search count aggregation columns:
+<code>sap</code>, <code>tagged-sap</code>, and <code>tagged-follow-on</code>, <code>organic</code> and <code>unknown</code>. Over time, more search count aggregation columns were added, including <code>ad_click</code> and <code>search_with_ads</code> in late 2018 <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1505411">bug</a>; and <code>ad_click_organic</code> and <code>search_with_ads_organic</code> in late 2021 <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1664849">bug</a>. </p>
+<p>Note that, if there were no such searches in a row's segment
 (i.e. the count would be 0),
 the column value is <code>null</code>.
 Each of these columns represent different types of searches.
@@ -209,9 +209,10 @@ For more details see the <a href="../../search.html">search data documentation</
 <p>This dataset is scheduled on Airflow
 (<a href="https://github.com/mozilla/bigquery-etl/blob/ad84a15d580333b41d36cfe8331e51238f3bafa1/dags/bqetl_search.py#L64">source</a>).</p>
 <h2 id="schema"><a class="header" href="#schema">Schema</a></h2>
-<p>As of 2019-11-27, the current version of the underlying <code>search_clients_daily</code> is <code>v8</code>,
-and has a schema as follows.
-It's backfilled through 2016-03-12</p>
+<p>As of 2022-03-25, the current version of the underlying <code>search_clients_daily</code> is <code>v8</code>,
+with schema as follows. 
+Generally, see <a href="https://console.cloud.google.com/datacatalog?project=mozdata&amp;qSystems=BIGQUERY">Data Catalog in GCP</a> for the most up-to-date schema.
+It's backfilled through 2016-03-12. </p>
 <pre><code>root
  |-- client_id: string (nullable = true)
  |-- submission_date: date (nullable = true)
@@ -246,11 +247,11 @@ It's backfilled through 2016-03-12</p>
  |-- tagged_sap: long (nullable = true)
  |-- tagged_follow_on: long (nullable = true)
  |-- sap: long (nullable = true)
- |-- tagged_sap: long (nullable = true)
- |-- tagged_follow_on: long (nullable = true)
  |-- organic: long (nullable = true)
  |-- search_with_ads: long (nullable = true)
+ |-- search_with_ads_organic: long (nullable = true)
  |-- ad_click: long (nullable = true)
+ |-- ad_click_organic: long (nullable = true)
  |-- unknown: long (nullable = true)
  |-- normalized_engine: string (nullable = true)
  |-- user_pref_browser_search_region: string (nullable = true)
@@ -258,6 +259,45 @@ It's backfilled through 2016-03-12</p>
  |-- experiments: map (nullable = true)
  |    |-- key: string
  |    |-- value: string
+ |-- scalar_parent_urlbar_searchmode_bookmarkmenu_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_handoff_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_keywordoffer_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_oneoff_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_other_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_shortcut_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_tabmenu_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_tabtosearch_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_tabtosearch_onboard_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_topsites_newtab_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_topsites_urlbar_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_touchbar_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_typed_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
 </code></pre>
 <h1 id="code-reference"><a class="header" href="#code-reference">Code Reference</a></h1>
 <p>The <code>search_clients_engines_sources_daily</code> job is

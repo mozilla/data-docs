@@ -7564,6 +7564,7 @@ The DAG defined in <a href="https://github.com/mozilla/bigquery-etl/blob/master/
 <ul>
 <li><a href="datasets/other/addons_daily/reference.html#dau-wau-and-mau-for-ublock-origin">DAU, WAU and MAU for uBlock Origin</a></li>
 <li><a href="datasets/other/addons_daily/reference.html#add-ons-with-highest-organicsap-search-ratio">Add-ons with Highest Organic:SAP search ratio</a></li>
+<li><a href="datasets/other/addons_daily/reference.html#adclickssap-ratio-for-popular-add-ons-around-adblocker"><code>AdClicks:SAP</code> ratio for Popular Add-ons around <code>adblocker</code></a></li>
 </ul>
 </li>
 <li><a href="datasets/other/addons_daily/reference.html#scheduling">Scheduling</a></li>
@@ -7612,6 +7613,33 @@ HAVING
     avg(dau) &gt; 1000
 ORDER BY
     4 DESC
+</code></pre>
+<h4 id="adclickssap-ratio-for-popular-add-ons-around-adblocker"><a class="header" href="#adclickssap-ratio-for-popular-add-ons-around-adblocker"><code>AdClicks:SAP</code> ratio for Popular Add-ons around <code>adblocker</code></a></h4>
+<pre><code class="language-sql">SELECT
+    addon_id,
+    ANY_VALUE(name) as name,
+    AVG(dau) as avg_dau,
+    SAFE_DIVIDE(SUM(ad_clicks.total), SUM(sap_searches.total)) as adclick_sap_ratio
+FROM
+    telemetry.addons_daily
+WHERE
+    submission_date &gt;= DATE_SUB(CURRENT_DATE, INTERVAL 7 DAY)
+    AND is_system = false
+    AND addon_id in ('uBlock0@raymondhill.net', --  'Ublock user'
+                     '{d10d0bf8-f5b5-c8b4-a8b2-2b9879e08c5d}', -- 'ABP user'
+                     'jid1-NIfFY2CA8fy1tg@jetpack', --'Adblock user', 
+                     '{73a6fe31-595d-460b-a920-fcc0f8843232}', --'NoScript user', 
+                     'firefox@ghostery.com', --'Ghostery user'
+                     'adblockultimate@adblockultimate.net', --'AdblockUltimate user'
+                     'jid1-MnnxcxisBPnSXQ@jetpack' -- '$PrivacyBadger user'
+                     )
+GROUP BY
+    1
+HAVING
+    avg(dau) &gt; 1000
+ORDER BY
+    4 DESC
+
 </code></pre>
 <h2 id="scheduling-3"><a class="header" href="#scheduling-3">Scheduling</a></h2>
 <p>This dataset is updated daily via the
@@ -9197,6 +9225,7 @@ complex analyses.</p>
 <ul>
 <li><a href="datasets/search.html#relies-on-whitelists">Relies on whitelists</a></li>
 <li><a href="datasets/search.html#limited-historical-data">Limited historical data</a></li>
+<li><a href="datasets/search.html#adblocker-addon"><code>AdBlocker</code> Addon</a></li>
 </ul>
 </li>
 <li><a href="datasets/search.html#address-bar--search-overviews">Address Bar &amp; Search Overviews</a></li>
@@ -9231,7 +9260,7 @@ complex analyses.</p>
 <p><strong>Tagged queries</strong> are queries that <strong>include one of our partner codes</strong>. If a SAP query is tagged, any follow-on query should also be tagged.</p>
 <p><strong>Untagged queries</strong> are queries that <strong>do not include one of our partner codes</strong>. If a query is untagged, it's usually because we do not have a partner deal for that search engine and region (or it is an organic search that did not start from an SAP).</p>
 <h1 id="standard-search-aggregates"><a class="header" href="#standard-search-aggregates">Standard Search Aggregates</a></h1>
-<p>We report five types of searches in our search datasets: <code>sap</code>, <code>tagged-sap</code>, <code>tagged-follow-on</code>, <code>organic</code>, and <code>unknown</code>. These aggregates show up as columns in the <code>search_aggregates</code> and <code>search_clients_engines_sources_daily</code> datasets. Our search datasets are all derived from <code>main_summary</code>. The aggregate columns are derived from the <code>SEARCH_COUNTS</code> histogram.</p>
+<p>We report nine types of searches in our search datasets: <code>sap</code>, <code>tagged-sap</code>, <code>tagged-follow-on</code>, <code>search_with_ads</code>, <code>search_with_ads_organic</code>, <code>ad_click</code>, <code>ad_click_organic</code>, <code>organic</code>, and <code>unknown</code> (although the earliest available date for each varies). These aggregates show up as columns in the<code>search_aggregates</code> and <code>search_clients_engines_sources_daily</code> datasets. Our search datasets are all derived from <code>main_summary</code>. The aggregate columns are derived from the <code>SEARCH_COUNTS</code> histogram.</p>
 <p>The <strong><code>sap</code> column counts all SAP (or direct) searches</strong>. <code>sap</code> search counts are collected via <a href="https://firefox-source-docs.mozilla.org/browser/browser/BrowserUsageTelemetry.html#search-telemetry">probes</a> within the Firefox UI These counts are <strong>very reliable, but do not count follow-on queries</strong>.</p>
 <p>In 2017-06 we deployed the <a href="https://github.com/mozilla/followonsearch"><code>followonsearch</code> addon</a>, which adds probes for <code>tagged-sap</code> and <code>tagged-follow-on</code> searches. These columns <strong>attempt to count all tagged searches</strong> by looking for Mozilla partner codes in the URL of requests to partner search engines. These search counts are critical to understanding revenue since they exclude untagged searches and include follow-on searches. However, these search counts have <strong>important caveats affecting their reliability</strong>. See <a href="datasets/search.html#in-content-telemetry-issues">In Content Telemetry Issues</a> for more information.</p>
 <p>In 2018, we <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1475571">incorporated</a> this code into the product (as of version 61) and also started tracking so-called &quot;organic&quot; searches that weren't initiated through a search access point (sap). This data has the same caveats as those for follow on searches, above.</p>
@@ -9248,6 +9277,12 @@ complex analyses.</p>
 <h2 id="limited-historical-data"><a class="header" href="#limited-historical-data">Limited historical data</a></h2>
 <p>The <a href="https://github.com/mozilla/followonsearch"><code>followonsearch</code> addon</a> was first deployed in 2017-06. There is no <code>tagged-*</code> search data available before this.</p>
 <p><code>default_private_search_engine</code> is only available starting 2019-11-19.</p>
+<h2 id="adblocker-addon"><a class="header" href="#adblocker-addon"><code>AdBlocker</code> Addon</a></h2>
+<p>When speaking of search metrics, people sometimes have the <code>adblockers</code> addon in mind. These type of information is available in <code>telemetry.addons_daily</code> and <code>telemetry.clients_daily</code>. Below we give two example queries around them, for more details please go visit the related section for these two tables.</p>
+<ol>
+<li><a href="https://sql.telemetry.mozilla.org/queries/84938/source"><code>AdBlockers</code> DAU, and ad click to sap ratio in last 7 days</a></li>
+<li><a href="https://sql.telemetry.mozilla.org/queries/84939/source">Popular <code>AdBlockers</code> average DAU in last 7 days</a></li>
+</ol>
 <h1 id="address-bar--search-overviews"><a class="header" href="#address-bar--search-overviews">Address Bar &amp; Search Overviews</a></h1>
 <ul>
 <li>Address Bar Overview by Marco Bonardo [<a href="https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=3cfa519d-d8cc-4b9d-a432-adff012b7bb9">Presentation</a> / <a href="https://docs.google.com/presentation/d/1Li7uBp8HJ2trTLkj8Qx_bt7nIGQyU-QyniTCo9VSesY/edit#slide=id.g82d2da351e_5_3617">Slides</a>] - an overview of Firefox's address bar (aka: the Awesomebar)</li>
@@ -9398,9 +9433,9 @@ For example, we include <code>country</code> and <code>channel</code> for each r
 In the event that a client sends multiple pings on a given <code>submission_date</code>
 we choose an arbitrary value from the pings for that (<code>client_id</code>, <code>submission_date</code>),
 unless otherwise noted.</p>
-<p>There are multiple standard search count aggregation columns:
-<code>sap</code>, <code>tagged-sap</code>, <code>tagged-follow-on</code>, <code>organic</code>, <code>unknown</code>, <code>ad_click</code>, <code>ad_click_organic</code>, <code>search_with_ads</code>, and <code>search_with_ads_organic</code> with varying dates the metrics became available. 
-Note that, if there were no such searches in a row's segment
+<p>There were originally five standard search count aggregation columns:
+<code>sap</code>, <code>tagged-sap</code>, and <code>tagged-follow-on</code>, <code>organic</code> and <code>unknown</code>. Over time, more search count aggregation columns were added, including <code>ad_click</code> and <code>search_with_ads</code> in late 2018 <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1505411">bug</a>; and <code>ad_click_organic</code> and <code>search_with_ads_organic</code> in late 2021 <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1664849">bug</a>. </p>
+<p>Note that, if there were no such searches in a row's segment
 (i.e. the count would be 0),
 the column value is <code>null</code>.
 Each of these columns represent different types of searches.
@@ -9428,9 +9463,10 @@ For more details see the <a href="datasets/search/search_clients_engines_sources
 <p>This dataset is scheduled on Airflow
 (<a href="https://github.com/mozilla/bigquery-etl/blob/ad84a15d580333b41d36cfe8331e51238f3bafa1/dags/bqetl_search.py#L64">source</a>).</p>
 <h2 id="schema-9"><a class="header" href="#schema-9">Schema</a></h2>
-<p>As of 2019-11-27, the current version of the underlying <code>search_clients_daily</code> is <code>v8</code>,
-and has a schema as follows.
-It's backfilled through 2016-03-12</p>
+<p>As of 2022-03-25, the current version of the underlying <code>search_clients_daily</code> is <code>v8</code>,
+with schema as follows. 
+Generally, see <a href="https://console.cloud.google.com/datacatalog?project=mozdata&amp;qSystems=BIGQUERY">Data Catalog in GCP</a> for the most up-to-date schema.
+It's backfilled through 2016-03-12. </p>
 <pre><code>root
  |-- client_id: string (nullable = true)
  |-- submission_date: date (nullable = true)
@@ -9465,11 +9501,11 @@ It's backfilled through 2016-03-12</p>
  |-- tagged_sap: long (nullable = true)
  |-- tagged_follow_on: long (nullable = true)
  |-- sap: long (nullable = true)
- |-- tagged_sap: long (nullable = true)
- |-- tagged_follow_on: long (nullable = true)
  |-- organic: long (nullable = true)
  |-- search_with_ads: long (nullable = true)
+ |-- search_with_ads_organic: long (nullable = true)
  |-- ad_click: long (nullable = true)
+ |-- ad_click_organic: long (nullable = true)
  |-- unknown: long (nullable = true)
  |-- normalized_engine: string (nullable = true)
  |-- user_pref_browser_search_region: string (nullable = true)
@@ -9477,6 +9513,45 @@ It's backfilled through 2016-03-12</p>
  |-- experiments: map (nullable = true)
  |    |-- key: string
  |    |-- value: string
+ |-- scalar_parent_urlbar_searchmode_bookmarkmenu_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_handoff_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_keywordoffer_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_oneoff_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_other_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_shortcut_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_tabmenu_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_tabtosearch_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_tabtosearch_onboard_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_topsites_newtab_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_topsites_urlbar_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_touchbar_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
+ |-- scalar_parent_urlbar_searchmode_typed_sum: map (nullable = true)
+ |    |-- key: string
+ |    |-- value: int64
 </code></pre>
 <h1 id="code-reference-12"><a class="header" href="#code-reference-12">Code Reference</a></h1>
 <p>The <code>search_clients_engines_sources_daily</code> job is

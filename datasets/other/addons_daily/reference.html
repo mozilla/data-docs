@@ -163,6 +163,7 @@
 <ul>
 <li><a href="#dau-wau-and-mau-for-ublock-origin">DAU, WAU and MAU for uBlock Origin</a></li>
 <li><a href="#add-ons-with-highest-organicsap-search-ratio">Add-ons with Highest Organic:SAP search ratio</a></li>
+<li><a href="#adclickssap-ratio-for-popular-add-ons-around-adblocker"><code>AdClicks:SAP</code> ratio for Popular Add-ons around <code>adblocker</code></a></li>
 </ul>
 </li>
 <li><a href="#scheduling">Scheduling</a></li>
@@ -211,6 +212,33 @@ HAVING
     avg(dau) &gt; 1000
 ORDER BY
     4 DESC
+</code></pre>
+<h4 id="adclickssap-ratio-for-popular-add-ons-around-adblocker"><a class="header" href="#adclickssap-ratio-for-popular-add-ons-around-adblocker"><code>AdClicks:SAP</code> ratio for Popular Add-ons around <code>adblocker</code></a></h4>
+<pre><code class="language-sql">SELECT
+    addon_id,
+    ANY_VALUE(name) as name,
+    AVG(dau) as avg_dau,
+    SAFE_DIVIDE(SUM(ad_clicks.total), SUM(sap_searches.total)) as adclick_sap_ratio
+FROM
+    telemetry.addons_daily
+WHERE
+    submission_date &gt;= DATE_SUB(CURRENT_DATE, INTERVAL 7 DAY)
+    AND is_system = false
+    AND addon_id in ('uBlock0@raymondhill.net', --  'Ublock user'
+                     '{d10d0bf8-f5b5-c8b4-a8b2-2b9879e08c5d}', -- 'ABP user'
+                     'jid1-NIfFY2CA8fy1tg@jetpack', --'Adblock user', 
+                     '{73a6fe31-595d-460b-a920-fcc0f8843232}', --'NoScript user', 
+                     'firefox@ghostery.com', --'Ghostery user'
+                     'adblockultimate@adblockultimate.net', --'AdblockUltimate user'
+                     'jid1-MnnxcxisBPnSXQ@jetpack' -- '$PrivacyBadger user'
+                     )
+GROUP BY
+    1
+HAVING
+    avg(dau) &gt; 1000
+ORDER BY
+    4 DESC
+
 </code></pre>
 <h2 id="scheduling"><a class="header" href="#scheduling">Scheduling</a></h2>
 <p>This dataset is updated daily via the
