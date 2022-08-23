@@ -12,5 +12,5 @@ LINKCHECK_CMD="npx markdown-link-check --quiet --verbose --config .linkcheck.jso
 if command -v parallel > /dev/null; then
   parallel -P 8 $LINKCHECK_CMD ::: "${SEARCH_ARR[@]}"
 else
-  echo "${SEARCH_ARR[*]}" | xargs -n1 $LINKCHECK_CMD
+  echo "${SEARCH_ARR[*]}" | xargs -n1 -P 8 $LINKCHECK_CMD
 fi
