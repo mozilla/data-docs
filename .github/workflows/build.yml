@@ -82,4 +82,5 @@ jobs:
     - name: Prettier check
       run: |
         npm install
-        scripts/prettier_check.sh ${{ needs.get-changed-md-files.outputs.changed_files }}
+        scripts/prettier_fix.sh ${{ needs.get-changed-md-files.outputs.changed_files }}
+        git --no-pager diff --color --exit-code src/ README.md
