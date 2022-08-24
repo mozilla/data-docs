@@ -1,3 +1,6 @@
 #!/bin/bash
+export TERM=xterm-color
 
-npx prettier --write src/**/*md README.md
+SEARCH_PATH=${@:-'src/**/*.md'}
+
+npx prettier --write --loglevel warn $SEARCH_PATH

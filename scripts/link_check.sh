@@ -1,11 +1,16 @@
 #!/bin/bash
+export TERM=xterm-color
 
-if command -v parallel > /dev/null; then
-  RUNNER="parallel"
-else
-  RUNNER="xargs -n1"
+SEARCH_ARR=(${@:-})
+
+if [[ -z $SEARCH_ARR ]]; then
+  SEARCH_ARR=(`find src -name "*.md"`)
 fi
 
-find src -name "*.md" |\
-  sort |\
-  $RUNNER -P 8 npx markdown-link-check --quiet --verbose --config .linkcheck.json
+LINKCHECK_CMD="npx markdown-link-check --quiet --verbose --config .linkcheck.json"
+
+if command -v parallel > /dev/null; then
+  parallel -P 8 $LINKCHECK_CMD ::: "${SEARCH_ARR[@]}"
+else
+  echo "${SEARCH_ARR[*]}" | xargs -n1 -P 8 $LINKCHECK_CMD
+fi
