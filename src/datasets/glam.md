@@ -11,6 +11,8 @@ The GLAM tables:
 - Provide a set of dimensions for subsets: channel, OS, process or ping type
 - Are aggregated by build ID and version
 - For each aggregation, the distribution and percentiles over time are calculated
+- Have the last 3 versions of data aggregated every day
+- Retain data for up to 10 major versions
 
 ## Firefox Desktop
 
