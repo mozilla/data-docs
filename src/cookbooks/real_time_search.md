@@ -19,4 +19,5 @@ WHERE
 GROUP BY 1,2
 ORDER BY 1,2
 ```
+
 You can include any other fields that might be of interest to you.
