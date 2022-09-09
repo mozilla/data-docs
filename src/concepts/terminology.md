@@ -148,8 +148,7 @@ The period of time that it takes between Firefox being started until it is shut 
 
 ## Subsession
 
-In Firefox, [Sessions](#sessions) are split into subsessions after every 24-hour time period has passed or the environment has changed. See 
-[here for more details](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/sessions.html?highlight=subsession).
+In Firefox, [Sessions](#sessions) are split into subsessions after every 24-hour time period has passed or the environment has changed. See [here for more details](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/sessions.html?highlight=subsession).
 
 ## STMO (sql.telemetry.mozilla.org)
 
