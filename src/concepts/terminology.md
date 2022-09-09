@@ -126,7 +126,7 @@ Newer measurements implemented using [Glean](#glean) are referred to as [metrics
 
 ## Profile
 
-All of the changes a user makes in Firefox, like the home page, what toolbars you use, installed addons, saved passwords and your bookmarks, are all stored in a special folder, called a profile. Telemetry stores archived and pending pings in the profile directory as well as metadata like the [client id](#client-id). See also [Profile Creation](./profile/profile_creation.md)
+All of the changes a user makes in Firefox, like the home page, what toolbars you use, installed addons, saved passwords and your bookmarks, are all stored in a special folder, called a profile. Telemetry stores archived and pending pings in the profile directory as well as metadata like the [client id](#client-id). See also [Profile Creation](./profile/profile_creation.md).
 
 ## Query
 
@@ -134,9 +134,9 @@ Typically refers to a query written in the SQL syntax, run on (for example) [STM
 
 ## Retention
 
-- As in “Data retention” - how long data is stored before it is automatically deleted/archived
+- As in “Data retention” - how long data is stored before it is automatically deleted/archived?
 
-- As in “User retention” - how likely is a user to continue using a product
+- As in “User retention” - how likely is a user to continue using a product?
 
 ## Schema
 
@@ -148,8 +148,8 @@ The period of time that it takes between Firefox being started until it is shut 
 
 ## Subsession
 
-In Firefox, [Sessions](#sessions) are split into subsessions after every 24-hour time period has passed or the environment has changed.
-([for more details](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/sessions.html?highlight=subsession))
+In Firefox, [Sessions](#sessions) are split into subsessions after every 24-hour time period has passed or the environment has changed. See 
+[here for more details](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/sessions.html?highlight=subsession).
 
 ## STMO (sql.telemetry.mozilla.org)
 
@@ -161,5 +161,5 @@ As you use Firefox, Telemetry measures and collects non-personal information, su
 
 ## WAU
 
-The number of unique profiles active at least once during the 7-day window
+Weekly Active Users - The number of unique profiles active at least once during the 7-day window
 ending on the specified day.
