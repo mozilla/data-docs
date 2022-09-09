@@ -59,7 +59,7 @@ A set of data, which includes ping data, derived datasets, etc.; sometimes it is
 
 ## DAU
 
-The number of unique profiles active on each day.
+Daily Active Users - The number of unique profiles active on each day.
 
 ## Derived Dataset
 
