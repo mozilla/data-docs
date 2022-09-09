@@ -40,6 +40,7 @@
       - [Visualizing Percentiles of a Main Ping Exponential Histogram](cookbooks/main_ping_exponential_histograms.md)
     - [Real-time](cookbooks/realtime.md)
       - [Seeing Your Own Pings](cookbooks/view_pings_cep.md)
+      - [See Real-time search metrics](cookbooks/real_time_search.md)
     - [Metrics](cookbooks/metrics.md)
       - [Daily Active Users (DAU and MAU)](cookbooks/dau.md)
       - [Active DAU (aDAU)](cookbooks/active_dau.md)
