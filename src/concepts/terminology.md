@@ -99,7 +99,7 @@ ending on the specified day.
 ## Ping
 
 A ping represents a message that is sent from the Firefox browser to Mozilla’s Telemetry servers. It typically includes information about the browser’s state, user actions, etc.
-[for more details](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/common-ping.html)
+For more information, see [Common ping format](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/common-ping.html).
 
 ## Ping Table
 
