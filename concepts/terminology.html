@@ -218,7 +218,7 @@ Note that <a href="./analysis_gotchas.html#build-ids">the format may differ acro
 <h2 id="dataset"><a class="header" href="#dataset">Dataset</a></h2>
 <p>A set of data, which includes ping data, derived datasets, etc.; sometimes it is used synonymously with “table”; sometimes it is used technically to refer to a <a href="#bigquery">BigQuery</a> dataset, which represents a container for one or more tables.</p>
 <h2 id="dau"><a class="header" href="#dau">DAU</a></h2>
-<p>The number of unique profiles active on each day.</p>
+<p>Daily Active Users - The number of unique profiles active on each day.</p>
 <h2 id="derived-dataset"><a class="header" href="#derived-dataset">Derived Dataset</a></h2>
 <p>A processed dataset, such as <a href="../datasets/batch_view/clients_daily/reference.html">Clients Daily</a>. At Mozilla, this is in contrast to a raw ping table which represents (more or less) the raw data submitted by our users.</p>
 <h2 id="glean"><a class="header" href="#glean">Glean</a></h2>
@@ -239,7 +239,7 @@ Note that <a href="./analysis_gotchas.html#build-ids">the format may differ acro
 ending on the specified day.</p>
 <h2 id="ping"><a class="header" href="#ping">Ping</a></h2>
 <p>A ping represents a message that is sent from the Firefox browser to Mozilla’s Telemetry servers. It typically includes information about the browser’s state, user actions, etc.
-<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/common-ping.html">for more details</a></p>
+For more information, see <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/common-ping.html">Common ping format</a>.</p>
 <h2 id="ping-table"><a class="header" href="#ping-table">Ping Table</a></h2>
 <p>A set of pings that is stored in a BigQuery table. See article on <a href="../datasets/pings.html">raw ping datasets</a>.</p>
 <h2 id="pipeline"><a class="header" href="#pipeline">Pipeline</a></h2>
@@ -256,16 +256,16 @@ The bulk of the data that is handled by this pipeline is Firefox Telemetry data.
 </ul>
 <p>Newer measurements implemented using <a href="#glean">Glean</a> are referred to as <a href="#metrics">metrics</a> instead of probes, but the basic outline is the same. Details about Glean Metrics are collected inside the <a href="https://dictionary.telemetry.mozilla.org">Glean Dictionary</a>.</p>
 <h2 id="profile"><a class="header" href="#profile">Profile</a></h2>
-<p>All of the changes a user makes in Firefox, like the home page, what toolbars you use, installed addons, saved passwords and your bookmarks, are all stored in a special folder, called a profile. Telemetry stores archived and pending pings in the profile directory as well as metadata like the <a href="#client-id">client id</a>. See also <a href="./profile/profile_creation.html">Profile Creation</a></p>
+<p>All of the changes a user makes in Firefox, like the home page, what toolbars you use, installed addons, saved passwords and your bookmarks, are all stored in a special folder, called a profile. Telemetry stores archived and pending pings in the profile directory as well as metadata like the <a href="#client-id">client id</a>. See also <a href="./profile/profile_creation.html">Profile Creation</a>.</p>
 <h2 id="query"><a class="header" href="#query">Query</a></h2>
 <p>Typically refers to a query written in the SQL syntax, run on (for example) <a href="#stmo">STMO</a>.</p>
 <h2 id="retention"><a class="header" href="#retention">Retention</a></h2>
 <ul>
 <li>
-<p>As in “Data retention” - how long data is stored before it is automatically deleted/archived</p>
+<p>As in “Data retention” - how long data is stored before it is automatically deleted/archived?</p>
 </li>
 <li>
-<p>As in “User retention” - how likely is a user to continue using a product</p>
+<p>As in “User retention” - how likely is a user to continue using a product?</p>
 </li>
 </ul>
 <h2 id="schema"><a class="header" href="#schema">Schema</a></h2>
@@ -273,14 +273,13 @@ The bulk of the data that is handled by this pipeline is Firefox Telemetry data.
 <h2 id="session"><a class="header" href="#session">Session</a></h2>
 <p>The period of time that it takes between Firefox being started until it is shut down. See also <a href="#subsession">subsession</a>.</p>
 <h2 id="subsession"><a class="header" href="#subsession">Subsession</a></h2>
-<p>In Firefox, <a href="#sessions">Sessions</a> are split into subsessions after every 24-hour time period has passed or the environment has changed.
-(<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/sessions.html?highlight=subsession">for more details</a>)</p>
+<p>In Firefox, <a href="#sessions">Sessions</a> are split into subsessions after every 24-hour time period has passed or the environment has changed. See <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/sessions.html?highlight=subsession">here for more details</a>.</p>
 <h2 id="stmo-sqltelemetrymozillaorg"><a class="header" href="#stmo-sqltelemetrymozillaorg">STMO (sql.telemetry.mozilla.org)</a></h2>
 <p>A service for creating queries and dashboards. See <a href="../introduction/tools.html#sqltelemetrymozillaorg-stmo">STMO under analysis tools</a>.</p>
 <h2 id="telemetry"><a class="header" href="#telemetry">Telemetry</a></h2>
 <p>As you use Firefox, Telemetry measures and collects non-personal information, such as performance, hardware, usage and customizations. It then sends this information to Mozilla on a daily basis and we use it to improve Firefox.</p>
 <h2 id="wau"><a class="header" href="#wau">WAU</a></h2>
-<p>The number of unique profiles active at least once during the 7-day window
+<p>Weekly Active Users - The number of unique profiles active at least once during the 7-day window
 ending on the specified day.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/concepts/terminology.md">Edit this page on GitHub.</a></footer>
                     </main>
