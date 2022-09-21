@@ -1,3 +1,3 @@
 # Data Modeling guidelines
 
-This is a section for guidelines and recommendations when implementing a new data model asset.
+This section has guidelines for implementing a new data model asset and to review pull requests that implement them.
