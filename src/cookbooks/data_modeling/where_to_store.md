@@ -24,15 +24,21 @@ For these cases, the recommendation in the PR is to move the implementation to b
 
 
 ##What to store in BigQuery datasets and the bigquery-etl repository
-- All transformations, calculations and business logic are stored in the bigquery-etl repository and the resulting datasets are stored in BigQuery as a derived table, an aggregate table, a view or a materialized view. Some examples:
+
+bigquery-etl is the repository for transformations and business logic, and the results are stored in a BigQuery dataset (derived table, aggregate table, view, materialized view).
+
+Some examples of logic expected in bigquery-etl:
+
 - Calculations of DAU, WAU, MAU, new profiles.
-- Calculation of search metrics (For ex. ad clicks, search with ads, organic searches).
+- Calculation of search metrics. E.g. Ad clicks, search with ads, organic search.
 - Calculation of acquisition, retention and churn metrics.
-- Classification of events. E.g. The query for this PDT in the event type view would preferably be stored in BigQuery.
-- Mapping from partner code to platform for Bing's revenue in Looker.
-- Segmentation of clients that require the implementation of business logic, rather than just filtering on certain columns.
+- Mapping from partner code to platform for Bing revenue.
+- Segmentation of clients that require the implementation of business logic, instead of only filtering on specific columns.
 
 ##What to store in Looker
+Data aggregations or aggregate awareness to improve performance, preferably that don't implement or replicate business logic. 
+
+Some examples:
 
 - Aggregates for summarization or creating a subset from a BigQuery dataset, and that don’t include business logic. Some examples:
   - A subset of data for a specific year. See this [aggregate for data after 2019 in Looker](https://github.com/mozilla/looker-spoke-default/blob/4ee892234963d3305f087b99a38caa501e45098f/activity_stream/explores/pocket_tile_impressions.explore.lkml#L6).
