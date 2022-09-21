@@ -4,14 +4,13 @@ Mozilla’s current setup allows for the implementation of data modeling and bus
 
 For the purposes of this documentation, the analytics data model is defined as the set of data assets designed to collect meaningful data from our raw datasets and structure it for an efficient understanding and analysis of our products, business processes and events.
 
-
 ##What to check in a Pull Request in Looker
 
 When reviewing a PR first check if the data required is already fully or partially implemented in an existing asset and always give preference to extending or making available in Looker existing datasets over creating new ones or moving the calculation to Looker.
+
 - Check the [bigquery-etl repository](https://github.com/mozilla/bigquery-etl) for an existing dataset (table, aggregate, view, materialized view)
 - Check the [looker-hub](https://github.com/mozilla/looker-hub) repository for the availability of the table in Looker.
 - Check the [looker-spoke-default](https://github.com/mozilla/looker-spoke-default/tree/e1315853507fc1ac6e78d252d53dc8df5f5f322b) repository for existing Explores in Looker.
-
 
 We want to avoid merging a PR in one of the Looker repositories that:
 
@@ -21,7 +20,6 @@ We want to avoid merging a PR in one of the Looker repositories that:
 - Includes a definition that is already implemented in a BigQuery dataset. If it is partially implemented e.g. not all the dimensions are available, the recommendation is to extend the dataset instead of moving the calculation to Looker.
 
 For these cases, the recommendation in the PR is to move the implementation to bigquery-etl.
-
 
 ##What to store in BigQuery datasets and the bigquery-etl repository
 
@@ -36,7 +34,8 @@ Some examples of logic expected in bigquery-etl:
 - Segmentation of clients that require the implementation of business logic, instead of only filtering on specific columns.
 
 ##What to store in Looker
-Data aggregations or aggregate awareness to improve performance, preferably that don't implement or replicate business logic. 
+
+Data aggregations or aggregate awareness to improve performance, preferably that don't implement or replicate business logic.
 
 Some examples:
 
