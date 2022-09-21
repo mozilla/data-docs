@@ -30,7 +30,7 @@ For these cases, the recommendation in the PR is to move the implementation to b
 - Calculation of acquisition, retention and churn metrics.
 - Classification of events. E.g. The query for this PDT in the event type view would preferably be stored in BigQuery.
 - Mapping from partner code to platform for Bing's revenue in Looker.
-Segmentation of clients that require the implementation of business logic, rather than just filtering on certain columns.
+- Segmentation of clients that require the implementation of business logic, rather than just filtering on certain columns.
 
 ##What to store in Looker
 
