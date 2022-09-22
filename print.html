@@ -822,14 +822,14 @@ CI checks will validate the columns, data sources, and SQL syntax. Once CI compl
 <p>Project configurations files are written in <a href="https://toml.io/en/">TOML</a>. To reuse configurations across multiple projects, project configurations can reference configurations from definition files.
 These definitions files are platform-specific and located in the <a href="https://github.com/mozilla/opmon-config/tree/main/definitions"><code>definitions/</code> directory of opmon-config</a>. Platform-specific configuration files follow the same format and structure as project configuration files.</p>
 <p>If the project is used to monitor a rollout or experiment, then the configuration files should have the same name as the slug that has been assigned in <a href="https://experimenter.services.mozilla.com/">Experimenter</a>.
-Generally, configuration files have four main sections: <code>[project]</code>, <code>[data_sources]</code>, <code>[probes]</code>, and <code>[dimensions]</code>. All of these sections are optional.</p>
+Generally, configuration files have four main sections: <code>[project]</code>, <code>[data_sources]</code>, <code>[metrics]</code>, and <code>[dimensions]</code>. All of these sections are optional.</p>
 <p>Examples of every value you can specify in each section are given below. <strong>You do not need to, and should not, specify everything!</strong>
 OpMon will take values from Experimenter (for rollouts and experiments) and combine them with a reasonable set of defaults.</p>
 <p>Lines starting with a <code>#</code> are comments and have no effect.</p>
 <h3 id="project-section"><a class="header" href="#project-section"><code>[project]</code> Section</a></h3>
 <p>This part of the configuration file is optional and allows to:</p>
 <ul>
-<li>specify the probes that should be analyzed</li>
+<li>specify the metrics that should be analyzed</li>
 <li>define the clients that should be monitored</li>
 <li>indicate if/how the client population should be segmented, and</li>
 <li>override some values from Experimenter</li>
@@ -852,12 +852,23 @@ xaxis = &quot;submission_date&quot;
 # Experimenter will be used as defaults.
 start_date = &quot;2022-01-01&quot;
 
-# Metrics, that are based on probes, to compute.
+# Whether to skip the analysis for this project entirely.
+# Useful for skipping rollouts for which OpMon projects are generated automatically otherwise.
+skip = false
+
+# Ignore the default metrics that would be computed.
+skip_default_metrics = false
+
+# Whether to have all the results in a single tile on the Looker dashboard (compact)
+# or to have separate tiles for each metric.
+compact_visualization = false
+
+# Metrics, that are based on metrics, to compute.
 # Defined as a list of strings. These strings are the &quot;slug&quot; of the metric, which is the
 # name of the metric definition section in either the project configuration or the platform-specific
 # configuration file.
-# See [probes] section on how these metrics get defined.
-probes = [
+# See [metrics] section on how these metrics get defined.
+metrics = [
     'shutdown_hangs',
     'main_crashes',
     'startup_crashes',
@@ -926,24 +937,24 @@ from_expression = &quot;&quot;&quot;
 &quot;&quot;&quot;
 submission_date_column = &quot;DATE(submission_date)&quot;
 </code></pre>
-<h3 id="probes-section"><a class="header" href="#probes-section"><code>[probes]</code> Section</a></h3>
-<p>The probes sections allows to specify metrics based on probes that should be monitored.</p>
-<p>In most cases, it is not necessary to define project-specific probes, instead probes can be specified and referenced from the
+<h3 id="metrics-section"><a class="header" href="#metrics-section"><code>[metrics]</code> Section</a></h3>
+<p>The metrics sections allows to specify metrics based on metrics that should be monitored.</p>
+<p>In most cases, it is not necessary to define project-specific metrics, instead metrics can be specified and referenced from the
 platform-specific definition configurations.</p>
-<p>A new probe can be defined by adding a new section with a name like:</p>
-<p><code>[probes.&lt;new_probe_slug&gt;]</code></p>
-<pre><code class="language-toml">[probes]
+<p>A new metric can be defined by adding a new section with a name like:</p>
+<p><code>[metrics.&lt;new_metric_slug&gt;]</code></p>
+<pre><code class="language-toml">[metrics]
 
-[probes.memory_pressure_count]
+[metrics.memory_pressure_count]
 
 # The data source to use. Use the slug of a data source defined in a platform-specific config,
 # or else define a new data source (see above).
 data_source = &quot;events_memory&quot;
 
-# A clause of a SELECT expression
-select_expression = &quot;SAFE_CAST(SPLIT(event_string_value, ',')[OFFSET(1)] AS NUMERIC)&quot;
+# A clause of a SELECT expression with an aggregation
+select_expression = &quot;SUM(SAFE_CAST(SPLIT(event_string_value, ',')[OFFSET(1)] AS NUMERIC))&quot;
 
-# Type of the probe to be evaluated.
+# Type of the metric to be evaluated.
 # This is used to determine the method of aggregation to be applied.
 # Either &quot;scalar&quot; or &quot;histogram&quot;.
 type = &quot;scalar&quot;
@@ -954,9 +965,24 @@ friendly_name = &quot;Memory Pressure Count&quot;
 # A description that will be displayed by dashboards.
 description = &quot;Number of memory pressure events&quot;
 
-# This can be any string value. It's currently not being used but in the future, this could be used to visually group different probes by category.
+# This can be any string value. It's currently not being used but in the future, this could be used to visually group different metrics by category.
 category = &quot;performance&quot;
 </code></pre>
+<p>Statistics reduce observations of many clients to one or many rows describing the population.</p>
+<p>Any summarization of the client-level data can be implemented as a statistic.</p>
+<p>There is a fixed set of statistics available:</p>
+<ul>
+<li><code>sum</code></li>
+<li><code>percentile</code> (default)</li>
+<li><code>mean</code></li>
+<li><code>count</code></li>
+</ul>
+<pre><code class="language-toml"># Specify which statistic to use for a metric
+[metrics.memory_pressure_count.statistics]
+sum = {}
+mean = {}
+</code></pre>
+<p>New statistics need to be implemented in OpMon.</p>
 <h3 id="dimensions-section"><a class="header" href="#dimensions-section"><code>[dimensions]</code> Section</a></h3>
 <p>Dimensions define how the client population should be segmented.</p>
 <p>For example:</p>
@@ -973,7 +999,7 @@ select_expression = &quot;normalized_os&quot;
 <p>The <code>os</code> dimension will result in the client population being segmented by operation system. For each dimension a filter is being added to the resulting
 dashboard which allows to, for example, only show results for all Windows clients.</p>
 <h3 id="alerts-section"><a class="header" href="#alerts-section"><code>[alerts]</code> Section</a></h3>
-<p>Different types of alerts can be defined for probes:</p>
+<p>Different types of alerts can be defined for metrics:</p>
 <pre><code class="language-toml">[alerts]
 
 [alerts.ci_diffs]
@@ -981,7 +1007,7 @@ dashboard which allows to, for example, only show results for all Windows client
 # an alert is triggered if confidence interval of different branches
 # do not overlap
 type = &quot;ci_overlap&quot;
-probes = [      # probes to monitor
+metrics = [      # metrics to monitor
     &quot;gc_ms&quot;,
     &quot;startup_crashes&quot;,
 ]
@@ -991,20 +1017,19 @@ percentiles = [50, 90]  # percentiles to monitor
 # Thresholds based aler:
 # an alert is triggered if defined thresholds are exceeded/subceeded
 type = &quot;threshold&quot;
-probes = [  # probes to monitor
+metrics = [  # metrics to monitor
     &quot;oom_crashes&quot;,
     &quot;gpu_crashes&quot;
 ]
-percentiles = [50, 90]  # percentiles to monitor
-min = [0, 0]    # lower thresholds for each percentile
-max = [2, 10]   # upper thresholds for each percentile
+min = [0]    # lower thresholds
+max = [10]   # upper thresholds
 
 [alerts.historical_diff]
 # Deviation from historical data:
 # an alert is triggered if the average of the specified window deviates
 # from the average of the previous window
 type = &quot;avg_diff&quot;
-probes = [  # probes to monitor
+metrics = [  # metrics to monitor
     &quot;memory_total&quot;,
 ]
 window_size = 7 # window size in days
@@ -1053,32 +1078,27 @@ Configure the alert by setting the condition, email addresses or Slack channels 
 <h3 id="result-tables"><a class="header" href="#result-tables">Result Tables</a></h3>
 <p>The result tables that back the Looker dashboards are available in the <code>operational_monitoring_derived</code> dataset in <code>moz-fx-data-shared-prod</code>.
 Result tables are named like:</p>
-<p><code>&lt;slug&gt;_&lt;data_type&gt;</code></p>
-<p><code>&lt;slug&gt;</code> is referring to the slug that has been set for the project and a separate table is created for each <code>data_type</code> (scalar and histogram). The schema for result tables is flexible and slightly different for each data type.</p>
-<p>Views for each tables are also created in the <code>operational_monitoring</code> dataset. These views will compute the percentiles based on the generated results and are used by the Looker dashboards.</p>
-<h4 id="scalar-result-tables"><a class="header" href="#scalar-result-tables">Scalar result tables</a></h4>
+<p><code>&lt;slug&gt;_v&lt;version&gt;</code></p>
+<p><code>&lt;slug&gt;</code> is referring to the slug that has been set for the project and a separate table is created for metrics, statistics and alerts. The schema for metric tables is flexible and depends on the metrics configured to be computed.</p>
+<p>Views for each tables are also created in the <code>operational_monitoring</code> dataset. These views are used by the Looker dashboards.</p>
+<h4 id="metric-tables"><a class="header" href="#metric-tables">Metric tables</a></h4>
 <div class="table-wrapper"><table><thead><tr><th>Column name</th><th>Type</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>submission_date</code></td><td><code>DATE</code></td><td>Date the monitoring results are for</td></tr>
 <tr><td><code>client_id</code></td><td><code>STRING</code></td><td>Client's telemetry <code>client_id</code></td></tr>
 <tr><td><code>branch</code></td><td><code>STRING</code></td><td>Branch client is enrolled in</td></tr>
 <tr><td><code>build_id</code></td><td><code>STRING</code></td><td>Build the client is on</td></tr>
-<tr><td><code>name</code></td><td><code>STRING</code></td><td>Slug of the probe-based metric the results are for</td></tr>
-<tr><td><code>agg_type</code></td><td><code>STRING</code></td><td>The type of aggregation used (<code>MAX</code>, <code>SUM</code>)</td></tr>
-<tr><td><code>value</code></td><td><code>FLOAT</code></td><td>The result value</td></tr>
 </tbody></table>
 </div>
-<p>The result table will have additional columns for each dimension that has been defined.</p>
-<h4 id="histogram-result-tables"><a class="header" href="#histogram-result-tables">Histogram Result Tables</a></h4>
+<p>The result table will have additional columns for each metric and dimension that has been defined.</p>
+<h4 id="statistic-tables"><a class="header" href="#statistic-tables">Statistic Tables</a></h4>
 <div class="table-wrapper"><table><thead><tr><th>Column name</th><th>Type</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>submission_date</code></td><td><code>DATE</code></td><td>Date the monitoring results are for</td></tr>
 <tr><td><code>client_id</code></td><td><code>STRING</code></td><td>Client's telemetry <code>client_id</code></td></tr>
 <tr><td><code>branch</code></td><td><code>STRING</code></td><td>Branch client is enrolled in</td></tr>
 <tr><td><code>build_id</code></td><td><code>STRING</code></td><td>Build the client is on</td></tr>
-<tr><td><code>probe</code></td><td><code>STRING</code></td><td>Slug of the probe-based metric the results are for</td></tr>
-<tr><td><code>value</code></td><td><code>RECORD</code></td><td>This record is a histogram</td></tr>
 </tbody></table>
 </div>
-<p>The result table will have additional columns for each dimension that has been defined.</p>
+<p>The result table will have additional columns for each metric and dimension that has been defined.</p>
 <h3 id="metadata"><a class="header" href="#metadata">Metadata</a></h3>
 <p>The table <code>projects_v1</code> in <code>operational_monitoring_derived</code> contains metadata about the configured projects that is required for generating the dashboards. The table is updated after each ETL run for a specific project.</p>
 <div class="table-wrapper"><table><thead><tr><th>Column name</th><th>Type</th><th>Description</th></tr></thead><tbody>
@@ -1089,7 +1109,7 @@ Result tables are named like:</p>
 <tr><td><code>dimensions</code></td><td><code>ARRAY</code></td><td>List of dimension slugs</td></tr>
 <tr><td><code>start_date</code></td><td><code>DATE</code></td><td>Date for when monitoring should start for the project</td></tr>
 <tr><td><code>end_date</code></td><td><code>DATE</code></td><td>Date for when monitoring should end for the project</td></tr>
-<tr><td><code>probes</code></td><td><code>RECORD</code></td><td>Repeated record with the probe slug and aggregation type</td></tr>
+<tr><td><code>metrics</code></td><td><code>RECORD</code></td><td>Repeated record with the metric slug and aggregation type</td></tr>
 </tbody></table>
 </div>
 <h3 id="scheduling"><a class="header" href="#scheduling">Scheduling</a></h3>
