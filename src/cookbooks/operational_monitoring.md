@@ -23,7 +23,7 @@ Project configurations files are written in [TOML](https://toml.io/en/). To reus
 These definitions files are platform-specific and located in the [`definitions/` directory of opmon-config](https://github.com/mozilla/opmon-config/tree/main/definitions). Platform-specific configuration files follow the same format and structure as project configuration files.
 
 If the project is used to monitor a rollout or experiment, then the configuration files should have the same name as the slug that has been assigned in [Experimenter](https://experimenter.services.mozilla.com/).
-Generally, configuration files have four main sections: `[project]`, `[data_sources]`, `[probes]`, and `[dimensions]`. All of these sections are optional.
+Generally, configuration files have four main sections: `[project]`, `[data_sources]`, `[metrics]`, and `[dimensions]`. All of these sections are optional.
 
 Examples of every value you can specify in each section are given below. **You do not need to, and should not, specify everything!**
 OpMon will take values from Experimenter (for rollouts and experiments) and combine them with a reasonable set of defaults.
@@ -34,7 +34,7 @@ Lines starting with a `#` are comments and have no effect.
 
 This part of the configuration file is optional and allows to:
 
-- specify the probes that should be analyzed
+- specify the metrics that should be analyzed
 - define the clients that should be monitored
 - indicate if/how the client population should be segmented, and
 - override some values from Experimenter
@@ -59,12 +59,23 @@ xaxis = "submission_date"
 # Experimenter will be used as defaults.
 start_date = "2022-01-01"
 
-# Metrics, that are based on probes, to compute.
+# Whether to skip the analysis for this project entirely.
+# Useful for skipping rollouts for which OpMon projects are generated automatically otherwise.
+skip = false
+
+# Ignore the default metrics that would be computed.
+skip_default_metrics = false
+
+# Whether to have all the results in a single tile on the Looker dashboard (compact)
+# or to have separate tiles for each metric.
+compact_visualization = false
+
+# Metrics, that are based on metrics, to compute.
 # Defined as a list of strings. These strings are the "slug" of the metric, which is the
 # name of the metric definition section in either the project configuration or the platform-specific
 # configuration file.
-# See [probes] section on how these metrics get defined.
-probes = [
+# See [metrics] section on how these metrics get defined.
+metrics = [
     'shutdown_hangs',
     'main_crashes',
     'startup_crashes',
@@ -139,30 +150,30 @@ from_expression = """
 submission_date_column = "DATE(submission_date)"
 ```
 
-### `[probes]` Section
+### `[metrics]` Section
 
-The probes sections allows to specify metrics based on probes that should be monitored.
+The metrics sections allows to specify metrics based on metrics that should be monitored.
 
-In most cases, it is not necessary to define project-specific probes, instead probes can be specified and referenced from the
+In most cases, it is not necessary to define project-specific metrics, instead metrics can be specified and referenced from the
 platform-specific definition configurations.
 
-A new probe can be defined by adding a new section with a name like:
+A new metric can be defined by adding a new section with a name like:
 
-`[probes.<new_probe_slug>]`
+`[metrics.<new_metric_slug>]`
 
 ```toml
-[probes]
+[metrics]
 
-[probes.memory_pressure_count]
+[metrics.memory_pressure_count]
 
 # The data source to use. Use the slug of a data source defined in a platform-specific config,
 # or else define a new data source (see above).
 data_source = "events_memory"
 
-# A clause of a SELECT expression
-select_expression = "SAFE_CAST(SPLIT(event_string_value, ',')[OFFSET(1)] AS NUMERIC)"
+# A clause of a SELECT expression with an aggregation
+select_expression = "SUM(SAFE_CAST(SPLIT(event_string_value, ',')[OFFSET(1)] AS NUMERIC))"
 
-# Type of the probe to be evaluated.
+# Type of the metric to be evaluated.
 # This is used to determine the method of aggregation to be applied.
 # Either "scalar" or "histogram".
 type = "scalar"
@@ -173,9 +184,29 @@ friendly_name = "Memory Pressure Count"
 # A description that will be displayed by dashboards.
 description = "Number of memory pressure events"
 
-# This can be any string value. It's currently not being used but in the future, this could be used to visually group different probes by category.
+# This can be any string value. It's currently not being used but in the future, this could be used to visually group different metrics by category.
 category = "performance"
 ```
+
+Statistics reduce observations of many clients to one or many rows describing the population.
+
+Any summarization of the client-level data can be implemented as a statistic.
+
+There is a fixed set of statistics available:
+
+- `sum`
+- `percentile` (default)
+- `mean`
+- `count`
+
+```toml
+# Specify which statistic to use for a metric
+[metrics.memory_pressure_count.statistics]
+sum = {}
+mean = {}
+```
+
+New statistics need to be implemented in OpMon.
 
 ### `[dimensions]` Section
 
@@ -200,7 +231,7 @@ dashboard which allows to, for example, only show results for all Windows client
 
 ### `[alerts]` Section
 
-Different types of alerts can be defined for probes:
+Different types of alerts can be defined for metrics:
 
 ```toml
 [alerts]
@@ -210,7 +241,7 @@ Different types of alerts can be defined for probes:
 # an alert is triggered if confidence interval of different branches
 # do not overlap
 type = "ci_overlap"
-probes = [      # probes to monitor
+metrics = [      # metrics to monitor
     "gc_ms",
     "startup_crashes",
 ]
@@ -220,20 +251,19 @@ percentiles = [50, 90]  # percentiles to monitor
 # Thresholds based aler:
 # an alert is triggered if defined thresholds are exceeded/subceeded
 type = "threshold"
-probes = [  # probes to monitor
+metrics = [  # metrics to monitor
     "oom_crashes",
     "gpu_crashes"
 ]
-percentiles = [50, 90]  # percentiles to monitor
-min = [0, 0]    # lower thresholds for each percentile
-max = [2, 10]   # upper thresholds for each percentile
+min = [0]    # lower thresholds
+max = [10]   # upper thresholds
 
 [alerts.historical_diff]
 # Deviation from historical data:
 # an alert is triggered if the average of the specified window deviates
 # from the average of the previous window
 type = "avg_diff"
-probes = [  # probes to monitor
+metrics = [  # metrics to monitor
     "memory_total",
 ]
 window_size = 7 # window size in days
@@ -311,38 +341,33 @@ OpMon writes monitoring results and metadata to BigQuery. OpMon runs as part of 
 The result tables that back the Looker dashboards are available in the `operational_monitoring_derived` dataset in `moz-fx-data-shared-prod`.
 Result tables are named like:
 
-`<slug>_<data_type>`
+`<slug>_v<version>`
 
-`<slug>` is referring to the slug that has been set for the project and a separate table is created for each `data_type` (scalar and histogram). The schema for result tables is flexible and slightly different for each data type.
+`<slug>` is referring to the slug that has been set for the project and a separate table is created for metrics, statistics and alerts. The schema for metric tables is flexible and depends on the metrics configured to be computed.
 
-Views for each tables are also created in the `operational_monitoring` dataset. These views will compute the percentiles based on the generated results and are used by the Looker dashboards.
+Views for each tables are also created in the `operational_monitoring` dataset. These views are used by the Looker dashboards.
 
-#### Scalar result tables
+#### Metric tables
 
-| Column name       | Type     | Description                                        |
-| ----------------- | -------- | -------------------------------------------------- |
-| `submission_date` | `DATE`   | Date the monitoring results are for                |
-| `client_id`       | `STRING` | Client's telemetry `client_id`                     |
-| `branch`          | `STRING` | Branch client is enrolled in                       |
-| `build_id`        | `STRING` | Build the client is on                             |
-| `name`            | `STRING` | Slug of the probe-based metric the results are for |
-| `agg_type`        | `STRING` | The type of aggregation used (`MAX`, `SUM`)        |
-| `value`           | `FLOAT`  | The result value                                   |
+| Column name       | Type     | Description                         |
+| ----------------- | -------- | ----------------------------------- |
+| `submission_date` | `DATE`   | Date the monitoring results are for |
+| `client_id`       | `STRING` | Client's telemetry `client_id`      |
+| `branch`          | `STRING` | Branch client is enrolled in        |
+| `build_id`        | `STRING` | Build the client is on              |
 
-The result table will have additional columns for each dimension that has been defined.
+The result table will have additional columns for each metric and dimension that has been defined.
 
-#### Histogram Result Tables
+#### Statistic Tables
 
-| Column name       | Type     | Description                                        |
-| ----------------- | -------- | -------------------------------------------------- |
-| `submission_date` | `DATE`   | Date the monitoring results are for                |
-| `client_id`       | `STRING` | Client's telemetry `client_id`                     |
-| `branch`          | `STRING` | Branch client is enrolled in                       |
-| `build_id`        | `STRING` | Build the client is on                             |
-| `probe`           | `STRING` | Slug of the probe-based metric the results are for |
-| `value`           | `RECORD` | This record is a histogram                         |
+| Column name       | Type     | Description                         |
+| ----------------- | -------- | ----------------------------------- |
+| `submission_date` | `DATE`   | Date the monitoring results are for |
+| `client_id`       | `STRING` | Client's telemetry `client_id`      |
+| `branch`          | `STRING` | Branch client is enrolled in        |
+| `build_id`        | `STRING` | Build the client is on              |
 
-The result table will have additional columns for each dimension that has been defined.
+The result table will have additional columns for each metric and dimension that has been defined.
 
 ### Metadata
 
@@ -357,7 +382,7 @@ The table `projects_v1` in `operational_monitoring_derived` contains metadata ab
 | `dimensions` | `ARRAY`  | List of dimension slugs                                                                  |
 | `start_date` | `DATE`   | Date for when monitoring should start for the project                                    |
 | `end_date`   | `DATE`   | Date for when monitoring should end for the project                                      |
-| `probes`     | `RECORD` | Repeated record with the probe slug and aggregation type                                 |
+| `metrics`    | `RECORD` | Repeated record with the metric slug and aggregation type                                |
 
 ### Scheduling
 
