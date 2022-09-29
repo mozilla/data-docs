@@ -16,7 +16,7 @@ SELECT
   AVG(IF(pred_num_days_seeing_ads > 0, 1, 0)) as pct_predicted_ad_viewers_next_year,
   AVG(IF(pred_num_days_clicking_ads > 0, 1, 0)) as pct_predicted_ad_clickers_next_year,
 FROM
- `moz-fx-data-shared-prod`.revenue.client_ltv
+  `moz-fx-data-shared-prod`.revenue.client_ltv
 WHERE
   submission_date = DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
 GROUP BY
