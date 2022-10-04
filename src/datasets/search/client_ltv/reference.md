@@ -16,7 +16,7 @@ SELECT
   AVG(IF(pred_num_days_seeing_ads > 0, 1, 0)) as pct_predicted_ad_viewers_next_year,
   AVG(IF(pred_num_days_clicking_ads > 0, 1, 0)) as pct_predicted_ad_clickers_next_year,
 FROM
-  `moz-fx-data-shared-prod`.revenue_derived.client_ltv_v1
+  `moz-fx-data-shared-prod`.revenue.client_ltv
 WHERE
   submission_date = DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY)
 GROUP BY
@@ -32,7 +32,7 @@ SELECT
   SUM(normalized_ltv_ad_clicks_future) AS normalized_ltv_ad_clicks_future,
   SUM(normalized_ltv_ad_clicks_future) / COUNT(*) AS avg_normalized_ltv_ad_clicks_future,
 FROM
-  `moz-fx-data-shared-prod`.revenue_derived.client_ltv_v1
+  `moz-fx-data-shared-prod`.revenue.client_ltv
 JOIN
   `moz-fx-data-shared-prod`.search.search_clients_last_seen
   USING(submission_date, client_id)
