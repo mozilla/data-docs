@@ -24,6 +24,7 @@ Especially severe problems with production data are announced on the `fx-data-de
 
 When you start to evaluate trends, be aware of events from the past that may invite comparisons with history. Here are a few to keep in mind:
 
+- **Aug 31 2022** - [A small number of records were missing from stable tables until October 5, 2022 and not reprocessed into downstream ETL tables][jiradsre999].
 - **July 19 - August 3, 2022** - [Fenix v103 seeing an increase in `null` values in `client_info` fields](https://bugzilla.mozilla.org/show_bug.cgi?id=1781085).
   Glean failed to properly collect data for the `client_info` fields `android_sdk_version`, `device_model`, `device_manufacturer` and `locale`.
   This has been fixed in subsequent releases and is fixed in Fenix 103.2 and all later releases.
@@ -95,6 +96,7 @@ When you start to evaluate trends, be aware of events from the past that may inv
 [jirads1843]: https://mozilla-hub.atlassian.net/browse/DS-1843
 [jirado673]: https://mozilla-hub.atlassian.net/browse/DO-673
 [bug1673868]: https://bugzilla.mozilla.org/show_bug.cgi?id=1673868
+[jiradsre999]: https://mozilla-hub.atlassian.net/browse/DSRE-999
 
 ## Pseudo-replication
 
