@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Firefox Sponsored Tiles is an advertising-based feature available on the new tab of both desktop and mobile Firefox browsers. This feature populates the new tab's Top Sites section with up to two Sponsored Tiles. These Sponsored Tiles display a company logo and link to the company website. Mozilla's Merino serves the advertisements and may refresh the advertisers every 15 minutes. Each click on a Sponsored Tile generates revenue for Mozilla.
+Firefox Sponsored Tiles is an advertising-based feature available on the new tab of both desktop and mobile Firefox browsers. This feature populates the new tab's Top Sites section with up to two Sponsored Tiles. These Sponsored Tiles display a company logo and link to the company website. Mozilla's Contile serves the advertisements and may refresh the advertisers every 15 minutes. Each click on a Sponsored Tile generates revenue for Mozilla.
 
 ## Data Usage Considerations
 
