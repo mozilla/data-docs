@@ -21,5 +21,5 @@ Access to Sponsored Tiles data by advertiser is restricted to members of the con
 | All Mozillians               | `telemetry.newtab`                            | Firefox Desktop > Newtab               | Expanded newtab **desktop** dataset. Requires unnesting events. |
 | Contextual Services          | `contextual_services.event_aggregates`        | Contextual Services > Event Aggregates | Workhorse dataset for Sponsored Tiles and Suggest analyses by advertiser. |
 | Contextual Services          | `contextual_services_derived.adm_forecasting` | Contextual Services > AdM Forecasting  | Dataset with required components for Sponsored Tiles and Suggest revenue forecasts. |
-| Revenue | `contextual_services.event_aggregates` x  `revenue.revenue_data`   | Revenue > AdM Revenue with Telemetry  | Revenue information combined with usage metrics. This dataset is useful for CPC analyses. |
+| Contextual Services, Revenue | `contextual_services.event_aggregates` x  `revenue.revenue_data`   | Revenue > AdM Revenue with Telemetry  | Revenue information combined with usage metrics. This dataset is useful for CPC analyses. |
 
