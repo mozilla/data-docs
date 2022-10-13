@@ -16,7 +16,7 @@ Access to Sponsored Tiles data by advertiser is restricted to members of the con
 
 | Access-restriction(s)  | Big Query Table                                     | Looker Explore                         | Description                                 |
 | ---------------------------- | --------------------------------------------- | -------------------------------------- | ------------------------------------------- |
-| All Mozillians               | `telemetry.sponsored_tiles_clients_daily`     | TBD                                    | Workhorse dataset for Sponsored Tiles, includes desktop and mobile data. All new Sponsored Tiles metrics are added to this table. |
+| All Mozillians               | `telemetry.sponsored_tiles_clients_daily`     | TBD                                    | Workhorse dataset for Sponsored Tiles, includes desktop and mobile data. All new Sponsored Tiles metrics are added to this table. Does not include advertiser data. |
 | All Mozillians               | `telemetry.newtab_interactions`               | Firefox Desktop > New Tab Interactions | In-development dataset for basic analyses. Available metrics are limited to **desktop** clicks and impressions.                             |
 | All Mozillians               | `telemetry.newtab`                            | Firefox Desktop > Newtab               | Expanded newtab **desktop** dataset. Requires unnesting events. |
 | Contextual Services          | `contextual_services.event_aggregates`        | Contextual Services > Event Aggregates | Workhorse dataset for Sponsored Tiles and Suggest analyses by advertiser. |
