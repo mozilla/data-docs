@@ -2,14 +2,14 @@
 
 Mozilla’s current setup allows for the implementation of data modeling and business logic in different locations e.g BigQuery or Looker. The purpose of this document is to provide guidelines to decide where to store a new asset and to review pull requests that implement them.
 
-For the purposes of this documentation, the analytics data model is defined as the set of data assets designed to collect meaningful data from our raw datasets and structure it for an efficient understanding and analysis of our products, business processes and events.
+For the purpose of this documentation, the analytics data model is defined as the set of data assets designed to collect meaningful data from our raw datasets and structure it for an efficient understanding and analysis of our products, business processes and events.
 
-##What to check in a Pull Request in Looker
+## What to check in a Pull Request in Looker
 
-When reviewing a PR first check if the data required is already fully or partially implemented in an existing asset and always give preference to extending or making available in Looker existing datasets over creating new ones or moving the calculation to Looker.
+When reviewing a PR first check if the data required is already implemented in an existing asset ( fully or partially) and prefer extending and existing dataset, over creating a new one or moving the calculation to Looker.
 
-- Check the [bigquery-etl repository](https://github.com/mozilla/bigquery-etl) for an existing dataset (table, aggregate, view, materialized view)
-- Check the [looker-hub](https://github.com/mozilla/looker-hub) repository for the availability of the table in Looker.
+- Check the [bigquery-etl repository](https://github.com/mozilla/bigquery-etl) for an existing dataset with the required data (table, aggregate, view, materialized view)
+- Check the [looker-hub](https://github.com/mozilla/looker-hub) repository for the availability of the table or view in Looker.
 - Check the [looker-spoke-default](https://github.com/mozilla/looker-spoke-default/tree/e1315853507fc1ac6e78d252d53dc8df5f5f322b) repository for existing Explores in Looker.
 
 We want to avoid merging a PR in one of the Looker repositories that:
@@ -21,7 +21,7 @@ We want to avoid merging a PR in one of the Looker repositories that:
 
 For these cases, the recommendation in the PR is to move the implementation to bigquery-etl.
 
-##What to store in BigQuery datasets and the bigquery-etl repository
+## What to store in BigQuery datasets and the bigquery-etl repository
 
 bigquery-etl is the repository for transformations and business logic, and the results are stored in a BigQuery dataset (derived table, aggregate table, view, materialized view).
 
@@ -33,7 +33,7 @@ Some examples of logic expected in bigquery-etl:
 - Mapping from partner code to platform for Bing revenue.
 - Segmentation of clients that require the implementation of business logic, instead of only filtering on specific columns.
 
-##What to store in Looker
+## What to store in Looker
 
 Data aggregations or aggregate awareness to improve performance, preferably that don't implement or replicate business logic.
 
