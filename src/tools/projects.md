@@ -68,34 +68,26 @@ See also [`data-docs`][docs] for documentation on datasets.
 
 ## Data applications
 
-| Name and repo                      | Description                                                     |
-| ---------------------------------- | --------------------------------------------------------------- |
-| [`telemetry.mozilla.org`][tmo_gh]  | Main entry point for viewing [aggregate Telemetry data][tmo]    |
-| [Growth & Usage dashboard][gud_gh] | Dashboard for questions about [product growth and usage][gud]   |
-| [Glean Aggregate Metrics][glam]    | Aggregate info about probes and measures                        |
-| [Glean Debug View][gdv]            | Tag and view Glean submissions with low latency                 |
-| [Cerberus][cer] & [Medusa][med]    | Automatic alert system for telemetry aggregates                 |
-| [Mission Control][mc]              | Low latency dashboard for stability and health metrics          |
-| [Redash][redash]                   | Mozilla's fork of the [data query / visualization system][stmo] |
-| [`redash-stmo`][redashstmo]        | Mozilla's extensions to Redash                                  |
-| [TAAR][taar]                       | Telemetry-aware addon recommender                               |
-| [Ensemble][ensemble]               | A minimalist platform for publishing data                       |
-| [Hardware Report][hwreport_gh]     | Firefox Hardware Report, [available here][hwreport]             |
-| [`python-zeppelin`][pyzep]         | Convert Zeppelin notebooks to Markdown                          |
-| [St. Mocli][stmocli]               | A command-line interface to [STMO][stmo]                        |
-| [probe-scraper]                    | Scrape and publish Telemetry probe data from Firefox            |
-| [test-tube]                        | Compare data across branches in experiments                     |
-| [experimenter]                     | A web application for managing experiments                      |
-| [St. Moab][stmoab]                 | Automatically generate Redash dashboard for A/B experiments     |
-| [Iodide] ([code][iodide_gh])       | Literate scientific computing and communication for the web     |
+| Name and repo                     | Description                                                     |
+| --------------------------------- | --------------------------------------------------------------- |
+| [`telemetry.mozilla.org`][tmo_gh] | Main entry point for viewing [aggregate Telemetry data][tmo]    |
+| [Glean Aggregate Metrics][glam]   | Aggregate info about probes and measures                        |
+| [Glean Debug View][gdv]           | Tag and view Glean submissions with low latency                 |
+| [Mission Control][mc]             | Low latency dashboard for stability and health metrics          |
+| [Redash][redash]                  | Mozilla's fork of the [data query / visualization system][stmo] |
+| [`redash-stmo`][redashstmo]       | Mozilla's extensions to Redash                                  |
+| [TAAR][taar]                      | Telemetry-aware addon recommender                               |
+| [Ensemble][ensemble]              | A minimalist platform for publishing data                       |
+| [Hardware Report][hwreport_gh]    | Firefox Hardware Report, [available here][hwreport]             |
+| [St. Mocli][stmocli]              | A command-line interface to [STMO][stmo]                        |
+| [probe-scraper]                   | Scrape and publish Telemetry probe data from Firefox            |
+| [test-tube]                       | Compare data across branches in experiments                     |
+| [experimenter]                    | A web application for managing experiments                      |
+| [St. Moab][stmoab]                | Automatically generate Redash dashboard for A/B experiments     |
 
 [tmo_gh]: https://github.com/mozilla/telemetry-dashboard
-[gud]: https://gud.telemetry.mozilla.org
-[gud_gh]: https://github.com/mozilla/GUD
 [glam]: https://github.com/mozilla/glam
 [gdv]: https://debug-ping-preview.firebaseapp.com
-[cer]: https://github.com/mozilla/cerberus
-[med]: https://github.com/mozilla/medusa
 [mc]: https://github.com/mozilla/missioncontrol
 [redash]: https://github.com/mozilla/redash
 [redashstmo]: https://github.com/mozilla/redash-stmo
@@ -106,14 +98,11 @@ See also [`data-docs`][docs] for documentation on datasets.
 [stmo]: https://sql.telemetry.mozilla.org
 [hwreport_gh]: https://github.com/mozilla/firefox-hardware-report
 [hwreport]: https://data.firefox.com/dashboard/hardware
-[pyzep]: https://github.com/mozilla/python-zeppelin
 [stmocli]: https://github.com/mozilla/stmocli
 [probe-scraper]: https://github.com/mozilla/probe-scraper
 [test-tube]: https://github.com/mozilla/firefox-test-tube
 [experimenter]: https://github.com/mozilla/experimenter
 [stmoab]: https://github.com/mozilla/stmoab
-[iodide]: http://iodide.telemetry.mozilla.org/
-[iodide_gh]: https://github.com/iodide-project/iodide
 
 ## Legacy projects
 
@@ -135,11 +124,11 @@ starting a new project using anything in this section.
 
 ### Public
 
-| Name and repo              | Description                                                                     |
-| -------------------------- | ------------------------------------------------------------------------------- |
-| [`data-docs`][docs_gh]     | All the info you need to [answer questions about Firefox users with data][docs] |
-| Firefox source docs        | [Mozilla Source Tree Docs - Telemetry section][fxsrcdocs]                       |
-| [`reports.t.m.o`][rtmo_gh] | Knowledge repository for [public reports][rtmo]                                 |
+| Name and repo               | Description                                                                     |
+| --------------------------- | ------------------------------------------------------------------------------- |
+| [`data-docs`][docs_gh]      | All the info you need to [answer questions about Firefox users with data][docs] |
+| Firefox source docs         | [Mozilla Source Tree Docs - Telemetry section][fxsrcdocs]                       |
+| [`mozilla.report`][rtmo_gh] | Knowledge repository for [public reports][rtmo]                                 |
 
 [docs_gh]: https://github.com/mozilla/data-docs
 [docs]: https://docs.telemetry.mozilla.org
