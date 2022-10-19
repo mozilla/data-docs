@@ -9,7 +9,7 @@ A couple of specific use cases are supported:
 1. Monitoring build over build. This is typically used for Nightly where one build may contain changes that a previous build doesn't and we want to see if those changes affected certain metrics.
 2. Monitoring by submission date over time. This is helpful for a rollout in Release for example, where we want to make sure there are no performance or stability regressions over time as a new build rolls out.
 
-The monitoring dashboards produced for these use cases are available in [Looker](https://mozilla.cloud.looker.com/folders/494).
+The monitoring dashboards produced for these use cases are available in [Looker](https://mozilla.cloud.looker.com/folders/lookml).
 OpMon does not emit real-time results. Dashboards and related datasets get updated on a daily basis.
 
 Access to the Looker Operational Monitoring dashboards is currently limited to Mozilla employees and designated contributors. For more information, see [gaining access](../concepts/gaining_access.md).
@@ -17,10 +17,12 @@ Access to the Looker Operational Monitoring dashboards is currently limited to M
 ## Configuring a Operational Monitoring project
 
 To add or update a project configuration, open a pull request against [opmon-config](https://github.com/mozilla/opmon-config).
+Consider using and adding metric definitions to the [metric-hub](https://github.com/mozilla/metric-hub) that should be available for use across other tools, such as [Jetstream](https://experimenter.info/jetstream/jetstream/), as well.
+
 CI checks will validate the columns, data sources, and SQL syntax. Once CI completes, the pull request can be merged and results for the new project will be available within the next 24 hours.
 
 Project configurations files are written in [TOML](https://toml.io/en/). To reuse configurations across multiple projects, project configurations can reference configurations from definition files.
-These definitions files are platform-specific and located in the [`definitions/` directory of opmon-config](https://github.com/mozilla/opmon-config/tree/main/definitions). Platform-specific configuration files follow the same format and structure as project configuration files.
+These definitions files are platform-specific and located in the [`definitions/` directory of opmon-config](https://github.com/mozilla/opmon-config/tree/main/definitions) or in the [metric-hub](https://github.com/mozilla/metric-hub) repository. Platform-specific configuration files follow the same format and structure as project configuration files.
 
 If the project is used to monitor a rollout or experiment, then the configuration files should have the same name as the slug that has been assigned in [Experimenter](https://experimenter.services.mozilla.com/).
 Generally, configuration files have four main sections: `[project]`, `[data_sources]`, `[metrics]`, and `[dimensions]`. All of these sections are optional.
@@ -62,6 +64,9 @@ start_date = "2022-01-01"
 # Whether to skip the analysis for this project entirely.
 # Useful for skipping rollouts for which OpMon projects are generated automatically otherwise.
 skip = false
+
+# Whether the project is related to a rollout.
+is_rollout = false
 
 # Ignore the default metrics that would be computed.
 skip_default_metrics = false
@@ -206,7 +211,7 @@ sum = {}
 mean = {}
 ```
 
-New statistics need to be implemented in OpMon.
+New statistics need to be implemented in OpMon. Some statististics allow to specify additional parameters.
 
 ### `[dimensions]` Section
 
