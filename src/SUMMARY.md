@@ -13,6 +13,8 @@
     - [Data Discovery Tools](cookbooks/analysis/data_discovery_tools.md)
       - [Using the Glean Dictionary](cookbooks/analysis/glean_dictionary.md)
       - [Using the Probe Dictionary](cookbooks/analysis/probe_dictionary.md)
+    - [Data Modeling](cookbooks/data_modeling/index.md)
+      - [Where to store the data model assets](cookbooks/data_modeling/where_to_store.md)
     - [Working with Looker](cookbooks/looker/index.md)
       - [Introduction to Looker](cookbooks/looker/intro.md)
       - [Normalizing Country Data](cookbooks/looker/countries.md)
