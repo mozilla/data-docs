@@ -211,7 +211,7 @@ sum = {}
 mean = {}
 ```
 
-New statistics need to be implemented in OpMon. Some statististics allow to specify additional parameters.
+New statistics need to be implemented in OpMon. Some statistics allow to specify additional parameters.
 
 ### `[dimensions]` Section
 

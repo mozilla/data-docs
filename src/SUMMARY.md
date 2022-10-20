@@ -78,6 +78,7 @@
     - [Engagement metrics](concepts/engagement.md)
     - [User states/Segments](concepts/segments.md)
   - [Experimentation](concepts/experiments.md)
+  - [Metric Hub](concepts/metric_hub.md)
   - [External data integration using Fivetran](concepts/external_data_integration_using_fivetran.md)
   - [Project Glossary](tools/projects.md)
 - [Dataset Reference](datasets/reference.md)
