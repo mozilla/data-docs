@@ -17,61 +17,58 @@ for implementation.
 You can access each aggregate directly in BigQuery by querying the view
 or in Looker using the link to the corresponding Looker explore.
 
-#### telemetry.active_users_aggregates
+#### `telemetry.active_users_aggregates`
 This aggregates contains the metrics daily, weekly and monthly active users,
 as well as new profile and search counts aggregated by Mozilla product and 
 business dimensions: attribution parameters, channel, country, city, date,
-device model, distribution_id, os details and segment.
+device model, distribution id, segment and os details.
 
-Explore [active_users_aggregates](https://mozilla.cloud.looker.com/explore/combined_browser_metrics/active_users_aggregates) in Looker.
+Explore [`active_users_aggregates`](https://mozilla.cloud.looker.com/explore/combined_browser_metrics/active_users_aggregates) in Looker.
 
-#### telemetry.active_users_aggregates_device
+#### `telemetry.active_users_aggregates_device`
 This aggregate contains the metrics daily, weekly and monthly active users
-as well as new profiles and search counts in the context of analysing per device.
+as well as new profiles and search counts to analyze behaviours per device.
 
-The reason to have this aggregate in addition to active_users_aggregates is to
+The reason to have this aggregate in addition to `active_users_aggregates` is to
 improve the query performance for final users, by separating the analysis per
 device, which is the biggest size column in the table, as most devices have
 unique identifiers.
 
-Explore [active_users_aggregates_device](https://mozilla.cloud.looker.com/explore/combined_browser_metrics/active_users_aggregates_device) in Looker.
+Explore [`active_users_aggregates_device`](https://mozilla.cloud.looker.com/explore/combined_browser_metrics/active_users_aggregates_device) in Looker.
 
-#### telemetry.active_users_aggregates_attribution
+#### `telemetry.active_users_aggregates_attribution`
 This aggregate contains the metrics daily, weekly and monthly active users
 as well as new profiles and search counts in the context of analysing where
-the installations come from and the cohorts behaviour. This information is
+the installations come from and the `cohorts` behaviour. This information is
 retrieved by the attribution parameters and complemented with the core 
-dimensions: country, submission_date, app_name and whether the browser is 
+dimensions: country, submission_date, `app_name` and whether the browser is 
 set to default or not.
 
 Here is the documentation about [Adjust parameters](https://help.adjust.com/en/article/tracker-urls#campaign-structure-parameters).
 
-The reason to have this aggregate in addition to active_users_aggregates
+The reason to have this aggregate in addition to `active_users_aggregates`
 is to improve the query performance for final users, by separating the analysis
 of the numerous attribution parameters, which is required with less regularity
 than other dimensions and mostly for specific purposes. E.g. During
 investigations or marketing campaigns.
 
-Explore [active_users_aggregates_attribution](https://mozilla.cloud.looker.com/explore/combined_browser_metrics/active_users_aggregates_attribution) in Looker.
+Explore [`active_users_aggregates_attribution`](https://mozilla.cloud.looker.com/explore/combined_browser_metrics/active_users_aggregates_attribution) in Looker.
 
-
-## Pre-built visualizations in Looker
-
-![img.png](img.png)
-
+## Looker visualizations with period over period analysis
 The `Usage` folder for [Mobile and Desktop browsers](https://mozilla.cloud.looker.com/folders/748)
 includes a set of visualizations that you can access directly and are enhanced
 with the period over period analysis.
 
+![img.png](img.png)
 
 ## Scheduling
 
-This datasets is scheduled in the Airflow DAG
-[bqetl_analytics_aggregations](https://workflow.telemetry.mozilla.org/home?search=bqetl_analytics_aggregations)
+These datasets are scheduled in the Airflow DAG
+[`bqetl_analytics_aggregations`](https://workflow.telemetry.mozilla.org/home?search=bqetl_analytics_aggregations)
 and updated daily.
 
 ## Code Reference
 
 The query and metadata for the aggregates is defined in the corresponding 
 sub-folder in bigquery-etl under
-[telemetry_derived](https://github.com/mozilla/bigquery-etl/tree/main/sql/moz-fx-data-shared-prod/telemetry_derived).
+[`telemetry_derived`](https://github.com/mozilla/bigquery-etl/tree/main/sql/moz-fx-data-shared-prod/telemetry_derived).
