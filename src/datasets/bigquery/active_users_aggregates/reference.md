@@ -6,7 +6,7 @@
 
 The `active_users_aggregates` is a set of 3 tables designed to analyze clients
 activity on a daily basis, starting from the date of installation.
-These aggregates are created to support the migration of the GUD - 
+These aggregates are created to support the migration of the GUD
 Growth and Usage Dashboard.
 
 Here is the link to the [proposal](https://docs.google.com/document/d/1qvWO49Lr_Z_WErh3I3058A3B1YuiuURx19K3aTdmejM/edit?usp=sharing)
@@ -19,7 +19,7 @@ or in Looker using the link to the corresponding Looker explore.
 
 #### `telemetry.active_users_aggregates`
 This aggregates contains the metrics daily, weekly and monthly active users,
-as well as new profile and search counts aggregated by Mozilla product and 
+as well as new profile and search counts aggregated by Mozilla product and
 business dimensions: attribution parameters, channel, country, city, date,
 device model, distribution id, segment and OS details.
 
@@ -40,11 +40,9 @@ Explore [`active_users_aggregates_device`](https://mozilla.cloud.looker.com/expl
 This aggregate contains the metrics daily, weekly and monthly active users
 as well as new profiles and search counts to analyze where
 the installations come from and the `cohorts` behaviour. This information is
-retrieved by the attribution parameters and complemented with the core 
-dimensions: country, submission_date, `app_name` and whether the browser is 
-set to default or not.
-
-Here is the documentation about [Adjust parameters](https://help.adjust.com/en/article/tracker-urls).
+retrieved by the attribution parameters and complemented with the core
+dimensions: country, submission_date, `app_name` and if the browser is
+set to default.
 
 The reason to have this aggregate in addition to `active_users_aggregates`
 is to improve the query performance for final users, by separating the analysis
@@ -69,6 +67,5 @@ and updated daily.
 
 ## Code Reference
 
-The query and metadata for the aggregates is defined in the corresponding 
-sub-folder in bigquery-etl under
-[`telemetry_derived`](https://github.com/mozilla/bigquery-etl/tree/main/sql/moz-fx-data-shared-prod/telemetry_derived).
+The query and metadata for the aggregates is defined in the corresponding
+sub-folder in bigquery-etl under [`telemetry_derived`](https://github.com/mozilla/bigquery-etl/tree/main/sql/moz-fx-data-shared-prod/telemetry_derived).
