@@ -21,13 +21,13 @@ or in Looker using the link to the corresponding Looker explore.
 This aggregates contains the metrics daily, weekly and monthly active users,
 as well as new profile and search counts aggregated by Mozilla product and 
 business dimensions: attribution parameters, channel, country, city, date,
-device model, distribution id, segment and os details.
+device model, distribution id, segment and OS details.
 
 Explore [`active_users_aggregates`](https://mozilla.cloud.looker.com/explore/combined_browser_metrics/active_users_aggregates) in Looker.
 
 #### `telemetry.active_users_aggregates_device`
 This aggregate contains the metrics daily, weekly and monthly active users
-as well as new profiles and search counts to analyze behaviours per device.
+as well as new profiles and search counts to analyze data per device.
 
 The reason to have this aggregate in addition to `active_users_aggregates` is to
 improve the query performance for final users, by separating the analysis per
@@ -38,13 +38,13 @@ Explore [`active_users_aggregates_device`](https://mozilla.cloud.looker.com/expl
 
 #### `telemetry.active_users_aggregates_attribution`
 This aggregate contains the metrics daily, weekly and monthly active users
-as well as new profiles and search counts in the context of analysing where
+as well as new profiles and search counts to analyze where
 the installations come from and the `cohorts` behaviour. This information is
 retrieved by the attribution parameters and complemented with the core 
 dimensions: country, submission_date, `app_name` and whether the browser is 
 set to default or not.
 
-Here is the documentation about [Adjust parameters](https://help.adjust.com/en/article/tracker-urls#campaign-structure-parameters).
+Here is the documentation about [Adjust parameters](https://help.adjust.com/en/article/tracker-urls).
 
 The reason to have this aggregate in addition to `active_users_aggregates`
 is to improve the query performance for final users, by separating the analysis
