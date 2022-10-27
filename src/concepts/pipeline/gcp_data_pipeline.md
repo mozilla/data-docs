@@ -162,7 +162,7 @@ Many examples can be found in the [bigquery-etl][bqe] repository.
 Data in BigQuery is also accessible via Spark, and several ETL jobs also run via Dataproc.
 
 These jobs produce data sets that are used for downstream analysis and data
-applications (such as [measurement][tmo] and [stability][mc] dashboards,
+applications (such as [measurement][tmo],
 [addon recommendation][taar], and other [data products]).
 
 ## Data Analysis
@@ -176,7 +176,6 @@ In summary, the following diagram illustrates how Recording, Ingestion, Transfor
 fit together:
 
 ![](../../assets/analytics_and_ingestion.jpg)
-
 
 ## Handling Sensitive Data
 
@@ -223,7 +222,6 @@ build and work with aggregate datasets rather than individual-level data.
 [spark]: ../../tools/spark.md
 [accessing bigquery]: ../../cookbooks/bigquery.md
 [taar]: https://github.com/mozilla/taar
-[mc]: https://missioncontrol.telemetry.mozilla.org
 [data products]: ../../tools/projects.md#data-applications
 [dataflow]: https://cloud.google.com/dataflow/docs/
 [jsonschema validation]: https://json-schema.org/understanding-json-schema/
