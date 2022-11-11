@@ -40,3 +40,14 @@ Interactions data related to Firefox Suggest is collected in the following ways.
 
 3. Service and operational data on Merino
   We also collect data about Merino as a service from Merino directly. Full documentation of the data is [here](https://mozilla-services.github.io/merino/data.html). 
+
+## Big Query Tables and Looker Explores
+
+| Access-restriction(s)        | Big Query Table                                                 | Looker Explore                          | Description                                                                                                                                                         |
+| ---------------------------- | --------------------------------------------------------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| All Mozillians               | `telemetry.suggest_clients_daily`                       | Firefox Desktop > Suggest Clients Daily | Workhorse dataset for Suggest, includes desktop data. All new Suggest metrics are added to this table. Does not include advertiser data. |                                                 |
+| Contextual Services          | `contextual_services.event_aggregates`                          | Contextual Services > Event Aggregates  | Dataset with Sponsored Tiles and Suggest analyses by advertiser. No longer maintained. Instead use the derived `event_aggregates_[product]` datasets. |
+| Contextual Services          | `contextual_services.event_aggregates_suggest` | Contextual Services > Event Aggregates Suggest  | Workhorse dataset for Suggest analyses by advertiser.                                                                                           |
+| Contextual Services          | `contextual_services_derived.adm_forecasting`                   | Contextual Services > `AdM` Forecasting | Dataset with required components for Sponsored Tiles and Suggest revenue forecasts.                                                                                 |
+| Contextual Services, Revenue | `contextual_services.event_aggregates` x `revenue.revenue_data` | Revenue > `AdM` Revenue with Telemetry  | Revenue information combined with usage metrics. This dataset is useful for `CPC` analyses.    
+   

@@ -124,6 +124,7 @@
     - [Build metadata](datasets/buildhub.md)
     - [Release information](datasets/releases.md)
     - [Suggest](datasets/other/suggest/suggest.md)
+    - [Sponsored Tiles](datasets/other/sponsored_tiles/sponsored_tiles.md)
   - [Firefox Accounts Datasets](datasets/fxa.md)
     - [Firefox Account Attribution](datasets/fxa_metrics/attribution.md)
     - [Firefox Account Funnel Metrics](datasets/fxa_metrics/funnels.md)
