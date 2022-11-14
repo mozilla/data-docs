@@ -14,12 +14,14 @@ Here is the link to the [proposal](https://docs.google.com/document/d/1qvWO49Lr_
 ## Contents
 
 #### Active users aggregates
+
 This aggregates contains the metrics daily, weekly and monthly active users,
 as well as new profile and search counts aggregated by Mozilla product and
 business dimensions: attribution parameters, channel, country, city, date,
 device model, distribution id, segment and OS details.
 
 #### Active users aggregates for device
+
 The `active_users_aggregates_device` contains the metrics of
 daily, weekly and monthly active users, new profiles and search counts
 to analyze data per device.
@@ -30,6 +32,7 @@ device analysis, which makes one of the biggest size columns in the table,
 as most devices have unique identifiers.
 
 #### Active users aggregates for attribution
+
 The `active_users_aggregates_attribution` contains the metrics of
 daily, weekly and monthly active users, new profiles and search counts
 to analyze the source and context of client installations and the `cohorts`
@@ -41,7 +44,7 @@ and if the browser is set to default.
 The reason to have this aggregate in addition to `active_users_aggregates`
 is to improve the query performance for final users, by separating the
 analysis of the numerous attribution parameters, which is required with
-less regularity  than other dimensions and mostly for specific purposes.
+less regularity than other dimensions and mostly for specific purposes.
 E.g. During investigations or marketing campaigns.
 
 ## Scheduling
@@ -57,13 +60,14 @@ sub-folder in bigquery-etl under
 
 ## How to query
 
-| Dataset | BigQuery | Looker |
-|---|---|---|
-| `active_users_aggregates` | Table `telemetry.active_users_aggregates` | [Explore](https://mozilla.cloud.looker.com/explore/combined_browser_metrics/active_users_aggregates) |
-| `active_users_aggregates_device` | Table `telemetry.active_users_aggregates_device` | [Explore](https://mozilla.cloud.looker.com/explore/combined_browser_metrics/active_users_aggregates_device) |
+| Dataset                             | BigQuery                                              | Looker                                                                                                           |
+| ----------------------------------- | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `active_users_aggregates`             | Table `telemetry.active_users_aggregates`             | [Explore](https://mozilla.cloud.looker.com/explore/combined_browser_metrics/active_users_aggregates)             |
+| `active_users_aggregates_device`      | Table `telemetry.active_users_aggregates_device`      | [Explore](https://mozilla.cloud.looker.com/explore/combined_browser_metrics/active_users_aggregates_device)      |
 | `active_users_aggregates_attribution` | Table `telemetry.active_users_aggregates_attribution` | [Explore](https://mozilla.cloud.looker.com/explore/combined_browser_metrics/active_users_aggregates_attribution) |
 
 ## Looker visualizations with period over period analysis
+
 The `Usage` folder for [Mobile and Desktop browsers](https://mozilla.cloud.looker.com/folders/748)
 includes a set of visualizations that you can access directly and are enhanced
 with the period over period analysis.
