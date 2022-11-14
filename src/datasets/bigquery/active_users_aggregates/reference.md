@@ -61,7 +61,7 @@ sub-folder in bigquery-etl under
 ## How to query
 
 | Dataset                               | BigQuery                                              | Looker                                                                                                           |
-|---------------------------------------| ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+|---------------------------------------| ----------------------------------------------------- |------------------------------------------------------------------------------------------------------------------|
 | `active_users_aggregates`             | Table `telemetry.active_users_aggregates`             | [Explore](https://mozilla.cloud.looker.com/explore/combined_browser_metrics/active_users_aggregates)             |
 | `active_users_aggregates_device`      | Table `telemetry.active_users_aggregates_device`      | [Explore](https://mozilla.cloud.looker.com/explore/combined_browser_metrics/active_users_aggregates_device)      |
 | `active_users_aggregates_attribution` | Table `telemetry.active_users_aggregates_attribution` | [Explore](https://mozilla.cloud.looker.com/explore/combined_browser_metrics/active_users_aggregates_attribution) |
