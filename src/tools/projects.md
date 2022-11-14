@@ -73,7 +73,6 @@ See also [`data-docs`][docs] for documentation on datasets.
 | [`telemetry.mozilla.org`][tmo_gh] | Main entry point for viewing [aggregate Telemetry data][tmo]    |
 | [Glean Aggregate Metrics][glam]   | Aggregate info about probes and measures                        |
 | [Glean Debug View][gdv]           | Tag and view Glean submissions with low latency                 |
-| [Mission Control][mc]             | Low latency dashboard for stability and health metrics          |
 | [Redash][redash]                  | Mozilla's fork of the [data query / visualization system][stmo] |
 | [`redash-stmo`][redashstmo]       | Mozilla's extensions to Redash                                  |
 | [TAAR][taar]                      | Telemetry-aware addon recommender                               |
@@ -88,7 +87,6 @@ See also [`data-docs`][docs] for documentation on datasets.
 [tmo_gh]: https://github.com/mozilla/telemetry-dashboard
 [glam]: https://github.com/mozilla/glam
 [gdv]: https://debug-ping-preview.firebaseapp.com
-[mc]: https://github.com/mozilla/missioncontrol
 [redash]: https://github.com/mozilla/redash
 [redashstmo]: https://github.com/mozilla/redash-stmo
 [taar]: https://github.com/mozilla/taar
