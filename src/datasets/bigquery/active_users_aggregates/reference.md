@@ -30,6 +30,7 @@ device analysis, which makes one of the biggest size columns in the table,
 as most devices have unique identifiers.
 
 #### Active users aggregates for attribution
+
 The `active_users_aggregates_attribution` contains the metrics of
 daily, weekly and monthly active users, new profiles and search counts
 to analyze the source and context of client installations and the `cohorts`
