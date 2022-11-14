@@ -67,6 +67,7 @@ sub-folder in bigquery-etl under
 | `active_users_aggregates_attribution` | Table `telemetry.active_users_aggregates_attribution` | [Explore](https://mozilla.cloud.looker.com/explore/combined_browser_metrics/active_users_aggregates_attribution) |
 
 ## Looker visualizations with period over period analysis
+
 The `Usage` folder for [Mobile and Desktop browsers](https://mozilla.cloud.looker.com/folders/748)
 includes a set of visualizations that you can access directly and are enhanced
 with the period over period analysis.
