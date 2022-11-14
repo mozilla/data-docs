@@ -59,9 +59,9 @@ sub-folder in bigquery-etl under
 
 | Dataset                             | BigQuery                                              | Looker                                                                                                           |
 |-------------------------------------|-------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|
-| active_users_aggregates             | Table `telemetry.active_users_aggregates`             | [Explore](https://mozilla.cloud.looker.com/explore/combined_browser_metrics/active_users_aggregates) |
-| active_users_aggregates_device      | Table `telemetry.active_users_aggregates_device`      | [Explore](https://mozilla.cloud.looker.com/explore/combined_browser_metrics/active_users_aggregates_device)      |
-| active_users_aggregates_attribution | Table `telemetry.active_users_aggregates_attribution` | [Explore](https://mozilla.cloud.looker.com/explore/combined_browser_metrics/active_users_aggregates_attribution) |
+| `active_users_aggregates`             | Table `telemetry.active_users_aggregates`             | [Explore](https://mozilla.cloud.looker.com/explore/combined_browser_metrics/active_users_aggregates)             |
+| `active_users_aggregates_device`      | Table `telemetry.active_users_aggregates_device`      | [Explore](https://mozilla.cloud.looker.com/explore/combined_browser_metrics/active_users_aggregates_device)      |
+| `active_users_aggregates_attribution` | Table `telemetry.active_users_aggregates_attribution` | [Explore](https://mozilla.cloud.looker.com/explore/combined_browser_metrics/active_users_aggregates_attribution) |
 
 ## Looker visualizations with period over period analysis
 The `Usage` folder for [Mobile and Desktop browsers](https://mozilla.cloud.looker.com/folders/748)
