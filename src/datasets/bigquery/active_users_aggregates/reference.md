@@ -44,7 +44,7 @@ and if the browser is set to default.
 The reason to have this aggregate in addition to `active_users_aggregates`
 is to improve the query performance for final users, by separating the
 analysis of the numerous attribution parameters, which is required with
-less regularity  than other dimensions and mostly for specific purposes.
+less regularity than other dimensions and mostly for specific purposes.
 E.g. During investigations or marketing campaigns.
 
 ## Scheduling
