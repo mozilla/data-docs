@@ -14,6 +14,7 @@ Here is the link to the [proposal](https://docs.google.com/document/d/1qvWO49Lr_
 ## Contents
 
 #### Active users aggregates
+
 This aggregates contains the metrics daily, weekly and monthly active users,
 as well as new profile and search counts aggregated by Mozilla product and
 business dimensions: attribution parameters, channel, country, city, date,
