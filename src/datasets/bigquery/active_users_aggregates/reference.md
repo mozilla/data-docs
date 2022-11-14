@@ -21,6 +21,7 @@ business dimensions: attribution parameters, channel, country, city, date,
 device model, distribution id, segment and OS details.
 
 #### Active users aggregates for device
+
 The `active_users_aggregates_device` contains the metrics of
 daily, weekly and monthly active users, new profiles and search counts
 to analyze data per device.
