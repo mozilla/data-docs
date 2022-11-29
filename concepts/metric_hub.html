@@ -150,13 +150,13 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="metric-hub"><a class="header" href="#metric-hub">Metric Hub</a></h1>
-<p>The Metric Hub is a <a href="https://github.com/mozilla/metric-hub">repository</a> that contains metric, data source and segment definitions that have been
+<p>Metric Hub is a <a href="https://github.com/mozilla/metric-hub">repository</a> that contains metric, data source and segment definitions that have been
 reviewed and can be seen as the source of truth.
-Definitions that are part of the Metric Hub can be referenced in configurations of other tooling as well, such as <a href="https://experimenter.info/jetstream/jetstream/">Jetstream</a> and <a href="https://docs.telemetry.mozilla.org/cookbooks/operational_monitoring.html?highlight=opmon#operational-monitoring-opmon">OpMon</a>.</p>
+Definitions that are part of Metric Hub can be referenced in configurations of other tooling as well, such as <a href="https://experimenter.info/jetstream/jetstream/">Jetstream</a> and <a href="https://docs.telemetry.mozilla.org/cookbooks/operational_monitoring.html?highlight=opmon#operational-monitoring-opmon">OpMon</a>.</p>
 <p>Generated docs for available metrics is available <a href="https://mozilla.github.io/metric-hub">here</a>.</p>
 <h2 id="adding-definitions"><a class="header" href="#adding-definitions">Adding definitions</a></h2>
 <p>To add or update a project configuration, open a pull request against <a href="https://github.com/mozilla/metric-hub">metric-hub</a>.
-CI checks will validate that the structure of the definitions as well as the SQL syntax is correct. A review is required before changes can get merged.</p>
+CI checks will validate that the structure of the definitions as well as the SQL syntax is correct. A review by data science is required before changes can get merged.</p>
 <p>Definitions are part of config files that are written in <a href="https://toml.io/en/">TOML</a>.
 These definitions files are platform-specific and located in the <a href="https://github.com/mozilla/metric-hub/tree/main/definitions"><code>definitions/</code> directory of the metric-hub repository</a>. Definitions files are named after the platform they target, for example definitions related to Firefox Desktop are in the <code>firefox_desktop.toml</code> file.</p>
 <p>Generally, configuration files have four main sections: <code>[data_sources]</code>, <code>[metrics]</code>, <code>[segments]</code>, and <code>[dimensions]</code>. All of these sections are optional.</p>
@@ -170,7 +170,7 @@ These definitions files are platform-specific and located in the <a href="https:
 from_expression = &quot;mozdata.telemetry.main&quot;
 
 # SQL snippet specifying the submission_date column
-submission_date_column = &quot;DATE(submission_timestamp)&quot;
+submission_date_column = &quot;submission_date&quot;
 
 [data_sources.events_memory]
 # FROM expression - subquery
@@ -183,11 +183,11 @@ from_expression = &quot;&quot;&quot;
             event_category = 'memory_watcher'
     )
 &quot;&quot;&quot;
-submission_date_column = &quot;DATE(submission_date)&quot;
+submission_date_column = &quot;submission_date&quot;
 </code></pre>
 <h3 id="metrics-section"><a class="header" href="#metrics-section"><code>[metrics]</code> Section</a></h3>
-<p>The metrics sections allows to specify metrics.</p>
-<p>A new metric can be defined by adding a new section with a name like:</p>
+<p>The metrics sections allows to specify metrics. A metric aggregates data and is associated with some data source.</p>
+<p>Each metric is identified by a unique slug, and can be defined by adding a new section with a name like:</p>
 <p><code>[metrics.&lt;new_metric_slug&gt;]</code></p>
 <pre><code class="language-toml">[metrics]
 
@@ -215,9 +215,19 @@ description = &quot;Number of memory pressure events&quot;
 
 # This can be any string value. It's currently not being used but in the future, this could be used to visually group different metrics by category.
 category = &quot;performance&quot;
+
+# And optional owner or team owning this metric
+owner = &quot;example@mozilla.org&quot;
+
+# Whether the metric is deprecated and should no longer be used
+deprecated = false
 </code></pre>
+<p>Since metrics aggregate data, the metric SQL definition must contain some aggregation method (like <code>SUM</code>, <code>COUNT</code>, ...) to be valid.</p>
+<p>Existing metrics cannot be removed after they have been added to Metric Hub. Other tools or configurations might still reference the
+deleted metric resulting in their computations to break. Instead, to indicate that a metric should no longer be used <code>deprecated</code> should
+be set to <code>true</code>.</p>
 <h3 id="dimensions-section"><a class="header" href="#dimensions-section"><code>[dimensions]</code> Section</a></h3>
-<p>Dimensions define a field or dimension on which the client population should be segmented. Dimensions are used in OpMon. For segmenting populations in clients see the <code>[segments]</code> section.</p>
+<p>Dimensions define a field or dimension on which the client population should be segmented. Dimensions are used in OpMon. For segmenting client populations clients see the <code>[segments]</code> section.</p>
 <p>For example:</p>
 <pre><code class="language-toml">[dimensions]
 
@@ -240,9 +250,15 @@ select_expression = '{{agg_any(&quot;is_default_browser&quot;)}}'data_source = &
 [segments.data_sources.my_data_source]
 from_expression = '(SELECT submission_date, client_id, is_default_browser FROM my_cool_table)'
 </code></pre>
+<p>Segment SQL snippets need to be boolean expressions to be valid.</p>
 <h2 id="accessing-and-using-metric-definitions"><a class="header" href="#accessing-and-using-metric-definitions">Accessing and Using Metric Definitions</a></h2>
-<p>All the definitions are automatically available in some of our tooling, such as Jetstream, <a href="https://github.com/mozilla/mozanalysis">mozanalysis</a> and OpMon.</p>
-<p>Metric definitions can also be imported into Python scripts by using the <a href="https://github.com/mozilla/metric-config-parser"><code>mozilla-metric-config-parser</code></a>. This library automatically parses the definitions in the Metric Hub and returns their Python type representations.</p>
+<p>All the definitions are automatically available in some of our tooling:</p>
+<ul>
+<li><a href="https://experimenter.info/jetstream/jetstream/">Jetstream</a> - used for analyzing experiments</li>
+<li><a href="https://github.com/mozilla/mozanalysis">mozanalysis</a> - a Python library which standardizes how experiment data is analyzed at Mozilla</li>
+<li><a href="https://docs.telemetry.mozilla.org/cookbooks/operational_monitoring.html">OpMon</a> - a tool for monitoring operational metrics</li>
+</ul>
+<p>Metric definitions can also be imported into Python scripts by using the <a href="https://github.com/mozilla/metric-config-parser"><code>mozilla-metric-config-parser</code></a>. This library automatically parses the definitions in Metric Hub and returns their Python type representations.</p>
 <pre><code class="language-python">from metric_config_parser.config import ConfigCollection
 
 config_collection = ConfigCollection.from_github_repo(&quot;https://github.com/mozilla/metric-hub&quot;)
