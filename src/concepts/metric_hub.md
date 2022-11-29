@@ -1,15 +1,15 @@
 # Metric Hub
 
-The Metric Hub is a [repository](https://github.com/mozilla/metric-hub) that contains metric, data source and segment definitions that have been
+Metric Hub is a [repository](https://github.com/mozilla/metric-hub) that contains metric, data source and segment definitions that have been
 reviewed and can be seen as the source of truth.
-Definitions that are part of the Metric Hub can be referenced in configurations of other tooling as well, such as [Jetstream](https://experimenter.info/jetstream/jetstream/) and [OpMon](https://docs.telemetry.mozilla.org/cookbooks/operational_monitoring.html?highlight=opmon#operational-monitoring-opmon).
+Definitions that are part of Metric Hub can be referenced in configurations of other tooling as well, such as [Jetstream](https://experimenter.info/jetstream/jetstream/) and [OpMon](https://docs.telemetry.mozilla.org/cookbooks/operational_monitoring.html?highlight=opmon#operational-monitoring-opmon).
 
 Generated docs for available metrics is available [here](https://mozilla.github.io/metric-hub).
 
 ## Adding definitions
 
 To add or update a project configuration, open a pull request against [metric-hub](https://github.com/mozilla/metric-hub).
-CI checks will validate that the structure of the definitions as well as the SQL syntax is correct. A review is required before changes can get merged.
+CI checks will validate that the structure of the definitions as well as the SQL syntax is correct. A review by data science is required before changes can get merged.
 
 Definitions are part of config files that are written in [TOML](https://toml.io/en/).
 These definitions files are platform-specific and located in the [`definitions/` directory of the metric-hub repository](https://github.com/mozilla/metric-hub/tree/main/definitions). Definitions files are named after the platform they target, for example definitions related to Firefox Desktop are in the `firefox_desktop.toml` file.
@@ -30,7 +30,7 @@ Data sources specify the tables data should be queried from.
 from_expression = "mozdata.telemetry.main"
 
 # SQL snippet specifying the submission_date column
-submission_date_column = "DATE(submission_timestamp)"
+submission_date_column = "submission_date"
 
 [data_sources.events_memory]
 # FROM expression - subquery
@@ -43,14 +43,14 @@ from_expression = """
             event_category = 'memory_watcher'
     )
 """
-submission_date_column = "DATE(submission_date)"
+submission_date_column = "submission_date"
 ```
 
 ### `[metrics]` Section
 
-The metrics sections allows to specify metrics.
+The metrics sections allows to specify metrics. A metric aggregates data and is associated with some data source.
 
-A new metric can be defined by adding a new section with a name like:
+Each metric is identified by a unique slug, and can be defined by adding a new section with a name like:
 
 `[metrics.<new_metric_slug>]`
 
@@ -81,11 +81,23 @@ description = "Number of memory pressure events"
 
 # This can be any string value. It's currently not being used but in the future, this could be used to visually group different metrics by category.
 category = "performance"
+
+# And optional owner or team owning this metric
+owner = "example@mozilla.org"
+
+# Whether the metric is deprecated and should no longer be used
+deprecated = false
 ```
+
+Since metrics aggregate data, the metric SQL definition must contain some aggregation method (like `SUM`, `COUNT`, ...) to be valid.
+
+Existing metrics cannot be removed after they have been added to Metric Hub. Other tools or configurations might still reference the
+deleted metric resulting in their computations to break. Instead, to indicate that a metric should no longer be used `deprecated` should
+be set to `true`.
 
 ### `[dimensions]` Section
 
-Dimensions define a field or dimension on which the client population should be segmented. Dimensions are used in OpMon. For segmenting populations in clients see the `[segments]` section.
+Dimensions define a field or dimension on which the client population should be segmented. Dimensions are used in OpMon. For segmenting client populations clients see the `[segments]` section.
 
 For example:
 
@@ -116,11 +128,17 @@ select_expression = '{{agg_any("is_default_browser")}}'data_source = "my_data_so
 from_expression = '(SELECT submission_date, client_id, is_default_browser FROM my_cool_table)'
 ```
 
+Segment SQL snippets need to be boolean expressions to be valid.
+
 ## Accessing and Using Metric Definitions
 
-All the definitions are automatically available in some of our tooling, such as Jetstream, [mozanalysis](https://github.com/mozilla/mozanalysis) and OpMon.
+All the definitions are automatically available in some of our tooling:
 
-Metric definitions can also be imported into Python scripts by using the [`mozilla-metric-config-parser`](https://github.com/mozilla/metric-config-parser). This library automatically parses the definitions in the Metric Hub and returns their Python type representations.
+- [Jetstream](https://experimenter.info/jetstream/jetstream/) - used for analyzing experiments
+- [mozanalysis](https://github.com/mozilla/mozanalysis) - a Python library which standardizes how experiment data is analyzed at Mozilla
+- [OpMon](https://docs.telemetry.mozilla.org/cookbooks/operational_monitoring.html) - a tool for monitoring operational metrics
+
+Metric definitions can also be imported into Python scripts by using the [`mozilla-metric-config-parser`](https://github.com/mozilla/metric-config-parser). This library automatically parses the definitions in Metric Hub and returns their Python type representations.
 
 ```python
 from metric_config_parser.config import ConfigCollection
