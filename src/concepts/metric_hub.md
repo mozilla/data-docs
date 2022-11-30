@@ -147,3 +147,10 @@ config_collection = ConfigCollection.from_github_repo("https://github.com/mozill
 metric = config_collection.get_metric_definition(slug="active_hours", app_name="firefox_desktop")
 print(metric.from_expression)
 ```
+
+To use the metrics with Mozanalysis, you'll need `Metric`s not `MetricDefinition`s. For example:
+```python
+from mozanalysis.config import ConfigLoader
+metric = ConfigLoader.get_metric(slug="active_hours", app_name="firefox_desktop")
+```
+
