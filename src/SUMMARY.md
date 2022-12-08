@@ -68,6 +68,7 @@
     - [Channel Normalization](concepts/channels/channel_normalization.md)
     - [Sampling](concepts/sample_id.md)
     - [Filtering](concepts/pipeline/filtering.md)
+    - [BigQuery Artifact Deployment](concepts/pipeline/artifact_deployment.md)
   - [Common Analysis Gotchas](concepts/analysis_gotchas.md)
   - [SQL Style Guide](concepts/sql_style.md)
   - [Airflow Gotcha's](concepts/airflow_gotchas.md)
