@@ -42,6 +42,7 @@ When you start to evaluate trends, be aware of events from the past that may inv
 - **Feb 16 2021 - Feb 25 2021** - [A small number of stub installer pings may have been discarded due to URI deduplication][bug1694764].
 - **August 6, 2020** - [Pings with "automation" tag in X-Source-Tags will no longer appear in stable tables][bq1215]
   This is particularly relevant for removing pings related to automated testing of Fenix.
+- **August 1, 2020 - August 31, 2020** - [Fennec was migrated to Fenix](https://sql.telemetry.mozilla.org/queries/89203#220890), causing changes in both how data was reported (Glean rather than the core ping) and some reported metrics (e.g. DAU, as people dropped off).
 - **July 20, 2020** - [Glean dropping application lifetime metrics from `metrics` pings][bug1653244].
   Glean Android bindings from version `v25.0.0` up to and including `v31.4.0` had a bug that would cause metrics with “lifetime: application” to be cleared before they could be collected for metrics pings sent during startup. This can result in application lifetime metrics like experiment information being randomly missing from the data.
 - **April 14, 2020** - [Telemetry edge server rejects pings for an hour][bug1630096].
