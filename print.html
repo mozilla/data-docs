@@ -11597,7 +11597,7 @@ style evo fill:lightgrey
 <h2 id="stream-processing"><a class="header" href="#stream-processing">Stream Processing</a></h2>
 <p>Stream processing is done using <a href="https://github.com/mozilla-services/hindsight">Hindsight</a> and <a href="https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html">Spark Streaming</a>.</p>
 <p>Hindsight allows you to run <a href="http://mozilla-services.github.io/lua_sandbox/">plugins written in Lua inside a sandbox</a>. This gives a safe, performant way to do self-serve streaming analysis. Hindsight plugins do the initial data validation and decoding, as well as writing out to long-term storage in both <a href="https://hekad.readthedocs.io/en/dev/message/index.html#stream-framing">Heka-framed protobuf</a> and <a href="https://mozilla-services.github.io/lua_sandbox_extensions/parquet/">parquet</a> forms.</p>
-<p>Spark Streaming is used to read from Kafka and perform <a href="https://github.com/mozilla/telemetry-streaming">low-latency ETL and aggregation tasks</a>. These aggregates are currently used by <a href="https://data-missioncontrol.dev.mozaws.net">Mission Control</a> and are also available for querying via <a href="concepts/pipeline/../../tools/stmo.html">STMO</a>.</p>
+<p>Spark Streaming is used to read from Kafka and perform <a href="https://github.com/mozilla/telemetry-streaming">low-latency ETL and aggregation tasks</a>. These aggregates are currently used by <a href="https://mozilla.cloud.looker.com/dashboards/918">Mission Control</a> and are also available for querying via <a href="concepts/pipeline/../../tools/stmo.html">STMO</a>.</p>
 <h2 id="batch-processing"><a class="header" href="#batch-processing">Batch Processing</a></h2>
 <p>Batch processing is done using <a href="https://spark.apache.org/docs/latest/index.html">Spark</a>. Production ETL code is written in both <a href="https://github.com/mozilla/python_mozetl">Python</a> and <a href="https://github.com/mozilla/telemetry-batch-view">Scala</a>.</p>
 <p>There are <a href="https://mozilla.github.io/python_moztelemetry/api.html#dataset">Python</a> and <a href="https://github.com/mozilla/moztelemetry/blob/master/src/main/scala/com/mozilla/telemetry/heka/Dataset.scala">Scala</a> libraries for reading data from the Data Lake in <a href="https://hekad.readthedocs.io/en/dev/message/index.html#stream-framing">Heka-framed protobuf</a> form, though it is much easier and more performant to make use of a derived dataset whenever possible.</p>
@@ -11648,7 +11648,7 @@ style evo fill:lightgrey
 <h5 id="others"><a class="header" href="#others">Others</a></h5>
 <p><a href="concepts/pipeline/../../tools/stmo.html">STMO</a> lets you query the data using SQL, but it also supports a number of useful visualizations.</p>
 <p><a href="concepts/pipeline/BROKEN:http://pipeline-cep.prod.mozaws.net/">Hindsight's web interface</a> has the ability to visualize time-series data.</p>
-<p><a href="https://data-missioncontrol.dev.mozaws.net">Mission Control</a> gives a low-latency view into release health.</p>
+<p><a href="https://mozilla.cloud.looker.com/dashboards/918">Mission Control</a> gives a low-latency view into release health.</p>
 <p>Many bespoke visualizations are built using the <a href="http://metricsgraphicsjs.org/">Metrics Graphics</a> library as a display layer.</p>
 <h2 id="monitoring-and-alerting"><a class="header" href="#monitoring-and-alerting">Monitoring and Alerting</a></h2>
 <p>There are multiple layers of monitoring and alerting.</p>
@@ -12779,9 +12779,8 @@ please look at the case classes
 </ul>
 <h1 id="introduction-32"><a class="header" href="#introduction-32">Introduction</a></h1>
 <p>The <code>error_aggregates_v2</code> table represents counts of errors counted from main and crash
-pings, aggregated every 5 minutes. It is the dataset backing the main <a href="https://data-missioncontrol.dev.mozaws.net/">mission
-control</a> view, but may also be queried
-independently.</p>
+pings, aggregated every 5 minutes.
+It is the dataset backing the old mission control view, but may also be queried independently.</p>
 <h4 id="contents-12"><a class="header" href="#contents-12">Contents</a></h4>
 <p>The <code>error_aggregates_v2</code> table contains counts of various error measures (for
 example: crashes, &quot;the slow script dialog showing&quot;), aggregated across each
