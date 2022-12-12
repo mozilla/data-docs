@@ -387,7 +387,7 @@ graph LR
 [tmo]: https://telemetry.mozilla.org
 [measurement dashboard]: https://telemetry.mozilla.org/new-pipeline/dist.html
 [cep]: BROKEN:http://pipeline-cep.prod.mozaws.net/
-[mission control]: https://data-missioncontrol.dev.mozaws.net
+[mission control]: https://mozilla.cloud.looker.com/dashboards/918
 [metrics graphics]: http://metricsgraphicsjs.org/
 [parquet]: https://parquet.apache.org/
 [hive]: https://cwiki.apache.org/confluence/display/Hive/Home
