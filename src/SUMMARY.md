@@ -53,6 +53,7 @@
     - [Scheduling Queries](cookbooks/scheduling_queries.md)
     - [Building and Deploying Containers to GCR with CircleCI](cookbooks/deploying-containers.md)
     - [Publishing Datasets](cookbooks/publishing_datasets.md)
+    - [Connecting Sheets and External Data to BigQuery](cookbooks/operational/connecting_external_data_bigquery.md)
   - [Sending telemetry](datasets/new_data.md)
     - [Implementing Experiments](cookbooks/client_guidelines.md)
     - [Sending Events](cookbooks/events_best_practices.md)
