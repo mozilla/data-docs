@@ -16,7 +16,7 @@ projects to maintain BigQuery [datasets](https://cloud.google.com/bigquery/docs/
 
 ### Caveats
 
-- Each or our tables is exposed by a view in the `mozdata` project, which in some cases it applies filters or business definitions. As a best practice and whenever possible, query the view instead of directly querying the underlying table(s).
+- Each or the derived tables is exposed by a view in the `mozdata` project, which in some cases apply additional filters or business definitions. As a best practice and whenever possible, query the view instead of directly querying the underlying table(s).
 - Most tables are partitioned by date and you can scan much less data by filtering on the partition field
   (usually `submission_timestamp` or `submission_date`).
   These dates are always in UTC.
