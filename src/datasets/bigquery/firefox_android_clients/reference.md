@@ -6,7 +6,7 @@
 
 The table `fenix_derived.firefox_android_clients` contains the first observations
 for Firefox Android clients retrieved from the ping that reports first from:
-`baseline`, `first_session` and `metrics` pings.
+baseline, `first_session` and metrics pings.
 
 The goals of this table, as described in the
 [proposal](https://docs.google.com/document/d/12bj4DhCybelqHVgOVq8KJlzgtbbUw3f68palNrv-gaM/):
