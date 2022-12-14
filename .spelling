@@ -422,3 +422,13 @@ doctype
 doctypes
 validator
 Jira
+adjust_campaign
+BrowserStack
+client_id
+isp
+os_version
+init.sql
+query.sql
+first_seen
+ - src/datasets/bigquery/firefox_android_clients/reference.md
+first_session
