@@ -54,9 +54,9 @@ sub-folder in `bigquery-etl` under
 
 This table should be accessed through the user-facing view
 `fenix.firefox_android_clients` which implements additional
-business logic for grouping attribution data, using a simple
+business logic for grouping attribution data. Use a simple
 join with the `client_id`.
 
 For analysis purposes, it's important to use the business date
-`first_seen_date` for filtering, which corresponds to the date when
+`first_seen_date` when filtering. This date corresponds to when
 the baseline ping is actually collected on the client side.
