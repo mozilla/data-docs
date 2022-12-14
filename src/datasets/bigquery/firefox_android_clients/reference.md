@@ -31,7 +31,7 @@ documented in BigQuery.
 
 This table contains data only for channel `release`, since it's the only
 channel where data is available in the `first_session` ping at the time
-of implementation and suffices to fulfil the goals.
+of implementation and suffices for the goals.
 
 ## Scheduling
 
