@@ -31,7 +31,8 @@ documented in BigQuery.
 
 This table contains data only for channel `release`, since it's the only
 channel where data is available in the `first_session` ping at the time
-of implementation and suffices for the goals.
+of implementation and suffices for the goals. Also, data is available
+since August 2020, when the migration from Fennec to Fenix took place.
 
 ## Scheduling
 

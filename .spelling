@@ -430,5 +430,6 @@ os_version
 init.sql
 query.sql
 first_seen
+2020
  - src/datasets/bigquery/firefox_android_clients/reference.md
 first_session
