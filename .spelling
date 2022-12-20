@@ -177,6 +177,7 @@ ISO3166
 ISO8601
 i.e.
 implementational
+InfluxCloud
 inlined
 int64
 interpretability
@@ -231,6 +232,7 @@ natively
 navigations
 nbconvert
 nbviewer
+nearline
 nginx
 ni
 node.js
