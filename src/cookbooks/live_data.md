@@ -2,7 +2,7 @@
 
 Live ping tables are the final destination for the telemetry ingestion pipeline. Incoming ping data is loaded into these tables approximately every 10 minutes, though a delay of up to 30 minutes is normal. Data in these tables is set to expire after 30 days.
 
-Data from live ping tables is expected to be accesses through user-facing views. The names of all views accessing live data should include the `_live` suffix (for example `monitoring.topsites_click_rate_live`). Live tables are generally clustered and partitioned by `submission_timestamp`, which allows for writing more efficient queries that filter over short time windows. When querying live data by running the same query multiple times ensure that query caching is turned off, otherwise newly arrived data might not appear in the query results.
+Data from live ping tables is expected to be accessed through user-facing views. The names of all views accessing live data should include the `_live` suffix (for example `monitoring.topsites_click_rate_live`). Live tables are generally clustered and partitioned by `submission_timestamp`, which allows for writing more efficient queries that filter over short time windows. When querying live data by running the same query multiple times ensure that query caching is turned off, otherwise newly arrived data might not appear in the query results.
 
 Of note, user-facing views for live ping tables, like the ones for historical ping tables, will not automatically be provisioned. Instead, it is expected for live views to be more curated, with each view being tied to a specific use case.
 
