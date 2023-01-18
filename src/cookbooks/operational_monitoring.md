@@ -122,7 +122,23 @@ monitor_entire_population = false
 # name of the dimension definition section in either the project configuration or the platform-specific
 # configuration file. See [dimensions] section on how these get defined.
 dimensions = ["os"]
+
+# A set of metrics that should be part of the the same visualization
+[project.metric_groups.crashes]
+friendly_name = "Crashes"
+description = "Breakdown of crashes"
+metrics = [
+    "main_crashes",
+    "startup_crashes",
+]
 ```
+
+#### Metric Groups
+
+Metrics groups allow to specify a set of existing metric definitions that should be displayed in the same visualization (like a graph, for example) as separate lines. Often these metrics are related to each other in some way and having them in a single graph simplifies visual comparison.
+
+Metric groups are different from `dimensions`. Dimensions segment the population based on a specific criteria (for example a table field). Depending on the selected segment only data for this slice of the population is shown for all specified metrics.
+Metric groups do not influence how metrics are computed, they only have an impact on how metrics are visualized.
 
 ### `[data_sources]` Section
 
