@@ -22,7 +22,7 @@ The UDF deploy is triggered through the `publish_public_udfs` and `publish_persi
 
 ## Table Deployment
 
-Tables get deployed through the [`publish_new_tables` Airflow task](https://workflow.telemetry.mozilla.org/tree?dag_id=bqetl_artifact_deployment) which runs nightly. This task will run all SQL generators, generate schemas for each query and will deploy schemas for tables that do not already exist in BigQuery. Currently, this task does not apply any schema changes for existing tables.
+Tables get deployed through the [`publish_new_tables` Airflow task](https://workflow.telemetry.mozilla.org/tree?dag_id=bqetl_artifact_deployment) which runs nightly. This task will run all SQL generators, generate schemas for each query and will deploy schemas for tables and apply any schema-compatible changes for existing tables. The task will fail if changes that are incompatible with existing schemas (such as removing fields or changing field types) are to be applied.
 
 ## View Deployment
 
