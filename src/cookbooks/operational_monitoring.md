@@ -16,13 +16,13 @@ Access to the Looker Operational Monitoring dashboards is currently limited to M
 
 ## Configuring a Operational Monitoring project
 
-To add or update a project configuration, open a pull request against [opmon-config](https://github.com/mozilla/opmon-config).
+To add or update a project configuration, open a pull request against the `opmon/` directory in [metric-hub](https://github.com/mozilla/metric-hub/tree/main/opmon).
 Consider using and adding metric definitions to the [metric-hub](https://github.com/mozilla/metric-hub) that should be available for use across other tools, such as [Jetstream](https://experimenter.info/jetstream/jetstream/), as well.
 
-CI checks will validate the columns, data sources, and SQL syntax. Once CI completes, the pull request can be merged and results for the new project will be available within the next 24 hours.
+CI checks will validate the columns, data sources, and SQL syntax. Once CI completes, the pull request gets automatically approved and can be merged. Results for the new project will be available within the next 24 hours.
 
 Project configurations files are written in [TOML](https://toml.io/en/). To reuse configurations across multiple projects, project configurations can reference configurations from definition files.
-These definitions files are platform-specific and located in the [`definitions/` directory of opmon-config](https://github.com/mozilla/opmon-config/tree/main/definitions) or in the [metric-hub](https://github.com/mozilla/metric-hub) repository. Platform-specific configuration files follow the same format and structure as project configuration files.
+These definitions files are platform-specific and located in the [`opmon/definitions/` directory in metric-hub](https://github.com/mozilla/metric-hub/tree/main/opmon/definitions) or in the [metric-hub](https://github.com/mozilla/metric-hub) repository. Platform-specific configuration files follow the same format and structure as project configuration files.
 
 If the project is used to monitor a rollout or experiment, then the configuration files should have the same name as the slug that has been assigned in [Experimenter](https://experimenter.services.mozilla.com/).
 Generally, configuration files have four main sections: `[project]`, `[data_sources]`, `[metrics]`, and `[dimensions]`. All of these sections are optional.
@@ -360,7 +360,7 @@ Options:
 
 > gcloud auth login --update-adc
 > gcloud config set project mozdata
-> opmon preview --slug=firefox-install-demo --config_file='/local/path/to/opmon-config/firefox-install-demo.toml'
+> opmon preview --slug=firefox-install-demo --config_file='/local/path/to/opmon/firefox-install-demo.toml'
 Start running backfill for firefox-install-demo: 2022-12-17 to 2022-12-19
 Backfill 2022-12-17
 ...
