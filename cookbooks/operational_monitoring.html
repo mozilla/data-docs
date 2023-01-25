@@ -161,11 +161,11 @@ OpMon automatically generates Looker dashboards that will provide insights into 
 OpMon does not emit real-time results. Dashboards and related datasets get updated on a daily basis.</p>
 <p>Access to the Looker Operational Monitoring dashboards is currently limited to Mozilla employees and designated contributors. For more information, see <a href="../concepts/gaining_access.html">gaining access</a>.</p>
 <h2 id="configuring-a-operational-monitoring-project"><a class="header" href="#configuring-a-operational-monitoring-project">Configuring a Operational Monitoring project</a></h2>
-<p>To add or update a project configuration, open a pull request against <a href="https://github.com/mozilla/opmon-config">opmon-config</a>.
+<p>To add or update a project configuration, open a pull request against the <code>opmon/</code> directory in <a href="https://github.com/mozilla/metric-hub/tree/main/opmon">metric-hub</a>.
 Consider using and adding metric definitions to the <a href="https://github.com/mozilla/metric-hub">metric-hub</a> that should be available for use across other tools, such as <a href="https://experimenter.info/jetstream/jetstream/">Jetstream</a>, as well.</p>
-<p>CI checks will validate the columns, data sources, and SQL syntax. Once CI completes, the pull request can be merged and results for the new project will be available within the next 24 hours.</p>
+<p>CI checks will validate the columns, data sources, and SQL syntax. Once CI completes, the pull request gets automatically approved and can be merged. Results for the new project will be available within the next 24 hours.</p>
 <p>Project configurations files are written in <a href="https://toml.io/en/">TOML</a>. To reuse configurations across multiple projects, project configurations can reference configurations from definition files.
-These definitions files are platform-specific and located in the <a href="https://github.com/mozilla/opmon-config/tree/main/definitions"><code>definitions/</code> directory of opmon-config</a> or in the <a href="https://github.com/mozilla/metric-hub">metric-hub</a> repository. Platform-specific configuration files follow the same format and structure as project configuration files.</p>
+These definitions files are platform-specific and located in the <a href="https://github.com/mozilla/metric-hub/tree/main/opmon/definitions"><code>opmon/definitions/</code> directory in metric-hub</a> or in the <a href="https://github.com/mozilla/metric-hub">metric-hub</a> repository. Platform-specific configuration files follow the same format and structure as project configuration files.</p>
 <p>If the project is used to monitor a rollout or experiment, then the configuration files should have the same name as the slug that has been assigned in <a href="https://experimenter.services.mozilla.com/">Experimenter</a>.
 Generally, configuration files have four main sections: <code>[project]</code>, <code>[data_sources]</code>, <code>[metrics]</code>, and <code>[dimensions]</code>. All of these sections are optional.</p>
 <p>Examples of every value you can specify in each section are given below. <strong>You do not need to, and should not, specify everything!</strong>
@@ -449,7 +449,7 @@ Options:
 
 &gt; gcloud auth login --update-adc
 &gt; gcloud config set project mozdata
-&gt; opmon preview --slug=firefox-install-demo --config_file='/local/path/to/opmon-config/firefox-install-demo.toml'
+&gt; opmon preview --slug=firefox-install-demo --config_file='/local/path/to/opmon/firefox-install-demo.toml'
 Start running backfill for firefox-install-demo: 2022-12-17 to 2022-12-19
 Backfill 2022-12-17
 ...
