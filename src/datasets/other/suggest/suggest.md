@@ -19,35 +19,36 @@ In addition to the search queries, we collect Category 1 and 2 telemetry data fr
 Interactions data related to Firefox Suggest is collected in the following ways.
 
 1. Interactions with Firefox Suggestions in the urlbar (i.e., clicks, impressions, blocks, clicks on help links) are collected using the standard (legacy) Telemetry system as Scalars and Events.
-  Full documentation of the probes is [here](https://firefox-source-docs.mozilla.org/browser/urlbar/firefox-suggest-telemetry.html). The Scalars are available in [Clients Daily](https://docs.telemetry.mozilla.org/datasets/batch_view/clients_daily/reference.html).
+   Full documentation of the probes is [here](https://firefox-source-docs.mozilla.org/browser/urlbar/firefox-suggest-telemetry.html). The Scalars are available in [Clients Daily](https://docs.telemetry.mozilla.org/datasets/batch_view/clients_daily/reference.html).
 
 2. Interactions with Firefox Suggestions in the urlbar (i.e., clicks, impressions, blocks) are collected using Custom Contextual Services Pings.
-  The Custom Contextual Services Pings contain additional information not available in the standard Scalars and Events, such as the advertiser that provided the recommendation, if any. This data has a much shorter retention period than the data collecting in (1) above. It also does not contain the Firefox Desktop Client ID, and is not join-able by design to any datasets outside of Contextual Services. Full documentation of the probes is [here](https://firefox-source-docs.mozilla.org/browser/urlbar/firefox-suggest-telemetry.html#contextual-services-pings).
+   The Custom Contextual Services Pings contain additional information not available in the standard Scalars and Events, such as the advertiser that provided the recommendation, if any. This data has a much shorter retention period than the data collecting in (1) above. It also does not contain the Firefox Desktop Client ID, and is not join-able by design to any datasets outside of Contextual Services. Full documentation of the probes is [here](https://firefox-source-docs.mozilla.org/browser/urlbar/firefox-suggest-telemetry.html#contextual-services-pings).
 
 3. [Preference Settings](about:preferences) are collected using the standard (legacy) Telemetry system in the Environment.
-  Full documentation of the probes is [here](https://firefox-source-docs.mozilla.org/browser/urlbar/firefox-suggest-telemetry.html#environment). The Preferences are available in [Clients Daily](https://docs.telemetry.mozilla.org/datasets/batch_view/clients_daily/reference.html). Choices users made on opt-in modals (which propagate to [Preferences](about:preferences)) are also recorded in the Environment.
+   Full documentation of the probes is [here](https://firefox-source-docs.mozilla.org/browser/urlbar/firefox-suggest-telemetry.html#environment). The Preferences are available in [Clients Daily](https://docs.telemetry.mozilla.org/datasets/batch_view/clients_daily/reference.html). Choices users made on opt-in modals (which propagate to [Preferences](about:preferences)) are also recorded in the Environment.
 
 4. Exposure Events for experiments are recorded using the standard Nimbus system.
-  Full documentation of the probes is [here](https://firefox-source-docs.mozilla.org/browser/urlbar/firefox-suggest-telemetry.html#nimbus-exposure-event). 
+   Full documentation of the probes is [here](https://firefox-source-docs.mozilla.org/browser/urlbar/firefox-suggest-telemetry.html#nimbus-exposure-event).
 
 ### Search queries and Merino
 
 1. Search queries sent to Merino by Firefox are logged by Merino.
-  Full documentation of the probes is [here](https://firefox-source-docs.mozilla.org/browser/urlbar/firefox-suggest-telemetry.html#merino-search-queries). For more information about the much shorter retention periods, security and access controls on this data, see the [Search Terms Data Access Policy](https://docs.google.com/document/d/11rOM3r5AOPUrqDnCAODY7gknxnqtjphgINSK5oAR9T4/edit#) (Mozilla internal only).
+   Full documentation of the probes is [here](https://firefox-source-docs.mozilla.org/browser/urlbar/firefox-suggest-telemetry.html#merino-search-queries). For more information about the much shorter retention periods, security and access controls on this data, see the [Search Terms Data Access Policy](https://docs.google.com/document/d/11rOM3r5AOPUrqDnCAODY7gknxnqtjphgINSK5oAR9T4/edit#) (Mozilla internal only).
 
 2. Merino responses as seen from Firefox.
-  We collect data about Merino's response times and response types in Firefox using the standard (legacy) Telemetry system as Histograms. Full documentation of the probes is [here](https://firefox-source-docs.mozilla.org/browser/urlbar/firefox-suggest-telemetry.html#histograms).
+   We collect data about Merino's response times and response types in Firefox using the standard (legacy) Telemetry system as Histograms. Full documentation of the probes is [here](https://firefox-source-docs.mozilla.org/browser/urlbar/firefox-suggest-telemetry.html#histograms).
 
 3. Service and operational data on Merino
-  We also collect data about Merino as a service from Merino directly. Full documentation of the data is [here](https://mozilla-services.github.io/merino/data.html). 
+   We also collect data about Merino as a service from Merino directly. Full documentation of the data is [here](https://mozilla-services.github.io/merino/data.html).
 
 ## Big Query Tables and Looker Explores
 
-| Access-restriction(s)        | Big Query Table                                                 | Looker Explore                          | Description                                                                                                                                                         |
-| ---------------------------- | --------------------------------------------------------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| All Mozillians               | `telemetry.suggest_clients_daily`                       | Firefox Desktop > Suggest Clients Daily | Workhorse dataset for Suggest, includes desktop data. All new Suggest metrics are added to this table. Does not include advertiser data. |                                                 |
-| Contextual Services          | `contextual_services.event_aggregates`                          | Contextual Services > Event Aggregates  | Dataset with Sponsored Tiles and Suggest analyses by advertiser. No longer maintained. Instead use the derived `event_aggregates_[product]` datasets. |
-| Contextual Services          | `contextual_services.event_aggregates_suggest` | Contextual Services > Event Aggregates Suggest  | Workhorse dataset for Suggest analyses by advertiser.                                                                                           |
-| Contextual Services          | `contextual_services_derived.adm_forecasting`                   | Contextual Services > `AdM` Forecasting | Dataset with required components for Sponsored Tiles and Suggest revenue forecasts.                                                                                 |
-| Contextual Services, Revenue | `contextual_services.event_aggregates` x `revenue.revenue_data` | Revenue > `AdM` Revenue with Telemetry  | Revenue information combined with usage metrics. This dataset is useful for `CPC` analyses.    
-   
+Note: gotchas with historical Suggest revenue data are outlined [here](https://docs.google.com/spreadsheets/d/1g-DhmvDJd4lXE7xRUrovCpLV9agAVTdCLzD6YyzvPDk/edit?usp=sharing).
+
+| Access-restriction(s)        | Big Query Table                                                 | Looker Explore                                 | Description                                                                                                                                           |
+| ---------------------------- | --------------------------------------------------------------- | ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| All Mozillians               | `telemetry.suggest_clients_daily`                               | Firefox Desktop > Suggest Clients Daily        | Workhorse dataset for Suggest, includes desktop data. All new Suggest metrics are added to this table. Does not include advertiser data.              |  |
+| Contextual Services          | `contextual_services.event_aggregates`                          | Contextual Services > Event Aggregates         | Dataset with Sponsored Tiles and Suggest analyses by advertiser. No longer maintained. Instead use the derived `event_aggregates_[product]` datasets. |
+| Contextual Services          | `contextual_services.event_aggregates_suggest`                  | Contextual Services > Event Aggregates Suggest | Workhorse dataset for Suggest analyses by advertiser.                                                                                                 |
+| Contextual Services          | `contextual_services_derived.adm_forecasting`                   | Contextual Services > `AdM` Forecasting        | Dataset with required components for Sponsored Tiles and Suggest revenue forecasts.                                                                   |
+| Contextual Services, Revenue | `contextual_services.event_aggregates` x `revenue.revenue_data` | Revenue > `AdM` Revenue with Telemetry         | Revenue information combined with usage metrics. This dataset is useful for `CPC` analyses.                                                           |
