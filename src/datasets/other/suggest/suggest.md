@@ -43,7 +43,7 @@ Interactions data related to Firefox Suggest is collected in the following ways.
 
 ## Big Query Tables and Looker Explores
 
-Note: import issues with historical Suggest revenue data are outlined [here](https://docs.google.com/spreadsheets/d/1g-DhmvDJd4lXE7xRUrovCpLV9agAVTdCLzD6YyzvPDk/edit?usp=sharing).
+Note: gotchas with historical Suggest revenue data are outlined [here](https://docs.google.com/spreadsheets/d/1g-DhmvDJd4lXE7xRUrovCpLV9agAVTdCLzD6YyzvPDk/edit?usp=sharing).
 
 | Access-restriction(s)        | Big Query Table                                                 | Looker Explore                          | Description                                                                                                                                                         |
 | ---------------------------- | --------------------------------------------------------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
