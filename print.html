@@ -11060,7 +11060,7 @@ Full documentation of the probes is <a href="https://firefox-source-docs.mozilla
 </li>
 <li>
 <p>Exposure Events for experiments are recorded using the standard Nimbus system.
-Full documentation of the probes is <a href="https://firefox-source-docs.mozilla.org/browser/urlbar/firefox-suggest-telemetry.html#nimbus-exposure-event">here</a>. </p>
+Full documentation of the probes is <a href="https://firefox-source-docs.mozilla.org/browser/urlbar/firefox-suggest-telemetry.html#nimbus-exposure-event">here</a>.</p>
 </li>
 </ol>
 <h3 id="search-queries-and-merino"><a class="header" href="#search-queries-and-merino">Search queries and Merino</a></h3>
@@ -11075,10 +11075,11 @@ We collect data about Merino's response times and response types in Firefox usin
 </li>
 <li>
 <p>Service and operational data on Merino
-We also collect data about Merino as a service from Merino directly. Full documentation of the data is <a href="https://mozilla-services.github.io/merino/data.html">here</a>. </p>
+We also collect data about Merino as a service from Merino directly. Full documentation of the data is <a href="https://mozilla-services.github.io/merino/data.html">here</a>.</p>
 </li>
 </ol>
 <h2 id="big-query-tables-and-looker-explores"><a class="header" href="#big-query-tables-and-looker-explores">Big Query Tables and Looker Explores</a></h2>
+<p>Note: gotchas with historical Suggest revenue data are outlined <a href="https://docs.google.com/spreadsheets/d/1g-DhmvDJd4lXE7xRUrovCpLV9agAVTdCLzD6YyzvPDk/edit?usp=sharing">here</a>.</p>
 <div class="table-wrapper"><table><thead><tr><th>Access-restriction(s)</th><th>Big Query Table</th><th>Looker Explore</th><th>Description</th></tr></thead><tbody>
 <tr><td>All Mozillians</td><td><code>telemetry.suggest_clients_daily</code></td><td>Firefox Desktop &gt; Suggest Clients Daily</td><td>Workhorse dataset for Suggest, includes desktop data. All new Suggest metrics are added to this table. Does not include advertiser data.</td></tr>
 <tr><td>Contextual Services</td><td><code>contextual_services.event_aggregates</code></td><td>Contextual Services &gt; Event Aggregates</td><td>Dataset with Sponsored Tiles and Suggest analyses by advertiser. No longer maintained. Instead use the derived <code>event_aggregates_[product]</code> datasets.</td></tr>
@@ -11093,7 +11094,7 @@ We also collect data about Merino as a service from Merino directly. Full docume
 <p>Mozillians may access Sponsored Tiles data when advertiser information is <strong>not</strong> attached. This includes metrics such as Sponsored Tile impressions, clicks, dismissals, and disablement. Sponsored Tiles is an important component of new tab user behavior and a growing source of revenue. Therefore, it is encouraged to monitor Sponsored Tile engagement metrics in do no harm experiments testing changes to the new tab.</p>
 <p>Access to Sponsored Tiles data by advertiser is restricted to members of the contextual services working group. These restrictions are designed to protect user privacy, preventing excessive access to data which links a given client to their interactions with different advertisers. For more information on requesting access, see <a href="https://mana.mozilla.org/wiki/display/DATA/Data+Access+Policies">comment here</a>.</p>
 <h2 id="big-query-tables-and-looker-explores-1"><a class="header" href="#big-query-tables-and-looker-explores-1">Big Query Tables and Looker Explores</a></h2>
-<h3 id="all-mozilla-access"><a class="header" href="#all-mozilla-access">All-Mozilla access</a></h3>
+<p>Note: gotchas with historical Sponsored Tiles revenue data are outlined <a href="https://docs.google.com/spreadsheets/d/1g-DhmvDJd4lXE7xRUrovCpLV9agAVTdCLzD6YyzvPDk/edit?usp=sharing">here</a>.</p>
 <div class="table-wrapper"><table><thead><tr><th>Access-restriction(s)</th><th>Big Query Table</th><th>Looker Explore</th><th>Description</th></tr></thead><tbody>
 <tr><td>All Mozillians</td><td><code>telemetry.sponsored_tiles_clients_daily</code></td><td>Firefox Desktop &gt; Sponsored Tiles Clients Daily</td><td>Workhorse dataset for Sponsored Tiles, includes desktop and mobile data. All new Sponsored Tiles metrics are added to this table. Does not include advertiser data.</td></tr>
 <tr><td>All Mozillians</td><td><code>telemetry.newtab</code></td><td>Firefox Desktop &gt; <code>Newtab</code></td><td>Expanded <code>newtab</code> <strong>desktop</strong> dataset. Requires unnesting events.</td></tr>

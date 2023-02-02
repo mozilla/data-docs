@@ -173,7 +173,7 @@ Full documentation of the probes is <a href="https://firefox-source-docs.mozilla
 </li>
 <li>
 <p>Exposure Events for experiments are recorded using the standard Nimbus system.
-Full documentation of the probes is <a href="https://firefox-source-docs.mozilla.org/browser/urlbar/firefox-suggest-telemetry.html#nimbus-exposure-event">here</a>. </p>
+Full documentation of the probes is <a href="https://firefox-source-docs.mozilla.org/browser/urlbar/firefox-suggest-telemetry.html#nimbus-exposure-event">here</a>.</p>
 </li>
 </ol>
 <h3 id="search-queries-and-merino"><a class="header" href="#search-queries-and-merino">Search queries and Merino</a></h3>
@@ -188,10 +188,11 @@ We collect data about Merino's response times and response types in Firefox usin
 </li>
 <li>
 <p>Service and operational data on Merino
-We also collect data about Merino as a service from Merino directly. Full documentation of the data is <a href="https://mozilla-services.github.io/merino/data.html">here</a>. </p>
+We also collect data about Merino as a service from Merino directly. Full documentation of the data is <a href="https://mozilla-services.github.io/merino/data.html">here</a>.</p>
 </li>
 </ol>
 <h2 id="big-query-tables-and-looker-explores"><a class="header" href="#big-query-tables-and-looker-explores">Big Query Tables and Looker Explores</a></h2>
+<p>Note: gotchas with historical Suggest revenue data are outlined <a href="https://docs.google.com/spreadsheets/d/1g-DhmvDJd4lXE7xRUrovCpLV9agAVTdCLzD6YyzvPDk/edit?usp=sharing">here</a>.</p>
 <div class="table-wrapper"><table><thead><tr><th>Access-restriction(s)</th><th>Big Query Table</th><th>Looker Explore</th><th>Description</th></tr></thead><tbody>
 <tr><td>All Mozillians</td><td><code>telemetry.suggest_clients_daily</code></td><td>Firefox Desktop &gt; Suggest Clients Daily</td><td>Workhorse dataset for Suggest, includes desktop data. All new Suggest metrics are added to this table. Does not include advertiser data.</td></tr>
 <tr><td>Contextual Services</td><td><code>contextual_services.event_aggregates</code></td><td>Contextual Services &gt; Event Aggregates</td><td>Dataset with Sponsored Tiles and Suggest analyses by advertiser. No longer maintained. Instead use the derived <code>event_aggregates_[product]</code> datasets.</td></tr>
