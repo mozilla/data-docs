@@ -43,6 +43,8 @@ Interactions data related to Firefox Suggest is collected in the following ways.
 
 ## Big Query Tables and Looker Explores
 
+Note: import issues with historical Suggest revenue data are outlined [here](https://docs.google.com/spreadsheets/d/1g-DhmvDJd4lXE7xRUrovCpLV9agAVTdCLzD6YyzvPDk/edit?usp=sharing).
+
 | Access-restriction(s)        | Big Query Table                                                 | Looker Explore                          | Description                                                                                                                                                         |
 | ---------------------------- | --------------------------------------------------------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | All Mozillians               | `telemetry.suggest_clients_daily`                       | Firefox Desktop > Suggest Clients Daily | Workhorse dataset for Suggest, includes desktop data. All new Suggest metrics are added to this table. Does not include advertiser data. |                                                 |
