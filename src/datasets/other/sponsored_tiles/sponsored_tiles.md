@@ -12,7 +12,7 @@ Access to Sponsored Tiles data by advertiser is restricted to members of the con
 
 ## Big Query Tables and Looker Explores
 
-### All-Mozilla access
+Note: import issues with historical Sponsored Tiles revenue data are outlined [here](https://docs.google.com/spreadsheets/d/1g-DhmvDJd4lXE7xRUrovCpLV9agAVTdCLzD6YyzvPDk/edit?usp=sharing).
 
 | Access-restriction(s)        | Big Query Table                                                 | Looker Explore                          | Description                                                                                                                                                         |
 | ---------------------------- | --------------------------------------------------------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
