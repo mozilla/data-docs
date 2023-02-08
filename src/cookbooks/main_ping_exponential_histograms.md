@@ -22,7 +22,7 @@ its appearance in milliseconds (ms). This is an unwanted operation (especially i
 `FX_TAB_SWITCH_SPINNER_VISIBLE_MS` is what's called an [exponential histogram](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/collection/histograms.html#exponential): it represents an exponentially increasing distribution of values in each of its "buckets". It's probably easier to visualize this using the histogram viewer than describe:
 
 ![example visualization of an exponential histogram](../assets/exponential_histograms_tutorial/example_visualization_of_an_exponential_histogram.png)
-[link](https://telemetry.mozilla.org/histogram-simulator/#low=1&high=1000&n_buckets=20&kind=exponential&generate=normal)
+[link](https://telemetry.mozilla.org/histogram-simulator/index.html#low=1&high=1000&n_buckets=20&kind=exponential&generate=normal)
 
 This visualization above shows how a [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution) would map into the buckets: you'll see that it skews towards the end: the point of the exponential histogram is to be sensitive to lower values (which one would assume would be more frequent, so long as the tab spinner doesn't come up too frequently!). Each "tick" represents the range of a bucket (in milliseconds): so we have a bucket representing values between `1ms` and `2ms`, `2ms` and `3ms`, and so on. You'll note that this distribution caps out at 1000: any values greater than or equal to this will wind up in this bucket but we won't know their value with any precision. For tracking values higher than this, a separate histogram ([`FX_TAB_SWITCH_SPINNER_VISIBLE_LONG_MS`](https://probes.telemetry.mozilla.org/?view=detail&probeId=histogram%2FFX_TAB_SWITCH_SPINNER_VISIBLE_LONG_MS)) was created.
 
