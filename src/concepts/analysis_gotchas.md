@@ -41,6 +41,7 @@ When you start to evaluate trends, be aware of events from the past that may inv
 - **Aug 23 2021 - Aug 29 2021** - [Approximately 1/251 of pings were improperly labeled as coming from Kansas City, US][bug1729069].
 - **Aug 05 2021 - Aug 31 2021** - Drop in search metrics (`tagged_sap`, `tagged_follow_on`, `search_with_ads`, `ad_click`) in Fenix due to probe expiry. [Incident report](https://docs.google.com/document/d/1C29HmYponPcqtX4yR4QA7uBkhhkAM76WqMW3PQBnL_g/edit) and [`STMO#203423`](https://sql.telemetry.mozilla.org/queries/82098/source#203423).
 - **Feb 16 2021 - Feb 25 2021** - [A small number of stub installer pings may have been discarded due to URI deduplication][bug1694764].
+- **Jan 28, 2021** - [Fenix DAU jumped rapidly, due to increased sending of the baseline ping](https://docs.google.com/document/d/1MEsAUqjaIZCUtWLFAhXHxq-m1hDEw1QAOKYEva4DDZk/edit)
 - **August 6, 2020** - [Pings with "automation" tag in X-Source-Tags will no longer appear in stable tables][bq1215]
   This is particularly relevant for removing pings related to automated testing of Fenix.
 - **August 1, 2020 - August 31, 2020** - [Fennec was migrated to Fenix](https://sql.telemetry.mozilla.org/queries/89203#220890), causing changes in both how data was reported (Glean rather than the core ping) and some reported metrics (e.g. DAU, as people dropped off).
