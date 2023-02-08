@@ -16,8 +16,9 @@ mathjax-support = true
 additional-css = ["dtmo.css", "mermaid.css"]
 additional-js = ["mermaid.min.js", "mermaid-init.js"]
 git-repository-url = "https://github.com/mozilla/data-docs"
-google-analytics = "UA-104326577-1"
 git-branch = "main"
+edit-url-template = "https://github.com/mozilla/data-docs/edit/main/{path}"
+google-analytics = "UA-104326577-1"
 
 [output.html.redirect]
 "/concepts/analysis_intro.html" = "/introduction/what_data.html"
