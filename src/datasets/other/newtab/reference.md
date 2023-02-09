@@ -19,7 +19,7 @@ This dataset does not have a long history. The newtab ping went live in Fall 202
 
 Currently, telemetry is not yet instrumented for organic topsites tiles. This work is in progress and will be added to the dataset soon.  For now, all total topsites metrics (impression, clicks) only include sponsored topsites data. 
 
-Some of the preference settings enabling features like Pocket and Topsites can be set to `enabled` in regions where these features are not available. In these cases, it is best to filter by country to only include regions where these features are available. In Looker, there are pre-set country groups for Topsties Available and Pocket Available to make this easier. 
+Some of the preference settings enabling features like Pocket and Topsites can be set to `enabled` in regions where these features are not available. In these cases, it is best to filter by country to only include regions where these features are available. In Looker, there are pre-set country groups for Topsites Available and Pocket Available to make this easier. 
 
 ## Data Reference 
 
