@@ -74,7 +74,7 @@ Some of the preference settings enabling features like Pocket and Topsites can b
 
 
 ## Scheduling
-This dataset is updated daily via the telemetry-airflow infrastructure. 
+This dataset is [updated daily](https://workflow.telemetry.mozilla.org/dags/bqetl_newtab) via the telemetry-airflow infrastructure. 
 
 ## Schema
 The data is partitioned by `submission_date`. 
