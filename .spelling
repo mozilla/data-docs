@@ -178,6 +178,7 @@ ISO8601
 i.e.
 implementational
 InfluxCloud
+init'd
 inlined
 int64
 interpretability
@@ -233,6 +234,9 @@ navigations
 nbconvert
 nbviewer
 nearline
+Newtab
+newtab
+Newtab_Interactions
 nginx
 ni
 node.js
@@ -277,6 +281,7 @@ pre-loaded
 pre-processes
 pre-release
 pre-released
+pre-set
 pre-specified
 preprocessors
 Prefs
@@ -358,7 +363,9 @@ TMO
 TODO
 TOML
 Topsite
+topsite
 Topsites
+topsites
 TOTP
 toolbars
 toolchain
