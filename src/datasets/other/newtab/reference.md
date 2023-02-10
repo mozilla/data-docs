@@ -12,8 +12,8 @@ The `client_id` is the Glean client identifier, there is also the `legacy_teleme
 ## Background and Caveats
 ### Scheduling:  
 "newtab" pings can be sent for one of two reasons. 
-component_init: The newtab component init'd, and the newtab and homepage settings have been categorized. This is mostly to ensure we hear at least once from clients configured to not show a newtab UI.
-newtab_session_end: The newtab visit ended. Could be by navigation, being closed, etc. 
+`component_init`: The newtab component init'd, and the newtab and homepage settings have been categorized. This is mostly to ensure we hear at least once from clients configured to not show a newtab UI.
+`newtab_session_end`: The newtab visit ended. Could be by navigation, being closed, etc. 
 
 This dataset does not have a long history. The newtab ping went live in Fall 2022 and therefore we do not have data prior to that launch.  Any historical analysis will not be possible until we collect more data. 
 
@@ -36,11 +36,11 @@ Some of the preference settings enabling features like Pocket and Topsites can b
 `pocket_sponsored_stories_enabled`: boolean indicating whether the setting to show Sponsored Stories in the New Tab is enabled. This can be enabled even in countries where Pocket is not available, so it is useful to add a country filter when using this. 
 `pocket_sponsored_stories_enabled`:  boolean flag indicating whether Pocket sponsored stories are enabled in settings. This can be enabled even in countries where Pocket is not available, so it is useful to add a country filter when using this.
 `topsites_enabled`: boolean flag for whether the client has topsites enabled in settings. This can be enabled even if topsites are not available in that country.
-`newtab_homepage_category`: the current setting of the homepage url. Classified into categories using `SiteClassifier`.
-`newtab_newtab_category`: the current setting of the new tab url.  Classified into categories using `SiteClassifier`.
-`newwtab_open_source`: describes the situation when the tab was opened. One of “about:Welcome”, “about:Home” or “about:NewTab” to reflect whether the tab is the first for a new profile/newFirefox install, the first in a new window or a new tab in an existing session window.
+`newtab_homepage_category`: the current setting of the homepage URL. Classified into categories using `SiteClassifier`.
+`newtab_newtab_category`: the current setting of the new tab URL.  Classified into categories using `SiteClassifier`.
+`newwtab_open_source`: describes the situation when the tab was opened. One of “about:Welcome”, “about:Home” or “about:NewTab” to reflect whether the tab is the first for a new profile/new Firefox install, the first in a new window or a new tab in an existing session window.
 `newtab_search_enabled`: boolean indicating whether the setting to enable search on New Tab is enabled 
-`Is_new_profile`: flag indicating if the profile is new, pulled from the unified_metrics table
+`is_new_profile`: flag indicating if the profile is new, pulled from the unified_metrics table
 `activity_segment`: flag indicating which activity segment the client falls into on this day, pulled from the `unified_metrics` table
 
 
