@@ -36,6 +36,8 @@ This dataset is large.
 If you're querying this dataset from STMO,
 heavily limit the data you read using `submission_date` or `sample_id`.
 
+The `has_adblocker_addon` field is True if the client had an active addon that blocks Mozilla's ability to monetize the searches via a search engine partnership. The logic for identifying ad-blocking addons is [here](https://github.com/mozilla/search-adhoc-analysis/blob/master/monetization-blocking-addons/Monetization%20blocking%20addons.ipynb) (private notebook).
+
 <!--
 #### Further Reading
 -->
