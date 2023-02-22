@@ -240,20 +240,20 @@ Do not include multiple arguments on one line.
 ```sql
 SELECT client_id, submission_date
 FROM main_summary
-WHERE
-  submission_date > '20180101'
+WHERE submission_date > '20180101'
   AND sample_id = '42'
 LIMIT 10
 ```
 
-**Bad**
+**Good**
 
 ```sql
 SELECT
   client_id,
   submission_date
 FROM main_summary
-WHERE submission_date > '20180101'
+WHERE
+  submission_date > '20180101'
   AND sample_id = '42'
 LIMIT 10
 ```
