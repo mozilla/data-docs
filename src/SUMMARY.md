@@ -22,6 +22,7 @@
       - [Using Growth and Usage Dashboards](cookbooks/looker/growth_usage_dashboards.md)
       - [Using the Event Counts Explore](cookbooks/looker/event_counts_explore.md)
       - [Using the Funnel Analysis Explore](cookbooks/looker/funnel_analysis_explore.md)
+      - [Looker Performance - Caching](cookbooks/looker/performance_caching.md)
     - [Other Data Analysis Tools](cookbooks/analysis/tools.md)
       - [Introduction to GLAM](cookbooks/glam.md)
       - [Introduction to Operational Monitoring](cookbooks/operational_monitoring.md)
