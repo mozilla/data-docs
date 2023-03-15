@@ -5,7 +5,8 @@ useful if you have many users accessing a dashboard or explore, especially acros
 
 This guide has two alternatives: Applying Generated Datagroups and Custom Datagroups
 
-> ⚠️ Some steps in this guide require knowledge of LookML - ask in #data-help for assistance if needed.
+> ⚠️ Some steps in this guide require knowledge of LookML and a developer license - ask in #data-help for assistance if
+> needed.
 
 The default setting in Looker is to store (cache) the results of any query for one hour. The majority of our data
 is updated at least daily. This means that while users will get the same result for a query, they might have to wait
