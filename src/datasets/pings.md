@@ -113,7 +113,7 @@ The [coverage ping][coverage_ping] ([announcement](https://blog.mozilla.org/data
 is a periodic census intended to estimate telemetry opt-out rates.
 
 We estimate that [93% of release channel
-profiles](https://metrics.mozilla.com/~rharter/reports/coverage/index.html)
+profiles](https://docs.google.com/document/d/1EnQoq9o1sLXTgsbbG8mPnUiWIOmKSINGJOAKyYUm_YA/edit#)
 have telemetry enabled (and are therefore included in DAU).
 
 ## Pingsender
