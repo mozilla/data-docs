@@ -59,7 +59,11 @@ A set of data, which includes ping data, derived datasets, etc.; sometimes it is
 
 ## DAU
 
-Daily Active Users - The number of unique profiles active on each day.
+Daily Active Users - The number of unique [client ids](#client-id) that we recieve a [ping](#ping) from each day.  
+
+DAU may be defined differently across different products. For example, [Firefox Desktop DAU](https://mozilla.github.io/metric-hub/metrics/firefox_desktop/#daily_active_users) only considers client ids to be "active" on a particular day if the client visits at least one [URI](#uri) and has a non-zero number of [active_hours](https://mozilla.github.io/metric-hub/metrics/firefox_desktop/#active_hours). Mobile DAU, on the other hand, considers any client to be "active" on days that we receive a ping from them.
+
+DAU is used to calculate one of Mozilla's [KPIs](#kpi). The KPI version of DAU is defined as "the 28-day average DAU over the period ending on December 15th each year". The Firefox Desktop DAU KPI definition is maintained [here](https://mozilla.github.io/metric-hub/metrics/firefox_desktop/#desktop_dau_kpi).
 
 ## Derived Dataset
 
@@ -84,6 +88,10 @@ Mozilla's core data platform has been built to support structured ingestion of a
 ## Intensity
 
 Intuitively, how many days per week do users use the product? Among profiles active at least once in the week ending on the date specified, the number of days on average they were active during that one-week window.
+
+## KPI
+
+Key Performance Indicator - a [metric](#metric) that is used to measure performance across an organization, product, or project.
 
 ## Metric
 
@@ -157,6 +165,14 @@ A service for creating queries and dashboards. See [STMO under analysis tools](.
 ## Telemetry
 
 As you use Firefox, Telemetry measures and collects non-personal information, such as performance, hardware, usage and customizations. It then sends this information to Mozilla on a daily basis and we use it to improve Firefox.
+
+## URI
+
+Uniform Resource Identifier - a string that refers to a resource. The most common are [URLs](#url), which identify the resource by giving its location on the Web ([source](https://developer.mozilla.org/en-US/docs/Glossary/URI)).
+
+## URL
+
+Uniform Resource Locator - a text string that specifies where a resource (such as a web page, image, or video) can be found on the Internet ([source](https://developer.mozilla.org/en-US/docs/Glossary/URL)). For example, `https://www.mozilla.org` is a URL.
 
 ## WAU
 
