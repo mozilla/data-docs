@@ -59,9 +59,9 @@ A set of data, which includes ping data, derived datasets, etc.; sometimes it is
 
 ## DAU
 
-Daily Active Users - The number of unique [client ids](#client-id) that we recieve a [ping](#ping) from each day.  
+Daily Active Users - The number of unique [client ids](#client-id) that we receive a [ping](#ping) from each day.
 
-DAU may be defined differently across different products. For example, [Firefox Desktop DAU](https://mozilla.github.io/metric-hub/metrics/firefox_desktop/#daily_active_users) only considers client ids to be "active" on a particular day if the client visits at least one [URI](#uri) and has a non-zero number of [active_hours](https://mozilla.github.io/metric-hub/metrics/firefox_desktop/#active_hours). Mobile DAU, on the other hand, considers any client to be "active" on days that we receive a ping from them.
+DAU may be defined differently across different products. For example, [Firefox Desktop DAU](https://mozilla.github.io/metric-hub/metrics/firefox_desktop/#daily_active_users) only considers client ids to be "active" on a particular day if the client visits at least one [URI](#uri) and has a non-zero number of [active hours](https://mozilla.github.io/metric-hub/metrics/firefox_desktop/#active_hours). Mobile DAU, on the other hand, considers any client to be "active" on days that we receive a ping from them.
 
 DAU is used to calculate one of Mozilla's [KPIs](#kpi). The KPI version of DAU is defined as "the 28-day average DAU over the period ending on December 15th each year". The Firefox Desktop DAU KPI definition is maintained [here](https://mozilla.github.io/metric-hub/metrics/firefox_desktop/#desktop_dau_kpi).
 
