@@ -293,6 +293,7 @@ If you're new to Mozilla, you may also find the <a href="https://wiki.mozilla.or
 <li><a href="concepts/terminology.html#geoip">GeoIP</a></li>
 <li><a href="concepts/terminology.html#ingestion">Ingestion</a></li>
 <li><a href="concepts/terminology.html#intensity">Intensity</a></li>
+<li><a href="concepts/terminology.html#kpi">KPI</a></li>
 <li><a href="concepts/terminology.html#metric">Metric</a></li>
 <li><a href="concepts/terminology.html#mau">MAU</a></li>
 <li><a href="concepts/terminology.html#ping">Ping</a></li>
@@ -307,6 +308,8 @@ If you're new to Mozilla, you may also find the <a href="https://wiki.mozilla.or
 <li><a href="concepts/terminology.html#subsession">Subsession</a></li>
 <li><a href="concepts/terminology.html#stmo-sqltelemetrymozillaorg">STMO (sql.telemetry.mozilla.org)</a></li>
 <li><a href="concepts/terminology.html#telemetry">Telemetry</a></li>
+<li><a href="concepts/terminology.html#uri">URI</a></li>
+<li><a href="concepts/terminology.html#url">URL</a></li>
 <li><a href="concepts/terminology.html#wau">WAU</a></li>
 </ul>
 <h2 id="aet"><a class="header" href="#aet">AET</a></h2>
@@ -339,7 +342,9 @@ Note that <a href="concepts/./analysis_gotchas.html#build-ids">the format may di
 <h2 id="dataset"><a class="header" href="#dataset">Dataset</a></h2>
 <p>A set of data, which includes ping data, derived datasets, etc.; sometimes it is used synonymously with “table”; sometimes it is used technically to refer to a <a href="concepts/terminology.html#bigquery">BigQuery</a> dataset, which represents a container for one or more tables.</p>
 <h2 id="dau"><a class="header" href="#dau">DAU</a></h2>
-<p>Daily Active Users - The number of unique profiles active on each day.</p>
+<p>Daily Active Users - The number of unique <a href="concepts/terminology.html#client-id">client ids</a> that we receive a <a href="concepts/terminology.html#ping">ping</a> from each day.</p>
+<p>DAU can be defined differently across different products. For example, <a href="https://mozilla.github.io/metric-hub/metrics/firefox_desktop/#daily_active_users">Firefox Desktop DAU</a> only considers client ids to be &quot;active&quot; on days we receive a main ping if the client visits at least one <a href="concepts/terminology.html#uri">URI</a> and has a non-zero number of <a href="https://mozilla.github.io/metric-hub/metrics/firefox_desktop/#active_hours">active hours</a>. Mobile DAU, on the other hand, considers any client to be &quot;active&quot; on days that we receive a baseline ping from them.</p>
+<p>DAU is used to calculate one of Mozilla's <a href="concepts/terminology.html#kpi">KPIs</a>. The KPI version of DAU is defined as &quot;the 28-day average DAU over the period ending on December 15th each year&quot;. The Firefox Desktop DAU KPI definition is maintained <a href="https://mozilla.github.io/metric-hub/metrics/firefox_desktop/#desktop_dau_kpi">here</a>.</p>
 <h2 id="derived-dataset"><a class="header" href="#derived-dataset">Derived Dataset</a></h2>
 <p>A processed dataset, such as <a href="concepts/../datasets/batch_view/clients_daily/reference.html">Clients Daily</a>. At Mozilla, this is in contrast to a raw ping table which represents (more or less) the raw data submitted by our users.</p>
 <h2 id="glean"><a class="header" href="#glean">Glean</a></h2>
@@ -352,6 +357,8 @@ Note that <a href="concepts/./analysis_gotchas.html#build-ids">the format may di
 <p>Mozilla's core data platform has been built to support structured ingestion of arbitrary JSON payloads whether they come from browser products on client devices or from server-side applications that have nothing to do with Firefox; any team at Mozilla can hook into structured ingestion by defining a schema and registering it with pipeline. Once a schema is registered, everything else is automatically provisioned, from an HTTPS endpoint for accepting payloads to a set of tables in BigQuery for holding the processed data.</p>
 <h2 id="intensity"><a class="header" href="#intensity">Intensity</a></h2>
 <p>Intuitively, how many days per week do users use the product? Among profiles active at least once in the week ending on the date specified, the number of days on average they were active during that one-week window.</p>
+<h2 id="kpi"><a class="header" href="#kpi">KPI</a></h2>
+<p>Key Performance Indicator - a <a href="concepts/terminology.html#metric">metric</a> that is used to measure performance across an organization, product, or project.</p>
 <h2 id="metric"><a class="header" href="#metric">Metric</a></h2>
 <p>In general: a metric is anything that you want to (and can) measure. This differs from a dimension which is a qualitative attribute of data.</p>
 <p>In the context of <a href="concepts/terminology.html#glean">Glean</a>, a metric refers to an instrumented measure for a specific aspect of the product (similar to a <a href="concepts/terminology.html#probe">probe</a> in Firefox Telemetry).</p>
@@ -399,6 +406,10 @@ The bulk of the data that is handled by this pipeline is Firefox Telemetry data.
 <p>A service for creating queries and dashboards. See <a href="concepts/../introduction/tools.html#sqltelemetrymozillaorg-stmo">STMO under analysis tools</a>.</p>
 <h2 id="telemetry"><a class="header" href="#telemetry">Telemetry</a></h2>
 <p>As you use Firefox, Telemetry measures and collects non-personal information, such as performance, hardware, usage and customizations. It then sends this information to Mozilla on a daily basis and we use it to improve Firefox.</p>
+<h2 id="uri"><a class="header" href="#uri">URI</a></h2>
+<p>Uniform Resource Identifier - a string that refers to a resource. The most common are <a href="concepts/terminology.html#url">URLs</a>, which identify the resource by giving its location on the Web (<a href="https://developer.mozilla.org/en-US/docs/Glossary/URI">source</a>).</p>
+<h2 id="url"><a class="header" href="#url">URL</a></h2>
+<p>Uniform Resource Locator - a text string that specifies where a resource (such as a web page, image, or video) can be found on the Internet (<a href="https://developer.mozilla.org/en-US/docs/Glossary/URL">source</a>). For example, <code>https://www.mozilla.org</code> is a URL.</p>
 <h2 id="wau"><a class="header" href="#wau">WAU</a></h2>
 <p>Weekly Active Users - The number of unique profiles active at least once during the 7-day window
 ending on the specified day.</p>
