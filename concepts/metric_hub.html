@@ -167,14 +167,14 @@ These definitions files are platform-specific and located in the <a href="https:
 <p>Data sources specify the tables data should be queried from.</p>
 <pre><code class="language-toml">[data_sources]
 
-[data_sources.main]
+[data_sources.main_v1]
 # FROM expression - often just a fully-qualified table name. Sometimes a subquery.
 from_expression = &quot;mozdata.telemetry.main&quot;
 
 # SQL snippet specifying the submission_date column
 submission_date_column = &quot;submission_date&quot;
 
-[data_sources.events_memory]
+[data_sources.events_memory_v1]
 # FROM expression - subquery
 from_expression = &quot;&quot;&quot;
     (
@@ -189,11 +189,11 @@ submission_date_column = &quot;submission_date&quot;
 </code></pre>
 <h3 id="metrics-section"><a class="header" href="#metrics-section"><code>[metrics]</code> Section</a></h3>
 <p>The metrics sections allows to specify metrics. A metric aggregates data and is associated with some data source.</p>
-<p>Each metric is identified by a unique slug, and can be defined by adding a new section with a name like:</p>
-<p><code>[metrics.&lt;new_metric_slug&gt;]</code></p>
+<p>Each metric is identified by a unique slug and a version (versions are optional but strongly encouraged), and can be defined by adding a new section with a name like:</p>
+<p><code>[metrics.&lt;new_metric_slug&gt;_v&lt;version&gt;]</code></p>
 <pre><code class="language-toml">[metrics]
 
-[metrics.memory_pressure_count]
+[metrics.memory_pressure_count_v1]
 
 # The data source to use. Use the slug of a data source defined in a platform-specific config,
 # or else define a new data source (see above).
@@ -233,7 +233,7 @@ be set to <code>true</code>.</p>
 <p>For example:</p>
 <pre><code class="language-toml">[dimensions]
 
-[dimensions.os]
+[dimensions.os_v1]
 # The data source to use. Use the slug of a data source defined in a platform-specific config,
 # or else define a new data source (see above).
 data_source = &quot;main&quot;
@@ -243,13 +243,13 @@ select_expression = &quot;normalized_os&quot;
 </code></pre>
 <h3 id="segments-section"><a class="header" href="#segments-section"><code>[segments]</code> Section</a></h3>
 <p>Segments specify a boolean condition that determines whether a client is part of the segment. Segment are used in Jetstream, for segmenting client populations in OpMon please see the <code>[dimensions]</code> section.</p>
-<pre><code class="language-toml">[segments.my_segment]
+<pre><code class="language-toml">[segments.my_segment_v1]
 # Note the aggregation function; these expressions are grouped over client_id
 select_expression = '{{agg_any(&quot;is_default_browser&quot;)}}'data_source = &quot;my_data_source&quot;
 
 # segments require their own data source to be defined
 # the standard `data_source`s cannot be used for segments
-[segments.data_sources.my_data_source]
+[segments.data_sources.my_data_source_v1]
 from_expression = '(SELECT submission_date, client_id, is_default_browser FROM my_cool_table)'
 </code></pre>
 <p>Segment SQL snippets need to be boolean expressions to be valid.</p>
@@ -260,6 +260,67 @@ from_expression = '(SELECT submission_date, client_id, is_default_browser FROM m
 <li><a href="https://github.com/mozilla/mozanalysis">mozanalysis</a> - a Python library which standardizes how experiment data is analyzed at Mozilla</li>
 <li><a href="https://docs.telemetry.mozilla.org/cookbooks/operational_monitoring.html">OpMon</a> - a tool for monitoring operational metrics</li>
 </ul>
+<h3 id="using-metrics-in-etl-queries"><a class="header" href="#using-metrics-in-etl-queries">Using Metrics in ETL queries</a></h3>
+<p>Metrics and data sources can be referenced in query and view definitions in <a href="https://github.com/mozilla/bigquery-etl">bigquery-etl</a>.
+Query and view definitions are <a href="https://jinja.palletsprojects.com/en/3.1.x/">Jinja templates</a> which have access to the <code>metrics.calculate()</code> and <code>metrics.data_source()</code> functions.</p>
+<p>Metrics can be referenced as follows:</p>
+<pre><code class="language-sql"> SELECT
+      *
+FROM
+    {{ metrics.calculate(
+    metrics=['days_of_use', 'active_hours'],
+    platform='firefox_desktop',
+    group_by={'sample_id': 'sample_id', 'channel': 'application.channel'},
+    where='submission_date = &quot;2023-01-01&quot;'
+    ) }}
+</code></pre>
+<p>This query will get translated to:</p>
+<pre><code class="language-sql">SELECT
+    *
+FROM
+    (
+    WITH clients_daily AS (
+        SELECT
+        client_id AS client_id,
+        submission_date AS submission_date,
+        COALESCE(SUM(active_hours_sum), 0) AS active_hours,
+        COUNT(submission_date) AS days_of_use,
+        FROM
+        mozdata.telemetry.clients_daily
+        GROUP BY
+        client_id,
+        submission_date
+    )
+    SELECT
+        clients_daily.client_id,
+        clients_daily.submission_date,
+        active_hours,
+        days_of_use,
+    FROM
+        clients_daily
+    )
+</code></pre>
+<p>The following parameters are available for <code>metrics.calculate()</code> to customize the query:</p>
+<ul>
+<li><code>metrics</code>: unique reference(s) to metric definition, all <a href="https://mozilla.github.io/metric-hub/metrics/firefox_desktop/">metric definitions</a> are aggregations (e.g. SUM, AVG, ...)</li>
+<li><code>platform</code>: platform to compute metrics for (e.g. <code>firefox_desktop</code>, <code>firefox_ios</code>, <code>fenix</code>, ...)</li>
+<li><code>group_by</code>: fields used in the GROUP BY statement; this is a dictionary where the key represents the alias, the value is the field path; <code>GROUP BY</code> always includes the configured <code>client_id</code> and <code>submission_date</code> fields</li>
+<li><code>where</code>: SQL filter clause</li>
+<li><code>group_by_client_id</code>: Whether the field configured as <code>client_id</code> (defined as part of the data source specification in metric-hub) should be part of the <code>GROUP BY</code>. <code>True</code> by default</li>
+<li><code>group_by_submission_date</code>: Whether the field configured as <code>submission_date</code> (defined as part of the data source specification in metric-hub) should be part of the <code>GROUP BY</code>. <code>True</code> by default</li>
+</ul>
+<p>Data sources can be referenced as follows:</p>
+<pre><code class="language-sql">SELECT
+    *
+FROM {{ metrics.data_source(
+        data_source=&quot;main&quot;,
+        platform=&quot;firefox_desktop&quot;,
+        where='submission_date = &quot;2023-01-01&quot;'
+    )
+}}
+</code></pre>
+<p>To render queries into raw SQL queries use the <code>./bqetl query render path/to/query.sql</code> command. Rendered views and queries are also available on the <a href="https://github.com/mozilla/bigquery-etl/tree/generated-sql"><code>generated-sql</code> branch in bigquery-etl</a>. The <code>bqetl</code> tooling does support running and publishing artifacts that use Jinja (translating Jinja templates into raw SQL isn't strictly necessary to perform these actions).</p>
+<h3 id="using-metrics-in-python-scripts"><a class="header" href="#using-metrics-in-python-scripts">Using Metrics in Python Scripts</a></h3>
 <p>Metric definitions can also be imported into Python scripts by using the <a href="https://github.com/mozilla/metric-config-parser"><code>mozilla-metric-config-parser</code></a>. This library automatically parses the definitions in Metric Hub and returns their Python type representations.</p>
 <pre><code class="language-python">from metric_config_parser.config import ConfigCollection
 
@@ -271,6 +332,11 @@ print(metric.from_expression)
 <pre><code class="language-python">from mozanalysis.config import ConfigLoader
 metric = ConfigLoader.get_metric(slug=&quot;active_hours&quot;, app_name=&quot;firefox_desktop&quot;)
 </code></pre>
+<h2 id="faq"><a class="header" href="#faq">FAQ</a></h2>
+<h3 id="should-metrics-be-defined-in-the-metric-definition-data-source-definition-or-source-table"><a class="header" href="#should-metrics-be-defined-in-the-metric-definition-data-source-definition-or-source-table">Should metrics be defined in the metric definition, data source definition or source table?</a></h3>
+<p>Definitions for metrics can be encoded at different levels. It is preferable to specify the SQL that defines how a metric should be computed as much upstream as possible. This allows the most flexible usage of metric definitions.</p>
+<p>Ideally, metrics should be defined in the <code>[metrics]</code> section. However in some cases metrics might rely on more complex logic. For example, if some more complicated unnesting of fields or <code>JOIN</code>s across multiple tables are required it might make sense to move the metric computation into the <code>[data_sources]</code> definition and then simply reference the field in the <code>[metrics]</code> section. The main drawback of this is that if users want to find the definition they will have to go one layer deeper and check how the data source is defined versus just having to look at the metric definition itself.</p>
+<p>For computationally expensive metrics it can make sense to set up an ETL job that computes the metrics on a daily basis and writes results to a separate table. This table can serve as basis of a data source which can then be used to define a metric.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/concepts/metric_hub.md">Edit this page on GitHub.</a></footer>
                     </main>
 
