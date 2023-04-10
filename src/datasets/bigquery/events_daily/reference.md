@@ -82,7 +82,7 @@ This dataset is scheduled on Airflow and updated daily.
 ## Code Reference
 
 The source for events daily is defined inside bigquery-etl as a set of templated queries which generate the `events_daily` tables as well as the dependent `event_types` tables for each supported application.
-You can find the source under [bigquery_etl/sql_generators](https://github.com/mozilla/bigquery-etl/tree/main/sql_generators/events_daily).
+You can find the source under [`bigquery_etl/sql_generators`](https://github.com/mozilla/bigquery-etl/tree/main/sql_generators/events_daily).
 
 ## Background and Caveats
 
