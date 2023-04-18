@@ -65,7 +65,7 @@ The `schedule_interval` of a DAG should be set to a time that ensures that all u
 
 ## DAG will be scheduled for one `schedule_interval` after the `start_date`
 
-The DAG will not run at the first available datetime after the `start_date` per its configured scheduled, but rather will wait for the `scheduled_interval` time to elapse after the `start_date`. For example, if the `schedule_interval` specifies a daily run, then the run starting on `2023-04-18` will trigger after `2023-04-18 23:59`. See the [Airflow docs](https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/dag-run.html#data-interval) for more info.
+The DAG will not run at the first available time after the `start_date` per its configured scheduled, but rather will wait for the `scheduled_interval` time to elapse after the `start_date`. For example, if the `schedule_interval` specifies a daily run, then the run starting on `2023-04-18` will trigger after `2023-04-18 23:59`. See the [Airflow docs](https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/dag-run.html#data-interval) for more info.
 
 ## Airflow triage
 
