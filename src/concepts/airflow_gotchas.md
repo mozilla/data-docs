@@ -63,6 +63,10 @@ Upstream dependencies are automatically determined between generated DAGs in big
 
 The `schedule_interval` of a DAG should be set to a time that ensures that all upstream dependencies have likely finished before tasks in the DAG get executed. Airflow will send an email notification every time a task needs to be rescheduled due to upstream dependencies not having finished. To reduce the amount of notifications and avoid delays due to rescheduled tasks, the `schedule_interval` should be set based on when upstream tasks have finished.
 
+## DAG will be scheduled for one `schedule_interval` after the `start_date`
+
+The DAG will not run at the first available datetime after the `start_date` per its configured scheduled, but rather will wait for the `scheduled_interval` time to elapse after the `start_date`. For example, if the `schedule_interval` specifies a daily run, then the run starting on `2023-04-18` will trigger after `2023-04-18 23:59`. See the [Airflow docs](https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/dag-run.html#data-interval) for more info.
+
 ## Airflow triage
 
 To detect broken or stuck tasks, we set up an [Airflow triage process](https://mana.mozilla.org/wiki/display/DATA/Airflow+Triage+Process) that notifies tasks owners of problems with their Airflow tasks. Generally, DAGs are checked for failures or stuck tasks on a daily basis and problems are reported on [Bugzilla](https://bugzilla.mozilla.org/buglist.cgi?query_format=advanced&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&status_whiteboard=%5Bairflow-triage%5D%20&classification=Client%20Software&classification=Developer%20Infrastructure&classification=Components&classification=Server%20Software&classification=Other&resolution=---&resolution=FIXED&resolution=INVALID&resolution=WONTFIX&resolution=INACTIVE&resolution=DUPLICATE&resolution=WORKSFORME&resolution=INCOMPLETE&resolution=SUPPORT&resolution=EXPIRED&resolution=MOVED&status_whiteboard_type=allwordssubstr&list_id=16121716).
