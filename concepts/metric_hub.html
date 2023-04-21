@@ -330,7 +330,7 @@ print(metric.from_expression)
 </code></pre>
 <p>To use the metrics with Mozanalysis, you'll need <code>Metric</code>s not <code>MetricDefinition</code>s. For example:</p>
 <pre><code class="language-python">from mozanalysis.config import ConfigLoader
-metric = ConfigLoader.get_metric(slug=&quot;active_hours&quot;, app_name=&quot;firefox_desktop&quot;)
+metric = ConfigLoader.get_metric(metric_slug=&quot;active_hours&quot;, app_name=&quot;firefox_desktop&quot;)
 </code></pre>
 <h2 id="faq"><a class="header" href="#faq">FAQ</a></h2>
 <h3 id="should-metrics-be-defined-in-the-metric-definition-data-source-definition-or-source-table"><a class="header" href="#should-metrics-be-defined-in-the-metric-definition-data-source-definition-or-source-table">Should metrics be defined in the metric definition, data source definition or source table?</a></h3>
