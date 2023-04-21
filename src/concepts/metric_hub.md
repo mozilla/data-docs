@@ -226,7 +226,7 @@ To use the metrics with Mozanalysis, you'll need `Metric`s not `MetricDefinition
 
 ```python
 from mozanalysis.config import ConfigLoader
-metric = ConfigLoader.get_metric(slug="active_hours", app_name="firefox_desktop")
+metric = ConfigLoader.get_metric(metric_slug="active_hours", app_name="firefox_desktop")
 ```
 
 ## FAQ
