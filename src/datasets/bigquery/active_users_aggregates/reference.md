@@ -4,7 +4,7 @@
 
 ## Introduction
 
-The `active_users_aggregates` is a set of tables designed to analyse client
+The `active_users_aggregates` is a set of tables designed for analysis of client
 activity on a daily, weekly and monthly basis, starting from the submission date
 of the first baseline ping received by our servers.
 
@@ -56,7 +56,7 @@ as most devices have unique identifiers.
 
 The `active_users_aggregates_attribution` contains the metrics of
 daily, weekly and monthly active users, new profiles and search counts
-to analyse the source and context of client installations and the `cohorts`
+to retrieve the source and context of each client installation and the `cohorts`
 behaviour.
 
 It can be used to query the set attribution parameters in the context
@@ -89,7 +89,7 @@ E.g. [Firefox desktop query](https://github.com/mozilla/bigquery-etl/blob/genera
 
 ## Change control
 
-The underlying tables for each browser aggregate are labelled and subject to change-control.
+The underlying tables for each browser aggregate are subject to change-control.
 
 This follows the [Infrastructure Change Control process](https://docs.google.com/document/d/1TTJi4ht7NuzX6BPG_KTr6omaZg70cEpxe9xlpfnHj9k/edit#heading=h.ttegrcfy18ck) and
 implies that any modifications to the corresponding code in GitHub will require the approval of members of the Data Science and Data Engineering teams.
