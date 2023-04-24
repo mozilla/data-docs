@@ -91,7 +91,7 @@
   - [Pings](datasets/pings.md)
   - [Derived Datasets](datasets/derived.md)
     - [Active Profiles](datasets/active_profiles.md)
-    - [Active Users Aggregates](datasets/bigquery/active_users_aggregates/reference.md)
+    - [Active Users](datasets/bigquery/active_users_aggregates/reference.md)
     - [Addons](datasets/batch_view/addons/reference.md)
     - [Addons Daily](datasets/other/addons_daily/reference.md)
     - [Autonomous System Aggregates](datasets/other/asn_aggregates/reference.md)
