@@ -24,6 +24,7 @@ Especially severe problems with production data are announced on the `fx-data-de
 
 When you start to evaluate trends, be aware of events from the past that may invite comparisons with history. Here are a few to keep in mind:
 
+- **Mar 14, 2023** - Firefox for Android began reporting significantly fewer new installs, due to [a fix for Client ID regeneration](https://docs.google.com/document/d/1Tf8F2FndPsOAWc7peLxgUZd4t-LUJu8RMotiDhgKF7I/edit#heading=h.xyargldz6xg0). This also affected retention for both new and existing users.
 - **Nov 15, 2022** - A major bug in the `search with ads` probes was fixed on Firefox Desktop. The [bug fix](https://bugzilla.mozilla.org/show_bug.cgi?id=1800506) impacts Firefox 109+ and resulted in significant increases in the number of searches with ads recorded.
 - **Aug 31 2022** - [A small number of records were missing from stable tables until October 5, 2022 and not reprocessed into downstream ETL tables][jiradsre999].
 - **July 19 - August 3, 2022** - [Fenix v103 seeing an increase in `null` values in `client_info` fields](https://bugzilla.mozilla.org/show_bug.cgi?id=1781085).
