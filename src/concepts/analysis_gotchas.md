@@ -22,6 +22,10 @@ Especially severe problems with production data are announced on the `fx-data-de
 
 ## Notable historic events
 
+See also [the spreadsheet of notable historic events](https://docs.google.com/spreadsheets/d/16Cyx_KBieRdQkSBKolivqpBaK2H-VceN9LEZcL0snHg/edit#gid=0). This spreadsheet is imported into BigQuery, and can be found at `moz-fx-data-shared-prod.static.data_incidents_v1`.
+
+**If you add an entry here, please add it to that spreadsheet as well!**
+
 When you start to evaluate trends, be aware of events from the past that may invite comparisons with history. Here are a few to keep in mind:
 
 - **Mar 14, 2023** - Firefox for Android began reporting significantly fewer new installs, due to [a fix for Client ID regeneration](https://docs.google.com/document/d/1Tf8F2FndPsOAWc7peLxgUZd4t-LUJu8RMotiDhgKF7I/edit#heading=h.xyargldz6xg0). This also affected retention for both new and existing users.
