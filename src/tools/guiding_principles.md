@@ -33,7 +33,7 @@ transforming data (ETL) once it's in BigQuery.
 Once data is accessible through BigQuery, users within Mozilla also get the
 benefit of leveraging common tools for data access. Beyond the Google-provided
 BigQuery console, Mozilla provides access to instances of Redash,
-Tableau, and other tools either with connections to BigQuery already available
+Looker, and other tools either with connections to BigQuery already available
 or with concrete instructions for provisioning connections.
 
 Some near real-time use cases can be handled via BigQuery as well, with BigQuery
@@ -83,9 +83,11 @@ https://incoming.telemetry.mozilla.org/submit/activity-stream/impression-stats/1
 
 where `<document_id>` should be a UUID that uniquely identifies the payload;
 `document_id` is used within the pipeline for deduplication of repeated
-documents. The payload is processed by a small edge service that returns a 200
+documents. The payload is processed by a small [edge service](https://github.com/mozilla/gcp-ingestion/tree/main/ingestion-edge)
+that returns a 200
 response to the client and publishes the message to a _raw_ Pub/Sub topic. A
-_decoder_ Dataflow job reads from this topic with low latency, validates that
+[_decoder_ Dataflow](https://github.com/mozilla/gcp-ingestion/tree/main/ingestion-beam)
+job reads from this topic with low latency, validates that
 the payload matches the schema registered for the endpoint, does some additional
 metadata processing, and then emits the message back to Pub/Sub in a _decoded_
 topic. A final job reads the _decoded_ topic, batches together records
@@ -173,18 +175,6 @@ retaining full control over how they ingest data and how they grant access to
 other teams. Once access is granted, though, it becomes trivial to write queries
 that join data across projects.
 
-The per-GB pricing for storing data in BigQuery is identical to pricing for GCS,
-so BigQuery can in some ways be treated as an advanced filesystem that has deep
-knowledge of and control over data structure. Be aware that while BigQuery
-compresses data under the hood, pricing reflects the uncompressed data size and
-users have no view into how data is compressed. It is still possible, however,
-to use BigQuery as an economical store for compressed data by saving compressed
-blobs in a `BYTES` column. Additional fields can be used like metadata. For
-examples, see the _raw_ schema from the pipeline
-([JSON schema](https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/80386c53b8e6910068964bd7c09904326b9480fd/schemas/metadata/raw/raw.1.schema.json)
-and final
-[BigQuery schema](https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/43edf3ffff932eb89f3e2a1092696d0d0081c43b/schemas/metadata/raw/raw.1.bq)).
-
 ### Defining tables
 
 BigQuery tables can express complex nested structures via compound `STRUCT`
@@ -247,7 +237,7 @@ If you already have well-structured data being produced to Stackdriver or GCS,
 it may be minimal effort to set up BigQuery Transfer Service to import that data
 or even to modify your existing server application to additionally issue
 BigQuery load jobs. For relational data in Cloud SQL instances, we can pull
-data into BigQuery via federated queries.
+data into BigQuery via [federated queries](https://cloud.google.com/bigquery/docs/federated-queries-intro).
 
 And don't forget about the possibility of hooking into the core telemetry
 pipeline through _structured ingestion_ as discussed earlier.
@@ -258,6 +248,10 @@ Dataflow pipeline (discussed further down in this document). Dataflow provides a
 unified model for batch and streaming processing and includes a variety of
 high-level I/O modules for reading from and writing to Google services such as
 BigQuery.
+
+For getting data of 3rd party services into BigQuery, consider using [Fivetran](https://docs.telemetry.mozilla.org/concepts/external_data_integration_using_fivetran.html).
+Fivetran offers some pre-defined connectors to import data from external APIs,
+but also allows for custom connectors to be created.
 
 ### Time-based partitioning and data retention in BigQuery
 
