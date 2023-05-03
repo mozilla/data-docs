@@ -83,10 +83,10 @@ https://incoming.telemetry.mozilla.org/submit/activity-stream/impression-stats/1
 
 where `<document_id>` should be a UUID that uniquely identifies the payload;
 `document_id` is used within the pipeline for deduplication of repeated
-documents. The payload is processed by a small [edge service](https://github.com/mozilla/gcp-ingestion/tree/main/ingestion-edge) 
+documents. The payload is processed by a small [edge service](https://github.com/mozilla/gcp-ingestion/tree/main/ingestion-edge)
 that returns a 200
 response to the client and publishes the message to a _raw_ Pub/Sub topic. A
-[_decoder_ Dataflow](https://github.com/mozilla/gcp-ingestion/tree/main/ingestion-beam) 
+[_decoder_ Dataflow](https://github.com/mozilla/gcp-ingestion/tree/main/ingestion-beam)
 job reads from this topic with low latency, validates that
 the payload matches the schema registered for the endpoint, does some additional
 metadata processing, and then emits the message back to Pub/Sub in a _decoded_
@@ -250,7 +250,7 @@ high-level I/O modules for reading from and writing to Google services such as
 BigQuery.
 
 For getting data of 3rd party services into BigQuery, consider using [Fivetran](https://docs.telemetry.mozilla.org/concepts/external_data_integration_using_fivetran.html).
-Fivetran offers some pre-defined connectors to import data from external APIs, 
+Fivetran offers some pre-defined connectors to import data from external APIs,
 but also allows for custom connectors to be created.
 
 ### Time-based partitioning and data retention in BigQuery
