@@ -181,7 +181,7 @@ transforming data (ETL) once it's in BigQuery.</p>
 <p>Once data is accessible through BigQuery, users within Mozilla also get the
 benefit of leveraging common tools for data access. Beyond the Google-provided
 BigQuery console, Mozilla provides access to instances of Redash,
-Tableau, and other tools either with connections to BigQuery already available
+Looker, and other tools either with connections to BigQuery already available
 or with concrete instructions for provisioning connections.</p>
 <p>Some near real-time use cases can be handled via BigQuery as well, with BigQuery
 supporting dozens of batch loads per table per hour and even streaming inserts.
@@ -222,9 +222,11 @@ an endpoint corresponding to the new namespace, document type, and version:</p>
 </code></pre>
 <p>where <code>&lt;document_id&gt;</code> should be a UUID that uniquely identifies the payload;
 <code>document_id</code> is used within the pipeline for deduplication of repeated
-documents. The payload is processed by a small edge service that returns a 200
+documents. The payload is processed by a small <a href="https://github.com/mozilla/gcp-ingestion/tree/main/ingestion-edge">edge service</a>
+that returns a 200
 response to the client and publishes the message to a <em>raw</em> Pub/Sub topic. A
-<em>decoder</em> Dataflow job reads from this topic with low latency, validates that
+<a href="https://github.com/mozilla/gcp-ingestion/tree/main/ingestion-beam"><em>decoder</em> Dataflow</a>
+job reads from this topic with low latency, validates that
 the payload matches the schema registered for the endpoint, does some additional
 metadata processing, and then emits the message back to Pub/Sub in a <em>decoded</em>
 topic. A final job reads the <em>decoded</em> topic, batches together records
@@ -301,17 +303,6 @@ teams within Mozilla can provision BigQuery tables in separate GCP projects,
 retaining full control over how they ingest data and how they grant access to
 other teams. Once access is granted, though, it becomes trivial to write queries
 that join data across projects.</p>
-<p>The per-GB pricing for storing data in BigQuery is identical to pricing for GCS,
-so BigQuery can in some ways be treated as an advanced filesystem that has deep
-knowledge of and control over data structure. Be aware that while BigQuery
-compresses data under the hood, pricing reflects the uncompressed data size and
-users have no view into how data is compressed. It is still possible, however,
-to use BigQuery as an economical store for compressed data by saving compressed
-blobs in a <code>BYTES</code> column. Additional fields can be used like metadata. For
-examples, see the <em>raw</em> schema from the pipeline
-(<a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/80386c53b8e6910068964bd7c09904326b9480fd/schemas/metadata/raw/raw.1.schema.json">JSON schema</a>
-and final
-<a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/43edf3ffff932eb89f3e2a1092696d0d0081c43b/schemas/metadata/raw/raw.1.bq">BigQuery schema</a>).</p>
 <h3 id="defining-tables"><a class="header" href="#defining-tables">Defining tables</a></h3>
 <p>BigQuery tables can express complex nested structures via compound <code>STRUCT</code>
 types and <code>REPEATED</code> fields. It's possible to model arbitrary JSON payloads as
@@ -363,7 +354,7 @@ external tables.</p>
 it may be minimal effort to set up BigQuery Transfer Service to import that data
 or even to modify your existing server application to additionally issue
 BigQuery load jobs. For relational data in Cloud SQL instances, we can pull
-data into BigQuery via federated queries.</p>
+data into BigQuery via <a href="https://cloud.google.com/bigquery/docs/federated-queries-intro">federated queries</a>.</p>
 <p>And don't forget about the possibility of hooking into the core telemetry
 pipeline through <em>structured ingestion</em> as discussed earlier.</p>
 <p>If you have a more complex processing need that doesn't fit into an existing
@@ -372,6 +363,9 @@ Dataflow pipeline (discussed further down in this document). Dataflow provides a
 unified model for batch and streaming processing and includes a variety of
 high-level I/O modules for reading from and writing to Google services such as
 BigQuery.</p>
+<p>For getting data of 3rd party services into BigQuery, consider using <a href="https://docs.telemetry.mozilla.org/concepts/external_data_integration_using_fivetran.html">Fivetran</a>.
+Fivetran offers some pre-defined connectors to import data from external APIs,
+but also allows for custom connectors to be created.</p>
 <h3 id="time-based-partitioning-and-data-retention-in-bigquery"><a class="header" href="#time-based-partitioning-and-data-retention-in-bigquery">Time-based partitioning and data retention in BigQuery</a></h3>
 <p>BigQuery provides built-in support for <a href="https://cloud.google.com/bigquery/docs/best-practices-storage">rolling time-based retention at the
 dataset and table

@@ -4765,7 +4765,7 @@ transforming data (ETL) once it's in BigQuery.</p>
 <p>Once data is accessible through BigQuery, users within Mozilla also get the
 benefit of leveraging common tools for data access. Beyond the Google-provided
 BigQuery console, Mozilla provides access to instances of Redash,
-Tableau, and other tools either with connections to BigQuery already available
+Looker, and other tools either with connections to BigQuery already available
 or with concrete instructions for provisioning connections.</p>
 <p>Some near real-time use cases can be handled via BigQuery as well, with BigQuery
 supporting dozens of batch loads per table per hour and even streaming inserts.
@@ -4806,9 +4806,11 @@ an endpoint corresponding to the new namespace, document type, and version:</p>
 </code></pre>
 <p>where <code>&lt;document_id&gt;</code> should be a UUID that uniquely identifies the payload;
 <code>document_id</code> is used within the pipeline for deduplication of repeated
-documents. The payload is processed by a small edge service that returns a 200
+documents. The payload is processed by a small <a href="https://github.com/mozilla/gcp-ingestion/tree/main/ingestion-edge">edge service</a>
+that returns a 200
 response to the client and publishes the message to a <em>raw</em> Pub/Sub topic. A
-<em>decoder</em> Dataflow job reads from this topic with low latency, validates that
+<a href="https://github.com/mozilla/gcp-ingestion/tree/main/ingestion-beam"><em>decoder</em> Dataflow</a>
+job reads from this topic with low latency, validates that
 the payload matches the schema registered for the endpoint, does some additional
 metadata processing, and then emits the message back to Pub/Sub in a <em>decoded</em>
 topic. A final job reads the <em>decoded</em> topic, batches together records
@@ -4885,17 +4887,6 @@ teams within Mozilla can provision BigQuery tables in separate GCP projects,
 retaining full control over how they ingest data and how they grant access to
 other teams. Once access is granted, though, it becomes trivial to write queries
 that join data across projects.</p>
-<p>The per-GB pricing for storing data in BigQuery is identical to pricing for GCS,
-so BigQuery can in some ways be treated as an advanced filesystem that has deep
-knowledge of and control over data structure. Be aware that while BigQuery
-compresses data under the hood, pricing reflects the uncompressed data size and
-users have no view into how data is compressed. It is still possible, however,
-to use BigQuery as an economical store for compressed data by saving compressed
-blobs in a <code>BYTES</code> column. Additional fields can be used like metadata. For
-examples, see the <em>raw</em> schema from the pipeline
-(<a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/80386c53b8e6910068964bd7c09904326b9480fd/schemas/metadata/raw/raw.1.schema.json">JSON schema</a>
-and final
-<a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/43edf3ffff932eb89f3e2a1092696d0d0081c43b/schemas/metadata/raw/raw.1.bq">BigQuery schema</a>).</p>
 <h3 id="defining-tables"><a class="header" href="#defining-tables">Defining tables</a></h3>
 <p>BigQuery tables can express complex nested structures via compound <code>STRUCT</code>
 types and <code>REPEATED</code> fields. It's possible to model arbitrary JSON payloads as
@@ -4947,7 +4938,7 @@ external tables.</p>
 it may be minimal effort to set up BigQuery Transfer Service to import that data
 or even to modify your existing server application to additionally issue
 BigQuery load jobs. For relational data in Cloud SQL instances, we can pull
-data into BigQuery via federated queries.</p>
+data into BigQuery via <a href="https://cloud.google.com/bigquery/docs/federated-queries-intro">federated queries</a>.</p>
 <p>And don't forget about the possibility of hooking into the core telemetry
 pipeline through <em>structured ingestion</em> as discussed earlier.</p>
 <p>If you have a more complex processing need that doesn't fit into an existing
@@ -4956,6 +4947,9 @@ Dataflow pipeline (discussed further down in this document). Dataflow provides a
 unified model for batch and streaming processing and includes a variety of
 high-level I/O modules for reading from and writing to Google services such as
 BigQuery.</p>
+<p>For getting data of 3rd party services into BigQuery, consider using <a href="https://docs.telemetry.mozilla.org/concepts/external_data_integration_using_fivetran.html">Fivetran</a>.
+Fivetran offers some pre-defined connectors to import data from external APIs,
+but also allows for custom connectors to be created.</p>
 <h3 id="time-based-partitioning-and-data-retention-in-bigquery"><a class="header" href="#time-based-partitioning-and-data-retention-in-bigquery">Time-based partitioning and data retention in BigQuery</a></h3>
 <p>BigQuery provides built-in support for <a href="https://cloud.google.com/bigquery/docs/best-practices-storage">rolling time-based retention at the
 dataset and table
@@ -5436,23 +5430,23 @@ specific path through our data pipeline, which we will detail here.</p>
 subgraph Products
 fx_code(fa:fa-cog Firefox code) --&gt; firefox(fa:fa-firefox Firefox Telemetry)
 fx_extensions(fa:fa-cog Mozilla extensions) --&gt; firefox
-mobile(fa:fa-cog Mobile products) --&gt; mobile_telemetry(fa:fa-firefox Mobile Telemetry)
+mobile(fa:fa-cog Mobile products) --&gt; mobile_telemetry(fa:fa-firefox Glean)
 end
 
 subgraph Data Platform
 firefox -.-&gt;|main ping, Firefox &lt;62| pipeline((fa:fa-database Firefox Data Pipeline))
 firefox --&gt;|event ping, Firefox 62+| pipeline
-mobile_telemetry --&gt; |mobile events ping| pipeline
+mobile_telemetry --&gt; |events ping| pipeline
 pipeline --&gt;|Firefox &lt;62 events| main_summary[fa:fa-bars main summary table]
-pipeline --&gt;|Firefox 62+ events| events_table[fa:fa-bars events table]
+pipeline --&gt;|Firefox 62+ events| mobile_events_table[fa:fa-bars events table]
 main_summary --&gt; events_table
-pipeline --&gt;|Mobile events| mobile_events_table[fa:fa-bars mobile events table]
+pipeline --&gt;|Glean events| events_table[fa:fa-bars events table]
 end
 
 subgraph Data Tools
-events_table --&gt; redash
-mobile_events_table --&gt; redash
-main_summary --&gt; redash(fa:fa-bar-chart Redash)
+events_table --&gt; looker
+events_table --&gt; looker
+main_summary --&gt; looker(fa:fa-bar-chart Looker)
 end
 
 style fx_code fill:#f94,stroke-width:0px
@@ -5464,7 +5458,7 @@ style pipeline fill:#79d,stroke-width:0px
 style main_summary fill:lightblue,stroke-width:0px
 style events_table fill:lightblue,stroke-width:0px
 style mobile_events_table fill:lightblue,stroke-width:0px
-style redash fill:salmon,stroke-width:0px
+style looker fill:salmon,stroke-width:0px
 </pre>
 <h1 id="overview-2"><a class="header" href="#overview-2">Overview</a></h1>
 <p>Across the different Firefox teams there is a common need for a more fine grained understanding of
@@ -5523,21 +5517,17 @@ From Firefox 61, all events recorded through these APIs are <a href="https://bug
 <p>Finally, <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html"><em>custom pings</em></a>
 can follow the event data format and potentially connect to the existing tooling with some integration work.</p>
 <h2 id="mobile-event-collection"><a class="header" href="#mobile-event-collection">Mobile event collection</a></h2>
-<p>Mobile events data primarily flows through the mobile events ping (<a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/master/schemas/telemetry/mobile-event">ping schema</a>), from e.g. <a href="https://github.com/mozilla-mobile/firefox-ios/wiki/Event-Tracking-with-Mozilla&#x27;s-Telemetry-Service#event-ping">Firefox iOS</a>, Firefox for Fire TV and Rocket.</p>
-<p>Currently we also collect event data from Firefox Focus through the <a href="https://github.com/mozilla-mobile/focus-ios/wiki/Event-Tracking-with-Mozilla%27s-Telemetry-Service#event-ping"><code>focus-events</code> ping</a>,
-using the <a href="https://github.com/mozilla-mobile/telemetry-ios"><code>telemetry-ios</code></a> and
-<a href="https://github.com/mozilla-mobile/telemetry-android"><code>telemetry-android</code></a> libraries.</p>
+<p>Mobile data collection is done through <a href="concepts/pipeline/glean_data.html">Glean</a>. <a href="https://mozilla.github.io/glean/book/reference/metrics/event.html">Glean events</a> are recorded for our mobile applications.</p>
 <h1 id="datasets"><a class="header" href="#datasets">Datasets</a></h1>
 <p>On the pipeline side, the event data is made available in different datasets:</p>
 <ul>
 <li><a href="concepts/pipeline/../../datasets/batch_view/main_summary/reference.html"><code>main_summary</code></a> has a row for each main ping and includes
 its event payload for Firefox versions before 62.</li>
 <li><a href="concepts/pipeline/../../datasets/batch_view/events/reference.html"><code>events</code></a> contains a row for each event received from main pings and event pings. See <a href="https://sql.telemetry.mozilla.org/queries/52582/source"><code>STMO#52582</code></a>.</li>
-<li><code>telemetry_mobile_event_parquet</code> contains a row for each mobile event ping. See <a href="https://sql.telemetry.mozilla.org/queries/52581/source"><code>STMO#52581</code></a>.</li>
-<li><code>focus_events_longitudinal</code> currently contains events from Firefox Focus.</li>
+<li>For applications that collect events through Glean, each application has a separate <code>events</code> dataset.</li>
 </ul>
 <h1 id="data-tooling"><a class="header" href="#data-tooling">Data tooling</a></h1>
-<p>The above datasets are all accessible through <a href="concepts/pipeline/../../tools/stmo.html">STMO</a> and <a href="concepts/pipeline/../../tools/spark.html">Spark jobs</a>.</p>
+<p>The above datasets are all accessible through <a href="concepts/pipeline/../../tools/stmo.html">STMO</a> and <a href="concepts/pipeline/../../cookbooks/looker/intro.html">Looker</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/concepts/pipeline/event_pipeline.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="generated-schemas"><a class="header" href="#generated-schemas">Generated Schemas</a></h1>
 <ul>
 <li><a href="concepts/pipeline/schemas.html#overview">Overview</a></li>

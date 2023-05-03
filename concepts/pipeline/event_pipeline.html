@@ -159,23 +159,23 @@ specific path through our data pipeline, which we will detail here.</p>
 subgraph Products
 fx_code(fa:fa-cog Firefox code) --&gt; firefox(fa:fa-firefox Firefox Telemetry)
 fx_extensions(fa:fa-cog Mozilla extensions) --&gt; firefox
-mobile(fa:fa-cog Mobile products) --&gt; mobile_telemetry(fa:fa-firefox Mobile Telemetry)
+mobile(fa:fa-cog Mobile products) --&gt; mobile_telemetry(fa:fa-firefox Glean)
 end
 
 subgraph Data Platform
 firefox -.-&gt;|main ping, Firefox &lt;62| pipeline((fa:fa-database Firefox Data Pipeline))
 firefox --&gt;|event ping, Firefox 62+| pipeline
-mobile_telemetry --&gt; |mobile events ping| pipeline
+mobile_telemetry --&gt; |events ping| pipeline
 pipeline --&gt;|Firefox &lt;62 events| main_summary[fa:fa-bars main summary table]
-pipeline --&gt;|Firefox 62+ events| events_table[fa:fa-bars events table]
+pipeline --&gt;|Firefox 62+ events| mobile_events_table[fa:fa-bars events table]
 main_summary --&gt; events_table
-pipeline --&gt;|Mobile events| mobile_events_table[fa:fa-bars mobile events table]
+pipeline --&gt;|Glean events| events_table[fa:fa-bars events table]
 end
 
 subgraph Data Tools
-events_table --&gt; redash
-mobile_events_table --&gt; redash
-main_summary --&gt; redash(fa:fa-bar-chart Redash)
+events_table --&gt; looker
+events_table --&gt; looker
+main_summary --&gt; looker(fa:fa-bar-chart Looker)
 end
 
 style fx_code fill:#f94,stroke-width:0px
@@ -187,7 +187,7 @@ style pipeline fill:#79d,stroke-width:0px
 style main_summary fill:lightblue,stroke-width:0px
 style events_table fill:lightblue,stroke-width:0px
 style mobile_events_table fill:lightblue,stroke-width:0px
-style redash fill:salmon,stroke-width:0px
+style looker fill:salmon,stroke-width:0px
 </pre>
 <h1 id="overview"><a class="header" href="#overview">Overview</a></h1>
 <p>Across the different Firefox teams there is a common need for a more fine grained understanding of
@@ -246,21 +246,17 @@ From Firefox 61, all events recorded through these APIs are <a href="https://bug
 <p>Finally, <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html"><em>custom pings</em></a>
 can follow the event data format and potentially connect to the existing tooling with some integration work.</p>
 <h2 id="mobile-event-collection"><a class="header" href="#mobile-event-collection">Mobile event collection</a></h2>
-<p>Mobile events data primarily flows through the mobile events ping (<a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/master/schemas/telemetry/mobile-event">ping schema</a>), from e.g. <a href="https://github.com/mozilla-mobile/firefox-ios/wiki/Event-Tracking-with-Mozilla&#x27;s-Telemetry-Service#event-ping">Firefox iOS</a>, Firefox for Fire TV and Rocket.</p>
-<p>Currently we also collect event data from Firefox Focus through the <a href="https://github.com/mozilla-mobile/focus-ios/wiki/Event-Tracking-with-Mozilla%27s-Telemetry-Service#event-ping"><code>focus-events</code> ping</a>,
-using the <a href="https://github.com/mozilla-mobile/telemetry-ios"><code>telemetry-ios</code></a> and
-<a href="https://github.com/mozilla-mobile/telemetry-android"><code>telemetry-android</code></a> libraries.</p>
+<p>Mobile data collection is done through <a href="glean_data.html">Glean</a>. <a href="https://mozilla.github.io/glean/book/reference/metrics/event.html">Glean events</a> are recorded for our mobile applications.</p>
 <h1 id="datasets"><a class="header" href="#datasets">Datasets</a></h1>
 <p>On the pipeline side, the event data is made available in different datasets:</p>
 <ul>
 <li><a href="../../datasets/batch_view/main_summary/reference.html"><code>main_summary</code></a> has a row for each main ping and includes
 its event payload for Firefox versions before 62.</li>
 <li><a href="../../datasets/batch_view/events/reference.html"><code>events</code></a> contains a row for each event received from main pings and event pings. See <a href="https://sql.telemetry.mozilla.org/queries/52582/source"><code>STMO#52582</code></a>.</li>
-<li><code>telemetry_mobile_event_parquet</code> contains a row for each mobile event ping. See <a href="https://sql.telemetry.mozilla.org/queries/52581/source"><code>STMO#52581</code></a>.</li>
-<li><code>focus_events_longitudinal</code> currently contains events from Firefox Focus.</li>
+<li>For applications that collect events through Glean, each application has a separate <code>events</code> dataset.</li>
 </ul>
 <h1 id="data-tooling"><a class="header" href="#data-tooling">Data tooling</a></h1>
-<p>The above datasets are all accessible through <a href="../../tools/stmo.html">STMO</a> and <a href="../../tools/spark.html">Spark jobs</a>.</p>
+<p>The above datasets are all accessible through <a href="../../tools/stmo.html">STMO</a> and <a href="../../cookbooks/looker/intro.html">Looker</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/concepts/pipeline/event_pipeline.md">Edit this page on GitHub.</a></footer>
                     </main>
 
