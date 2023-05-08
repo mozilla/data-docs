@@ -42,7 +42,7 @@ table: `mozdata.static.country_codes_v1`. For example:
 ```sql
 SELECT
     ...
-    your_table.country,
+    your_table.country_field,
     COALESCE(lookup.code, your_table.country, '??') as country_code
     ...
 FROM
