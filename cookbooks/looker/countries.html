@@ -185,7 +185,7 @@ For example:</p>
 table: <code>mozdata.static.country_codes_v1</code>. For example:</p>
 <pre><code class="language-sql">SELECT
     ...
-    your_table.country,
+    your_table.country_field,
     COALESCE(lookup.code, your_table.country, '??') as country_code
     ...
 FROM
