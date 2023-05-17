@@ -28,6 +28,7 @@ See also [the spreadsheet of notable historic events](https://docs.google.com/sp
 
 When you start to evaluate trends, be aware of events from the past that may invite comparisons with history. Here are a few to keep in mind:
 
+- **Mar 17, 2023 - May 9, 2023** - Firefox for Android was collecting but not sending `perf.page_load` events during this period. The recorded events started being sent after May 9, 2023 resulting in a spike of events that eventually returned to normal levels. [See Bug 1833178 for more info.][bug1833178]
 - **Mar 14, 2023** - Firefox for Android began reporting significantly fewer new installs, due to [a fix for Client ID regeneration](https://docs.google.com/document/d/1Tf8F2FndPsOAWc7peLxgUZd4t-LUJu8RMotiDhgKF7I/edit#heading=h.xyargldz6xg0). This also affected retention for both new and existing users.
 - **Nov 15, 2022** - A major bug in the `search with ads` probes was fixed on Firefox Desktop. The [bug fix](https://bugzilla.mozilla.org/show_bug.cgi?id=1800506) impacts Firefox 109+ and resulted in significant increases in the number of searches with ads recorded.
 - **Aug 31 2022** - [A small number of records were missing from stable tables until October 5, 2022 and not reprocessed into downstream ETL tables][jiradsre999].
@@ -105,6 +106,7 @@ When you start to evaluate trends, be aware of events from the past that may inv
 [jirado673]: https://mozilla-hub.atlassian.net/browse/DO-673
 [bug1673868]: https://bugzilla.mozilla.org/show_bug.cgi?id=1673868
 [jiradsre999]: https://mozilla-hub.atlassian.net/browse/DSRE-999
+[bug1833178]: https://bugzilla.mozilla.org/show_bug.cgi?id=1833178
 
 ## Pseudo-replication
 
