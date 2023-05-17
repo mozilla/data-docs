@@ -6118,6 +6118,7 @@ LIMIT
 <p><strong>If you add an entry here, please add it to that spreadsheet as well!</strong></p>
 <p>When you start to evaluate trends, be aware of events from the past that may invite comparisons with history. Here are a few to keep in mind:</p>
 <ul>
+<li><strong>Mar 17, 2023 - May 9, 2023</strong> - Firefox for Android was collecting but not sending <code>perf.page_load</code> events during this period. The recorded events started being sent after May 9, 2023 resulting in a spike of events that eventually returned to normal levels. <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1833178">See Bug 1833178 for more info.</a></li>
 <li><strong>Mar 14, 2023</strong> - Firefox for Android began reporting significantly fewer new installs, due to <a href="https://docs.google.com/document/d/1Tf8F2FndPsOAWc7peLxgUZd4t-LUJu8RMotiDhgKF7I/edit#heading=h.xyargldz6xg0">a fix for Client ID regeneration</a>. This also affected retention for both new and existing users.</li>
 <li><strong>Nov 15, 2022</strong> - A major bug in the <code>search with ads</code> probes was fixed on Firefox Desktop. The <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1800506">bug fix</a> impacts Firefox 109+ and resulted in significant increases in the number of searches with ads recorded.</li>
 <li><strong>Aug 31 2022</strong> - <a href="https://mozilla-hub.atlassian.net/browse/DSRE-999">A small number of records were missing from stable tables until October 5, 2022 and not reprocessed into downstream ETL tables</a>.</li>
