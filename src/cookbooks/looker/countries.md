@@ -36,25 +36,25 @@ CI:
     - "The Republic of Côte d'Ivoire"
 ```
 
-To map (normalize) your input alias to its country code, add a LEFT join from your table or view to the alias lookup 
+To map (normalize) your input alias to its country code, add a LEFT join from your table or view to the alias country_lookup 
 table: `mozdata.static.country_codes_v1`. For example:
 
 ```sql
 SELECT
     ...
     your_table.country_field,
-    COALESCE(lookup.code, your_table.country, '??') as country_code
+    COALESCE(country_lookup.code, your_table.country, '??') as country_code
     ...
 FROM
     your_table 
-    LEFT JOIN mozdata.static.country_codes_v1 lookup ON your_table.country_field = lookup.name 
+    LEFT JOIN mozdata.static.country_codes_v1 country_lookup ON your_table.country_field = country_lookup.name 
 ```
 
 Note: we use `??` as a country-code for empty country data from data sources. This will map to "Unknown Country", 
 "Unknown Region", etc.
 
 At this point, you should check for cases where the resulting `country_code` matches `your_table.country` but does 
-not match any values in the lookup table - you may have discovered a new alias, in which case please add it to the list!
+not match any values in the country_lookup table - you may have discovered a new alias, in which case please add it to the list!
 You can do this via a bigquery-etl pull request for example: https://github.com/mozilla/bigquery-etl/pull/2858.
 
 > ⚠️ This list of aliases is public. If you are working with sensitive data, please do not add to the public list of 
