@@ -36,7 +36,7 @@ CI:
     - "The Republic of Côte d'Ivoire"
 ```
 
-To map (normalize) your input alias to its country code, add a LEFT join from your table or view to the alias country_lookup 
+To map (normalize) your input alias to its country code, add a LEFT join from your table or view to the alias `country_lookup`
 table: `mozdata.static.country_codes_v1`. For example:
 
 ```sql
