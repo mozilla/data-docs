@@ -640,54 +640,54 @@ If your application uses <a href="cookbooks/looker/../../concepts/glean/glean.ht
 <blockquote>
 <p>⚠️ Some steps in this guide require knowledge of SQL and LookML - ask in #data-help for assistance if needed.</p>
 </blockquote>
-<p>We get country data from many sources: partners, telemetry, third-party tools etc. 
-In order to analyze these in a standard way, i.e. make different analyses comparable, 
-we can conform these sources to a set of standard country codes, names, regions, 
+<p>We get country data from many sources: partners, telemetry, third-party tools etc.
+In order to analyze these in a standard way, i.e. make different analyses comparable,
+we can conform these sources to a set of standard country codes, names, regions,
 sub-regions, etc.</p>
 <h2 id="step-one---normalizing-aliases"><a class="header" href="#step-one---normalizing-aliases">Step One - Normalizing Aliases</a></h2>
 <blockquote>
-<p>⚠️ If your country data already consists of two-character ISO3166 codes, you can skip to Step Two! </p>
+<p>⚠️ If your country data already consists of two-character ISO3166 codes, you can skip to Step Two!</p>
 </blockquote>
 <p>We refer to a different input name for the same country as &quot;alias&quot;. For example, your data might contain
-the country value &quot;US&quot;, another might contain &quot;USA&quot; and yet another might contain &quot;United States&quot;, etc. 
-This can be confusing when read in a table or seen on a graph. </p>
-<p>To normalize this, we maintain a mapping of <a href="https://github.com/mozilla/bigquery-etl/blob/main/sql_generators/country_code_lookup/aliases.yaml">aliases</a> 
-from each country to its two-character <a href="https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes">ISO3166 code</a> 
-This includes misspellings and alternate language encoding that we encounter in various datasets. 
+the country value &quot;US&quot;, another might contain &quot;USA&quot; and yet another might contain &quot;United States&quot;, etc.
+This can be confusing when read in a table or seen on a graph.</p>
+<p>To normalize this, we maintain a mapping of <a href="https://github.com/mozilla/bigquery-etl/blob/main/sql_generators/country_code_lookup/aliases.yaml">aliases</a>
+from each country to its two-character <a href="https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes">ISO3166 code</a>
+This includes misspellings and alternate language encoding that we encounter in various datasets.
 For example:</p>
 <pre><code class="language-yaml">CI:
-    - &quot;Ivory Coast&quot;
-    - &quot;Côte d’Ivoire&quot;
-    - &quot;Côte d'Ivoire&quot;
-    - &quot;Cote d'Ivoire&quot;
-    - &quot;CÃ´te dâ€™Ivoire&quot;
-    - &quot;The Republic of Côte d'Ivoire&quot;
+  - &quot;Ivory Coast&quot;
+  - &quot;Côte d’Ivoire&quot;
+  - &quot;Côte d'Ivoire&quot;
+  - &quot;Cote d'Ivoire&quot;
+  - &quot;CÃ´te dâ€™Ivoire&quot;
+  - &quot;The Republic of Côte d'Ivoire&quot;
 </code></pre>
-<p>To map (normalize) your input alias to its country code, add a LEFT join from your table or view to the alias lookup 
+<p>To map (normalize) your input alias to its country code, add a LEFT join from your table or view to the alias <code>country_lookup</code>
 table: <code>mozdata.static.country_codes_v1</code>. For example:</p>
 <pre><code class="language-sql">SELECT
     ...
     your_table.country_field,
-    COALESCE(lookup.code, your_table.country, '??') as country_code
+    COALESCE(country_lookup.code, your_table.country, '??') as country_code
     ...
 FROM
-    your_table 
-    LEFT JOIN mozdata.static.country_codes_v1 lookup ON your_table.country_field = lookup.name 
+    your_table
+    LEFT JOIN mozdata.static.country_codes_v1 country_lookup ON your_table.country_field = country_lookup.name
 </code></pre>
-<p>Note: we use <code>??</code> as a country-code for empty country data from data sources. This will map to &quot;Unknown Country&quot;, 
+<p>Note: we use <code>??</code> as a country-code for empty country data from data sources. This will map to &quot;Unknown Country&quot;,
 &quot;Unknown Region&quot;, etc.</p>
-<p>At this point, you should check for cases where the resulting <code>country_code</code> matches <code>your_table.country</code> but does 
-not match any values in the lookup table - you may have discovered a new alias, in which case please add it to the list!
+<p>At this point, you should check for cases where the resulting <code>country_code</code> matches <code>your_table.country</code> but does
+not match any values in the <code>country_lookup</code> table - you may have discovered a new alias, in which case please add it to the list!
 You can do this via a bigquery-etl pull request for example: https://github.com/mozilla/bigquery-etl/pull/2858.</p>
 <blockquote>
-<p>⚠️ This list of aliases is public. If you are working with sensitive data, please do not add to the public list of 
-aliases, you should handle it in custom logic in code that interfaces with your sensitive data for example in 
-<a href="https://github.com/mozilla/private-bigquery-etl">private-bigquery-etl</a> or the 
-<a href="https://github.com/mozilla/looker-spoke-private">private Looker spoke</a>. </p>
+<p>⚠️ This list of aliases is public. If you are working with sensitive data, please do not add to the public list of
+aliases, you should handle it in custom logic in code that interfaces with your sensitive data for example in
+<a href="https://github.com/mozilla/private-bigquery-etl">private-bigquery-etl</a> or the
+<a href="https://github.com/mozilla/looker-spoke-private">private Looker spoke</a>.</p>
 </blockquote>
-<p>If you are satisfied that the <code>country_code</code> field is appropriately normalized, move on to Step Two! </p>
+<p>If you are satisfied that the <code>country_code</code> field is appropriately normalized, move on to Step Two!</p>
 <h2 id="step-two---accessing-standard-country-data"><a class="header" href="#step-two---accessing-standard-country-data">Step Two - Accessing Standard Country Data</a></h2>
-<p>Standard country data is contained in the <code>mozdata.static.country_codes_v1</code> table and by extension the 
+<p>Standard country data is contained in the <code>mozdata.static.country_codes_v1</code> table and by extension the
 <code>shared/views/countries</code> Looker View.</p>
 <p>Add the following join to your Explore (either in the <code>.explore.lkml</code> or <code>.model.lkml</code> file):</p>
 <pre><code class="language-lookml">include: &quot;/shared/views/*&quot;
