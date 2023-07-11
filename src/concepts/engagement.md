@@ -3,7 +3,7 @@
 > This section was originally included in the [Project Smoot existing metrics report][smootv1]
 > (Mozilla internal link).
 
-[smootv1]: https://mozilla-private.report/smoot-existing-metrics/book/05_overview.html
+[smootv1]: https://mozilla-private-report.protosaur.dev/smoot-existing-metrics/book/05_overview.html
 
 A handful of metrics have been adopted as engagement metrics, either as
 censuses of the population or to describe user activity within a
