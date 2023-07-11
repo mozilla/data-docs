@@ -130,7 +130,7 @@ You can search for details about probes by using the [Probe Dictionary](https://
 - When a probe started being collected
 - Whether data from this probe is collected in the release channel
 
-Newer measurements implemented using [Glean](#glean) are referred to as [metrics](#metrics) instead of probes, but the basic outline is the same. Details about Glean Metrics are collected inside the [Glean Dictionary](https://dictionary.telemetry.mozilla.org).
+Newer measurements implemented using [Glean](#glean) are referred to as [metrics](#metric) instead of probes, but the basic outline is the same. Details about Glean Metrics are collected inside the [Glean Dictionary](https://dictionary.telemetry.mozilla.org).
 
 ## Profile
 
@@ -138,7 +138,7 @@ All of the changes a user makes in Firefox, like the home page, what toolbars yo
 
 ## Query
 
-Typically refers to a query written in the SQL syntax, run on (for example) [STMO](#stmo).
+Typically refers to a query written in the SQL syntax, run on (for example) [STMO](#stmo-sqltelemetrymozillaorg).
 
 ## Retention
 
@@ -156,7 +156,7 @@ The period of time that it takes between Firefox being started until it is shut 
 
 ## Subsession
 
-In Firefox, [Sessions](#sessions) are split into subsessions after every 24-hour time period has passed or the environment has changed. See [here for more details](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/sessions.html?highlight=subsession).
+In Firefox, [Sessions](#session) are split into subsessions after every 24-hour time period has passed or the environment has changed. See [here for more details](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/sessions.html?highlight=subsession).
 
 ## STMO (sql.telemetry.mozilla.org)
 
