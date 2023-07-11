@@ -126,13 +126,12 @@ starting a new project using anything in this section.
 | --------------------------- | ------------------------------------------------------------------------------- |
 | [`data-docs`][docs_gh]      | All the info you need to [answer questions about Firefox users with data][docs] |
 | Firefox source docs         | [Mozilla Source Tree Docs - Telemetry section][fxsrcdocs]                       |
-| [`mozilla.report`][rtmo_gh] | Knowledge repository for [public reports][rtmo]                                 |
+| [`mozilla.report`][rtmo_gh] | Knowledge repository for public reports (archived)                              |
 
 [docs_gh]: https://github.com/mozilla/data-docs
 [docs]: https://docs.telemetry.mozilla.org
 [fxsrcdocs]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/
 [rtmo_gh]: https://github.com/mozilla/mozilla-reports
-[rtmo]: https://mozilla.report
 
 ### Non-public
 
