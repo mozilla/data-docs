@@ -60,7 +60,7 @@ The following video demonstrates this workflow in detail:
 
 If you want to explore Looker more deeply, you can check out:
 
-- ["Looker Connect" training hub](https://connect.looker.com/library): A collection of self-paced video training courses for new users. Full courses are free, but require registration, but course descriptions contain preview videos that are useful on their own.
+- ["BI and Analytics with Looker" training hub](https://www.cloudskillsboost.google/journeys/28): A collection of self-paced video training courses for new users. Full courses are free, but require registration, but course descriptions contain material that is useful on its own.
 - [Looker Documentation](https://docs.looker.com/): Extensive text and video documentation, a “textbook” reference on how the product works.
 - [Looker Help Center](https://help.looker.com/): Contains articles on common problems, specific use cases, error messages, and best practices.
 - [Looker Community](https://community.looker.com/) has customer-written material, broadcasts from Looker employees (primarily release notes), and topics written by Looker employees that are not officially supported by Looker.
