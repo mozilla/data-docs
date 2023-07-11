@@ -52,7 +52,7 @@ bug](https://bugzilla.mozilla.org/show_bug.cgi?id=1205985) to count only
 time that the computer is not in sleep.
 
 `subsession_length` was first implemented with [the advent of
-subsessions](https://mail.mozilla.org/pipermail/fhr-dev/2015-January/000384.html),
+subsessions](https://web.archive.org/web/20210402095333/https://mail.mozilla.org/pipermail/fhr-dev/2015-January/000384.html),
 which came with unified telemetry.
 
 ### `total_uri_count`
