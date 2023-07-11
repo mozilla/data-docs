@@ -11,7 +11,7 @@ A user is a "heavy user" as of day N if, for the 28 day period ending
 on day N, the sum of their `active_ticks` is in the 90th percentile (or
 above) of all clients during that period. For more analysis on this,
 and a discussion of new profiles, see
-[this link](https://metrics.mozilla.com/protected/sguha/heavy/heavycutoffs5.html).
+[this link](BROKEN:https://metrics.mozilla.com/protected/sguha/heavy/heavycutoffs5.html).
 
 #### Background and Caveats
 
