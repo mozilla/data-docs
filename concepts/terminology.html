@@ -263,11 +263,11 @@ The bulk of the data that is handled by this pipeline is Firefox Telemetry data.
 <li>When a probe started being collected</li>
 <li>Whether data from this probe is collected in the release channel</li>
 </ul>
-<p>Newer measurements implemented using <a href="#glean">Glean</a> are referred to as <a href="#metrics">metrics</a> instead of probes, but the basic outline is the same. Details about Glean Metrics are collected inside the <a href="https://dictionary.telemetry.mozilla.org">Glean Dictionary</a>.</p>
+<p>Newer measurements implemented using <a href="#glean">Glean</a> are referred to as <a href="#metric">metrics</a> instead of probes, but the basic outline is the same. Details about Glean Metrics are collected inside the <a href="https://dictionary.telemetry.mozilla.org">Glean Dictionary</a>.</p>
 <h2 id="profile"><a class="header" href="#profile">Profile</a></h2>
 <p>All of the changes a user makes in Firefox, like the home page, what toolbars you use, installed addons, saved passwords and your bookmarks, are all stored in a special folder, called a profile. Telemetry stores archived and pending pings in the profile directory as well as metadata like the <a href="#client-id">client id</a>. See also <a href="./profile/profile_creation.html">Profile Creation</a>.</p>
 <h2 id="query"><a class="header" href="#query">Query</a></h2>
-<p>Typically refers to a query written in the SQL syntax, run on (for example) <a href="#stmo">STMO</a>.</p>
+<p>Typically refers to a query written in the SQL syntax, run on (for example) <a href="#stmo-sqltelemetrymozillaorg">STMO</a>.</p>
 <h2 id="retention"><a class="header" href="#retention">Retention</a></h2>
 <ul>
 <li>
@@ -282,7 +282,7 @@ The bulk of the data that is handled by this pipeline is Firefox Telemetry data.
 <h2 id="session"><a class="header" href="#session">Session</a></h2>
 <p>The period of time that it takes between Firefox being started until it is shut down. See also <a href="#subsession">subsession</a>.</p>
 <h2 id="subsession"><a class="header" href="#subsession">Subsession</a></h2>
-<p>In Firefox, <a href="#sessions">Sessions</a> are split into subsessions after every 24-hour time period has passed or the environment has changed. See <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/sessions.html?highlight=subsession">here for more details</a>.</p>
+<p>In Firefox, <a href="#session">Sessions</a> are split into subsessions after every 24-hour time period has passed or the environment has changed. See <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/sessions.html?highlight=subsession">here for more details</a>.</p>
 <h2 id="stmo-sqltelemetrymozillaorg"><a class="header" href="#stmo-sqltelemetrymozillaorg">STMO (sql.telemetry.mozilla.org)</a></h2>
 <p>A service for creating queries and dashboards. See <a href="../introduction/tools.html#sqltelemetrymozillaorg-stmo">STMO under analysis tools</a>.</p>
 <h2 id="telemetry"><a class="header" href="#telemetry">Telemetry</a></h2>

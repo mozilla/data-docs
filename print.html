@@ -382,11 +382,11 @@ The bulk of the data that is handled by this pipeline is Firefox Telemetry data.
 <li>When a probe started being collected</li>
 <li>Whether data from this probe is collected in the release channel</li>
 </ul>
-<p>Newer measurements implemented using <a href="concepts/terminology.html#glean">Glean</a> are referred to as <a href="concepts/terminology.html#metrics">metrics</a> instead of probes, but the basic outline is the same. Details about Glean Metrics are collected inside the <a href="https://dictionary.telemetry.mozilla.org">Glean Dictionary</a>.</p>
+<p>Newer measurements implemented using <a href="concepts/terminology.html#glean">Glean</a> are referred to as <a href="concepts/terminology.html#metric">metrics</a> instead of probes, but the basic outline is the same. Details about Glean Metrics are collected inside the <a href="https://dictionary.telemetry.mozilla.org">Glean Dictionary</a>.</p>
 <h2 id="profile"><a class="header" href="#profile">Profile</a></h2>
 <p>All of the changes a user makes in Firefox, like the home page, what toolbars you use, installed addons, saved passwords and your bookmarks, are all stored in a special folder, called a profile. Telemetry stores archived and pending pings in the profile directory as well as metadata like the <a href="concepts/terminology.html#client-id">client id</a>. See also <a href="concepts/./profile/profile_creation.html">Profile Creation</a>.</p>
 <h2 id="query"><a class="header" href="#query">Query</a></h2>
-<p>Typically refers to a query written in the SQL syntax, run on (for example) <a href="concepts/terminology.html#stmo">STMO</a>.</p>
+<p>Typically refers to a query written in the SQL syntax, run on (for example) <a href="concepts/terminology.html#stmo-sqltelemetrymozillaorg">STMO</a>.</p>
 <h2 id="retention"><a class="header" href="#retention">Retention</a></h2>
 <ul>
 <li>
@@ -401,7 +401,7 @@ The bulk of the data that is handled by this pipeline is Firefox Telemetry data.
 <h2 id="session"><a class="header" href="#session">Session</a></h2>
 <p>The period of time that it takes between Firefox being started until it is shut down. See also <a href="concepts/terminology.html#subsession">subsession</a>.</p>
 <h2 id="subsession"><a class="header" href="#subsession">Subsession</a></h2>
-<p>In Firefox, <a href="concepts/terminology.html#sessions">Sessions</a> are split into subsessions after every 24-hour time period has passed or the environment has changed. See <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/sessions.html?highlight=subsession">here for more details</a>.</p>
+<p>In Firefox, <a href="concepts/terminology.html#session">Sessions</a> are split into subsessions after every 24-hour time period has passed or the environment has changed. See <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/sessions.html?highlight=subsession">here for more details</a>.</p>
 <h2 id="stmo-sqltelemetrymozillaorg"><a class="header" href="#stmo-sqltelemetrymozillaorg">STMO (sql.telemetry.mozilla.org)</a></h2>
 <p>A service for creating queries and dashboards. See <a href="concepts/../introduction/tools.html#sqltelemetrymozillaorg-stmo">STMO under analysis tools</a>.</p>
 <h2 id="telemetry"><a class="header" href="#telemetry">Telemetry</a></h2>
@@ -627,7 +627,7 @@ If your application uses <a href="cookbooks/looker/../../concepts/glean/glean.ht
 <h2 id="going-deeper"><a class="header" href="#going-deeper">Going Deeper</a></h2>
 <p>If you want to explore Looker more deeply, you can check out:</p>
 <ul>
-<li><a href="https://connect.looker.com/library">&quot;Looker Connect&quot; training hub</a>: A collection of self-paced video training courses for new users. Full courses are free, but require registration, but course descriptions contain preview videos that are useful on their own.</li>
+<li><a href="https://www.cloudskillsboost.google/journeys/28">&quot;BI and Analytics with Looker&quot; training hub</a>: A collection of self-paced video training courses for new users. Full courses are free, but require registration, but course descriptions contain material that is useful on its own.</li>
 <li><a href="https://docs.looker.com/">Looker Documentation</a>: Extensive text and video documentation, a “textbook” reference on how the product works.</li>
 <li><a href="https://help.looker.com/">Looker Help Center</a>: Contains articles on common problems, specific use cases, error messages, and best practices.</li>
 <li><a href="https://community.looker.com/">Looker Community</a> has customer-written material, broadcasts from Looker employees (primarily release notes), and topics written by Looker employees that are not officially supported by Looker.</li>
@@ -6650,7 +6650,7 @@ some_local_task.set_upstream(wait_for_bq_events)
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/concepts/airflow_gotchas.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="telemetry-reference"><a class="header" href="#telemetry-reference">Telemetry Reference</a></h1>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/concepts/index.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="a-brief-history-of-mozilla-data-collection"><a class="header" href="#a-brief-history-of-mozilla-data-collection">A brief history of Mozilla data collection</a></h1>
 <blockquote>
-<p>This section was originally included in the <a href="https://mozilla-private.report/smoot-existing-metrics/book/05_overview.html">Project Smoot existing metrics report</a>
+<p>This section was originally included in the <a href="https://mozilla-private-report.protosaur.dev/smoot-existing-metrics/book/05_overview.html">Project Smoot existing metrics report</a>
 (Mozilla internal link); the DTMO version has been updated to reflect changes to the data platform.</p>
 </blockquote>
 <h2 id="blocklistxml-and-active-daily-installs-adi"><a class="header" href="#blocklistxml-and-active-daily-installs-adi"><code>blocklist.xml</code> and Active Daily Installs (ADI)</a></h2>
@@ -7104,7 +7104,7 @@ It is very hard to distinguish between the different branches of the same profil
 <p><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1631934">(Work in Progress)</a></p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/concepts/profile/profilehistory.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="engagement-metrics"><a class="header" href="#engagement-metrics">Engagement metrics</a></h1>
 <blockquote>
-<p>This section was originally included in the <a href="https://mozilla-private.report/smoot-existing-metrics/book/05_overview.html">Project Smoot existing metrics report</a>
+<p>This section was originally included in the <a href="https://mozilla-private-report.protosaur.dev/smoot-existing-metrics/book/05_overview.html">Project Smoot existing metrics report</a>
 (Mozilla internal link).</p>
 </blockquote>
 <p>A handful of metrics have been adopted as engagement metrics, either as
@@ -7142,7 +7142,7 @@ sleep time on all platforms.</p>
 <p>There is <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1205985">another
 bug</a> to count only
 time that the computer is not in sleep.</p>
-<p><code>subsession_length</code> was first implemented with <a href="https://mail.mozilla.org/pipermail/fhr-dev/2015-January/000384.html">the advent of
+<p><code>subsession_length</code> was first implemented with <a href="https://web.archive.org/web/20210402095333/https://mail.mozilla.org/pipermail/fhr-dev/2015-January/000384.html">the advent of
 subsessions</a>,
 which came with unified telemetry.</p>
 <h3 id="total_uri_count"><a class="header" href="#total_uri_count"><code>total_uri_count</code></a></h3>
@@ -7708,7 +7708,7 @@ starting a new project using anything in this section.</p>
 <div class="table-wrapper"><table><thead><tr><th>Name and repo</th><th>Description</th></tr></thead><tbody>
 <tr><td><a href="https://github.com/mozilla/data-docs"><code>data-docs</code></a></td><td>All the info you need to <a href="https://docs.telemetry.mozilla.org">answer questions about Firefox users with data</a></td></tr>
 <tr><td>Firefox source docs</td><td><a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/">Mozilla Source Tree Docs - Telemetry section</a></td></tr>
-<tr><td><a href="https://github.com/mozilla/mozilla-reports"><code>mozilla.report</code></a></td><td>Knowledge repository for <a href="https://mozilla.report">public reports</a></td></tr>
+<tr><td><a href="https://github.com/mozilla/mozilla-reports"><code>mozilla.report</code></a></td><td>Knowledge repository for public reports (archived)</td></tr>
 </tbody></table>
 </div>
 <h3 id="non-public"><a class="header" href="#non-public">Non-public</a></h3>
@@ -9691,7 +9691,7 @@ for all kinds of studies.</p>
 <p>Normandy and Nimbus events both have event category <code>normandy</code>.
 The event value will contain the experiment slug.</p>
 <p>The event schema is described
-<a href="https://hg.mozilla.org/mozilla-central/file/tip/toolkit/components/normandy/lib/TelemetryEvents.jsm">in the Firefox source tree</a>.</p>
+<a href="https://hg.mozilla.org/mozilla-central/file/tip/toolkit/components/normandy/lib/TelemetryEvents.sys.mjs">in the Firefox source tree</a>.</p>
 <p>The <code>events</code> table is updated daily.</p>
 <h3 id="telemetryshield_study_addon"><a class="header" href="#telemetryshield_study_addon"><code>telemetry.shield_study_addon</code></a></h3>
 <p>The <code>telemetry.shield_study_addon</code> table contains SHIELD telemetry from legacy add-on experiments,
@@ -10933,7 +10933,7 @@ GROUP BY normalized_country_code,
 <p>The Activity Stream team has implemented data collection in and around these pages. This data has some overlap with the standard Firefox Telemetry system, however it is a custom system, designed and maintained by that team.</p>
 <p>For specific questions about this data, reach out to the <code>#fx-messaging-system</code> Slack channel directly.</p>
 <h2 id="activity-stream-pings"><a class="header" href="#activity-stream-pings">Activity Stream Pings</a></h2>
-<p>This data is measured in various custom pings that are sent via <a href="https://searchfox.org/mozilla-central/source/browser/modules/PingCentre.jsm">PingCentre</a> (different from <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/pingsender.html">Pingsender</a>).</p>
+<p>This data is measured in various custom pings that are sent via <a href="https://searchfox.org/mozilla-central/source/browser/modules/PingCentre.sys.mjs">PingCentre</a> (different from <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/pingsender.html">Pingsender</a>).</p>
 <ul>
 <li><a href="https://firefox-source-docs.mozilla.org/browser/components/newtab/docs/v2-system-addon/data_events.html">Activity Stream Pings: <code>data_events.md</code></a></li>
 <li><a href="https://firefox-source-docs.mozilla.org/browser/components/newtab/docs/v2-system-addon/data_dictionary.html">Activity Stream Pings: <code>data_dictionary.md</code></a></li>
@@ -11013,17 +11013,17 @@ WHERE
     DATE(submission_timestamp) = '20200601'
 </code></pre>
 <h3 id="topsite-tile-dismissals-sponsored-and-non-sponsored"><a class="header" href="#topsite-tile-dismissals-sponsored-and-non-sponsored"><code>Topsite</code> Tile Dismissals: Sponsored and Non-Sponsored</a></h3>
-<p>The <code>Topsite</code> Tile <code>Dismiss</code> action corresponds to the <code>BLOCK</code> event which can be taken on a Sponsored or Non-Sponsored Tile <a href="https://firefox-source-docs.mozilla.org/browser/components/newtab/docs/v2-system-addon/data_events.html#blocking-a-site">reference</a>. When applied to a Non-Sponsored Tile, the <code>BLOCK</code> event prevents the Tile from appearing in <code>TopSites</code> but leaves the browsing history as is. The <code>DELETE</code> event is fired when the user selects <code>Delete from History</code> and is only applicable to Non-Sponsored Tiles. This action deletes the URL from the client's complete browser history and prevents the Tile from appearing in their <code>Topsites.</code> <code>DELETE</code> doesn't apply to Sponsored Tiles as these are not generated by the user's browsing history. </p>
+<p>The <code>Topsite</code> Tile <code>Dismiss</code> action corresponds to the <code>BLOCK</code> event which can be taken on a Sponsored or Non-Sponsored Tile <a href="https://firefox-source-docs.mozilla.org/browser/components/newtab/docs/v2-system-addon/data_events.html#blocking-a-site">reference</a>. When applied to a Non-Sponsored Tile, the <code>BLOCK</code> event prevents the Tile from appearing in <code>TopSites</code> but leaves the browsing history as is. The <code>DELETE</code> event is fired when the user selects <code>Delete from History</code> and is only applicable to Non-Sponsored Tiles. This action deletes the URL from the client's complete browser history and prevents the Tile from appearing in their <code>Topsites.</code> <code>DELETE</code> doesn't apply to Sponsored Tiles as these are not generated by the user's browsing history.</p>
 <pre><code class="language-sql">SELECT
-    DATE(submission_timestamp) AS date, 
+    DATE(submission_timestamp) AS date,
     count(*)
 FROM
     `moz-fx-data-shared-prod.activity_stream.events`
 WHERE
-    source = 'TOP_SITES' 
-    AND event = 'BLOCK' 
+    source = 'TOP_SITES'
+    AND event = 'BLOCK'
     AND DATE(submission_timestamp) = '20220101'
-    AND value LIKE '%&quot;card_type&quot;:&quot;spoc&quot;%' 
+    AND value LIKE '%&quot;card_type&quot;:&quot;spoc&quot;%'
 GROUP BY 1
 ORDER BY 1
 </code></pre>
@@ -12399,7 +12399,7 @@ ORDER BY 1
 <p>Something about how all metrics presented should have references to definitions here or explanations as to why a nonstandard metric was used.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/metrics/policy.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h2 id="legacy-census-metrics"><a class="header" href="#legacy-census-metrics">Legacy Census Metrics</a></h2>
 <blockquote>
-<p><strong>⚠</strong> The information in this document is obsolete. This content was originally included in the <a href="https://mozilla-private.report/smoot-existing-metrics/book/05_overview.html">Project Smoot existing metrics report</a> (Mozilla internal link).</p>
+<p><strong>⚠</strong> The information in this document is obsolete. This content was originally included in the <a href="https://mozilla-private-report.protosaur.dev/smoot-existing-metrics/book/05_overview.html">Project Smoot existing metrics report</a> (Mozilla internal link).</p>
 </blockquote>
 <p>ADI and DAU are oft-discussed censuses. This chapter discusses their history and definition.</p>
 <h3 id="adi--active-daily-installs-blocklist-fetches"><a class="header" href="#adi--active-daily-installs-blocklist-fetches">ADI / Active Daily Installs (blocklist fetches)</a></h3>
@@ -13407,7 +13407,7 @@ they were active at all in the 28 day window ending on that <code>submission_dat
 on day N, the sum of their <code>active_ticks</code> is in the 90th percentile (or
 above) of all clients during that period. For more analysis on this,
 and a discussion of new profiles, see
-<a href="https://metrics.mozilla.com/protected/sguha/heavy/heavycutoffs5.html">this link</a>.</p>
+<a href="datasets/obsolete/heavy_users/BROKEN:https://metrics.mozilla.com/protected/sguha/heavy/heavycutoffs5.html">this link</a>.</p>
 <h4 id="background-and-caveats-13"><a class="header" href="#background-and-caveats-13">Background and Caveats</a></h4>
 <ol>
 <li>Data starts at 20170801. There is technically data in the table before
