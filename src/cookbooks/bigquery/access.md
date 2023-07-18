@@ -50,7 +50,7 @@ For more details, see [Google's Documentation on the GCP Console](https://cloud.
 
 Steps to use:
 
-- Install the [GCP SDK](https://cloud.google.com/sdk/)
+- Install the [GCP SDK](https://cloud.google.com/sdk/docs/install-sdk)
 - Authorize `gcloud` with either your user account or provisioned service account. See documentation [here](https://cloud.google.com/sdk/docs/authorizing).
   - `gcloud auth login`
 - Set your google project to `mozdata`
