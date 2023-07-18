@@ -61,6 +61,7 @@
     - [Sending Events](cookbooks/events_best_practices.md)
     - [Sending a Custom Ping](cookbooks/new_ping.md)
 - [Data Platform Reference](reference/index.md)
+  - [Data Stack Overview](tools/data_stack_overview.md)
   - [Guiding Principles for Data Infrastructure](tools/guiding_principles.md)
   - [Glean overview](concepts/glean/glean.md)
   - [Overview of Mozilla's Data Pipeline](concepts/pipeline/gcp_data_pipeline.md)
