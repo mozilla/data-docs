@@ -19,7 +19,7 @@ You can access Mozilla's instance of Looker at [`mozilla.cloud.looker.com`](http
 
 By default, on the front page you will see a list of default folders, which contain links to dashboards.
 These are organized by project.
-Of particular note is the [Mozilla Metrics folder] inside the [KPI Metrics Folder](https://mozilla.cloud.looker.com/folders/706), which includes several Data-produced and vetted dashboards like the Firefox Corporate KPI Dashboard.
+Of particular note is the [KPI Metrics Folder](https://mozilla.cloud.looker.com/folders/706), which includes several Data-produced and vetted dashboards like the Firefox Corporate KPI Dashboard.
 
 ![](../../assets/Looker_screenshots/front-page.png)
 
