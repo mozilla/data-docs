@@ -28,7 +28,7 @@ See also [the spreadsheet of notable historic events](https://docs.google.com/sp
 
 When you start to evaluate trends, be aware of events from the past that may invite comparisons with history. Here are a few to keep in mind:
 
-- **Jul 16, 2023 - Jul 24, 2023** - During the migration from release to ESR of Firefox users on obsolete versions of macOS and Windows, Firefox sent deletion request pings for clients in the migration, which also reset the `client_id`. [See the summary of the incident here.](https://docs.google.com/document/d/1vdn9OFSoKPD5wt14dmTwyh0kGs-96fWx26ESui95jo0/edit). Approximately 2M clients were affected by this bug; as a result of this, around 1.3M clients were double counted due to both the old `client_id` and reset `client_id` being active on the same day.
+- **Jul 16, 2023 - Jul 24, 2023** - During the migration from release to ESR of Firefox users on obsolete versions of MacOS and Windows, Firefox sent deletion request pings for clients in the migration, which also reset the `client_id`. [See the summary of the incident here.](https://docs.google.com/document/d/1vdn9OFSoKPD5wt14dmTwyh0kGs-96fWx26ESui95jo0/edit). Approximately 2 million clients were affected by this bug; as a result of this, around 1.3 million clients were double counted due to both the old `client_id` and reset `client_id` being active on the same day.
 - **Mar 17, 2023 - May 9, 2023** - Firefox for Android was collecting but not sending `perf.page_load` events during this period. The recorded events started being sent after May 9, 2023 resulting in a spike of events that eventually returned to normal levels. [See Bug 1833178 for more info.][bug1833178]
 - **Mar 14, 2023** - Firefox for Android began reporting significantly fewer new installs, due to [a fix for Client ID regeneration](https://docs.google.com/document/d/1Tf8F2FndPsOAWc7peLxgUZd4t-LUJu8RMotiDhgKF7I/edit#heading=h.xyargldz6xg0). This also affected retention for both new and existing users.
 - **Nov 15, 2022** - A major bug in the `search with ads` probes was fixed on Firefox Desktop. The [bug fix](https://bugzilla.mozilla.org/show_bug.cgi?id=1800506) impacts Firefox 109+ and resulted in significant increases in the number of searches with ads recorded.
@@ -58,7 +58,7 @@ When you start to evaluate trends, be aware of events from the past that may inv
   Clients generally retry periodically until success is achieved. Therefore, most of these messages were eventually ingested; submission timestamps appear later than normal. A small number of pings are attributed to a later day or were never sent due to the client never being reopened.
 - **February 11, 2020** - Firefox 73 was released and began the start of [4-week release cycles][four_week_cycles]. There was a gradual transition from 7/8 week ones to 4 week ones.
 - **December 4 2019** - [AWS Ingestion Pipeline decommissioned][bug1598815].
-  Specifically, the last ping relayed through the AWS machinery had a
+  Specifically, the last ping relayed through the AWS hinery had a
   timestamp of `2019-12-04 22:04:45.912204 UTC`.
 - **October 29 2019** - Glean SDK Timing Distribution(s) report buckets
   1 nanosecond apart. This occurred because of a potential rounding bug in Glean SDK
