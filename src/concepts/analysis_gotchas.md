@@ -58,7 +58,7 @@ When you start to evaluate trends, be aware of events from the past that may inv
   Clients generally retry periodically until success is achieved. Therefore, most of these messages were eventually ingested; submission timestamps appear later than normal. A small number of pings are attributed to a later day or were never sent due to the client never being reopened.
 - **February 11, 2020** - Firefox 73 was released and began the start of [4-week release cycles][four_week_cycles]. There was a gradual transition from 7/8 week ones to 4 week ones.
 - **December 4 2019** - [AWS Ingestion Pipeline decommissioned][bug1598815].
-  Specifically, the last ping relayed through the AWS hinery had a
+  Specifically, the last ping relayed through the AWS machinery had a
   timestamp of `2019-12-04 22:04:45.912204 UTC`.
 - **October 29 2019** - Glean SDK Timing Distribution(s) report buckets
   1 nanosecond apart. This occurred because of a potential rounding bug in Glean SDK
