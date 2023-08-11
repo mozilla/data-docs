@@ -37,6 +37,7 @@
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
             var path_to_root = "";
@@ -74,10 +75,12 @@
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -90,11 +93,33 @@
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
@@ -229,7 +254,6 @@ To facilitate comparative analysis with product and usage telemetry, we export m
 <li><a href="introduction/tools.html#high-level-tools">High-level tools</a>
 <ul>
 <li><a href="introduction/tools.html#looker">Looker</a></li>
-<li><a href="introduction/tools.html#mozilla-growth--usage-dashboard-gud">Mozilla Growth &amp; Usage Dashboard (GUD)</a></li>
 <li><a href="introduction/tools.html#glean-aggregated-metrics-dashboard-glam">Glean Aggregated Metrics Dashboard (GLAM)</a></li>
 </ul>
 </li>
@@ -250,8 +274,6 @@ To facilitate comparative analysis with product and usage telemetry, we export m
 <p>In 2020, Mozilla chose <a href="https://looker.com/">Looker</a> as its primary tool for analyzing data.
 It allows data exploration and visualization by experts and non-experts alike.</p>
 <p>For a brief introduction to Looker, see <a href="introduction/../cookbooks/looker/intro.html">Introduction to Looker</a>.</p>
-<h3 id="mozilla-growth--usage-dashboard-gud"><a class="header" href="#mozilla-growth--usage-dashboard-gud">Mozilla Growth &amp; Usage Dashboard (GUD)</a></h3>
-<p>The <a href="https://gud.telemetry.mozilla.org/">Mozilla Growth &amp; Usage Dashboard</a> (GUD) is a tool to visualize growth metrics in a standard way across Mozilla’s products. This is the first place you should look if you have a question like &quot;how many people are using X?&quot;.</p>
 <h3 id="glean-aggregated-metrics-dashboard-glam"><a class="header" href="#glean-aggregated-metrics-dashboard-glam">Glean Aggregated Metrics Dashboard (GLAM)</a></h3>
 <p>The <a href="https://glam.telemetry.mozilla.org/">Glean Aggregated Metrics Dashboard</a> (GLAM) is an interactive dashboard that is Mozilla’s primary self-service tool for examining the distributions of values of specific individual telemetry metrics, over time and across different user populations. It is similar to GUD in that it is meant to be usable by everyone; no specific data analysis or coding skills are needed. But while GUD is focused on a relatively small number of high level, derived product metrics about user engagement (e.g. MAU, DAU, retention, etc) GLAM is focused on a diverse and plentiful set of probes and data points that engineers capture in code and transmit back from Firefox and other Mozilla products.</p>
 <p>For more information on how to use GLAM, see <a href="introduction/../cookbooks/glam.html">Introduction to GLAM</a>.</p>
@@ -3940,7 +3962,7 @@ ORDER BY
 <p>Note that we use a new profile definition that relies on the <code>profile_creation_date</code> and requires that a main ping be sent within one week of the <code>profile_creation_date</code>. This differs from analysis using new profile pings, but allows valid comparison over time. New profile pings do not allow comparison over time due to the increased adoption of versions of the browser recent enough to send new profile pings.</p>
 <h2 id="accessing-retention-metrics"><a class="header" href="#accessing-retention-metrics">Accessing Retention Metrics</a></h2>
 <p>There are three standard methods for accessing retention metrics. These methods trade off between simplicity and flexibility.</p>
-<h3 id="mozilla-growth--usage-dashboard-gud-1"><a class="header" href="#mozilla-growth--usage-dashboard-gud-1">Mozilla Growth &amp; Usage Dashboard (GUD)</a></h3>
+<h3 id="mozilla-growth--usage-dashboard-gud"><a class="header" href="#mozilla-growth--usage-dashboard-gud">Mozilla Growth &amp; Usage Dashboard (GUD)</a></h3>
 <p>The <a href="https://gud.telemetry.mozilla.org/">GUD</a> provides plots and exportable tables of both retention metrics over time. Metrics are available for most products and can be sliced by OS, language, country, and channel.</p>
 <h3 id="querying-smoot-usage-tables"><a class="header" href="#querying-smoot-usage-tables">Querying Smoot Usage Tables</a></h3>
 <p>For programmatic access, the tables underlying GUD can be queried directly. For example:</p>
@@ -14267,5 +14289,6 @@ so make it easy to identify important information.
         });
         </script>
 
+    </div>
     </body>
 </html>

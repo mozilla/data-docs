@@ -36,6 +36,7 @@
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
             var path_to_root = "../";
@@ -73,10 +74,12 @@
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -89,11 +92,33 @@
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
@@ -157,7 +182,6 @@
 <li><a href="#high-level-tools">High-level tools</a>
 <ul>
 <li><a href="#looker">Looker</a></li>
-<li><a href="#mozilla-growth--usage-dashboard-gud">Mozilla Growth &amp; Usage Dashboard (GUD)</a></li>
 <li><a href="#glean-aggregated-metrics-dashboard-glam">Glean Aggregated Metrics Dashboard (GLAM)</a></li>
 </ul>
 </li>
@@ -178,8 +202,6 @@
 <p>In 2020, Mozilla chose <a href="https://looker.com/">Looker</a> as its primary tool for analyzing data.
 It allows data exploration and visualization by experts and non-experts alike.</p>
 <p>For a brief introduction to Looker, see <a href="../cookbooks/looker/intro.html">Introduction to Looker</a>.</p>
-<h3 id="mozilla-growth--usage-dashboard-gud"><a class="header" href="#mozilla-growth--usage-dashboard-gud">Mozilla Growth &amp; Usage Dashboard (GUD)</a></h3>
-<p>The <a href="https://gud.telemetry.mozilla.org/">Mozilla Growth &amp; Usage Dashboard</a> (GUD) is a tool to visualize growth metrics in a standard way across Mozilla’s products. This is the first place you should look if you have a question like &quot;how many people are using X?&quot;.</p>
 <h3 id="glean-aggregated-metrics-dashboard-glam"><a class="header" href="#glean-aggregated-metrics-dashboard-glam">Glean Aggregated Metrics Dashboard (GLAM)</a></h3>
 <p>The <a href="https://glam.telemetry.mozilla.org/">Glean Aggregated Metrics Dashboard</a> (GLAM) is an interactive dashboard that is Mozilla’s primary self-service tool for examining the distributions of values of specific individual telemetry metrics, over time and across different user populations. It is similar to GUD in that it is meant to be usable by everyone; no specific data analysis or coding skills are needed. But while GUD is focused on a relatively small number of high level, derived product metrics about user engagement (e.g. MAU, DAU, retention, etc) GLAM is focused on a diverse and plentiful set of probes and data points that engineers capture in code and transmit back from Firefox and other Mozilla products.</p>
 <p>For more information on how to use GLAM, see <a href="../cookbooks/glam.html">Introduction to GLAM</a>.</p>
@@ -265,5 +287,6 @@ It is the predecessor to GLAM (see above) and is still lightly maintained until 
         <script src="../mermaid-init.js"></script>
 
 
+    </div>
     </body>
 </html>
