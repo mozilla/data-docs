@@ -15,10 +15,6 @@ It allows data exploration and visualization by experts and non-experts alike.
 
 For a brief introduction to Looker, see [Introduction to Looker](../cookbooks/looker/intro.md).
 
-### Mozilla Growth & Usage Dashboard (GUD)
-
-The [Mozilla Growth & Usage Dashboard](https://gud.telemetry.mozilla.org/) (GUD) is a tool to visualize growth metrics in a standard way across Mozilla’s products. This is the first place you should look if you have a question like "how many people are using X?".
-
 ### Glean Aggregated Metrics Dashboard (GLAM)
 
 The [Glean Aggregated Metrics Dashboard](https://glam.telemetry.mozilla.org/) (GLAM) is an interactive dashboard that is Mozilla’s primary self-service tool for examining the distributions of values of specific individual telemetry metrics, over time and across different user populations. It is similar to GUD in that it is meant to be usable by everyone; no specific data analysis or coding skills are needed. But while GUD is focused on a relatively small number of high level, derived product metrics about user engagement (e.g. MAU, DAU, retention, etc) GLAM is focused on a diverse and plentiful set of probes and data points that engineers capture in code and transmit back from Firefox and other Mozilla products.
