@@ -219,7 +219,7 @@ from metric_config_parser.config import ConfigCollection
 
 config_collection = ConfigCollection.from_github_repo("https://github.com/mozilla/metric-hub")
 metric = config_collection.get_metric_definition(slug="active_hours", app_name="firefox_desktop")
-print(metric.from_expression)
+print(metric.select_expression)
 ```
 
 To use the metrics with Mozanalysis, you'll need `Metric`s not `MetricDefinition`s. For example:
