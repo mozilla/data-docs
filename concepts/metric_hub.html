@@ -351,7 +351,7 @@ FROM {{ metrics.data_source(
 
 config_collection = ConfigCollection.from_github_repo(&quot;https://github.com/mozilla/metric-hub&quot;)
 metric = config_collection.get_metric_definition(slug=&quot;active_hours&quot;, app_name=&quot;firefox_desktop&quot;)
-print(metric.from_expression)
+print(metric.select_expression)
 </code></pre>
 <p>To use the metrics with Mozanalysis, you'll need <code>Metric</code>s not <code>MetricDefinition</code>s. For example:</p>
 <pre><code class="language-python">from mozanalysis.config import ConfigLoader
