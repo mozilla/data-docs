@@ -258,6 +258,44 @@ WHERE submission_date > '20180101'
 LIMIT 10
 ```
 
+## Join Conditions
+
+The `ON` or `USING` keyword should start on a new line indented one level more than the join keyword
+and be followed by the join conditions starting on the same line. For example:
+
+**Good**:
+
+```sql
+...
+FROM
+  telemetry_stable.main_v4
+LEFT JOIN
+  static.normalized_os_name
+  ON main_v4.environment.system.os.name = normalized_os_name.os_name
+```
+
+**Bad**:
+
+```sql
+...
+FROM
+  telemetry_stable.main_v4
+LEFT JOIN
+  static.normalized_os_name ON main_v4.environment.system.os.name = normalized_os_name.os_name
+```
+
+**Bad**:
+
+```sql
+...
+FROM
+  telemetry_stable.main_v4
+LEFT JOIN
+  static.normalized_os_name
+ON
+  main_v4.environment.system.os.name = normalized_os_name.os_name
+```
+
 ## Parentheses
 
 If parentheses span multiple lines:

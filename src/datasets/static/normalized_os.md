@@ -22,8 +22,7 @@ FROM
   telemetry_stable.main_v4
 LEFT JOIN
   static.normalized_os_name
-ON
-  (environment.system.os.name = os_name)
+  ON (environment.system.os.name = os_name)
 ```
 
 ### OS Versions
