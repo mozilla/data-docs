@@ -260,7 +260,7 @@ LIMIT 10
 
 ## Join Conditions
 
-The `ON` or `USING` keyword should start on a new line indented one level more than the join keyword
+The `ON` and `USING` keywords should start on a new line indented one level more than the join keyword
 and be followed by the join conditions starting on the same line. For example:
 
 **Good**:
