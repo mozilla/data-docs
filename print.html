@@ -7613,6 +7613,8 @@ from_expression = '(SELECT submission_date, client_id, is_default_browser FROM m
 <li><a href="https://experimenter.info/jetstream/jetstream/">Jetstream</a> - used for analyzing experiments</li>
 <li><a href="https://github.com/mozilla/mozanalysis">mozanalysis</a> - a Python library which standardizes how experiment data is analyzed at Mozilla</li>
 <li><a href="https://docs.telemetry.mozilla.org/cookbooks/operational_monitoring.html">OpMon</a> - a tool for monitoring operational metrics</li>
+<li><a href="https://github.com/mozilla/bigquery-etl">bigquery-etl</a> - used for writing ETL queries</li>
+<li><a href="https://mozilla.cloud.looker.com">Looker</a> - used for creating dashboards and ad-hoc analyses</li>
 </ul>
 <h3 id="using-metrics-in-etl-queries"><a class="header" href="#using-metrics-in-etl-queries">Using Metrics in ETL queries</a></h3>
 <p>Metrics and data sources can be referenced in query and view definitions in <a href="https://github.com/mozilla/bigquery-etl">bigquery-etl</a>.
@@ -7686,6 +7688,12 @@ print(metric.select_expression)
 <pre><code class="language-python">from mozanalysis.config import ConfigLoader
 metric = ConfigLoader.get_metric(metric_slug=&quot;active_hours&quot;, app_name=&quot;firefox_desktop&quot;)
 </code></pre>
+<h3 id="using-metrics-in-looker"><a class="header" href="#using-metrics-in-looker">Using Metrics in Looker</a></h3>
+<p>Metric definitions are available in Looker. A single explore exists for each product/namespace that exposes all metric definitions from metric-hub. These explores are prefixed with &quot;Metric Definitions&quot; followed by the platform name. For example, for Firefox Desktop an explore &quot;Metric Definitions Firefox Desktop&quot; is available.</p>
+<p>The explore looks like the following:</p>
+<p><img src="concepts/../assets/looker_metric_hub.png" alt="" /></p>
+<p>The side pane has all available fields, with metrics appearing as dimensions. Metrics appear in separate sections that correspond to the data source they are derived from. A <em>Base Fields</em> section contains dimensions that are useful for filtering or segmenting the population, like channel or operating system. These base fields are based on <code>clients_daily</code> tables.</p>
+<p>By default, metrics are computed on a per-client basis. To get a summary over the entire population or a population segment for a specific metric it is necessary to create a custom measure which aggregates the metric dimension.</p>
 <h2 id="faq"><a class="header" href="#faq">FAQ</a></h2>
 <h3 id="should-metrics-be-defined-in-the-metric-definition-data-source-definition-or-source-table"><a class="header" href="#should-metrics-be-defined-in-the-metric-definition-data-source-definition-or-source-table">Should metrics be defined in the metric definition, data source definition or source table?</a></h3>
 <p>Definitions for metrics can be encoded at different levels. It is preferable to specify the SQL that defines how a metric should be computed as much upstream as possible. This allows the most flexible usage of metric definitions.</p>
