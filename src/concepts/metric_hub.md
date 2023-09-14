@@ -137,6 +137,8 @@ All the definitions are automatically available in some of our tooling:
 - [Jetstream](https://experimenter.info/jetstream/jetstream/) - used for analyzing experiments
 - [mozanalysis](https://github.com/mozilla/mozanalysis) - a Python library which standardizes how experiment data is analyzed at Mozilla
 - [OpMon](https://docs.telemetry.mozilla.org/cookbooks/operational_monitoring.html) - a tool for monitoring operational metrics
+- [bigquery-etl](https://github.com/mozilla/bigquery-etl) - used for writing ETL queries
+- [Looker](https://mozilla.cloud.looker.com) - used for creating dashboards and ad-hoc analyses
 
 ### Using Metrics in ETL queries
 
@@ -228,6 +230,18 @@ To use the metrics with Mozanalysis, you'll need `Metric`s not `MetricDefinition
 from mozanalysis.config import ConfigLoader
 metric = ConfigLoader.get_metric(metric_slug="active_hours", app_name="firefox_desktop")
 ```
+
+### Using Metrics in Looker
+
+Metric definitions are available in Looker. A single explore exists for each product/namespace that exposes all metric definitions from metric-hub. These explores are prefixed with "Metric Definitions" followed by the platform name. For example, for Firefox Desktop an explore "Metric Definitions Firefox Desktop" is available.
+
+The explore looks like the following:
+
+![](../assets/looker_metric_hub.png)
+
+The side pane has all available fields, with metrics appearing as dimensions. Metrics appear in separate sections that correspond to the data source they are derived from. A _Base Fields_ section contains dimensions that are useful for filtering or segmenting the population, like channel or operating system. These base fields are based on `clients_daily` tables.
+
+By default, metrics are computed on a per-client basis. To get a summary over the entire population or a population segment for a specific metric it is necessary to create a custom measure which aggregates the metric dimension.
 
 ## FAQ
 
