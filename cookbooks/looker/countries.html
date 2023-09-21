@@ -207,7 +207,7 @@ For example:</p>
   - &quot;The Republic of Côte d'Ivoire&quot;
 </code></pre>
 <p>To map (normalize) your input alias to its country code, add a LEFT join from your table or view to the alias <code>country_lookup</code>
-table: <code>mozdata.static.country_codes_v1</code>. For example:</p>
+table: <code>mozdata.static.country_names_v1</code>. For example:</p>
 <pre><code class="language-sql">SELECT
     ...
     your_table.country_field,
@@ -215,7 +215,7 @@ table: <code>mozdata.static.country_codes_v1</code>. For example:</p>
     ...
 FROM
     your_table
-    LEFT JOIN mozdata.static.country_codes_v1 country_lookup ON your_table.country_field = country_lookup.name
+    LEFT JOIN mozdata.static.country_names_v1 country_lookup ON your_table.country_field = country_lookup.name
 </code></pre>
 <p>Note: we use <code>??</code> as a country-code for empty country data from data sources. This will map to &quot;Unknown Country&quot;,
 &quot;Unknown Region&quot;, etc.</p>
