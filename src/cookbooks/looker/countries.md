@@ -37,7 +37,7 @@ CI:
 ```
 
 To map (normalize) your input alias to its country code, add a LEFT join from your table or view to the alias `country_lookup`
-table: `mozdata.static.country_codes_v1`. For example:
+table: `mozdata.static.country_names_v1`. For example:
 
 ```sql
 SELECT
@@ -47,7 +47,7 @@ SELECT
     ...
 FROM
     your_table
-    LEFT JOIN mozdata.static.country_codes_v1 country_lookup ON your_table.country_field = country_lookup.name
+    LEFT JOIN mozdata.static.country_names_v1 country_lookup ON your_table.country_field = country_lookup.name
 ```
 
 Note: we use `??` as a country-code for empty country data from data sources. This will map to "Unknown Country",
