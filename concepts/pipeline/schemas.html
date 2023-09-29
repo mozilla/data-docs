@@ -220,7 +220,7 @@ this job on the <a href="https://protosaur.dev/mps-deploys/"><code>mozilla-pipel
 
 %% Nodes
 subgraph mozilla-pipeline-schemas
-  master
+  main
   schemas(generated-schemas)
 end
 
@@ -233,7 +233,7 @@ bigquery(BigQuery)
 
 %% Node hyperlinks
 click bigquery &quot;../../cookbooks/bigquery.html&quot;
-click master &quot;https://github.com/mozilla-services/mozilla-pipeline-schemas&quot;
+click main &quot;https://github.com/mozilla-services/mozilla-pipeline-schemas&quot;
 click schemas &quot;https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/generated-schemas&quot;
 click generator &quot;https://github.com/mozilla/mozilla-schema-generator&quot;
 click transpiler &quot;https://github.com/mozilla/jsonschema-transpiler&quot;
@@ -243,7 +243,7 @@ click airflow &quot;https://github.com/mozilla/telemetry-airflow&quot;
 
 
 %% Edges
-master --&gt; |git clone| generator
+main --&gt; |git clone| generator
 transpiler --&gt; |used by| generator
 probe-info --&gt; |used by| generator
 generator --&gt; |scheduled by| airflow
@@ -289,7 +289,7 @@ may be affected by blocked schema deploys.</p>
 <pre class="mermaid">graph LR
 
 subgraph mozilla-pipeline-schemas
-  subgraph origin/master
+  subgraph origin/main
     templates --&gt;|cmake| schemas
   end
 
@@ -341,7 +341,7 @@ For example, the <code>first_shutdown</code> ping is a copy of the <code>main_pi
 Schemas are also altered in the generator to accommodate various edge-cases in the data.
 For example, a field that validates both boolean and integer types may be altered to assume a boolean type.</p>
 <p>The main entry-point is a script that merges and generates <code>*.schema.json</code> under the <code>schemas</code> directory, then translates these to <code>*.bq</code>.
-It commits the schema to the <code>generated-schemas</code> branch, with a change-log referencing commits in the <code>master</code> branch.</p>
+It commits the schema to the <code>generated-schemas</code> branch, with a change-log referencing commits in the <code>main</code> branch.</p>
 <h2 id="data-ingestion"><a class="header" href="#data-ingestion">Data Ingestion</a></h2>
 <h3 id="validation"><a class="header" href="#validation">Validation</a></h3>
 <p>Data that fails validation is sent to the <code>payload_bytes_error</code> table. Each row contains an
@@ -400,7 +400,7 @@ LIMIT 1
 <h4 id="data-structure-normalization"><a class="header" href="#data-structure-normalization">Data Structure Normalization</a></h4>
 <p>Thee decoder is also responsible for transforming the data to
 accommodate BigQuery limitations in data representation. All transformations are defined in
-<a href="https://github.com/mozilla/gcp-ingestion/blob/master/ingestion-beam/src/main/java/com/mozilla/telemetry/transforms/PubsubMessageToTableRow.java"><code>ingestion-beam</code> under
+<a href="https://github.com/mozilla/gcp-ingestion/blob/main/ingestion-beam/src/main/java/com/mozilla/telemetry/transforms/PubsubMessageToTableRow.java"><code>ingestion-beam</code> under
 <code>com.mozilla.telemtry.transforms.PubsubMessageToTableRow</code></a>.</p>
 <p>The following transformations are currently applied:</p>
 <div class="table-wrapper"><table><thead><tr><th>Transformation</th><th>Description</th></tr></thead><tbody>
@@ -448,7 +448,7 @@ subgraph workflow.tmo
 end
 
 subgraph mozilla-pipeline-schemas
-  master
+  main
   schemas(generated-schemas)
 end
 
@@ -459,13 +459,13 @@ generator(mozilla-schema-generator)
 manual --&gt; |run now| generator
 scheduled --&gt; |run at midnight UTC| generator
 
-master --&gt;|git pull| generator
+main --&gt;|git pull| generator
 generator --&gt; |git push| schemas
 </pre>
-<p>A new push to the <code>generated-schemas</code> branch is made every time the <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/probe_scraper.py"><code>probe-scraper.schema_generator</code></a> task is run by Airflow.
+<p>A new push to the <code>generated-schemas</code> branch is made every time the <a href="https://github.com/mozilla/telemetry-airflow/blob/main/dags/probe_scraper.py"><code>probe-scraper.schema_generator</code></a> task is run by Airflow.
 <code>mozilla-schema-generator</code> runs in a container that commits snapshots of generated schemas to the remote repository.
-Generated schemas may change when <code>probe-scraper</code> finds new probes in defined repositories e.g. <code>hg.mozilla.org</code> or <a href="https://github.com/mozilla/probe-scraper/blob/master/repositories.yaml"><code>glean</code></a>.
-It may also change when the <code>master</code> branch contains new or updated schemas under the <code>schemas/</code> directory.</p>
+Generated schemas may change when <code>probe-scraper</code> finds new probes in defined repositories e.g. <code>hg.mozilla.org</code> or <a href="https://github.com/mozilla/probe-scraper/blob/main/repositories.yaml"><code>glean</code></a>.
+It may also change when the <code>main</code> branch contains new or updated schemas under the <code>schemas/</code> directory.</p>
 <p>To manually trigger a new push, clear the state of a single task in the workflow admin UI.
 To update the schedule and dependencies, update the DAG definition.</p>
 <h3 id="deploying-schemas-to-production"><a class="header" href="#deploying-schemas-to-production">Deploying schemas to production</a></h3>
