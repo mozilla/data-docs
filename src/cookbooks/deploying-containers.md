@@ -41,7 +41,7 @@ to start the conversation.
 - In your CircleCI config file add a changeset like this:
   - [Add automated deployment of docker image to google container registry…](https://github.com/mozilla/pensieve/commit/b56f6f78b16d5893ff1cbf1ba895fa5bc85266c0)
   - The `orb` directive allows the use of the [CircleCI GCP-GCR orb](https://circleci.com/orbs/registry/orb/circleci/gcp-gcr) build-and-push-image job
-  - In your `workflows` section, add `gcp-gcr/build-and-push-image` as a job and require any dependencies you’d like to pass before pushing a new image. Assuming you only want this deployment to occur on new commits to master, add a filter for only the master branch (as in the changeset above)
+  - In your `workflows` section, add `gcp-gcr/build-and-push-image` as a job and require any dependencies you’d like to pass before pushing a new image. Assuming you only want this deployment to occur on new commits to main, add a filter for only the main branch (as in the changeset above)
 - Create and merge a pull request for this changeset and your newly built image should be in your project’s container registry in a few moments!
 
 ### Optional
