@@ -15,7 +15,7 @@ graph TD
 
 %% Nodes
 subgraph mozilla-pipeline-schemas
-  master
+  main
   schemas(generated-schemas)
 end
 
@@ -28,7 +28,7 @@ bigquery(BigQuery)
 
 %% Node hyperlinks
 click bigquery "../../cookbooks/bigquery.html"
-click master "https://github.com/mozilla-services/mozilla-pipeline-schemas"
+click main "https://github.com/mozilla-services/mozilla-pipeline-schemas"
 click schemas "https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/generated-schemas"
 click generator "https://github.com/mozilla/mozilla-schema-generator"
 click transpiler "https://github.com/mozilla/jsonschema-transpiler"
@@ -38,7 +38,7 @@ click airflow "https://github.com/mozilla/telemetry-airflow"
 
 
 %% Edges
-master --> |git clone| generator
+main --> |git clone| generator
 transpiler --> |used by| generator
 probe-info --> |used by| generator
 generator --> |scheduled by| airflow
@@ -106,7 +106,7 @@ may be affected by blocked schema deploys.
 graph LR
 
 subgraph mozilla-pipeline-schemas
-  subgraph origin/master
+  subgraph origin/main
     templates -->|cmake| schemas
   end
 
@@ -168,7 +168,7 @@ Schemas are also altered in the generator to accommodate various edge-cases in t
 For example, a field that validates both boolean and integer types may be altered to assume a boolean type.
 
 The main entry-point is a script that merges and generates `*.schema.json` under the `schemas` directory, then translates these to `*.bq`.
-It commits the schema to the `generated-schemas` branch, with a change-log referencing commits in the `master` branch.
+It commits the schema to the `generated-schemas` branch, with a change-log referencing commits in the `main` branch.
 
 ## Data Ingestion
 
@@ -244,7 +244,7 @@ LIMIT 1
 Thee decoder is also responsible for transforming the data to
 accommodate BigQuery limitations in data representation. All transformations are defined in
 [`ingestion-beam` under
-`com.mozilla.telemtry.transforms.PubsubMessageToTableRow`](https://github.com/mozilla/gcp-ingestion/blob/master/ingestion-beam/src/main/java/com/mozilla/telemetry/transforms/PubsubMessageToTableRow.java).
+`com.mozilla.telemtry.transforms.PubsubMessageToTableRow`](https://github.com/mozilla/gcp-ingestion/blob/main/ingestion-beam/src/main/java/com/mozilla/telemetry/transforms/PubsubMessageToTableRow.java).
 
 The following transformations are currently applied:
 
@@ -303,7 +303,7 @@ subgraph workflow.tmo
 end
 
 subgraph mozilla-pipeline-schemas
-  master
+  main
   schemas(generated-schemas)
 end
 
@@ -314,14 +314,14 @@ generator(mozilla-schema-generator)
 manual --> |run now| generator
 scheduled --> |run at midnight UTC| generator
 
-master -->|git pull| generator
+main -->|git pull| generator
 generator --> |git push| schemas
 ```
 
-A new push to the `generated-schemas` branch is made every time the [`probe-scraper.schema_generator`](https://github.com/mozilla/telemetry-airflow/blob/master/dags/probe_scraper.py) task is run by Airflow.
+A new push to the `generated-schemas` branch is made every time the [`probe-scraper.schema_generator`](https://github.com/mozilla/telemetry-airflow/blob/main/dags/probe_scraper.py) task is run by Airflow.
 `mozilla-schema-generator` runs in a container that commits snapshots of generated schemas to the remote repository.
-Generated schemas may change when `probe-scraper` finds new probes in defined repositories e.g. `hg.mozilla.org` or [`glean`](https://github.com/mozilla/probe-scraper/blob/master/repositories.yaml).
-It may also change when the `master` branch contains new or updated schemas under the `schemas/` directory.
+Generated schemas may change when `probe-scraper` finds new probes in defined repositories e.g. `hg.mozilla.org` or [`glean`](https://github.com/mozilla/probe-scraper/blob/main/repositories.yaml).
+It may also change when the `main` branch contains new or updated schemas under the `schemas/` directory.
 
 To manually trigger a new push, clear the state of a single task in the workflow admin UI.
 To update the schedule and dependencies, update the DAG definition.
