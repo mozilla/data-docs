@@ -11,19 +11,18 @@ provides a data source for understanding user interactions with the urlbar and s
 Its structure and fields are designed around the notion of urlbar search sessions.
 This data is Desktop-only.
 
-
 ## Urlbar search sessions
 
-A __urlbar search session__ is a sequence of interactions with the
+A **urlbar search session** is a sequence of interactions with the
 [urlbar](https://firefox-source-docs.mozilla.org/browser/urlbar/nontechnical-overview.html),
 starting from when the urlbar receives focus,
 and ending when the user navigates to a new page or focuses outside of it,
 causing the result panel to close.
-In this context, __search__ means _using the urlbar to search for a page_,
+In this context, **search** means _using the urlbar to search for a page_,
 not specifically _using a search engine_.
 
 The following diagram shows the user interaction flow through a search session.
-The most common case ("user types a query and clicks on a result") is shown with __bold__ arrows.
+The most common case ("user types a query and clicks on a result") is shown with **bold** arrows.
 Unusual cases are shown with dotted lines.
 
 ```mermaid
@@ -45,28 +44,28 @@ G -.->|panel stays open| B
 E -.->|search mode| B
 ```
 
-A search session includes one or more __event actions__ taken by the user,
+A search session includes one or more **event actions** taken by the user,
 usually in response to the results that are displayed.
 There are 3 types of event action:
-- __Engaged:__ the user selects a result.
-This includes pressing Enter after typing, which has the effect of selecting the first result.
-- __Abandoned:__ the user focuses outside of the urlbar without selecting a result.
-- __Annoyance:__ the user selects an auxiliary option associated with a result,
-eg. `Dismiss` in the meatball menu.
 
-The search session ends if the event action causes the panel to close, eg. by navigating to a new page.
+- **Engaged:** the user selects a result.
+  This includes pressing Enter after typing, which has the effect of selecting the first result.
+- **Abandoned:** the user focuses outside of the urlbar without selecting a result.
+- **Annoyance:** the user selects an auxiliary option associated with a result,
+  e.g. `Dismiss` in the meatball menu.
+
+The search session ends if the event action causes the panel to close, e.g. by navigating to a new page.
 Most search sessions see the user typing some characters and selecting a result,
 ending the session after one event action.
 
 However, in some instances the event action leaves the panel open for further interaction,
-eg. selecting the `Dismiss` annoyance signal.
+e.g. selecting the `Dismiss` annoyance signal.
 In such cases, the search session will contain multiple event actions.
 Also, in some search sessions, the user can take an event action without typing any characters
-or without results being displayed, eg. using the `Paste & Go` context menu option.
+or without results being displayed, e.g. using the `Paste & Go` context menu option.
 
-An event action is called __terminal__ if it causes the session to end.
+An event action is called **terminal** if it causes the session to end.
 Whether or not an event action is terminal is determined _a posteriori_ from its characteristics.
-
 
 ### Measurement
 
@@ -91,16 +90,15 @@ and the analytical focus is on counting occurrences rather than event sequences.
 Also, the events do not contain an indicator of whether they are terminal.
 This determination is made at ETL time based on the event contents.
 
-
 ### Summary
 
 This table summarizes key information about the 3 types of event action:
 
-| Event action | Terminal? | Glean event | Event extra fields of interest |
-|---|---|---|---|
-| Engaged | <ul><li>Usually yes (eg. clicking on a result)</li><li>Sometimes no (eg. entering search mode)</li></ul> | `urlbar.engagement` | <ul><li>Ordered list of displayed results: `results`</li><li>Selected result type: `selected_result`</li><li>Selected result position (1-indexed): `selected_position`</li></ul> |
-| Abandoned | Yes | `urlbar.abandonment` | Ordered list of displayed results: `results` |
-| Annoyance | <ul><li>Sometimes yes (eg. "Learn More")</li><li>Sometimes no (eg. "Dismiss")</li></ul> | `urlbar.engagement` | <ul><li>Ordered list of displayed results: `results`</li><li>Selected result type: `selected_result`</li><li>Selected result position (1-indexed): `selected_position`</li><li>Annoyance signal (the option selected for a result): `engagement_type`</li></ul> |
+| Event action | Terminal?                                                                                                  | Glean event          | Event extra fields of interest                                                                                                                                                                                                                                  |
+| ------------ | ---------------------------------------------------------------------------------------------------------- | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Engaged      | <ul><li>Usually yes (e.g. clicking on a result)</li><li>Sometimes no (e.g. entering search mode)</li></ul> | `urlbar.engagement`  | <ul><li>Ordered list of displayed results: `results`</li><li>Selected result type: `selected_result`</li><li>Selected result position (1-indexed): `selected_position`</li></ul>                                                                                |
+| Abandoned    | Yes                                                                                                        | `urlbar.abandonment` | Ordered list of displayed results: `results`                                                                                                                                                                                                                    |
+| Annoyance    | <ul><li>Sometimes yes (e.g. "Learn More")</li><li>Sometimes no (e.g. "Dismiss")</li></ul>                  | `urlbar.engagement`  | <ul><li>Ordered list of displayed results: `results`</li><li>Selected result type: `selected_result`</li><li>Selected result position (1-indexed): `selected_position`</li><li>Annoyance signal (the option selected for a result): `engagement_type`</li></ul> |
 
 ## Results, impressions and clicks
 
@@ -111,55 +109,57 @@ is built on top of the `urlbar_events` table to serve this need.
 
 The `results` and `selected_result` fields in the Glean event extras report "raw" result types,
 which are sometimes more granular than Product needs.
-Product has developed a 
+Product has developed a
 [mapping](https://github.com/mozilla/bigquery-etl/blob/main/sql/mozfun/norm/result_type_to_product_name/udf.sql)
-which translates these raw values into interpretable __Product result types__ (eg. "search suggestion").
-All columns in the `urlbar_events` table containing raw result types (eg. `selected_result`)
-have a corresponding Product version (eg. `product_selected_result`) with the mapped values.
+which translates these raw values into interpretable **Product result types** (e.g. "search suggestion").
+All columns in the `urlbar_events` table containing raw result types (e.g. `selected_result`)
+have a corresponding Product version (e.g. `product_selected_result`) with the mapped values.
 If a raw result type does not map to any Product result type, the mapping returns `other`.
 
-An __impression__ is defined as a result that is showing in the result panel at event action time.
+An **impression** is defined as a result that is showing in the result panel at event action time.
 This means:
+
 - We only consider 1 set of impressions per event action. As the user types characters,
-they will see intermediate result sets, as the result panel updates on each keystroke.
-However, these are currently not taken into account.
-- At event action time, there are usually multiple results showing, ie. multiple impressions.
-Many impression sets have 10 impressions (the default number).
-The number of impressions shown on an event action is given in the `num_total_results` column.
+  they will see intermediate result sets, as the result panel updates on each keystroke.
+  However, these are currently not taken into account.
+- At event action time, there are usually multiple results showing, i.e. multiple impressions.
+  Many impression sets have 10 impressions (the default number).
+  The number of impressions shown on an event action is given in the `num_total_results` column.
 - An impression set may have multiple impressions of the same type.
-Eg. multiple search suggestions are usually surfaced for a typed query.
+  e.g. multiple search suggestions are usually surfaced for a typed query.
 
 The ordered list of result impressions for each event action is given in the array-valued column `results`.
 
-A __click__ occurs when the user selects a result, ie. taking an engaged event action.
+A **click** occurs when the user selects a result, i.e. taking an engaged event action.
+
 - We use this as standard terminology, even though the user may not have physically clicked a mouse.
 - The majority of clicks are terminal: they cause a page to be loaded and the search session to end.
-In a few rare cases, a click is not terminal.
+  In a few rare cases, a click is not terminal.
 
 The type of result selected is given in the `selected_result`/`product_selected_result` columns.
 
-__CTR__ can be computed in 2 ways for a given result type:
+**CTR** can be computed in 2 ways for a given result type:
+
 1. num clicks / total num impressions
 2. num clicks / num search sessions with at least 1 such impression
 
 We generally use (2.) for Product-focused analyses and experiments, including the
 [Looker explore](https://mozilla.cloud.looker.com/explore/firefox_desktop/urlbar_events).
-For result types that have at most 1 impression per result set (eg. navigational),
+For result types that have at most 1 impression per result set (e.g. navigational),
 these will be the same.
-For types that tend to have multiple impressions per result set (eg. search suggestions),
+For types that tend to have multiple impressions per result set (e.g. search suggestions),
 (1.) could be much lower than (2.).
 
-An __annoyance__ occurs when the user selects an option associated with a result, eg. "Dismiss",
+An **annoyance** occurs when the user selects an option associated with a result, e.g. "Dismiss",
 without selecting the result itself.
 These are usually found in the meatball menu next to the displayed result.
 The `annoyance_signal_type` column gives the type of annoyance option that was selected,
 and `selected_result`/`product_selected_result` give the result type with which the annoyance is associated.
 
-
 ## Urlbar events table
 
 The [`mozdata.firefox_desktop.urlbar_events`](https://github.com/mozilla/bigquery-etl/tree/main/sql_generators/urlbar_events/templates)
-table contains 1 row for each Glean event (ie. 1 row per event action) reported across all Desktop users.
+table contains 1 row for each Glean event (i.e. 1 row per event action) reported across all Desktop users.
 
 As discussed above, most search sessions only have 1 associated row, but some have multiple.
 There is no session identifier linking rows associated with the same session
@@ -169,30 +169,29 @@ The event action type is listed in the `event_action` column.
 
 Most of the Glean event extras fields are included in separate columns.
 Additionally:
+
 - The array-valued `results` column lists the ordered results showing at event action time.
-Each array element is a struct with `result_type`, `product_result_type`, `position`, and `result_group`.
+  Each array element is a struct with `result_type`, `product_result_type`, `position`, and `result_group`.
 - `selected_result`, `product_selected_result`, `selected_position` give the selected result
-associated with an engagement or annoyance.
+  associated with an engagement or annoyance.
 - `annoyance_signal_type` gives the annoyance option selected, if any.
 - `event_id` is a row identifier UUID. This is mainly useful when unnesting the `results` column.
 - `glean_client_id`, `seq` (from the event's `ping_info`), `event_timestamp` can be used
-to build event sequences and interlace with SERP events.
+  to build event sequences and interlace with SERP events.
 
 This table summarizes the main column values associated with each event action:
 
-| Event action | `event_action` | `is_terminal` | `selected_result` | `annoyance_signal_type` |
-|---|---|---|---|---|
-| Engaged | `engaged` | `true` or `false` | `selected_result` from Glean engagement event | `null` |
-| Abandoned | `abandoned` | `true` | `null` | `null` |
-| Annoyance | `annoyance` | `true` or `false` | `selected_result` from Glean engagement event | `engagement_type` from Glean engagement event |
-
+| Event action | `event_action` | `is_terminal`     | `selected_result`                             | `annoyance_signal_type`                       |
+| ------------ | -------------- | ----------------- | --------------------------------------------- | --------------------------------------------- |
+| Engaged      | `engaged`      | `true` or `false` | `selected_result` from Glean engagement event | `null`                                        |
+| Abandoned    | `abandoned`    | `true`            | `null`                                        | `null`                                        |
+| Annoyance    | `annoyance`    | `true` or `false` | `selected_result` from Glean engagement event | `engagement_type` from Glean engagement event |
 
 ### Gotchas
 
 - Each search session may have multiple associated rows.
-To count __unique search sessions__ (the most common use case), condition on `is_terminal = true`.
+  To count **unique search sessions** (the most common use case), condition on `is_terminal = true`.
 - To work with impressions, `UNNEST` the `results` column.
-
 
 ### Example queries
 
@@ -274,11 +273,9 @@ WHERE
 
 This dataset is scheduled on Airflow and updated daily.
 
-
 ### Schema
 
 The data is partitioned by `submission_date`.
-
 
 ### Code Reference
 
