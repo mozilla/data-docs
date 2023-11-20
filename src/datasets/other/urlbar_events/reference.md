@@ -157,6 +157,8 @@ These are usually found in the meatball menu next to the displayed result.
 The `annoyance_signal_type` column gives the type of annoyance option that was selected,
 and `selected_result`/`product_selected_result` give the result type with which the annoyance is associated.
 
+For more examples of previously used metrics, see the [Firefox Suggest Jetstream outccome](https://github.com/mozilla/metric-hub/blob/main/jetstream/outcomes/firefox_desktop/firefox_suggest.toml)
+
 ## Urlbar events table
 
 The [`mozdata.firefox_desktop.urlbar_events`](https://github.com/mozilla/bigquery-etl/tree/main/sql_generators/urlbar_events/templates)
