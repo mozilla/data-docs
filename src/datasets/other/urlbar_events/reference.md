@@ -66,7 +66,8 @@ or without results being displayed, e.g. using the `Paste & Go` context menu opt
 
 An event action is called **terminal** if it causes the session to end.
 Whether or not an event action is terminal is determined _a posteriori_ from its characteristics.
-For the complete logic on terminal event actions, see [this code](https://github.com/mozilla/bigquery-etl/blob/main/sql_generators/urlbar_events/templates/desktop_query.sql#L30)
+For the complete logic on terminal event actions, see
+[this code](https://github.com/mozilla/bigquery-etl/blob/main/sql_generators/urlbar_events/templates/desktop_query.sql#L30).
 
 ### Measurement
 
@@ -157,7 +158,8 @@ These are usually found in the meatball menu next to the displayed result.
 The `annoyance_signal_type` column gives the type of annoyance option that was selected,
 and `selected_result`/`product_selected_result` give the result type with which the annoyance is associated.
 
-For more examples of previously used metrics, see the [Firefox Suggest Jetstream outccome](https://github.com/mozilla/metric-hub/blob/main/jetstream/outcomes/firefox_desktop/firefox_suggest.toml)
+For more examples of previously used metrics, see the
+[Firefox Suggest Jetstream outcome](https://github.com/mozilla/metric-hub/blob/main/jetstream/outcomes/firefox_desktop/firefox_suggest.toml).
 
 ## Urlbar events table
 
