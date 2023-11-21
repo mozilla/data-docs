@@ -9592,6 +9592,112 @@ These tables include the client ID and could be joined with other tables to filt
 </ul>
 </li>
 </ul>
+<h2 id="etl-pipeline"><a class="header" href="#etl-pipeline">ETL Pipeline</a></h2>
+<h3 id="scheduling-14"><a class="header" href="#scheduling-14">Scheduling</a></h3>
+<p>GLAM is scheduled to run daily via Airflow. There are two separate ETL pipelines for computing GLAM datasets for <a href="https://workflow.telemetry.mozilla.org/dags/glam/grid">Firefox Desktop legacy</a>, <a href="https://workflow.telemetry.mozilla.org/dags/glam_fenix/grid">Fenix</a> and <a href="https://workflow.telemetry.mozilla.org/dags/glam_fog/grid">Firefox on Glean</a>.</p>
+<h3 id="source-code"><a class="header" href="#source-code">Source Code</a></h3>
+<p>The ETL code base lives in the <a href="https://github.com/mozilla/bigquery-etl">bigquery-etl repository</a> and is partially generated. The scripts for generating ETL queries for Firefox Desktop Legacy currently live <a href="https://github.com/mozilla/bigquery-etl/tree/main/script/glam">here</a> while the GLAM logic for Glean apps lives <a href="https://github.com/mozilla/bigquery-etl/tree/main/bigquery_etl/glam">here</a>.</p>
+<h3 id="steps-1"><a class="header" href="#steps-1">Steps</a></h3>
+<p>GLAM has a separate set of steps and intermediate tables to aggregate scalar and histogram probes.</p>
+<h4 id="latest_versions"><a class="header" href="#latest_versions"><code>latest_versions</code></a></h4>
+<ul>
+<li>This task pulls in the most recent version for each channel from https://product-details.mozilla.org/1.0/firefox_versions.json</li>
+</ul>
+<h4 id="clients_daily_histogram_aggregates_process"><a class="header" href="#clients_daily_histogram_aggregates_process"><code>clients_daily_histogram_aggregates_&lt;process&gt;</code></a></h4>
+<ul>
+<li>The set of steps that load data to this table are divided into different processes (<code>parent</code>, <code>content</code>, <code>gpu</code>) plus a keyed step for keyed histograms.</li>
+<li>The parent job creates or overwrites the partition corresponding to the <code>logical_date</code>, and other processes append data to that partition.</li>
+<li>The process uses <code>telemetry.buildhub2</code> to select rows with valid <code>build_ids</code>.</li>
+<li>Aggregations are done per client, per day, and include a line for each <code>submission_date</code>, <code>client_id</code>, <code>os</code>, <code>app_version</code>, <code>build_id</code>, and <code>channel</code>.</li>
+<li>The aggregation is done by adding histogram values with the same key for the dimensions listed above.</li>
+<li>The queries for the different steps are generated and run as part of each step.</li>
+<li>The &quot;keyed&quot; step includes all Keyed Histogram probes, regardless of process (<code>parent</code>, <code>content</code>, <code>gpu</code>).</li>
+<li>As a result of the subdivisions in this step, it generates different rows for each process and keyed/non-keyed metric, which will be grouped together in the <code>clients_histogram_aggregates</code> step.</li>
+<li>Clients that are on the release channel of the Windows operating system get sampled to reduce the data size.</li>
+<li>The partitions are set to expire after 7 days.</li>
+</ul>
+<h4 id="clients_histogram_aggregates_new"><a class="header" href="#clients_histogram_aggregates_new"><code>clients_histogram_aggregates_new</code></a></h4>
+<ul>
+<li>This step groups together all rows that have the same <code>submission_date</code> and <code>logical_date</code> from different processes and keyed and non-keyed sources, and combines them into a single row in the <code>histogram_aggregates</code> column. It sums the histogram values with the same key.</li>
+<li>This process is only applied to the last three versions.</li>
+<li>The table is overwritten at every execution of this step.</li>
+</ul>
+<h4 id="clients_histogram_aggregates"><a class="header" href="#clients_histogram_aggregates"><code>clients_histogram_aggregates</code></a></h4>
+<ul>
+<li>New entries from <code>clients_histogram_aggregates_new</code> are merged with the 3 last versions of previous day’s partition and written to the current day’s partition.</li>
+<li>The most recent partition contains the current snapshot of the last three versions of data.</li>
+<li>The partitions expire in 7 days.</li>
+</ul>
+<h4 id="clients_histogram_buckets_counts"><a class="header" href="#clients_histogram_buckets_counts"><code>clients_histogram_buckets_counts</code></a></h4>
+<ul>
+<li>This process starts by creating wildcards for <code>os</code> and <code>app_build_id</code> which are needed for aggregating values across os and build IDs later on.</li>
+<li>It then filters out builds that have less than 0.5% of WAU (which can vary per channel). This is referenced in https://github.com/mozilla/glam/issues/1575#issuecomment-946880387.</li>
+<li>The process then normalizes histograms per client - it sets the sum of histogram values for each client for a given metric to 1.</li>
+<li>Finally, it removes the <code>client_id</code> dimension by aggregating all histograms for a given metric and adding the clients' histogram values.</li>
+</ul>
+<h4 id="clients_histogram_probe_counts"><a class="header" href="#clients_histogram_probe_counts"><code>clients_histogram_probe_counts</code></a></h4>
+<ul>
+<li>This process generates buckets - which can be linear or exponential - based on the <code>metric_type</code>.</li>
+<li>It then aggregates metrics per wildcards (<code>os</code>, <code>app_build_id</code>).</li>
+<li>Finally, it rebuilds histograms using the Dirichlet Distribution, normalized using the number of clients that contributed to that histogram in the <code>clients_histogram_buckets_counts</code> step.</li>
+</ul>
+<h4 id="histogram_percentiles"><a class="header" href="#histogram_percentiles"><code>histogram_percentiles</code></a></h4>
+<ul>
+<li>Uses <code>mozfun.glam.percentile</code> UDF to build histogram percentiles, from [0.1 to 99.9]</li>
+</ul>
+<hr />
+<h4 id="clients_daily_scalar_aggregates"><a class="header" href="#clients_daily_scalar_aggregates"><code>clients_daily_scalar_aggregates</code></a></h4>
+<ul>
+<li>The set of steps that load data to this table are divided into non-keyed <code>scalar</code>, <code>keyed_boolean</code> and <code>keyed_scalar</code>. The non-keyed scalar job creates or overwrites the partition corresponding to the <code>logical_date</code>, and other processes append data to that partition.</li>
+<li>The process uses <code>telemetry.buildhub2</code> to select rows with valid <code>build_ids</code>.</li>
+<li>Aggregations are done per client, per day and include a line for each <code>client</code>, <code>os</code>, <code>app_version</code>, <code>build_id</code>, and <code>channel</code>.</li>
+<li>The queries for the different steps are generated and run as part of each step. All steps include probes regardless of process (<code>parent</code>, <code>content</code>, <code>gpu</code>).</li>
+<li>As a result of the subdivisions in this step, it generates different rows for each keyed/non-keyed, boolean/scalar metric, which will be grouped together in <code>clients_scalar_aggregates</code>.</li>
+<li>Clients that are on the release channel of the Windows operating system get sampled to reduce the data size.</li>
+<li>Partitions expire in 7 days.</li>
+</ul>
+<h4 id="clients_scalar_aggregates"><a class="header" href="#clients_scalar_aggregates"><code>clients_scalar_aggregates</code></a></h4>
+<ul>
+<li>The process starts by taking the <code>clients_daily_scalar_aggregates</code> as the primary source.</li>
+<li>It then groups all rows that have the same <code>submission_date</code> and <code>logical_date</code> from the keyed and non-keyed, scalar and boolean sources, and combines them into a single row in the <code>scalar_aggregates</code> column.</li>
+<li>If the <code>agg_type</code> is <code>count</code>, <code>sum</code>, <code>true</code>, or <code>false</code>, the process will sum the values.</li>
+<li>If the <code>agg_type</code> is <code>max</code>, it will take the maximum value, and if it is <code>min</code>, it will take the minimum value.</li>
+<li>This process is only applied to the last three versions.</li>
+<li>The partitions expire in 7 days.</li>
+</ul>
+<h4 id="scalar_percentiles"><a class="header" href="#scalar_percentiles"><code>scalar_percentiles</code></a></h4>
+<ul>
+<li>This process produces a user count and percentiles for scalar metrics.</li>
+<li>It generates wildcard combinations of <code>os</code> and <code>app_build_id</code> and merges all submissions from a client for the same <code>os</code>, <code>app_version</code>, <code>app_build_id</code> and channel into the <code>scalar_aggregates</code> column.</li>
+<li>The <code>user_count</code> column is computed taking sampling into account.</li>
+<li>Finally it splits the aggregates into percentiles from [0.1 to 99.9]</li>
+</ul>
+<h4 id="client_scalar_probe_counts"><a class="header" href="#client_scalar_probe_counts"><code>client_scalar_probe_counts</code></a></h4>
+<ul>
+<li>This step processes booleans and scalars, although booleans are not supported by GLAM.
+<ul>
+<li>For boolean metrics the process aggregates their values with the following rule: &quot;never&quot; if all values for a metric are false, &quot;always&quot; if all values are true, and sometimes if there's a mix.</li>
+<li>For scalar and <code>keyed_scalar</code> probes the process starts by building the buckets per metric, then it generates wildcards for os and <code>app_build_id</code>. It then aggregates all submissions from the same <code>client_id</code> under one row and assigns the <code>user_count</code> column to it with the following rule: 10 if os is &quot;Windows&quot; and channel is &quot;release&quot;, 1 otherwise. After that it finishes by aggregating the rows per metric, placing the scalar values in their appropriate buckets and summing up all <code>user_count</code> values for that metric.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="glam_user_counts"><a class="header" href="#glam_user_counts"><code>glam_user_counts</code></a></h4>
+<ul>
+<li>Combines both aggregated scalar and histogram values.</li>
+<li>This process produces a user count for each combination of <code>os</code>, <code>app_version</code>, <code>app_build_id</code>, channel.</li>
+<li>It builds a client count from the union of histograms and scalars, including all combinations in which <code>os</code>, <code>app_version</code>, <code>app_build_id</code>, and <code>channel</code> are wildcards.</li>
+</ul>
+<h4 id="glam_sample_counts"><a class="header" href="#glam_sample_counts"><code>glam_sample_counts</code></a></h4>
+<ul>
+<li>This process calculates the <code>total_sample</code> column by adding up all the <code>aggregates</code> values.</li>
+<li>This works because in the primary sources the values also represent a count of the samples that registered their respective keys</li>
+</ul>
+<h4 id="extract_user_counts"><a class="header" href="#extract_user_counts"><code>extract_user_counts</code></a></h4>
+<ul>
+<li>This step exports user counts in its final shape to GCS as a CSV.</li>
+<li>It first copies a deduplicated version of the primary source to a temporary table, removes the previously exported CSV files from GCS, then exports the temporary table to GCS as CSV files.</li>
+</ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/glam.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="experiment-datasets"><a class="header" href="#experiment-datasets">Experiment datasets</a></h1>
 <p>See <a href="datasets/../concepts/experiments.html">Experimentation</a> for an overview of experimentation in Firefox.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/experiments.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="jetstream-datasets"><a class="header" href="#jetstream-datasets">Jetstream datasets</a></h1>
@@ -9756,7 +9862,7 @@ is then re-used in sub-sequent analysis runs.</p>
 <p>The combination of <code>(client_id, branch)</code> is unique.</p>
 <p>Each segment defines an additional non-NULL boolean column per segment which is set to
 <code>true</code> if the client is in the segment and <code>false</code> otherwise.</p>
-<h2 id="scheduling-14"><a class="header" href="#scheduling-14">Scheduling</a></h2>
+<h2 id="scheduling-15"><a class="header" href="#scheduling-15">Scheduling</a></h2>
 <p>Jetstream is updated nightly by telemetry-airflow.
 It is invoked by the <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/jetstream.py"><code>jetstream</code> DAG</a>.</p>
 <h2 id="code-reference-11"><a class="header" href="#code-reference-11">Code reference</a></h2>
@@ -10166,7 +10272,7 @@ GROUP BY submission_date
 ORDER BY submission_date
 </code></pre>
 <p><a href="https://sql.telemetry.mozilla.org/queries/51140/source"><code>STMO#51140</code></a></p>
-<h2 id="scheduling-15"><a class="header" href="#scheduling-15">Scheduling</a></h2>
+<h2 id="scheduling-16"><a class="header" href="#scheduling-16">Scheduling</a></h2>
 <p>This job is
 <a href="https://github.com/mozilla/bigquery-etl/blob/ad84a15d580333b41d36cfe8331e51238f3bafa1/dags/bqetl_search.py#L40">scheduled on airflow</a>
 to run daily.</p>
@@ -10263,7 +10369,7 @@ calculates searches per <code>normalized_channel</code> for US clients on an arb
 If you have trouble viewing this query,
 it's likely you don't have the proper permissions.
 For more details see the <a href="datasets/search/search_clients_engines_sources_daily/../../search.html">search data documentation</a>.</p>
-<h2 id="scheduling-16"><a class="header" href="#scheduling-16">Scheduling</a></h2>
+<h2 id="scheduling-17"><a class="header" href="#scheduling-17">Scheduling</a></h2>
 <p>This dataset is scheduled on Airflow
 (<a href="https://github.com/mozilla/bigquery-etl/blob/ad84a15d580333b41d36cfe8331e51238f3bafa1/dags/bqetl_search.py#L64">source</a>).</p>
 <h2 id="schema-9"><a class="header" href="#schema-9">Schema</a></h2>
@@ -10457,7 +10563,7 @@ outage from Armagaddon, and the outage for ad click telemetry in October.</p>
 shows the amount of different search activity taken by clients. We can use it
 to determine the % of clients who partake in each activity, regardless of their
 baseline amount of activity.</p>
-<h2 id="scheduling-17"><a class="header" href="#scheduling-17">Scheduling</a></h2>
+<h2 id="scheduling-18"><a class="header" href="#scheduling-18">Scheduling</a></h2>
 <p>This dataset is scheduled on Airflow
 (<a href="https://github.com/mozilla/bigquery-etl/blob/ad84a15d580333b41d36cfe8331e51238f3bafa1/dags/bqetl_search.py#L52">source</a>).</p>
 <h2 id="schema-10"><a class="header" href="#schema-10">Schema</a></h2>
@@ -10729,7 +10835,7 @@ GROUP BY 1,2
 ORDER BY 1
 </code></pre>
 <p><a href="https://sql.telemetry.mozilla.org/queries/72054"><code>STMO#72054</code></a></p>
-<h2 id="scheduling-18"><a class="header" href="#scheduling-18">Scheduling</a></h2>
+<h2 id="scheduling-19"><a class="header" href="#scheduling-19">Scheduling</a></h2>
 <p>This dataset is scheduled on Airflow (<a href="https://github.com/mozilla/telemetry-airflow/blob/59effc6ead0b764a9ef3d30f40fbdb4b0b3394ec/dags/copy_deduplicate.py#L337">source</a>).</p>
 <h2 id="schema-12"><a class="header" href="#schema-12">Schema</a></h2>
 <p>As of 2020-07-24, the current version of <code>firefox_nondesktop_day_2_7_activation</code> is v1, and has a schema as follows:</p>
@@ -10872,7 +10978,7 @@ ORDER BY
   package_name, Store_Visits
 </code></pre>
 <p><a href="https://sql.telemetry.mozilla.org/queries/74288/source"><code>STMO#74288</code></a></p>
-<h2 id="scheduling-19"><a class="header" href="#scheduling-19">Scheduling</a></h2>
+<h2 id="scheduling-20"><a class="header" href="#scheduling-20">Scheduling</a></h2>
 <p>The job to retrieve the raw data from the Google Play Store can be found in <a href="https://github.com/mozilla/play-store-export">the <code>play-store-export</code> repository</a> and it is scheduled in <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/play_store_export.py">airflow</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/non_desktop/google_play_store/reference.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="apple-app-store"><a class="header" href="#apple-app-store">Apple App Store</a></h1>
 <ul>
@@ -10985,7 +11091,7 @@ GROUP BY
   date, app_name, source
 </code></pre>
 <p><a href="https://sql.telemetry.mozilla.org/queries/74290/source"><code>STMO#74290</code></a></p>
-<h2 id="scheduling-20"><a class="header" href="#scheduling-20">Scheduling</a></h2>
+<h2 id="scheduling-21"><a class="header" href="#scheduling-21">Scheduling</a></h2>
 <p>The job to retrieve the raw data from the Apple App Store can be found in <a href="https://github.com/mozilla/app-store-analytics-export">the <code>app-store-analytics-export</code> repository</a>. The exported results are individual metrics grouped by a single dimension. These exports are initially loaded into the <a href="https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&amp;p=moz-fx-data-marketing-prod&amp;d=apple_app_store_exported&amp;page=dataset"><code>apple_app_store_exported</code></a> data source. The exports are scheduled in <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/app_store_analytics.py"><code>airflow</code></a>. The job to create the derived tables found in <a href="https://console.cloud.google.com/bigquery?project=moz-fx-data-marketing-prod&amp;p=moz-fx-data-marketing-prod&amp;d=apple_app_store&amp;page=dataset"><code>moz-fx-data-marketing-prod.apple_app_store</code></a> can be found in <a href="https://github.com/mozilla/bigquery-etl/tree/master/sql/moz-fx-data-marketing-prod/apple_app_store"><code>bigquery-etl</code> under <code>apple_app_store</code></a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/non_desktop/apple_app_store/reference.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="other-datasets"><a class="header" href="#other-datasets">Other Datasets</a></h1>
 <p>These datasets are for projects outside of the Firefox telemetry domain.</p>
@@ -11425,7 +11531,7 @@ We also collect data about Merino as a service from Merino directly. Full docume
 <p>This dataset can contain more than one row for each  <code>submission_date</code>, <code>client_id</code> and <code>visit_id</code>.  Each unique tab opened is defined as a unique New Tab <code>visit_id</code>.  We recommend aggregating by <code>client_id</code>, <code>submission_date</code> and <code>visit_id</code>.</p>
 <p>The <code>client_id</code> is the Glean client identifier, there is also the <code>legacy_telemetry_client_id</code> which can be used to join this data to non-Glean data tables.</p>
 <h2 id="background-and-caveats-9"><a class="header" href="#background-and-caveats-9">Background and Caveats</a></h2>
-<h3 id="scheduling-21"><a class="header" href="#scheduling-21">Scheduling:</a></h3>
+<h3 id="scheduling-22"><a class="header" href="#scheduling-22">Scheduling:</a></h3>
 <p>&quot;newtab&quot; pings can be sent for one of two reasons. 
 <code>component_init</code>: The newtab component init'd, and the newtab and homepage settings have been categorized. This is mostly to ensure we hear at least once from clients configured to not show a newtab UI.
 <code>newtab_session_end</code>: The newtab visit ended. Could be by navigation, being closed, etc.</p>
@@ -11478,7 +11584,7 @@ Might not always have a value due to being too early for it to have loaded
 <code>sponsored_topsite_impressions</code>: count of impressions on sponsored topsites tiles. Each tile displayed contributes to this count.
 <code>topsites_clicks</code>: count of clicks on topsites tiles. Currently this is only instrumented for sponsored topsites and does not include non-sponsored topsites.
 <code>sponsored_topsite_clicks</code>: count of clicks on sponsored topsites tiles</p>
-<h2 id="scheduling-22"><a class="header" href="#scheduling-22">Scheduling</a></h2>
+<h2 id="scheduling-23"><a class="header" href="#scheduling-23">Scheduling</a></h2>
 <p>This dataset is updated daily via the telemetry-airflow infrastructure.</p>
 <h2 id="schema-15"><a class="header" href="#schema-15">Schema</a></h2>
 <p>The data is partitioned by <code>submission_date</code>.</p>
@@ -11728,7 +11834,7 @@ WHERE
   event_action = 'annoyance'
   AND annoyance_signal_type = 'dismiss'
 </code></pre>
-<h3 id="scheduling-23"><a class="header" href="#scheduling-23">Scheduling</a></h3>
+<h3 id="scheduling-24"><a class="header" href="#scheduling-24">Scheduling</a></h3>
 <p>This dataset is scheduled on Airflow and updated daily.</p>
 <h3 id="schema-16"><a class="header" href="#schema-16">Schema</a></h3>
 <p>The data is partitioned by <code>submission_date</code>.</p>
@@ -12977,7 +13083,7 @@ WHERE
 GROUP BY 1, 2
 </code></pre>
 <iframe src="https://sql.telemetry.mozilla.org/embed/query/63957/visualization/163467?api_key=gzCopzybDta4t3JGkx2urB9MQa67akAehJUybVdW&" width="100%" height="570" frameborder="0" scrolling="no"></iframe>
-<h2 id="scheduling-24"><a class="header" href="#scheduling-24">Scheduling</a></h2>
+<h2 id="scheduling-25"><a class="header" href="#scheduling-25">Scheduling</a></h2>
 <p>This dataset is updated daily via the
 <a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a> infrastructure.
 The job runs as part of the <a href="https://github.com/mozilla/telemetry-airflow/blob/master/dags/attitudes_daily.py"><code>attitudes_daily</code> DAG</a>.</p>
@@ -13184,7 +13290,7 @@ FROM results
 <p>You may consider visualizing using cohort graphs, line charts, or a pivot
 tables. See <a href="https://sql.telemetry.mozilla.org/dashboard/firefox-telemetry-retention-dataset-example-usage">Firefox Telemetry Retention: Dataset Example Usage</a>
 for more examples.</p>
-<h2 id="scheduling-25"><a class="header" href="#scheduling-25">Scheduling</a></h2>
+<h2 id="scheduling-26"><a class="header" href="#scheduling-26">Scheduling</a></h2>
 <p>The aggregated churn data is updated weekly on Wednesday.</p>
 <h2 id="schema-18"><a class="header" href="#schema-18">Schema</a></h2>
 <p>As of 2017-10-15, the current version of <code>churn</code> is <code>v3</code> and has a schema as follows:</p>
@@ -13456,7 +13562,7 @@ ORDER BY build_id ASC
 <li>The <code>docType</code> field is missing or unknown.</li>
 <li>The ping is a main ping without usage hours or a crash ping with usage hours.</li>
 </ul>
-<h2 id="scheduling-26"><a class="header" href="#scheduling-26">Scheduling</a></h2>
+<h2 id="scheduling-27"><a class="header" href="#scheduling-27">Scheduling</a></h2>
 <p>The <code>crash_aggregates</code> job is run daily, at midnight UTC.
 The job is scheduled on <a href="https://github.com/mozilla/telemetry-airflow">Airflow</a>.
 The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/d50b938/dags/crash_aggregates.py">here</a></p>
@@ -13557,7 +13663,7 @@ group by gfx_compositor
 <p><code>CrashSummary</code> contains one record for every
 <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html">crash ping</a>
 submitted by Firefox.</p>
-<h2 id="scheduling-27"><a class="header" href="#scheduling-27">Scheduling</a></h2>
+<h2 id="scheduling-28"><a class="header" href="#scheduling-28">Scheduling</a></h2>
 <p>This dataset is updated daily, shortly after midnight UTC.
 The job is scheduled on
 <a href="https://github.com/mozilla/telemetry-airflow">telemetry-airflow</a>.
@@ -13690,7 +13796,7 @@ GROUP BY window_start
 <li>crash pings are used to count/gather main and content crash events, all other errors from desktop clients (including all other crashes) are gathered from main pings</li>
 <li>core pings are used to count usage hours, first subsession and unique client counts.</li>
 </ul>
-<h2 id="scheduling-28"><a class="header" href="#scheduling-28">Scheduling</a></h2>
+<h2 id="scheduling-29"><a class="header" href="#scheduling-29">Scheduling</a></h2>
 <p>The <code>error_aggregates</code> job is run continuously, using the Spark Streaming infrastructure</p>
 <h2 id="schema-22"><a class="header" href="#schema-22">Schema</a></h2>
 <p>The <code>error_aggregates_v2</code> table has the following columns which define its dimensions:</p>
@@ -13982,7 +14088,7 @@ or clients without a ping in the last 180 days.</li>
 the sample is created by filtering to pings with <code>main_summary.sample_id == 42</code>.
 If you're working with <code>main_summary</code>,
 you can recreate this sample by doing this filter manually.</p>
-<h2 id="scheduling-29"><a class="header" href="#scheduling-29">Scheduling</a></h2>
+<h2 id="scheduling-30"><a class="header" href="#scheduling-30">Scheduling</a></h2>
 <p>The <code>longitudinal</code> job is run weekly, early on Sunday morning UTC.
 The job is scheduled on <a href="https://github.com/mozilla/telemetry-airflow">Airflow</a>.
 The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/54cffc42a2ca24e46056b7030735f0d4d093c0c7/dags/longitudinal.py">here</a>.</p>
@@ -14079,7 +14185,7 @@ configured STMO environment, <a href="https://github.com/mozilla/spark-hyperlogl
 <h2 id="example-queries-24"><a class="header" href="#example-queries-24">Example Queries</a></h2>
 <p>See the <a href="https://sql.telemetry.mozilla.org/dashboard/firefox-telemetry-retention-dataset-example-usage">Example Usage Dashboard</a> for more usages of datasets of
 the same shape.</p>
-<h2 id="scheduling-30"><a class="header" href="#scheduling-30">Scheduling</a></h2>
+<h2 id="scheduling-31"><a class="header" href="#scheduling-31">Scheduling</a></h2>
 <p>The job is scheduled on Airflow on a daily basis after <code>main_summary</code> is run
 for the day. This job requires both <code>mozetl</code> and <code>telemetry-batch-view</code> as
 dependencies.</p>
@@ -14199,7 +14305,7 @@ SELECT * FROM rates
 </code></pre>
 <h2 id="sampling-6"><a class="header" href="#sampling-6">Sampling</a></h2>
 <p>Sadly, these datasets are not sampled. It should be possible to derive a <code>sample_id</code> on <code>uid</code>, however. Someone should do that because querying these datasets for long time horizons is very expensive.</p>
-<h2 id="scheduling-31"><a class="header" href="#scheduling-31">Scheduling</a></h2>
+<h2 id="scheduling-32"><a class="header" href="#scheduling-32">Scheduling</a></h2>
 <p>This dataset was updated daily, shortly after midnight UTC.
 The job was scheduled on <a href="https://github.com/mozilla/telemetry-airflow">Airflow</a>.
 The DAG was <a href="https://github.com/mozilla/telemetry-airflow/blob/27d34a73db02131a39f469f3950c1da747bc8a95/dags/sync_view.py">here</a>.</p>

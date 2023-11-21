@@ -309,6 +309,112 @@ These tables include the client ID and could be joined with other tables to filt
 </ul>
 </li>
 </ul>
+<h2 id="etl-pipeline"><a class="header" href="#etl-pipeline">ETL Pipeline</a></h2>
+<h3 id="scheduling"><a class="header" href="#scheduling">Scheduling</a></h3>
+<p>GLAM is scheduled to run daily via Airflow. There are two separate ETL pipelines for computing GLAM datasets for <a href="https://workflow.telemetry.mozilla.org/dags/glam/grid">Firefox Desktop legacy</a>, <a href="https://workflow.telemetry.mozilla.org/dags/glam_fenix/grid">Fenix</a> and <a href="https://workflow.telemetry.mozilla.org/dags/glam_fog/grid">Firefox on Glean</a>.</p>
+<h3 id="source-code"><a class="header" href="#source-code">Source Code</a></h3>
+<p>The ETL code base lives in the <a href="https://github.com/mozilla/bigquery-etl">bigquery-etl repository</a> and is partially generated. The scripts for generating ETL queries for Firefox Desktop Legacy currently live <a href="https://github.com/mozilla/bigquery-etl/tree/main/script/glam">here</a> while the GLAM logic for Glean apps lives <a href="https://github.com/mozilla/bigquery-etl/tree/main/bigquery_etl/glam">here</a>.</p>
+<h3 id="steps"><a class="header" href="#steps">Steps</a></h3>
+<p>GLAM has a separate set of steps and intermediate tables to aggregate scalar and histogram probes.</p>
+<h4 id="latest_versions"><a class="header" href="#latest_versions"><code>latest_versions</code></a></h4>
+<ul>
+<li>This task pulls in the most recent version for each channel from https://product-details.mozilla.org/1.0/firefox_versions.json</li>
+</ul>
+<h4 id="clients_daily_histogram_aggregates_process"><a class="header" href="#clients_daily_histogram_aggregates_process"><code>clients_daily_histogram_aggregates_&lt;process&gt;</code></a></h4>
+<ul>
+<li>The set of steps that load data to this table are divided into different processes (<code>parent</code>, <code>content</code>, <code>gpu</code>) plus a keyed step for keyed histograms.</li>
+<li>The parent job creates or overwrites the partition corresponding to the <code>logical_date</code>, and other processes append data to that partition.</li>
+<li>The process uses <code>telemetry.buildhub2</code> to select rows with valid <code>build_ids</code>.</li>
+<li>Aggregations are done per client, per day, and include a line for each <code>submission_date</code>, <code>client_id</code>, <code>os</code>, <code>app_version</code>, <code>build_id</code>, and <code>channel</code>.</li>
+<li>The aggregation is done by adding histogram values with the same key for the dimensions listed above.</li>
+<li>The queries for the different steps are generated and run as part of each step.</li>
+<li>The &quot;keyed&quot; step includes all Keyed Histogram probes, regardless of process (<code>parent</code>, <code>content</code>, <code>gpu</code>).</li>
+<li>As a result of the subdivisions in this step, it generates different rows for each process and keyed/non-keyed metric, which will be grouped together in the <code>clients_histogram_aggregates</code> step.</li>
+<li>Clients that are on the release channel of the Windows operating system get sampled to reduce the data size.</li>
+<li>The partitions are set to expire after 7 days.</li>
+</ul>
+<h4 id="clients_histogram_aggregates_new"><a class="header" href="#clients_histogram_aggregates_new"><code>clients_histogram_aggregates_new</code></a></h4>
+<ul>
+<li>This step groups together all rows that have the same <code>submission_date</code> and <code>logical_date</code> from different processes and keyed and non-keyed sources, and combines them into a single row in the <code>histogram_aggregates</code> column. It sums the histogram values with the same key.</li>
+<li>This process is only applied to the last three versions.</li>
+<li>The table is overwritten at every execution of this step.</li>
+</ul>
+<h4 id="clients_histogram_aggregates"><a class="header" href="#clients_histogram_aggregates"><code>clients_histogram_aggregates</code></a></h4>
+<ul>
+<li>New entries from <code>clients_histogram_aggregates_new</code> are merged with the 3 last versions of previous day’s partition and written to the current day’s partition.</li>
+<li>The most recent partition contains the current snapshot of the last three versions of data.</li>
+<li>The partitions expire in 7 days.</li>
+</ul>
+<h4 id="clients_histogram_buckets_counts"><a class="header" href="#clients_histogram_buckets_counts"><code>clients_histogram_buckets_counts</code></a></h4>
+<ul>
+<li>This process starts by creating wildcards for <code>os</code> and <code>app_build_id</code> which are needed for aggregating values across os and build IDs later on.</li>
+<li>It then filters out builds that have less than 0.5% of WAU (which can vary per channel). This is referenced in https://github.com/mozilla/glam/issues/1575#issuecomment-946880387.</li>
+<li>The process then normalizes histograms per client - it sets the sum of histogram values for each client for a given metric to 1.</li>
+<li>Finally, it removes the <code>client_id</code> dimension by aggregating all histograms for a given metric and adding the clients' histogram values.</li>
+</ul>
+<h4 id="clients_histogram_probe_counts"><a class="header" href="#clients_histogram_probe_counts"><code>clients_histogram_probe_counts</code></a></h4>
+<ul>
+<li>This process generates buckets - which can be linear or exponential - based on the <code>metric_type</code>.</li>
+<li>It then aggregates metrics per wildcards (<code>os</code>, <code>app_build_id</code>).</li>
+<li>Finally, it rebuilds histograms using the Dirichlet Distribution, normalized using the number of clients that contributed to that histogram in the <code>clients_histogram_buckets_counts</code> step.</li>
+</ul>
+<h4 id="histogram_percentiles"><a class="header" href="#histogram_percentiles"><code>histogram_percentiles</code></a></h4>
+<ul>
+<li>Uses <code>mozfun.glam.percentile</code> UDF to build histogram percentiles, from [0.1 to 99.9]</li>
+</ul>
+<hr />
+<h4 id="clients_daily_scalar_aggregates"><a class="header" href="#clients_daily_scalar_aggregates"><code>clients_daily_scalar_aggregates</code></a></h4>
+<ul>
+<li>The set of steps that load data to this table are divided into non-keyed <code>scalar</code>, <code>keyed_boolean</code> and <code>keyed_scalar</code>. The non-keyed scalar job creates or overwrites the partition corresponding to the <code>logical_date</code>, and other processes append data to that partition.</li>
+<li>The process uses <code>telemetry.buildhub2</code> to select rows with valid <code>build_ids</code>.</li>
+<li>Aggregations are done per client, per day and include a line for each <code>client</code>, <code>os</code>, <code>app_version</code>, <code>build_id</code>, and <code>channel</code>.</li>
+<li>The queries for the different steps are generated and run as part of each step. All steps include probes regardless of process (<code>parent</code>, <code>content</code>, <code>gpu</code>).</li>
+<li>As a result of the subdivisions in this step, it generates different rows for each keyed/non-keyed, boolean/scalar metric, which will be grouped together in <code>clients_scalar_aggregates</code>.</li>
+<li>Clients that are on the release channel of the Windows operating system get sampled to reduce the data size.</li>
+<li>Partitions expire in 7 days.</li>
+</ul>
+<h4 id="clients_scalar_aggregates"><a class="header" href="#clients_scalar_aggregates"><code>clients_scalar_aggregates</code></a></h4>
+<ul>
+<li>The process starts by taking the <code>clients_daily_scalar_aggregates</code> as the primary source.</li>
+<li>It then groups all rows that have the same <code>submission_date</code> and <code>logical_date</code> from the keyed and non-keyed, scalar and boolean sources, and combines them into a single row in the <code>scalar_aggregates</code> column.</li>
+<li>If the <code>agg_type</code> is <code>count</code>, <code>sum</code>, <code>true</code>, or <code>false</code>, the process will sum the values.</li>
+<li>If the <code>agg_type</code> is <code>max</code>, it will take the maximum value, and if it is <code>min</code>, it will take the minimum value.</li>
+<li>This process is only applied to the last three versions.</li>
+<li>The partitions expire in 7 days.</li>
+</ul>
+<h4 id="scalar_percentiles"><a class="header" href="#scalar_percentiles"><code>scalar_percentiles</code></a></h4>
+<ul>
+<li>This process produces a user count and percentiles for scalar metrics.</li>
+<li>It generates wildcard combinations of <code>os</code> and <code>app_build_id</code> and merges all submissions from a client for the same <code>os</code>, <code>app_version</code>, <code>app_build_id</code> and channel into the <code>scalar_aggregates</code> column.</li>
+<li>The <code>user_count</code> column is computed taking sampling into account.</li>
+<li>Finally it splits the aggregates into percentiles from [0.1 to 99.9]</li>
+</ul>
+<h4 id="client_scalar_probe_counts"><a class="header" href="#client_scalar_probe_counts"><code>client_scalar_probe_counts</code></a></h4>
+<ul>
+<li>This step processes booleans and scalars, although booleans are not supported by GLAM.
+<ul>
+<li>For boolean metrics the process aggregates their values with the following rule: &quot;never&quot; if all values for a metric are false, &quot;always&quot; if all values are true, and sometimes if there's a mix.</li>
+<li>For scalar and <code>keyed_scalar</code> probes the process starts by building the buckets per metric, then it generates wildcards for os and <code>app_build_id</code>. It then aggregates all submissions from the same <code>client_id</code> under one row and assigns the <code>user_count</code> column to it with the following rule: 10 if os is &quot;Windows&quot; and channel is &quot;release&quot;, 1 otherwise. After that it finishes by aggregating the rows per metric, placing the scalar values in their appropriate buckets and summing up all <code>user_count</code> values for that metric.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="glam_user_counts"><a class="header" href="#glam_user_counts"><code>glam_user_counts</code></a></h4>
+<ul>
+<li>Combines both aggregated scalar and histogram values.</li>
+<li>This process produces a user count for each combination of <code>os</code>, <code>app_version</code>, <code>app_build_id</code>, channel.</li>
+<li>It builds a client count from the union of histograms and scalars, including all combinations in which <code>os</code>, <code>app_version</code>, <code>app_build_id</code>, and <code>channel</code> are wildcards.</li>
+</ul>
+<h4 id="glam_sample_counts"><a class="header" href="#glam_sample_counts"><code>glam_sample_counts</code></a></h4>
+<ul>
+<li>This process calculates the <code>total_sample</code> column by adding up all the <code>aggregates</code> values.</li>
+<li>This works because in the primary sources the values also represent a count of the samples that registered their respective keys</li>
+</ul>
+<h4 id="extract_user_counts"><a class="header" href="#extract_user_counts"><code>extract_user_counts</code></a></h4>
+<ul>
+<li>This step exports user counts in its final shape to GCS as a CSV.</li>
+<li>It first copies a deduplicated version of the primary source to a temporary table, removes the previously exported CSV files from GCS, then exports the temporary table to GCS as CSV files.</li>
+</ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/glam.md">Edit this page on GitHub.</a></footer>
                     </main>
 
