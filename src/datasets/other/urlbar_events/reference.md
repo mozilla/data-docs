@@ -274,6 +274,41 @@ WHERE
   AND annoyance_signal_type = 'dismiss'
 ```
 
+### Column descriptions
+
+Descriptions for relevant columns in the table are provided here.
+
+(This will be moved to `bigquery-etl` in the future,
+but tables generated dynamically using `sql_generators` don't currently support `schema.yaml`.)
+
+| Column                        | Description                                                                                                                                                       |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `event_name`                  | Name of the `urlbar` Glean event represented by this row: `engagement` or `abandonment`                                                                           |
+| `event_timestamp`             | Glean [event timestamp](https://mozilla.github.io/glean/book/user/pings/events.html#contents)                                                                     |
+| `event_id`                    | Row identifier UUID. When unnesting the `results` column, use `COUNT(DISTINCT event_id)` to count events.                                                         |
+| `seq`                         | [`ping_info.seq`](https://mozilla.github.io/glean/book/user/pings/index.html#seq) from the events ping. Use together with `event_timestamp` for event sequencing. |
+| `normalized_engine`           | Normalized default search engine                                                                                                                                  |
+| `pref_fx_suggestions`         | Is Firefox Suggest enabled (nonsponsored suggestions)?                                                                                                            |
+| `pref_sponsored_suggestions`  | Are Firefox Suggest sponsored suggestions enabled?                                                                                                                |
+| `pref_data_collection`        | Has the user opted into Firefox Suggest data collection, aka Suggest Online?                                                                                      |
+| `engagement_type`             | How the user selected the result [e.g. `click`, `enter`]                                                                                                          |
+| `interaction`                 | How the user started the search action [e.g. `typed`, `pasted`]                                                                                                   |
+| `num_chars_typed`             | Length of the query string typed by the user                                                                                                                      |
+| `num_total_results`           | Number of results displayed                                                                                                                                       |
+| `selected_position`           | Rank of the selected result, starting from 1, if any                                                                                                              |
+| `selected_result`             | Raw type identifier for the selected result, if any [e.g. `search_suggest`, `bookmark`]                                                                           |
+| `product_selected_result`     | [Product type identifier](#results-impressions-and-clicks) for the selected result, if any [e.g. `wikipedia_enhanced`, `default_partner_search_suggestion`]       |
+| `results`                     | Array listing info about each result displayed                                                                                                                    |
+| `results.position`            | Display rank of this result, starting from 1                                                                                                                      |
+| `results.result_type`         | Raw type identifier for this result                                                                                                                               |
+| `results.product_result_type` | Product type identifier for this result                                                                                                                           |
+| `results.result_group`        | Result group this result belongs to [e.g. `heuristic`, `suggest`]                                                                                                 |
+| `event_action`                | Event action: `engaged`, `abandoned`, or `annoyance`                                                                                                              |
+| `is_terminal`                 | Did the event action cause the search session to end? Filter on `is_terminal = TRUE` to count unique search sessions.                                             |
+| `engaged_result_type`         | Raw type identifier for the selected result, if any                                                                                                               |
+| `product_engaged_result_type` | Product type identifier for the selected result, if any                                                                                                           |
+| `annoyance_signal_type`       | Annoyance option selected, if any. This uses the value of `engagement_type` when `event_action` is annoyance. [e.g. `dismiss`, `help`]                            |
+
 ### Scheduling
 
 This dataset is scheduled on Airflow and updated daily.
@@ -282,7 +317,7 @@ This dataset is scheduled on Airflow and updated daily.
 
 The data is partitioned by `submission_date`.
 
-### Code Reference
+### Code reference
 
 This table is
 [generated](https://github.com/mozilla/bigquery-etl/blob/main/sql_generators/urlbar_events/__init__.py)
