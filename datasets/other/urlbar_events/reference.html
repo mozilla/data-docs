@@ -191,9 +191,10 @@
 <ul>
 <li><a href="#gotchas">Gotchas</a></li>
 <li><a href="#example-queries">Example queries</a></li>
+<li><a href="#column-descriptions">Column descriptions</a></li>
 <li><a href="#scheduling">Scheduling</a></li>
 <li><a href="#schema">Schema</a></li>
-<li><a href="#code-reference">Code Reference</a></li>
+<li><a href="#code-reference">Code reference</a></li>
 </ul>
 </li>
 </ul>
@@ -420,11 +421,43 @@ WHERE
   event_action = 'annoyance'
   AND annoyance_signal_type = 'dismiss'
 </code></pre>
+<h3 id="column-descriptions"><a class="header" href="#column-descriptions">Column descriptions</a></h3>
+<p>Descriptions for relevant columns in the table are provided here.</p>
+<p>(This will be moved to <code>bigquery-etl</code> in the future,
+but tables generated dynamically using <code>sql_generators</code> don't currently support <code>schema.yaml</code>.)</p>
+<div class="table-wrapper"><table><thead><tr><th>Column</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>event_name</code></td><td>Name of the <code>urlbar</code> Glean event represented by this row: <code>engagement</code> or <code>abandonment</code></td></tr>
+<tr><td><code>event_timestamp</code></td><td>Glean <a href="https://mozilla.github.io/glean/book/user/pings/events.html#contents">event timestamp</a></td></tr>
+<tr><td><code>event_id</code></td><td>Row identifier UUID. When unnesting the <code>results</code> column, use <code>COUNT(DISTINCT event_id)</code> to count events.</td></tr>
+<tr><td><code>seq</code></td><td><a href="https://mozilla.github.io/glean/book/user/pings/index.html#seq"><code>ping_info.seq</code></a> from the events ping. Use together with <code>event_timestamp</code> for event sequencing.</td></tr>
+<tr><td><code>normalized_engine</code></td><td>Normalized default search engine</td></tr>
+<tr><td><code>pref_fx_suggestions</code></td><td>Is Firefox Suggest enabled (nonsponsored suggestions)?</td></tr>
+<tr><td><code>pref_sponsored_suggestions</code></td><td>Are Firefox Suggest sponsored suggestions enabled?</td></tr>
+<tr><td><code>pref_data_collection</code></td><td>Has the user opted into Firefox Suggest data collection, aka Suggest Online?</td></tr>
+<tr><td><code>engagement_type</code></td><td>How the user selected the result [e.g. <code>click</code>, <code>enter</code>]</td></tr>
+<tr><td><code>interaction</code></td><td>How the user started the search action [e.g. <code>typed</code>, <code>pasted</code>]</td></tr>
+<tr><td><code>num_chars_typed</code></td><td>Length of the query string typed by the user</td></tr>
+<tr><td><code>num_total_results</code></td><td>Number of results displayed</td></tr>
+<tr><td><code>selected_position</code></td><td>Rank of the selected result, starting from 1, if any</td></tr>
+<tr><td><code>selected_result</code></td><td>Raw type identifier for the selected result, if any [e.g. <code>search_suggest</code>, <code>bookmark</code>]</td></tr>
+<tr><td><code>product_selected_result</code></td><td><a href="#results-impressions-and-clicks">Product type identifier</a> for the selected result, if any [e.g. <code>wikipedia_enhanced</code>, <code>default_partner_search_suggestion</code>]</td></tr>
+<tr><td><code>results</code></td><td>Array listing info about each result displayed</td></tr>
+<tr><td><code>results.position</code></td><td>Display rank of this result, starting from 1</td></tr>
+<tr><td><code>results.result_type</code></td><td>Raw type identifier for this result</td></tr>
+<tr><td><code>results.product_result_type</code></td><td>Product type identifier for this result</td></tr>
+<tr><td><code>results.result_group</code></td><td>Result group this result belongs to [e.g. <code>heuristic</code>, <code>suggest</code>]</td></tr>
+<tr><td><code>event_action</code></td><td>Event action: <code>engaged</code>, <code>abandoned</code>, or <code>annoyance</code></td></tr>
+<tr><td><code>is_terminal</code></td><td>Did the event action cause the search session to end? Filter on <code>is_terminal = TRUE</code> to count unique search sessions.</td></tr>
+<tr><td><code>engaged_result_type</code></td><td>Raw type identifier for the selected result, if any</td></tr>
+<tr><td><code>product_engaged_result_type</code></td><td>Product type identifier for the selected result, if any</td></tr>
+<tr><td><code>annoyance_signal_type</code></td><td>Annoyance option selected, if any. This uses the value of <code>engagement_type</code> when <code>event_action</code> is annoyance. [e.g. <code>dismiss</code>, <code>help</code>]</td></tr>
+</tbody></table>
+</div>
 <h3 id="scheduling"><a class="header" href="#scheduling">Scheduling</a></h3>
 <p>This dataset is scheduled on Airflow and updated daily.</p>
 <h3 id="schema"><a class="header" href="#schema">Schema</a></h3>
 <p>The data is partitioned by <code>submission_date</code>.</p>
-<h3 id="code-reference"><a class="header" href="#code-reference">Code Reference</a></h3>
+<h3 id="code-reference"><a class="header" href="#code-reference">Code reference</a></h3>
 <p>This table is
 <a href="https://github.com/mozilla/bigquery-etl/blob/main/sql_generators/urlbar_events/__init__.py">generated</a>
 from a templated query defined under
