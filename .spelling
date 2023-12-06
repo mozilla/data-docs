@@ -223,6 +223,7 @@ metadata
 metastore
 Miroglio
 Mocli
+monetizable
 mozanalysis
 Mozfun
 mozilla-datahub-ingestion
@@ -337,6 +338,7 @@ SDKs
 searchfox
 SendPing
 SERP
+SERPs
 serverless
 sessionizing
 shield_study
@@ -394,6 +396,8 @@ UI
 un-check
 un-encoded
 un-publish
+undercount
+undercounted
 unenroll
 unenrollment
 unicode

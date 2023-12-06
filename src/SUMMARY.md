@@ -134,6 +134,7 @@
     - [Sponsored Tiles](datasets/other/sponsored_tiles/sponsored_tiles.md)
     - [Newtab_Interactions](datasets/other/newtab_interactions/reference.md)
     - [Urlbar Events](datasets/other/urlbar_events/reference.md)
+    - [SERP Events](datasets/other/serp_events/reference.md)
   - [Mozilla Accounts Datasets](datasets/fxa.md)
     - [Mozilla Account Attribution](datasets/fxa_metrics/attribution.md)
     - [Mozilla Account Funnel Metrics](datasets/fxa_metrics/funnels.md)
