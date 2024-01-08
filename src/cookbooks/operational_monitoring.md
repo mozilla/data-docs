@@ -17,7 +17,7 @@ Access to the Looker Operational Monitoring dashboards is currently limited to M
 ## Configuring a Operational Monitoring project
 
 To add or update a project configuration, open a pull request against the `opmon/` directory in [metric-hub](https://github.com/mozilla/metric-hub/tree/main/opmon).
-Consider using and adding metric definitions to the [metric-hub](https://github.com/mozilla/metric-hub) that should be available for use across other tools, such as [Jetstream](https://experimenter.info/jetstream/jetstream/), as well.
+Consider using and adding metric definitions to the [metric-hub](https://github.com/mozilla/metric-hub) that should be available for use across other tools, such as [Jetstream](https://experimenter.info/deep-dives/jetstream/overview), as well.
 
 CI checks will validate the columns, data sources, and SQL syntax. Once CI completes, the pull request gets automatically approved and can be merged. Results for the new project will be available within the next 24 hours.
 
