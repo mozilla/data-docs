@@ -29,7 +29,6 @@ For specific questions about this data, reach out to the `#fx-messaging-system` 
 This data is measured in various custom pings that are sent via [PingCentre](https://searchfox.org/mozilla-central/source/browser/modules/PingCentre.sys.mjs) (different from [Pingsender](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/pingsender.html)).
 
 - [Activity Stream Pings: `data_events.md`](https://firefox-source-docs.mozilla.org/browser/components/newtab/docs/v2-system-addon/data_events.html)
-- [Activity Stream Pings: `data_dictionary.md`](https://firefox-source-docs.mozilla.org/browser/components/newtab/docs/v2-system-addon/data_dictionary.html)
 
 ## Accessing Activity Stream Data
 
