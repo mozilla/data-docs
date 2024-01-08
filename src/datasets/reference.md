@@ -6,8 +6,7 @@ Instead, identify a dataset you'd like to understand better and read through
 the relevant documentation.
 After reading the tutorial, you should know all you need about the dataset.
 
-Also see more detailed [per-table docs](https://mozilla.github.io/bigquery-etl/mozdata/introduction/)
-that are generated alongside ETL code in the `bigquery-etl` repository.
+Detailed per-table docs are available [in the Data Catalog](https://mozilla.acryl.io/).
 
 Each tutorial should include:
 
