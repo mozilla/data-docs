@@ -11,6 +11,7 @@
     - [Reporting a problem](concepts/reporting_a_problem.md)
   - [Analysis](cookbooks/analysis/index.md)
     - [Data Discovery Tools](cookbooks/analysis/data_discovery_tools.md)
+      - [Using the Data Catalog](cookbooks/analysis/data_catalog.md)
       - [Using the Glean Dictionary](cookbooks/analysis/glean_dictionary.md)
       - [Using the Probe Dictionary](cookbooks/analysis/probe_dictionary.md)
     - [Data Modeling](cookbooks/data_modeling/index.md)
