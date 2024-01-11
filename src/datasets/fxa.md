@@ -54,3 +54,13 @@ Note that the BigQuery [ETL jobs](https://github.com/mozilla/bigquery-etl/tree/m
 FxA's amplitude metrics were originally just re-configured and re-named versions of the flow metrics. However things have since diverged a bit and there are now metrics events that only have an amplitude version but no corresponding flow event, and vice-versa. If you are wondering whether a certain event is logged its likely you will have to check both data sources.
 
 It is also possible to query the FxA server logs directly through BigQuery (ask an FxA team member for access), though virtually all analytics-related questions are more easily answered using the data sources described above.
+
+## Service databases
+
+Transactional databases used by Mozilla Accounts services are replicated to BigQuery. You can find table schemas in [Ecosystem Platform documentation](https://github.com/mozilla/ecosystem-platform/blob/master/docs/reference/database-structure.md).
+
+There are two datasets, containing data from the production and stage databases:
+* `moz-fx-data-shared-prod.accounts_db_external`
+* `moz-fx-data-shared-prod.accounts_db_nonprod_external`
+
+These datasets are restricted to a specific workgroup. Some user-facing views are available in `mozdata.accounts_db`.
