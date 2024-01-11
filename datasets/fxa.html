@@ -190,6 +190,7 @@
 <li><a href="#what-is-firefox-accounts">What is Firefox Accounts?</a></li>
 <li><a href="#metrics-background">Metrics Background</a></li>
 <li><a href="#metrics-taxonomies">Metrics Taxonomies</a></li>
+<li><a href="#service-databases">Service databases</a></li>
 </ul>
 <h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
 <p>This article provides an overview of Firefox accounts metrics: what is measured and how. See the other articles in this chapter for more details about the specific measurements that are available for analysis.</p>
@@ -243,6 +244,14 @@ The <a href="https://github.com/mozilla/fxa/pull/3176">FxA oauth server</a> logs
 <p>Note that the BigQuery <a href="https://github.com/mozilla/bigquery-etl/tree/master/sql">ETL jobs</a> run daily.</p>
 <p>FxA's amplitude metrics were originally just re-configured and re-named versions of the flow metrics. However things have since diverged a bit and there are now metrics events that only have an amplitude version but no corresponding flow event, and vice-versa. If you are wondering whether a certain event is logged its likely you will have to check both data sources.</p>
 <p>It is also possible to query the FxA server logs directly through BigQuery (ask an FxA team member for access), though virtually all analytics-related questions are more easily answered using the data sources described above.</p>
+<h2 id="service-databases"><a class="header" href="#service-databases">Service databases</a></h2>
+<p>Transactional databases used by Mozilla Accounts services are replicated to BigQuery. You can find table schemas in <a href="https://github.com/mozilla/ecosystem-platform/blob/master/docs/reference/database-structure.md">Ecosystem Platform documentation</a>.</p>
+<p>There are two datasets, containing data from the production and stage databases:</p>
+<ul>
+<li><code>moz-fx-data-shared-prod.accounts_db_external</code></li>
+<li><code>moz-fx-data-shared-prod.accounts_db_nonprod_external</code></li>
+</ul>
+<p>These datasets are restricted to a specific workgroup. Some user-facing views are available in <code>mozdata.accounts_db</code>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/fxa.md">Edit this page on GitHub.</a></footer>
                     </main>
 
