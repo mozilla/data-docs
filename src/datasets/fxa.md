@@ -60,6 +60,7 @@ It is also possible to query the FxA server logs directly through BigQuery (ask 
 Transactional databases used by Mozilla Accounts services are replicated to BigQuery. You can find table schemas in [Ecosystem Platform documentation](https://github.com/mozilla/ecosystem-platform/blob/master/docs/reference/database-structure.md).
 
 There are two datasets, containing data from the production and stage databases:
+
 - `moz-fx-data-shared-prod.accounts_db_external`
 - `moz-fx-data-shared-prod.accounts_db_nonprod_external`
 
