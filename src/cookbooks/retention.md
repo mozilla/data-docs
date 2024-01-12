@@ -88,8 +88,7 @@ FROM
   `moz-fx-data-shared-prod.telemetry.desktop_retention_1_week`
 RIGHT JOIN
   my_cohort_t
-USING
-  (client_id)
+  USING (client_id)
 WHERE
   date BETWEEN "2020-03-01" AND "2020-03-07"
 GROUP BY
