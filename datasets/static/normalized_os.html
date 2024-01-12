@@ -201,8 +201,7 @@ FROM
   telemetry_stable.main_v4
 LEFT JOIN
   static.normalized_os_name
-ON
-  (environment.system.os.name = os_name)
+  ON (environment.system.os.name = os_name)
 </code></pre>
 <h3 id="os-versions"><a class="header" href="#os-versions">OS Versions</a></h3>
 <p>OS versions for some OS's are not properly normalized in telemetry. For example, the version

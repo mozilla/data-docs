@@ -198,6 +198,7 @@
 </li>
 <li><a href="#left-align-root-keywords">Left Align Root Keywords</a></li>
 <li><a href="#code-blocks">Code Blocks</a></li>
+<li><a href="#join-conditions">Join Conditions</a></li>
 <li><a href="#parentheses">Parentheses</a></li>
 <li><a href="#boolean-at-the-beginning-of-line">Boolean at the Beginning of Line</a></li>
 <li><a href="#nested-queries">Nested Queries</a></li>
@@ -398,6 +399,33 @@ FROM main_summary
 WHERE submission_date &gt; '20180101'
   AND sample_id = '42'
 LIMIT 10
+</code></pre>
+<h2 id="join-conditions"><a class="header" href="#join-conditions">Join Conditions</a></h2>
+<p>The <code>ON</code> and <code>USING</code> keywords should start on a new line indented one level more than the join keyword
+and be followed by the join conditions starting on the same line. For example:</p>
+<p><strong>Good</strong>:</p>
+<pre><code class="language-sql">...
+FROM
+  telemetry_stable.main_v4
+LEFT JOIN
+  static.normalized_os_name
+  ON main_v4.environment.system.os.name = normalized_os_name.os_name
+</code></pre>
+<p><strong>Bad</strong>:</p>
+<pre><code class="language-sql">...
+FROM
+  telemetry_stable.main_v4
+LEFT JOIN
+  static.normalized_os_name ON main_v4.environment.system.os.name = normalized_os_name.os_name
+</code></pre>
+<p><strong>Bad</strong>:</p>
+<pre><code class="language-sql">...
+FROM
+  telemetry_stable.main_v4
+LEFT JOIN
+  static.normalized_os_name
+ON
+  main_v4.environment.system.os.name = normalized_os_name.os_name
 </code></pre>
 <h2 id="parentheses"><a class="header" href="#parentheses">Parentheses</a></h2>
 <p>If parentheses span multiple lines:</p>

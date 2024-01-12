@@ -4050,8 +4050,7 @@ FROM
   `moz-fx-data-shared-prod.telemetry.desktop_retention_1_week`
 RIGHT JOIN
   my_cohort_t
-USING
-  (client_id)
+  USING (client_id)
 WHERE
   date BETWEEN &quot;2020-03-01&quot; AND &quot;2020-03-07&quot;
 GROUP BY
@@ -6488,6 +6487,7 @@ The build id format for Firefox Desktop has been very stable over time thus far,
 </li>
 <li><a href="concepts/sql_style.html#left-align-root-keywords">Left Align Root Keywords</a></li>
 <li><a href="concepts/sql_style.html#code-blocks">Code Blocks</a></li>
+<li><a href="concepts/sql_style.html#join-conditions">Join Conditions</a></li>
 <li><a href="concepts/sql_style.html#parentheses">Parentheses</a></li>
 <li><a href="concepts/sql_style.html#boolean-at-the-beginning-of-line">Boolean at the Beginning of Line</a></li>
 <li><a href="concepts/sql_style.html#nested-queries">Nested Queries</a></li>
@@ -6688,6 +6688,33 @@ FROM main_summary
 WHERE submission_date &gt; '20180101'
   AND sample_id = '42'
 LIMIT 10
+</code></pre>
+<h2 id="join-conditions"><a class="header" href="#join-conditions">Join Conditions</a></h2>
+<p>The <code>ON</code> and <code>USING</code> keywords should start on a new line indented one level more than the join keyword
+and be followed by the join conditions starting on the same line. For example:</p>
+<p><strong>Good</strong>:</p>
+<pre><code class="language-sql">...
+FROM
+  telemetry_stable.main_v4
+LEFT JOIN
+  static.normalized_os_name
+  ON main_v4.environment.system.os.name = normalized_os_name.os_name
+</code></pre>
+<p><strong>Bad</strong>:</p>
+<pre><code class="language-sql">...
+FROM
+  telemetry_stable.main_v4
+LEFT JOIN
+  static.normalized_os_name ON main_v4.environment.system.os.name = normalized_os_name.os_name
+</code></pre>
+<p><strong>Bad</strong>:</p>
+<pre><code class="language-sql">...
+FROM
+  telemetry_stable.main_v4
+LEFT JOIN
+  static.normalized_os_name
+ON
+  main_v4.environment.system.os.name = normalized_os_name.os_name
 </code></pre>
 <h2 id="parentheses"><a class="header" href="#parentheses">Parentheses</a></h2>
 <p>If parentheses span multiple lines:</p>
@@ -12194,8 +12221,7 @@ FROM
   telemetry_stable.main_v4
 LEFT JOIN
   static.normalized_os_name
-ON
-  (environment.system.os.name = os_name)
+  ON (environment.system.os.name = os_name)
 </code></pre>
 <h3 id="os-versions"><a class="header" href="#os-versions">OS Versions</a></h3>
 <p>OS versions for some OS's are not properly normalized in telemetry. For example, the version
