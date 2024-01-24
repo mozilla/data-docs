@@ -1,6 +1,6 @@
 # Mozilla Accounts Data
 
-> ⚠️ Formerly Firefox Accounts, this service was renamed publicly in 2023, but is still often referred to by it's previous abbreviation `FxA` internally including in this documentation.
+> ⚠️ Formerly Firefox Accounts, this service was renamed publicly in 2023, but is still often referred to by its previous abbreviation `FxA` internally, including in this documentation.
 
 ## Table of Contents
 
