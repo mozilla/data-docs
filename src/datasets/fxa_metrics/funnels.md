@@ -1,4 +1,4 @@
-# Firefox Account Funnels
+# Mozilla Account Funnels
 
 ## Table of Contents
 
@@ -140,29 +140,9 @@ _This funnel starts after user clicks to use a recovery code during the TOTP fun
 | 2    | Not Implemented              | `flow.sign_in_recovery_code.view`     | View of the TOTP recovery code form.  |
 | 3    | Not Implemented              | `recoveryCode.verified` (auth server) | User submitted a valid recovery code. |
 
-## Connect Another Device / SMS
-
-Sync is most valuable to users who have multiple devices connected to their account. Thus after a user completes a sync login or registration funnel, they are shown the "connect another device" form. This Call to Action contains a form for a phone number, as well as links to the Google Play and Apple stores where users can download mobile versions of Firefox. If a user submits a valid phone number (associated with a country that our service supports), then we send them an SMS message with links to their mobile phone's app store.
-
-At one point, at least for iOS, the SMS message contained a deep link that pre-filled the user's email address on the sign-in form once they installed the mobile browser. There is some uncertainty about whether this still works...
-
-### SMS Funnel
-
-_This funnel begins either (1) after a user has completed the login or registration funnel, or (2) if they click on "connect another device" from the FxA toolbar menu within the desktop browser (provided they are signed in). In the latter case the `signin` segment of the flow event will be omitted._
-
-| Step | Amplitude Event                                               | Flow Event                  | Description                                                     |
-| ---- | ------------------------------------------------------------- | --------------------------- | --------------------------------------------------------------- |
-| 1    | `fxa_connect_device - view` (`connect_device_flow` = `sms`)   | `flow.signin.sms.view`      | User viewed the SMS form.                                       |
-| 2    | `fxa_connect_device - engage` (`connect_device_flow` = `sms`) | `flow.signin.sms.engage`    | User clicked somewhere on the SMS form.                         |
-| 3    | `fxa_connect_device - submit` (`connect_device_flow` = `sms`) | `flow.signin.sms.submit`    | User submitted the SMS form.                                    |
-| 4    | Not Implemented                                               | `sms.region.{country_code}` | An SMS was sent to a number with the two letter `country_code`. |
-| 5    | Not Implemented                                               | `flow.sms.sent.view`        | User views the message confirming that the SMS has been sent.   |
-
-The SMS form also contains app store links. If they are clicked, flow events `flow.signin.sms.link.app-store.android` or `flow.signin.sms.link.app-store.ios` will be logged.
-
 ## Settings
 
-A variety of metrics are logged that reflect user interaction with the settings page (https://accounts.firefox.com/settings). The chart below outlines some of these events (this may not be an exhaustive list).
+A variety of metrics are logged that reflect user interaction with the settings page (https://accounts.firefox.com/settings). The chart below outlines some of these events (this is not an exhaustive list).
 
 | Amplitude Event                                                     | Flow Event                                                             | Description                                                                                                                                                          |
 | ------------------------------------------------------------------- | ---------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

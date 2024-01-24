@@ -1,4 +1,4 @@
-# Attribution of Firefox Accounts
+# Attribution of Mozilla Accounts
 
 ## Table of Contents
 
@@ -6,7 +6,7 @@
 
 ## Introduction
 
-Users can create or login to an account through an increasingly large number of relying services and entrypoints. This article describes how we attribute authentications to their point of origin, and documents some of the most frequently trafficked entrypoints (it would not be feasible to list them all, but we will try to update this document when there are substantial changes).
+Users can create or login to an account through an increasingly large number of relying services and entrypoints. This article describes how we attribute authentications to their point of origin, and documents some of the most frequently trafficked entrypoints.
 
 ## Types of Attribution
 
@@ -22,11 +22,7 @@ There is a variable called `service` that we use to (1) attribute users to the r
 | `fx-monitor`                | `802d56ef2a9af9fa` | Firefox Monitor ([website](https://monitor.firefox.com))                                                                                                                    |
 | `pocket-mobile`             | `7377719276ad44ee` | Pocket Mobile App                                                                                                                                                           |
 | `pocket-web`                | `749818d3f2e7857f` | Pocket Website                                                                                                                                                              |
-| `firefox-addons`            | `3a1f53aabe17ba32` | `addons.mozilla.org`                                                                                                                                                        |
-| `amo-web`                   | `a4907de5fa9d78fc` | `addons.mozilla.org` (still unsure how this differs from `firefox-addons`)                                                                                                  |
-| `screenshots`               | `5e75409a5a3f096d` | Firefox Screenshots ([website](https://screenshots.firefox.com/), no longer supported)                                                                                      |
-| `notes`                     | `a3dbd8c5a6fd93e2` | Firefox Notes (desktop extension)                                                                                                                                           |
-| `notes`                     | `7f368c6886429f19` | Firefox Notes (android app)                                                                                                                                                 |
+| `amo-web`                   | `a4907de5fa9d78fc` | `addons.mozilla.org`                                                                                                                                                        |
 | `fxa-content`               | `ea3ca969f8c6bb0d` | Oauth ID used when a user is signing in with cached credentials (i.e. does not have to re-enter username/password) and when the user is logging into the FxA settings page. |
 | `mozilla-email-preferences` | `c40f32fd2938f0b6` | Oauth ID used when a user is signing in to modify their marketing email preferences (e.g., to opt-out.)                                                                     |
 

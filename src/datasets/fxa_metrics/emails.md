@@ -1,4 +1,4 @@
-# FxA Email Metrics
+# Mozilla Account Email Metrics
 
 ## Table of Contents
 
@@ -6,7 +6,7 @@
 
 ## Introduction
 
-Users must provide an email address when they sign up for a Firefox Account. Emails are sent to users to confirm authentication, alert them to new sign-ins, and to complete password resets. Users can also opt-in to marketing emails, however metrics for those are not covered in this article.
+Users must provide an email address when they sign up for a Mozilla Account. Emails are sent to users to confirm authentication, alert them to new sign-ins, and to complete password resets. Users can also opt-in to marketing emails, however metrics for those are not covered in this article.
 
 Events that we track relating to email:
 
@@ -24,7 +24,7 @@ Metrics relating to emails also contain the following properties:
 
 Only emails sent by the FxA auth server are represented in the tables below. TBD on marketing emails.
 
-### Firefox Accounts
+### Mozilla Accounts
 
 | `email_template`                       | `email_type`             | Description & Notes                                                                                                                                                                                                                                                        |
 | -------------------------------------- | -------------------------| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
