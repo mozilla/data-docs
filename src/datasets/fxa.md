@@ -53,7 +53,7 @@ There are two additional legacy event types described below:
 
 **Amplitude Events**: FxA started to send metrics events to Amplitude circa October 2017 and ended around June 2020. While we stopped using Amplitude, the term Amplitude Events lives on to reference this set of events. Amplitude events can be queried through the `moz-fx-data-shared-prod.firefox_accounts` dataset in BigQuery. [`moz-fx-data-shared-prod.firefox_accounts.fxa_content_auth_events`](https://github.com/mozilla/bigquery-etl/blob/main/sql/moz-fx-data-shared-prod/firefox_accounts/fxa_content_auth_events/view.sql) is probably the easiest BigQuery view to use, though it does not contain email bounce events.  These are being completely replaced by the Glean Event Metrics and will be removed in 2024.  FxA's Amplitude metrics were originally just re-configured and re-named versions of the flow metrics. However things have since diverged a bit and there are now metrics events that only have an Amplitude version but no corresponding flow event, and vice-versa. If you are wondering whether a certain event is logged its likely you will have to check both data sources.
 
-Note that the BigQuery [ETL jobs](https://github.com/mozilla/bigquery-etl/tree/master/sql) run daily.
+Note that the BigQuery [ETL jobs](https://github.com/mozilla/bigquery-etl/tree/main/sql) run daily.
 
 ## Service databases
 
