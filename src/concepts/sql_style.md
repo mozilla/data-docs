@@ -27,7 +27,7 @@ Always use uppercase for reserved keywords like `SELECT`, `WHERE`, or `AS`.
 
 1. Use consistent and descriptive identifiers and names.
 1. Use lower case names with underscores, such as `first_name`.
-   Do not use CamelCase.
+   Do not use camelCase.
 1. Functions, such as `cardinality`, `approx_distinct`, or `substr`,
    [are identifiers](https://www.postgresql.org/docs/10/static/sql-syntax-lexical.html#SQL-SYNTAX-IDENTIFIERS)
    and should be treated like variable names.
