@@ -1,0 +1,727 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>SERP Events - Mozilla Data Documentation</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../../dtmo.css">
+        <link rel="stylesheet" href="../../../mermaid.css">
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../../index.html">Mozilla Data Documentation</a></li><li class="chapter-item expanded "><a href="../../../introduction/index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../introduction/what_data.html"><strong aria-hidden="true">1.1.</strong> What Data does Mozilla Collect?</a></li><li class="chapter-item expanded "><a href="../../../introduction/tools.html"><strong aria-hidden="true">1.2.</strong> Tools for Data Analysis</a></li><li class="chapter-item expanded "><a href="../../../concepts/terminology.html"><strong aria-hidden="true">1.3.</strong> Terminology</a></li></ol></li><li class="chapter-item expanded "><a href="../../../cookbooks/index.html"><strong aria-hidden="true">2.</strong> Tutorials & Cookbooks</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../cookbooks/getting_started/index.html"><strong aria-hidden="true">2.1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../concepts/gaining_access.html"><strong aria-hidden="true">2.1.1.</strong> Gaining Access</a></li><li class="chapter-item expanded "><a href="../../../concepts/getting_help.html"><strong aria-hidden="true">2.1.2.</strong> Getting Help</a></li><li class="chapter-item expanded "><a href="../../../concepts/reporting_a_problem.html"><strong aria-hidden="true">2.1.3.</strong> Reporting a problem</a></li></ol></li><li class="chapter-item expanded "><a href="../../../cookbooks/analysis/index.html"><strong aria-hidden="true">2.2.</strong> Analysis</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../cookbooks/analysis/data_discovery_tools.html"><strong aria-hidden="true">2.2.1.</strong> Data Discovery Tools</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../cookbooks/analysis/data_catalog.html"><strong aria-hidden="true">2.2.1.1.</strong> Using the Data Catalog</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/analysis/glean_dictionary.html"><strong aria-hidden="true">2.2.1.2.</strong> Using the Glean Dictionary</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/analysis/probe_dictionary.html"><strong aria-hidden="true">2.2.1.3.</strong> Using the Probe Dictionary</a></li></ol></li><li class="chapter-item expanded "><a href="../../../cookbooks/data_modeling/index.html"><strong aria-hidden="true">2.2.2.</strong> Data Modeling</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../cookbooks/data_modeling/where_to_store.html"><strong aria-hidden="true">2.2.2.1.</strong> Where to store the data model assets</a></li></ol></li><li class="chapter-item expanded "><a href="../../../cookbooks/looker/index.html"><strong aria-hidden="true">2.2.3.</strong> Working with Looker</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../cookbooks/looker/intro.html"><strong aria-hidden="true">2.2.3.1.</strong> Introduction to Looker</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/looker/countries.html"><strong aria-hidden="true">2.2.3.2.</strong> Normalizing Country Data</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/looker/browser_versions.html"><strong aria-hidden="true">2.2.3.3.</strong> Normalizing Browser Version Data</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/looker/growth_usage_dashboards.html"><strong aria-hidden="true">2.2.3.4.</strong> Using Growth and Usage Dashboards</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/looker/event_counts_explore.html"><strong aria-hidden="true">2.2.3.5.</strong> Using the Event Counts Explore</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/looker/funnel_analysis_explore.html"><strong aria-hidden="true">2.2.3.6.</strong> Using the Funnel Analysis Explore</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/looker/performance_caching.html"><strong aria-hidden="true">2.2.3.7.</strong> Looker Performance - Caching</a></li></ol></li><li class="chapter-item expanded "><a href="../../../cookbooks/analysis/tools.html"><strong aria-hidden="true">2.2.4.</strong> Other Data Analysis Tools</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../cookbooks/glam.html"><strong aria-hidden="true">2.2.4.1.</strong> Introduction to GLAM</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/operational_monitoring.html"><strong aria-hidden="true">2.2.4.2.</strong> Introduction to Operational Monitoring</a></li><li class="chapter-item expanded "><a href="../../../tools/stmo.html"><strong aria-hidden="true">2.2.4.3.</strong> Introduction to STMO</a></li></ol></li><li class="chapter-item expanded "><a href="../../../cookbooks/public_data.html"><strong aria-hidden="true">2.2.5.</strong> Accessing Public Data</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/bigquery.html"><strong aria-hidden="true">2.2.6.</strong> Accessing and working with BigQuery</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../cookbooks/bigquery/access.html"><strong aria-hidden="true">2.2.6.1.</strong> Access</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/bigquery/querying.html"><strong aria-hidden="true">2.2.6.2.</strong> Writing Queries</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/bigquery/optimization.html"><strong aria-hidden="true">2.2.6.3.</strong> Optimization</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/bigquery/accessing_desktop_data.html"><strong aria-hidden="true">2.2.6.4.</strong> Accessing Desktop Data</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/accessing_glean_data.html"><strong aria-hidden="true">2.2.6.5.</strong> Accessing Glean Data</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/additional_props.html"><strong aria-hidden="true">2.2.6.6.</strong> Accessing Additional Properties</a></li><li class="chapter-item expanded "><a href="../../../tools/spark.html"><strong aria-hidden="true">2.2.6.7.</strong> Custom analysis with Spark</a></li></ol></li><li class="chapter-item expanded "><a href="../../../cookbooks/dataset_specific.html"><strong aria-hidden="true">2.2.7.</strong> Dataset-Specific</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../cookbooks/normandy_events.html"><strong aria-hidden="true">2.2.7.1.</strong> Working with Normandy events</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/crash_pings.html"><strong aria-hidden="true">2.2.7.2.</strong> Working with Crash Pings</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/clients_last_seen_bits.html"><strong aria-hidden="true">2.2.7.3.</strong> Working with Bit Patterns in Clients Last Seen</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/main_ping_exponential_histograms.html"><strong aria-hidden="true">2.2.7.4.</strong> Visualizing Percentiles of a Main Ping Exponential Histogram</a></li></ol></li><li class="chapter-item expanded "><a href="../../../cookbooks/realtime.html"><strong aria-hidden="true">2.2.8.</strong> Real-time</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../cookbooks/live_data.html"><strong aria-hidden="true">2.2.8.1.</strong> Working with Live Data</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/view_pings_cep.html"><strong aria-hidden="true">2.2.8.2.</strong> Seeing Your Own Pings</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/real_time_search.html"><strong aria-hidden="true">2.2.8.3.</strong> See Real-time search metrics</a></li></ol></li><li class="chapter-item expanded "><a href="../../../cookbooks/metrics.html"><strong aria-hidden="true">2.2.9.</strong> Metrics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../cookbooks/dau.html"><strong aria-hidden="true">2.2.9.1.</strong> Daily Active Users (DAU and MAU)</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/active_dau.html"><strong aria-hidden="true">2.2.9.2.</strong> Active DAU (aDAU)</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/retention.html"><strong aria-hidden="true">2.2.9.3.</strong> Retention</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../../cookbooks/operational/index.html"><strong aria-hidden="true">2.3.</strong> Operational</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../cookbooks/gcp-projects.html"><strong aria-hidden="true">2.3.1.</strong> Creating a Prototype Data Project on Google Cloud Platform</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/operational/protosaur.html"><strong aria-hidden="true">2.3.2.</strong> Creating Static Dashboards with Protosaur</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/scheduling_queries.html"><strong aria-hidden="true">2.3.3.</strong> Scheduling Queries</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/deploying-containers.html"><strong aria-hidden="true">2.3.4.</strong> Building and Deploying Containers to GCR with CircleCI</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/publishing_datasets.html"><strong aria-hidden="true">2.3.5.</strong> Publishing Datasets</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/operational/connecting_external_data_bigquery.html"><strong aria-hidden="true">2.3.6.</strong> Connecting Sheets and External Data to BigQuery</a></li></ol></li><li class="chapter-item expanded "><a href="../../../datasets/new_data.html"><strong aria-hidden="true">2.4.</strong> Sending telemetry</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../cookbooks/client_guidelines.html"><strong aria-hidden="true">2.4.1.</strong> Implementing Experiments</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/events_best_practices.html"><strong aria-hidden="true">2.4.2.</strong> Sending Events</a></li><li class="chapter-item expanded "><a href="../../../cookbooks/new_ping.html"><strong aria-hidden="true">2.4.3.</strong> Sending a Custom Ping</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../../reference/index.html"><strong aria-hidden="true">3.</strong> Data Platform Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../tools/data_stack_overview.html"><strong aria-hidden="true">3.1.</strong> Data Stack Overview</a></li><li class="chapter-item expanded "><a href="../../../tools/guiding_principles.html"><strong aria-hidden="true">3.2.</strong> Guiding Principles for Data Infrastructure</a></li><li class="chapter-item expanded "><a href="../../../concepts/glean/glean.html"><strong aria-hidden="true">3.3.</strong> Glean overview</a></li><li class="chapter-item expanded "><a href="../../../concepts/pipeline/gcp_data_pipeline.html"><strong aria-hidden="true">3.4.</strong> Overview of Mozilla's Data Pipeline</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../concepts/pipeline/http_edge_spec.html"><strong aria-hidden="true">3.4.1.</strong> HTTP Edge Server Specification</a></li><li class="chapter-item expanded "><a href="../../../concepts/pipeline/event_pipeline.html"><strong aria-hidden="true">3.4.2.</strong> Event Pipeline Detail</a></li><li class="chapter-item expanded "><a href="../../../concepts/pipeline/schemas.html"><strong aria-hidden="true">3.4.3.</strong> Schemas</a></li><li class="chapter-item expanded "><a href="../../../concepts/pipeline/glean_data.html"><strong aria-hidden="true">3.4.4.</strong> Glean Data</a></li><li class="chapter-item expanded "><a href="../../../concepts/channels/channel_normalization.html"><strong aria-hidden="true">3.4.5.</strong> Channel Normalization</a></li><li class="chapter-item expanded "><a href="../../../concepts/sample_id.html"><strong aria-hidden="true">3.4.6.</strong> Sampling</a></li><li class="chapter-item expanded "><a href="../../../concepts/pipeline/filtering.html"><strong aria-hidden="true">3.4.7.</strong> Filtering</a></li><li class="chapter-item expanded "><a href="../../../concepts/pipeline/artifact_deployment.html"><strong aria-hidden="true">3.4.8.</strong> BigQuery Artifact Deployment</a></li></ol></li><li class="chapter-item expanded "><a href="../../../concepts/analysis_gotchas.html"><strong aria-hidden="true">3.5.</strong> Common Analysis Gotchas</a></li><li class="chapter-item expanded "><a href="../../../concepts/sql_style.html"><strong aria-hidden="true">3.6.</strong> SQL Style Guide</a></li><li class="chapter-item expanded "><a href="../../../concepts/airflow_gotchas.html"><strong aria-hidden="true">3.7.</strong> Airflow Gotcha's</a></li><li class="chapter-item expanded "><a href="../../../concepts/index.html"><strong aria-hidden="true">3.8.</strong> Telemetry Behavior Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../concepts/history.html"><strong aria-hidden="true">3.8.1.</strong> History of Telemetry</a></li><li class="chapter-item expanded "><a href="../../../concepts/profile/index.html"><strong aria-hidden="true">3.8.2.</strong> Profile Behavior</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../concepts/profile/profile_creation.html"><strong aria-hidden="true">3.8.2.1.</strong> Profile Creation</a></li><li class="chapter-item expanded "><a href="../../../concepts/profile/realworldusage.html"><strong aria-hidden="true">3.8.2.2.</strong> Real World Usage</a></li><li class="chapter-item expanded "><a href="../../../concepts/profile/profilehistory.html"><strong aria-hidden="true">3.8.2.3.</strong> Profile History</a></li></ol></li><li class="chapter-item expanded "><a href="../../../concepts/engagement.html"><strong aria-hidden="true">3.8.3.</strong> Engagement metrics</a></li><li class="chapter-item expanded "><a href="../../../concepts/segments.html"><strong aria-hidden="true">3.8.4.</strong> User states/Segments</a></li></ol></li><li class="chapter-item expanded "><a href="../../../concepts/experiments.html"><strong aria-hidden="true">3.9.</strong> Experimentation</a></li><li class="chapter-item expanded "><a href="../../../concepts/metric_hub.html"><strong aria-hidden="true">3.10.</strong> Metric Hub</a></li><li class="chapter-item expanded "><a href="../../../concepts/external_data_integration_using_fivetran.html"><strong aria-hidden="true">3.11.</strong> External data integration using Fivetran</a></li><li class="chapter-item expanded "><a href="../../../tools/projects.html"><strong aria-hidden="true">3.12.</strong> Project Glossary</a></li></ol></li><li class="chapter-item expanded "><a href="../../../datasets/reference.html"><strong aria-hidden="true">4.</strong> Dataset Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../datasets/pings.html"><strong aria-hidden="true">4.1.</strong> Pings</a></li><li class="chapter-item expanded "><a href="../../../datasets/derived.html"><strong aria-hidden="true">4.2.</strong> Derived Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../datasets/active_profiles.html"><strong aria-hidden="true">4.2.1.</strong> Active Profiles</a></li><li class="chapter-item expanded "><a href="../../../datasets/bigquery/active_users_aggregates/reference.html"><strong aria-hidden="true">4.2.2.</strong> Active Users</a></li><li class="chapter-item expanded "><a href="../../../datasets/batch_view/addons/reference.html"><strong aria-hidden="true">4.2.3.</strong> Addons</a></li><li class="chapter-item expanded "><a href="../../../datasets/other/addons_daily/reference.html"><strong aria-hidden="true">4.2.4.</strong> Addons Daily</a></li><li class="chapter-item expanded "><a href="../../../datasets/other/asn_aggregates/reference.html"><strong aria-hidden="true">4.2.5.</strong> Autonomous System Aggregates</a></li><li class="chapter-item expanded "><a href="../../../datasets/batch_view/clients_daily/reference.html"><strong aria-hidden="true">4.2.6.</strong> Clients Daily</a></li><li class="chapter-item expanded "><a href="../../../datasets/bigquery/clients_last_seen/reference.html"><strong aria-hidden="true">4.2.7.</strong> Clients Last Seen</a></li><li class="chapter-item expanded "><a href="../../../datasets/batch_view/events/reference.html"><strong aria-hidden="true">4.2.8.</strong> Events</a></li><li class="chapter-item expanded "><a href="../../../datasets/bigquery/events_daily/reference.html"><strong aria-hidden="true">4.2.9.</strong> Events Daily</a></li><li class="chapter-item expanded "><a href="../../../datasets/bigquery/exact_mau/reference.html"><strong aria-hidden="true">4.2.10.</strong> Exact MAU</a></li><li class="chapter-item expanded "><a href="../../../datasets/bigquery/firefox_android_clients/reference.html"><strong aria-hidden="true">4.2.11.</strong> Firefox Android Clients</a></li><li class="chapter-item expanded "><a href="../../../datasets/main_ping_tables.html"><strong aria-hidden="true">4.2.12.</strong> Main Ping Tables</a></li><li class="chapter-item expanded "><a href="../../../datasets/batch_view/main_summary/reference.html"><strong aria-hidden="true">4.2.13.</strong> Main Summary</a></li><li class="chapter-item expanded "><a href="../../../datasets/other/socorro_crash/reference.html"><strong aria-hidden="true">4.2.14.</strong> Socorro Crash Reports</a></li><li class="chapter-item expanded "><a href="../../../datasets/other/ssl/reference.html"><strong aria-hidden="true">4.2.15.</strong> SSL Ratios (public)</a></li><li class="chapter-item expanded "><a href="../../../datasets/batch_view/telemetry_aggregates/reference.html"><strong aria-hidden="true">4.2.16.</strong> Telemetry Aggregates</a></li><li class="chapter-item expanded "><a href="../../../datasets/glam.html"><strong aria-hidden="true">4.2.17.</strong> GLAM Aggregates</a></li></ol></li><li class="chapter-item expanded "><a href="../../../datasets/experiments.html"><strong aria-hidden="true">4.3.</strong> Experiment Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../datasets/jetstream.html"><strong aria-hidden="true">4.3.1.</strong> Jetstream</a></li><li class="chapter-item expanded "><a href="../../../datasets/experiment_telemetry.html"><strong aria-hidden="true">4.3.2.</strong> Accessing experiment data</a></li><li class="chapter-item expanded "><a href="../../../datasets/heartbeat.html"><strong aria-hidden="true">4.3.3.</strong> Accessing Heartbeat data</a></li><li class="chapter-item expanded "><a href="../../../datasets/dynamic_telemetry.html"><strong aria-hidden="true">4.3.4.</strong> Dynamic telemetry</a></li><li class="chapter-item expanded "><a href="../../../datasets/experiment_monitoring.html"><strong aria-hidden="true">4.3.5.</strong> Experiment monitoring</a></li></ol></li><li class="chapter-item expanded "><a href="../../../datasets/search.html"><strong aria-hidden="true">4.4.</strong> Search Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../datasets/search/search_aggregates/reference.html"><strong aria-hidden="true">4.4.1.</strong> Search Aggregates</a></li><li class="chapter-item expanded "><a href="../../../datasets/search/search_clients_engines_sources_daily/reference.html"><strong aria-hidden="true">4.4.2.</strong> Search Clients Engines Sources Daily</a></li><li class="chapter-item expanded "><a href="../../../datasets/search/search_clients_last_seen/reference.html"><strong aria-hidden="true">4.4.3.</strong> Search Clients Last Seen</a></li><li class="chapter-item expanded "><a href="../../../datasets/search/client_ltv/reference.html"><strong aria-hidden="true">4.4.4.</strong> Client LTV</a></li></ol></li><li class="chapter-item expanded "><a href="../../../datasets/non_desktop.html"><strong aria-hidden="true">4.5.</strong> Non-Desktop Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../datasets/non_desktop/day_2_7_activation/reference.html"><strong aria-hidden="true">4.5.1.</strong> Day 2-7 Activation</a></li><li class="chapter-item expanded "><a href="../../../datasets/non_desktop/google_play_store/reference.html"><strong aria-hidden="true">4.5.2.</strong> Google Play Store</a></li><li class="chapter-item expanded "><a href="../../../datasets/non_desktop/apple_app_store/reference.html"><strong aria-hidden="true">4.5.3.</strong> Apple App Store</a></li></ol></li><li class="chapter-item expanded "><a href="../../../datasets/other.html"><strong aria-hidden="true">4.6.</strong> Other Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../datasets/other/hgpush/reference.html"><strong aria-hidden="true">4.6.1.</strong> hgpush</a></li><li class="chapter-item expanded "><a href="../../../datasets/other/stub_installer/reference.html"><strong aria-hidden="true">4.6.2.</strong> Stub installer ping</a></li><li class="chapter-item expanded "><a href="../../../datasets/other/bmobugs/reference.html"><strong aria-hidden="true">4.6.3.</strong> bmobugs</a></li><li class="chapter-item expanded "><a href="../../../datasets/buildhub.html"><strong aria-hidden="true">4.6.4.</strong> Build metadata</a></li><li class="chapter-item expanded "><a href="../../../datasets/releases.html"><strong aria-hidden="true">4.6.5.</strong> Release information</a></li><li class="chapter-item expanded "><a href="../../../datasets/other/suggest/suggest.html"><strong aria-hidden="true">4.6.6.</strong> Suggest</a></li><li class="chapter-item expanded "><a href="../../../datasets/other/sponsored_tiles/sponsored_tiles.html"><strong aria-hidden="true">4.6.7.</strong> Sponsored Tiles</a></li><li class="chapter-item expanded "><a href="../../../datasets/other/newtab_interactions/reference.html"><strong aria-hidden="true">4.6.8.</strong> Newtab_Interactions</a></li><li class="chapter-item expanded "><a href="../../../datasets/other/urlbar_events/reference.html"><strong aria-hidden="true">4.6.9.</strong> Urlbar Events</a></li><li class="chapter-item expanded "><a href="../../../datasets/other/serp_events/reference.html" class="active"><strong aria-hidden="true">4.6.10.</strong> SERP Events</a></li></ol></li><li class="chapter-item expanded "><a href="../../../datasets/fxa.html"><strong aria-hidden="true">4.7.</strong> Mozilla Accounts Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../datasets/fxa_metrics/attribution.html"><strong aria-hidden="true">4.7.1.</strong> Mozilla Account Attribution</a></li><li class="chapter-item expanded "><a href="../../../datasets/fxa_metrics/funnels.html"><strong aria-hidden="true">4.7.2.</strong> Mozilla Account Funnel Metrics</a></li><li class="chapter-item expanded "><a href="../../../datasets/fxa_metrics/emails.html"><strong aria-hidden="true">4.7.3.</strong> Mozilla Account Email Metrics</a></li></ol></li><li class="chapter-item expanded "><a href="../../../datasets/static.html"><strong aria-hidden="true">4.8.</strong> Static Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../datasets/static/normalized_os.html"><strong aria-hidden="true">4.8.1.</strong> Normalized OS Names And Versions</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../../historical/index.html"><strong aria-hidden="true">5.</strong> Historical Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../concepts/pipeline/data_pipeline.html"><strong aria-hidden="true">5.1.</strong> Previous AWS Pipeline Overview</a></li><li class="chapter-item expanded "><a href="../../../concepts/pipeline/data_pipeline_detail.html"><strong aria-hidden="true">5.2.</strong> In-depth AWS Data Pipeline Detail</a></li><li class="chapter-item expanded "><a href="../../../metrics/index.html"><strong aria-hidden="true">5.3.</strong> Metrics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../metrics/definitions.html"><strong aria-hidden="true">5.3.1.</strong> Definitions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../metrics/metrics.html"><strong aria-hidden="true">5.3.1.1.</strong> Metrics</a></li><li class="chapter-item expanded "><a href="../../../metrics/usage.html"><strong aria-hidden="true">5.3.1.2.</strong> Usage Criteria</a></li><li class="chapter-item expanded "><a href="../../../metrics/dimensions.html"><strong aria-hidden="true">5.3.1.3.</strong> Slicing Dimensions</a></li></ol></li><li class="chapter-item expanded "><a href="../../../metrics/policy.html"><strong aria-hidden="true">5.3.2.</strong> Metrics Standardization and Policy</a></li></ol></li><li class="chapter-item expanded "><a href="../../../concepts/censuses.html"><strong aria-hidden="true">5.4.</strong> Legacy Census Metrics</a></li><li class="chapter-item expanded "><a href="../../../datasets/obsolete.html"><strong aria-hidden="true">5.5.</strong> Obsolete Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../datasets/obsolete/activity-stream/reference.html"><strong aria-hidden="true">5.5.1.</strong> Activity Stream</a></li><li class="chapter-item expanded "><a href="../../../datasets/obsolete/attitudes_daily/reference.html"><strong aria-hidden="true">5.5.2.</strong> Attitudes Daily</a></li><li class="chapter-item expanded "><a href="../../../datasets/obsolete/churn/reference.html"><strong aria-hidden="true">5.5.3.</strong> Churn</a></li><li class="chapter-item expanded "><a href="../../../datasets/obsolete/client_count_daily/reference.html"><strong aria-hidden="true">5.5.4.</strong> Client Count Daily</a></li><li class="chapter-item expanded "><a href="../../../datasets/obsolete/client_count/reference.html"><strong aria-hidden="true">5.5.5.</strong> Client Count</a></li><li class="chapter-item expanded "><a href="../../../datasets/obsolete/crash_aggregates/reference.html"><strong aria-hidden="true">5.5.6.</strong> Crash Aggregates</a></li><li class="chapter-item expanded "><a href="../../../datasets/obsolete/crash_summary/reference.html"><strong aria-hidden="true">5.5.7.</strong> Crash Summary</a></li><li class="chapter-item expanded "><a href="../../../datasets/obsolete/error_aggregates/reference.html"><strong aria-hidden="true">5.5.8.</strong> Error Aggregates</a></li><li class="chapter-item expanded "><a href="../../../datasets/obsolete/first_shutdown_summary/reference.html"><strong aria-hidden="true">5.5.9.</strong> First Shutdown Summary</a></li><li class="chapter-item expanded "><a href="../../../datasets/obsolete/heavy_users/reference.html"><strong aria-hidden="true">5.5.10.</strong> Heavy Users</a></li><li class="chapter-item expanded "><a href="../../../datasets/obsolete/legacy_mobile/reference.html"><strong aria-hidden="true">5.5.11.</strong> Legacy Mobile Datasets</a></li><li class="chapter-item expanded "><a href="../../../datasets/obsolete/longitudinal/reference.html"><strong aria-hidden="true">5.5.12.</strong> Longitudinal</a></li><li class="chapter-item expanded "><a href="../../../datasets/obsolete/retention/reference.html"><strong aria-hidden="true">5.5.13.</strong> Retention</a></li><li class="chapter-item expanded "><a href="../../../datasets/obsolete/sync_summary/reference.html"><strong aria-hidden="true">5.5.14.</strong> Sync Summary</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../../contributing/index.html"><strong aria-hidden="true">6.</strong> Contributing</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../contributing/style_guide.html"><strong aria-hidden="true">6.1.</strong> Style Guide</a></li><li class="chapter-item expanded "><a href="../../../contributing/structure.html"><strong aria-hidden="true">6.2.</strong> Structure</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Mozilla Data Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/mozilla/data-docs" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/other/serp_events/reference.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="serp-events"><a class="header" href="#serp-events">SERP Events</a></h1>
+<h2 id="table-of-contents"><a class="header" href="#table-of-contents">Table of Contents</a></h2>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#serp-impression-model">SERP impression model</a>
+<ul>
+<li><a href="#ad-detection-and-visibility">Ad detection and visibility</a></li>
+</ul>
+</li>
+<li><a href="#measurement">Measurement</a>
+<ul>
+<li><a href="#limitations-of-ad-impression-detection">Limitations of ad impression detection</a></li>
+</ul>
+</li>
+<li><a href="#ad-impressions-and-clicks">Ad impressions and clicks</a></li>
+<li><a href="#serp-events-table">SERP events table</a>
+<ul>
+<li><a href="#ad-impression-counts">Ad impression counts</a></li>
+<li><a href="#assumptions-on-event-sequences">Assumptions on event sequences</a></li>
+<li><a href="#gotchas">Gotchas</a></li>
+<li><a href="#example-queries">Example queries</a></li>
+<li><a href="#column-descriptions">Column descriptions</a></li>
+<li><a href="#scheduling">Scheduling</a></li>
+<li><a href="#schema">Schema</a></li>
+<li><a href="#code-reference">Code reference</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
+<p>The <code>serp_events</code> table, derived from Glean <code>serp</code> events, provides a source
+for understanding user interactions with search engine result pages (SERPs).
+It is structured around SERP page loads and engagements
+with different UI components on the SERP.
+This data is Desktop-only.</p>
+<h2 id="serp-impression-model"><a class="header" href="#serp-impression-model">SERP impression model</a></h2>
+<p>A <strong>SERP impression</strong> consists of a SERP page load,
+together with any user engagements with the links and UI features displayed on the page.
+It starts from when the SERP is loaded.
+Soon after the page loads, the browser runs a scan to detect sponsored search results (i.e. ads).
+The user may engage with the page by clicking on a link or UI element.
+The SERP impression ends when the user navigates away or closes the page.</p>
+<p>The following diagram outlines the flow through a SERP impression,
+along with the Glean events which are sent at different points.</p>
+<pre class="mermaid">flowchart LR
+A[User loads SERP] --&gt; AA([&lt;code&gt;serp.impression&lt;/code&gt;])
+AA --&gt; B{Ads loaded?}
+B --&gt;|Yes| C([&lt;code&gt;serp.ad_impression&lt;/code&gt;])
+C --&gt;|Each component| C
+B --&gt;|No| D{User engages?}
+C --&gt; D
+D --&gt;|No| E([&lt;code&gt;serp.abandonment&lt;/code&gt;])
+D --&gt;|Yes| F([&lt;code&gt;serp.engagement&lt;/code&gt;])
+F --&gt;|User engages again?| F
+F --&gt; G[User leaves SERP]
+E --&gt; G
+AA -.-&gt; H{{User engages\nbefore ad\ncategorization\ncomplete}}
+H -.-&gt; E
+classDef edgecase fill:lightgrey,stroke:grey,font-size:10pt
+class H edgecase
+linkStyle 11,12 stroke-width:1px
+</pre>
+<p>A SERP impression is considered <strong>engaged</strong> if the user clicks at least once
+on a search result link or UI component (out of the ones we track).
+If the user leaves the SERP without engaging, the impression is considered <strong>abandoned</strong>.</p>
+<h3 id="ad-detection-and-visibility"><a class="header" href="#ad-detection-and-visibility">Ad detection and visibility</a></h3>
+<p>Depending on the search provider, ads may displayed across different
+<a href="https://docs.google.com/document/d/1OxixC4r7hytWtwsHY0tDkq3rlY9vocmf5o0ija07A9o/edit#bookmark=id.nzlxxwj74kro">display components</a>
+(areas of the SERP with specific UI treatments), such as inline sponsored results,
+a carousel showing result tiles streaming horizontally across the top,
+a sidebar with result tiles laid out in a grid.
+The ad detection procedure scans each of these components to check whether ad links are present.</p>
+<p>Ad detection checks for ad links that are <strong>loaded</strong>, i.e. present in the DOM.
+Loaded ad links may or may not be visible to the user.</p>
+<ul>
+<li>Ad links are considered <strong>visible</strong> or <strong>showing</strong> if the user has an opportunity to see them,
+i.e. display properties of the DOM element containing the ad link make them visible,
+and they are in the area of the page showing on the user's screen.</li>
+<li>They are considered <strong>blocked</strong> if the display properties of the DOM element
+containing the ad link appear to have been altered by an ad blocker so as to make it invisible.</li>
+<li>Ad links that are neither visible nor explicitly blocked are considered <strong>not showing</strong>.
+These may be hidden by the SERP or outside of the area of the page the user has seen,
+e.g. &quot;below the fold&quot;, or additional results in the carousel the user needs to scroll to.</li>
+</ul>
+<p>Usually, if an ad blocker is in use, all loaded ads will be blocked.
+In such cases, we infer an <strong>ad blocker to be in use</strong>.</p>
+<h2 id="measurement"><a class="header" href="#measurement">Measurement</a></h2>
+<p>Measurement for SERP impressions is collected through Glean <code>serp</code> category events.
+All events include the <code>impression_id</code> field in their event extras,
+which is used to link together events associated with the same SERP impression.
+SERP events are only implemented for specific search engines:
+<code>google</code>, <code>bing</code>, <code>duckduckgo</code>, <code>ecosia</code>.</p>
+<p>When a user loads a SERP, a
+<a href="https://dictionary.telemetry.mozilla.org/apps/firefox_desktop/metrics/serp_impression"><code>serp.impression</code></a>
+event is recorded with a newly-generated <code>impression_id</code>,
+containing some top-level information about the impression and the search that led to it.
+Note that a &quot;SERP impression&quot; means a single page load,
+not a sequence of pages associated with the same search term
+(which might be called a &quot;search session&quot;).
+If the user loads Page 2 of the search results, or opens the Shopping results page,
+that is considered a separate SERP impression and generates a new <code>impression_id</code>.</p>
+<p>When ad detection runs, a
+<a href="https://dictionary.telemetry.mozilla.org/apps/firefox_desktop/metrics/serp_ad_impression"><code>serp.ad_impression</code></a>
+event is generated for each display component containing at least 1 loaded ad link.
+It lists counts of:</p>
+<ul>
+<li>loaded ads: <code>ads_loaded</code></li>
+<li>ad links which are visible to the user: <code>ads_visible</code></li>
+<li>ad links which appear to have been blocked: <code>ads_hidden</code>.</li>
+</ul>
+<p>These counts have the following properties:</p>
+<ul>
+<li><code>ads_loaded &gt; 0</code></li>
+<li><code>0 &lt;= ads_visible + ads_hidden &lt;= ads_loaded</code></li>
+<li>Usually <code>ads_hidden = 0</code> or <code>= ads_loaded</code>.</li>
+</ul>
+<p>Beyond the main ad display components, <code>ad_impression</code> events are also reported
+for a few additional shopping-related features
+(which don't themselves contain ad links and are not monetizable):
+the shopping tab, and Google's refined search buttons.
+For these, <code>ads_loaded</code> tracks whether the feature was on the page, and is either 0 or 1.</p>
+<p>A separate
+<a href="https://dictionary.telemetry.mozilla.org/apps/firefox_desktop/metrics/serp_engagement"><code>serp.engagement</code></a>
+event is recorded each time the user clicks on one of the instrumented UI components.
+These include the ad components, as well as any non-ad link on the page,
+and the in-content search box at the top.
+Along with clicks on links, some components report additional engagement types,
+such as the Expand (right arrow) button for the carousel,
+and submitting a new search from the search box.</p>
+<p>The following table summarizes impressions and engagements instrumented for each component:</p>
+<div class="table-wrapper">
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Component</th>
+      <th>Impression reported</th>
+      <th>Possible engagement actions</th>
+      <th>Search engines supported</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="5">Ad components</th>
+      <td><code>ad_carousel</code></td>
+      <td><code>serp.ad_impression</code></td>
+      <td><code>clicked</code>, <code>expanded</code></td>
+      <td>all</td>
+    </tr>
+    <tr>
+      <td><code>ad_image_row</code></td>
+      <td><code>serp.ad_impression</code></td>
+      <td><code>clicked</code></td>
+      <td>all</td>
+    </tr>
+    <tr>
+      <td><code>ad_link</code></td>
+      <td><code>serp.ad_impression</code></td>
+      <td><code>clicked</code></td>
+      <td>all</td>
+    </tr>
+    <tr>
+      <td><code>ad_sidebar</code></td>
+      <td><code>serp.ad_impression</code></td>
+      <td><code>clicked</code></td>
+      <td>all except Ecosia</td>
+    </tr>
+    <tr>
+      <td><code>ad_sitelink</code></td>
+      <td><code>serp.ad_impression</code></td>
+      <td><code>clicked</code></td>
+      <td>all</td>
+    </tr>
+    <tr>
+      <th rowspan="4">Other page components</th>
+      <td><code>refined_search_buttons</code></td>
+      <td><code>serp.ad_impression</code></td>
+      <td><code>clicked</code>, <code>expanded</code></td>
+      <td>Google only</td>
+    </tr>
+    <tr>
+      <td><code>shopping_tab</code></td>
+      <td><code>serp.ad_impression</code></td>
+      <td><code>clicked</code></td>
+      <td>all</td>
+    </tr>
+    <tr>
+      <td><code>incontent_searchbox</code></td>
+      <td>None (impression assumed)</td>
+      <td><code>clicked</code>, <code>submitted</code></td>
+      <td>all</td>
+    </tr>
+    <tr>
+      <td><code>non_ads_link</code></td>
+      <td>None (impression assumed)</td>
+      <td><code>clicked</code></td>
+      <td>all</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<p>If the user leaves the page without making an engagement,
+a
+<a href="https://dictionary.telemetry.mozilla.org/apps/firefox_desktop/metrics/serp_abandonment"><code>serp.abandonment</code></a>
+event is generated, indicating the <code>reason</code> for abandonment:
+navigating to a different page, or closing the tab or window.</p>
+<p>One subtlety here is that there is no explicit signal for when an engaged SERP impression ends.
+The user may leave the SERP open a long time and keep clicking on different links or components.
+To count engagements, we need to aggregate all <code>engagement</code> events for that <code>impression_id</code>,
+and these may come in over some undefined period of time.
+We handle this by imposing a 2-day maximum SERP impression length at ETL time,
+as described <a href="#assumptions-on-event-sequences">below</a>.</p>
+<h3 id="limitations-of-ad-impression-detection"><a class="header" href="#limitations-of-ad-impression-detection">Limitations of ad impression detection</a></h3>
+<p>As the ad detection procedure runs at most once for a SERP impression
+against a snapshot of the page,
+ad impression and click reporting will be subject to some small systematic bias.
+This is important to be aware of, although no explicit correction is used at present.</p>
+<p>As a user continues to interact with the SERP,
+it is possible for additional ads to become visible and for the user to engage with those.
+For example, if the user keeps scrolling further down the page,
+they may begin to see ads which were considered &quot;not showing&quot; by ad detection.
+Engagements with these ads will be recorded, but the impressions may not,
+meaning that the number of visible ad links may be undercounted.</p>
+<p>There is also an edge case in which the user may click on a result
+before ad detection has time to complete;
+such impressions are reported as abandoned, and ad impressions and clicks are ignored.</p>
+<p>Note that the Legacy Telemetry ad click measurement will count all of these cases as ad clicks,
+since it checks links for ads at click time rather than taking a snapshot.
+This means that the <code>serp</code> events will undercount ad clicks somewhat relative to Legacy Telemetry.</p>
+<p>The different cases are described in the following table:</p>
+<div class="table-wrapper"><table><thead><tr><th>Engagement target</th><th>Click reporting</th><th>Link impression reporting</th></tr></thead><tbody>
+<tr><td>Non-ad component</td><td><code>serp.engagement</code> for target</td><td>No explicit reporting, impression assumed</td></tr>
+<tr><td>Ad detected as visible</td><td><code>serp.engagement</code> for ad component</td><td>Included in <code>ads_visible</code> count of <code>serp.ad_impression</code> for component</td></tr>
+<tr><td>Ad detected but not visible<p>Eg. user scrolls to reveal an ad that was on the page but not in the visible area when ad detection was run</td><td><code>serp.engagement</code> for ad component</td><td>Included in <code>ads_loaded</code> count but not <code>ads_visible</code> count of <code>serp.ad_impression</code> for component</td></tr>
+<tr><td>Ad not previously detected<p>Eg. user scrolls down and more results are loaded automatically. Includes ads that were not on the page when ad detection was run</td><td><code>serp.engagement</code> for <code>non_ad_link</code></td><td>Not included in <code>serp.ad_impression</code></td></tr>
+<tr><td>Engagement before ad detection completed</td><td>None. A <code>serp.abandonment</code> is sent instead.</td><td>None</td></tr>
+</tbody></table>
+</div>
+<h2 id="ad-impressions-and-clicks"><a class="header" href="#ad-impressions-and-clicks">Ad impressions and clicks</a></h2>
+<p>One of the main applications of this data is to compute ad impressions and clicks per SERP impression.
+As discussed above, a SERP impression may include several ad links across different display components,
+as well as nonsponsored links, and see multiple engagements with any of these.
+Depending on the use case, ad impressions and clicks may be viewed either per-component or per-SERP impression.</p>
+<p>Also, to count impressions and clicks, we can either count individual ads and clicks,
+or the number of page loads with least one ad or click.
+The latter is usually preferred, since the former could give CTR counts larger than 1
+and is more susceptible to issues described <a href="#limitations-of-ad-impression-detection">above</a>.
+The rate of individual ad impressions per component may be of interest as well.</p>
+<p>A display component in a SERP impression is said to have:</p>
+<ul>
+<li>an <strong>ad impression</strong> if it had at least 1 visible ad</li>
+<li>a <strong>click</strong> if it had at least 1 visible ad and at least 1 click engagement.</li>
+</ul>
+<p>This means that, for a given SERP impression and display component,
+<em>ad impression</em> and <em>click</em> are both binary 0/1 variables.
+<strong>CTR</strong> for ads is then defined as <code>clicks / ad impressions</code>, and will be between 0 and 1.
+We can also compute CTR for components that don't have explicit impression reporting,
+such as organic results, by assuming 1 impression per SERP.</p>
+<p>Impressions, clicks and CTR can be computed per SERP impression instead
+by considering an impression or click to have occurred if at least 1 display component had one.</p>
+<p>If a component has ads loaded, and they are all hidden,
+an <strong>ad blocker is inferred</strong> to be in use on the component.
+At the SERP level, ad ad blocker is inferred to be in use if is it inferred on at least 1 ad component.</p>
+<h2 id="serp-events-table"><a class="header" href="#serp-events-table">SERP events table</a></h2>
+<p>The
+<a href="https://github.com/mozilla/bigquery-etl/blob/main/sql_generators/serp_events/templates/desktop_query.sql"><code>mozdata.firefox_desktop.serp_events</code></a>
+table has <strong>multiple rows per SERP impression</strong> (indexed by <code>impression_id</code>),
+<strong>1 row for each unique display component</strong> that had either an ad impression or an engagement.
+SERP impressions with neither have 1 row with a component value of <code>null</code>.
+Each row aggregates multiple underlying Glean events.
+Rows for submission date <code>D</code> represent all SERP impressions
+whose <code>serp.impression</code> event has submission date <code>D</code>.</p>
+<p>The table contains columns pulling information from all 4 event types.
+Values computed from <code>impression</code> and <code>abandonment</code> events are repeated
+down all rows associated with the <code>impression_id</code>.
+This example table shows a summary view of the schema:</p>
+<div class="table-wrapper"><table><thead><tr><th><code>impression_id</code></th><th>Impression info</th><th><code>abandon_reason</code></th><th><code>component</code></th><th>Engagement counts</th><th>Ad impression counts</th></tr></thead><tbody>
+<tr><td><code>123</code></td><td><code>abc</code></td><td><code>null</code></td><td><code>C1</code></td><td><code>N1</code></td><td><code>M1</code></td></tr>
+<tr><td><code>123</code></td><td><code>abc</code></td><td><code>null</code></td><td><code>C2</code></td><td><code>N2</code></td><td><code>M2</code></td></tr>
+<tr><td><code>456</code></td><td><code>def</code></td><td><code>A</code></td><td><code>C1</code></td><td>0</td><td><code>M3</code></td></tr>
+<tr><td><code>456</code></td><td><code>def</code></td><td><code>A</code></td><td><code>C3</code></td><td>0</td><td><code>M4</code></td></tr>
+<tr><td><code>789</code></td><td><code>ghi</code></td><td><code>B</code></td><td><code>null</code></td><td>0</td><td>0</td></tr>
+</tbody></table>
+</div>
+<p>In this example:</p>
+<ul>
+<li>Impression <code>123</code> is engaged, and had ad impressions and engagements for components <code>C1</code> and <code>C2</code>.
+Component <code>C3</code> had neither ad impressions nor engagements on this SERP impression,
+so there is no corresponding row.</li>
+<li>Impression <code>456</code> is abandoned, but had some ad impressions for components <code>C1</code> and <code>C3</code>.</li>
+<li>Impression <code>789</code> is abandoned and had no ad impressions.</li>
+</ul>
+<h3 id="ad-impression-counts"><a class="header" href="#ad-impression-counts">Ad impression counts</a></h3>
+<p>Ad impression counts should generally be read from the <code>num_ads_showing</code> and <code>num_ads_notshowing</code> columns.
+These are computed from the raw counts reported in the events,
+which are included in the <code>num_ads_loaded_reported</code>/<code>num_ads_visible_reported</code>/<code>num_ads_hidden_reported</code> columns,
+according to the following logic.
+The <code>ad_blocker_inferred</code> column indicates whether we assume an ad blocker was in use on a display component.</p>
+<div class="table-wrapper"><table><thead><tr><th><code>num_ads_hidden_reported</code> case</th><th><code>num_ads_showing</code></th><th><code>num_ads_notshowing</code></th><th><code>ad_blocker_inferred</code></th></tr></thead><tbody>
+<tr><td><code>== 0</code></td><td><code>= num_ads_visible_reported</code></td><td><code>= num_ads_loaded_reported - num_ads_visible_reported</code></td><td><code>false</code></td></tr>
+<tr><td><code>== num_ads_loaded_reported</code></td><td><code>0</code></td><td><code>0</code></td><td><code>true</code></td></tr>
+<tr><td><code>&gt; 0</code> and <code>&lt; num_ads_loaded_reported</code></td><td><code>= num_ads_visible_reported + num_ads_hidden_reported</code></td><td><code>= num_ads_loaded_reported - num_ads_visible_reported - num_ads_hidden_reported</code></td><td><code>false</code></td></tr>
+</tbody></table>
+</div>
+<p>The last row represents an edge case in which some but not all loaded ads are blocked.
+Per Engineering, this is best interpreted as a shortcoming of the detection method
+rather than an ad blocker operating selectively.
+In this case, ads reported as &quot;blocked&quot; are considered to actually be visible.</p>
+<h3 id="assumptions-on-event-sequences"><a class="header" href="#assumptions-on-event-sequences">Assumptions on event sequences</a></h3>
+<p>We expect to see the following events reported for a given <code>impression_id</code>:</p>
+<ul>
+<li>1 <code>serp.impression</code> event</li>
+<li>Either 1 <code>serp.abandonment</code> event or else 1 or more <code>serp.engagement</code> events</li>
+<li>0 or more <code>serp.ad_impression</code> events, with at most 1 per component</li>
+</ul>
+<p>Impression IDs for events which don't meet these requirements
+are excluded from the table (this only affects a handful of impressions).</p>
+<p>As discussed above,
+a user could potentially keep a SERP open in their browser for multiple days
+and keep recording clicks over that time,
+as impression IDs don't have an inherent expiration.
+In filling the table,
+we only allow events for an impression ID to span at most <strong>2 consecutive submission dates</strong>:
+<code>serp</code> events with a submission date 2 or more days after
+the first submission date observed for that impression ID are ignored<sup class="footnote-reference"><a href="#1">1</a></sup>.
+As a result, the <code>serp_events</code> table has a <strong>2-day lag</strong> in its data
+rather than the 1-day lag present for most other datasets.</p>
+<p>On day <code>D</code>, the ETL logic looks like the following:</p>
+<ol>
+<li>Pull all <code>serp</code> events with submission dates <code>D-2</code> or <code>D-1</code></li>
+<li>Retain event sequences (sharing a common <code>impression_id</code>)
+meeting the above requirements whose <code>serp.impression</code> event has submission date <code>D-2</code></li>
+<li>Compute 1 or more rows for each event sequence and insert into the table
+with submission date <code>D-2</code>.</li>
+</ol>
+<h3 id="gotchas"><a class="header" href="#gotchas">Gotchas</a></h3>
+<ul>
+<li>To count number of SERP impressions that had X, use <code>COUNT(DISTINCT impression_id)</code>.</li>
+<li>Use <code>num_ads_showing</code> and <code>num_ads_notshowing</code> to count ad impressions.</li>
+<li>The table fills at a 2-day lag: the most recent submission date in the table is 2 days ago, not yesterday.</li>
+<li><code>ad_blocker_inferred</code> applies individually to the display component,
+and a single <code>impression_id</code> may have different values of <code>ad_blocker_inferred</code> across components.
+To compute a per-SERP impression version of <code>ad_blocker_inferred</code>,
+check if any component had <code>ad_blocker_inferred = true</code>.</li>
+<li>Ad blocker use can only be inferred when ads are loaded
+(which is a minority of all SERP impressions).
+If ads are not loaded, <code>ad_blocker_inferred</code> will report <code>false</code>,
+but really there is not enough information to make a determination.</li>
+<li>Currently <code>is_ad_component</code> and <code>has_ads_loaded</code> refers to all components
+reported in the <code>ad_impression</code> event, which includes <code>refined_search_buttons</code> and <code>shopping_tab</code>.
+To compute monetizable ad impressions or clicks, these need to be filtered out.</li>
+</ul>
+<h3 id="example-queries"><a class="header" href="#example-queries">Example queries</a></h3>
+<p>Number of engaged and abandoned SERP impressions:</p>
+<pre><code class="language-sql">SELECT
+  IF(is_engaged, 'engaged', 'abandoned') AS session_type,
+  COUNT(DISTINCT impression_id) AS num_serp
+FROM
+  `mozdata.firefox_desktop.serp_events`
+GROUP BY
+  1
+</code></pre>
+<p>Number of SERP impressions with ads loaded:</p>
+<pre><code class="language-sql">SELECT
+  component IN ('ad_carousel', 'ad_image_row', 'ad_link', 'ad_sidebar', 'ad_sitelink')
+    AND num_ads_loaded_reported &gt; 0 AS has_ads_loaded,
+  COUNT(DISTINCT impression_id) AS num_serp
+FROM
+  `mozdata.firefox_desktop.serp_events`
+GROUP BY
+  1
+</code></pre>
+<p>Number of SERP impression-level ad impressions and clicks</p>
+<pre><code class="language-sql">SELECT
+  COUNT(DISTINCT impression_id) as num_with_ad_impression,
+  COUNT(DISTINCT IF(num_clicks &gt; 0, impression_id, NULL)) as num_with_ad_click,
+FROM
+  `mozdata.firefox_desktop.serp_events`
+WHERE
+  component IN ('ad_carousel', 'ad_image_row', 'ad_link', 'ad_sidebar', 'ad_sitelink')
+  AND num_ads_showing &gt; 0
+</code></pre>
+<p>Proportion of loaded ads that are visible, by search engine &amp; component:</p>
+<pre><code class="language-sql">SELECT
+  search_engine,
+  component,
+  SAFE_DIVIDE(SUM(num_ads_showing), SUM(num_ads_loaded_reported)) as prop_visible
+FROM
+  `mozdata.firefox_desktop.serp_events`
+GROUP BY
+  1,
+  2
+ORDER BY
+  1,
+  2
+</code></pre>
+<p>Number of SERP impressions with ads loaded and an ad blocker in use:</p>
+<pre><code class="language-sql">SELECT
+  ad_blocker_inferred,
+  COUNT(DISTINCT impression_id) as num_serp
+FROM
+  `mozdata.firefox_desktop.serp_events`
+WHERE
+  has_ads_loaded
+GROUP BY
+  1
+</code></pre>
+<p>Ad impression rates, among sessions with ads showing:</p>
+<pre><code class="language-sql">SELECT
+  component,
+  SAFE_DIVIDE(SUM(num_ads_showing), COUNT(DISTINCT impression_id)) AS ad_imp_rate
+FROM
+  `mozdata.firefox_desktop.serp_events`
+WHERE
+  component IN ('ad_carousel', 'ad_image_row', 'ad_link', 'ad_sidebar', 'ad_sitelink')
+  AND num_ads_showing &gt; 0
+</code></pre>
+<p>Abandonment reason distribution:</p>
+<pre><code class="language-sql">SELECT
+  abandon_reason,
+  COUNT(DISTINCT impression_id) AS num_sessions
+FROM
+  `mozdata.firefox_desktop.serp_events`
+WHERE
+  NOT is_engaged
+GROUP BY
+  1
+</code></pre>
+<h3 id="column-descriptions"><a class="header" href="#column-descriptions">Column descriptions</a></h3>
+<p>As described above, the table has multiple rows for each SERP impression, 1 row per display component.
+The first few columns hold properties of the SERP impression;
+the values in each of these columns will be the same down all rows
+corresponding to the same <code>impression_id</code>.
+The remaining columns hold properties of each display component on the SERP.</p>
+<div class="table-wrapper"><table><thead><tr><th>Column</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>impression_id</code></td><td>UUID identifying SERP page loads. The table may have multiple rows with the same <code>impression_id</code>, 1 row per <code>component</code>. Use <code>COUNT(DISTINCT impression_id)</code> to count unique SERP loads.</td></tr>
+<tr><td><code>event_timestamp</code></td><td>Glean event timestamp for the <code>serp.impression</code> event corresponding to the SERP page load.</td></tr>
+<tr><td><code>is_shopping_page</code></td><td>Is the SERP a shopping page, resulting from clicking on the &quot;Shopping&quot; tab?</td></tr>
+<tr><td><code>search_engine</code></td><td><code>google</code>, <code>bing</code>, <code>duckduckgo</code>, <code>ecosia</code> (only these support SERP events currently)</td></tr>
+<tr><td><code>sap_source</code></td><td>How the user arrived at the SERP [e.g. <code>urlbar</code>, <code>follow_on_from_refine_on_SERP</code>]</td></tr>
+<tr><td><code>is_tagged</code></td><td>Whether the search is tagged (<code>true</code>) or organic (<code>false</code>)</td></tr>
+<tr><td><code>is_engaged</code></td><td>Did the SERP have at least 1 engagement (<code>clicked</code>, <code>expanded</code> or <code>submitted</code>)?</td></tr>
+<tr><td><code>abandon_reason</code></td><td>Why the SERP is deemed abandoned: <code>tab_close</code>, <code>window_close</code>, <code>navigation</code>, or <code>null</code> if not abandoned.</td></tr>
+<tr><td><code>ping_seq</code></td><td><code>ping_info.seq</code> from the events ping. Use together with <code>event_timestamp</code> for event sequencing.</td></tr>
+<tr><td><code>has_ads_loaded</code></td><td>Did the SERP have at least 1 ad loaded (across all <code>ad_impression</code> components)?</td></tr>
+<tr><td><code>component</code></td><td>SERP display component corresponding to ad impression or engagement counts [e.g. <code>ad_link</code>, <code>non_ads_link</code>]. This includes both ad components and non-ad components. Different components support different engagement types, and only ad components support ad impressions.</td></tr>
+<tr><td><code>is_ad_component</code></td><td>Is the component covered by <code>serp.ad_impression</code> events?</td></tr>
+<tr><td><code>num_clicks</code></td><td>Number of clicks recorded on <code>component</code> for the SERP page load. All components support clicks.</td></tr>
+<tr><td><code>num_expands</code></td><td>Number of expands recorded on <code>component</code> for the SERP page load. Only <code>ad_carousel</code>, <code>refined_search_buttons</code> support expands.</td></tr>
+<tr><td><code>num_submits</code></td><td>Number of submits recorded on <code>component</code> for the SERP page load. Only <code>incontent_searchbox</code> supports submits.</td></tr>
+<tr><td><code>num_ads_loaded_reported</code></td><td>Number of ads loaded in <code>component</code> for the SERP page load. They may or may not be visible on the page.</td></tr>
+<tr><td><code>num_ads_visible_reported</code></td><td>Number of ads visible to the user in <code>component</code> for the SERP page load, as reported in the event. Use <code>num_ads_showing</code> instead to count visible ads.</td></tr>
+<tr><td><code>num_ads_hidden_reported</code></td><td>Number of ads hidden by an ad blocker in <code>component</code> for the SERP page load, as reported in the event. Use <code>num_ads_notshowing</code> instead to count ads loaded but not showing.</td></tr>
+<tr><td><code>ad_blocker_inferred</code></td><td>Can we infer an ad blocker is in use on <code>component</code>? <code>true</code> if all loaded ads in the <code>component</code> are blocked, <code>false</code> otherwise. A single SERP page load can have <code>ad_blocker_inferred = true</code> for one ad component and <code>ad_blocker_inferred = false</code> for a different ad component.</td></tr>
+<tr><td><code>num_ads_showing</code></td><td>Inferred number of ads visible to the user in <code>component</code> for the SERP page load. Use this to count &quot;visible ads&quot;.</td></tr>
+<tr><td><code>num_ads_notshowing</code></td><td>Inferred number of ads that are loaded but not visible, and not blocked by an ad blocker. For example, ads in the carousel that will be shown on clicking &quot;Expand&quot; button. Use this to count &quot;ads that are available but not visible&quot;.</td></tr>
+</tbody></table>
+</div>
+<h3 id="scheduling"><a class="header" href="#scheduling">Scheduling</a></h3>
+<p>This dataset is scheduled on Airflow and updated daily.</p>
+<h3 id="schema"><a class="header" href="#schema">Schema</a></h3>
+<p>The data is partitioned by <code>submission_date</code>.</p>
+<h3 id="code-reference"><a class="header" href="#code-reference">Code reference</a></h3>
+<p>This table is
+<a href="https://github.com/mozilla/bigquery-etl/blob/main/sql_generators/serp_events/__init__.py">generated</a>
+from a templated query defined under
+<a href="https://github.com/mozilla/bigquery-etl/blob/main/sql_generators/serp_events/templates/desktop_query.sql"><code>bigquery_etl/sql_generators</code></a>.</p>
+<!-- prettier-ignore -->
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>This limit of 2 days was chosen as a trade-off between data completeness and lag time.
+A previous analysis showed that, even if we allow events for an impression ID to span up to 7 days,
+99.5% of impression IDs only have events spanning 1 or 2 consecutive days.</p>
+</div>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/other/serp_events/reference.md">Edit this page on GitHub.</a></footer>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../datasets/other/urlbar_events/reference.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../datasets/fxa.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../datasets/other/urlbar_events/reference.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../datasets/fxa.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+        <!-- Google Analytics Tag -->
+        <script>
+            var localAddrs = ["localhost", "127.0.0.1", ""];
+
+            // make sure we don't activate google analytics if the developer is
+            // inspecting the book locally...
+            if (localAddrs.indexOf(document.location.hostname) === -1) {
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'UA-104326577-1', 'auto');
+                ga('send', 'pageview');
+            }
+        </script>
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../mermaid.min.js"></script>
+        <script src="../../../mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>
