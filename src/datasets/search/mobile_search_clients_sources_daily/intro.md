@@ -12,22 +12,22 @@ For example, we include `normalized_app_name` and `normalized_app_name_os` for e
 
 | `app_name`          | `os`    | `normalized_app_name_os`       | `normalized_app_name`       |
 | ------------------- | ------- | ------------------------------ | --------------------------- |
-| Fenix               | Android | Firefox Android                | Firefox                     |
-| Fennec              | Other   | Fennec Other                   | Fennec                      |
-| Fennec              | Android | Legacy Firefox Android         | Fennec                      |
-| Fennec              | iOS     | Firefox iOS                    | Firefox                     |
-| Firefox Preview     | Android | Firefox Preview                | Firefox Preview             |
-| Firefox Connect     | Android | Firefox for Echo Show          | Firefox for Echo Show       |
-| Firefox For Fire TV | Android | Firefox for FireTV             | Firefox for FireTV          |
-| Focus Android Glean | Android | Focus Android                  | Focus                       |
-| Focus iOS Glean     | iOS     | Focus iOS                      | Focus                       |
-| Klar Android Glean  | Android | Klar Android                   | Klar                        |
-| Klar iOS Glean      | iOS     | Klar iOS                       | Klar                        |
-| Other               | iOS     | Other iOS                      | Other                       |
-| Other               | Other   | Other                          | Other                       |
-| Other               | Android | Other Android                  | Other                       |
-| Zerda               | Android | Firefox Lite Android           | Firefox Lite                |
-| Zerda cn            | Android | Firefox Lite Android (China)   | Firefox Lite (China)        |
+| `Fenix`               | Android | Firefox Android                | Firefox                     |
+| `Fennec`              | Other   | Fennec Other                   | Fennec                      |
+| `Fennec`              | Android | Legacy Firefox Android         | Fennec                      |
+| `Fennec`              | iOS     | Firefox iOS                    | Firefox                     |
+| `Firefox Preview`     | Android | Firefox Preview                | Firefox Preview             |
+| `FirefoxConnect`     | Android | Firefox for Echo Show          | Firefox for Echo Show       |
+| `FirefoxForFireTV` | Android | Firefox for FireTV             | Firefox for FireTV          |
+| `Focus Android Glean` | Android | Focus Android                  | Focus                       |
+| `Focus iOS Glean`     | iOS     | Focus iOS                      | Focus                       |
+| `Klar Android Glean`  | Android | Klar Android                   | Klar                        |
+| `Klar iOS Glean`      | iOS     | Klar iOS                       | Klar                        |
+| `Other`               | iOS     | Other iOS                      | Other                       |
+| `Other`               | Other   | Other                          | Other                       |
+| `Other`               | Android | Other Android                  | Other                       |
+| `Zerda`               | Android | Firefox Lite Android           | Firefox Lite                |
+| `Zerda_cn`            | Android | Firefox Lite Android (China)   | Firefox Lite (China)        |
 
 In the event that a client sends multiple pings on a given `submission_date`
 we choose an arbitrary value from the pings for that (`client_id`, `submission_date`),
