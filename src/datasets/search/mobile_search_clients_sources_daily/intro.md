@@ -10,15 +10,15 @@ consider using `mobile_search_aggregates` for coarse analyses.
 Alongside standard search metrics, this dataset includes client specific descriptive information as well.
 For example, we include `normalized_app_name` and `normalized_app_name_os` for each row of data. `normalized_app_name` modifies the raw app_name data to align it more consistently with KPI reporting while `normalized_app_name_os` combines app name and os used by each client. Refer to the table below for comprehensive mapping details regarding these two fields.
 
-| `app_name`            | `os`      | `normalized_app_name_os` | `normalized_app_name`  |
+| `app_name`          | `os`    | `normalized_app_name_os`       | `normalized_app_name`       |
 | ------------------- | ------- | ------------------------------ | --------------------------- |
 | Fenix               | Android | Firefox Android                | Firefox                     |
 | Fennec              | Other   | Fennec Other                   | Fennec                      |
 | Fennec              | Android | Legacy Firefox Android         | Fennec                      |
 | Fennec              | iOS     | Firefox iOS                    | Firefox                     |
 | Firefox Preview     | Android | Firefox Preview                | Firefox Preview             |
-| Firefox Connect      | Android | Firefox for Echo Show          | Firefox for Echo Show       |
-| Firefox For Fire TV    | Android | Firefox for FireTV             | Firefox for FireTV          |
+| Firefox Connect     | Android | Firefox for Echo Show          | Firefox for Echo Show       |
+| Firefox For Fire TV | Android | Firefox for FireTV             | Firefox for FireTV          |
 | Focus Android Glean | Android | Focus Android                  | Focus                       |
 | Focus iOS Glean     | iOS     | Focus iOS                      | Focus                       |
 | Klar Android Glean  | Android | Klar Android                   | Klar                        |
