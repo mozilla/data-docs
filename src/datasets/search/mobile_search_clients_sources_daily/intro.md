@@ -8,7 +8,7 @@ consider using `mobile_search_aggregates` for coarse analyses.
 (`client_id`, `submission_date`, `engine`, `source`).
 
 Alongside standard search metrics, this dataset includes client specific descriptive information as well.
-For example, we include `normalized_app_name` and `normalized_app_name_os` for each row of data. `normalized_app_name` modifies the raw app_name data to align it more consistently with KPI reporting while `normalized_app_name_os` combines app name and os used by each client. Refer to the table below for comprehensive mapping details regarding these two fields.
+For example, we include `normalized_app_name` and `normalized_app_name_os` for each row of data. `normalized_app_name` modifies the raw `app_name` data to align it more consistently with KPI reporting while `normalized_app_name_os` combines app name and os used by each client. Refer to the table below for comprehensive mapping details regarding these two fields.
 
 | `app_name`          | `os`    | `normalized_app_name_os`       | `normalized_app_name`       |
 | ------------------- | ------- | ------------------------------ | --------------------------- |
@@ -27,7 +27,7 @@ For example, we include `normalized_app_name` and `normalized_app_name_os` for e
 | Other               | Other   | Other                          | Other                       |
 | Other               | Android | Other Android                  | Other                       |
 | Zerda               | Android | Firefox Lite Android           | Firefox Lite                |
-| Zerda_cn            | Android | Firefox Lite Android (China)   | Firefox Lite (China)        |
+| Zerda cn            | Android | Firefox Lite Android (China)   | Firefox Lite (China)        |
 
 In the event that a client sends multiple pings on a given `submission_date`
 we choose an arbitrary value from the pings for that (`client_id`, `submission_date`),
