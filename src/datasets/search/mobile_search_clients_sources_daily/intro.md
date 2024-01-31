@@ -29,12 +29,6 @@ For example, we include `normalized_app_name` and `normalized_app_name_os` for e
 | `Zerda`               | Android | Firefox Lite Android         | Firefox Lite          |
 | `Zerda_cn`            | Android | Firefox Lite Android (China) | Firefox Lite (China)  |
 
-In the event that a client sends multiple pings on a given `submission_date`
-we choose an arbitrary value from the pings for that (`client_id`, `submission_date`),
-unless otherwise noted.
-
-There were originally five standard search count aggregation columns:
-`sap`, `tagged-sap`, and `tagged-follow-on`, `organic` and `unknown`. Over time, more search count aggregation columns were added, including `ad_click` and `search_with_ads` in late 2018 [bug](https://bugzilla.mozilla.org/show_bug.cgi?id=1505411); and `ad_click_organic` and `search_with_ads_organic` in late 2021 [bug](https://bugzilla.mozilla.org/show_bug.cgi?id=1664849).
 
 Note that, if there were no such searches in a row's segment
 (i.e. the count would be 0),
