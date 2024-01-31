@@ -48,8 +48,4 @@ This dataset is large.
 If you're querying this dataset from STMO,
 heavily limit the data you read using `submission_date` or `sample_id`.
 
-<!--
-#### Further Reading
--->
-
 [search data documentation]: ../../search.md
