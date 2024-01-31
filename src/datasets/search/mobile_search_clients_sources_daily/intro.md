@@ -29,7 +29,6 @@ For example, we include `normalized_app_name` and `normalized_app_name_os` for e
 | `Zerda`               | Android | Firefox Lite Android         | Firefox Lite          |
 | `Zerda_cn`            | Android | Firefox Lite Android (China) | Firefox Lite (China)  |
 
-
 Note that, if there were no such searches in a row's segment
 (i.e. the count would be 0),
 the column value is `null`.
