@@ -89,10 +89,11 @@ The following headers will be passed through the pipeline and made available as 
   Used for computing client clock skew.
 - `DNT` - The "Do Not Track" header.
 - `X-PingSender-Version` - The version of [Pingsender] used to send this ping (if applicable).
-- `X-Debug-ID` - An optional tag used to make data available to the [Glean Debug View].
+- `X-Debug-ID` - An optional tag used to make data available to the [Glean Debug View][gdv].
 - `X-Source-Tags` - An optional comma-separated list of tags related to the client source; pings sent from automated testing should include the "automation" tag so that they are not included in analyses
 
 [pingsender]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/pingsender.html
+[gdv]: https://debug-ping-preview.firebaseapp.com/
 
 ## Other Considerations
 
