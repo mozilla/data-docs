@@ -38,7 +38,7 @@ These are the aggregates counts that are available in this table:
 - `urlbar_annoyances`
 - `urlbar_sessions`
 
-For more information about the exact definition for these metrics, please visit `./
+For more information about the exact definition for these metrics, please visit [here](../urlbar_events/reference.md#measurement)
 
 ### Scheduling
 
