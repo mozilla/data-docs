@@ -4,7 +4,41 @@ Metric Hub is a [repository](https://github.com/mozilla/metric-hub) that contain
 reviewed and can be seen as the source of truth.
 Definitions that are part of Metric Hub can be referenced in configurations of other tooling as well, such as [Jetstream](https://experimenter.info/deep-dives/jetstream/overview) and [OpMon](https://docs.telemetry.mozilla.org/cookbooks/operational_monitoring.html?highlight=opmon#operational-monitoring-opmon).
 
-Generated docs for available metrics is available [here](https://mozilla.github.io/metric-hub).
+Metric Hub is a "thin" metric layer that lies between the Data Warehouse and consumers, such as analysis tools.
+The Data Warehouse contains the datasets and tables referenced in the metric definitions. Analysis tools can reference metrics that are defined in metric-hub.
+
+```mermaid
+graph TB
+
+subgraph MH[" "]
+m1 -->|2. Run SQL against Source| d0(fa:fa-database Data Warehouse)
+m0(fa:fa-file Metric Definitions) --> m1(fa:fa-stream Metric Hub)
+end
+c0(fa:fa-magnifying-glass-chart Analysis Tools) -->|1. Reference Metrics| m1
+d0 -->|3. Return Results| c0
+
+classDef bq fill:#eff,stroke:#099;
+classDef metrics fill:#efe,stroke:#090;
+classDef consumer fill:#ececff,stroke:#9370db;
+classDef nostyle fill:#fff,stroke:#fff;
+class c0 consumer
+class d0 bq
+class m0,m1 metrics
+class MH nostyle
+```
+
+## Metrics and Statistics
+
+_Metric_ is a very overloaded term and has different meanings in different parts of our data platform.
+In the context of metric-hub there are two key concepts:
+
+- _metric_: A metric describes an aggregation of activities or measurements for a specific entity (e.g. clients, users, ...).
+  - Example 1: A metric "Ad Clicks" is defined as `SUM('ad_click')`, counts clicks on ads for individual clients
+  - Example 2: A metric "Income" can be calculated as `SUM('money_made')` for individual people
+- _statistic_: Statistics summarize the distribution of metrics within a specific time frame and population segment. Statistics are used to derive insights and patterns from the raw metric data
+  - Example 1: To get the average number of daily "Ad Clicks" for all Windows clients over the last month, the statistic "Mean" can be applied. To see the distribution of ad clicks across clients in the US, "Frequency Binning" can be applied to the "Ad Clicks" metric data.
+  - Example 2: To see the median monthly "Income" for people in the US, the "Percentile" statistic can be applied on the calculated "Income" metric aggregated over a month, with the 50th percentile representing the median
+  - Different statistics are available for different tools that use metrics.
 
 ## Adding definitions
 
@@ -94,6 +128,22 @@ Since metrics aggregate data, the metric SQL definition must contain some aggreg
 Existing metrics cannot be removed after they have been added to Metric Hub. Other tools or configurations might still reference the
 deleted metric resulting in their computations to break. Instead, to indicate that a metric should no longer be used `deprecated` should
 be set to `true`.
+
+#### Statistics
+
+Statistics reduce a set of metric values to a summary describing the population.
+Any summarization of the client-level data can be implemented as a statistic.
+
+Different statistics are available for different tools. To specify which statistic should be applied to a specific metric, use the config files that live in the folders specific to each tool that integrates metric-hub. For example, to specify that certain statistics should be applied to the `memory_pressure_count` metric in Looker, go to the `looker/definitions/firefox_desktop.toml` file and specify the statistics:
+
+```toml
+# Specify which statistic to use for a metric
+[metrics.memory_pressure_count.statistics]
+client_count = {}
+mean = {}
+```
+
+New statistics need to be implemented inside the tooling that uses metric definitions.
 
 ### `[dimensions]` Section
 
