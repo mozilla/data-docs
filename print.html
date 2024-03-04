@@ -7598,6 +7598,7 @@ class d0 bq
 class m0,m1 metrics
 class MH nostyle
 </pre>
+<p>Available metrics can be found in the <a href="https://mozilla.acryl.io/glossaryNode/urn:li:glossaryNode:Metric%20Hub/Contents?is_lineage_mode=false">DataHub metrics glossary</a></p>
 <h2 id="metrics-and-statistics"><a class="header" href="#metrics-and-statistics">Metrics and Statistics</a></h2>
 <p><em>Metric</em> is a very overloaded term and has different meanings in different parts of our data platform.
 In the context of metric-hub there are two key concepts:</p>
@@ -7805,11 +7806,58 @@ print(metric.select_expression)
 metric = ConfigLoader.get_metric(metric_slug=&quot;active_hours&quot;, app_name=&quot;firefox_desktop&quot;)
 </code></pre>
 <h3 id="using-metrics-in-looker"><a class="header" href="#using-metrics-in-looker">Using Metrics in Looker</a></h3>
-<p>Metric definitions are available in Looker. A single explore exists for each product/namespace that exposes all metric definitions from metric-hub. These explores are prefixed with &quot;Metric Definitions&quot; followed by the platform name. For example, for Firefox Desktop an explore &quot;Metric Definitions Firefox Desktop&quot; is available.</p>
-<p>The explore looks like the following:</p>
+<p>Metric definitions are available in Looker. For each data source a corresponding explore exists in Looker. These explores are prefixed with &quot;Metric Definitions&quot; followed by the data source name. For example, for the Firefox Desktop <code>clients_daily</code> data source an explore &quot;Metric Definitions Clients Daily&quot; is available under the Firefox Desktop section.</p>
+<p>These explores look like the following:</p>
 <p><img src="concepts/../assets/looker_metric_hub.png" alt="" /></p>
-<p>The side pane has all available fields, with metrics appearing as dimensions. Metrics appear in separate sections that correspond to the data source they are derived from. A <em>Base Fields</em> section contains dimensions that are useful for filtering or segmenting the population, like channel or operating system. These base fields are based on <code>clients_daily</code> tables.</p>
-<p>By default, metrics are computed on a per-client basis. To get a summary over the entire population or a population segment for a specific metric it is necessary to create a custom measure which aggregates the metric dimension.</p>
+<p>The side pane is split into different sections:</p>
+<ul>
+<li><strong>Base Fields</strong>: This section contains dimensions that are useful for filtering or segmenting the population, like channel or operating system. These base fields are based on <code>clients_daily</code> tables.</li>
+<li><strong>Metrics</strong>: This section contains all metrics that are based on the data source represented by the explore. These metrics describe an aggregation of activities or measurements on a per-client basis.</li>
+<li><strong>Statistics</strong>: This sections contains the <a href="https://github.com/mozilla/metric-hub/tree/main/looker">statistics that have been defined in metric-hub on top of the metric definitions</a> as measures. These statistics summarize the distribution of metrics within a specific time frame, population and/or segment and are used to derive insights and patterns from the raw metric data. Statistics have to be defined manually under the <a href="https://github.com/mozilla/metric-hub/tree/main/looker"><code>looker/</code> directory in metric-hub</a>.</li>
+<li><strong>Sample of source data</strong>: Defines the sample size that should be selected from the data source. Decreasing the sample size will speed up getting results in Looker, however it might decrease the accuracy. The results are being adjusted based on the sample size. For example, if a 1% sample is being used, then certain statistic results (like sum, count) will be multiplied by 100.</li>
+<li><strong>Aggregate Client Metrics Per ...</strong>: This parameter controls the time window over which metrics are aggregated per client. For example, this allows to get a weekly average of a metric, a maximum of a metric over the entire time period. By default, aggregations are on a daily basis.</li>
+</ul>
+<h4 id="getting-metrics-into-looker"><a class="header" href="#getting-metrics-into-looker">Getting Metrics into Looker</a></h4>
+<p>Metric definitions will be available in the &quot;Metric Definition&quot; explores for metrics that have been added to the <a href="https://github.com/mozilla/metric-hub/tree/main/definitions"><code>defintions/</code> folder in metric-hub</a>.</p>
+<p>Statistics on top of these metrics need to be defined in the <a href="https://github.com/mozilla/metric-hub/tree/main/looker"><code>looker/</code> folder in metric-hub</a>. Statistics currently supported by Looker are:</p>
+<ul>
+<li><code>sum</code></li>
+<li><code>count</code></li>
+<li><code>average</code></li>
+<li><code>min</code></li>
+<li><code>max</code></li>
+<li><code>client_count</code>: distinct count of clients where the metric value is &gt;0</li>
+<li><code>ratio</code>: ratio between two metrics. When configuring the statistic metric slugs need to be provided for the <code>numerator</code> and <code>denominator</code> parameters</li>
+<li><code>dau_proportion</code>: Ratio between the metric and active user counts</li>
+</ul>
+<p>To get more statistics added, please reach out on the <a href="https://mozilla.slack.com/archives/C4D5ZA91B">#data-help</a> Slack channel.</p>
+<h4 id="example-use-cases"><a class="header" href="#example-use-cases">Example Use Cases</a></h4>
+<p>Some stakeholders would like to analyze crash metrics for Firefox Desktop in Looker. First, relevant metrics, such as number of socket crashes, need to be <a href="https://github.com/mozilla/metric-hub/blob/4ef7e2ef8a53c90f77a692af4c82ef31be8bf369/definitions/firefox_desktop.toml#L1577C10-L1593C11">added to <code>definitions/firefox_desktop.toml</code></a>:</p>
+<pre><code class="language-toml">[metrics.socket_crash_count_v1]
+select_expression = &quot;SUM(socket_crash_count)&quot;
+data_source = &quot;clients_daily&quot;
+friendly_name = &quot;Client Crash Count&quot;
+description = &quot;Number of Socket crashes by a single client. Filter on this field to remove clients with large numbers of crashes.&quot;
+
+[metrics.socket_crash_active_hours_v1]
+select_expression = &quot;SUM(IF(socket_crash_count &gt; 0, active_hours_sum, 0))&quot;
+data_source = &quot;clients_daily&quot;
+friendly_name = &quot;Client Crash Active Hours&quot;
+description = &quot;Total active hours of a client with socket crashes&quot;
+</code></pre>
+<p>To summarize these metrics for specific channels, operating systems, etc, statistics need to be defined in <a href="https://github.com/mozilla/metric-hub/blob/4ef7e2ef8a53c90f77a692af4c82ef31be8bf369/looker/definitions/firefox_desktop.toml#L3C10-L9"><code>looker/definitions/firefox_desktop.toml</code> in metric-hub</a>:</p>
+<pre><code class="language-toml">[metrics.socket_crash_count_v1.statistics.sum]
+
+[metrics.socket_crash_active_hours_v1.statistics.sum]
+
+[metrics.socket_crash_active_hours_v1.statistics.client_count]
+
+[metrics.socket_crash_count_v1.statistics.ratio]
+numerator = &quot;socket_crash_count_v1.sum&quot;
+denominator = &quot;socket_crash_active_hours_v1.sum&quot;
+</code></pre>
+<p>These statistics allow to determine the total number of crashes, total number of hours with crashes, how many clients were affected and so on.</p>
+<p>The <a href="https://mozilla.cloud.looker.com/explore/firefox_desktop/metric_definitions_clients_daily?qid=KxzAcgpqBQEzaCcVxrUA3w&amp;toggle=fil,vis">Metric Definitions Clients Daily explore in Looker</a> now exposes the defined metrics in statistics which are ready to be used in dashboards or ad-hoc analyses.</p>
 <h2 id="faq"><a class="header" href="#faq">FAQ</a></h2>
 <h3 id="should-metrics-be-defined-in-the-metric-definition-data-source-definition-or-source-table"><a class="header" href="#should-metrics-be-defined-in-the-metric-definition-data-source-definition-or-source-table">Should metrics be defined in the metric definition, data source definition or source table?</a></h3>
 <p>Definitions for metrics can be encoded at different levels. It is preferable to specify the SQL that defines how a metric should be computed as much upstream as possible. This allows the most flexible usage of metric definitions.</p>
