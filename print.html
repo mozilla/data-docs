@@ -7578,7 +7578,44 @@ We maintain <a href="concepts/../datasets/dynamic_telemetry.html">a list</a> of 
 <p>Metric Hub is a <a href="https://github.com/mozilla/metric-hub">repository</a> that contains metric, data source and segment definitions that have been
 reviewed and can be seen as the source of truth.
 Definitions that are part of Metric Hub can be referenced in configurations of other tooling as well, such as <a href="https://experimenter.info/deep-dives/jetstream/overview">Jetstream</a> and <a href="https://docs.telemetry.mozilla.org/cookbooks/operational_monitoring.html?highlight=opmon#operational-monitoring-opmon">OpMon</a>.</p>
-<p>Generated docs for available metrics is available <a href="https://mozilla.github.io/metric-hub">here</a>.</p>
+<p>Metric Hub is a &quot;thin&quot; metric layer that lies between the Data Warehouse and consumers, such as analysis tools.
+The Data Warehouse contains the datasets and tables referenced in the metric definitions. Analysis tools can reference metrics that are defined in metric-hub.</p>
+<pre class="mermaid">graph TB
+
+subgraph MH[&quot; &quot;]
+m1 --&gt;|2. Run SQL against Source| d0(fa:fa-database Data Warehouse)
+m0(fa:fa-file Metric Definitions) --&gt; m1(fa:fa-stream Metric Hub)
+end
+c0(fa:fa-magnifying-glass-chart Analysis Tools) --&gt;|1. Reference Metrics| m1
+d0 --&gt;|3. Return Results| c0
+
+classDef bq fill:#eff,stroke:#099;
+classDef metrics fill:#efe,stroke:#090;
+classDef consumer fill:#ececff,stroke:#9370db;
+classDef nostyle fill:#fff,stroke:#fff;
+class c0 consumer
+class d0 bq
+class m0,m1 metrics
+class MH nostyle
+</pre>
+<h2 id="metrics-and-statistics"><a class="header" href="#metrics-and-statistics">Metrics and Statistics</a></h2>
+<p><em>Metric</em> is a very overloaded term and has different meanings in different parts of our data platform.
+In the context of metric-hub there are two key concepts:</p>
+<ul>
+<li><em>metric</em>: A metric describes an aggregation of activities or measurements for a specific entity (e.g. clients, users, ...).
+<ul>
+<li>Example 1: A metric &quot;Ad Clicks&quot; is defined as <code>SUM('ad_click')</code>, counts clicks on ads for individual clients</li>
+<li>Example 2: A metric &quot;Income&quot; can be calculated as <code>SUM('money_made')</code> for individual people</li>
+</ul>
+</li>
+<li><em>statistic</em>: Statistics summarize the distribution of metrics within a specific time frame and population segment. Statistics are used to derive insights and patterns from the raw metric data
+<ul>
+<li>Example 1: To get the average number of daily &quot;Ad Clicks&quot; for all Windows clients over the last month, the statistic &quot;Mean&quot; can be applied. To see the distribution of ad clicks across clients in the US, &quot;Frequency Binning&quot; can be applied to the &quot;Ad Clicks&quot; metric data.</li>
+<li>Example 2: To see the median monthly &quot;Income&quot; for people in the US, the &quot;Percentile&quot; statistic can be applied on the calculated &quot;Income&quot; metric aggregated over a month, with the 50th percentile representing the median</li>
+<li>Different statistics are available for different tools that use metrics.</li>
+</ul>
+</li>
+</ul>
 <h2 id="adding-definitions"><a class="header" href="#adding-definitions">Adding definitions</a></h2>
 <p>To add or update a project configuration, open a pull request against <a href="https://github.com/mozilla/metric-hub">metric-hub</a>.
 CI checks will validate that the structure of the definitions as well as the SQL syntax is correct. A review by data science is required before changes can get merged.</p>
@@ -7651,6 +7688,16 @@ deprecated = false
 <p>Existing metrics cannot be removed after they have been added to Metric Hub. Other tools or configurations might still reference the
 deleted metric resulting in their computations to break. Instead, to indicate that a metric should no longer be used <code>deprecated</code> should
 be set to <code>true</code>.</p>
+<h4 id="statistics"><a class="header" href="#statistics">Statistics</a></h4>
+<p>Statistics reduce a set of metric values to a summary describing the population.
+Any summarization of the client-level data can be implemented as a statistic.</p>
+<p>Different statistics are available for different tools. To specify which statistic should be applied to a specific metric, use the config files that live in the folders specific to each tool that integrates metric-hub. For example, to specify that certain statistics should be applied to the <code>memory_pressure_count</code> metric in Looker, go to the <code>looker/definitions/firefox_desktop.toml</code> file and specify the statistics:</p>
+<pre><code class="language-toml"># Specify which statistic to use for a metric
+[metrics.memory_pressure_count.statistics]
+client_count = {}
+mean = {}
+</code></pre>
+<p>New statistics need to be implemented inside the tooling that uses metric definitions.</p>
 <h3 id="dimensions-section-1"><a class="header" href="#dimensions-section-1"><code>[dimensions]</code> Section</a></h3>
 <p>Dimensions define a field or dimension on which the client population should be segmented. Dimensions are used in OpMon. For segmenting client populations clients see the <code>[segments]</code> section.</p>
 <p>For example:</p>
