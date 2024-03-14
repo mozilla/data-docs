@@ -101,7 +101,6 @@
     - [Clients Last Seen](datasets/bigquery/clients_last_seen/reference.md)
     - [Events](datasets/batch_view/events/reference.md)
     - [Events Daily](datasets/bigquery/events_daily/reference.md)
-    - [Exact MAU](datasets/bigquery/exact_mau/reference.md)
     - [Firefox Android Clients](datasets/bigquery/firefox_android_clients/reference.md)
     - [Main Ping Tables](datasets/main_ping_tables.md)
     - [Main Summary](datasets/batch_view/main_summary/reference.md)
