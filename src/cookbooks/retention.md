@@ -5,6 +5,7 @@ _Authored by the Data Science Team. Please direct questions/concerns to Jesse Mc
 Retention measures the proportion of users that _continue_ to use any of the browsers after sending the first ping, making it one of the most important metrics that we track at Mozilla - the expectation is that the more value our users receive from a product, the more likely they are to be retained. We commonly measure retention between releases, experiment cohorts, and various Firefox subpopulations to better understand how a change to the user experience or use of a specific feature affects the retention behavior.
 
 ### References
+
 - Initial [Proposed Metric Definition: Retention](https://docs.google.com/document/d/1VtqNFQFB9eJNr57h3Mz-lldMcpSYQKHVn2jzMMjPFYY/).
 
 - Proposed [Revision of Funnel Metrics](https://docs.google.com/document/d/18QGa4JYbDP35IywH3zGftCgejrd8aGnbft_L2oxp1Ao/edit#heading=h.rl9rub54j6oj) implemented in H2-2023.
