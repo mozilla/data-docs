@@ -8,7 +8,7 @@ Retention measures the proportion of users that _continue_ to use any of the bro
 
 - Initial [Proposed Metric Definition: Retention](https://docs.google.com/document/d/1VtqNFQFB9eJNr57h3Mz-lldMcpSYQKHVn2jzMMjPFYY/).
 
-- Proposed [Revision of Funnel Metrics](https://docs.google.com/document/d/18QGa4JYbDP35IywH3zGftCgejrd8aGnbft_L2oxp1Ao/edit#heading=h.rl9rub54j6oj) implemented in H2-2023.
+- Proposed [Revision of Funnel Metrics](https://docs.google.com/document/d/18QGa4JYbDP35IywH3zGftCgejrd8aGnbft_L2oxp1Ao/edit#heading=h.rl9rub54j6oj) implemented in 2023.
 
 ## Metric definitions
 
@@ -32,7 +32,7 @@ There are three standard methods for accessing retention metrics. These methods 
 
 - Mobile retention can be analyzed in the [Fenix Funnel](https://mozilla.cloud.looker.com/dashboards/1470) and [iOS Funnel](https://mozilla.cloud.looker.com/dashboards/1314?Country=&YoY+control+%28Do+not+change%29+=before+28+days+ago&Date=2023%2F01%2F01+to+2023%2F10%2F18) dashboards.
 
-- Desktop retention is available in the [Desktop Moz.org Funnel (Windows)](https://mozilla.cloud.looker.com/dashboards/duet::desktop_moz_org_funnel_windows?Analysis%20Period=90%20day&Countries=US,GB,DE,FR,CA,BR,MX,CN,IN,AU,NL,ES,RU,ROW&Include%20Dates%20Where=data%20complete).
+- Desktop retention is available in the [Desktop Funnel](https://mozilla.cloud.looker.com/dashboards/duet::desktop_moz_org_funnel_windows?Analysis%20Period=90%20day&Countries=US,GB,DE,FR,CA,BR,MX,CN,IN,AU,NL,ES,RU,ROW&Include%20Dates%20Where=data%20complete).
 
 ### Querying Aggregate Tables
 
