@@ -276,7 +276,7 @@ select_expression = &quot;SUM(SAFE_CAST(SPLIT(event_string_value, ',')[OFFSET(1)
 # This is used to determine the method of aggregation to be applied.
 # Either &quot;scalar&quot; or &quot;histogram&quot;.
 # scalar = a single value is returned
-# histogram = an array of histograms is returned
+# histogram = an array of scalars is returned
 type = &quot;scalar&quot;
 
 # A friendly metric name displayed in dashboards.
