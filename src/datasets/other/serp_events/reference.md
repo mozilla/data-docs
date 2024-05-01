@@ -60,7 +60,7 @@ The ad detection procedure scans each of these components to check whether ad li
 Ad detection checks for ad links that are **loaded**, i.e. present in the DOM.
 Loaded ad links may or may not be visible to the user.
 
-- Ad links are considered **visible** or **showing** if the user has an opportunity to see them,
+- Ad links are considered **visible** if the user has an opportunity to see them,
   i.e. display properties of the DOM element containing the ad link make them visible,
   and they are in the area of the page showing on the user's screen.
 - They are considered **blocked** if the display properties of the DOM element
@@ -77,14 +77,13 @@ In such cases, we infer an **ad blocker to be in use**.
 Measurement for SERP impressions is collected through Glean `serp` category events.
 All events include the `impression_id` field in their event extras,
 which is used to link together events associated with the same SERP impression.
-SERP events are only implemented for specific search engines:
-`google`, `bing`, `duckduckgo`, `ecosia`.
+SERP events are only implemented for specific search engines.
 
 When a user loads a SERP, a
 [`serp.impression`](https://dictionary.telemetry.mozilla.org/apps/firefox_desktop/metrics/serp_impression)
 event is recorded with a newly-generated `impression_id`,
 containing some top-level information about the impression and the search that led to it.
-Note that a "SERP impression" means a single page load,
+Here, a "SERP impression" means a single page load,
 not a sequence of pages associated with the same search term
 (which might be called a "search session").
 If the user loads Page 2 of the search results, or opens the Shopping results page,
@@ -92,12 +91,12 @@ that is considered a separate SERP impression and generates a new `impression_id
 
 When ad detection runs, a
 [`serp.ad_impression`](https://dictionary.telemetry.mozilla.org/apps/firefox_desktop/metrics/serp_ad_impression)
-event is generated for each display component containing at least 1 loaded ad link.
-It lists counts of:
+event is generated for each display component containing at least 1 loaded element.
+It records counts of:
 
-- loaded ads: `ads_loaded`
-- ad links which are visible to the user: `ads_visible`
-- ad links which appear to have been blocked: `ads_hidden`.
+- loaded elements: `ads_loaded`
+- elements which are visible to the user: `ads_visible`
+- elements which appear to have been blocked: `ads_hidden`.
 
 These counts have the following properties:
 
@@ -105,22 +104,29 @@ These counts have the following properties:
 - `0 <= ads_visible + ads_hidden <= ads_loaded`
 - Usually `ads_hidden = 0` or `= ads_loaded`.
 
-Beyond the main ad display components, `ad_impression` events are also reported
-for a few additional shopping-related features
-(which don't themselves contain ad links and are not monetizable):
-the shopping tab, and Google's refined search buttons.
+Despite the naming prefixed by `ads_`,
+`ad_impression` events are also reported
+for certain other page components which do not contain ad links and are not monetizable,
+such as the shopping tab and Google's refined search buttons.
 For these, `ads_loaded` tracks whether the feature was on the page, and is either 0 or 1.
+For components containing ads, the counts refer to ad links.
 
 A separate
 [`serp.engagement`](https://dictionary.telemetry.mozilla.org/apps/firefox_desktop/metrics/serp_engagement)
 event is recorded each time the user clicks on one of the instrumented UI components.
-These include the ad components, as well as any non-ad link on the page,
-and the in-content search box at the top.
+These include the ad components, organic links on the page,
+as well as certain other non-ad page components.
 Along with clicks on links, some components report additional engagement types,
 such as the Expand (right arrow) button for the carousel,
-and submitting a new search from the search box.
+or submitting a new search from the search box.
 
-The following table summarizes impressions and engagements instrumented for each component:
+The following table summarizes impressions and engagements instrumented for the main components.
+Others components or engagement actions may be instrumented in the future;
+for the most up-to-date list, refer to the
+[`serp.ad_impression`](https://dictionary.telemetry.mozilla.org/apps/firefox_desktop/metrics/serp_ad_impression)
+and
+[`serp.engagement`](https://dictionary.telemetry.mozilla.org/apps/firefox_desktop/metrics/serp_engagement)
+event documentation.
 
 <div class="table-wrapper">
 <table>
@@ -166,7 +172,7 @@ The following table summarizes impressions and engagements instrumented for each
       <td>all</td>
     </tr>
     <tr>
-      <th rowspan="4">Other page components</th>
+      <th rowspan="5">Other page components</th>
       <td><code>refined_search_buttons</code></td>
       <td><code>serp.ad_impression</code></td>
       <td><code>clicked</code>, <code>expanded</code></td>
@@ -176,6 +182,12 @@ The following table summarizes impressions and engagements instrumented for each
       <td><code>shopping_tab</code></td>
       <td><code>serp.ad_impression</code></td>
       <td><code>clicked</code></td>
+      <td>all</td>
+    </tr>
+    <tr>
+      <td><code>cookie_banner</code></td>
+      <td><code>serp.ad_impression</code></td>
+      <td><code>clicked_accept</code>, <code>clicked_reject</code>, <code>clicked_more_options</code></td>
       <td>all</td>
     </tr>
     <tr>
@@ -225,28 +237,28 @@ There is also an edge case in which the user may click on a result
 before ad detection has time to complete;
 such impressions are reported as abandoned, and ad impressions and clicks are ignored.
 
-Note that the Legacy Telemetry ad click measurement will count all of these cases as ad clicks,
+However, the Legacy Telemetry ad click measurement will count all of these cases as ad clicks,
 since it checks links for ads at click time rather than taking a snapshot.
 This means that the `serp` events will undercount ad clicks somewhat relative to Legacy Telemetry.
 
 The different cases are described in the following table:
 
-| Engagement target                                                                                                                                              | Click reporting                             | Link impression reporting                                                                        |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| Non-ad component                                                                                                                                               | `serp.engagement` for target                | No explicit reporting, impression assumed                                                        |
-| Ad detected as visible                                                                                                                                         | `serp.engagement` for ad component          | Included in `ads_visible` count of `serp.ad_impression` for component                            |
-| Ad detected but not visible<p>Eg. user scrolls to reveal an ad that was on the page but not in the visible area when ad detection was run                      | `serp.engagement` for ad component          | Included in `ads_loaded` count but not `ads_visible` count of `serp.ad_impression` for component |
-| Ad not previously detected<p>Eg. user scrolls down and more results are loaded automatically. Includes ads that were not on the page when ad detection was run | `serp.engagement` for `non_ad_link`         | Not included in `serp.ad_impression`                                                             |
-| Engagement before ad detection completed                                                                                                                       | None. A `serp.abandonment` is sent instead. | None                                                                                             |
+| Engagement target                                                                                                                                               | Click reporting                             | Link impression reporting                                                                        |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| Non-ad component                                                                                                                                                | `serp.engagement` for target                | No explicit reporting, impression assumed                                                        |
+| Ad detected as visible                                                                                                                                          | `serp.engagement` for ad component          | Included in `ads_visible` count of `serp.ad_impression` for component                            |
+| Ad detected but not visible<p>E.g. user scrolls to reveal an ad that was on the page but not in the visible area when ad detection was run                      | `serp.engagement` for ad component          | Included in `ads_loaded` count but not `ads_visible` count of `serp.ad_impression` for component |
+| Ad not previously detected<p>E.g. user scrolls down and more results are loaded automatically. Includes ads that were not on the page when ad detection was run | `serp.engagement` for `non_ad_link`         | Not included in `serp.ad_impression`                                                             |
+| Engagement before ad detection completed                                                                                                                        | None. A `serp.abandonment` is sent instead. | None                                                                                             |
 
 ## Ad impressions and clicks
 
 One of the main applications of this data is to compute ad impressions and clicks per SERP impression.
 As discussed above, a SERP impression may include several ad links across different display components,
-as well as nonsponsored links, and see multiple engagements with any of these.
+as well as organic links, and see multiple engagements with any of these.
 Depending on the use case, ad impressions and clicks may be viewed either per-component or per-SERP impression.
 
-Also, to count impressions and clicks, we can either count individual ads and clicks,
+To count impressions and clicks, we can either count individual ads and clicks,
 or the number of page loads with least one ad or click.
 The latter is usually preferred, since the former could give CTR counts larger than 1
 and is more susceptible to issues described [above](#limitations-of-ad-impression-detection).
@@ -263,7 +275,7 @@ _ad impression_ and _click_ are both binary 0/1 variables.
 We can also compute CTR for components that don't have explicit impression reporting,
 such as organic results, by assuming 1 impression per SERP.
 
-Impressions, clicks and CTR can be computed per SERP impression instead
+Impressions, clicks, and CTR can be computed per SERP impression instead
 by considering an impression or click to have occurred if at least 1 display component had one.
 
 If a component has ads loaded, and they are all hidden,
@@ -273,53 +285,43 @@ At the SERP level, ad ad blocker is inferred to be in use if is it inferred on a
 ## SERP events table
 
 The
-[`mozdata.firefox_desktop.serp_events`](https://github.com/mozilla/bigquery-etl/blob/main/sql_generators/serp_events/templates/desktop_query.sql)
-table has **multiple rows per SERP impression** (indexed by `impression_id`),
-**1 row for each unique display component** that had either an ad impression or an engagement.
-SERP impressions with neither have 1 row with a component value of `null`.
-Each row aggregates multiple underlying Glean events.
-Rows for submission date `D` represent all SERP impressions
+[`mozdata.firefox_desktop.serp_events`](https://github.com/mozilla/bigquery-etl/blob/main/sql_generators/serp_events_v2/templates/view.sql)
+table has **1 row per SERP impression** (indexed by `impression_id`),
+combining information from all 4 `serp` event types.
+Rows for submission date `D` represent SERP impressions
 whose `serp.impression` event has submission date `D`.
 
-The table contains columns pulling information from all 4 event types.
-Values computed from `impression` and `abandonment` events are repeated
-down all rows associated with the `impression_id`.
-This example table shows a summary view of the schema:
+Alongside impression-level fields and summaries,
+the table has 3 array-valued fields:
 
-| `impression_id` | Impression info | `abandon_reason` | `component` | Engagement counts | Ad impression counts |
-| --------------- | --------------- | ---------------- | ----------- | ----------------- | -------------------- |
-| `123`           | `abc`           | `null`           | `C1`        | `N1`              | `M1`                 |
-| `123`           | `abc`           | `null`           | `C2`        | `N2`              | `M2`                 |
-| `456`           | `def`           | `A`              | `C1`        | 0                 | `M3`                 |
-| `456`           | `def`           | `A`              | `C3`        | 0                 | `M4`                 |
-| `789`           | `ghi`           | `B`              | `null`      | 0                 | 0                    |
+- `ad_components`, with 1 entry per [ad component](#measurement),
+  listing counts of impressions and engagements
+- `non_ad_impressions`, with 1 entry per non-ad page component,
+  listing impression counts
+- `non_ad_engagements`, with 1 entry per non-ad page component and engagement type,
+  listing engagement counts.
 
-In this example:
+These arrays only include components with at least one non-zero count.
+For SERP impressions with no impressions or engagements,
+the corresponding arrays will be empty.
 
-- Impression `123` is engaged, and had ad impressions and engagements for components `C1` and `C2`.
-  Component `C3` had neither ad impressions nor engagements on this SERP impression,
-  so there is no corresponding row.
-- Impression `456` is abandoned, but had some ad impressions for components `C1` and `C3`.
-- Impression `789` is abandoned and had no ad impressions.
+SERP impressions with no engagements are considered abandoned and have a non-null `abandon_reason`.
 
-### Ad impression counts
+### Ad component tagging
 
-Ad impression counts should generally be read from the `num_ads_showing` and `num_ads_notshowing` columns.
-These are computed from the raw counts reported in the events,
-which are included in the `num_ads_loaded_reported`/`num_ads_visible_reported`/`num_ads_hidden_reported` columns,
-according to the following logic.
-The `ad_blocker_inferred` column indicates whether we assume an ad blocker was in use on a display component.
+Tagging components as containing ads,
+and computing related fields such as `ad_components` and `num_ad_clicks`,
+is implemented at the
+[view layer](https://github.com/mozilla/bigquery-etl/blob/main/sql_generators/serp_events_v2/templates/view.sql)
+using the
+[`is_ad_component` UDF](https://github.com/mozilla/bigquery-etl/blob/main/sql/mozfun/serp_events/is_ad_component/udf.sql).
 
-| `num_ads_hidden_reported` case        | `num_ads_showing`                                      | `num_ads_notshowing`                                                             | `ad_blocker_inferred` |
-| ------------------------------------- | ------------------------------------------------------ | -------------------------------------------------------------------------------- | --------------------- |
-| `== 0`                                | `= num_ads_visible_reported`                           | `= num_ads_loaded_reported - num_ads_visible_reported`                           | `false`               |
-| `== num_ads_loaded_reported`          | `0`                                                    | `0`                                                                              | `true`                |
-| `> 0` and `< num_ads_loaded_reported` | `= num_ads_visible_reported + num_ads_hidden_reported` | `= num_ads_loaded_reported - num_ads_visible_reported - num_ads_hidden_reported` | `false`               |
+The underlying
+[derived table](https://github.com/mozilla/bigquery-etl/blob/main/sql_generators/serp_events_v2/templates/desktop_query.sql)
+instead has 2 array-valued fields:
 
-The last row represents an edge case in which some but not all loaded ads are blocked.
-Per Engineering, this is best interpreted as a shortcoming of the detection method
-rather than an ad blocker operating selectively.
-In this case, ads reported as "blocked" are considered to actually be visible.
+- `component_impressions`, with 1 entry per component reported in a `serp.ad_impression` event
+- `engagements`, with 1 entry per component and engagement action reported in a `serp.engagement` event.
 
 ### Assumptions on event sequences
 
@@ -348,25 +350,27 @@ On day `D`, the ETL logic looks like the following:
 1. Pull all `serp` events with submission dates `D-2` or `D-1`
 2. Retain event sequences (sharing a common `impression_id`)
    meeting the above requirements whose `serp.impression` event has submission date `D-2`
-3. Compute 1 or more rows for each event sequence and insert into the table
+3. Compute 1 row for each event sequence and insert into the table
    with submission date `D-2`.
 
 ### Gotchas
 
-- To count number of SERP impressions that had X, use `COUNT(DISTINCT impression_id)`.
-- Use `num_ads_showing` and `num_ads_notshowing` to count ad impressions.
 - The table fills at a 2-day lag: the most recent submission date in the table is 2 days ago, not yesterday.
-- `ad_blocker_inferred` applies individually to the display component,
-  and a single `impression_id` may have different values of `ad_blocker_inferred` across components.
-  To compute a per-SERP impression version of `ad_blocker_inferred`,
-  check if any component had `ad_blocker_inferred = true`.
+- Use `num_ads_visible` or `ad_components.num_visible` to count ad impressions,
+  and `num_ad_clicks` or `ad_components.num_clicks` to count ad clicks.
+  The table does not explicitly require `num_visible > 0` when `num_clicks > 0`.
+- `ad_component.blocker_inferred` applies individually to each ad component,
+  and a single `impression_id` may have different values of `blocker_inferred` for different components.
+  The impression-level field `ad_blocker_inferred` is `true` if
+  any ad component has `blocker_inferred = true`.
 - Ad blocker use can only be inferred when ads are loaded
   (which is a minority of all SERP impressions).
   If ads are not loaded, `ad_blocker_inferred` will report `false`,
-  but really there is not enough information to make a determination.
-- Currently `is_ad_component` and `has_ads_loaded` refers to all components
-  reported in the `ad_impression` event, which includes `refined_search_buttons` and `shopping_tab`.
-  To compute monetizable ad impressions or clicks, these need to be filtered out.
+  but really, there is not enough information to make a determination.
+- The array-valued fields will contain empty arrays rather than `NULL`s
+  when there are no corresponding entries.
+  For example, if a SERP impression has neither impressions nor engagements for ad components,
+  `ad_components` will be `[]`.
 
 ### Example queries
 
@@ -374,8 +378,8 @@ Number of engaged and abandoned SERP impressions:
 
 ```sql
 SELECT
-  IF(is_engaged, 'engaged', 'abandoned') AS session_type,
-  COUNT(DISTINCT impression_id) AS num_serp
+  IF(abandon_reason IS NOT NULL, 'engaged', 'abandoned') AS session_type,
+  COUNT(*) AS num_serp
 FROM
   `mozdata.firefox_desktop.serp_events`
 GROUP BY
@@ -386,9 +390,8 @@ Number of SERP impressions with ads loaded:
 
 ```sql
 SELECT
-  component IN ('ad_carousel', 'ad_image_row', 'ad_link', 'ad_sidebar', 'ad_sitelink')
-    AND num_ads_loaded_reported > 0 AS has_ads_loaded,
-  COUNT(DISTINCT impression_id) AS num_serp
+  num_ads_loaded > 0 AS has_ads_loaded,
+  COUNT(*) AS num_serp
 FROM
   `mozdata.firefox_desktop.serp_events`
 GROUP BY
@@ -399,13 +402,12 @@ Number of SERP impression-level ad impressions and clicks
 
 ```sql
 SELECT
-  COUNT(DISTINCT impression_id) as num_with_ad_impression,
-  COUNT(DISTINCT IF(num_clicks > 0, impression_id, NULL)) as num_with_ad_click,
+  COUNT(*) as num_with_ad_impression,
+  COUNTIF(num_ad_clicks > 0) as num_with_ad_click,
 FROM
   `mozdata.firefox_desktop.serp_events`
 WHERE
-  component IN ('ad_carousel', 'ad_image_row', 'ad_link', 'ad_sidebar', 'ad_sitelink')
-  AND num_ads_showing > 0
+  num_ads_visible > 0
 ```
 
 Proportion of loaded ads that are visible, by search engine & component:
@@ -414,9 +416,9 @@ Proportion of loaded ads that are visible, by search engine & component:
 SELECT
   search_engine,
   component,
-  SAFE_DIVIDE(SUM(num_ads_showing), SUM(num_ads_loaded_reported)) as prop_visible
+  SAFE_DIVIDE(SUM(num_visible), SUM(num_loaded)) as prop_visible
 FROM
-  `mozdata.firefox_desktop.serp_events`
+  `mozdata.firefox_desktop.serp_events`, UNNEST(ad_components)
 GROUP BY
   1,
   2
@@ -430,26 +432,32 @@ Number of SERP impressions with ads loaded and an ad blocker in use:
 ```sql
 SELECT
   ad_blocker_inferred,
-  COUNT(DISTINCT impression_id) as num_serp
+  COUNT(*) as num_serp
 FROM
   `mozdata.firefox_desktop.serp_events`
 WHERE
-  has_ads_loaded
+  num_ads_loaded > 0
 GROUP BY
   1
 ```
 
-Ad impression rates, among sessions with ads showing:
+Per-component ad impression and click-through rates, among sessions with ads showing:
 
 ```sql
 SELECT
   component,
-  SAFE_DIVIDE(SUM(num_ads_showing), COUNT(DISTINCT impression_id)) AS ad_imp_rate
+  SAFE_DIVIDE(SUM(num_visible), COUNT(DISTINCT impression_id)) AS ad_imp_rate,
+  -- only count clicks when ads are visible
+  SAFE_DIVIDE(
+    COUNT(DISTINCT IF(num_clicks > 0, impression_id, NULL)),
+    COUNT(DISTINCT impression_id)
+  ) AS ad_ctr
 FROM
-  `mozdata.firefox_desktop.serp_events`
+  `mozdata.firefox_desktop.serp_events`, UNNEST(ad_components)
 WHERE
-  component IN ('ad_carousel', 'ad_image_row', 'ad_link', 'ad_sidebar', 'ad_sitelink')
-  AND num_ads_showing > 0
+  num_visible > 0
+GROUP BY
+  1
 ```
 
 Abandonment reason distribution:
@@ -457,46 +465,75 @@ Abandonment reason distribution:
 ```sql
 SELECT
   abandon_reason,
-  COUNT(DISTINCT impression_id) AS num_sessions
+  COUNT(*) AS num_serp
 FROM
   `mozdata.firefox_desktop.serp_events`
 WHERE
-  NOT is_engaged
+  abandon_reason IS NOT NULL
+GROUP BY
+  1
+```
+
+Number of SERP impressions with a shopping tab visible:
+
+```sql
+SELECT
+  EXISTS(
+    SELECT * FROM UNNEST(non_ad_impressions) AS x
+    WHERE x.component = 'shopping_tab' AND x.num_elements_loaded  > 0
+  ) AS has_shopping_tab,
+  COUNT(*) AS num_serp
+FROM
+  `mozdata.firefox_desktop.serp_events`
 GROUP BY
   1
 ```
 
 ### Column descriptions
 
-As described above, the table has multiple rows for each SERP impression, 1 row per display component.
-The first few columns hold properties of the SERP impression;
-the values in each of these columns will be the same down all rows
-corresponding to the same `impression_id`.
-The remaining columns hold properties of each display component on the SERP.
+The `v2` table has 1 row per SERP impression, each representing a single page load of a SERP.
+Most columns contain impression-level properties.
+There are also 3 array-valued columns listing impressions and engagements by component.
 
-| Column                     | Description                                                                                                                                                                                                                                                                         |
-| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `impression_id`            | UUID identifying SERP page loads. The table may have multiple rows with the same `impression_id`, 1 row per `component`. Use `COUNT(DISTINCT impression_id)` to count unique SERP loads.                                                                                            |
-| `event_timestamp`          | Glean event timestamp for the `serp.impression` event corresponding to the SERP page load.                                                                                                                                                                                          |
-| `is_shopping_page`         | Is the SERP a shopping page, resulting from clicking on the "Shopping" tab?                                                                                                                                                                                                         |
-| `search_engine`            | `google`, `bing`, `duckduckgo`, `ecosia` (only these support SERP events currently)                                                                                                                                                                                                 |
-| `sap_source`               | How the user arrived at the SERP [e.g. `urlbar`, `follow_on_from_refine_on_SERP`]                                                                                                                                                                                                   |
-| `is_tagged`                | Whether the search is tagged (`true`) or organic (`false`)                                                                                                                                                                                                                          |
-| `is_engaged`               | Did the SERP have at least 1 engagement (`clicked`, `expanded` or `submitted`)?                                                                                                                                                                                                     |
-| `abandon_reason`           | Why the SERP is deemed abandoned: `tab_close`, `window_close`, `navigation`, or `null` if not abandoned.                                                                                                                                                                            |
-| `ping_seq`                 | `ping_info.seq` from the events ping. Use together with `event_timestamp` for event sequencing.                                                                                                                                                                                     |
-| `has_ads_loaded`           | Did the SERP have at least 1 ad loaded (across all `ad_impression` components)?                                                                                                                                                                                                     |
-| `component`                | SERP display component corresponding to ad impression or engagement counts [e.g. `ad_link`, `non_ads_link`]. This includes both ad components and non-ad components. Different components support different engagement types, and only ad components support ad impressions.        |
-| `is_ad_component`          | Is the component covered by `serp.ad_impression` events?                                                                                                                                                                                                                            |
-| `num_clicks`               | Number of clicks recorded on `component` for the SERP page load. All components support clicks.                                                                                                                                                                                     |
-| `num_expands`              | Number of expands recorded on `component` for the SERP page load. Only `ad_carousel`, `refined_search_buttons` support expands.                                                                                                                                                     |
-| `num_submits`              | Number of submits recorded on `component` for the SERP page load. Only `incontent_searchbox` supports submits.                                                                                                                                                                      |
-| `num_ads_loaded_reported`  | Number of ads loaded in `component` for the SERP page load. They may or may not be visible on the page.                                                                                                                                                                             |
-| `num_ads_visible_reported` | Number of ads visible to the user in `component` for the SERP page load, as reported in the event. Use `num_ads_showing` instead to count visible ads.                                                                                                                              |
-| `num_ads_hidden_reported`  | Number of ads hidden by an ad blocker in `component` for the SERP page load, as reported in the event. Use `num_ads_notshowing` instead to count ads loaded but not showing.                                                                                                        |
-| `ad_blocker_inferred`      | Can we infer an ad blocker is in use on `component`? `true` if all loaded ads in the `component` are blocked, `false` otherwise. A single SERP page load can have `ad_blocker_inferred = true` for one ad component and `ad_blocker_inferred = false` for a different ad component. |
-| `num_ads_showing`          | Inferred number of ads visible to the user in `component` for the SERP page load. Use this to count "visible ads".                                                                                                                                                                  |
-| `num_ads_notshowing`       | Inferred number of ads that are loaded but not visible, and not blocked by an ad blocker. For example, ads in the carousel that will be shown on clicking "Expand" button. Use this to count "ads that are available but not visible".                                              |
+| Column                                       | Description                                                                                                                                                                                                                                                  |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `impression_id`                              | UUID identifying SERP page loads. Use `COUNT(DISTINCT impression_id)` to count unique SERP impressions when `CROSS JOIN UNNEST`ing the array-valued columns.                                                                                                 |
+| `ping_seq`                                   | `ping_info.seq` from the events ping. Use together with `event_timestamp` for event sequencing.                                                                                                                                                              |
+| `event_timestamp`                            | Glean event timestamp for the `serp.impression` event corresponding to the SERP page load.                                                                                                                                                                   |
+| `is_shopping_page`                           | Is the SERP a shopping page, resulting from clicking on the "Shopping" tab?                                                                                                                                                                                  |
+| `is_private`                                 | Was the SERP loaded while in Private Browsing Mode?                                                                                                                                                                                                          |
+| `is_signed_in`                               | Was the SERP loaded while signed into a search provider account?                                                                                                                                                                                             |
+| `search_engine`                              | `google`, `bing`, `duckduckgo`, `ecosia` (only these support SERP events currently).                                                                                                                                                                         |
+| `sap_source`                                 | How the user arrived at the SERP [e.g. `urlbar`, `follow_on_from_refine_on_SERP`]. There are a number of cases where this will be `unknown`, e.g. clicking on a link that opens a new SERP, or clicking on a history result containing a SERP URL.           |
+| `is_tagged`                                  | Whether the search is tagged (`true`) or organic (`false`).                                                                                                                                                                                                  |
+| `abandon_reason`                             | Why the SERP is deemed abandoned: `tab_close`, `window_close`, `navigation`, or `null` if not abandoned.                                                                                                                                                     |
+| `ad_components`                              | Array with 1 entry for each ad component which had either an impression or engagement, `[]` if none.                                                                                                                                                         |
+| `ad_components.component`                    | SERP display component containing ad links [e.g. `ad_link`, `ad_carousel`].                                                                                                                                                                                  |
+| `ad_components.num_loaded`                   | Number of ads loaded in the component. They may or may not be visible on the page.                                                                                                                                                                           |
+| `ad_components.num_visible`                  | Number of ads visible to the user in the component.                                                                                                                                                                                                          |
+| `ad_components.num_blocked`                  | Number of ads blocked by an ad blocker in the component.                                                                                                                                                                                                     |
+| `ad_components.num_notshowing`               | Number of ads in the component which are loaded but not visible, and not blocked by an ad blocker. For example, ads in the carousel that will be shown on clicking the "Expand" button.                                                                      |
+| `ad_components.num_clicks`                   | Number of clicks on ad links in the component.                                                                                                                                                                                                               |
+| `ad_components.num_other_engagements`        | Number of engagements in the component which are not ad clicks. E.g. clicking "Expand" for the carousel.                                                                                                                                                     |
+| `ad_components.blocker_inferred`             | Can we infer an ad blocker is in use in the component? `true` if all loaded ads are blocked, `false` otherwise. Note that the same SERP impression can have `blocker_inferred = true` for some ad components and `false` for others.                         |
+| `non_ad_engagements`                         | Array with 1 entry for each non-ad component (which had an engagement) and engagement action, `[]` if none.                                                                                                                                                  |
+| `non_ad_engagements.component`               | SERP display component not containing ad links [e.g. `non_ads_link`, `shopping_tab`].                                                                                                                                                                        |
+| `non_ad_engagements.action`                  | Engagement action taken in the component.                                                                                                                                                                                                                    |
+| `non_ad_engagements.num_engagements`         | Number of engagements of that action type taken in the component.                                                                                                                                                                                            |
+| `non_ad_impressions`                         | Array with 1 entry for each non-ad component which had an impression, `[]` if none.                                                                                                                                                                          |
+| `non_ad_impressions.component`               | SERP display component not containing ad links [e.g. `shopping_tab`, `refined_search_buttons`].                                                                                                                                                              |
+| `non_ad_impressions.num_elements_loaded`     | Number of instrumented elements loaded in the component. They may or may not be visible on the page. For many non-ad components this will be either 0 or 1.                                                                                                  |
+| `non_ad_impressions.num_elements_visible`    | Number of instrumented elements visible to the user in the component.                                                                                                                                                                                        |
+| `non_ad_impressions.num_elements_blocked`    | Number of instrumented elements blocked by an ad blocker in the component.                                                                                                                                                                                   |
+| `non_ad_impressions.num_elements_notshowing` | Number of instrumented elements in the component which are loaded but not visible, and not blocked by an ad blocker.                                                                                                                                         |
+| `num_ad_clicks`                              | Total number of clicks on links in ad components for the SERP page load.                                                                                                                                                                                     |
+| `num_non_ad_link_clicks`                     | Total number of clicks on organic result links (`non_ads_link` target) for the SERP page load.                                                                                                                                                               |
+| `num_other_engagements`                      | Total number of engagements for the SERP page load which are neither ad clicks nor organic link clicks. These include `expanded` actions on the `ad_carousel` component, as well as clicks or other engagement actions on non-ad components.                 |
+| `num_ads_loaded`                             | Total number of ads loaded in ad components for the SERP page load. They may or may not be visible on the page.                                                                                                                                              |
+| `num_ads_visible`                            | Total number of ads visible to the user in ad components for the SERP page load.                                                                                                                                                                             |
+| `num_ads_blocked`                            | Total number of ads blocked by an ad blocker in ad components for the SERP page load.                                                                                                                                                                        |
+| `num_ads_notshowing`                         | Total number of ads which are loaded but not visible, and not blocked by an ad blocker, for the SERP page load. For example, ads in the carousel that will be shown on clicking "Expand" button. Use this to count "ads that are available but not visible". |
+| `ad_blocker_inferred`                        | Can we infer an ad blocker is in use on the SERP? `true` if all loaded ads are blocked in at least one ad component, `false` otherwise.                                                                                                                      |
 
 ### Scheduling
 
@@ -508,10 +545,12 @@ The data is partitioned by `submission_date`.
 
 ### Code reference
 
-This table is
-[generated](https://github.com/mozilla/bigquery-etl/blob/main/sql_generators/serp_events/__init__.py)
+The derived table is
+[generated](https://github.com/mozilla/bigquery-etl/blob/main/sql_generators/serp_events_v2/__init__.py)
 from a templated query defined under
-[`bigquery_etl/sql_generators`](https://github.com/mozilla/bigquery-etl/blob/main/sql_generators/serp_events/templates/desktop_query.sql).
+[`bigquery_etl/sql_generators`](https://github.com/mozilla/bigquery-etl/blob/main/sql_generators/serp_events_v2/templates/desktop_query.sql)
+and accessible via its
+[view](https://github.com/mozilla/bigquery-etl/blob/main/sql_generators/serp_events_v2/templates/view.sql).
 
 <!-- prettier-ignore -->
 [^1]: This limit of 2 days was chosen as a trade-off between data completeness and lag time.
