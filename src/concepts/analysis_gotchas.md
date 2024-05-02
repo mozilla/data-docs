@@ -28,6 +28,7 @@ See also [the spreadsheet of notable historic events](https://docs.google.com/sp
 
 When you start to evaluate trends, be aware of events from the past that may invite comparisons with history. Here are a few to keep in mind:
 
+- **Jan 15 - May 1, 2024** - Legacy Telemetry pings containing os information from Arch Linux clients without the `lsb-release` package were [dropped](https://bugzilla.mozilla.org/show_bug.cgi?id=1875874).
 - **Dec 7, 2023** - Contextual Services data for Firefox Desktop versions 116 and up [now supplied by Glean](http://mozilla-hub.atlassian.net/browse/DSRE-1489).
 - **Nov 20, 2023** - Changeover day for Onboarding data sent via Messaging System from PingCentre to Glean. Views and datasets downstream of `messaging_system.onboarding` [began being fueled by Glean-sent data instead of PingCentre-sent data](https://github.com/mozilla/bigquery-etl/pull/4457).
 - **Jul 16, 2023 - Jul 24, 2023** - During the migration from release to ESR of Firefox users on obsolete versions of MacOS and Windows, Firefox sent deletion request pings for clients in the migration, which also reset the `client_id`. [See the summary of the incident here.](https://docs.google.com/document/d/1vdn9OFSoKPD5wt14dmTwyh0kGs-96fWx26ESui95jo0/edit). Approximately 2 million clients were affected by this bug; as a result of this, around 1.3 million clients were double counted due to both the old `client_id` and reset `client_id` being active on the same day.
