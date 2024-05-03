@@ -287,9 +287,9 @@ At the SERP level, ad ad blocker is inferred to be in use if is it inferred on a
 The
 [`mozdata.firefox_desktop.serp_events`](https://github.com/mozilla/bigquery-etl/blob/main/sql_generators/serp_events_v2/templates/view.sql)
 table has **1 row per SERP impression** (indexed by `impression_id`),
-combining information from all 4 `serp` event types.
-Rows for submission date `D` represent SERP impressions
-whose `serp.impression` event has submission date `D`.
+combining information from all `serp` event types
+recorded for that `impression_id`.
+The `submission_date` column gives the submission date of the `serp.impression` event.
 
 Alongside impression-level fields and summaries,
 the table has 3 array-valued fields:
