@@ -3989,36 +3989,47 @@ ORDER BY
 </div>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/cookbooks/active_dau.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><p><em>Authored by the Data Science Team. Please direct questions/concerns to Jesse McCrosky (<code>jmccrosky@mozilla.com</code>).</em></p>
 <h1 id="retention-1"><a class="header" href="#retention-1">Retention</a></h1>
-<p>Retention measures the proportion of users that are <em>continuing</em> to use Firefox, making it one of the more important metrics we track - we generally expect that the more value our users receive from the product, the more likely they are to be retained. We commonly measure retention between releases, experiment cohorts, and various Firefox subpopulations to better understand how a change to the user experience or use of a specific feature affects retention behavior.</p>
-<h2 id="state-of-retention"><a class="header" href="#state-of-retention">State of Retention</a></h2>
-<p>There is currently active research into retention metrics and we expect our conceptual and data model around retention to evolve in the coming months. This page will be updated. However, in the meantime, we want to be clear about our standard retention metrics for use right now.</p>
-<p>You can also see the <a href="https://docs.google.com/document/d/1VtqNFQFB9eJNr57h3Mz-lldMcpSYQKHVn2jzMMjPFYY/"><em>Proposed Metric Definition: Retention</em> Google Doc</a> for a summary of our conceptual thinking about retention metrics.</p>
-<h2 id="standard-retention-metrics"><a class="header" href="#standard-retention-metrics">Standard Retention metrics</a></h2>
-<p>Note that the definitions below refer to &quot;usage criterion&quot;. See the <a href="https://docs.google.com/document/d/1sIHCCaJhtfxj-dnbInfuIjlMRhCFbEhFiBESaezIRwM/edit#heading=h.ysqpvceb7pgt">GUD Data Model documentation</a> for more information. For normal Firefox Desktop retention, the usage criterion refers to simply sending any main ping.</p>
-<h3 id="1-week-retention"><a class="header" href="#1-week-retention">1-Week Retention</a></h3>
-<p>Among profiles that were active in the specified usage criterion at least once in the week starting on the specified day (day 0), what proportion (out of 1) meet the usage criterion during the following week (days 7 through 13).</p>
-<h3 id="1-week-new-profile-retention"><a class="header" href="#1-week-new-profile-retention">1-Week New Profile Retention</a></h3>
-<p>Among new profiles created on the day specified, what proportion (out of 1) meet the usage criterion during the week beginning one week after the day specified.</p>
-<p>Note that we use a new profile definition that relies on the <code>profile_creation_date</code> and requires that a main ping be sent within one week of the <code>profile_creation_date</code>. This differs from analysis using new profile pings, but allows valid comparison over time. New profile pings do not allow comparison over time due to the increased adoption of versions of the browser recent enough to send new profile pings.</p>
+<p>Retention measures the proportion of users that <em>continue</em> to use any of the browsers after sending the first ping, making it one of the most important metrics that we track at Mozilla - the expectation is that the more value our users receive from a product, the more likely they are to be retained. We commonly measure retention between releases, experiment cohorts, and various Firefox subpopulations to better understand how a change to the user experience or use of a specific feature affects the retention behavior.</p>
+<h3 id="references"><a class="header" href="#references">References</a></h3>
+<ul>
+<li>
+<p>Initial <a href="https://docs.google.com/document/d/1VtqNFQFB9eJNr57h3Mz-lldMcpSYQKHVn2jzMMjPFYY/">Proposed Metric Definition: Retention</a>.</p>
+</li>
+<li>
+<p>Proposed <a href="https://docs.google.com/document/d/18QGa4JYbDP35IywH3zGftCgejrd8aGnbft_L2oxp1Ao/edit#heading=h.rl9rub54j6oj">Revision of Funnel Metrics</a> implemented in 2023.</p>
+</li>
+</ul>
+<h2 id="metric-definitions"><a class="header" href="#metric-definitions">Metric definitions</a></h2>
+<h3 id="repeat-first-month-users"><a class="header" href="#repeat-first-month-users">Repeat First Month Users</a></h3>
+<p>New profiles who used the browser more than one day in their first 28-day window. The inclusion of this metric guarantees us monotonically decreasing flow (that week 4 retention is either smaller than or equal to multi-day users) and also has backward compatibility with week 4 retention (every member of the 4 week retention cohort is a member of the multi-day users cohort). It also covers more users than activation to make the opportunity size valuable than activation.</p>
+<h3 id="week-4-retention"><a class="header" href="#week-4-retention">Week 4 Retention</a></h3>
+<p>Used the browser at least once between days 22-28.</p>
+<h3 id="activated-user"><a class="header" href="#activated-user">Activated User</a></h3>
+<p>For Desktop, a new user becomes an activated user when they have used the browser at least 5 times in their first 7 days. For mobile, a new user becomes an activated user when they have used the browser for at least 3 days (including the first day of app open) in their first week and performed a search in the latter half of their first week.</p>
 <h2 id="accessing-retention-metrics"><a class="header" href="#accessing-retention-metrics">Accessing Retention Metrics</a></h2>
 <p>There are three standard methods for accessing retention metrics. These methods trade off between simplicity and flexibility.</p>
-<h3 id="mozilla-growth--usage-dashboard-gud"><a class="header" href="#mozilla-growth--usage-dashboard-gud">Mozilla Growth &amp; Usage Dashboard (GUD)</a></h3>
-<p>The <a href="https://gud.telemetry.mozilla.org/">GUD</a> provides plots and exportable tables of both retention metrics over time. Metrics are available for most products and can be sliced by OS, language, country, and channel.</p>
-<h3 id="querying-smoot-usage-tables"><a class="header" href="#querying-smoot-usage-tables">Querying Smoot Usage Tables</a></h3>
-<p>For programmatic access, the tables underlying GUD can be queried directly. For example:</p>
+<h3 id="funnel-dashboards-with-retention-analysis"><a class="header" href="#funnel-dashboards-with-retention-analysis">Funnel Dashboards with Retention analysis</a></h3>
+<ul>
+<li>
+<p>Mobile retention can be analyzed in the <a href="https://mozilla.cloud.looker.com/dashboards/1470">Fenix Funnel</a> and <a href="https://mozilla.cloud.looker.com/dashboards/1314?Country=&amp;YoY+control+%28Do+not+change%29+=before+28+days+ago&amp;Date=2023%2F01%2F01+to+2023%2F10%2F18">iOS Funnel</a> dashboards.</p>
+</li>
+<li>
+<p>Desktop retention is available in the <a href="https://mozilla.cloud.looker.com/dashboards/duet::desktop_moz_org_funnel_windows?Analysis%20Period=90%20day&amp;Countries=US,GB,DE,FR,CA,BR,MX,CN,IN,AU,NL,ES,RU,ROW&amp;Include%20Dates%20Where=data%20complete">Desktop Funnel</a>.</p>
+</li>
+</ul>
+<h3 id="querying-aggregate-tables"><a class="header" href="#querying-aggregate-tables">Querying Aggregate Tables</a></h3>
+<p>For programmatic access, the views underlying the dashboards can be queried directly. For example:</p>
 <pre><code class="language-sql">SELECT
-  `date`,
-  SAFE_DIVIDE(SUM(new_profile_active_in_week_1), SUM(new_profiles)) AS one_week_new_profile_retention,
-  SAFE_DIVIDE(SUM(active_in_weeks_0_and_1), SUM(active_in_week_0)) AS one_week_retention
-FROM `moz-fx-data-shared-prod.telemetry.smoot_usage_day_13`
-WHERE
-  usage = 'Any Firefox Desktop Activity'
-  AND country IN ('US', 'GB', 'CA', 'FR', 'DE')
-  AND `date` BETWEEN &quot;2019-11-01&quot; AND &quot;2019-11-07&quot;
-GROUP BY `date` ORDER BY `date`
+  first_seen_date AS submission_date,
+  country_code,
+  SUM(CASE WHEN qualified_week4 = TRUE THEN 1 ELSE 0 END) AS retained_week4
+FROM `mozdata.telemetry.clients_first_seen_28_days_later`
+WHERE first_seen_date &gt;= '2024-01-01'
+  AND DATE_DIFF(current_date(), first_seen_date, DAY) &gt; 1
+GROUP BY 1, 2;
 </code></pre>
 <h3 id="querying-clients-daily-tables"><a class="header" href="#querying-clients-daily-tables">Querying Clients Daily Tables</a></h3>
-<p>For more custom access, use the <code>clients_last_seen tables</code>. You can restrict to an arbitrary population of users by joining the <code>base</code> table below against a table containing the <code>client_id</code>s of interest.</p>
+<p>Another option for more custom access, e.g. to see retention in the first week, is to use the <code>clients_last_seen tables</code>. You can restrict to an arbitrary population of users by joining the <code>base</code> table below against a table containing the <code>client_id</code>s of interest.</p>
 <pre><code class="language-sql">WITH base AS (
   SELECT
     client_id,
@@ -4059,29 +4070,6 @@ GROUP BY
 <p>When performing retention analysis it is important to understand that there are many reasons for retention differences between groups. Unless you are comparing two arms of a controlled experiment, in which case you can probably attribute any difference to the experimental treatment, it is impossible to make causal arguments about retention differences. For example, if you observe the users that save a large number of bookmarks tend to have higher retention than those who do not, it is more likely that the retention difference is simply a property of <em>the types of people</em> that save bookmarks, and an intervention to encourage saving more bookmarks is not necessarily likely to improve retention.</p>
 <h2 id="confidence-intervals"><a class="header" href="#confidence-intervals">Confidence Intervals</a></h2>
 <p>It is good practice to always compute confidence intervals for retention metrics, especially when looking at specific slices of users or when making comparisons between different groups.</p>
-<p>The <a href="https://gud.telemetry.mozilla.org/">Growth and Usage Dashboard</a> provides confidence intervals automatically using a jackknife resampling method over <code>client_id</code> buckets. This confidence intervals generated using this method should be considered the &quot;standard&quot;. We show below how to compute them using the data sources described above. These methods use UDFs <a href="https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/udf_js/jackknife_ratio_ci/udf.sql">defined in bigquery-etl</a>.</p>
-<p>We also note that it is fairly simple to calculate a confidence interval using any statistical method appropriate for proportions. The queries given above provide both numerators and denominators, so feel free to calculate confidence intervals in the manner you prefer. However, if you want to replicate the standard confidence intervals, please work from the example queries below.</p>
-<h3 id="querying-smoot-usage-tables-1"><a class="header" href="#querying-smoot-usage-tables-1">Querying Smoot Usage Tables</a></h3>
-<pre><code class="language-sql">WITH bucketed AS (
-  SELECT
-    `date`,
-    id_bucket,
-    SUM(new_profile_active_in_week_1) AS new_profile_active_in_week_1,
-    SUM(new_profiles) AS new_profiles
-  FROM `moz-fx-data-shared-prod.telemetry.smoot_usage_day_13`
-  WHERE
-    usage = 'Any Firefox Desktop Activity'
-    AND country IN ('US', 'GB', 'CA', 'FR', 'DE')
-    AND `date` BETWEEN &quot;2019-11-01&quot; AND &quot;2019-11-07&quot;
-  GROUP BY `date`, id_bucket
-)
-
-SELECT
-  `date`,
-  udf_js.jackknife_ratio_ci(20, ARRAY_AGG(STRUCT(CAST(new_profile_active_in_week_1 AS float64), CAST(new_profiles as FLOAT64)))) AS one_week_new_profile_retention
-FROM bucketed
-GROUP BY `date` ORDER BY `date`
-</code></pre>
 <h3 id="querying-clients-daily-tables-1"><a class="header" href="#querying-clients-daily-tables-1">Querying Clients Daily Tables</a></h3>
 <pre><code class="language-sql">WITH base AS (
   SELECT
@@ -5345,7 +5333,7 @@ This includes previously manual and error-prone steps such as updating the ping 
 <li><a href="https://chat.mozilla.org/#/room/#glean:mozilla.org">#glean:mozilla.org</a> on matrix</li>
 <li><a href="mailto:glean-team@mozilla.com"><code>glean-team@mozilla.com</code></a> to reach out</li>
 </ul>
-<h1 id="references"><a class="header" href="#references">References</a></h1>
+<h1 id="references-1"><a class="header" href="#references-1">References</a></h1>
 <ul>
 <li>The <a href="https://github.com/mozilla/glean/">Glean SDK</a> implementation.</li>
 <li><a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools&amp;component=Glean%3A%20SDK">Reporting issues &amp; bugs for the Glean SDK</a>.</li>
@@ -13103,10 +13091,10 @@ ending on the specified day.</p>
 active at least once in the week ending on the date specified, the number of
 days on average they were active during that one-week window.</p>
 <h2 id="retention-2"><a class="header" href="#retention-2">Retention</a></h2>
-<h3 id="1-week-new-profile-retention-1"><a class="header" href="#1-week-new-profile-retention-1">1-Week New Profile Retention</a></h3>
+<h3 id="1-week-new-profile-retention"><a class="header" href="#1-week-new-profile-retention">1-Week New Profile Retention</a></h3>
 <p>Among new profiles created on the day specified, what proportion (out of 1) are
 active during the week beginning one week after the day specified.</p>
-<h3 id="1-week-retention-1"><a class="header" href="#1-week-retention-1">1-Week Retention</a></h3>
+<h3 id="1-week-retention"><a class="header" href="#1-week-retention">1-Week Retention</a></h3>
 <p>Among profiles that were active at least once in the week starting on the
 specified day, what proportion (out of 1) are active during the following week.</p>
 <h2 id="frequently-asked-questions"><a class="header" href="#frequently-asked-questions">Frequently Asked Questions</a></h2>
@@ -13134,7 +13122,7 @@ client-side activity dates).</li>
 </ul>
 </li>
 </ul>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/metrics/index.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="metric-definitions"><a class="header" href="#metric-definitions">Metric Definitions</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/metrics/index.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="metric-definitions-1"><a class="header" href="#metric-definitions-1">Metric Definitions</a></h1>
 <p>These sections provide the lists of our standardized metrics, usage criteria, and slicing dimensions. All three are important to provide a holistic view of product usage and performance.</p>
 <ul>
 <li>
