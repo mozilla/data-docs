@@ -88,8 +88,8 @@ Data sources can be joined with other data sources:
 # Join the `baseline` data source with the `metrics` data source.
 # Definitions for both data sources must exist.
 [data_sources.baseline.joins.metrics]
-relationship = "many_to_many"  # this determines the type of JOIN used; options: many_to_many, one_to_one, one_to_many, many_to_one
-on_expression = """  # SQL expression specifying the JOIN condition
+relationship = "many_to_many"  # this determines the type of JOIN used; options: many_to_many, one_to_one, one_to_many, many_to_one; default: many_to_many
+on_expression = """  # SQL expression specifying the JOIN condition; default join is on client_id_column and submission_date_columns
   baseline.client_id = metrics.client_id AND
   baseline.submission_date = metrics.submission_date
 """
@@ -100,8 +100,16 @@ Wildcard character can be used to apply joins to multiple data sources:
 ```toml
 # Apply join to all data sources prefixed with user_
 [data_sources.user_'*'.joins.metrics]
-# defaults are many_to_many relationship and joins on the client_id_column and submission_date_column
+# [default] relationship = many_to_many
+# [default] on_expression = """  # SQL expression specifying the JOIN condition; default join is on client_id_column and submission_date_columns
+#  baseline.{client_id_column} = metrics.{client_id_column} AND
+#  baseline.{submission_date_column} = metrics.{submission_date_column}
+# """
 ```
+
+> If there are multiple wildcard expression targeting a data source, the definition that is provided
+> last in the config file has precedence. This means `joins` expressions can be overwritten by
+> re-defining a data source definition later on in the config file.
 
 ### `[metrics]` Section
 
@@ -363,7 +371,7 @@ select_expression = """
 """
 columns_as_dimensions = true  # expose the selected fields as dimensions in Looker
 
-# Join `looker_base_fields` on to all the data sources in the file
+# Join `looker_base_fields` on to all the data sources that are in scope for the current file (i.e., data sources for the current application)
 # The selected fields in `looker_base_fields` will show up as dimensions for all the metrics
 [data_sources.'*'.joins.looker_base_fields]
 
