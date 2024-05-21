@@ -82,6 +82,35 @@ from_expression = """
 submission_date_column = "submission_date"
 ```
 
+Data sources can be joined with other data sources:
+
+```toml
+# Join the `baseline` data source with the `metrics` data source.
+# Definitions for both data sources must exist.
+[data_sources.baseline.joins.metrics]
+relationship = "many_to_many"  # this determines the type of JOIN used; options: many_to_many, one_to_one, one_to_many, many_to_one; default: many_to_many
+on_expression = """  # SQL expression specifying the JOIN condition; default join is on client_id_column and submission_date_columns
+  baseline.client_id = metrics.client_id AND
+  baseline.submission_date = metrics.submission_date
+"""
+```
+
+Wildcard character can be used to apply joins to multiple data sources:
+
+```toml
+# Apply join to all data sources prefixed with user_
+[data_sources.user_'*'.joins.metrics]
+# [default] relationship = many_to_many
+# [default] on_expression = """  # SQL expression specifying the JOIN condition; default join is on client_id_column and submission_date_columns
+#  baseline.{client_id_column} = metrics.{client_id_column} AND
+#  baseline.{submission_date_column} = metrics.{submission_date_column}
+# """
+```
+
+> If there are multiple wildcard expression targeting a data source, the definition that is provided
+> last in the config file has precedence. This means `joins` expressions can be overwritten by
+> re-defining a data source definition later on in the config file.
+
 ### `[metrics]` Section
 
 The metrics sections allows to specify metrics. A metric aggregates data and is associated with some data source.
@@ -143,6 +172,16 @@ Different statistics are available for different tools. To specify which statist
 [metrics.memory_pressure_count.statistics]
 client_count = {}
 mean = {}
+```
+
+Wildcard expressions can be used to express that a specific statistic should be available for multiple metrics:
+
+```toml
+# All metrics with the bookmark_ prefix should have the mean computed
+[metrics.bookmark_'*'.statistics.mean]
+
+# All metrics should have client counts computed (not recommended to apply statistic to every metric)
+[metrics.'*'.statistics.client_count]
 ```
 
 New statistics need to be implemented inside the tooling that uses metric definitions.
@@ -293,7 +332,7 @@ These explores look like the following:
 
 The side pane is split into different sections:
 
-- **Base Fields**: This section contains dimensions that are useful for filtering or segmenting the population, like channel or operating system. These base fields are based on `clients_daily` tables.
+- **Base Fields**: This section contains dimensions that are useful for filtering or segmenting the population, like channel or operating system. These base fields can be configured in metric-hub (see below).
 - **Metrics**: This section contains all metrics that are based on the data source represented by the explore. These metrics describe an aggregation of activities or measurements on a per-client basis.
 - **Statistics**: This sections contains the [statistics that have been defined in metric-hub on top of the metric definitions](https://github.com/mozilla/metric-hub/tree/main/looker) as measures. These statistics summarize the distribution of metrics within a specific time frame, population and/or segment and are used to derive insights and patterns from the raw metric data. Statistics have to be defined manually under the [`looker/` directory in metric-hub](https://github.com/mozilla/metric-hub/tree/main/looker).
 - **Sample of source data**: Defines the sample size that should be selected from the data source. Decreasing the sample size will speed up getting results in Looker, however it might decrease the accuracy. The results are being adjusted based on the sample size. For example, if a 1% sample is being used, then certain statistic results (like sum, count) will be multiplied by 100.
@@ -301,7 +340,7 @@ The side pane is split into different sections:
 
 #### Getting Metrics into Looker
 
-Metric definitions will be available in the "Metric Definition" explores for metrics that have been added to the [`defintions/` folder in metric-hub](https://github.com/mozilla/metric-hub/tree/main/definitions).
+Metric definitions will be available in the "Metric Definition" explores for metrics that have been added to the [`definitions/` folder in metric-hub](https://github.com/mozilla/metric-hub/tree/main/definitions).
 
 Statistics on top of these metrics need to be defined in the [`looker/` folder in metric-hub](https://github.com/mozilla/metric-hub/tree/main/looker). Statistics currently supported by Looker are:
 
@@ -315,6 +354,32 @@ Statistics on top of these metrics need to be defined in the [`looker/` folder i
 - `dau_proportion`: Ratio between the metric and active user counts
 
 To get more statistics added, please reach out on the [#data-help](https://mozilla.slack.com/archives/C4D5ZA91B) Slack channel.
+
+To filter and segment metrics in Looker, data sources that expose fields as dimensions can be configured in metric-hub. These base field data sources need to be joined with the metric data sources. Wildcard characters can be used to apply these joins to multiple data sources:
+
+```toml
+[data_sources.looker_base_fields]
+select_expression = """
+    SELECT
+        submission_date,
+        client_id,
+        os,
+        country,
+        channel
+    FROM
+        mozdata.telemetry.clients_daily
+"""
+columns_as_dimensions = true  # expose the selected fields as dimensions in Looker
+
+# Join `looker_base_fields` on to all the data sources that are in scope for the current file (i.e., data sources for the current application)
+# The selected fields in `looker_base_fields` will show up as dimensions for all the metrics
+[data_sources.'*'.joins.looker_base_fields]
+
+# Overwrite the join, to allow for a different data source to be used as base field data source
+[data_sources.baseline.joins.some_other_datasource]
+relationship = "many_to_many"
+on_expression = "baseline.client_id = some_other_datasource.client_id"
+```
 
 #### Example Use Cases
 
