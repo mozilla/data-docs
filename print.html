@@ -7637,6 +7637,30 @@ from_expression = &quot;&quot;&quot;
 &quot;&quot;&quot;
 submission_date_column = &quot;submission_date&quot;
 </code></pre>
+<p>Data sources can be joined with other data sources:</p>
+<pre><code class="language-toml"># Join the `baseline` data source with the `metrics` data source.
+# Definitions for both data sources must exist.
+[data_sources.baseline.joins.metrics]
+relationship = &quot;many_to_many&quot;  # this determines the type of JOIN used; options: many_to_many, one_to_one, one_to_many, many_to_one; default: many_to_many
+on_expression = &quot;&quot;&quot;  # SQL expression specifying the JOIN condition; default join is on client_id_column and submission_date_columns
+  baseline.client_id = metrics.client_id AND
+  baseline.submission_date = metrics.submission_date
+&quot;&quot;&quot;
+</code></pre>
+<p>Wildcard character can be used to apply joins to multiple data sources:</p>
+<pre><code class="language-toml"># Apply join to all data sources prefixed with user_
+[data_sources.user_'*'.joins.metrics]
+# [default] relationship = many_to_many
+# [default] on_expression = &quot;&quot;&quot;  # SQL expression specifying the JOIN condition; default join is on client_id_column and submission_date_columns
+#  baseline.{client_id_column} = metrics.{client_id_column} AND
+#  baseline.{submission_date_column} = metrics.{submission_date_column}
+# &quot;&quot;&quot;
+</code></pre>
+<blockquote>
+<p>If there are multiple wildcard expression targeting a data source, the definition that is provided
+last in the config file has precedence. This means <code>joins</code> expressions can be overwritten by
+re-defining a data source definition later on in the config file.</p>
+</blockquote>
 <h3 id="metrics-section-1"><a class="header" href="#metrics-section-1"><code>[metrics]</code> Section</a></h3>
 <p>The metrics sections allows to specify metrics. A metric aggregates data and is associated with some data source.</p>
 <p>Each metric is identified by a unique slug and a version (versions are optional but strongly encouraged), and can be defined by adding a new section with a name like:</p>
@@ -7686,6 +7710,13 @@ Any summarization of the client-level data can be implemented as a statistic.</p
 [metrics.memory_pressure_count.statistics]
 client_count = {}
 mean = {}
+</code></pre>
+<p>Wildcard expressions can be used to express that a specific statistic should be available for multiple metrics:</p>
+<pre><code class="language-toml"># All metrics with the bookmark_ prefix should have the mean computed
+[metrics.bookmark_'*'.statistics.mean]
+
+# All metrics should have client counts computed (not recommended to apply statistic to every metric)
+[metrics.'*'.statistics.client_count]
 </code></pre>
 <p>New statistics need to be implemented inside the tooling that uses metric definitions.</p>
 <h3 id="dimensions-section-1"><a class="header" href="#dimensions-section-1"><code>[dimensions]</code> Section</a></h3>
@@ -7800,14 +7831,14 @@ metric = ConfigLoader.get_metric(metric_slug=&quot;active_hours&quot;, app_name=
 <p><img src="concepts/../assets/looker_metric_hub.png" alt="" /></p>
 <p>The side pane is split into different sections:</p>
 <ul>
-<li><strong>Base Fields</strong>: This section contains dimensions that are useful for filtering or segmenting the population, like channel or operating system. These base fields are based on <code>clients_daily</code> tables.</li>
+<li><strong>Base Fields</strong>: This section contains dimensions that are useful for filtering or segmenting the population, like channel or operating system. These base fields can be configured in metric-hub (see below).</li>
 <li><strong>Metrics</strong>: This section contains all metrics that are based on the data source represented by the explore. These metrics describe an aggregation of activities or measurements on a per-client basis.</li>
 <li><strong>Statistics</strong>: This sections contains the <a href="https://github.com/mozilla/metric-hub/tree/main/looker">statistics that have been defined in metric-hub on top of the metric definitions</a> as measures. These statistics summarize the distribution of metrics within a specific time frame, population and/or segment and are used to derive insights and patterns from the raw metric data. Statistics have to be defined manually under the <a href="https://github.com/mozilla/metric-hub/tree/main/looker"><code>looker/</code> directory in metric-hub</a>.</li>
 <li><strong>Sample of source data</strong>: Defines the sample size that should be selected from the data source. Decreasing the sample size will speed up getting results in Looker, however it might decrease the accuracy. The results are being adjusted based on the sample size. For example, if a 1% sample is being used, then certain statistic results (like sum, count) will be multiplied by 100.</li>
 <li><strong>Aggregate Client Metrics Per ...</strong>: This parameter controls the time window over which metrics are aggregated per client. For example, this allows to get a weekly average of a metric, a maximum of a metric over the entire time period. By default, aggregations are on a daily basis.</li>
 </ul>
 <h4 id="getting-metrics-into-looker"><a class="header" href="#getting-metrics-into-looker">Getting Metrics into Looker</a></h4>
-<p>Metric definitions will be available in the &quot;Metric Definition&quot; explores for metrics that have been added to the <a href="https://github.com/mozilla/metric-hub/tree/main/definitions"><code>defintions/</code> folder in metric-hub</a>.</p>
+<p>Metric definitions will be available in the &quot;Metric Definition&quot; explores for metrics that have been added to the <a href="https://github.com/mozilla/metric-hub/tree/main/definitions"><code>definitions/</code> folder in metric-hub</a>.</p>
 <p>Statistics on top of these metrics need to be defined in the <a href="https://github.com/mozilla/metric-hub/tree/main/looker"><code>looker/</code> folder in metric-hub</a>. Statistics currently supported by Looker are:</p>
 <ul>
 <li><code>sum</code></li>
@@ -7820,6 +7851,29 @@ metric = ConfigLoader.get_metric(metric_slug=&quot;active_hours&quot;, app_name=
 <li><code>dau_proportion</code>: Ratio between the metric and active user counts</li>
 </ul>
 <p>To get more statistics added, please reach out on the <a href="https://mozilla.slack.com/archives/C4D5ZA91B">#data-help</a> Slack channel.</p>
+<p>To filter and segment metrics in Looker, data sources that expose fields as dimensions can be configured in metric-hub. These base field data sources need to be joined with the metric data sources. Wildcard characters can be used to apply these joins to multiple data sources:</p>
+<pre><code class="language-toml">[data_sources.looker_base_fields]
+select_expression = &quot;&quot;&quot;
+    SELECT
+        submission_date,
+        client_id,
+        os,
+        country,
+        channel
+    FROM
+        mozdata.telemetry.clients_daily
+&quot;&quot;&quot;
+columns_as_dimensions = true  # expose the selected fields as dimensions in Looker
+
+# Join `looker_base_fields` on to all the data sources that are in scope for the current file (i.e., data sources for the current application)
+# The selected fields in `looker_base_fields` will show up as dimensions for all the metrics
+[data_sources.'*'.joins.looker_base_fields]
+
+# Overwrite the join, to allow for a different data source to be used as base field data source
+[data_sources.baseline.joins.some_other_datasource]
+relationship = &quot;many_to_many&quot;
+on_expression = &quot;baseline.client_id = some_other_datasource.client_id&quot;
+</code></pre>
 <h4 id="example-use-cases"><a class="header" href="#example-use-cases">Example Use Cases</a></h4>
 <p>Some stakeholders would like to analyze crash metrics for Firefox Desktop in Looker. First, relevant metrics, such as number of socket crashes, need to be <a href="https://github.com/mozilla/metric-hub/blob/4ef7e2ef8a53c90f77a692af4c82ef31be8bf369/definitions/firefox_desktop.toml#L1577C10-L1593C11">added to <code>definitions/firefox_desktop.toml</code></a>:</p>
 <pre><code class="language-toml">[metrics.socket_crash_count_v1]
