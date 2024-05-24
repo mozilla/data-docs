@@ -28,6 +28,7 @@ See also [the spreadsheet of notable historic events](https://docs.google.com/sp
 
 When you start to evaluate trends, be aware of events from the past that may invite comparisons with history. Here are a few to keep in mind:
 
+- **Feb 29 , 2024** - Spike in the [search engine changed probe](https://dictionary.telemetry.mozilla.org/apps/firefox_desktop/metrics/search_engine_default_changed) for users who had an engine update for versions >= 124 . This is due to search engine default changed probes being triggered during engine updates even when users don't actually change their default search engines post-update [bug](https://bugzilla.mozilla.org/show_bug.cgi?id=1876178). More details can be found [here](https://mozilla-hub.atlassian.net/browse/RS-1051).
 - **Jan 15 - May 1, 2024** - Legacy Telemetry pings containing os information from Arch Linux clients without the `lsb-release` package were [dropped](https://bugzilla.mozilla.org/show_bug.cgi?id=1875874).
 - **Dec 7, 2023** - Contextual Services data for Firefox Desktop versions 116 and up [now supplied by Glean](http://mozilla-hub.atlassian.net/browse/DSRE-1489).
 - **Nov 20, 2023** - Changeover day for Onboarding data sent via Messaging System from PingCentre to Glean. Views and datasets downstream of `messaging_system.onboarding` [began being fueled by Glean-sent data instead of PingCentre-sent data](https://github.com/mozilla/bigquery-etl/pull/4457).
