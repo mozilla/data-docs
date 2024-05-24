@@ -27,7 +27,7 @@ See also [the spreadsheet of notable historic events](https://docs.google.com/sp
 **If you add an entry here, please add it to that spreadsheet as well!**
 
 When you start to evaluate trends, be aware of events from the past that may invite comparisons with history. Here are a few to keep in mind:
-
+- **March 15, 2024** - Spike in clients with null default search engine (~32%) for Firefox iOS. This issue was fixed for FX 126 and above. More details can be found in this [incident report](https://docs.google.com/document/d/1iMoGOnTZZ920oth6aWbzD_npP79vSQq6OQx_bz4vFXw/edit)
 - **Jan 15 - May 1, 2024** - Legacy Telemetry pings containing os information from Arch Linux clients without the `lsb-release` package were [dropped](https://bugzilla.mozilla.org/show_bug.cgi?id=1875874).
 - **Dec 7, 2023** - Contextual Services data for Firefox Desktop versions 116 and up [now supplied by Glean](http://mozilla-hub.atlassian.net/browse/DSRE-1489).
 - **Nov 20, 2023** - Changeover day for Onboarding data sent via Messaging System from PingCentre to Glean. Views and datasets downstream of `messaging_system.onboarding` [began being fueled by Glean-sent data instead of PingCentre-sent data](https://github.com/mozilla/bigquery-etl/pull/4457).
