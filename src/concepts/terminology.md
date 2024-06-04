@@ -59,7 +59,7 @@ A set of data, which includes ping data, derived datasets, etc.; sometimes it is
 
 ## DAU
 
-Daily Active Users - The number of unique [client ids](#client-id) that we receive a [ping](#ping) from each day.
+Daily Active Users - The number of unique [client ids](#client-id) that are active each day.
 
 For more details, see the [DAU Metric](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/314704478/Daily+Active+Users+DAU+Metric) page on Confluence.
 
