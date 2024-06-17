@@ -28,6 +28,7 @@ See also [the spreadsheet of notable historic events](https://docs.google.com/sp
 
 When you start to evaluate trends, be aware of events from the past that may invite comparisons with history. Here are a few to keep in mind:
 
+- **May 20, 2024 - June 14, 2024** - Excessive Glean database writes degraded Fenix performance on startup, pageload, scrolling, video playback, and possibly other areas. Some metrics were disabled. See [bug 1892230](https://bugzilla.mozilla.org/show_bug.cgi?id=1892230).
 - **Apr 18, 2024** - Google began rolling out a new SERP experience on Firefox Android, which impacted standard search metrics. See [the spreadsheet](https://docs.google.com/spreadsheets/d/16Cyx_KBieRdQkSBKolivqpBaK2H-VceN9LEZcL0snHg/edit#gid=0) for more details.
 - **Jan 15 - May 1, 2024** - Legacy Telemetry pings containing os information from Arch Linux clients without the `lsb-release` package were [dropped](https://bugzilla.mozilla.org/show_bug.cgi?id=1875874).
 - **Dec 8, 2023** - (ongoing) Firefox iOS Clients coming through the French ISP Netskope report an increased number of 4xx HTTP errors on submission ([bug 1870670](https://bugzilla.mozilla.org/show_bug.cgi?id=1870670)).
