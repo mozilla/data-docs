@@ -1,4 +1,4 @@
-# Introduction
+# Where to Store our analytics data models
 
 Mozilla’s current setup allows for the implementation of data modeling and business logic in different locations e.g BigQuery or Looker. The purpose of this document is to provide guidelines to decide where to store a new asset and to review pull requests that implement them.
 
