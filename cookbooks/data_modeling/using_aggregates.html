@@ -1,0 +1,414 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Using aggregates in BigQuery and Looker - Mozilla Data Documentation</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../dtmo.css">
+        <link rel="stylesheet" href="../../mermaid.css">
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../index.html">Mozilla Data Documentation</a></li><li class="chapter-item expanded "><a href="../../introduction/index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../introduction/what_data.html"><strong aria-hidden="true">1.1.</strong> What Data does Mozilla Collect?</a></li><li class="chapter-item expanded "><a href="../../introduction/tools.html"><strong aria-hidden="true">1.2.</strong> Tools for Data Analysis</a></li><li class="chapter-item expanded "><a href="../../concepts/terminology.html"><strong aria-hidden="true">1.3.</strong> Terminology</a></li></ol></li><li class="chapter-item expanded "><a href="../../cookbooks/index.html"><strong aria-hidden="true">2.</strong> Tutorials & Cookbooks</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../cookbooks/getting_started/index.html"><strong aria-hidden="true">2.1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../concepts/gaining_access.html"><strong aria-hidden="true">2.1.1.</strong> Gaining Access</a></li><li class="chapter-item expanded "><a href="../../concepts/getting_help.html"><strong aria-hidden="true">2.1.2.</strong> Getting Help</a></li><li class="chapter-item expanded "><a href="../../concepts/reporting_a_problem.html"><strong aria-hidden="true">2.1.3.</strong> Reporting a problem</a></li></ol></li><li class="chapter-item expanded "><a href="../../cookbooks/analysis/index.html"><strong aria-hidden="true">2.2.</strong> Analysis</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../cookbooks/analysis/data_discovery_tools.html"><strong aria-hidden="true">2.2.1.</strong> Data Discovery Tools</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../cookbooks/analysis/data_catalog.html"><strong aria-hidden="true">2.2.1.1.</strong> Using the Data Catalog</a></li><li class="chapter-item expanded "><a href="../../cookbooks/analysis/glean_dictionary.html"><strong aria-hidden="true">2.2.1.2.</strong> Using the Glean Dictionary</a></li><li class="chapter-item expanded "><a href="../../cookbooks/analysis/probe_dictionary.html"><strong aria-hidden="true">2.2.1.3.</strong> Using the Probe Dictionary</a></li></ol></li><li class="chapter-item expanded "><a href="../../cookbooks/data_modeling/index.html"><strong aria-hidden="true">2.2.2.</strong> Data Modeling</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../cookbooks/data_modeling/where_to_store.html"><strong aria-hidden="true">2.2.2.1.</strong> Where to store the data model assets</a></li><li class="chapter-item expanded "><a href="../../cookbooks/data_modeling/using_aggregates.html" class="active"><strong aria-hidden="true">2.2.2.2.</strong> Using aggregates in BigQuery and Looker</a></li></ol></li><li class="chapter-item expanded "><a href="../../cookbooks/looker/index.html"><strong aria-hidden="true">2.2.3.</strong> Working with Looker</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../cookbooks/looker/intro.html"><strong aria-hidden="true">2.2.3.1.</strong> Introduction to Looker</a></li><li class="chapter-item expanded "><a href="../../cookbooks/looker/countries.html"><strong aria-hidden="true">2.2.3.2.</strong> Normalizing Country Data</a></li><li class="chapter-item expanded "><a href="../../cookbooks/looker/browser_versions.html"><strong aria-hidden="true">2.2.3.3.</strong> Normalizing Browser Version Data</a></li><li class="chapter-item expanded "><a href="../../cookbooks/looker/growth_usage_dashboards.html"><strong aria-hidden="true">2.2.3.4.</strong> Using Growth and Usage Dashboards</a></li><li class="chapter-item expanded "><a href="../../cookbooks/looker/event_counts_explore.html"><strong aria-hidden="true">2.2.3.5.</strong> Using the Event Counts Explore</a></li><li class="chapter-item expanded "><a href="../../cookbooks/looker/funnel_analysis_explore.html"><strong aria-hidden="true">2.2.3.6.</strong> Using the Funnel Analysis Explore</a></li><li class="chapter-item expanded "><a href="../../cookbooks/looker/performance_caching.html"><strong aria-hidden="true">2.2.3.7.</strong> Looker Performance - Caching</a></li></ol></li><li class="chapter-item expanded "><a href="../../cookbooks/analysis/tools.html"><strong aria-hidden="true">2.2.4.</strong> Other Data Analysis Tools</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../cookbooks/glam.html"><strong aria-hidden="true">2.2.4.1.</strong> Introduction to GLAM</a></li><li class="chapter-item expanded "><a href="../../cookbooks/operational_monitoring.html"><strong aria-hidden="true">2.2.4.2.</strong> Introduction to Operational Monitoring</a></li><li class="chapter-item expanded "><a href="../../tools/stmo.html"><strong aria-hidden="true">2.2.4.3.</strong> Introduction to STMO</a></li></ol></li><li class="chapter-item expanded "><a href="../../cookbooks/public_data.html"><strong aria-hidden="true">2.2.5.</strong> Accessing Public Data</a></li><li class="chapter-item expanded "><a href="../../cookbooks/bigquery.html"><strong aria-hidden="true">2.2.6.</strong> Accessing and working with BigQuery</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../cookbooks/bigquery/access.html"><strong aria-hidden="true">2.2.6.1.</strong> Access</a></li><li class="chapter-item expanded "><a href="../../cookbooks/bigquery/querying.html"><strong aria-hidden="true">2.2.6.2.</strong> Writing Queries</a></li><li class="chapter-item expanded "><a href="../../cookbooks/bigquery/optimization.html"><strong aria-hidden="true">2.2.6.3.</strong> Optimization</a></li><li class="chapter-item expanded "><a href="../../cookbooks/bigquery/accessing_desktop_data.html"><strong aria-hidden="true">2.2.6.4.</strong> Accessing Desktop Data</a></li><li class="chapter-item expanded "><a href="../../cookbooks/accessing_glean_data.html"><strong aria-hidden="true">2.2.6.5.</strong> Accessing Glean Data</a></li><li class="chapter-item expanded "><a href="../../cookbooks/additional_props.html"><strong aria-hidden="true">2.2.6.6.</strong> Accessing Additional Properties</a></li><li class="chapter-item expanded "><a href="../../tools/spark.html"><strong aria-hidden="true">2.2.6.7.</strong> Custom analysis with Spark</a></li></ol></li><li class="chapter-item expanded "><a href="../../cookbooks/dataset_specific.html"><strong aria-hidden="true">2.2.7.</strong> Dataset-Specific</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../cookbooks/normandy_events.html"><strong aria-hidden="true">2.2.7.1.</strong> Working with Normandy events</a></li><li class="chapter-item expanded "><a href="../../cookbooks/crash_pings.html"><strong aria-hidden="true">2.2.7.2.</strong> Working with Crash Pings</a></li><li class="chapter-item expanded "><a href="../../cookbooks/clients_last_seen_bits.html"><strong aria-hidden="true">2.2.7.3.</strong> Working with Bit Patterns in Clients Last Seen</a></li><li class="chapter-item expanded "><a href="../../cookbooks/main_ping_exponential_histograms.html"><strong aria-hidden="true">2.2.7.4.</strong> Visualizing Percentiles of a Main Ping Exponential Histogram</a></li></ol></li><li class="chapter-item expanded "><a href="../../cookbooks/realtime.html"><strong aria-hidden="true">2.2.8.</strong> Real-time</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../cookbooks/live_data.html"><strong aria-hidden="true">2.2.8.1.</strong> Working with Live Data</a></li><li class="chapter-item expanded "><a href="../../cookbooks/view_pings_cep.html"><strong aria-hidden="true">2.2.8.2.</strong> Seeing Your Own Pings</a></li><li class="chapter-item expanded "><a href="../../cookbooks/real_time_search.html"><strong aria-hidden="true">2.2.8.3.</strong> See Real-time search metrics</a></li></ol></li><li class="chapter-item expanded "><a href="../../cookbooks/metrics.html"><strong aria-hidden="true">2.2.9.</strong> Metrics</a></li></ol></li><li class="chapter-item expanded "><a href="../../cookbooks/operational/index.html"><strong aria-hidden="true">2.3.</strong> Operational</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../cookbooks/gcp-projects.html"><strong aria-hidden="true">2.3.1.</strong> Creating a Prototype Data Project on Google Cloud Platform</a></li><li class="chapter-item expanded "><a href="../../cookbooks/operational/protosaur.html"><strong aria-hidden="true">2.3.2.</strong> Creating Static Dashboards with Protosaur</a></li><li class="chapter-item expanded "><a href="../../cookbooks/scheduling_queries.html"><strong aria-hidden="true">2.3.3.</strong> Scheduling Queries</a></li><li class="chapter-item expanded "><a href="../../cookbooks/deploying-containers.html"><strong aria-hidden="true">2.3.4.</strong> Building and Deploying Containers to GCR with CircleCI</a></li><li class="chapter-item expanded "><a href="../../cookbooks/publishing_datasets.html"><strong aria-hidden="true">2.3.5.</strong> Publishing Datasets</a></li><li class="chapter-item expanded "><a href="../../cookbooks/operational/connecting_external_data_bigquery.html"><strong aria-hidden="true">2.3.6.</strong> Connecting Sheets and External Data to BigQuery</a></li></ol></li><li class="chapter-item expanded "><a href="../../datasets/new_data.html"><strong aria-hidden="true">2.4.</strong> Sending telemetry</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../cookbooks/client_guidelines.html"><strong aria-hidden="true">2.4.1.</strong> Implementing Experiments</a></li><li class="chapter-item expanded "><a href="../../cookbooks/events_best_practices.html"><strong aria-hidden="true">2.4.2.</strong> Sending Events</a></li><li class="chapter-item expanded "><a href="../../cookbooks/new_ping.html"><strong aria-hidden="true">2.4.3.</strong> Sending a Custom Ping</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../reference/index.html"><strong aria-hidden="true">3.</strong> Data Platform Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../tools/data_stack_overview.html"><strong aria-hidden="true">3.1.</strong> Data Stack Overview</a></li><li class="chapter-item expanded "><a href="../../tools/guiding_principles.html"><strong aria-hidden="true">3.2.</strong> Guiding Principles for Data Infrastructure</a></li><li class="chapter-item expanded "><a href="../../concepts/glean/glean.html"><strong aria-hidden="true">3.3.</strong> Glean overview</a></li><li class="chapter-item expanded "><a href="../../concepts/pipeline/gcp_data_pipeline.html"><strong aria-hidden="true">3.4.</strong> Overview of Mozilla's Data Pipeline</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../concepts/pipeline/http_edge_spec.html"><strong aria-hidden="true">3.4.1.</strong> HTTP Edge Server Specification</a></li><li class="chapter-item expanded "><a href="../../concepts/pipeline/event_pipeline.html"><strong aria-hidden="true">3.4.2.</strong> Event Pipeline Detail</a></li><li class="chapter-item expanded "><a href="../../concepts/pipeline/schemas.html"><strong aria-hidden="true">3.4.3.</strong> Schemas</a></li><li class="chapter-item expanded "><a href="../../concepts/pipeline/glean_data.html"><strong aria-hidden="true">3.4.4.</strong> Glean Data</a></li><li class="chapter-item expanded "><a href="../../concepts/channels/channel_normalization.html"><strong aria-hidden="true">3.4.5.</strong> Channel Normalization</a></li><li class="chapter-item expanded "><a href="../../concepts/sample_id.html"><strong aria-hidden="true">3.4.6.</strong> Sampling</a></li><li class="chapter-item expanded "><a href="../../concepts/pipeline/filtering.html"><strong aria-hidden="true">3.4.7.</strong> Filtering</a></li><li class="chapter-item expanded "><a href="../../concepts/pipeline/artifact_deployment.html"><strong aria-hidden="true">3.4.8.</strong> BigQuery Artifact Deployment</a></li></ol></li><li class="chapter-item expanded "><a href="../../concepts/analysis_gotchas.html"><strong aria-hidden="true">3.5.</strong> Common Analysis Gotchas</a></li><li class="chapter-item expanded "><a href="../../concepts/sql_style.html"><strong aria-hidden="true">3.6.</strong> SQL Style Guide</a></li><li class="chapter-item expanded "><a href="../../concepts/airflow_gotchas.html"><strong aria-hidden="true">3.7.</strong> Airflow Gotcha's</a></li><li class="chapter-item expanded "><a href="../../concepts/index.html"><strong aria-hidden="true">3.8.</strong> Telemetry Behavior Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../concepts/history.html"><strong aria-hidden="true">3.8.1.</strong> History of Telemetry</a></li><li class="chapter-item expanded "><a href="../../concepts/profile/index.html"><strong aria-hidden="true">3.8.2.</strong> Profile Behavior</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../concepts/profile/profile_creation.html"><strong aria-hidden="true">3.8.2.1.</strong> Profile Creation</a></li><li class="chapter-item expanded "><a href="../../concepts/profile/realworldusage.html"><strong aria-hidden="true">3.8.2.2.</strong> Real World Usage</a></li><li class="chapter-item expanded "><a href="../../concepts/profile/profilehistory.html"><strong aria-hidden="true">3.8.2.3.</strong> Profile History</a></li></ol></li><li class="chapter-item expanded "><a href="../../concepts/engagement.html"><strong aria-hidden="true">3.8.3.</strong> Engagement metrics</a></li><li class="chapter-item expanded "><a href="../../concepts/segments.html"><strong aria-hidden="true">3.8.4.</strong> User states/Segments</a></li></ol></li><li class="chapter-item expanded "><a href="../../concepts/experiments.html"><strong aria-hidden="true">3.9.</strong> Experimentation</a></li><li class="chapter-item expanded "><a href="../../concepts/metric_hub.html"><strong aria-hidden="true">3.10.</strong> Metric Hub</a></li><li class="chapter-item expanded "><a href="../../concepts/external_data_integration_using_fivetran.html"><strong aria-hidden="true">3.11.</strong> External data integration using Fivetran</a></li><li class="chapter-item expanded "><a href="../../tools/projects.html"><strong aria-hidden="true">3.12.</strong> Project Glossary</a></li></ol></li><li class="chapter-item expanded "><a href="../../datasets/reference.html"><strong aria-hidden="true">4.</strong> Dataset Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../datasets/pings.html"><strong aria-hidden="true">4.1.</strong> Pings</a></li><li class="chapter-item expanded "><a href="../../datasets/derived.html"><strong aria-hidden="true">4.2.</strong> Derived Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../datasets/active_profiles.html"><strong aria-hidden="true">4.2.1.</strong> Active Profiles</a></li><li class="chapter-item expanded "><a href="../../datasets/bigquery/active_users_aggregates/reference.html"><strong aria-hidden="true">4.2.2.</strong> Active Users</a></li><li class="chapter-item expanded "><a href="../../datasets/batch_view/addons/reference.html"><strong aria-hidden="true">4.2.3.</strong> Addons</a></li><li class="chapter-item expanded "><a href="../../datasets/other/addons_daily/reference.html"><strong aria-hidden="true">4.2.4.</strong> Addons Daily</a></li><li class="chapter-item expanded "><a href="../../datasets/other/asn_aggregates/reference.html"><strong aria-hidden="true">4.2.5.</strong> Autonomous System Aggregates</a></li><li class="chapter-item expanded "><a href="../../datasets/batch_view/clients_daily/reference.html"><strong aria-hidden="true">4.2.6.</strong> Clients Daily</a></li><li class="chapter-item expanded "><a href="../../datasets/bigquery/clients_last_seen/reference.html"><strong aria-hidden="true">4.2.7.</strong> Clients Last Seen</a></li><li class="chapter-item expanded "><a href="../../datasets/batch_view/events/reference.html"><strong aria-hidden="true">4.2.8.</strong> Events</a></li><li class="chapter-item expanded "><a href="../../datasets/bigquery/events_daily/reference.html"><strong aria-hidden="true">4.2.9.</strong> Events Daily</a></li><li class="chapter-item expanded "><a href="../../datasets/bigquery/firefox_android_clients/reference.html"><strong aria-hidden="true">4.2.10.</strong> Firefox Android Clients</a></li><li class="chapter-item expanded "><a href="../../datasets/main_ping_tables.html"><strong aria-hidden="true">4.2.11.</strong> Main Ping Tables</a></li><li class="chapter-item expanded "><a href="../../datasets/batch_view/main_summary/reference.html"><strong aria-hidden="true">4.2.12.</strong> Main Summary</a></li><li class="chapter-item expanded "><a href="../../datasets/other/socorro_crash/reference.html"><strong aria-hidden="true">4.2.13.</strong> Socorro Crash Reports</a></li><li class="chapter-item expanded "><a href="../../datasets/other/ssl/reference.html"><strong aria-hidden="true">4.2.14.</strong> SSL Ratios (public)</a></li><li class="chapter-item expanded "><a href="../../datasets/batch_view/telemetry_aggregates/reference.html"><strong aria-hidden="true">4.2.15.</strong> Telemetry Aggregates</a></li><li class="chapter-item expanded "><a href="../../datasets/glam.html"><strong aria-hidden="true">4.2.16.</strong> GLAM Aggregates</a></li></ol></li><li class="chapter-item expanded "><a href="../../datasets/experiments.html"><strong aria-hidden="true">4.3.</strong> Experiment Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../datasets/jetstream.html"><strong aria-hidden="true">4.3.1.</strong> Jetstream</a></li><li class="chapter-item expanded "><a href="../../datasets/experiment_telemetry.html"><strong aria-hidden="true">4.3.2.</strong> Accessing experiment data</a></li><li class="chapter-item expanded "><a href="../../datasets/heartbeat.html"><strong aria-hidden="true">4.3.3.</strong> Accessing Heartbeat data</a></li><li class="chapter-item expanded "><a href="../../datasets/dynamic_telemetry.html"><strong aria-hidden="true">4.3.4.</strong> Dynamic telemetry</a></li><li class="chapter-item expanded "><a href="../../datasets/experiment_monitoring.html"><strong aria-hidden="true">4.3.5.</strong> Experiment monitoring</a></li></ol></li><li class="chapter-item expanded "><a href="../../datasets/search.html"><strong aria-hidden="true">4.4.</strong> Search Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../datasets/search/search_aggregates/reference.html"><strong aria-hidden="true">4.4.1.</strong> Search Aggregates</a></li><li class="chapter-item expanded "><a href="../../datasets/search/search_clients_engines_sources_daily/reference.html"><strong aria-hidden="true">4.4.2.</strong> Search Clients Engines Sources Daily</a></li><li class="chapter-item expanded "><a href="../../datasets/search/search_clients_last_seen/reference.html"><strong aria-hidden="true">4.4.3.</strong> Search Clients Last Seen</a></li><li class="chapter-item expanded "><a href="../../datasets/search/client_ltv/reference.html"><strong aria-hidden="true">4.4.4.</strong> Client LTV</a></li><li class="chapter-item expanded "><a href="../../datasets/search/mobile_search_clients_sources_daily/intro.html"><strong aria-hidden="true">4.4.5.</strong> Mobile Search Clients Sources Daily</a></li></ol></li><li class="chapter-item expanded "><a href="../../datasets/non_desktop.html"><strong aria-hidden="true">4.5.</strong> Non-Desktop Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../datasets/non_desktop/day_2_7_activation/reference.html"><strong aria-hidden="true">4.5.1.</strong> Day 2-7 Activation</a></li><li class="chapter-item expanded "><a href="../../datasets/non_desktop/google_play_store/reference.html"><strong aria-hidden="true">4.5.2.</strong> Google Play Store</a></li><li class="chapter-item expanded "><a href="../../datasets/non_desktop/apple_app_store/reference.html"><strong aria-hidden="true">4.5.3.</strong> Apple App Store</a></li></ol></li><li class="chapter-item expanded "><a href="../../datasets/other.html"><strong aria-hidden="true">4.6.</strong> Other Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../datasets/other/hgpush/reference.html"><strong aria-hidden="true">4.6.1.</strong> hgpush</a></li><li class="chapter-item expanded "><a href="../../datasets/other/stub_installer/reference.html"><strong aria-hidden="true">4.6.2.</strong> Stub installer ping</a></li><li class="chapter-item expanded "><a href="../../datasets/other/bmobugs/reference.html"><strong aria-hidden="true">4.6.3.</strong> bmobugs</a></li><li class="chapter-item expanded "><a href="../../datasets/buildhub.html"><strong aria-hidden="true">4.6.4.</strong> Build metadata</a></li><li class="chapter-item expanded "><a href="../../datasets/releases.html"><strong aria-hidden="true">4.6.5.</strong> Release information</a></li><li class="chapter-item expanded "><a href="../../datasets/other/suggest/suggest.html"><strong aria-hidden="true">4.6.6.</strong> Suggest</a></li><li class="chapter-item expanded "><a href="../../datasets/other/sponsored_tiles/sponsored_tiles.html"><strong aria-hidden="true">4.6.7.</strong> Sponsored Tiles</a></li><li class="chapter-item expanded "><a href="../../datasets/other/newtab_interactions/reference.html"><strong aria-hidden="true">4.6.8.</strong> Newtab_Interactions</a></li><li class="chapter-item expanded "><a href="../../datasets/other/urlbar_events/reference.html"><strong aria-hidden="true">4.6.9.</strong> Urlbar Events</a></li><li class="chapter-item expanded "><a href="../../datasets/other/urlbar_events_daily/reference.html"><strong aria-hidden="true">4.6.10.</strong> Urlbar Events Daily</a></li><li class="chapter-item expanded "><a href="../../datasets/other/serp_events/reference.html"><strong aria-hidden="true">4.6.11.</strong> SERP Events</a></li></ol></li><li class="chapter-item expanded "><a href="../../datasets/fxa.html"><strong aria-hidden="true">4.7.</strong> Mozilla Accounts Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../datasets/fxa_metrics/attribution.html"><strong aria-hidden="true">4.7.1.</strong> Mozilla Account Attribution</a></li><li class="chapter-item expanded "><a href="../../datasets/fxa_metrics/funnels.html"><strong aria-hidden="true">4.7.2.</strong> Mozilla Account Funnel Metrics</a></li><li class="chapter-item expanded "><a href="../../datasets/fxa_metrics/emails.html"><strong aria-hidden="true">4.7.3.</strong> Mozilla Account Email Metrics</a></li></ol></li><li class="chapter-item expanded "><a href="../../datasets/static.html"><strong aria-hidden="true">4.8.</strong> Static Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../datasets/static/normalized_os.html"><strong aria-hidden="true">4.8.1.</strong> Normalized OS Names And Versions</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../historical/index.html"><strong aria-hidden="true">5.</strong> Historical Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../concepts/pipeline/data_pipeline.html"><strong aria-hidden="true">5.1.</strong> Previous AWS Pipeline Overview</a></li><li class="chapter-item expanded "><a href="../../concepts/pipeline/data_pipeline_detail.html"><strong aria-hidden="true">5.2.</strong> In-depth AWS Data Pipeline Detail</a></li><li class="chapter-item expanded "><a href="../../metrics/index.html"><strong aria-hidden="true">5.3.</strong> Metrics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../metrics/definitions.html"><strong aria-hidden="true">5.3.1.</strong> Definitions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../metrics/metrics.html"><strong aria-hidden="true">5.3.1.1.</strong> Metrics</a></li><li class="chapter-item expanded "><a href="../../metrics/usage.html"><strong aria-hidden="true">5.3.1.2.</strong> Usage Criteria</a></li><li class="chapter-item expanded "><a href="../../metrics/dimensions.html"><strong aria-hidden="true">5.3.1.3.</strong> Slicing Dimensions</a></li></ol></li><li class="chapter-item expanded "><a href="../../metrics/policy.html"><strong aria-hidden="true">5.3.2.</strong> Metrics Standardization and Policy</a></li></ol></li><li class="chapter-item expanded "><a href="../../concepts/censuses.html"><strong aria-hidden="true">5.4.</strong> Legacy Census Metrics</a></li><li class="chapter-item expanded "><a href="../../datasets/obsolete.html"><strong aria-hidden="true">5.5.</strong> Obsolete Datasets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../datasets/obsolete/activity-stream/reference.html"><strong aria-hidden="true">5.5.1.</strong> Activity Stream</a></li><li class="chapter-item expanded "><a href="../../datasets/obsolete/attitudes_daily/reference.html"><strong aria-hidden="true">5.5.2.</strong> Attitudes Daily</a></li><li class="chapter-item expanded "><a href="../../datasets/obsolete/churn/reference.html"><strong aria-hidden="true">5.5.3.</strong> Churn</a></li><li class="chapter-item expanded "><a href="../../datasets/obsolete/client_count_daily/reference.html"><strong aria-hidden="true">5.5.4.</strong> Client Count Daily</a></li><li class="chapter-item expanded "><a href="../../datasets/obsolete/client_count/reference.html"><strong aria-hidden="true">5.5.5.</strong> Client Count</a></li><li class="chapter-item expanded "><a href="../../datasets/obsolete/crash_aggregates/reference.html"><strong aria-hidden="true">5.5.6.</strong> Crash Aggregates</a></li><li class="chapter-item expanded "><a href="../../datasets/obsolete/crash_summary/reference.html"><strong aria-hidden="true">5.5.7.</strong> Crash Summary</a></li><li class="chapter-item expanded "><a href="../../datasets/obsolete/error_aggregates/reference.html"><strong aria-hidden="true">5.5.8.</strong> Error Aggregates</a></li><li class="chapter-item expanded "><a href="../../datasets/obsolete/first_shutdown_summary/reference.html"><strong aria-hidden="true">5.5.9.</strong> First Shutdown Summary</a></li><li class="chapter-item expanded "><a href="../../datasets/obsolete/heavy_users/reference.html"><strong aria-hidden="true">5.5.10.</strong> Heavy Users</a></li><li class="chapter-item expanded "><a href="../../datasets/obsolete/legacy_mobile/reference.html"><strong aria-hidden="true">5.5.11.</strong> Legacy Mobile Datasets</a></li><li class="chapter-item expanded "><a href="../../datasets/obsolete/longitudinal/reference.html"><strong aria-hidden="true">5.5.12.</strong> Longitudinal</a></li><li class="chapter-item expanded "><a href="../../datasets/obsolete/retention/reference.html"><strong aria-hidden="true">5.5.13.</strong> Retention</a></li><li class="chapter-item expanded "><a href="../../datasets/obsolete/sync_summary/reference.html"><strong aria-hidden="true">5.5.14.</strong> Sync Summary</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../contributing/index.html"><strong aria-hidden="true">6.</strong> Contributing</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../contributing/style_guide.html"><strong aria-hidden="true">6.1.</strong> Style Guide</a></li><li class="chapter-item expanded "><a href="../../contributing/structure.html"><strong aria-hidden="true">6.2.</strong> Structure</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Mozilla Data Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/mozilla/data-docs" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/mozilla/data-docs/edit/main/src/cookbooks/data_modeling/using_aggregates.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="using-aggregates-for-cost-saving-and-performance-improvement"><a class="header" href="#using-aggregates-for-cost-saving-and-performance-improvement">Using aggregates for cost saving and performance improvement</a></h1>
+<p>A good approach to better performance and reduced cost is reducing the amount of data scanned in queries, which can be achieved by summarizing and pre-calculating data in aggregates.</p>
+<p>This doc is about when to use different options to aggregate data, their limitations, benefits, and examples.</p>
+<!-- TOC -->
+<ul>
+<li><a href="#what-are-the-options-available">What are the options available?</a>
+<ul>
+<li><a href="#bigquery-aggregate-tables">BigQuery Aggregate Tables</a></li>
+<li><a href="#bigquery-materialized-views">BigQuery Materialized Views</a></li>
+<li><a href="#looker-pdts--aggregate-awareness">Looker PDTs &amp; aggregate awareness</a></li>
+</ul>
+</li>
+<li><a href="#important-considerations">Important considerations:</a></li>
+<li><a href="#when-to-use-each-of-these-aggregates">When to use each of these aggregates?</a>
+<ul>
+<li><a href="#a-bigquery-aggregate-table-is-suitable-when">A BigQuery aggregate table is suitable when:</a></li>
+<li><a href="#a-materialized-view-is-suitable-when">A Materialized View is suitable when:</a></li>
+<li><a href="#a-looker-pdt-is-suitable-when">A Looker PDT is suitable when:</a></li>
+</ul>
+</li>
+<li><a href="#how-to-measure-the-benefit-and-savings">How to measure the benefit and savings?</a></li>
+</ul>
+<!-- TOC -->
+<h2 id="what-are-the-options-available"><a class="header" href="#what-are-the-options-available">What are the options available?</a></h2>
+<h4 id="bigquery-aggregate-tables"><a class="header" href="#bigquery-aggregate-tables">BigQuery Aggregate Tables</a></h4>
+<p>Aggregates tables contain pre-aggregated results of scheduled queries running some business logic. These tables are created and maintained by the Data Team and scheduled to get updated periodically via Airflow.</p>
+<ul>
+<li><a href="https://mozilla.github.io/bigquery-etl/cookbooks/common_workflows/#adding-a-new-scheduled-query">Process to create an aggregate table in BigQuery</a>.</li>
+</ul>
+<h4 id="bigquery-materialized-views"><a class="header" href="#bigquery-materialized-views"><a href="https://cloud.google.com/bigquery/docs/materialized-views-intro">BigQuery Materialized Views</a></a></h4>
+<p>These are views defined by the developer and then created, managed and incrementally updated by BigQuery, reading <em>only</em> the changes in the base table to compute results. Materialized view definitions <a href="https://cloud.google.com/bigquery/docs/materialized-views-intro#limitations"><em>do not support</em> certain BigQuery features and expressions</a>, such as UDFs, certain aggregate functions, backfilling or nesting.</p>
+<ul>
+<li>
+<p><a href="https://console.cloud.google.com/bigquery?ws=!1m7!1m6!12m5!1m3!1smozdata!2sus-central1!3s8403c62c-e243-4e57-8d91-5c1fcdf26828!2e1">Template to create a Materialized View</a>.</p>
+</li>
+<li>
+<p>Example.</p>
+<pre><code>CREATE MATERIALIZED VIEW `moz-fx-data-shared-prod.monitoring_derived.suggest_click_rate_live_v1`
+OPTIONS
+(enable_refresh = TRUE, refresh_interval_minutes = 5)
+AS
+SELECT
+ TIMESTAMP_TRUNC(submission_timestamp, minute) AS submission_minute,
+ COUNT(*) AS n,
+ COUNTIF(release_channel = &quot;release&quot;) AS n_release,
+ COUNTIF(release_channel = &quot;beta&quot;) AS n_beta,
+ COUNTIF(release_channel = &quot;nightly&quot;) AS n_nightly,
+ COUNT(request_id) AS n_merino,
+ COUNTIF(request_id IS NOT NULL AND release_channel = &quot;release&quot;) AS n_merino_release,
+ COUNTIF(request_id IS NOT NULL AND release_channel = &quot;beta&quot;) AS n_merino_beta,
+ COUNTIF(request_id IS NOT NULL AND release_channel = &quot;nightly&quot;) AS n_merino_nightly,
+FROM
+ `moz-fx-data-shared-prod.contextual_services_live.quicksuggest_click_v1`
+WHERE
+ DATE(submission_timestamp) &gt; '2010-01-01'
+GROUP BY
+ 1
+</code></pre>
+</li>
+</ul>
+<h4 id="looker-pdts--aggregate-awareness"><a class="header" href="#looker-pdts--aggregate-awareness"><a href="https://cloud.google.com/looker/docs/aggregate_awareness">Looker PDTs &amp; aggregate awareness</a></a></h4>
+<p>These are aggregations that a developer defines in an Explore file (<code>explore.lkml</code>). From this definition, Looker creates a table in BigQuery's <code>mozdata.tmp</code> using the naming convention<code>scratch schema + table status code + hash value + view name</code> and runs the scheduled update of the data.
+Looker's PDTs and aggregate awareness are <em>only</em> referenced in Looker when at least one of the columns is used in a Looker object. These aggregates can be particularly beneficial to avoid having to rebuild dashboards after a schema change.</p>
+<ul>
+<li>
+<p>Template to create aggregate awareness in a Looker Explore, replacing the text inside &lt;&gt; with the actual values:</p>
+<pre><code>aggregate_table: &lt;aggregate_name: Descriptive name of this aggregation.&gt; {
+  query: {
+  dimensions: [&lt;table&gt;.&lt;columns&gt;]
+  measures: [&lt;table&gt;.&lt;columns&gt;]
+  filters: [&lt;table&gt;.&lt;partition_column&gt;: &quot;&lt;Period to materialize in the aggregate e.g. 2 years&gt;&quot;]
+  }
+  materialization: {
+  sql_trigger_value: SELECT CURRENT_DATE() ;;
+  increment_key: &lt;table&gt;.&lt;partition_column&gt;
+  increment_offset: &lt;INT: number of periods to update, recommended is 1.&gt; }
+  }
+</code></pre>
+</li>
+<li>
+<p><a href="https://mozilla.cloud.looker.com/projects/spoke-default/files/combined_browser_metrics/explores/active_users_aggregates.explore.lkml">Example of aggregate awareness in a Looker Explore</a></p>
+</li>
+</ul>
+<h2 id="important-considerations"><a class="header" href="#important-considerations">Important considerations</a></h2>
+<ul>
+<li><a href="https://docs.telemetry.mozilla.org/cookbooks/data_modeling/where_to_store">Store the business logic in BigQuery</a>, preferably in a client_id level table to aggregate from.</li>
+<li>All aggregates are version controlled in the git repositories <code>bigquery-etl</code> and <code>spoke-default</code>.</li>
+<li>All aggregates require a backfill or update when the source data changes:
+<ul>
+<li>BigQuery aggregate tables are backfilled using the managed-backfill process.</li>
+<li>Materialized views cannot be backfilled, instead a materialized view needs to be re-created. Schema changes in base tables also invalidate the view and requires it to be re-created. Materialized views scan all historical data of their referenced base tables by default, so <em>ensure to set a date filter to reduce the amount of data to be scanned</em>.
+<ul>
+<li>Add a date filter to materialized views to limit the amount of data to be scanned when these views get deployed initially. Otherwise, they will scan the entire data in referenced base tables.</li>
+</ul>
+</li>
+<li>Looker PDTs require following the [protocol to backfill described in the <a href="https://mozilla.udemy.com/course/looker-training-for-developers/learn/lecture/35440216#overview">Mozilla Looker Developers course</a>.</li>
+</ul>
+</li>
+<li>Indices, partition and clustering are allowed for all cases. Looker PDTs and aggregates require that these are defined in the base table.</li>
+<li>There is a limit of 20 materialized views per table.</li>
+<li>When considering materialized views, a common practice is to use a combination of an aggregate table to store historical data (e.g. older than 2 days) and use a materialized view to track data in real-time (e.g. aggregate data that is just coming in). This allows to run backfills on the aggregate table.</li>
+<li>BigQuery retries the update of materialized views when it fails, which results in <em>increased costs</em> due to querying data multiple times. Monitor for broken materialized views in the <a href="https://mozilla.cloud.looker.com/x/uTZhF7sqlOOvrV4o7It1Cc">BigQuery Usage Explore</a>.</li>
+</ul>
+<h2 id="when-to-use-each-of-these-aggregates"><a class="header" href="#when-to-use-each-of-these-aggregates">When to use each of these aggregates?</a></h2>
+<h4 id="a-bigquery-aggregate-table-is-suitable-when"><a class="header" href="#a-bigquery-aggregate-table-is-suitable-when">A BigQuery aggregate table is suitable when:</a></h4>
+<ul>
+<li>The results should not be unexpectedly affected by Shredder.</li>
+<li>The metric requires strict change control.</li>
+<li>A scheduled alert is required in case of failure or data out of sync. Airflow sends emails and alerts on failure for BigQuery aggregate tables, which are addressed daily by the Data Engineering team during the Airflow Triage.</li>
+<li>The table will be queried directly or used as a source for other analysis. Looker PDTs are not designed to be queried directly.</li>
+<li>The query requires full flexibility to use DML, data types, aggregation functions and different types of JOIN.</li>
+</ul>
+<h4 id="a-materialized-view-is-suitable-when"><a class="header" href="#a-materialized-view-is-suitable-when">A Materialized View is suitable when:</a></h4>
+<ul>
+<li>To aggregate data in real-time (for example, for implementing real-time monitoring of certain metrics)</li>
+<li>The results can be based on shredded data (tables with client_id).</li>
+<li>The view will be queried directly or used as a source for other analysis.</li>
+<li>Change control is <em>not</em> required or is already implemented in the base table. This can be verified by looking for the label <code>change_controlled: true</code> in the table's metadata.</li>
+<li>A scheduled alert on failure is not required. Failures must be actively monitored in the <a href="https://mozilla.cloud.looker.com/x/uTZhF7sqlOOvrV4o7It1Cc">BigQuery Usage Explore</a>.</li>
+<li>The metric does <em>not</em> require non-deterministic functions that are not supported: RAND(), CURRENT_TIMESTAMP, CURRENT_DATE(), or CURRENT_TIME().</li>
+<li>The query does <em>not</em> require UDFs, UNNESTING arrays, COUNT DISTINCT, ORDER BY or any DML operation different from SELECT.</li>
+<li>The query uses a WITH clause, COUNTIF, INNER JOIN or TIMESTAMP_ADD. These are all supported.</li>
+<li>The data does not need to be backfilled.</li>
+</ul>
+<h4 id="a-looker-pdt-is-suitable-when"><a class="header" href="#a-looker-pdt-is-suitable-when">A Looker PDT is suitable when:</a></h4>
+<ul>
+<li>The results can be based on shredded data (tables with client_id).</li>
+<li>Change control is not required or is already implemented in the base table. This can be verified by looking for the label <code>change_controlled: true</code> in the metadata.</li>
+<li>A scheduled alert on failure is <em>not</em> required. Failures must be monitored in the <a href="https://mozilla.cloud.looker.com/admin/pdts">PDT Admin Dashboard</a> or in the <a href="https://mozilla.cloud.looker.com/dashboards/system__activity::errors_and_broken_content">Errors and Broken Content Dashboard</a>.</li>
+<li>The metrics defined in the Explore use only any of these aggregations: SUM, COUNT, COUNTIF, MIN, MAX or AVERAGE.</li>
+<li>The metrics defined in the Explore use only any of these data types: NUMBER, DATE, STRING or YESNO.</li>
+<li>The aggregate uses a DISTINCT COUNT <em>and</em> the query matches exactly the Explore query.</li>
+<li>The base table for the Explore is expected to change with added columns and Looker Explore will require modifications that also require re-creating the dashboards. When using aggregate awareness this re-create is <em>not</em> neccesary.</li>
+</ul>
+<h2 id="how-to-measure-the-benefit-and-savings"><a class="header" href="#how-to-measure-the-benefit-and-savings">How to measure the benefit and savings?</a></h2>
+<ul>
+<li>
+<p>Looker displays the amount of data that will be processed with and without using the aggregates, in the top right corner of a view or explore when in development mode.
+<img src="looker_cost_saving.png" alt="Looker cost saving" /></p>
+</li>
+<li>
+<p>BigQuery displays also in the top right corner of the window, the amount of data that will be scanned by a query written in the console.</p>
+</li>
+<li>
+<p>Alternatively, query the information schema to return the bytes processed and cost. With this information is possible to compare and calculate the savings that result from using an aggregate instead of querying the base table directly. Using sample data for the comparison will save costs.</p>
+<pre><code> SELECT destination_table.project_id AS project_id,
+      destination_table.dataset_id AS dataset,
+      SUBSTR(destination_table.table_id, 0, INSTR(destination_table.table_id, '$') -1) AS table_id,
+      SUM(total_bytes_processed/(1024*1024*1024)) as TB_processed,
+      SUM((total_slot_ms * 0.06) / (60 * 60 * 1000)) AS cost
+ FROM `moz-fx-data-shared-prod`.`region-us`.INFORMATION_SCHEMA.JOBS_BY_PROJECT
+ WHERE EXTRACT(DATE FROM  creation_time) BETWEEN &lt;ini_date&gt; AND CURRENT_DATE
+      AND destination_table.dataset_id = &lt;dataset_name&gt;
+      AND user_email = &lt;user_email&gt;
+      AND destination_table.table_id = &lt;table_name&gt;
+ GROUP BY ALL;
+</code></pre>
+</li>
+</ul>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/cookbooks/data_modeling/using_aggregates.md">Edit this page on GitHub.</a></footer>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../cookbooks/data_modeling/where_to_store.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../cookbooks/looker/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../cookbooks/data_modeling/where_to_store.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../cookbooks/looker/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+        <!-- Google Analytics Tag -->
+        <script>
+            var localAddrs = ["localhost", "127.0.0.1", ""];
+
+            // make sure we don't activate google analytics if the developer is
+            // inspecting the book locally...
+            if (localAddrs.indexOf(document.location.hostname) === -1) {
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'UA-104326577-1', 'auto');
+                ga('send', 'pageview');
+            }
+        </script>
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../mermaid.min.js"></script>
+        <script src="../../mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>
