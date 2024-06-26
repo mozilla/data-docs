@@ -15,6 +15,7 @@
         { "pattern": "^https://github.com" },
         { "pattern": "^https://help.looker.com"},
         { "pattern": "^https://mozilla-hub.atlassian.net" },
-        { "pattern": "^https:///mozilla.slack.com" }
+        { "pattern": "^https:///mozilla.slack.com" },
+        { "pattern": "^https://mozilla.udemy.com"}
     ]
 }

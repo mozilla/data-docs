@@ -465,5 +465,20 @@ Unioned
 2
 4xx
 unioned
- - src/datasets/bigquery/firefox_android_clients/reference.md
+PDTs
+explore.lkml
+20
+yesno
+current_timestamp
+current_date
+current_time
+dml
+countif
+timestamp_add
+Modeling
 first_session
+neccesary
+modeling
+2019
+pre-calculating
+pre-aggregated

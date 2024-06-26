@@ -7,7 +7,7 @@ SEARCH_PATH=${@:-'src/**/*.md'}
 
 npx mdspell \
     $SEARCH_PATH \
-    '!src/cookbooks/new_ping_metadata_table.md' \
+    '!src/cookbooks/*' \
     --ignore-numbers \
     --en-us \
     --report

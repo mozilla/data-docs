@@ -1,3 +1,5 @@
 # Data Modeling guidelines
 
-This section has guidelines for implementing a new data model asset and to review pull requests that implement them.
+This section contains guidelines to consider when implementing new data models.
+
+It's also a collection of best practices related to different parts of the Data Modeling process, including the review of Pull Requests and techniques for performance improvements and cost reduction.
