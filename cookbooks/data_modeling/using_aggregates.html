@@ -289,6 +289,7 @@ Looker's PDTs and aggregate awareness are <em>only</em> referenced in Looker whe
 <h2 id="when-to-use-each-of-these-aggregates"><a class="header" href="#when-to-use-each-of-these-aggregates">When to use each of these aggregates?</a></h2>
 <h4 id="a-bigquery-aggregate-table-is-suitable-when"><a class="header" href="#a-bigquery-aggregate-table-is-suitable-when">A BigQuery aggregate table is suitable when:</a></h4>
 <ul>
+<li>The query requires full flexibility to use DML, data types, aggregation functions and different types of JOIN.</li>
 <li>The results should not be unexpectedly affected by Shredder.</li>
 <li>The metric requires strict change control.</li>
 <li>A scheduled alert is required in case of failure or data out of sync. Airflow sends emails and alerts on failure for BigQuery aggregate tables, which are addressed daily by the Data Engineering team during the Airflow Triage.</li>
