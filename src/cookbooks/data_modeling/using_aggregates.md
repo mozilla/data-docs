@@ -98,6 +98,7 @@ Looker's PDTs and aggregate awareness are _only_ referenced in Looker when at le
 
 #### A BigQuery aggregate table is suitable when:
 
+- The query requires full flexibility to use DML, data types, aggregation functions and different types of JOIN.
 - The results should not be unexpectedly affected by Shredder.
 - The metric requires strict change control.
 - A scheduled alert is required in case of failure or data out of sync. Airflow sends emails and alerts on failure for BigQuery aggregate tables, which are addressed daily by the Data Engineering team during the Airflow Triage.
