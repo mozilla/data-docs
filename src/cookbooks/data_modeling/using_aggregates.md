@@ -106,7 +106,7 @@ Looker's PDTs and aggregate awareness are _only_ referenced in Looker when at le
 
 #### A Materialized View is suitable when:
 
-- Your goal is to aggregate data in real-time (for example, for implementing real-time monitoring of certain metrics)
+- Your goal is to aggregate data in real-time (for example, for implementing real-time monitoring of certain metrics).
 - The results can be based on shredded data (tables with client_id).
 - The view will be queried directly or used as a source for other analysis.
 - Change control is _not_ required or is already implemented in the base table. This can be verified by looking for the label `change_controlled: true` in the table's metadata.
@@ -118,7 +118,7 @@ Looker's PDTs and aggregate awareness are _only_ referenced in Looker when at le
 
 #### A Looker PDT is suitable when:
 
-- Your goal is to improve the performance and query response time in Dashboard by pre-aggregating common query patterns and not having to re-create the dashboard when the base table changes.
+- Your goal is to improve the performance and query response in Dashboards by pre-aggregating common query patterns and not having to re-create the dashboard Everytime the base table changes.
 - The results can be based on shredded data (tables with client_id).
 - Change control is not required or is already implemented in the base table. This can be verified by looking for the label `change_controlled: true` in the metadata.
 - A scheduled alert on failure is _not_ required. Failures must be monitored in the [PDT Admin Dashboard](https://mozilla.cloud.looker.com/admin/pdts) or in the [Errors and Broken Content Dashboard](https://mozilla.cloud.looker.com/dashboards/system__activity::errors_and_broken_content).
