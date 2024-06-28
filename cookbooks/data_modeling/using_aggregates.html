@@ -293,11 +293,10 @@ Looker's PDTs and aggregate awareness are <em>only</em> referenced in Looker whe
 <li>The metric requires strict change control.</li>
 <li>A scheduled alert is required in case of failure or data out of sync. Airflow sends emails and alerts on failure for BigQuery aggregate tables, which are addressed daily by the Data Engineering team during the Airflow Triage.</li>
 <li>The table will be queried directly or used as a source for other analysis. Looker PDTs are not designed to be queried directly.</li>
-<li>The query requires full flexibility to use DML, data types, aggregation functions and different types of JOIN.</li>
 </ul>
 <h4 id="a-materialized-view-is-suitable-when"><a class="header" href="#a-materialized-view-is-suitable-when">A Materialized View is suitable when:</a></h4>
 <ul>
-<li>To aggregate data in real-time (for example, for implementing real-time monitoring of certain metrics)</li>
+<li>Your goal is to aggregate data in real-time (for example, for implementing real-time monitoring of certain metrics).</li>
 <li>The results can be based on shredded data (tables with client_id).</li>
 <li>The view will be queried directly or used as a source for other analysis.</li>
 <li>Change control is <em>not</em> required or is already implemented in the base table. This can be verified by looking for the label <code>change_controlled: true</code> in the table's metadata.</li>
@@ -309,6 +308,7 @@ Looker's PDTs and aggregate awareness are <em>only</em> referenced in Looker whe
 </ul>
 <h4 id="a-looker-pdt-is-suitable-when"><a class="header" href="#a-looker-pdt-is-suitable-when">A Looker PDT is suitable when:</a></h4>
 <ul>
+<li>Your goal is to improve the performance and query response in dashboards by aggregating data using common query patterns, with the added benefit of not having to re-create the dashboard every time the base table changes.</li>
 <li>The results can be based on shredded data (tables with client_id).</li>
 <li>Change control is not required or is already implemented in the base table. This can be verified by looking for the label <code>change_controlled: true</code> in the metadata.</li>
 <li>A scheduled alert on failure is <em>not</em> required. Failures must be monitored in the <a href="https://mozilla.cloud.looker.com/admin/pdts">PDT Admin Dashboard</a> or in the <a href="https://mozilla.cloud.looker.com/dashboards/system__activity::errors_and_broken_content">Errors and Broken Content Dashboard</a>.</li>
