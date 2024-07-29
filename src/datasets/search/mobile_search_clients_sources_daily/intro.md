@@ -49,8 +49,8 @@ If you're querying this dataset from STMO,
 heavily limit the data you read using `submission_date` or `sample_id`.
 
 With recent [`KPI upgrades`](https://docs.google.com/document/d/1G_pJs62c8mGOxt1eGdzc_-pwG_ShE3hAb-N4Lmp9A8M), the Mozilla Revenue Intelligence team decided to update the measurement procedure for Search DAU (Daily Active Users) metrics. These updates streamline the workflows into a single DAU funnel.
-As part of this effort, the `mobile_search_clients_daily` table has been updated to extract data from the `baseline` ping tables instead of the original `metrics` tables. The new derived table, mobile_search_clients_daily_v2, will now contain search metrics based on baseline pings.
-The mobile_search_clients_daily_v2 will be the derived table containing search metrics based on `baseline` pings. 
+As part of this effort, the `mobile_search_clients_daily` table has been updated to extract data from the `baseline` ping tables instead of the original `metrics` tables. The new derived table, `mobile_search_clients_daily_v2`, will now contain search metrics based on baseline pings.
+
 All data prior to August 1st, 2024, has been moved to the `mobile_search_clients_daily_historical` table. Downstream views and tables will pull data from both `mobile_search_clients_daily_v2` and `mobile_search_clients_daily_historical` to ensure comprehensive data coverage.
 
 [search data documentation]: ../../search.md
