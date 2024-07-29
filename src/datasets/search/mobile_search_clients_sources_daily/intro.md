@@ -48,10 +48,10 @@ This dataset is large.
 If you're querying this dataset from STMO,
 heavily limit the data you read using `submission_date` or `sample_id`.
 
-With recent [`KPI upgrades`](https://docs.google.com/document/d/1G_pJs62c8mGOxt1eGdzc_-pwG_ShE3hAb-N4Lmp9A8M), the Mozilla Revenue Intelligence team decided to update the measurement procedure for Search DAU (Daily Active Users) metrics. These updates streamline the workflows into a single DAU funnel.
-As part of this effort, the `mobile_search_clients_daily` table has been updated to extract data from the `baseline` ping tables instead of the original `metrics` tables. The new derived table, `mobile_search_clients_daily_v2`, will now contain search metrics based on baseline pings.
+As of August 1, 2024, the `mobile_search_clients_daily` table has been updated to extract data from the `baseline` ping tables instead of the original `metrics` ping tables. This shift maintains the same search totals with greater confidence in the mobile search engagement dates. 
 
-The `mobile_search_clients_daily_v2` will be the derived table containing search metrics based on `baseline` pings. 
-All data prior to August 1st, 2024, has been moved to the `mobile_search_clients_daily_historical` table. Downstream views and tables will pull data from both `mobile_search_clients_daily_v2` and `mobile_search_clients_daily_historical` to ensure comprehensive data coverage.
+As [noted](https://docs.telemetry.mozilla.org/concepts/analysis_gotchas.html?highlight=submission)#submission-date), the `submission_date` used throughout telemetry is the date Mozilla received that client's engagement, not necessarily the actual date on which that client engaged with Firefox. Mobile `metrics` pings are historically sent later than the actual date of activity: it takes roughly [4 days for Firefox to receive 95% of Fenix `metrics` pings](https://sql.telemetry.mozilla.org/queries/92717) which originate from a given actual date. `Baseline` pings are more frequently sent/ received and serve as the basis of KPI DAU metrics. Therefore, this switch ensures client KPI activity can be matched to search activity from that same active day.  
+
+The view, accessible via `mozdata.search.mobile_search_clients_daily`, pulls metrics ping data from `mobile_search_clients_daily_historical` prior to August 1, 2024 and baseline ping data from `mobile_search_clients_daily_v2` after August 1, 2024.
 
 [search data documentation]: ../../search.md
