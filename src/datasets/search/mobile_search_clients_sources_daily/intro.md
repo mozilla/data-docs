@@ -48,7 +48,7 @@ This dataset is large.
 If you're querying this dataset from STMO,
 heavily limit the data you read using `submission_date` or `sample_id`.
 
-As of August 1, 2024, the `mobile_search_clients_daily` table has been updated to extract data from the `baseline` ping tables instead of the original `metrics` ping tables. This shift maintains the same search totals with greater confidence in the mobile search engagement dates. 
+As of August 1, 2024, the `mobile_search_clients_daily` table has been updated to extract data from the `baseline` ping tables instead of the original `metrics` ping tables. This shift maintains the same search totals with greater confidence in the mobile search engagement dates.
 
 As [noted](https://docs.telemetry.mozilla.org/concepts/analysis_gotchas.html?highlight=submission)#submission-date), the `submission_date` used throughout telemetry is the date Mozilla received that client's engagement, not necessarily the actual date on which that client engaged with Firefox. Mobile `metrics` pings are historically sent later than the actual date of activity: it takes roughly [4 days for Firefox to receive 95% of Fenix `metrics` pings](https://sql.telemetry.mozilla.org/queries/92717) which originate from a given actual date. `Baseline` pings are more frequently sent/ received and serve as the basis of KPI DAU metrics. Therefore, this switch ensures a client's KPI DAU activity can be matched to search activity from that same active day.
 
