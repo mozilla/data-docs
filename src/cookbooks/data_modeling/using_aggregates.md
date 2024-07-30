@@ -28,7 +28,7 @@ Aggregates tables contain pre-aggregated results of scheduled queries running so
 
 #### [BigQuery Materialized Views](https://cloud.google.com/bigquery/docs/materialized-views-intro)
 
-These are views defined by the developer and then created, managed and incrementally updated by BigQuery, reading _only_ the changes in the base table to compute results. Materialized view definitions [_do not support_ certain BigQuery features and expressions](https://cloud.google.com/bigquery/docs/materialized-views-intro#limitations), such as UDFs, certain aggregate functions, backfilling or nesting.
+These are views defined by the developer and then created, managed and incrementally updated by BigQuery, reading _only_ the changes in the base table to compute results. Materialized view definitions [_do not support_ certain BigQuery features and expressions](https://cloud.google.com/bigquery/docs/materialized-views-intro#limitations), such as UDFs, certain aggregate functions, backfilling or nesting. - There is a limit of 20 materialized views per table.
 
 - [Template to create a Materialized View](https://console.cloud.google.com/bigquery?ws=!1m7!1m6!12m5!1m3!1smozdata!2sus-central1!3s8403c62c-e243-4e57-8d91-5c1fcdf26828!2e1).
 
@@ -90,9 +90,9 @@ Looker's PDTs and aggregate awareness are _only_ referenced in Looker when at le
     - Add a date filter to materialized views to limit the amount of data to be scanned when these views get deployed initially. Otherwise, they will scan the entire data in referenced base tables.
   - Looker PDTs require following the [protocol to backfill described in the [Mozilla Looker Developers course](https://mozilla.udemy.com/course/looker-training-for-developers/learn/lecture/35440216#overview).
 - Indices, partition and clustering are allowed for all cases. Looker PDTs and aggregates require that these are defined in the base table.
-- There is a limit of 20 materialized views per table.
-- When considering materialized views, a common practice is to use a combination of an aggregate table to store historical data (e.g. older than 2 days) and use a materialized view to track data in real-time (e.g. aggregate data that is just coming in). This allows to run backfills on the aggregate table.
-- BigQuery retries the update of materialized views when it fails, which results in _increased costs_ due to querying data multiple times. Monitor for broken materialized views in the [BigQuery Usage Explore](https://mozilla.cloud.looker.com/x/uTZhF7sqlOOvrV4o7It1Cc).
+- **For Cost savings**: BigQuery retries the update of materialized views after failures, which results in increased costs due to querying data multiple times.
+  - Monitor for broken materialized views in the [BigQuery Usage Explore](https://mozilla.cloud.looker.com/x/uTZhF7sqlOOvrV4o7It1Cc)
+  - Use the command `bq cancel` to stop unnecessary updates. E.g. `bq --project_id moz-fx-data-shared-prod cancel moz-fx-data-shared-prod:US.<materialized view>`. The permission to use this command is assigned to Data Engineering and Airflow.
 
 ## When to use each of these aggregates?
 
@@ -115,6 +115,7 @@ Looker's PDTs and aggregate awareness are _only_ referenced in Looker when at le
 - The query does _not_ require UDFs, UNNESTING arrays, COUNT DISTINCT, ORDER BY or any DML operation different from SELECT.
 - The query uses a WITH clause, COUNTIF, INNER JOIN or TIMESTAMP_ADD. These are all supported.
 - The data does not need to be backfilled.
+- When considering materialized views, a common practice is to use a combination of an aggregate table to store historical data (e.g. older than 2 days) and use a materialized view to track data in real-time (e.g. aggregate data that is just coming in). This allows to run backfills on the aggregate table.
 
 #### A Looker PDT is suitable when:
 
