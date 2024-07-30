@@ -674,7 +674,7 @@ Again, feel free to <a href="cookbooks/analysis/../../concepts/getting_help.html
 <li><a href="https://mozilla.github.io/bigquery-etl/cookbooks/common_workflows/#adding-a-new-scheduled-query">Process to create an aggregate table in BigQuery</a>.</li>
 </ul>
 <h4 id="bigquery-materialized-views"><a class="header" href="#bigquery-materialized-views"><a href="https://cloud.google.com/bigquery/docs/materialized-views-intro">BigQuery Materialized Views</a></a></h4>
-<p>These are views defined by the developer and then created, managed and incrementally updated by BigQuery, reading <em>only</em> the changes in the base table to compute results. Materialized view definitions <a href="https://cloud.google.com/bigquery/docs/materialized-views-intro#limitations"><em>do not support</em> certain BigQuery features and expressions</a>, such as UDFs, certain aggregate functions, backfilling or nesting.</p>
+<p>These are views defined by the developer and then created, managed and incrementally updated by BigQuery, reading <em>only</em> the changes in the base table to compute results. Materialized view definitions <a href="https://cloud.google.com/bigquery/docs/materialized-views-intro#limitations"><em>do not support</em> certain BigQuery features and expressions</a>, such as UDFs, certain aggregate functions, backfilling or nesting. - There is a limit of 20 materialized views per table.</p>
 <ul>
 <li>
 <p><a href="https://console.cloud.google.com/bigquery?ws=!1m7!1m6!12m5!1m3!1smozdata!2sus-central1!3s8403c62c-e243-4e57-8d91-5c1fcdf26828!2e1">Template to create a Materialized View</a>.</p>
@@ -743,9 +743,12 @@ Looker's PDTs and aggregate awareness are <em>only</em> referenced in Looker whe
 </ul>
 </li>
 <li>Indices, partition and clustering are allowed for all cases. Looker PDTs and aggregates require that these are defined in the base table.</li>
-<li>There is a limit of 20 materialized views per table.</li>
-<li>When considering materialized views, a common practice is to use a combination of an aggregate table to store historical data (e.g. older than 2 days) and use a materialized view to track data in real-time (e.g. aggregate data that is just coming in). This allows to run backfills on the aggregate table.</li>
-<li>BigQuery retries the update of materialized views when it fails, which results in <em>increased costs</em> due to querying data multiple times. Monitor for broken materialized views in the <a href="https://mozilla.cloud.looker.com/x/uTZhF7sqlOOvrV4o7It1Cc">BigQuery Usage Explore</a>.</li>
+<li><strong>For Cost savings</strong>: BigQuery retries the update of materialized views after failures, which results in increased costs due to querying data multiple times.
+<ul>
+<li>Monitor for broken materialized views in the <a href="https://mozilla.cloud.looker.com/x/uTZhF7sqlOOvrV4o7It1Cc">BigQuery Usage Explore</a></li>
+<li>Use the command <code>bq cancel</code> to stop unnecessary updates. E.g. <code>bq --project_id moz-fx-data-shared-prod cancel moz-fx-data-shared-prod:US.&lt;materialized view&gt;</code>. The permission to use this command is assigned to Data Engineering and Airflow.</li>
+</ul>
+</li>
 </ul>
 <h2 id="when-to-use-each-of-these-aggregates"><a class="header" href="#when-to-use-each-of-these-aggregates">When to use each of these aggregates?</a></h2>
 <h4 id="a-bigquery-aggregate-table-is-suitable-when"><a class="header" href="#a-bigquery-aggregate-table-is-suitable-when">A BigQuery aggregate table is suitable when:</a></h4>
@@ -767,6 +770,7 @@ Looker's PDTs and aggregate awareness are <em>only</em> referenced in Looker whe
 <li>The query does <em>not</em> require UDFs, UNNESTING arrays, COUNT DISTINCT, ORDER BY or any DML operation different from SELECT.</li>
 <li>The query uses a WITH clause, COUNTIF, INNER JOIN or TIMESTAMP_ADD. These are all supported.</li>
 <li>The data does not need to be backfilled.</li>
+<li>When considering materialized views, a common practice is to use a combination of an aggregate table to store historical data (e.g. older than 2 days) and use a materialized view to track data in real-time (e.g. aggregate data that is just coming in). This allows to run backfills on the aggregate table.</li>
 </ul>
 <h4 id="a-looker-pdt-is-suitable-when"><a class="header" href="#a-looker-pdt-is-suitable-when">A Looker PDT is suitable when:</a></h4>
 <ul>
