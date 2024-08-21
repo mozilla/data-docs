@@ -7519,14 +7519,17 @@ friendly_name = &quot;Memory Pressure Count&quot;
 # A description that will be displayed by dashboards.
 description = &quot;Number of memory pressure events&quot;
 
-# This can be any string value. It's currently not being used but in the future, this could be used to visually group different metrics by category.
+# An optional category that can be any string value. It's currently not being used but in the future, this could be used to visually group different metrics by category.
 category = &quot;performance&quot;
 
-# And optional owner or team owning this metric
+# An optional owner or team owning this metric. Can be a string or list of strings.
 owner = &quot;example@mozilla.org&quot;
 
-# Whether the metric is deprecated and should no longer be used
+# Whether the metric is deprecated and should no longer be used (optional).
 deprecated = false
+
+# An optionl string ('gold', 'silver', or 'bronze') that is the metric's current level according to the Metric Levels Taxonomy (https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/610894135/Metrics#Metric-Levels-Taxonomy).
+level = &quot;gold&quot;
 </code></pre>
 <p>Since metrics aggregate data, the metric SQL definition must contain some aggregation method (like <code>SUM</code>, <code>COUNT</code>, ...) to be valid.</p>
 <p>Existing metrics cannot be removed after they have been added to Metric Hub. Other tools or configurations might still reference the
