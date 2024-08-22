@@ -20,7 +20,7 @@ description: >
 owners:
   - example@mozilla.com
 external_data:
-  format: google_sheet
+  format: google_sheets
   source_uris:
     - https://docs.google.com/spreadsheets/d/Avakdiasl341kdasdf # URL to the spreadsheet
   options:
