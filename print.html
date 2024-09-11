@@ -2405,7 +2405,7 @@ number of aggregates about that day's activity.</p>
 <p>See the <a href="cookbooks/bigquery/../../datasets/batch_view/clients_daily/reference.html"><code>clients_daily</code> reference</a> for more information.</p>
 <h3 id="clients-last-seen"><a class="header" href="#clients-last-seen">Clients Last Seen</a></h3>
 <p>The <code>clients_last_seen</code> dataset is useful for efficiently determining exact
-user counts such as <a href="cookbooks/bigquery/../../../cookbooks/dau.html">DAU and MAU</a>.
+user counts such as DAU and MAU.
 It can also allow efficient calculation of other windowed usage metrics like retention via its
 <a href="cookbooks/bigquery/../../../cookbooks/clients_last_seen_bits.html">bit pattern fields</a>.
 It includes the most recent values in a 28 day window for all columns in the
@@ -8579,7 +8579,7 @@ The job runs as part of the <a href="https://github.com/mozilla/bigquery-etl/blo
 </ul>
 <h1 id="introduction-6"><a class="header" href="#introduction-6">Introduction</a></h1>
 <p>The <code>clients_last_seen</code> dataset is useful for efficiently determining exact
-user counts such as <a href="datasets/bigquery/clients_last_seen/../../../cookbooks/dau.html">DAU and MAU</a>.
+user counts such as DAU and MAU.
 It can also allow efficient calculation of other windowed usage metrics like retention via its
 <a href="datasets/bigquery/clients_last_seen/../../../cookbooks/clients_last_seen_bits.html">bit pattern fields</a>.
 It includes the most recent values in a 28 day window for all columns in the
@@ -8607,10 +8607,9 @@ create filters in SQL can be found in
 the <code>client_id</code> appeared.</p>
 <h4 id="background-and-caveats"><a class="header" href="#background-and-caveats">Background and Caveats</a></h4>
 <p>User counts generated using <code>days_since_seen</code> only reflect the most recent
-values from <code>clients_daily</code> for each <code>client_id</code> in a 28 day window. This means
-<a href="datasets/bigquery/clients_last_seen/../../../cookbooks/active_dau.html">Active MAU</a>
-as defined cannot be efficiently calculated using <code>days_since_seen</code> because if
-a given <code>client_id</code> appeared every day in February and only on February 1st had
+values from <code>clients_daily</code> for each <code>client_id</code> in a 28 day window.
+This means Active MAU as defined cannot be efficiently calculated using <code>days_since_seen</code>
+because if a given <code>client_id</code> appeared every day in February and only on February 1st had
 <code>scalar_parent_browser_engagement_total_uri_count_sum &gt;= 5</code> then it would only
 be counted on the 1st, and not the 2nd-28th. Active MAU can be efficiently and
 correctly calculated using <code>days_since_visited_5_uri</code>.</p>
@@ -13070,16 +13069,14 @@ client-side activity dates).</li>
 <li><a href="metrics/metrics.html#overview">Overview</a></li>
 <li><a href="metrics/metrics.html#details">Details</a></li>
 <li><a href="metrics/metrics.html#caveats">Caveats</a></li>
-<li><a href="metrics/metrics.html#dashboards">Dashboards</a></li>
-<li><a href="metrics/metrics.html#tables">Tables</a></li>
 </ul>
 </li>
 <li><a href="metrics/metrics.html#day-2-7-activation">Day 2-7 Activation</a>
 <ul>
 <li><a href="metrics/metrics.html#overview-1">Overview</a></li>
 <li><a href="metrics/metrics.html#details-1">Details</a></li>
-<li><a href="metrics/metrics.html#dashboards-1">Dashboards</a></li>
-<li><a href="metrics/metrics.html#tables-1">Tables</a></li>
+<li><a href="metrics/metrics.html#dashboards">Dashboards</a></li>
+<li><a href="metrics/metrics.html#tables">Tables</a></li>
 </ul>
 </li>
 </ul>
@@ -13087,6 +13084,10 @@ client-side activity dates).</li>
 <h2 id="daily-active-users-dau"><a class="header" href="#daily-active-users-dau">Daily Active Users (DAU)</a></h2>
 <h3 id="overview-5"><a class="header" href="#overview-5">Overview</a></h3>
 <p>Daily Active Users or DAU counts the number of unique profiles active in the product on each day. This is intended to approximate the number of people using the product each day.</p>
+<p>The most accurate and up-to-date metric information can be found on the
+<a href="https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/620494911/Metrics+Inventory">Metrics Inventory</a> page in Confluence (Mozilla LDAP required).</p>
+<p>The official source code definitions for the metrics can be found in
+<a href="https://github.com/mozilla/metric-hub/tree/main/definitions">metric-hub</a> on GitHub.</p>
 <h3 id="details"><a class="header" href="#details">Details</a></h3>
 <p>DAU counts unique profiles. Keep in mind that a <a href="metrics/../concepts/analysis_gotchas.html#profiles-vs-users">profile is not necessarily a user</a>.</p>
 <p>The standard concept of active varies by product, but generally, active users are defined as unique profiles that have sent a <code>main</code> ping (on desktop) or a <code>baseline</code> ping (on mobile). The precise criteria are defined in the <a href="metrics/./usage.html"><code>usage criterion</code></a> section of this documentation.</p>
@@ -13094,23 +13095,6 @@ client-side activity dates).</li>
 <p>Some common alternative usage criteria documented in the <a href="metrics/./usage.html"><code>usage criterion</code> section</a>.</p>
 <h3 id="caveats-2"><a class="header" href="#caveats-2">Caveats</a></h3>
 <p>If the number of users stays constant, but the average number of active profiles per user increases, this metric will tend to increase. For more details on the relationship between users and profiles, see <a href="metrics/../concepts/analysis_gotchas.html#profiles-vs-users">the profiles vs users section in analysis gotchas</a>.</p>
-<h3 id="dashboards-2"><a class="header" href="#dashboards-2">Dashboards</a></h3>
-<p>This metric is available on the <a href="https://go.corp.mozilla.com/gud">standard Growth and Usage Dashboard (GUD)</a> for most products and with some slicing available.</p>
-<h3 id="tables-2"><a class="header" href="#tables-2">Tables</a></h3>
-<p>DAU can easily be calculated from the <a href="metrics/../datasets/bigquery/exact_mau/reference.html">Exact MAU tables</a>; for example:</p>
-<pre><code class="language-sql">SELECT
-  submission_date,
-  SUM(dau) AS dau
-FROM
-  mozdata.telemetry.firefox_desktop_exact_mau28_by_dimensions_v1
-WHERE
-  -- You define your slice using additional filters here.
-  country IN ('US', 'GB', 'CA', 'FR', 'DE')
-
-GROUP BY
-  submission_date
-</code></pre>
-<p>You can run this query on <a href="https://sql.telemetry.mozilla.org/queries/72012/source"><code>STMO#72012</code></a>.</p>
 <hr />
 <h2 id="day-2-7-activation"><a class="header" href="#day-2-7-activation">Day 2-7 Activation</a></h2>
 <h3 id="overview-6"><a class="header" href="#overview-6">Overview</a></h3>
@@ -13122,9 +13106,9 @@ GROUP BY
 <p>Activated New Profiles (day 2-7): Unique count of client ids who use the product at any point starting the day after they created a profile up to 6 days after.</p>
 <p>New Profiles: Unique count of client ids with a given profile creation date. As not all initial pings are received exactly on the day of profile creation, we wait for 7 days after the profile creation date before establishing the New Profile cohort to ensure the data is complete.</p>
 <p>E.g. For a cohort acquired (with a profile creation date) of Mar 1, they are considered activated in day 2-7 if they show up in DAU at any time between Mar 2nd and Mar 7th.</p>
-<h3 id="dashboards-3"><a class="header" href="#dashboards-3">Dashboards</a></h3>
+<h3 id="dashboards-2"><a class="header" href="#dashboards-2">Dashboards</a></h3>
 <p>The <a href="https://datastudio.google.com/u/0/reporting/1L7dsFyqjT8XZHrYprYS-HCP5_k_gZGIb/page/0iERB">non-desktop day 2-7 dashboard</a> tracks this measure.</p>
-<h3 id="tables-3"><a class="header" href="#tables-3">Tables</a></h3>
+<h3 id="tables-2"><a class="header" href="#tables-2">Tables</a></h3>
 <p>You can calculate this measure via the <code>firefox_nondesktop_day_2_7_activation</code> table in BigQuery. Here is a sample query:</p>
 <pre><code class="language-sql">SELECT
   cohort_date,
@@ -13559,10 +13543,8 @@ Refer to this repository for information on how to run or augment the dataset. Y
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/obsolete/attitudes_daily/reference.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="churn"><a class="header" href="#churn">Churn</a></h1>
 <blockquote>
 <p>As of 2019-08-21, this dataset has been deprecated and is no longer
-maintained. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1561048">Bug
-1561048</a> for historical
-sources. See the <a href="datasets/obsolete/churn/../../../cookbooks/retention.html">retention cookbook</a> for
-current best practices.</p>
+maintained. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1561048">Bug 1561048</a>
+for historical sources.</p>
 </blockquote>
 <ul>
 <li><a href="datasets/obsolete/churn/reference.html#introduction">Introduction</a>
@@ -13813,9 +13795,7 @@ be found in
 </ul>
 <h1 id="replacement"><a class="header" href="#replacement">Replacement</a></h1>
 <p>We've moved to calculating exact user counts based on
-<a href="datasets/obsolete/client_count_daily//datasets/bigquery/clients_last_seen/reference.html"><code>clients_last_seen</code></a>, see
-<a href="datasets/obsolete/client_count_daily/../../../cookbooks/dau.html">DAU</a> and
-<a href="datasets/obsolete/client_count_daily/../../../cookbooks/active_dau.html">Active DAU</a> for examples.</p>
+<a href="datasets/obsolete/client_count_daily//datasets/bigquery/clients_last_seen/reference.html"><code>clients_last_seen</code></a>.</p>
 <h1 id="introduction-32"><a class="header" href="#introduction-32">Introduction</a></h1>
 <p>The <code>client_count_daily</code> dataset is useful for estimating user counts over a few
 <a href="https://github.com/mozilla/telemetry-airflow/blob/adfce4a30895faa607ccf586b292b61ad68d8f75/jobs/client_count_daily_view.sh">pre-defined dimensions</a>.</p>
@@ -14348,8 +14328,7 @@ separate first-shutdown ping was created to evaluate first-shutdown behavior whi
 <li><a href="datasets/obsolete/heavy_users/reference.html#code-reference">Code Reference</a></li>
 </ul>
 <h1 id="replacement-1"><a class="header" href="#replacement-1">Replacement</a></h1>
-<p>We've moved to assigning user's an active tag based on <code>total_uri_count</code>, see
-the <a href="datasets/obsolete/heavy_users/../../../cookbooks/active_dau.html">Active DAU definition</a>.</p>
+<p>We've moved to assigning user's an active tag based on <code>total_uri_count</code>.</p>
 <p>The activity of a user based on <code>active_ticks</code> is available in <code>clients_daily</code>
 in the <code>active_hours_sum</code> field, which has the <code>sum(active_ticks / 720)</code>.</p>
 <p>To retrieve a client's 28-day <code>active_hours</code>, use the following query:</p>
@@ -14563,10 +14542,8 @@ Refer to this repository for information on how to run or augment the dataset.</
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/obsolete/longitudinal/reference.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="1-day-retention"><a class="header" href="#1-day-retention">1 Day Retention</a></h1>
 <blockquote>
 <p>As of 2019-08-13, this dataset has been deprecated and is no longer
-maintained. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1571565">Bug
-1571565</a> for historical
-sources. See the <a href="datasets/obsolete/retention/../../../cookbooks/retention.html">retention cookbook</a> for
-current best practices.</p>
+maintained. See <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1571565">Bug 1571565</a>
+for historical sources.</p>
 </blockquote>
 <ul>
 <li><a href="datasets/obsolete/retention/reference.html#introduction">Introduction</a>

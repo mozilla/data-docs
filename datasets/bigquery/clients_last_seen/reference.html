@@ -215,7 +215,7 @@
 </ul>
 <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
 <p>The <code>clients_last_seen</code> dataset is useful for efficiently determining exact
-user counts such as <a href="../../../cookbooks/dau.html">DAU and MAU</a>.
+user counts such as DAU and MAU.
 It can also allow efficient calculation of other windowed usage metrics like retention via its
 <a href="../../../cookbooks/clients_last_seen_bits.html">bit pattern fields</a>.
 It includes the most recent values in a 28 day window for all columns in the
@@ -243,10 +243,9 @@ create filters in SQL can be found in
 the <code>client_id</code> appeared.</p>
 <h4 id="background-and-caveats"><a class="header" href="#background-and-caveats">Background and Caveats</a></h4>
 <p>User counts generated using <code>days_since_seen</code> only reflect the most recent
-values from <code>clients_daily</code> for each <code>client_id</code> in a 28 day window. This means
-<a href="../../../cookbooks/active_dau.html">Active MAU</a>
-as defined cannot be efficiently calculated using <code>days_since_seen</code> because if
-a given <code>client_id</code> appeared every day in February and only on February 1st had
+values from <code>clients_daily</code> for each <code>client_id</code> in a 28 day window.
+This means Active MAU as defined cannot be efficiently calculated using <code>days_since_seen</code>
+because if a given <code>client_id</code> appeared every day in February and only on February 1st had
 <code>scalar_parent_browser_engagement_total_uri_count_sum &gt;= 5</code> then it would only
 be counted on the 1st, and not the 2nd-28th. Active MAU can be efficiently and
 correctly calculated using <code>days_since_visited_5_uri</code>.</p>
