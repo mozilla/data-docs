@@ -6,8 +6,7 @@
 
 # Replacement
 
-We've moved to assigning user's an active tag based on `total_uri_count`, see
-the [Active DAU definition](../../../cookbooks/active_dau.md).
+We've moved to assigning user's an active tag based on `total_uri_count`.
 
 The activity of a user based on `active_ticks` is available in `clients_daily`
 in the `active_hours_sum` field, which has the `sum(active_ticks / 720)`.

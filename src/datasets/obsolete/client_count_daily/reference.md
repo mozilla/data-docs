@@ -7,9 +7,7 @@
 # Replacement
 
 We've moved to calculating exact user counts based on
-[`clients_last_seen`](/datasets/bigquery/clients_last_seen/reference.md), see
-[DAU](../../../cookbooks/dau.md) and
-[Active DAU](../../../cookbooks/active_dau.md) for examples.
+[`clients_last_seen`](/datasets/bigquery/clients_last_seen/reference.md).
 
 # Introduction
 

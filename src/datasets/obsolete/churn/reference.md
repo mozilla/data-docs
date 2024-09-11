@@ -1,10 +1,8 @@
 # Churn
 
 > As of 2019-08-21, this dataset has been deprecated and is no longer
-> maintained. See [Bug
-> 1561048](https://bugzilla.mozilla.org/show_bug.cgi?id=1561048) for historical
-> sources. See the [retention cookbook](../../../cookbooks/retention.md) for
-> current best practices.
+> maintained. See [Bug 1561048](https://bugzilla.mozilla.org/show_bug.cgi?id=1561048)
+> for historical sources.
 
 <!-- toc -->
 
