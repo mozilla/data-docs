@@ -28,6 +28,7 @@ See also [the spreadsheet of notable historic events](https://docs.google.com/sp
 
 When you start to evaluate trends, be aware of events from the past that may invite comparisons with history. Here are a few to keep in mind:
 
+- **Aug 22, 2024** - Adjust is disabled in mobile clients (Firefox Android & Firefox iOS).
 - **May 20, 2024 - June 14, 2024** - Excessive Glean database writes degraded Fenix performance on startup, pageload, scrolling, video playback, and possibly other areas. Some metrics were disabled. See [bug 1892230](https://bugzilla.mozilla.org/show_bug.cgi?id=1892230).
 - **Apr 18, 2024** - Google began rolling out a new SERP experience on Firefox Android, which impacted standard search metrics. See [the spreadsheet](https://docs.google.com/spreadsheets/d/16Cyx_KBieRdQkSBKolivqpBaK2H-VceN9LEZcL0snHg/edit#gid=0) for more details.
 - **March 15, 2024** - Spike in clients with null default search engine (~32%) for Firefox iOS. This issue was fixed for Firefox 126 and above. More details can be found in this [incident report](https://docs.google.com/document/d/1iMoGOnTZZ920oth6aWbzD_npP79vSQq6OQx_bz4vFXw/edit)
