@@ -1,4 +1,4 @@
-### Cost considerations
+# Cost considerations
 
 The Freshness and Volume metrics, which represent Pipeline Reliability, are included in the free tier. There is no charge when these metrics are added to a table.
 
