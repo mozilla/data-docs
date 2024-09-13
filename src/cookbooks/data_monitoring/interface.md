@@ -1,6 +1,6 @@
-## Interface
+# Bigeye Interface
 
-### Catalog
+## Catalog
 
 The Catalog tab in the left-hand menu offers a comprehensive view of all data sources connected to Bigeye, making it simple to navigate and manage your entire data ecosystem.
 
@@ -14,7 +14,7 @@ For more detailed information about the Catalog, please refer to the [Catalog do
 
 Watch the [Bigeye tutorial](https://www.youtube.com/watch?v=8DWyZuU-w1c&t=9s) on how to navigate Bigeye Catalog.
 
-### Workspaces
+## Workspaces
 
 Workspaces in Bigeye allow multiple teams to collaborate simultaneously, with each team managing and monitoring their own data independently.
 Each Bigeye workspace includes its own Catalog, BI tools, and ETL tools, Metrics and issues, Templates and schedules, Collections, Deltas.
@@ -25,7 +25,7 @@ If you do not find a suitable workspace, please submit a [Jira ticket](https://m
 
 ![](../../assets/Bigeye/Bigeye-Workspace.png)
 
-### Collections
+## Collections
 
 Collections in Bigeye allow you to group related metrics, making it easier to manage and monitor them together.
 
@@ -34,14 +34,14 @@ If you're not an admin, please submit a [Jira ticket](https://mozilla-hub.atlass
 
 Watch the [Bigeye tutorial](https://www.youtube.com/watch?v=4H5AM0a71bs&list=PLUmsPWeo8j4U9SpGCnAe9syilD4_jBgSI&index=8) on how to navigate Bigeye Catalog.
 
-### Issues
+## Issues
 
 Bigeye's Issues feature helps you track and manage data quality issues detected by the platform.
 You can assign, prioritize, and resolve issues within the platform, ensuring that your data quality remains high. Issues can be categorized and filtered to streamline the resolution process across teams.
 
 For more details, refer to the Bigeye documentation on [Issues page](https://docs.bigeye.com/docs/issues)
 
-### Dashboard
+## Dashboard
 
 Users can monitor the data quality metrics and issues in a centralized view. It highlights key features such as customizable widgets, real-time metric tracking, and the ability to visualize data health at a glance. Users can configure dashboards to focus on specific metrics or tables and receive immediate insights into their data pipelines' performance.
 
