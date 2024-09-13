@@ -42,5 +42,3 @@ The Bigeye integration with Jira enables teams to track critical data quality is
 
 Bigeye enables users to take direct actions on issues on Slack messages without needing to navigate to the Bigeye web interface.
 Users can resolve, mute, or dismiss alerts directly from Slack messages, ensuring efficient workflows and quick responses to data quality issues.
-
-## Recommendation / Best practices [Coming Soon]
