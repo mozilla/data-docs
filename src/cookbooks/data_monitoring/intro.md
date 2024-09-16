@@ -13,7 +13,9 @@ Watch the [Bigeye tutorial](https://www.youtube.com/watch?v=8DWyZuU-w1c&t=9s) to
 Please refer to additional helpful videos available on the Bigeye channel.
 
 ## Stay Updated on What's Happening
+
 [Jira Epic Link](https://mozilla-hub.atlassian.net/browse/DENG-4563)
 
 ## Have an issue or looking for a new feature in Bigeye
+
 If you're experiencing any issues while using the issues tracker for [Bigeye](https://docs.google.com/spreadsheets/d/1L7JrbgTaVsKKFIK3ilKKttUfuzHh91xSeBFC0VZTp68)
