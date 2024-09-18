@@ -14,6 +14,12 @@ This section contains definitions and information about standard metrics used at
 
 Daily Active Users or DAU counts the number of unique profiles active in the product on each day. This is intended to approximate the number of people using the product each day.
 
+The most accurate and up-to-date metric information can be found on the
+[Metrics Inventory](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/620494911/Metrics+Inventory) page in Confluence (Mozilla LDAP required).
+
+The official source code definitions for the metrics can be found in
+[metric-hub](https://github.com/mozilla/metric-hub/tree/main/definitions) on GitHub.
+
 ### Details
 
 DAU counts unique profiles. Keep in mind that a [profile is not necessarily a user](../concepts/analysis_gotchas.md#profiles-vs-users).
@@ -27,30 +33,6 @@ Some common alternative usage criteria documented in the [`usage criterion` sect
 ### Caveats
 
 If the number of users stays constant, but the average number of active profiles per user increases, this metric will tend to increase. For more details on the relationship between users and profiles, see [the profiles vs users section in analysis gotchas](../concepts/analysis_gotchas.md#profiles-vs-users).
-
-### Dashboards
-
-This metric is available on the [standard Growth and Usage Dashboard (GUD)](https://go.corp.mozilla.com/gud) for most products and with some slicing available.
-
-### Tables
-
-DAU can easily be calculated from the [Exact MAU tables](../datasets/bigquery/exact_mau/reference.md); for example:
-
-```sql
-SELECT
-  submission_date,
-  SUM(dau) AS dau
-FROM
-  mozdata.telemetry.firefox_desktop_exact_mau28_by_dimensions_v1
-WHERE
-  -- You define your slice using additional filters here.
-  country IN ('US', 'GB', 'CA', 'FR', 'DE')
-
-GROUP BY
-  submission_date
-```
-
-You can run this query on [`STMO#72012`](https://sql.telemetry.mozilla.org/queries/72012/source).
 
 ---
 

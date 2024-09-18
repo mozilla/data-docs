@@ -16,6 +16,9 @@
         { "pattern": "^https://help.looker.com"},
         { "pattern": "^https://mozilla-hub.atlassian.net" },
         { "pattern": "^https:///mozilla.slack.com" },
-        { "pattern": "^https://mozilla.udemy.com"}
+        { "pattern": "^https://mozilla.udemy.com"},
+        { "pattern": "^#bigquery-materialized-views$"},
+        { "pattern": "^#looker-pdts--aggregate-awareness$"},
+        { "pattern": "^#experiment-unpacking$"}
     ]
 }

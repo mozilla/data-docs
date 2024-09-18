@@ -36,10 +36,9 @@ the `client_id` appeared.
 #### Background and Caveats
 
 User counts generated using `days_since_seen` only reflect the most recent
-values from `clients_daily` for each `client_id` in a 28 day window. This means
-[Active MAU](../../../cookbooks/active_dau.md)
-as defined cannot be efficiently calculated using `days_since_seen` because if
-a given `client_id` appeared every day in February and only on February 1st had
+values from `clients_daily` for each `client_id` in a 28 day window.
+This means Active MAU as defined cannot be efficiently calculated using `days_since_seen`
+because if a given `client_id` appeared every day in February and only on February 1st had
 `scalar_parent_browser_engagement_total_uri_count_sum >= 5` then it would only
 be counted on the 1st, and not the 2nd-28th. Active MAU can be efficiently and
 correctly calculated using `days_since_visited_5_uri`.

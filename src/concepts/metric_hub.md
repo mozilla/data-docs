@@ -144,14 +144,17 @@ friendly_name = "Memory Pressure Count"
 # A description that will be displayed by dashboards.
 description = "Number of memory pressure events"
 
-# This can be any string value. It's currently not being used but in the future, this could be used to visually group different metrics by category.
+# An optional category that can be any string value. It's currently not being used but in the future, this could be used to visually group different metrics by category.
 category = "performance"
 
-# And optional owner or team owning this metric
+# An optional owner or team owning this metric. Can be a string or list of strings.
 owner = "example@mozilla.org"
 
-# Whether the metric is deprecated and should no longer be used
+# Whether the metric is deprecated and should no longer be used (optional).
 deprecated = false
+
+# An optionl string ('gold', 'silver', or 'bronze') that is the metric's current level according to the Metric Levels Taxonomy (https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/610894135/Metrics#Metric-Levels-Taxonomy).
+level = "gold"
 ```
 
 Since metrics aggregate data, the metric SQL definition must contain some aggregation method (like `SUM`, `COUNT`, ...) to be valid.
