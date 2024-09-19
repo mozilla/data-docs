@@ -24,6 +24,7 @@
     - [Data Modeling](cookbooks/data_modeling/index.md)
       - [Where to store the data model assets](cookbooks/data_modeling/where_to_store.md)
       - [Using aggregates in BigQuery and Looker](cookbooks/data_modeling/using_aggregates.md)
+      - [Shredder mitigation](cookbooks/data_modeling/shredder_mitigation.md)
     - [Working with Looker](cookbooks/looker/index.md)
       - [Introduction to Looker](cookbooks/looker/intro.md)
       - [Normalizing Country Data](cookbooks/looker/countries.md)
