@@ -30,7 +30,7 @@ Some examples of aggregates where this process is applicable
   Now, it's straightforward: Create a managed backfill with the `--shredder-mitigation` parameter, and you're set!
 - The process automatically generates a query that mitigates the effect of shredder and which is automatically used for that specific backfill.
 - It supports the most common data types used in aggregates.
-- Prevents an accidental backfill with shredder mitigation on not pre-validated tables.
+- Prevents an accidental backfill with shredder mitigation on tables that are not set up for the process.
 - Clearly identifies which aggregate tables are set to use shredder mitigation.
 - Documents each process run, along with its purpose.
 - Provides a comprehensive set of informative and debugging messages, especially useful during first-time runs where many columns may need updating.
@@ -43,7 +43,7 @@ Some examples of aggregates where this process is applicable
 
 ## Key considerations before using shredder mitigation for the first time
 
-1. This process ensures it is triggered only for pre-validated tables, which can be accomplished by ensuring that:
+1. This process ensures it is triggered only for tables set up for this type of backfill, which can be accomplished by ensuring that:
 
 - `GROUP BY` is explicit in all versions of the query, avoiding expressions like `GROUP BY ALL`, `GROUP BY 1, 2`.
 - All columns have descriptions that if applicable, include the date when new columns become available.
@@ -168,7 +168,7 @@ Recommended data validations include:
 1. Can I run this process to update one column at a time and still achieve the same result?
 
    Yes, the process allows you to add one column at a time, as long as all columns with upstream changes have been properly propagated to your aggregate table.
-   However, this is not the recommended practice as it will lead to multiple table versions and reprocessing data several times, increasing costs. On the plus side, it may facilitate rollback of single changes if needed, so use your best judgement.
+   However, this is not the recommended practice as it will lead to multiple table versions and reprocessing data several times, increasing costs. On the plus side, it may facilitate rollback of single changes if needed, so use your best criteria.
 
 2. After following the guidelines I still have a mismatch. Where can I get for help?
 
