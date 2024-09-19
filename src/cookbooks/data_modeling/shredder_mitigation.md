@@ -30,7 +30,7 @@ Some examples of aggregates where this process is applicable
   Now, it's straightforward: Create a managed backfill with the `--shredder-mitigation` parameter, and you're set!
 - The process automatically generates a query that mitigates the effect of shredder and which is automatically used for that specific backfill.
 - It supports the most common data types used in aggregates.
-- Prevents an accidental backfill with shredder mitigation on non-pre-validated tables.
+- Prevents an accidental backfill with shredder mitigation on not pre-validated tables.
 - Clearly identifies which aggregate tables are set to use shredder mitigation.
 - Documents each process run, along with its purpose.
 - Provides a comprehensive set of informative and debugging messages, especially useful during first-time runs where many columns may need updating.
@@ -116,7 +116,7 @@ After running the backfill, you should expect the distribution of `os_version` t
 
 ### Example 1. Regular runs
 
-This example is for a table is already labelled for `shredder_mitigation` and upstream changes have been propagated, which makes the process as simple as:
+This example is for a table that already has the label `shredder_mitigation` and upstream changes propagated, which makes the process as simple as:
 
 - Bump the version of the table and make changes to the new version files.
 - Update the definition of `os_version` in the query and rename it to `os_version_build` both in query and schema to ensure that it is recalculated. The schema description remains valid and remove column `attributed` from the query and schema.
