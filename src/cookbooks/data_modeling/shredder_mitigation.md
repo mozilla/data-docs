@@ -82,7 +82,7 @@ This section describes scenarios where mismatches in the metrics between version
 1. Dimensions with upstream changes that haven't propagated to your aggregate and show metrics mismatches between versions after the backfill. Follow these steps to resolve the issue:
 
    - Run a backfill with shredder mitigation for a small period of time.
-   - Validate the totals for each dimension and identify any columns with mismatches. Investigate whether the column had upstream changes and if so, rename it to ensure it is recalculated in your aggregate. Refer to the [list of known columns with recent changes](list-of-columns-with-recent-upstream-changes-that-may-require-reprocessing-in-aggregates) above for guidance.
+   - Validate the totals for each dimension and identify any columns with mismatches. Investigate whether the column had upstream changes and if so, rename it to ensure it is recalculated in your aggregate. Refer to the [list of known columns with recent changes](#columns-with-recent-changes-that-may-require-propagation-to-aggregates) above for guidance.
    - Check the distribution of values in columns with mismatches and identify any wildcards used for NULL values. Then apply the same logic in the new query.
 
 2. The process halts and returns a detailed failure message that you can resolve by providing the missing information or correcting the issue:
@@ -132,7 +132,7 @@ This example is for a first-run of the process, which requires setting up the ta
 
 `active_users_aggregates_vX` is an aggregate table that contains Mozilla KPI metrics for Firefox Desktop, which makes it a suitable candidate to use the shredder mitigation process.
 
-Since this is the first time the process is being run for this table, we will follow the [Key considerations before using shredder mitigation for the first time](key-considerations-before-using-shredder-mitigation-for-the-first-time) above.
+Since this is the first time the process is being run for this table, we will follow the [Considerations before using shredder mitigation for the first time](#key-considerations-before-using-shredder-mitigation-for-the-first-time) above.
 
 ##### Preparation for the backfill
 
