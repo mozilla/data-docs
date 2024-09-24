@@ -30,6 +30,7 @@ Some examples of aggregates where this process is applicable are:
   Now, it's straightforward: Create a managed backfill with the `--shredder-mitigation` parameter, and you're set!
 - The process automatically generates a query that mitigates the effect of shredder and which is automatically used for that specific backfill.
 - Clearly identifies which aggregate tables are set up to use shredder mitigation.
+- The process automatically generates and runs data checks to validate after each partition backfilled that all rows match both versions. It will terminate in case of mismatches to avoid unnecessary costs.
 - Prevents an accidental backfill with mitigation on tables that are not set up for the process.
 - Supports the most common data types used in aggregates.
 - Provides a comprehensive set of informative and debugging messages, especially useful during first-time runs where many columns may need updating.
@@ -63,7 +64,7 @@ Some examples of aggregates where this process is applicable are:
 - `os_version` where the logic now integrates the`build_version` for Windows operating systems.
 - `dau`, `wau` and `mau` where the business logic changed in 2024-H1 with new qualifiers.
 
-## Run a managed backfill with shredder mitigation
+## Running a managed backfill with shredder mitigation
 
 The following steps outline how to use the shredder mitigation process:
 
@@ -93,14 +94,6 @@ This section describes scenarios where mismatches in the metrics between version
    - The schema is missing, is not updated to reflect the correct column names and data types, or contains columns without descriptions.
 
 3. The sql-generated queries are not yet supported in managed backfills, so run `bqetl query generate <name>` in advance for this case.
-
-## Validation steps
-
-As part of the managed backfill, it is recommended to validate the following, along with any other specific validations that you may require:
-
-- Metrics totals per dimension match those in the previous version of the table.
-- Metric sub-totals for the new or modified columns match the upstream table. Remaining subtotals are reflected under NULL for each column.
-- All metrics remain stable and consistent.
 
 ## Examples for First-Time and subsequent runs
 
@@ -165,10 +158,28 @@ We need these changes:
 
 ## Validations
 
-Recommended data validations include:
+##### Automated validations
 
-- Use `SELECT EXCEPT DISTINCT` to identify rows in the previous version of the table that are missing in the new version, which was just backfilled. This command performs a 1:1 comparison by checking both dimensions and metrics.
-- Calculate subtotals per column, ensuring you use `COALESCE` for an accurate comparison of `NULL` values, and verify that all values match the upstream sources, except for `NULL` which is expected to increase.
+The process automatically generates data checks using `SELECT EXCEPT DISTINCT` to identify:
+
+- Rows in the previous version of the data that are missing in the newly backfilled version which either have mismatches in metrics or are missing completely.
+- Rows in the backfilled version that are not present in the previous data which either have mismatches in metrics or have been incorrectly added by the process.
+
+The command used 'EXCEPT DISTINCT' performs a 1:1 comparison by checking both dimensions and metrics which ensures a complete match of rows between both versions.
+
+These data checks run after each partition backfilled and the process will terminate in case of mismatches to avoid unnecessary costs.
+
+##### Recommended data validations include:
+
+Before completing the backfill, it is recommended to validate the following, along with any other specific validations that you may require:
+
+- Metrics totals per dimension match those in the previous version of the table.
+- Metric sub-totals for the new or modified columns match the upstream table. Remaining subtotals are reflected under NULL for each column.
+- All metrics remain stable and consistent.
+
+The auto-generated checks are written to the query folder. Use them to retrieve all rows when there are mismatches.
+
+When comparing subtotals per column, ensure you use `COALESCE` for an accurate comparison of `NULL` values, and verify that all values match the upstream sources, except for `NULL` which is expected to increase.
 
 # FAQ
 
