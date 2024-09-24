@@ -201,9 +201,8 @@
 <li><a href="#columns-with-recent-changes-that-may-require-propagation-to-aggregates">Columns with recent changes that may require propagation to aggregates</a></li>
 </ul>
 </li>
-<li><a href="#run-a-managed-backfill-with-shredder-mitigation">Run a managed backfill with shredder mitigation</a></li>
+<li><a href="#running-a-managed-backfill-with-shredder-mitigation">Running a managed backfill with shredder mitigation</a></li>
 <li><a href="#troubleshooting-scenarios-and-guidelines">Troubleshooting scenarios and guidelines</a></li>
-<li><a href="#validation-steps">Validation steps</a></li>
 <li><a href="#examples-for-first-time-and-subsequent-runs">Examples for First-Time and subsequent runs</a>
 <ul>
 <li><a href="#example-1-regular-runs">Example 1. Regular runs</a></li>
@@ -231,6 +230,7 @@
 Now, it's straightforward: Create a managed backfill with the <code>--shredder-mitigation</code> parameter, and you're set!</li>
 <li>The process automatically generates a query that mitigates the effect of shredder and which is automatically used for that specific backfill.</li>
 <li>Clearly identifies which aggregate tables are set up to use shredder mitigation.</li>
+<li>The process automatically generates and runs data checks to validate after each partition backfilled that all rows match both versions. It will terminate in case of mismatches to avoid unnecessary costs.</li>
 <li>Prevents an accidental backfill with mitigation on tables that are not set up for the process.</li>
 <li>Supports the most common data types used in aggregates.</li>
 <li>Provides a comprehensive set of informative and debugging messages, especially useful during first-time runs where many columns may need updating.</li>
@@ -270,7 +270,7 @@ Now, it's straightforward: Create a managed backfill with the <code>--shredder-m
 <li><code>os_version</code> where the logic now integrates the<code>build_version</code> for Windows operating systems.</li>
 <li><code>dau</code>, <code>wau</code> and <code>mau</code> where the business logic changed in 2024-H1 with new qualifiers.</li>
 </ul>
-<h2 id="run-a-managed-backfill-with-shredder-mitigation"><a class="header" href="#run-a-managed-backfill-with-shredder-mitigation">Run a managed backfill with shredder mitigation</a></h2>
+<h2 id="running-a-managed-backfill-with-shredder-mitigation"><a class="header" href="#running-a-managed-backfill-with-shredder-mitigation">Running a managed backfill with shredder mitigation</a></h2>
 <p>The following steps outline how to use the shredder mitigation process:</p>
 <ol>
 <li>Bump the version of the aggregate query.</li>
@@ -307,13 +307,6 @@ Now, it's straightforward: Create a managed backfill with the <code>--shredder-m
 <p>The sql-generated queries are not yet supported in managed backfills, so run <code>bqetl query generate &lt;name&gt;</code> in advance for this case.</p>
 </li>
 </ol>
-<h2 id="validation-steps"><a class="header" href="#validation-steps">Validation steps</a></h2>
-<p>As part of the managed backfill, it is recommended to validate the following, along with any other specific validations that you may require:</p>
-<ul>
-<li>Metrics totals per dimension match those in the previous version of the table.</li>
-<li>Metric sub-totals for the new or modified columns match the upstream table. Remaining subtotals are reflected under NULL for each column.</li>
-<li>All metrics remain stable and consistent.</li>
-</ul>
 <h2 id="examples-for-first-time-and-subsequent-runs"><a class="header" href="#examples-for-first-time-and-subsequent-runs">Examples for First-Time and subsequent runs</a></h2>
 <p>This section contains examples both for first-time and subsequent runs of a backfill with shredder mitigation.</p>
 <p>Let's use as an example a requirement to modify <code>firefox_desktop_derived.active_users_aggregates_v3</code> to:</p>
@@ -363,11 +356,23 @@ Now, it's straightforward: Create a managed backfill with the <code>--shredder-m
 <li>Follow the <a href="https://mozilla.github.io/bigquery-etl/cookbooks/creating_a_derived_dataset/#backfilling-a-table">managed backfill</a> process using the <code>--shredder_mitigation</code> parameter.</li>
 </ul>
 <h2 id="validations"><a class="header" href="#validations">Validations</a></h2>
-<p>Recommended data validations include:</p>
+<h5 id="automated-validations"><a class="header" href="#automated-validations">Automated validations</a></h5>
+<p>The process automatically generates data checks using <code>SELECT EXCEPT DISTINCT</code> to identify:</p>
 <ul>
-<li>Use <code>SELECT EXCEPT DISTINCT</code> to identify rows in the previous version of the table that are missing in the new version, which was just backfilled. This command performs a 1:1 comparison by checking both dimensions and metrics.</li>
-<li>Calculate subtotals per column, ensuring you use <code>COALESCE</code> for an accurate comparison of <code>NULL</code> values, and verify that all values match the upstream sources, except for <code>NULL</code> which is expected to increase.</li>
+<li>Rows in the previous version of the data that are missing in the newly backfilled version which either have mismatches in metrics or are missing completely.</li>
+<li>Rows in the backfilled version that are not present in the previous data which either have mismatches in metrics or have been incorrectly added by the process.</li>
 </ul>
+<p>The command used 'EXCEPT DISTINCT' performs a 1:1 comparison by checking both dimensions and metrics which ensures a complete match of rows between both versions.</p>
+<p>These data checks run after each partition backfilled and the process will terminate in case of mismatches to avoid unnecessary costs.</p>
+<h5 id="recommended-data-validations-include"><a class="header" href="#recommended-data-validations-include">Recommended data validations include:</a></h5>
+<p>Before completing the backfill, it is recommended to validate the following, along with any other specific validations that you may require:</p>
+<ul>
+<li>Metrics totals per dimension match those in the previous version of the table.</li>
+<li>Metric sub-totals for the new or modified columns match the upstream table. Remaining subtotals are reflected under NULL for each column.</li>
+<li>All metrics remain stable and consistent.</li>
+</ul>
+<p>The auto-generated checks are written to the query folder. Use them to retrieve all rows when there are mismatches.</p>
+<p>When comparing subtotals per column, ensure you use <code>COALESCE</code> for an accurate comparison of <code>NULL</code> values, and verify that all values match the upstream sources, except for <code>NULL</code> which is expected to increase.</p>
 <h1 id="faq"><a class="header" href="#faq">FAQ</a></h1>
 <ol>
 <li>
