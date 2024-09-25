@@ -7,28 +7,25 @@
 The `search_revenue_levers` datasets isolate key components of the search monetization funnel, e.g. revenue levers, to more effectively support search revenue analyses. The suite of `search_revenue_levers` datasets are as follows:
 
 - `search_revenue_levers_daily`: provides daily search metrics at \*_minimum country granularity_ (e.g. SAP by device, partner, channel, and specific country)
-- `search_revenue_levers_monthly_detail` **(work in progress, see [Jira](https://mozilla-hub.atlassian.net/browse/RS-1245))**: provides monthly search and revenue metrics at _partner reporting granularity_ (e.g. SAP by device, partner, channel, and country as reported by each partner)
 - `search_revenue_levers_monthly`: provides monthly search and revenue metrics at _search funnel granularity_ (e.g. SAP by device, partner, and US vs Rest of World)
 
-**[Revenue data access permissions](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/747176558/Search+Revenue+Documentation#Revenue-Data-Access-Policies) of category 2 or higher are required to access `search_revenue_levers_monthly_detail` and `search_revenue_levers_monthly`.**
+**[Revenue data access permissions](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/747176558/Search+Revenue+Documentation#Revenue-Data-Access-Policies) of category 2 or higher are required to access `search_revenue_levers_monthly`.**
 
 For most search and revenue analyses, we recommend using `search_revenue_levers_monthly`. By aggregating to the search monetization funnel granularity, this table is used to support the Monthly and Quarterly Business Reviews. Most ad hoc search revenue analyses should align with this internal standard of reporting.
 
-That being said, there are cases when Mozillians require more granularity for search revenue analyses. By aggregating to the partner reporting granularity, `search_revenue_levers_monthly_detail` is designed to support deep dives into performance by search partner.
-
-The final dataset, `search_revenue_levers_daily`, does not include revenue (because search revenue is reported monthly, not daily). Due to the convenient partner-level aggregation, this table is ingested for search revenue forecasting. However, Mozillians focused on search analyses may prefer the other existing search tables: [`search_aggregates`](https://docs.telemetry.mozilla.org/datasets/search/search_aggregates/reference) (fastest to query!) or [`search_clients_engines_sources_daily`](https://docs.telemetry.mozilla.org/datasets/search/search_clients_engines_sources_daily/reference) (most data possible!).
+That being said, there are cases when Mozillians require more granularity for search revenue analyses. By aggregating to the daily reporting granularity, `search_revenue_levers_daily` is designed to support forecasting and deep dives into performance by search partner. `search_revenue_levers_daily` does not include revenue because search revenue is reported monthly, not daily. However, Mozillians focused on search analyses may prefer the other existing search tables: [`search_aggregates`](https://docs.telemetry.mozilla.org/datasets/search/search_aggregates/reference) (fastest to query!) or [`search_clients_engines_sources_daily`](https://docs.telemetry.mozilla.org/datasets/search/search_clients_engines_sources_daily/reference) (most data possible!).
 
 ## Contents
 
 The differences between the aggregation structures are summarized as follows:
 
-| Column Name     | `search_revenue_levers_daily`  | `search_revenue_levers_monthly_detail`           | `search_revenue_levers_monthly` |
-| --------------- | ------------------------------ | ------------------------------------------------ | ------------------------------- |
-| device          | `desktop`, `mobile`            | `desktop`, `mobile`                              | `desktop`, `mobile`             |
-| partner         | `Google`, `Bing`, `DuckDuckGo` | `Google`, `Bing`, `DuckDuckGo`                   | `Google`, `Bing`, `DuckDuckGo`  |
-| channel         | `NULL`, `personal`, `ESR`      | `NULL`, `personal`, `ESR`                        | column does not exist           |
-| country         | `US`, `DE`, `FR`, ...          | Google: `US`, `ROW`, Bing: `US`, `DE`, `FR`, ... | All partners: `US`, `ROW`       |
-| submission_date | minimum aggregation: daily     | minimum aggregation: monthly                     | minimum aggregation: monthly    |
+| Column Name     | `search_revenue_levers_daily`         | `search_revenue_levers_monthly` |
+| --------------- | ------------------------------ | ------------------------------- |
+| device          | `desktop`, `mobile`            | `desktop`, `mobile`             |
+| partner         | `Google`, `Bing`, `DuckDuckGo` | `Google`, `Bing`, `DuckDuckGo`  |
+| channel         | `NULL`, `personal`, `ESR`      | column does not exist           |
+| country         | `US`, `DE`, `FR`, ...          | All partners: `US`, `ROW`       |
+| submission_date | minimum aggregation: daily     | minimum aggregation: monthly    |
 
 There are 14 possible revenue levers measures available:
 
