@@ -156,9 +156,9 @@ We need these changes:
 
 - Follow the [managed backfill](https://mozilla.github.io/bigquery-etl/cookbooks/creating_a_derived_dataset/#backfilling-a-table) process using the `--shredder_mitigation` parameter.
 
-## Validations
+## Data validation
 
-##### Automated validations
+### Automated validations
 
 The process automatically generates data checks using `SELECT EXCEPT DISTINCT` to identify:
 
@@ -169,7 +169,7 @@ The command used 'EXCEPT DISTINCT' performs a 1:1 comparison by checking both di
 
 These data checks run after each partition backfilled and the process will terminate in case of mismatches to avoid unnecessary costs.
 
-##### Recommended data validations include:
+### Recommended validations
 
 Before completing the backfill, it is recommended to validate the following, along with any other specific validations that you may require:
 
