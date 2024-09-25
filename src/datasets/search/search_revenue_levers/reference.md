@@ -13,7 +13,9 @@ The `search_revenue_levers` datasets isolate key components of the search moneti
 
 For most search and revenue analyses, we recommend using `search_revenue_levers_monthly`. By aggregating to the search monetization funnel granularity, this table is used to support the Monthly and Quarterly Business Reviews. Most ad hoc search revenue analyses should align with this internal standard of reporting.
 
-That being said, there are cases when Mozillians require more granularity for search revenue analyses. By aggregating to the daily reporting granularity, `search_revenue_levers_daily` is designed to support forecasting and deep dives into performance by search partner. `search_revenue_levers_daily` does not include revenue because search revenue is reported monthly, not daily. However, Mozillians focused on search analyses may prefer the other existing search tables: [`search_aggregates`](https://docs.telemetry.mozilla.org/datasets/search/search_aggregates/reference) (fastest to query!) or [`search_clients_engines_sources_daily`](https://docs.telemetry.mozilla.org/datasets/search/search_clients_engines_sources_daily/reference) (most data possible!).
+That being said, there are cases when Mozillians require more granularity for search analyses. By aggregating to the daily reporting granularity, `search_revenue_levers_daily` is designed to support forecasting and deep dives into performance by search partner. Revenue is not included in `search_revenue_levers_daily` because search revenue is reported monthly, not daily. 
+
+In practice, Mozillians focused on search-only analyses may prefer the other existing search tables: [`search_aggregates`](https://docs.telemetry.mozilla.org/datasets/search/search_aggregates/reference) (fastest to query!) or [`search_clients_engines_sources_daily`](https://docs.telemetry.mozilla.org/datasets/search/search_clients_engines_sources_daily/reference) (most data possible!).
 
 ## Contents
 
