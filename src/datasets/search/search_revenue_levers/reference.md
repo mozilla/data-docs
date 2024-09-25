@@ -62,7 +62,7 @@ SELECT
     submission_month,
     COALESCE(SUM(sap), 0) AS sap,
     COALESCE(SUM(revenue), 0) AS revenue
-FROM `mozdata.revenue.search_revenue_levers_monthly`  
+FROM `mozdata.revenue.search_revenue_levers_monthly`
 WHERE device = 'desktop' AND partner_name = 'Google' AND submission_month >= "2023-01-01"
 GROUP BY
     1,
