@@ -23,7 +23,7 @@ The differences between the aggregation structures are summarized as follows:
 
 | Column Name | `search_revenue_levers_daily` | `search_revenue_levers_monthly_detail` | `search_revenue_levers_monthly`  |
 | ----------- | ----------------------------- | -------------------------------------- | -------------------------------- | 
-| device | `desktop`, `mobile`, DDG only: `extension` | `desktop`, `mobile`, DDG only: `extension` | `desktop`, `mobile` |
+| device | `desktop`, `mobile` | `desktop`, `mobile` | `desktop`, `mobile` |
 | partner | `Google`, `Bing`, `DuckDuckGo` | `Google`, `Bing`, `DuckDuckGo` | `Google`, `Bing`, `DuckDuckGo` |
 | channel | `NULL`, `personal`, `ESR` | `NULL`, `personal`, `ESR` | column does not exist |
 | country | `US`, `DE`, `FR`, ... | Google: `US`, `ROW`, Bing: `US`, `DE`, `FR`, ... | All partners: `US`, `ROW` |
