@@ -5,6 +5,7 @@
 # Introduction
 
 The `search_revenue_levers` datasets isolate key components of the search monetization funnel, e.g. revenue levers, to more effectively support search revenue analyses. The suite of `search_revenue_levers` datasets are as follows:
+
 - `search_revenue_levers_daily`: provides daily search metrics at \*_minimum country granularity_ (e.g. SAP by device, partner, channel, and specific country)
 - `search_revenue_levers_monthly_detail` **(work in progress, see [Jira](https://mozilla-hub.atlassian.net/browse/RS-1245))**: provides monthly search and revenue metrics at _partner reporting granularity_ (e.g. SAP by device, partner, channel, and country as reported by each partner)
 - `search_revenue_levers_monthly`: provides monthly search and revenue metrics at _search funnel granularity_ (e.g. SAP by device, partner, and US vs Rest of World)
@@ -30,6 +31,7 @@ The differences between the aggregation structures are summarized as follows:
 | submission_date | minimum aggregation: daily     | minimum aggregation: monthly                     | minimum aggregation: monthly    |
 
 There are 14 possible revenue levers measures available:
+
 - 3 [daily active users metrics](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/747176558/Search+Revenue+Documentation#Search-DAU): `Eligible Markets DAU`, `Default Engine DAU`, `Search-Engaged DAU`
 - 9 [search engagement metrics](https://mozilla.cloud.looker.com/dashboards/314): `SAP`, `Tagged SAP`, `Tagged Follow On`, `Monetizable SAP`, `Search with Ads`, `Ad Click`, `Organic Search`, `Organic Search with Ads`, `Organic Ad Click`
 - 2 revenue metrics (monthly tables only): `Revenue paid to Mozilla`, `Revenue per Ad Click`
