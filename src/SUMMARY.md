@@ -20,6 +20,7 @@
       - [Collections](cookbooks/data_monitoring/collections.md)
       - [Issues Management](cookbooks/data_monitoring/issues_management.md)
       - [Cost Considerations](cookbooks/data_monitoring/cost_considerations.md)
+      - [bigquery-etl and Bigeye](cookbooks/data_monitoring/bigquery_etl_integration.md)
       - [Further Reading](cookbooks/data_monitoring/further_reading.md)
     - [Data Modeling](cookbooks/data_modeling/index.md)
       - [Where to store the data model assets](cookbooks/data_modeling/where_to_store.md)
