@@ -127,6 +127,7 @@
     - [Search Clients Last Seen](datasets/search/search_clients_last_seen/reference.md)
     - [Client LTV](datasets/search/client_ltv/reference.md)
     - [Mobile Search Clients Sources Daily](datasets/search/mobile_search_clients_sources_daily/intro.md)
+    - [Search Revenue Levers](datasets/search/search_revenue_levers/reference.md)
   - [Non-Desktop Datasets](datasets/non_desktop.md)
     - [Day 2-7 Activation](datasets/non_desktop/day_2_7_activation/reference.md)
     - [Google Play Store](datasets/non_desktop/google_play_store/reference.md)
