@@ -152,24 +152,24 @@ We need these changes:
 - Existing column `first_seen_year` is renamed to `first_seen_year_new` and `segment` is renamed to `segment_dau`, as both have upstream changes.
 - Merge a PR to apply all changes.
 
-##### Run the backfill:
+##### Running the backfill:
 
 - Follow the [managed backfill](https://mozilla.github.io/bigquery-etl/cookbooks/creating_a_derived_dataset/#backfilling-a-table) process using the `--shredder_mitigation` parameter.
 
-## Validations
+## Data validation
 
-##### Automated validations
+### Automated validations
 
 The process automatically generates data checks using `SELECT EXCEPT DISTINCT` to identify:
 
 - Rows in the previous version of the data that are missing in the newly backfilled version which either have mismatches in metrics or are missing completely.
 - Rows in the backfilled version that are not present in the previous data which either have mismatches in metrics or have been incorrectly added by the process.
 
-The command used 'EXCEPT DISTINCT' performs a 1:1 comparison by checking both dimensions and metrics which ensures a complete match of rows between both versions.
+The command 'EXCEPT DISTINCT' performs a 1:1 comparison by checking both dimensions and metrics which ensures a complete match of rows between both versions.
 
 These data checks run after each partition backfilled and the process will terminate in case of mismatches to avoid unnecessary costs.
 
-##### Recommended data validations include:
+### Recommended validations
 
 Before completing the backfill, it is recommended to validate the following, along with any other specific validations that you may require:
 
