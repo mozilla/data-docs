@@ -209,7 +209,12 @@
 <li><a href="#example-2-first-time-run">Example 2. First-Time run</a></li>
 </ul>
 </li>
-<li><a href="#validations">Validations</a></li>
+<li><a href="#data-validation">Data validation</a>
+<ul>
+<li><a href="#automated-validations">Automated validations</a></li>
+<li><a href="#recommended-validations">Recommended validations</a></li>
+</ul>
+</li>
 <li><a href="#faq">FAQ</a></li>
 </ul>
 <h2 id="when-to-use-this-process"><a class="header" href="#when-to-use-this-process">When to use this process</a></h2>
@@ -351,20 +356,20 @@ Now, it's straightforward: Create a managed backfill with the <code>--shredder-m
 <li>Existing column <code>first_seen_year</code> is renamed to <code>first_seen_year_new</code> and <code>segment</code> is renamed to <code>segment_dau</code>, as both have upstream changes.</li>
 <li>Merge a PR to apply all changes.</li>
 </ul>
-<h5 id="run-the-backfill"><a class="header" href="#run-the-backfill">Run the backfill:</a></h5>
+<h5 id="running-the-backfill"><a class="header" href="#running-the-backfill">Running the backfill:</a></h5>
 <ul>
 <li>Follow the <a href="https://mozilla.github.io/bigquery-etl/cookbooks/creating_a_derived_dataset/#backfilling-a-table">managed backfill</a> process using the <code>--shredder_mitigation</code> parameter.</li>
 </ul>
-<h2 id="validations"><a class="header" href="#validations">Validations</a></h2>
-<h5 id="automated-validations"><a class="header" href="#automated-validations">Automated validations</a></h5>
+<h2 id="data-validation"><a class="header" href="#data-validation">Data validation</a></h2>
+<h3 id="automated-validations"><a class="header" href="#automated-validations">Automated validations</a></h3>
 <p>The process automatically generates data checks using <code>SELECT EXCEPT DISTINCT</code> to identify:</p>
 <ul>
 <li>Rows in the previous version of the data that are missing in the newly backfilled version which either have mismatches in metrics or are missing completely.</li>
 <li>Rows in the backfilled version that are not present in the previous data which either have mismatches in metrics or have been incorrectly added by the process.</li>
 </ul>
-<p>The command used 'EXCEPT DISTINCT' performs a 1:1 comparison by checking both dimensions and metrics which ensures a complete match of rows between both versions.</p>
+<p>The command 'EXCEPT DISTINCT' performs a 1:1 comparison by checking both dimensions and metrics which ensures a complete match of rows between both versions.</p>
 <p>These data checks run after each partition backfilled and the process will terminate in case of mismatches to avoid unnecessary costs.</p>
-<h5 id="recommended-data-validations-include"><a class="header" href="#recommended-data-validations-include">Recommended data validations include:</a></h5>
+<h3 id="recommended-validations"><a class="header" href="#recommended-validations">Recommended validations</a></h3>
 <p>Before completing the backfill, it is recommended to validate the following, along with any other specific validations that you may require:</p>
 <ul>
 <li>Metrics totals per dimension match those in the previous version of the table.</li>
