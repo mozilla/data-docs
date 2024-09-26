@@ -45,7 +45,17 @@ The [FxA oauth server](https://github.com/mozilla/fxa/pull/3176) logs metrics ev
 
 ## Metrics Taxonomies
 
-In 2023 we integrated Glean with Mozilla Accounts and Event Metrics are now available for the [server-side](https://dictionary.telemetry.mozilla.org/apps/accounts_backend) and [client-side](https://dictionary.telemetry.mozilla.org/apps/accounts_frontend).
+### Glean
+
+In 2023, we integrated Glean with Mozilla Accounts and Event Metrics are now available for both the server-side and client-side.
+
+To explore available metrics, visit [Glean Dictionary](https://dictionary.telemetry.mozilla.org/) and browse the [`accounts_backend`](https://dictionary.telemetry.mozilla.org/apps/accounts_backend) and [`accounts_frontend`](https://dictionary.telemetry.mozilla.org/apps/accounts_frontend) applications.
+
+All events are sent in `events` ping. The most effective way to query them is to use the `events_stream` tables in BigQuery: [`accounts_frontend.events_stream`](<https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.accounts_frontend.events_stream,PROD)>) and [`accounts_backend.events_stream`](<https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,mozdata.accounts_backend.events_stream,PROD)>). `events_stream` tables are accessible in Looker. Because they have extra properties packaged as a JSON structure, when these are needed it is best to use the `events unnested` explores.
+
+The Accounts frontend is instrumented with [automatic Glean website events](https://mozilla.github.io/glean.js/automatic_instrumentation/page_load_events/). Data collected this way can be explored on the [Website Sessions dashboard](https://mozilla.cloud.looker.com/dashboards/websites::website_sessions?App+ID=accounts%5E_frontend&Submission+Date=7+day&Country+Name=&External+Referrer=&App+Channel=&UA+-+Browser=&Traffic+Source=) in Looker. To dig deeper you can write a query to analyze properties of these events: [`element_click`](https://sql.telemetry.mozilla.org/queries/102469/source) and [`page_load`](https://sql.telemetry.mozilla.org/queries/102470/source).
+
+### Legacy
 
 There are two additional legacy event types described below:
 
