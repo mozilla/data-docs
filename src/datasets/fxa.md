@@ -55,6 +55,12 @@ All events are sent in `events` ping. The most effective way to query them is to
 
 The Accounts frontend is instrumented with [automatic Glean website events](https://mozilla.github.io/glean.js/automatic_instrumentation/page_load_events/). Data collected this way can be explored on the [Website Sessions dashboard](https://mozilla.cloud.looker.com/dashboards/websites::website_sessions?App+ID=accounts%5E_frontend&Submission+Date=7+day&Country+Name=&External+Referrer=&App+Channel=&UA+-+Browser=&Traffic+Source=) in Looker. To dig deeper you can write a query to analyze properties of these events: [`element_click`](https://sql.telemetry.mozilla.org/queries/102469/source) and [`page_load`](https://sql.telemetry.mozilla.org/queries/102470/source).
 
+#### `accounts_frontend` or `accounts_backend`?
+
+As mentioned above, backend services and JavaScript frontend are instrumented as separate Glean applications. Backend events have generally higher delivery guarantees as we control the environment in which they are sent - we do not expect any data loss there. Frontend events are sent from the browser and are subject to all the usual reliability issues that entails.
+
+If analysis requires a metric that is available in both frontend and backend, backend metrics are generally preferred. For complex queries involving multiple event metrics, for example funnels, it is preferable to use a single application to avoid issues with event order of arrival and partial delivery. If you need to mix data from frontend and backend in your query, you can use `session.flow_id` metric to correlate sessions and `submission_timestamp` for ordering.
+
 ### Legacy
 
 There are two additional legacy event types described below:
