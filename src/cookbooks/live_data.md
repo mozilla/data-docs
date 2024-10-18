@@ -27,6 +27,7 @@ Directly querying live tables allows access to the most up-to-date data. A user-
   - Easy to set up via bigquery-etl
 - **Cons:**
   - High cost and slow performance when querying large datasets or running frequent complex queries.
+  - Duplicates from live tables.
 - **Example:** [Active Hub Subscriptions](https://github.com/mozilla/bigquery-etl/blob/12470a846ef379cfba42995044f592c00fbc4e5b/sql/moz-fx-data-shared-prod/hubs/active_subscription_ids/view.sql#L1-L23)
 
 ### 2. Scheduled Queries
