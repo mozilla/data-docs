@@ -710,7 +710,7 @@ These metrics cover areas such as data freshness, volume, distribution, schema c
 <p>Autothresholds are recommended for freshness and volume metrics, as they automatically adjust based on typical patterns. For other metrics, it's advisable to manually set thresholds to ensure accuracy and relevance.</p>
 </li>
 <li>
-<p>It is recommended to add metrics at the view level rather than directly on tables. This ensures that even if a table becomes obsolete or is upgraded, unnecessary checks on previous versions are avoided. The only exception to this rule is for freshness and volume metrics, which must be deployed directly on tables.</p>
+<p>It is recommended to add metrics at the table level. This ensures that checks run as closely to the source as possible. Also, cost of running checks on tables is usually much lower in Bigeye compared to running them on views as Bigeye makes use of the partition configurations.</p>
 </li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/cookbooks/data_monitoring/deploying_metrics.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="collections-in-bigeye"><a class="header" href="#collections-in-bigeye">Collections in Bigeye</a></h1>
@@ -755,19 +755,68 @@ Users can resolve, mute, or dismiss alerts directly from Slack messages, ensurin
 <p><strong>Try to avoid Autometrics!</strong> - On tables with many columns a large number of monitors might get deployed. This increases noise and cost. Instead, it is recommended to <a href="cookbooks/data_monitoring/deploying_metrics.html#list-of-available-metrics">choose relevant metrics from the list of available metrics</a> manually.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/cookbooks/data_monitoring/cost_considerations.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="bigquery-etl-and-bigeye"><a class="header" href="#bigquery-etl-and-bigeye">bigquery-etl and Bigeye</a></h1>
 <p>Monitors can be defined alongside derived datasets in bigquery-etl. Monitoring in Bigeye for a specific table can be enabled by adding <code>monitoring</code> metadata to the <code>metadata.yaml</code> file:</p>
-<pre><code class="language-yaml">friendly_name: Some Table
+<pre><code class="language-yaml">friendly_name: Some Table [warn]
 monitoring:
   enabled: true # Enables monitoring for the table in Bigeye and deploys freshness and volume metrics
   collection: Test # An existing collection these monitors should be part of in Bigeye
 </code></pre>
 <p>Enabling monitoring for a table automatically deploys freshness and volume metrics for this table.</p>
+<p>Bigeye monitors are triggered automatically via Airflow for queries that have <code>monitoring</code> set to <code>enabled: true</code>. The checks are executed after the ETL run for the table has been completed.</p>
+<p>To indicate whether a failing check should block any downstream Airflow tasks, a <code>[warn]</code> or <code>[fail]</code> can be added to the name of the Bigeye metric. By default, all metrics that do not have either of those tags specified are considered as <code>[warn]</code>. These metrics won't be blocking any downstream Airflow tasks when checks fail, but any failing check will appear in the Bigeye dashboard. Metrics that have <code>[fail]</code> specified in their names will block the execution of downstream Airflow tasks in the event of a check failing.</p>
 <h2 id="bigconfig"><a class="header" href="#bigconfig">Bigconfig</a></h2>
 <p>Additional and custom monitors can be defined in a <a href="https://docs.bigeye.com/docs/bigconfig#example-template">Bigconfig</a> <code>bigconfig.yml</code> file that is stored in the same directory as the table query. Bigconfig allows users to deploy other pre-defined monitors, such as row counts or null checks on a table or column level.</p>
+<h2 id="custom-sql-rules"><a class="header" href="#custom-sql-rules">Custom SQL Rules</a></h2>
+<blockquote>
+<blockquote>
+<p>This is a temporary workaround until custom SQL rules are supported in Bigconfig, which is currently being worked on.</p>
+</blockquote>
+</blockquote>
+<p>Custom SQL rules can be configured in a separate <code>bigeye_custom_rules.sql</code> file alongside the query. This file can contain various rules:</p>
+<pre><code class="language-sql">-- {
+--   &quot;name&quot;: &quot;Fenix releases version format&quot;,
+--   &quot;alert_conditions&quot;: &quot;value&quot;,
+--   &quot;range&quot;: {
+--     &quot;min&quot;: 0,
+--     &quot;max&quot;: 1
+--   },
+--   &quot;collections&quot;: [&quot;Test&quot;],
+--   &quot;owner&quot;: &quot;&quot;,
+--   &quot;schedule&quot;: &quot;Default Schedule - 13:00 UTC&quot;
+-- }
+SELECT
+  ROUND((COUNTIF(NOT REGEXP_CONTAINS(version, r&quot;^[0-9]+\..+$&quot;))) / COUNT(*) * 100, 2) AS perc
+FROM
+  `{{ project_id }}.{{ dataset_id }}.{{ table_name }}`;
+
+-- {
+--   &quot;name&quot;: &quot;Fenix releases product check&quot;,
+--   &quot;alert_conditions&quot;: &quot;value&quot;,
+--   &quot;range&quot;: {
+--     &quot;min&quot;: 0,
+--     &quot;max&quot;: 1
+--   },
+--   &quot;collections&quot;: [&quot;Test&quot;],
+--   &quot;owner&quot;: &quot;&quot;,
+--   &quot;schedule&quot;: &quot;Default Schedule - 13:00 UTC&quot;
+-- }
+SELECT
+  ROUND((COUNTIF(product != &quot;fenix&quot;)) / COUNT(*) * 100, 2) AS perc
+FROM
+  `{{ project_id }}.{{ dataset_id }}.{{ table_name }}`;
+</code></pre>
+<p>The SQL comment before the rule SQL has to be a JSON object that contains the configuration parameters for this rule:</p>
+<ul>
+<li><code>name</code>: the name of the SQL rule. Specify <code>[warn]</code> or <code>[fail]</code> to indicate whether a rule failure should block downstream Airflow tasks</li>
+<li><code>alert_conditions</code>: one of <code>value</code> (alerts based on the returned value) or <code>count</code> (alerts based on whether the query returns rows)</li>
+<li><code>collections</code>: list of collections this rule should be a part of</li>
+<li><code>owner</code>: email address of the rule owner</li>
+<li><code>schedule</code>: optional schedule of when this rule should be triggered. The rule will also get triggered as part of Airflow</li>
+<li><code>range</code>: optional range of allowed values when <code>&quot;alert_conditions&quot;: &quot;value&quot;</code></li>
+</ul>
 <h2 id="deployment"><a class="header" href="#deployment">Deployment</a></h2>
 <p>To generate a <code>bigconfig.yml</code> file with the default metrics when monitoring is enabled run: <code>bqetl monitoring update [PATH]</code>.
 The created file can be manually edited. For tables that do not have a <code>bigconfig.yml</code> checked into the repository, the file will get generated automatically before deployment to Bigeye. Files only need to be checked in if there are some customizations.</p>
-<p>To manually deploy a Bigconfig file run: <code>bqetl monitoring deploy [PATH]</code>. The environment variable <code>BIGEYE_API_KEY</code> needs to be set to a valid API token that can be <a href="https://docs.bigeye.com/docs/using-api-keys">created in Bigeye</a>.</p>
-<p>The deployment of Bigconfig files also runs automatically as part of the <a href="cookbooks/data_monitoring/../../concepts/pipeline/artifact_deployment.html">artifact deployment process</a>, after tables and views have been deployed.</p>
+<p>The deployment of Bigconfig files runs automatically as part of the <a href="cookbooks/data_monitoring/../../concepts/pipeline/artifact_deployment.html">artifact deployment process</a>, after tables and views have been deployed.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/cookbooks/data_monitoring/bigquery_etl_integration.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="bigeye---further-reading"><a class="header" href="#bigeye---further-reading">Bigeye - Further reading</a></h1>
 <ul>
 <li>

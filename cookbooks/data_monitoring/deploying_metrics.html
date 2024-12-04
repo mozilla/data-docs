@@ -235,7 +235,7 @@ These metrics cover areas such as data freshness, volume, distribution, schema c
 <p>Autothresholds are recommended for freshness and volume metrics, as they automatically adjust based on typical patterns. For other metrics, it's advisable to manually set thresholds to ensure accuracy and relevance.</p>
 </li>
 <li>
-<p>It is recommended to add metrics at the view level rather than directly on tables. This ensures that even if a table becomes obsolete or is upgraded, unnecessary checks on previous versions are avoided. The only exception to this rule is for freshness and volume metrics, which must be deployed directly on tables.</p>
+<p>It is recommended to add metrics at the table level. This ensures that checks run as closely to the source as possible. Also, cost of running checks on tables is usually much lower in Bigeye compared to running them on views as Bigeye makes use of the partition configurations.</p>
 </li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/cookbooks/data_monitoring/deploying_metrics.md">Edit this page on GitHub.</a></footer>
