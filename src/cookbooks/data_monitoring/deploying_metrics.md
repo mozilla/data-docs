@@ -68,4 +68,4 @@ Custom rules are useful for addressing unique data quality requirements that sta
 
 - Autothresholds are recommended for freshness and volume metrics, as they automatically adjust based on typical patterns. For other metrics, it's advisable to manually set thresholds to ensure accuracy and relevance.
 
-- It is recommended to add metrics at the view level rather than directly on tables. This ensures that even if a table becomes obsolete or is upgraded, unnecessary checks on previous versions are avoided. The only exception to this rule is for freshness and volume metrics, which must be deployed directly on tables.
+- It is recommended to add metrics at the table level. This ensures that checks run as closely to the source as possible. Also, cost of running checks on tables is usually much lower in Bigeye compared to running them on views as Bigeye makes use of the partition configurations.
