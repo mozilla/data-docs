@@ -495,3 +495,7 @@ rescan
 unmute
 2023-Q4
 2024-H1
+is_lineage_mode
+schemaFilter
+client_scalar_probe_counts
+20Definition
