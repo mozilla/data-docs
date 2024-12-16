@@ -96,7 +96,7 @@ GLAM has a separate set of steps and intermediate tables to aggregate scalar and
 
 #### [`clients_histogram_probe_counts`](<https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.telemetry_derived.clients_histogram_probe_counts_v1,PROD)/Schema?is_lineage_mode=false&schemaFilter=>)
 
-- This process uses the `metric_type` information to pick a specific algorithm to build histograms from the broken down buckets from the previous step. Histograms can be `linear`, `exponential` or `custom`.
+- This process uses the `metric_type` to select the algorithm to build histograms using the broken down buckets from the previous step. Histograms can be `linear`, `exponential` or `custom`.
 - It then aggregates metrics per wildcards (`os`, `app_build_id`).
 - Finally, it rebuilds histograms using the Dirichlet Distribution, normalized using the number of clients that contributed to that histogram in the `clients_histogram_buckets_counts` step.
 
