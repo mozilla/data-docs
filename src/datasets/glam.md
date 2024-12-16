@@ -85,7 +85,7 @@ GLAM has a separate set of steps and intermediate tables to aggregate scalar and
 
 - This is the most important histogram table in the intermediate dataset, where each row represents a `client_id` with its cumulative sum of the histograms for the last 3 versions of all metrics.
 - New entries from `clients_histogram_aggregates_new` are merged with the 3 last versions of previous day’s partition and written to the current day’s partition.
-- This table only holds the most recent `submission_date`, which marks the last date data has been merged into it. A check before running this jobs ensures the ETL does not skip days. In other words, the ETL only processes date `d` if the last date processed was `d-1`.
+- This table only holds the most recent `submission_date`, which marks the most recent date of data ingestion. A check before running this jobs ensures that the ETL does not skip days. In other words, the ETL only processes date `d` if the last date processed was `d-1`.
 - In case of failures in the GLAM ETL this table must be backfilled one day at a time.
 
 #### [`clients_histogram_buckets_counts`](<https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.telemetry_derived.clients_histogram_bucket_counts_v1,PROD)/Schema?is_lineage_mode=false&schemaFilter=>)
