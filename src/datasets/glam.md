@@ -1,15 +1,17 @@
 # GLAM datasets
 
-[GLAM](https://glam.telemetry.mozilla.org) aims to answer a majority of the "easy" questions of how a probe or metric has changed over time.
-The GLAM aggregation tables are useful for accessing the data that drives GLAM if more exploration is required.
-Exploring the GLAM tables could take that a little farther, but still has some limitations.
-If you need to dive deeper or aggregate on a field that isn't included here, consider reading [Visualizing Percentiles of a Main Ping Exponential Histogram](https://docs.telemetry.mozilla.org/cookbooks/main_ping_exponential_histograms.html).
+[GLAM](https://glam.telemetry.mozilla.org) provides aggregated telemetry data in a way that makes it easy to understand how a given probe or metric has been changing over subsequent builds. GLAM aggregations are statistically validated by data scientists to ensure an accurate picture of the observed behavior of telemetry data.
+
+GLAM data is also meant to be explored by itself: GLAM aggregation tables are useful for accessing the data that drives GLAM if more digging is required. Please read through the next section to learn more!
 
 ## GLAM final tables (Aggregates dataset)
 
 The following datasets are split in three categories: Firefox Desktop Glean, Firefox Desktop Legacy and Firefox for Android. The tables contain the final aggregated data that powers GLAM.
 
-Each link below points to the dataset's page on [Mozilla's Data Catalog](https://mozilla.acryl.io/) where you can find the dataset's full documentation
+Each link below points to the dataset's page on [Mozilla's Data Catalog](https://mozilla.acryl.io/) where you can find the dataset's full documentation.
+
+> **_NOTE:_** You may realize that the Aggregates dataset does not have the dimensions you need. For example, the dataset does not contain client-level or day-by-day aggregations.
+> If you need to dive deeper or aggregate on a field that isn't included in the Aggregates dataset, you will need to write queries against raw telemetry tables. Should that be your quest we don't want you to start from scratch, this is why GLAM has the `View SQL Query` -> `Telemetry SQL` feature, which gives you a query that already works so you can tweak it. The feature is accessible once you pick a metric or probe. Additionally, you can read other material such as [Visualizing Percentiles of a Main Ping Exponential Histogram](https://docs.telemetry.mozilla.org/cookbooks/main_ping_exponential_histograms.html) in order to learn how to write queries that can give you what you need. Finally, #data-help on slack is a place where all questions related to data are welcome.
 
 ### Firefox Desktop (Glean)
 
