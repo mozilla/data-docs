@@ -184,14 +184,14 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="introduction-to-glam"><a class="header" href="#introduction-to-glam">Introduction to GLAM</a></h1>
-<p>GLAM was built to help Mozillians answer their data questions without needing data analysis or coding skills. It contains a visualization layer meant to answer most &quot;easy&quot; questions about how a probe or metric has changed over build ids and releases.</p>
+<p>GLAM was built to help Mozillians answer most &quot;easy&quot; questions about how a probe or metric has changed over build ids and releases.</p>
 <p>GLAM is one of several high-level data tools that we provide at Mozilla. For more information, see <a href="../introduction/tools.html">Tools for Data Analysis</a>.</p>
-<p>Access to GLAM is currently limited to Mozilla employees and designated contributors (this <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1712353">may change in the future</a>). For more information, see <a href="../concepts/gaining_access.html">gaining access</a>.</p>
+<p>Access to GLAM is public!</p>
 <h2 id="how-to-use-glam"><a class="header" href="#how-to-use-glam">How to use GLAM</a></h2>
 <p>You can visit GLAM at <a href="https://glam.telemetry.mozilla.org"><code>glam.telemetry.mozilla.org</code></a>.</p>
 <h3 id="front-page"><a class="header" href="#front-page">Front page</a></h3>
 <p><img src="../assets/GLAM_screenshots/front-page.png" alt="" /></p>
-<p>The front page includes two main sections: the search bar and the random probe explorer. Fuzzy tech search is implemented to let users search not only by the probe title, but also by the full description.</p>
+<p>The front page includes two main sections: the search bar and the random probe explorer. Users can search not only by the probe title, but also by the full description.</p>
 <p>GLAM is currently serving data for Firefox Desktop and Firefox for Android.</p>
 <h3 id="individual-probemetric-page"><a class="header" href="#individual-probemetric-page">Individual probe/metric page</a></h3>
 <p>Clicking on a probe or metric name takes you to the individual explorer, where most of the analysis happens. As this page is packed with data, we make sure that it's self-documented as much as possible: every button, surface, menu item, is tool-tipped with description and links.</p>
@@ -211,13 +211,6 @@
 <li><code>Summary</code> table provides the exact numeric values of the percentiles of the median changes between Build IDs.</li>
 </ul>
 <p><strong><code>(6)</code></strong> shows the volume of clients with each given Build ID</p>
-<h2 id="differences-between-glam-and-telemetrymozillaorg-dashboard"><a class="header" href="#differences-between-glam-and-telemetrymozillaorg-dashboard">Differences between GLAM and <code>telemetry.mozilla.org</code> dashboard</a></h2>
-<p>GLAM is aggregated per client, <code>telemetry.mozilla.org</code> (TMO) is aggregated per ping. This will cause different movements in the visualization between the two systems. Notably:</p>
-<ul>
-<li>Because GLAM normalizes the aggregations by client ID, a single client weighs equally to all other clients, regardless of how many samples that client sends.</li>
-<li>Reversely, TMO does not normalize by client ID, so if a single client sends a lot of pings, that client will impact the distribution more heavily. This can result in some changes appearing bigger on TMO.</li>
-</ul>
-<p>As of July 2022, TMO serves only Firefox Desktop (telemetry) data, while GLAM supports Firefox Desktop (both telemetry and Glean), Firefox for Android (Fenix), with ongoing efforts to integrate Firefox iOS and more products that use Glean as their telemetry system.</p>
 <h2 id="going-deeper"><a class="header" href="#going-deeper">Going deeper</a></h2>
 <p>For more information about the datasets that power GLAM, see <a href="../datasets/glam.html">GLAM Datasets</a>.</p>
 <p>If you have a question that can't be easily answered by the GLAM GUI, you can access the raw GLAM datasets using <a href="../tools/stmo.html"><code>sql.telemetry.mozilla.org</code></a>.</p>

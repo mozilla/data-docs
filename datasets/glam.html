@@ -184,150 +184,70 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="glam-datasets"><a class="header" href="#glam-datasets">GLAM datasets</a></h1>
-<p><a href="https://glam.telemetry.mozilla.org">GLAM</a> aims to answer a majority of the &quot;easy&quot; questions of how a probe or metric has changed over time.
-The GLAM aggregation tables are useful for accessing the data that drives GLAM if more exploration is required.
-Exploring the GLAM tables could take that a little farther, but still has some limitations.
-If you need to dive deeper or aggregate on a field that isn't included here, consider reading <a href="https://docs.telemetry.mozilla.org/cookbooks/main_ping_exponential_histograms.html">Visualizing Percentiles of a Main Ping Exponential Histogram</a>.</p>
-<p>The GLAM tables:</p>
+<p><a href="https://glam.telemetry.mozilla.org">GLAM</a> provides aggregated telemetry data in a way that makes it easy to understand how a given probe or metric has been changing over subsequent builds. GLAM aggregations are statistically validated by data scientists to ensure an accurate picture of the observed behavior of telemetry data.</p>
+<p>GLAM data is also meant to be explored by itself: GLAM aggregation tables are useful for accessing the data that drives GLAM if more digging is required. Please read through the next section to learn more!</p>
+<h2 id="glam-final-tables-aggregates-dataset"><a class="header" href="#glam-final-tables-aggregates-dataset">GLAM final tables (Aggregates dataset)</a></h2>
+<p>The following datasets are split in three categories: Firefox Desktop Glean, Firefox Desktop Legacy and Firefox for Android. The tables contain the final aggregated data that powers GLAM.</p>
+<p>Each link below points to the dataset's page on <a href="https://mozilla.acryl.io/">Mozilla's Data Catalog</a> where you can find the dataset's full documentation.</p>
+<blockquote>
+<p><strong><em>NOTE:</em></strong> You may realize that the Aggregates dataset does not have the dimensions you need. For example, the dataset does not contain client-level or day-by-day aggregations.
+If you need to dive deeper or aggregate on a field that isn't included in the Aggregates dataset, you will need to write queries against raw telemetry tables. Should that be your quest we don't want you to start from scratch, this is why GLAM has the <code>View SQL Query</code> -&gt; <code>Telemetry SQL</code> feature, which gives you a query that already works so you can tweak it. The feature is accessible once you pick a metric or probe. Additionally, you can read other material such as <a href="https://docs.telemetry.mozilla.org/cookbooks/main_ping_exponential_histograms.html">Visualizing Percentiles of a Main Ping Exponential Histogram</a> in order to learn how to write queries that can give you what you need. Finally, #data-help on slack is a place where all questions related to data are welcome.</p>
+</blockquote>
+<h3 id="firefox-desktop-glean"><a class="header" href="#firefox-desktop-glean">Firefox Desktop (Glean)</a></h3>
 <ul>
-<li>Are aggregated at the client level, not the submission ping level</li>
-<li>Provide a set of dimensions for subsets: channel, OS, process or ping type</li>
-<li>Are aggregated by build ID and version</li>
-<li>For each aggregation, the distribution and percentiles over time are calculated</li>
-<li>Have the last 3 versions of data aggregated every day</li>
-<li>Retain data for up to 10 major versions</li>
+<li><a href="https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.glam_etl.glam_fog_nightly_aggregates,PROD)/Schema?is_lineage_mode=false&amp;schemaFilter="><code>moz-fx-data-shared-prod.glam_etl.glam_fog_nightly_aggregates</code></a></li>
+<li><a href="https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.glam_etl.glam_fog_beta_aggregates,PROD)/Schema?is_lineage_mode=false&amp;schemaFilter="><code>moz-fx-data-shared-prod.glam_etl.glam_fog_beta_aggregates</code></a></li>
+<li><a href="https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.glam_etl.glam_fog_release_aggregates,PROD)/Schema?is_lineage_mode=false&amp;schemaFilter="><code>moz-fx-data-shared-prod.glam_etl.glam_fog_release_aggregates</code></a></li>
 </ul>
-<h2 id="firefox-desktop"><a class="header" href="#firefox-desktop">Firefox Desktop</a></h2>
-<h3 id="data-source-table"><a class="header" href="#data-source-table">Data source table</a></h3>
+<h3 id="firefox-for-android"><a class="header" href="#firefox-for-android">Firefox for Android</a></h3>
 <ul>
-<li><code>moz-fx-data-shared-prod.telemetry.client_probe_counts</code></li>
+<li><a href="https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.glam_etl.glam_fenix_nightly_aggregates,PROD)/Schema?is_lineage_mode=false&amp;schemaFilter="><code>moz-fx-data-shared-prod.glam_etl.glam_fenix_nightly_aggregates</code></a></li>
+<li><a href="https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.glam_etl.glam_fenix_beta_aggregates,PROD)/Schema?is_lineage_mode=false&amp;schemaFilter="><code>moz-fx-data-shared-prod.glam_etl.glam_fenix_beta_aggregates</code></a></li>
+<li><a href="https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.glam_etl.glam_fenix_release_aggregates,PROD)/Schema?is_lineage_mode=false&amp;schemaFilter="><code>moz-fx-data-shared-prod.glam_etl.glam_fenix_release_aggregates</code></a></li>
 </ul>
-<h3 id="data-reference"><a class="header" href="#data-reference">Data reference</a></h3>
+<h3 id="firefox-desktop-legacy-telemetry"><a class="header" href="#firefox-desktop-legacy-telemetry">Firefox Desktop (Legacy Telemetry)</a></h3>
 <ul>
-<li><code>os</code>: One of Windows, Mac, Linux, or NULL for all OSes</li>
-<li><code>app_version</code>: Integer representing the major version</li>
-<li><code>app_build_id</code>: The full build ID, or NULL if aggregated by major version</li>
-<li><code>channel</code>: One of nightly, beta, or release</li>
-<li><code>metric</code>: The name of the metric</li>
-<li><code>metric_type</code>: The type of metric, e.g. <code>histogram-enumerated</code></li>
-<li><code>key</code>: The key if the metric is a keyed metric</li>
-<li><code>process</code>: The process</li>
-<li><code>client_agg_type</code>: The type of client aggregation used, e.g. <code>summed_histogram</code></li>
-<li><code>agg_type</code>: One of histogram or percentiles representing what data will be in the <code>aggregates</code> column</li>
-<li><code>total_users</code>: The number of users that submitted data for the combination of dimensions</li>
-<li><code>aggregates</code>: The data as a key/value record, either percentiles or histogram</li>
+<li><a href="https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.glam_etl.glam_desktop_nightly_aggregates,PROD)/Schema?is_lineage_mode=false&amp;schemaFilter="><code>moz-fx-data-shared-prod.glam_etl.glam_desktop_nightly_aggregates</code></a></li>
+<li><a href="https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.glam_etl.glam_desktop_beta_aggregates,PROD)/Schema?is_lineage_mode=false&amp;schemaFilter="><code>moz-fx-data-shared-prod.glam_etl.glam_desktop_beta_aggregates</code></a></li>
+<li><a href="https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.glam_etl.glam_desktop_release_aggregates,PROD)/Schema?is_lineage_mode=false&amp;schemaFilter="><code>moz-fx-data-shared-prod.glam_etl.glam_desktop_release_aggregates</code></a></li>
 </ul>
-<h3 id="sample-query"><a class="header" href="#sample-query">Sample query</a></h3>
-<pre><code class="language-sql">SELECT
-  os,
-  app_version,
-  app_build_id,
-  channel,
-  metric,
-  metric_type,
-  key,
-  process,
-  client_agg_type,
-  agg_type,
-  total_users,
-  mozfun.glam.histogram_cast_json(aggregates) AS aggregates
-FROM
-  `moz-fx-data-shared-prod.telemetry.client_probe_counts`
-WHERE
-  metric=&quot;checkerboard_severity&quot;
-  AND channel=&quot;nightly&quot;
-  AND os IS NULL
-  AND process=&quot;parent&quot;
-  AND app_build_id IS NULL
-</code></pre>
-<p>Notes:</p>
+<p>In addition to the above tables, the GLAM ETL saves intermediate data transformed after each step. The next section provides an overview of each of the steps with the dataset they produce.</p>
+<h2 id="etl-pipeline"><a class="header" href="#etl-pipeline">ETL Pipeline</a></h2>
+<h3 id="scheduling"><a class="header" href="#scheduling">Scheduling</a></h3>
+<p>Most of the GLAM ETL is scheduled to run daily via Airflow. There are separate ETL pipelines for computing GLAM datasets:</p>
 <ul>
-<li>To query all OSes, use: <code>WHERE os IS NULL</code></li>
-<li>To query by build ID, use: <code>WHERE app_build_id IS NOT NULL</code></li>
-<li>To query by version, use: <code>WHERE app_build_id IS NULL</code></li>
+<li><a href="https://workflow.telemetry.mozilla.org/dags/glam_fog/grid">Firefox Desktop on Glean</a>
+<ul>
+<li>Runs daily</li>
+<li>Only <code>daily_</code> (first &quot;half&quot;) jobs for release are processed</li>
 </ul>
-<h2 id="firefox-for-android"><a class="header" href="#firefox-for-android">Firefox for Android</a></h2>
-<h3 id="data-source-tables"><a class="header" href="#data-source-tables">Data source tables</a></h3>
+</li>
+<li><a href="https://workflow.telemetry.mozilla.org/dags/glam_fog_release/grid">Firefox Desktop on Glean (release)</a>
 <ul>
-<li><code>org_mozilla_fenix_glam_release__view_probe_counts_v1</code></li>
-<li><code>org_mozilla_fenix_glam_beta__view_probe_counts_v1</code></li>
-<li><code>org_mozilla_fenix_glam_nightly__view_probe_counts_v1</code></li>
+<li>Runs weekly</li>
+<li>Second &quot;half&quot; of release ETL is processed</li>
 </ul>
-<h2 id="data-reference-1"><a class="header" href="#data-reference-1">Data reference</a></h2>
+</li>
+<li><a href="https://workflow.telemetry.mozilla.org/dags/glam/grid">Firefox Desktop legacy</a>
 <ul>
-<li><code>os</code>: Just &quot;Android&quot; for now</li>
-<li><code>app_version</code>: Integer representing the major version</li>
-<li><code>app_build_id</code>: The full build ID, or &quot;*&quot; if aggregated by major version</li>
-<li><code>channel</code>: Always &quot;*&quot;, use the different source tables to select a channel</li>
-<li><code>metric</code>: The name of the metric</li>
-<li><code>metric_type</code>: The type of metric, e.g. <code>timing_distribution</code></li>
-<li><code>key</code>: The key if the metric is a keyed metric</li>
-<li><code>ping_type</code>: The type of ping, or &quot;*&quot; for all ping types</li>
-<li><code>client_agg_type</code>: The type of client aggregation used, e.g. <code>summed_histogram</code></li>
-<li><code>agg_type</code>: One of histogram or percentiles representing what data will be in the <code>aggregates</code> column</li>
-<li><code>total_users</code>: The number of users that submitted data for the combination of dimensions</li>
-<li><code>aggregates</code>: The data as a key/value record, either percentiles or histogram</li>
+<li>Runs daily</li>
 </ul>
-<h3 id="sample-query-1"><a class="header" href="#sample-query-1">Sample query</a></h3>
-<pre><code class="language-sql">SELECT
-  ping_type,
-  os,
-  app_version,
-  app_build_id,
-  metric,
-  metric_type,
-  key,
-  client_agg_type,
-  agg_type,
-  total_users,
-  mozfun.glam.histogram_cast_json(aggregates) AS aggregates,
-FROM
-  `moz-fx-data-shared-prod.glam_etl.org_mozilla_fenix_glam_release__view_probe_counts_v1`
-WHERE
-  metric=&quot;performance_time_dom_complete&quot;
-  AND os=&quot;Android&quot;
-  AND ping_type=&quot;*&quot;
-  AND app_build_id!=&quot;*&quot;
-</code></pre>
-<p>Notes:</p>
+</li>
+<li><a href="https://workflow.telemetry.mozilla.org/dags/glam_fenix/grid">Firefox for Android</a>
 <ul>
-<li>To query all ping types, use: <code>WHERE ping_type = &quot;*&quot;</code></li>
-<li>To query by build ID, use: <code>WHERE app_build_id != &quot;*&quot;</code></li>
-<li>To query by version, use: <code>WHERE app_build_id = &quot;*&quot;</code></li>
-</ul>
-<h2 id="glam-intermediate-tables"><a class="header" href="#glam-intermediate-tables">GLAM Intermediate Tables</a></h2>
-<p>In addition to the above tables, the GLAM ETL produces intermediate tables that can be useful outside of the GLAM ETL in some cases.
-These tables include the client ID and could be joined with other tables to filter by client based data (e.g. specific hardware).</p>
-<h3 id="firefox-desktop-1"><a class="header" href="#firefox-desktop-1">Firefox Desktop</a></h3>
-<p>Data sources:</p>
-<ul>
-<li><code>moz-fx-data-shared-prod.telemetry.clients_daily_histogram_aggregates</code></li>
-<li><code>moz-fx-data-shared-prod.telemetry.clients_daily_scalar_aggregates</code></li>
-</ul>
-<p>These tables are:</p>
-<ul>
-<li>Preprocessed from main telemetry to intermediate data with one row per client per metric per day, then aggregated normalizing across clients.</li>
-<li>Clients daily aggregates analogous to clients daily with:
-<ul>
-<li>all metrics aggregated</li>
-<li>each scalar includes min, max, average, sum, and count aggregations</li>
-<li>each histogram aggregated over all client data per day</li>
-<li>each date is further aggregated over the dimensions: channel, os, version, build ID</li>
+<li>Runs daily</li>
 </ul>
 </li>
 </ul>
-<h2 id="etl-pipeline"><a class="header" href="#etl-pipeline">ETL Pipeline</a></h2>
-<h3 id="scheduling"><a class="header" href="#scheduling">Scheduling</a></h3>
-<p>GLAM is scheduled to run daily via Airflow. There are two separate ETL pipelines for computing GLAM datasets for <a href="https://workflow.telemetry.mozilla.org/dags/glam/grid">Firefox Desktop legacy</a>, <a href="https://workflow.telemetry.mozilla.org/dags/glam_fenix/grid">Fenix</a> and <a href="https://workflow.telemetry.mozilla.org/dags/glam_fog/grid">Firefox on Glean</a>.</p>
 <h3 id="source-code"><a class="header" href="#source-code">Source Code</a></h3>
 <p>The ETL code base lives in the <a href="https://github.com/mozilla/bigquery-etl">bigquery-etl repository</a> and is partially generated. The scripts for generating ETL queries for Firefox Desktop Legacy currently live <a href="https://github.com/mozilla/bigquery-etl/tree/main/script/glam">here</a> while the GLAM logic for Glean apps lives <a href="https://github.com/mozilla/bigquery-etl/tree/main/bigquery_etl/glam">here</a>.</p>
 <h3 id="steps"><a class="header" href="#steps">Steps</a></h3>
 <p>GLAM has a separate set of steps and intermediate tables to aggregate scalar and histogram probes.</p>
-<h4 id="latest_versions"><a class="header" href="#latest_versions"><code>latest_versions</code></a></h4>
+<h4 id="latest_versions"><a class="header" href="#latest_versions"><a href="https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.telemetry.latest_versions,PROD)/Schema?is_lineage_mode=false&amp;schemaFilter="><code>latest_versions</code></a></a></h4>
 <ul>
 <li>This task pulls in the most recent version for each channel from https://product-details.mozilla.org/1.0/firefox_versions.json</li>
 </ul>
-<h4 id="clients_daily_histogram_aggregates_process"><a class="header" href="#clients_daily_histogram_aggregates_process"><code>clients_daily_histogram_aggregates_&lt;process&gt;</code></a></h4>
+<h4 id="clients_daily_histogram_aggregates_process"><a class="header" href="#clients_daily_histogram_aggregates_process"><a href="https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.telemetry.clients_daily_histogram_aggregates,PROD)/View%20Definition?is_lineage_mode=false"><code>clients_daily_histogram_aggregates_&lt;process&gt;</code></a></a></h4>
 <ul>
 <li>The set of steps that load data to this table are divided into different processes (<code>parent</code>, <code>content</code>, <code>gpu</code>) plus a keyed step for keyed histograms.</li>
 <li>The parent job creates or overwrites the partition corresponding to the <code>logical_date</code>, and other processes append data to that partition.</li>
@@ -340,37 +260,33 @@ These tables include the client ID and could be joined with other tables to filt
 <li>Clients that are on the release channel of the Windows operating system get sampled to reduce the data size.</li>
 <li>The partitions are set to expire after 7 days.</li>
 </ul>
-<h4 id="clients_histogram_aggregates_new"><a class="header" href="#clients_histogram_aggregates_new"><code>clients_histogram_aggregates_new</code></a></h4>
+<h4 id="clients_histogram_aggregates_new"><a class="header" href="#clients_histogram_aggregates_new"><a href="https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.telemetry_derived.clients_histogram_aggregates_new_v1,PROD)/Schema?is_lineage_mode=false&amp;schemaFilter="><code>clients_histogram_aggregates_new</code></a></a></h4>
 <ul>
 <li>This step groups together all rows that have the same <code>submission_date</code> and <code>logical_date</code> from different processes and keyed and non-keyed sources, and combines them into a single row in the <code>histogram_aggregates</code> column. It sums the histogram values with the same key.</li>
 <li>This process is only applied to the last three versions.</li>
 <li>The table is overwritten at every execution of this step.</li>
 </ul>
-<h4 id="clients_histogram_aggregates"><a class="header" href="#clients_histogram_aggregates"><code>clients_histogram_aggregates</code></a></h4>
+<h4 id="clients_histogram_aggregates"><a class="header" href="#clients_histogram_aggregates"><a href="https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.telemetry_derived.clients_histogram_aggregates_v2,PROD)/Schema?is_lineage_mode=false&amp;schemaFilter="><code>clients_histogram_aggregates</code></a></a></h4>
 <ul>
+<li>This is the most important histogram table in the intermediate dataset, where each row represents a <code>client_id</code> with its cumulative sum of the histograms for the last 3 versions of all metrics.</li>
 <li>New entries from <code>clients_histogram_aggregates_new</code> are merged with the 3 last versions of previous day’s partition and written to the current day’s partition.</li>
-<li>The most recent partition contains the current snapshot of the last three versions of data.</li>
-<li>The partitions expire in 7 days.</li>
+<li>This table only holds the most recent <code>submission_date</code>, which marks the most recent date of data ingestion. A check before running this jobs ensures that the ETL does not skip days. In other words, the ETL only processes date <code>d</code> if the last date processed was <code>d-1</code>.</li>
+<li>In case of failures in the GLAM ETL this table must be backfilled one day at a time.</li>
 </ul>
-<h4 id="clients_histogram_buckets_counts"><a class="header" href="#clients_histogram_buckets_counts"><code>clients_histogram_buckets_counts</code></a></h4>
+<h4 id="clients_histogram_buckets_counts"><a class="header" href="#clients_histogram_buckets_counts"><a href="https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.telemetry_derived.clients_histogram_bucket_counts_v1,PROD)/Schema?is_lineage_mode=false&amp;schemaFilter="><code>clients_histogram_buckets_counts</code></a></a></h4>
 <ul>
-<li>This process starts by creating wildcards for <code>os</code> and <code>app_build_id</code> which are needed for aggregating values across os and build IDs later on.</li>
-<li>It then filters out builds that have less than 0.5% of WAU (which can vary per channel). This is referenced in https://github.com/mozilla/glam/issues/1575#issuecomment-946880387.</li>
-<li>The process then normalizes histograms per client - it sets the sum of histogram values for each client for a given metric to 1.</li>
-<li>Finally, it removes the <code>client_id</code> dimension by aggregating all histograms for a given metric and adding the clients' histogram values.</li>
+<li>This process creates wildcards for <code>os</code> and <code>app_build_id</code>, which are needed for aggregating values across os and build IDs later on.</li>
+<li>It then adds a normalized histogram per client, while keeping a non-normalized histogram.</li>
+<li>Finally, it removes the <code>client_id</code> dimension by breaking histograms into key/value pairs and doing the <code>SUM</code> all values of the same key for the same metric/os/version/build.</li>
 </ul>
-<h4 id="clients_histogram_probe_counts"><a class="header" href="#clients_histogram_probe_counts"><code>clients_histogram_probe_counts</code></a></h4>
+<h4 id="clients_histogram_probe_counts"><a class="header" href="#clients_histogram_probe_counts"><a href="https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.telemetry_derived.clients_histogram_probe_counts_v1,PROD)/Schema?is_lineage_mode=false&amp;schemaFilter="><code>clients_histogram_probe_counts</code></a></a></h4>
 <ul>
-<li>This process generates buckets - which can be linear or exponential - based on the <code>metric_type</code>.</li>
+<li>This process uses the <code>metric_type</code> to select the algorithm to build histograms using the broken down buckets from the previous step. Histograms can be <code>linear</code>, <code>exponential</code> or <code>custom</code>.</li>
 <li>It then aggregates metrics per wildcards (<code>os</code>, <code>app_build_id</code>).</li>
 <li>Finally, it rebuilds histograms using the Dirichlet Distribution, normalized using the number of clients that contributed to that histogram in the <code>clients_histogram_buckets_counts</code> step.</li>
 </ul>
-<h4 id="histogram_percentiles"><a class="header" href="#histogram_percentiles"><code>histogram_percentiles</code></a></h4>
-<ul>
-<li>Uses <code>mozfun.glam.percentile</code> UDF to build histogram percentiles, from [0.1 to 99.9]</li>
-</ul>
 <hr />
-<h4 id="clients_daily_scalar_aggregates"><a class="header" href="#clients_daily_scalar_aggregates"><code>clients_daily_scalar_aggregates</code></a></h4>
+<h4 id="clients_daily_scalar_aggregates"><a class="header" href="#clients_daily_scalar_aggregates"><a href="https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.telemetry.clients_daily_scalar_aggregates,PROD)/Schema?is_lineage_mode=false&amp;schemaFilter="><code>clients_daily_scalar_aggregates</code></a></a></h4>
 <ul>
 <li>The set of steps that load data to this table are divided into non-keyed <code>scalar</code>, <code>keyed_boolean</code> and <code>keyed_scalar</code>. The non-keyed scalar job creates or overwrites the partition corresponding to the <code>logical_date</code>, and other processes append data to that partition.</li>
 <li>The process uses <code>telemetry.buildhub2</code> to select rows with valid <code>build_ids</code>.</li>
@@ -380,47 +296,24 @@ These tables include the client ID and could be joined with other tables to filt
 <li>Clients that are on the release channel of the Windows operating system get sampled to reduce the data size.</li>
 <li>Partitions expire in 7 days.</li>
 </ul>
-<h4 id="clients_scalar_aggregates"><a class="header" href="#clients_scalar_aggregates"><code>clients_scalar_aggregates</code></a></h4>
+<h4 id="clients_scalar_aggregates"><a class="header" href="#clients_scalar_aggregates"><a href="https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,mozdata.telemetry.clients_scalar_aggregates,PROD)/Schema?is_lineage_mode=false&amp;schemaFilter="><code>clients_scalar_aggregates</code></a></a></h4>
 <ul>
-<li>The process starts by taking the <code>clients_daily_scalar_aggregates</code> as the primary source.</li>
-<li>It then groups all rows that have the same <code>submission_date</code> and <code>logical_date</code> from the keyed and non-keyed, scalar and boolean sources, and combines them into a single row in the <code>scalar_aggregates</code> column.</li>
+<li>This process groups all rows with the same <code>submission_date</code> and <code>logical_date</code> from <code>clients_daily_scalar_aggregates</code> and combines them into a single row in the <code>scalar_aggregates</code> column.</li>
 <li>If the <code>agg_type</code> is <code>count</code>, <code>sum</code>, <code>true</code>, or <code>false</code>, the process will sum the values.</li>
 <li>If the <code>agg_type</code> is <code>max</code>, it will take the maximum value, and if it is <code>min</code>, it will take the minimum value.</li>
 <li>This process is only applied to the last three versions.</li>
-<li>The partitions expire in 7 days.</li>
+<li>The table is partitioned by <code>submission_date</code>. The partitions expire in 7 days.</li>
 </ul>
-<h4 id="scalar_percentiles"><a class="header" href="#scalar_percentiles"><code>scalar_percentiles</code></a></h4>
+<h4 id="client_scalar_probe_counts"><a class="header" href="#client_scalar_probe_counts"><a href="https://mozilla.acryl.io/tasks/urn:li:dataJob:(urn:li:dataFlow:(airflow,glam,prod),client_scalar_probe_counts)/Documentation?is_lineage_mode=false"><code>client_scalar_probe_counts</code></a></a></h4>
 <ul>
-<li>This process produces a user count and percentiles for scalar metrics.</li>
-<li>It generates wildcard combinations of <code>os</code> and <code>app_build_id</code> and merges all submissions from a client for the same <code>os</code>, <code>app_version</code>, <code>app_build_id</code> and channel into the <code>scalar_aggregates</code> column.</li>
-<li>The <code>user_count</code> column is computed taking sampling into account.</li>
-<li>Finally it splits the aggregates into percentiles from [0.1 to 99.9]</li>
-</ul>
-<h4 id="client_scalar_probe_counts"><a class="header" href="#client_scalar_probe_counts"><code>client_scalar_probe_counts</code></a></h4>
-<ul>
-<li>This step processes booleans and scalars, although booleans are not supported by GLAM.
-<ul>
-<li>For boolean metrics the process aggregates their values with the following rule: &quot;never&quot; if all values for a metric are false, &quot;always&quot; if all values are true, and sometimes if there's a mix.</li>
+<li>This step processes booleans and scalars, although booleans are not supported by GLAM.</li>
+<li>For boolean metrics the process aggregates their values with the following rule: &quot;never&quot; if all values for a metric are false, &quot;always&quot; if all values are true, and &quot;sometimes&quot; if there's a mix.</li>
 <li>For scalar and <code>keyed_scalar</code> probes the process starts by building the buckets per metric, then it generates wildcards for os and <code>app_build_id</code>. It then aggregates all submissions from the same <code>client_id</code> under one row and assigns the <code>user_count</code> column to it with the following rule: 10 if os is &quot;Windows&quot; and channel is &quot;release&quot;, 1 otherwise. After that it finishes by aggregating the rows per metric, placing the scalar values in their appropriate buckets and summing up all <code>user_count</code> values for that metric.</li>
 </ul>
-</li>
-</ul>
 <hr />
-<h4 id="glam_user_counts"><a class="header" href="#glam_user_counts"><code>glam_user_counts</code></a></h4>
+<h4 id="glam_sample_counts"><a class="header" href="#glam_sample_counts"><a href="https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.telemetry_derived.glam_sample_counts_v1,PROD)/Schema?is_lineage_mode=false&amp;schemaFilter="><code>glam_sample_counts</code></a></a></h4>
 <ul>
-<li>Combines both aggregated scalar and histogram values.</li>
-<li>This process produces a user count for each combination of <code>os</code>, <code>app_version</code>, <code>app_build_id</code>, channel.</li>
-<li>It builds a client count from the union of histograms and scalars, including all combinations in which <code>os</code>, <code>app_version</code>, <code>app_build_id</code>, and <code>channel</code> are wildcards.</li>
-</ul>
-<h4 id="glam_sample_counts"><a class="header" href="#glam_sample_counts"><code>glam_sample_counts</code></a></h4>
-<ul>
-<li>This process calculates the <code>total_sample</code> column by adding up all the <code>aggregates</code> values.</li>
-<li>This works because in the primary sources the values also represent a count of the samples that registered their respective keys</li>
-</ul>
-<h4 id="extract_user_counts"><a class="header" href="#extract_user_counts"><code>extract_user_counts</code></a></h4>
-<ul>
-<li>This step exports user counts in its final shape to GCS as a CSV.</li>
-<li>It first copies a deduplicated version of the primary source to a temporary table, removes the previously exported CSV files from GCS, then exports the temporary table to GCS as CSV files.</li>
+<li>This process calculates the <code>total_sample</code> column.</li>
 </ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/glam.md">Edit this page on GitHub.</a></footer>
                     </main>
