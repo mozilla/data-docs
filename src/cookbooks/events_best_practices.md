@@ -1,5 +1,8 @@
 # Telemetry Events Best Practices
 
+**Note:** This doc is deprecated and will be updated in [bug 1940696](https://bugzilla.mozilla.org/show_bug.cgi?id=1940696).
+In the meantime, please consult [the Glean event documentation](https://mozilla.github.io/glean/book/reference/metrics/event.html).
+
 ## Overview:
 
 [The Telemetry Events API](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html) allows users to define and record events in the browser.
