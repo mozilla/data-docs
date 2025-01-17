@@ -11,6 +11,7 @@ deprecated across the platform.
 
 For more up to date information on events used by Nimbus,
 see <https://experimenter.info/telemetry>.
+
 </div>
 
 The [`events` table](../datasets/batch_view/events/reference.md)
@@ -24,7 +25,6 @@ or name (for add-on experiments).
 
 Normandy events are described in detail in the
 [Firefox source tree docs][normandy-doc].
-
 
 ## Counting pref-flip enrollment events by branch
 

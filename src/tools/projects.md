@@ -81,7 +81,7 @@ See also [`data-docs`][docs] for documentation on datasets.
 | [St. Mocli][stmocli]              | A command-line interface to [STMO][stmo]                        |
 | [probe-scraper]                   | Scrape and publish Telemetry probe data from Firefox            |
 | [experimenter]                    | A web application for managing experiments                      |
-| [jetstream]                       | Automated analysis for experiments                              |
+| [Jetstream]                       | Automated analysis for experiments                              |
 | [metric-hub]                      | Semantic layer for metric definitions                           |
 
 See also [What Data Tool Should I Use?][data-tools-wiki] for more information on Data Tools and their uses.
