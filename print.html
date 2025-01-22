@@ -3110,8 +3110,17 @@ or to <a href="tools/../cookbooks/bigquery/querying.html#writing-results-to-gcs-
 <p>You can also save data to the <a href="https://docs.databricks.com/user-guide/databricks-file-system.html#dbfs">Databricks Filesystem</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/tools/spark.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="dataset-specific"><a class="header" href="#dataset-specific">Dataset Specific</a></h1>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/cookbooks/dataset_specific.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="working-with-normandy-events"><a class="header" href="#working-with-normandy-events">Working with Normandy events</a></h1>
-<p>A common request is to count the number of users who have
-enrolled or unenrolled from a SHIELD experiment.</p>
+<div class="warning">
+Normandy and SHIELD are older experimentation platforms
+at Mozilla, but are no longer in use. However, Normandy
+events are still in use (as of January 2025) by Jetstream
+for computing enrollments and exposures. Note that this
+will likely change in the near future because these events
+have been ported to Glean and legacy telemetry is being
+deprecated across the platform.
+<p>For more up to date information on events used by Nimbus,
+see <a href="https://experimenter.info/telemetry">https://experimenter.info/telemetry</a>.</p>
+</div>
 <p>The <a href="cookbooks/../datasets/batch_view/events/reference.html"><code>events</code> table</a>
 includes Normandy enrollment and unenrollment events
 for both pref-flip and add-on studies.
@@ -3121,11 +3130,6 @@ The <code>event_string_value</code> will contain the experiment slug (for pref-f
 or name (for add-on experiments).</p>
 <p>Normandy events are described in detail in the
 <a href="https://firefox-source-docs.mozilla.org/toolkit/components/normandy/normandy/data-collection.html#enrollment">Firefox source tree docs</a>.</p>
-<p>Note that addon studies do not have branch information in the events table,
-since addons, not Normandy, are responsible for branch assignment.
-For studies built with the obsolete <a href="https://github.com/mozilla/shield-studies-addon-utils">add-on utilities</a>,
-branch assignments are published to the
-<a href="cookbooks/../datasets/experiment_telemetry.html#telemetryshield_study">shield_study</a> dataset.</p>
 <h2 id="counting-pref-flip-enrollment-events-by-branch"><a class="header" href="#counting-pref-flip-enrollment-events-by-branch">Counting pref-flip enrollment events by branch</a></h2>
 <p>The <code>event_map_values</code> column of enroll events contains a <code>branch</code> key,
 describing which branch the user enrolled in.</p>
@@ -4754,115 +4758,7 @@ please read the <a href="https://wiki.mozilla.org/Firefox/Data_Collection">Data 
 ingestion of structured (JSON) data that utilizes the same underlying
 infrastructure. See <a href="datasets/../cookbooks/new_ping.html">this cookbook</a> for details on using it.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/new_data.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="client-implementation-guidelines-for-experiments"><a class="header" href="#client-implementation-guidelines-for-experiments">Client Implementation Guidelines for Experiments</a></h1>
-<p><strong>Note</strong>: This guidance is useful for implementing Normandy experiments. To ship experiments with the Nimbus platform, please see the guidance for engineers at <a href="https://experimenter.info/">https://experimenter.info/</a>.</p>
-<p>There are three supported approaches for enabling experimental features for Firefox:</p>
-<ul>
-<li><a href="cookbooks/client_guidelines.html#prefs">Firefox Prefs</a>
-<ul>
-<li>Prefs can be used to control features that <strong>land in-tree</strong>.
-<a href="cookbooks/client_guidelines.html#feature-gates">Feature Gates</a> provide a wrapper around prefs that can be used from JavaScript.</li>
-</ul>
-</li>
-<li><a href="cookbooks/client_guidelines.html#extensions">Firefox Extensions</a> AKA &quot;<strong>Add-ons</strong>&quot;.
-<ul>
-<li>If the feature being tested should not land in the tree, or if it will ultimately ship as an extension, then an extension should be used.</li>
-</ul>
-</li>
-</ul>
-<p>New features go through the standard Firefox review, testing, and deployment processes, and are then enabled experimentally in the field using <a href="https://github.com/mozilla/normandy">Normandy</a>.</p>
-<h2 id="prefs"><a class="header" href="#prefs">Prefs</a></h2>
-<p>Firefox Preferences (AKA &quot;prefs&quot;) are commonly used to enable and disable features. However, prefs are more complex to implement correctly than <a href="cookbooks/client_guidelines.html#feature-gates">feature gates</a>.</p>
-<p><strong>Each pref should represent a different experimental treatment</strong>. If your experimental feature requires multiple prefs, then Normandy does not currently support this but will soon. In the meantime, an <a href="cookbooks/client_guidelines.html#extensions">extension</a> such as <a href="https://github.com/nhnt11/multipreffer">multipreffer</a> may be used.</p>
-<p>There are three types of Prefs:</p>
-<ol>
-<li>Built-in prefs - shipped with Firefox, in <code>firefox.js</code>.</li>
-<li><code>user branch</code> - set by the user, overriding built-in prefs.</li>
-<li><code>default branch</code> - Overrides both built-in and <code>user branch</code> prefs. Only persists until the browser session ends, next restart will revert to either built-in or <code>user branch</code> (if set).</li>
-</ol>
-<p><a href="https://github.com/mozilla/normandy">Normandy</a> supports overriding both the <code>user</code> and <code>default</code> branches, although the latter is preferred as it does not permanently override user settings. <code>default</code> branch prefs are simple to reset since they do not persist past a restart.</p>
-<p><strong>In order for features to be activated experimentally using <code>default branch</code> prefs</strong>:</p>
-<ul>
-<li>The feature must not start up before <code>final-ui-startup</code> is observed.</li>
-</ul>
-<p>For instance, to set an observer:</p>
-<pre><code class="language-js">Services.obs.addObserver(this, &quot;final-ui-startup&quot;, true);
-</code></pre>
-<p>In this example, <code>this</code> would implement an <code>observe(subject, topic, data)</code> function which will be called when <code>final-ui-startup</code> is observed. See the <a href="https://searchfox.org/mozilla-central/rev/59e797b66f5ce8a27ede0e7677688931be7aed20/xpcom/ds/nsIObserverService.idl#24-39">Observer documentation</a> for more information.</p>
-<ul>
-<li>It must be possible to enable/disable the feature at runtime, via a pref change.</li>
-</ul>
-<p>This is similar to the observer pattern above:</p>
-<pre><code class="language-js">Services.prefs.addObserver(&quot;pref_name&quot;, this);
-</code></pre>
-<p>More information is available in the <a href="https://searchfox.org/mozilla-central/source/modules/libpref/nsIPrefService.idl">Preference service documentation</a>.</p>
-<ul>
-<li>
-<p>Never use <code>Services.prefs.prefHasUserValue()</code>, or any other function specific to <code>user branch</code> prefs.</p>
-</li>
-<li>
-<p>Prefs should be set by default in <code>firefox.js</code></p>
-</li>
-</ul>
-<p>If your feature cannot abide by one or more of these rules (for instance, it needs to run at startup and/or cannot be toggled at runtime) then experimental preferences can be set on the <code>user branch</code>. This is more complex than using the methods described above; user branch prefs override the users choice, which is a really complex thing to try to support when flipping prefs experimentally. We also need to be careful to back up and reset the pref, and then figure out how to resolve conflicts if the user has changed the pref in the meantime.</p>
-<h2 id="feature-gates"><a class="header" href="#feature-gates">Feature Gates</a></h2>
-<p>A new Feature Gate library for Firefox Desktop is now available.</p>
-<p><strong>Each feature gate should represent a different experimental treatment</strong>. If your experimental feature requires multiple flags, then Normandy will not be able to support this directly and an <a href="cookbooks/client_guidelines.html#extensions">extension</a> may be used.</p>
-<h3 id="feature-gate-caveats"><a class="header" href="#feature-gate-caveats">Feature Gate caveats</a></h3>
-<p>The current Feature Gate library comes with a few caveats, and may not be appropriate for your situation:</p>
-<ul>
-<li>Only JS is supported.</li>
-<li>Always asynchronous.</li>
-</ul>
-<p>Future versions of the Feature Gate API will include C++/Rust support and a synchronous API.</p>
-<h3 id="using-the-feature-gate-library"><a class="header" href="#using-the-feature-gate-library">Using the Feature Gate library</a></h3>
-<p>Read <a href="https://firefox-source-docs.mozilla.org/toolkit/components/featuregates/featuregates/index.html">the documentation</a> to get started.</p>
-<h2 id="extensions"><a class="header" href="#extensions">Extensions</a></h2>
-<p>Firefox currently supports the <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions">Web Extensions API</a>.</p>
-<p><strong>If new WebExtension APIs are needed, they should land in-tree</strong>. Extensions which are signed by Mozilla can load privileged code using the <a href="https://firefox-source-docs.mozilla.org/toolkit/components/extensions/webextensions/index.html">WebExtension Experiments</a>, but this is not preferred.</p>
-<p>WebExtensions go through the same correctness and performance tests as other features. This is possible using the Mozilla tryserver by dropping your XPI into <code>testing/profiles/common/extensions</code> in <code>mozilla-central</code> and pushing to Tryserver - see the <a href="cookbooks/client_guidelines.html#testing-extensions">Testing Extensions</a> section below.</p>
-<p>NOTE - it is ideal to test against the version of Firefox which the extension will release against, but there is a <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1435403">bug related to artifact builds on release channels</a> which must be worked around. The workaround is pretty simple (modify an <code>artifacts.py</code> file), but this bug being resolved will make it much simpler.</p>
-<p><strong>Each extension can represent a different experimental treatment (preferred), or the extension can choose the branch internally</strong>.</p>
-<h3 id="shield-studies"><a class="header" href="#shield-studies">SHIELD studies</a></h3>
-<p>The previous version of the experiments program, SHIELD, always bundled privileged code with extensions and would do things such as mock UI features in Firefox.</p>
-<p>This sort of approach is discouraged for new features - land these (or the necessary WebExtension APIs) in-tree instead.</p>
-<p>For the moment, the <a href="https://github.com/mozilla/shield-studies-addon-utils/">SHIELD Study Add-on Utilities</a> may be used if the extension needs to control the lifecycle of the study, but using one extension per experimental treatment makes this unnecessary and is preferred. The APIs provided by the SHIELD Study Add-on Utilities will be available as privileged APIs shipped with Firefox soon.</p>
-<h1 id="development-and-testing"><a class="header" href="#development-and-testing">Development and Testing</a></h1>
-<h2 id="testing-built-in-features"><a class="header" href="#testing-built-in-features">Testing Built-in Features</a></h2>
-<p>Firefox features go through standard development and testing processes. See the <a href="https://firefox-source-docs.mozilla.org/">Firefox developer guide</a> for more information.</p>
-<h2 id="testing-extensions"><a class="header" href="#testing-extensions">Testing Extensions</a></h2>
-<p>Extensions do not need to go through the same process, but should take advantage of Mozilla CI and bug tracking systems:</p>
-<ol>
-<li>Use the Mozilla CI to test changes (tryserver).</li>
-<li>Performance tests (<strong>this step is required</strong>) - extension XPI files should be placed in <code>testing/profiles/common/extensions/</code>, which will cause test harnesses to load the XPI.</li>
-<li>Custom unit/functional tests (AKA <code>xpcshell</code>/<code>mochitest</code>) may be placed in <code>testing/extensions</code>, although running these tests outside Mozilla CI is acceptable so these are <strong>optional</strong>.</li>
-<li>Receive reviewer approval. A Firefox peer <strong>must sign off</strong> if this extension contains privileged code, aka WebExtension Experiments.</li>
-</ol>
-<ul>
-<li>Any <a href="https://wiki.mozilla.org/Modules/All#Firefox">Firefox Peer</a> should be able to do the review, or point you to someone who can.</li>
-</ul>
-<ol start="5">
-<li>Extension is signed.</li>
-<li>Email to <code>pi-request@mozilla.com</code> is sent to request QA</li>
-<li>QA approval signed off in Bugzilla.</li>
-<li>Extension is shipped via <a href="https://github.com/mozilla/normandy">Normandy</a>.</li>
-</ol>
-<h2 id="example-extensions-testing-workflow"><a class="header" href="#example-extensions-testing-workflow">Example Extensions Testing Workflow</a></h2>
-<p>Note that for the below to work you only need <a href="https://www.mercurial-scm.org/">Mercurial</a> installed, but if you want to do local testing you must be set up to <a href="https://firefox-source-docs.mozilla.org/setup/index.html">build Firefox</a>. You don't need to build Firefox from source; <a href="https://firefox-source-docs.mozilla.org/contributing/build/artifact_builds.html">artifact builds</a> are sufficient.</p>
-<p>In order to use Mozilla CI (AKA &quot;<a href="https://firefox-source-docs.mozilla.org/tools/try/">Tryserver</a>&quot;), you must have a full clone of the <code>mozilla-central</code> repository:</p>
-<pre><code class="language-bash">hg clone https://hg.mozilla.org/mozilla-central
-cd mozilla-central
-</code></pre>
-<p>Copy in unsigned XPI, and commit it to your local Mercurial repo:</p>
-<pre><code class="language-bash">cp ~/src/my-extension.xpi testing/profiles/common/extensions/
-hg add testing/profiles/common/extensions/my-extension.xpi
-hg commit -m &quot;Bug nnn - Testing my extension&quot; testing/profiles/common/extensions/my-extension.xpi
-</code></pre>
-<p>Push to Try:</p>
-<pre><code class="language-bash">./mach try -p linux64,macosx64,win64 -b do -u none -t all --artifact
-</code></pre>
-<p>This will run Mozilla CI tests on all platforms</p>
-<p>Note that you must have Level 1 commit access to use tryserver. If you are interested in interacting with Mozilla CI from Github (which only requires users to be in the Mozilla GitHub org), check out the <a href="https://github.com/biancadanforth/taskcluster-integration-poc/">Taskcluster Integration proof-of-concept</a>.</p>
-<p>Also note that this requires an investment time to set up just as CircleCI or Travis-CI would, so it's not really appropriate for short-term projects. Use tryserver directly instead.</p>
+<p>To ship experiments with the Nimbus platform, please see the guidance for engineers at <a href="https://experimenter.info/getting-started/engineers/for-engineers">https://experimenter.info/getting-started/engineers/for-engineers</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/cookbooks/client_guidelines.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="telemetry-events-best-practices"><a class="header" href="#telemetry-events-best-practices">Telemetry Events Best Practices</a></h1>
 <p><strong>Note:</strong> This doc is deprecated and will be updated in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1940696">bug 1940696</a>.
 In the meantime, please consult <a href="https://mozilla.github.io/glean/book/reference/metrics/event.html">the Glean event documentation</a>.</p>
@@ -8422,11 +8318,12 @@ A detailed guide of how to create a new custom connector step by step, best prac
 <tr><td><a href="https://github.com/mozilla/firefox-hardware-report">Hardware Report</a></td><td>Firefox Hardware Report, <a href="https://data.firefox.com/dashboard/hardware">available here</a></td></tr>
 <tr><td><a href="https://github.com/mozilla/stmocli">St. Mocli</a></td><td>A command-line interface to <a href="https://sql.telemetry.mozilla.org">STMO</a></td></tr>
 <tr><td><a href="https://github.com/mozilla/probe-scraper">probe-scraper</a></td><td>Scrape and publish Telemetry probe data from Firefox</td></tr>
-<tr><td><a href="https://github.com/mozilla/firefox-test-tube">test-tube</a></td><td>Compare data across branches in experiments</td></tr>
 <tr><td><a href="https://github.com/mozilla/experimenter">experimenter</a></td><td>A web application for managing experiments</td></tr>
-<tr><td><a href="https://github.com/mozilla/stmoab">St. Moab</a></td><td>Automatically generate Redash dashboard for A/B experiments</td></tr>
+<tr><td><a href="https://github.com/mozilla/jetstream">Jetstream</a></td><td>Automated analysis for experiments</td></tr>
+<tr><td><a href="https://github.com/mozilla/metric-hub">metric-hub</a></td><td>Semantic layer for metric definitions</td></tr>
 </tbody></table>
 </div>
+<p>See also <a href="https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/375750774/Data+Tools">What Data Tool Should I Use?</a> for more information on Data Tools and their uses.</p>
 <h2 id="legacy-projects"><a class="header" href="#legacy-projects">Legacy projects</a></h2>
 <p>Projects in this section are less active, but may not be officially
 deprecated. Please check with the <code>fx-data-dev</code> mailing list before
@@ -10155,24 +10052,24 @@ Data scientists can configure Jetstream or trigger a Jetstream invocation
 by interacting with the <a href="https://github.com/mozilla/jetstream-config"><code>jetstream-config</code></a> repository.</p>
 <h2 id="documentation"><a class="header" href="#documentation">Documentation</a></h2>
 <p>Additional documentation about Jetstream can be found in the <a href="https://experimenter.info/deep-dives/jetstream/overview">Jetstream Experimenter Docs</a>.</p>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/jetstream.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="analyzing-data-from-shield-studies"><a class="header" href="#analyzing-data-from-shield-studies">Analyzing data from SHIELD studies</a></h1>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/jetstream.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="accessing-experiment-telemetry"><a class="header" href="#accessing-experiment-telemetry">Accessing Experiment Telemetry</a></h1>
 <p>This article introduces the datasets that are useful for analyzing studies in Firefox.
-After reading this article,
-you should understand how to answer questions about
-study enrollment,
-identify telemetry from clients enrolled in an experiment,
-and locate telemetry from add-on studies.</p>
+After reading this article, you should understand how to answer questions about
+experiment enrollment, and identify telemetry from clients enrolled in an experiment.</p>
 <h2 id="table-of-contents-12"><a class="header" href="#table-of-contents-12">Table of contents</a></h2>
 <ul>
 <li><a href="datasets/experiment_telemetry.html#dashboards">Dashboards</a></li>
 <li><a href="datasets/experiment_telemetry.html#experiment-slugs">Experiment slugs</a></li>
-<li><a href="datasets/experiment_telemetry.html#tables">Tables</a>
+<li><a href="datasets/experiment_telemetry.html#tables-glean">Tables (Glean)</a>
+<ul>
+<li><a href="datasets/experiment_telemetry.html#experiments-map-glean"><code>experiments</code> map (Glean)</a></li>
+</ul>
+</li>
+<li><a href="datasets/experiment_telemetry.html#tables-legacy-telemetry">Tables (Legacy Telemetry)</a>
 <ul>
 <li><a href="datasets/experiment_telemetry.html#experiments-map-ping-tables"><code>experiments</code> map (ping tables)</a></li>
 <li><a href="datasets/experiment_telemetry.html#experiments-column-some-derived-tables"><code>experiments</code> column (some derived tables)</a></li>
 <li><a href="datasets/experiment_telemetry.html#events"><code>events</code></a></li>
-<li><a href="datasets/experiment_telemetry.html#telemetryshield_study_addon"><code>telemetry.shield_study_addon</code></a></li>
-<li><a href="datasets/experiment_telemetry.html#telemetryshield_study"><code>telemetry.shield_study</code></a></li>
 </ul>
 </li>
 </ul>
@@ -10185,7 +10082,27 @@ The slug is also used to identify the experiment in most telemetry.
 The slug for pref-flip experiments is defined in the recipe by a field named <code>slug</code>;
 the slug for add-on experiments is defined in the recipe by a field named <code>name</code>.</p>
 <p>You can find the slug associated with an experiment in Experimenter.</p>
-<h2 id="tables-1"><a class="header" href="#tables-1">Tables</a></h2>
+<h2 id="tables-glean"><a class="header" href="#tables-glean">Tables (Glean)</a></h2>
+<h3 id="experiments-map-glean"><a class="header" href="#experiments-map-glean"><code>experiments</code> map (Glean)</a></h3>
+<p>Glean tables include a <code>ping_info</code> column with <code>experiments</code> mapping from
+experiment slug to a struct containing information about the experiment,
+including <code>branch</code>.</p>
+<p>You can query for enrolled clients using a query like:</p>
+<pre><code class="language-sql">SELECT
+  -- ... some fields ...,
+  `mozfun.map.get_key`(ping_info.experiments, '{experiment_slug}').branch
+FROM
+  `moz-fx-data-shared-prod.firefox_desktop.metrics`
+WHERE
+  `mozfun.map.get_key`(ds.ping_info.experiments, '{experiment_slug}') IS NOT NULL
+  AND DATE(m.submission_timestamp) BETWEEN '&lt;start_date&gt;' AND '&lt;end_date&gt;'
+  AND normalized_channel = 'release'
+  -- AND ...other filters...
+</code></pre>
+<h2 id="tables-legacy-telemetry"><a class="header" href="#tables-legacy-telemetry">Tables (Legacy Telemetry)</a></h2>
+<p>As of January 2025, legacy telemetry is still used for enrollment and exposure
+events. However, while Glean adoption is in progress, these docs remain for
+the time being as reference.</p>
 <h3 id="experiments-map-ping-tables"><a class="header" href="#experiments-map-ping-tables"><code>experiments</code> map (ping tables)</a></h3>
 <p>Ping tables and some derived tables include an <code>experiments</code> column
 which is a mapping from an experiment slug to a struct of information
@@ -10227,39 +10144,6 @@ The event value will contain the experiment slug.</p>
 <p>The event schema is described
 <a href="https://hg.mozilla.org/mozilla-central/file/tip/toolkit/components/normandy/lib/TelemetryEvents.sys.mjs">in the Firefox source tree</a>.</p>
 <p>The <code>events</code> table is updated daily.</p>
-<h3 id="telemetryshield_study_addon"><a class="header" href="#telemetryshield_study_addon"><code>telemetry.shield_study_addon</code></a></h3>
-<p>The <code>telemetry.shield_study_addon</code> table contains SHIELD telemetry from legacy add-on experiments,
-i.e. key-value pairs sent with the
-<code>browser.study.sendTelemetry()</code> method from the
-<a href="https://github.com/mozilla/shield-studies-addon-utils/">SHIELD study add-on utilities</a>
-library.</p>
-<p>The <code>study_name</code> attribute of the <code>payload</code> column will contain the identifier
-registered with the SHIELD add-on utilities.
-This is set by the add-on; sometimes it takes the value of
-<code>applications.gecko.id</code> from the add-on's <code>manifest.json</code>.
-This is often not the same as the Normandy slug.</p>
-<p>The schema for shield-study-addon pings is described in the
-<a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/master/schemas/telemetry/shield-study-addon"><code>mozilla-pipeline-schemas</code> repository</a>.</p>
-<p>The key-value pairs are present in <code>data</code> attribute of the <code>payload</code> column.</p>
-<p>The <code>telemetry.shield_study_addon</code> table contains only full days of data.
-If you need access to data with lower latency, you can use the &quot;live&quot; table
-<code>telemetry_live.shield_study_addon_v4</code> which should have latency significantly
-less than 1 hour.</p>
-<h3 id="telemetryshield_study"><a class="header" href="#telemetryshield_study"><code>telemetry.shield_study</code></a></h3>
-<p>The <code>telemetry.shield_study</code> dataset includes
-enrollment and unenrollment events for legacy add-on experiments only,
-sent by the <a href="https://github.com/mozilla/shield-studies-addon-utils/">SHIELD study add-on utilities</a>.</p>
-<p>The <code>study_name</code> attribute of the <code>payload</code> column will contain the identifier
-registered with the SHIELD add-on utilities.
-This is set by the add-on; sometimes it takes the value of
-<code>applications.gecko.id</code> from the add-on's <code>manifest.json</code>.
-This is often not the same as the Normandy slug.</p>
-<p>Normandy also emits its own enrollment and unenrollment events for these studies,
-which are available in the <code>events</code> table.</p>
-<p>The <code>telemetry.shield_study</code> table contains only full days of data.
-If you need access to data with lower latency, you can use the &quot;live&quot; table
-<code>telemetry_live.shield_study_v4</code> which should have latency significantly
-less than 1 hour.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/experiment_telemetry.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="accessing-heartbeat-data"><a class="header" href="#accessing-heartbeat-data">Accessing Heartbeat data</a></h1>
 <p><a href="datasets/../concepts/experiments.html#heartbeat">Heartbeat</a> survey studies return telemetry on user engagement with the survey prompt.
 The heartbeat pings do not contain the survey responses themselves,
@@ -13705,7 +13589,7 @@ client-side activity dates).</li>
 <p>E.g. For a cohort acquired (with a profile creation date) of Mar 1, they are considered activated in day 2-7 if they show up in DAU at any time between Mar 2nd and Mar 7th.</p>
 <h3 id="dashboards-2"><a class="header" href="#dashboards-2">Dashboards</a></h3>
 <p>The <a href="https://datastudio.google.com/u/0/reporting/1L7dsFyqjT8XZHrYprYS-HCP5_k_gZGIb/page/0iERB">non-desktop day 2-7 dashboard</a> tracks this measure.</p>
-<h3 id="tables-2"><a class="header" href="#tables-2">Tables</a></h3>
+<h3 id="tables-1"><a class="header" href="#tables-1">Tables</a></h3>
 <p>You can calculate this measure via the <code>firefox_nondesktop_day_2_7_activation</code> table in BigQuery. Here is a sample query:</p>
 <pre><code class="language-sql">SELECT
   cohort_date,
