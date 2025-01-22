@@ -1,7 +1,18 @@
 # Working with Normandy events
 
-A common request is to count the number of users who have
-enrolled or unenrolled from a SHIELD experiment.
+<div class="warning">
+Normandy and SHIELD are older experimentation platforms
+at Mozilla, but are no longer in use. However, Normandy
+events are still in use (as of January 2025) by Jetstream
+for computing enrollments and exposures. Note that this
+will likely change in the near future because these events
+have been ported to Glean and legacy telemetry is being
+deprecated across the platform.
+
+For more up to date information on events used by Nimbus,
+see <https://experimenter.info/telemetry>.
+
+</div>
 
 The [`events` table](../datasets/batch_view/events/reference.md)
 includes Normandy enrollment and unenrollment events
@@ -14,12 +25,6 @@ or name (for add-on experiments).
 
 Normandy events are described in detail in the
 [Firefox source tree docs][normandy-doc].
-
-Note that addon studies do not have branch information in the events table,
-since addons, not Normandy, are responsible for branch assignment.
-For studies built with the obsolete [add-on utilities][`addon-utils`],
-branch assignments are published to the
-[shield_study] dataset.
 
 ## Counting pref-flip enrollment events by branch
 
@@ -68,5 +73,3 @@ ORDER BY 1, 2, 3
 ```
 
 [normandy-doc]: https://firefox-source-docs.mozilla.org/toolkit/components/normandy/normandy/data-collection.html#enrollment
-[shield_study]: ../datasets/experiment_telemetry.md#telemetryshield_study
-[`addon-utils`]: https://github.com/mozilla/shield-studies-addon-utils

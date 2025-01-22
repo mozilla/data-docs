@@ -80,9 +80,11 @@ See also [`data-docs`][docs] for documentation on datasets.
 | [Hardware Report][hwreport_gh]    | Firefox Hardware Report, [available here][hwreport]             |
 | [St. Mocli][stmocli]              | A command-line interface to [STMO][stmo]                        |
 | [probe-scraper]                   | Scrape and publish Telemetry probe data from Firefox            |
-| [test-tube]                       | Compare data across branches in experiments                     |
 | [experimenter]                    | A web application for managing experiments                      |
-| [St. Moab][stmoab]                | Automatically generate Redash dashboard for A/B experiments     |
+| [Jetstream]                       | Automated analysis for experiments                              |
+| [metric-hub]                      | Semantic layer for metric definitions                           |
+
+See also [What Data Tool Should I Use?][data-tools-wiki] for more information on Data Tools and their uses.
 
 [tmo_gh]: https://github.com/mozilla/telemetry-dashboard
 [glam]: https://github.com/mozilla/glam
@@ -91,16 +93,16 @@ See also [`data-docs`][docs] for documentation on datasets.
 [redashstmo]: https://github.com/mozilla/redash-stmo
 [taar]: https://github.com/mozilla/taar
 [ensemble]: https://github.com/mozilla/ensemble
-[shield]: https://wiki.mozilla.org/index.php?title=Firefox/Shield
 [tmo]: https://telemetry.mozilla.org
 [stmo]: https://sql.telemetry.mozilla.org
 [hwreport_gh]: https://github.com/mozilla/firefox-hardware-report
 [hwreport]: https://data.firefox.com/dashboard/hardware
 [stmocli]: https://github.com/mozilla/stmocli
 [probe-scraper]: https://github.com/mozilla/probe-scraper
-[test-tube]: https://github.com/mozilla/firefox-test-tube
 [experimenter]: https://github.com/mozilla/experimenter
-[stmoab]: https://github.com/mozilla/stmoab
+[jetstream]: https://github.com/mozilla/jetstream
+[metric-hub]: https://github.com/mozilla/metric-hub
+[data-tools-wiki]: https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/375750774/Data+Tools
 
 ## Legacy projects
 

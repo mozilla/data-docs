@@ -1,11 +1,8 @@
-# Analyzing data from SHIELD studies
+# Accessing Experiment Telemetry
 
 This article introduces the datasets that are useful for analyzing studies in Firefox.
-After reading this article,
-you should understand how to answer questions about
-study enrollment,
-identify telemetry from clients enrolled in an experiment,
-and locate telemetry from add-on studies.
+After reading this article, you should understand how to answer questions about
+experiment enrollment, and identify telemetry from clients enrolled in an experiment.
 
 ## Table of contents
 
@@ -27,7 +24,34 @@ the slug for add-on experiments is defined in the recipe by a field named `name`
 
 You can find the slug associated with an experiment in Experimenter.
 
-## Tables
+## Tables (Glean)
+
+### `experiments` map (Glean)
+
+Glean tables include a `ping_info` column with `experiments` mapping from
+experiment slug to a struct containing information about the experiment,
+including `branch`.
+
+You can query for enrolled clients using a query like:
+
+```sql
+SELECT
+  -- ... some fields ...,
+  `mozfun.map.get_key`(ping_info.experiments, '{experiment_slug}').branch
+FROM
+  `moz-fx-data-shared-prod.firefox_desktop.metrics`
+WHERE
+  `mozfun.map.get_key`(ds.ping_info.experiments, '{experiment_slug}') IS NOT NULL
+  AND DATE(m.submission_timestamp) BETWEEN '<start_date>' AND '<end_date>'
+  AND normalized_channel = 'release'
+  -- AND ...other filters...
+```
+
+## Tables (Legacy Telemetry)
+
+As of January 2025, legacy telemetry is still used for enrollment and exposure
+events. However, while Glean adoption is in progress, these docs remain for
+the time being as reference.
 
 ### `experiments` map (ping tables)
 
@@ -85,47 +109,3 @@ The event schema is described
 [in the Firefox source tree](https://hg.mozilla.org/mozilla-central/file/tip/toolkit/components/normandy/lib/TelemetryEvents.sys.mjs).
 
 The `events` table is updated daily.
-
-### `telemetry.shield_study_addon`
-
-The `telemetry.shield_study_addon` table contains SHIELD telemetry from legacy add-on experiments,
-i.e. key-value pairs sent with the
-`browser.study.sendTelemetry()` method from the
-[SHIELD study add-on utilities](https://github.com/mozilla/shield-studies-addon-utils/)
-library.
-
-The `study_name` attribute of the `payload` column will contain the identifier
-registered with the SHIELD add-on utilities.
-This is set by the add-on; sometimes it takes the value of
-`applications.gecko.id` from the add-on's `manifest.json`.
-This is often not the same as the Normandy slug.
-
-The schema for shield-study-addon pings is described in the
-[`mozilla-pipeline-schemas` repository](https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/master/schemas/telemetry/shield-study-addon).
-
-The key-value pairs are present in `data` attribute of the `payload` column.
-
-The `telemetry.shield_study_addon` table contains only full days of data.
-If you need access to data with lower latency, you can use the "live" table
-`telemetry_live.shield_study_addon_v4` which should have latency significantly
-less than 1 hour.
-
-### `telemetry.shield_study`
-
-The `telemetry.shield_study` dataset includes
-enrollment and unenrollment events for legacy add-on experiments only,
-sent by the [SHIELD study add-on utilities](https://github.com/mozilla/shield-studies-addon-utils/).
-
-The `study_name` attribute of the `payload` column will contain the identifier
-registered with the SHIELD add-on utilities.
-This is set by the add-on; sometimes it takes the value of
-`applications.gecko.id` from the add-on's `manifest.json`.
-This is often not the same as the Normandy slug.
-
-Normandy also emits its own enrollment and unenrollment events for these studies,
-which are available in the `events` table.
-
-The `telemetry.shield_study` table contains only full days of data.
-If you need access to data with lower latency, you can use the "live" table
-`telemetry_live.shield_study_v4` which should have latency significantly
-less than 1 hour.
