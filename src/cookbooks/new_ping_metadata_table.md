@@ -29,5 +29,5 @@
 | `metadata.isp.name`                    | The name of the Internet Service Provider                                                                                           |
 | `metadata.isp.organization`            | The name of a specific business entity when available; otherwise the ISP name                                                       |
 
-[geo database]: https://dev.maxmind.com/geoip/geoip2/geoip2-city-country-csv-databases/
-[isp database]: https://dev.maxmind.com/geoip/geoip2/geoip2-isp-csv-database/
+[geo database]: https://dev.maxmind.com/geoip/docs/databases/city-and-country/
+[isp database]: https://dev.maxmind.com/geoip/docs/databases/isp/
