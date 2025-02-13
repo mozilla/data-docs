@@ -309,9 +309,9 @@ these fields are documented here, instead of in the source tree docs.</p>
 <tr><td><code>additional_properties</code></td><td>A JSON string containing any payload properties not present in the schema</td></tr>
 <tr><td><code>document_id</code></td><td>The document ID specified in the URI when the client sent this message</td></tr>
 <tr><td><code>normalized_app_name</code></td><td>Set to &quot;Other&quot; if this message contained an unrecognized app name</td></tr>
-<tr><td><code>normalized_channel</code></td><td>Set to &quot;Other&quot; if this message contained an unrecognized channel name</td></tr>
+<tr><td><code>normalized_channel</code></td><td>Possible values: <code>release</code>, <code>esr</code>, <code>beta</code>, <code>aurora</code>, <code>nightly</code>, or <code>Other</code> when this message contained an unrecognized channel name</td></tr>
 <tr><td><code>normalized_country_code</code></td><td>An ISO 3166-1 alpha-2 country code</td></tr>
-<tr><td><code>normalized_os</code></td><td>Set to &quot;Other&quot; if this message contained an unrecognized OS name</td></tr>
+<tr><td><code>normalized_os</code></td><td>Possible values: <code>Windows</code>, <code>Mac</code>, <code>Linux</code>, <code>iOS</code>, <code>Android</code>, or <code>Other</code> when this message contained an unrecognized OS name</td></tr>
 <tr><td><code>normalized_os_version</code></td><td>N/A</td></tr>
 <tr><td><code>sample_id</code></td><td>Hashed version of client_id (if present) useful for partitioning; ranges from 0 to 99</td></tr>
 <tr><td><code>submission_timestamp</code></td><td>Time when the ingestion edge server accepted this message</td></tr>
