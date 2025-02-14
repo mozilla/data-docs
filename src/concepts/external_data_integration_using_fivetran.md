@@ -6,7 +6,7 @@
 
 Access to Fivetran is limited to Mozilla employees. By default, users do not have permissions to create or access connectors. To gain access, create a task in [Jira under the DENG project](https://mozilla-hub.atlassian.net/jira/software/c/projects/DENG/issues/).
 
-Fivetran can be accessed using your Mozilla LDAP credentials through `sso.mozilla.com`.
+Fivetran can be accessed using your Mozilla LDAP credentials through [`sso.mozilla.com`](https://sso.mozilla.com/).
 
 ## Architecture
 
