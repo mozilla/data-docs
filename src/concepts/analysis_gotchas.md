@@ -334,7 +334,7 @@ The build id format for Firefox Desktop has been very stable over time thus far,
 
 4. **Different Reporting Frequencies (Especially for Scalars)**
    - **Legacy Telemetry**: Sends telemetry data [at distinct intervals or under certain conditions](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/data/main-ping.html). Usually per browsing session.
-   - **Glean**: Generally sends data less often. Usually once a day for the `metrics` ping.
+   - **Glean**: Generally sends data [less often](https://mozilla.github.io/glean/book/user/pings/metrics.html#scheduling). Usually once a day for the `metrics` ping.
    - **Result**: Scalar comparisons (like sums or counts) often diverge because each system “batches” or “chunks” the data differently over time.
 
 #### Impact on Analyses
