@@ -300,3 +300,44 @@ A build id might be formatted in any way and contain the time or version control
 
 Do not assume build id's are consistent across the products we ship. A build id format may vary between products, between channels of the same product, or over time within the same channel of the same product.
 The build id format for Firefox Desktop has been very stable over time thus far, but even it can be different for different platforms in some respin circumstances (if e.g. only one platform's builder failed).
+
+## Comparing Legacy Telemetry and Glean Data in GLAM
+
+### Official Recommendation
+
+> **Do Not Compare Legacy Telemetry and Glean Data Directly in GLAM.**
+
+- If you need to track long-term trends for a particular metric, treat the Legacy Telemetry timeframe and the Glean timeframe as **separate eras**.
+- For in-depth analysis, rely on the Glean instrumentation once you have fully migrated, and use Legacy Telemetry only for historical reference.
+- Recognize that both Legacy Telemetry and Glean “tell the same story” but from different angles and with different measurement methodologies.
+- Both data sources remain valid and useful, but **side-by-side comparison is not recommended and if done should be approached with caution**. Instead, analysts are encouraged to use Legacy Telemetry data for historical context and Glean data for current and future trends.
+
+#### If you still need to do side-by-side comparisons, be aware that significant discrepancies will occur due to a variety of factors:
+
+1. **Bucket Discrepancies (Histograms)**
+
+   - **Legacy Telemetry**: Fewer buckets; Uses a fixed number of buckets depending on histogram type.
+   - **Glean**: More buckets; Uses an algorithmically-generated number of buckets depending on the metric's distribution type.
+   - **Result**: The distributions and percentiles can look different in GLAM even when measuring the same underlying data because the histogram bounds and number of buckets do not match.
+
+2. **Cross-Process vs. Per-Process Collection**
+
+   - **Legacy Telemetry**: Often collects data per process (e.g., main, content, etc.) and can send data differently depending on the process.
+   - **Glean**: Consolidates measurements across multiple processes.
+   - **Result**: Aggregated Glean data may appear larger or differently distributed compared to Legacy data, because it merges what Legacy would treat as separate process-specific measurements.
+
+3. **Ping Differences ("baseline" & "metrics" Pings in Glean, "main" pings in Legacy Telemetry)**
+
+   - **Legacy Telemetry**: Typically sends one primary ping type (e.g., the “main” ping) for most data.
+   - **Glean**: Splits data into multiple ping types (e.g., a “baseline” ping, a “metrics” ping, etc.).
+   - **Result**: The same metric can appear to have more frequent updates or different submission times in Glean if it is reported in multiple pings.
+
+4. **Different Reporting Frequencies (Especially for Scalars)**
+   - **Legacy Telemetry**: Sends telemetry data [at distinct intervals or under certain conditions](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/data/main-ping.html). Usually per browsing session.
+   - **Glean**: Generally sends data [less often](https://mozilla.github.io/glean/book/user/pings/metrics.html#scheduling). Usually once a day for the `metrics` ping.
+   - **Result**: Scalar comparisons (like sums or counts) often diverge because each system “batches” or “chunks” the data differently over time.
+
+#### Impact on Analyses
+
+- **Histogram Metrics**: Expect to see different bucket distributions, total counts, and percentile shapes.
+- **Scalars**: Differences in sums, counts, and other simple accumulations are common. The magnitude of these discrepancies may vary depending on how often the ping is sent, how usage patterns differ, and whether data is merged across processes.
