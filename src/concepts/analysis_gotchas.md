@@ -310,7 +310,7 @@ The build id format for Firefox Desktop has been very stable over time thus far,
 - If you need to track long-term trends for a particular metric, treat the Legacy Telemetry timeframe and the Glean timeframe as **separate eras**.
 - For in-depth analysis, rely on the Glean instrumentation once you have fully migrated, and use Legacy Telemetry only for historical reference.
 - Recognize that both Legacy Telemetry and Glean “tell the same story” but from different angles and with different measurement methodologies.
-- Both data sources remain valid and useful, but **side-by-side comparisons is not recommended and if done should be approached with caution**. Instead, analysts are encouraged to use Legacy Telemetry data for historical context and Glean data for current and future trends.
+- Both data sources remain valid and useful, but **side-by-side comparison is not recommended and if done should be approached with caution**. Instead, analysts are encouraged to use Legacy Telemetry data for historical context and Glean data for current and future trends.
 
 #### If you still need to do side-by-side comparisons, be aware that significant discrepancies will occur due to a variety of factors:
 
