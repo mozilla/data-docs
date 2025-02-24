@@ -316,7 +316,7 @@ The build id format for Firefox Desktop has been very stable over time thus far,
 
 1. **Bucket Discrepancies (Histograms)**
 
-   - **Legacy Telemetry**: Less buckets; Uses a fixed number of buckets depending on histogram type.
+   - **Legacy Telemetry**: Fewer buckets; Uses a fixed number of buckets depending on histogram type.
    - **Glean**: More buckets; Uses an algorithmically-generated number of buckets depending on the metric's distribution type.
    - **Result**: The distributions and percentiles can look different in GLAM even when measuring the same underlying data because the histogram bounds and number of buckets do not match.
 
