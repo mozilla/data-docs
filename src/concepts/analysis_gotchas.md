@@ -326,7 +326,7 @@ The build id format for Firefox Desktop has been very stable over time thus far,
    - **Glean**: Consolidates measurements across multiple processes.
    - **Result**: Aggregated Glean data may appear larger or differently distributed compared to Legacy data, because it merges what Legacy would treat as separate process-specific measurements.
 
-3. **Ping Differences (Baseline & Metrics Pings in Glean)**
+3. **Ping Differences ("baseline" & "metrics" Pings in Glean, "main" pings in Legacy Telemetry)**
 
    - **Legacy Telemetry**: Typically sends one primary ping type (e.g., the “main” ping) for most data.
    - **Glean**: Splits data into multiple ping types (e.g., a “baseline” ping, a “metrics” ping, etc.).
