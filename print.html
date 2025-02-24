@@ -6540,6 +6540,16 @@ LIMIT
 </li>
 <li><a href="concepts/analysis_gotchas.html#pings-from-robots">Pings from Robots</a></li>
 <li><a href="concepts/analysis_gotchas.html#build-ids">Build Ids</a></li>
+<li><a href="concepts/analysis_gotchas.html#comparing-legacy-telemetry-and-glean-data-in-glam">Comparing Legacy Telemetry and Glean Data in GLAM</a>
+<ul>
+<li><a href="concepts/analysis_gotchas.html#official-recommendation">Official Recommendation</a>
+<ul>
+<li><a href="concepts/analysis_gotchas.html#if-you-still-need-to-do-side-by-side-comparisons-be-aware-that-significant-discrepancies-will-occur-due-to-a-variety-of-factors">If you still need to do side-by-side comparisons, be aware that significant discrepancies will occur due to a variety of factors:</a></li>
+<li><a href="concepts/analysis_gotchas.html#impact-on-analyses">Impact on Analyses</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <h2 id="intermittent-issues"><a class="header" href="#intermittent-issues">Intermittent issues</a></h2>
 <p>Despite best efforts, problems may occur from time to time with the ingestion of data or the faithful creation of datasets.</p>
@@ -6736,6 +6746,57 @@ For example, in Firefox Desktop, the build id is the date and time the build was
 A build id might be formatted in any way and contain the time or version control system revision of the code included in the build.</p>
 <p>Do not assume build id's are consistent across the products we ship. A build id format may vary between products, between channels of the same product, or over time within the same channel of the same product.
 The build id format for Firefox Desktop has been very stable over time thus far, but even it can be different for different platforms in some respin circumstances (if e.g. only one platform's builder failed).</p>
+<h2 id="comparing-legacy-telemetry-and-glean-data-in-glam"><a class="header" href="#comparing-legacy-telemetry-and-glean-data-in-glam">Comparing Legacy Telemetry and Glean Data in GLAM</a></h2>
+<h3 id="official-recommendation"><a class="header" href="#official-recommendation">Official Recommendation</a></h3>
+<blockquote>
+<p><strong>Do Not Compare Legacy Telemetry and Glean Data Directly in GLAM.</strong></p>
+</blockquote>
+<ul>
+<li>If you need to track long-term trends for a particular metric, treat the Legacy Telemetry timeframe and the Glean timeframe as <strong>separate eras</strong>.</li>
+<li>For in-depth analysis, rely on the Glean instrumentation once you have fully migrated, and use Legacy Telemetry only for historical reference.</li>
+<li>Recognize that both Legacy Telemetry and Glean “tell the same story” but from different angles and with different measurement methodologies.</li>
+<li>Both data sources remain valid and useful, but <strong>side-by-side comparison is not recommended and if done should be approached with caution</strong>. Instead, analysts are encouraged to use Legacy Telemetry data for historical context and Glean data for current and future trends.</li>
+</ul>
+<h4 id="if-you-still-need-to-do-side-by-side-comparisons-be-aware-that-significant-discrepancies-will-occur-due-to-a-variety-of-factors"><a class="header" href="#if-you-still-need-to-do-side-by-side-comparisons-be-aware-that-significant-discrepancies-will-occur-due-to-a-variety-of-factors">If you still need to do side-by-side comparisons, be aware that significant discrepancies will occur due to a variety of factors:</a></h4>
+<ol>
+<li>
+<p><strong>Bucket Discrepancies (Histograms)</strong></p>
+<ul>
+<li><strong>Legacy Telemetry</strong>: Fewer buckets; Uses a fixed number of buckets depending on histogram type.</li>
+<li><strong>Glean</strong>: More buckets; Uses an algorithmically-generated number of buckets depending on the metric's distribution type.</li>
+<li><strong>Result</strong>: The distributions and percentiles can look different in GLAM even when measuring the same underlying data because the histogram bounds and number of buckets do not match.</li>
+</ul>
+</li>
+<li>
+<p><strong>Cross-Process vs. Per-Process Collection</strong></p>
+<ul>
+<li><strong>Legacy Telemetry</strong>: Often collects data per process (e.g., main, content, etc.) and can send data differently depending on the process.</li>
+<li><strong>Glean</strong>: Consolidates measurements across multiple processes.</li>
+<li><strong>Result</strong>: Aggregated Glean data may appear larger or differently distributed compared to Legacy data, because it merges what Legacy would treat as separate process-specific measurements.</li>
+</ul>
+</li>
+<li>
+<p><strong>Ping Differences (&quot;baseline&quot; &amp; &quot;metrics&quot; Pings in Glean, &quot;main&quot; pings in Legacy Telemetry)</strong></p>
+<ul>
+<li><strong>Legacy Telemetry</strong>: Typically sends one primary ping type (e.g., the “main” ping) for most data.</li>
+<li><strong>Glean</strong>: Splits data into multiple ping types (e.g., a “baseline” ping, a “metrics” ping, etc.).</li>
+<li><strong>Result</strong>: The same metric can appear to have more frequent updates or different submission times in Glean if it is reported in multiple pings.</li>
+</ul>
+</li>
+<li>
+<p><strong>Different Reporting Frequencies (Especially for Scalars)</strong></p>
+<ul>
+<li><strong>Legacy Telemetry</strong>: Sends telemetry data <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/data/main-ping.html">at distinct intervals or under certain conditions</a>. Usually per browsing session.</li>
+<li><strong>Glean</strong>: Generally sends data <a href="https://mozilla.github.io/glean/book/user/pings/metrics.html#scheduling">less often</a>. Usually once a day for the <code>metrics</code> ping.</li>
+<li><strong>Result</strong>: Scalar comparisons (like sums or counts) often diverge because each system “batches” or “chunks” the data differently over time.</li>
+</ul>
+</li>
+</ol>
+<h4 id="impact-on-analyses"><a class="header" href="#impact-on-analyses">Impact on Analyses</a></h4>
+<ul>
+<li><strong>Histogram Metrics</strong>: Expect to see different bucket distributions, total counts, and percentile shapes.</li>
+<li><strong>Scalars</strong>: Differences in sums, counts, and other simple accumulations are common. The magnitude of these discrepancies may vary depending on how often the ping is sent, how usage patterns differ, and whether data is merged across processes.</li>
+</ul>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/concepts/analysis_gotchas.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="sql-style-guide"><a class="header" href="#sql-style-guide">SQL Style Guide</a></h1>
 <h2 id="table-of-contents-10"><a class="header" href="#table-of-contents-10">Table of Contents</a></h2>
 <ul>
