@@ -200,11 +200,6 @@
 </li>
 <li><a href="#spark">Spark</a></li>
 <li><a href="#colaboratory">Colaboratory</a></li>
-<li><a href="#ai-platform-notebooks">AI Platform Notebooks</a>
-<ul>
-<li><a href="#notebooks-access-to-workgroup-confidential-datasets">Notebooks Access to workgroup-confidential Datasets</a></li>
-</ul>
-</li>
 </ul>
 </li>
 <li><a href="#bigquery-access-request">BigQuery Access Request</a></li>
@@ -300,27 +295,11 @@ python -c 'from google.cloud import bigquery; print([d.dataset_id for d in bigqu
 <h3 id="colaboratory"><a class="header" href="#colaboratory">Colaboratory</a></h3>
 <p><a href="https://colab.research.google.com">Colaboratory</a> (Colab) is Jupyter notebook environment, managed by Google and running in the cloud. Notebooks are stored in Google Drive and can be shared in a similar way to Google Docs.</p>
 <p>Colab can be used to easily access BigQuery and perform analyses. See the <a href="https://colab.research.google.com/drive/1uXmrPnqzDATiCVH2RNJKD8obIZuofFHx"><code>Telemetry Hello World</code> notebook</a> for an interactive example. Under the hood, it uses the BigQuery API to read and write to BigQuery tables, so access needs to be explicitly provisioned.</p>
-<h3 id="ai-platform-notebooks"><a class="header" href="#ai-platform-notebooks">AI Platform Notebooks</a></h3>
-<p><a href="https://cloud.google.com/ai-platform/notebooks/docs">AI Platform Notebooks</a> is a managed JupyterLab service running on GCP. It gives you full control over the machine where your notebooks are running - you can install your own libraries and choose machine size depending on your needs.</p>
-<p>To start, go to <a href="https://console.cloud.google.com">GCP console</a> and make sure you are in the correct project - most likely this will be your team project. Then navigate to the Notebooks page in the sidebar under AI Platform &gt; Notebooks (<a href="https://console.cloud.google.com/ai-platform/notebooks/list/instances">direct link</a>). There you can create new notebook server instances and connect to them (when your instance is ready, you'll see an <code>Open JupyterLab</code> button).</p>
-<p>Please note that by default JupyterLab saves notebook files only locally, so they are lost if your instance is deleted. To make sure you don't lose your work, either push your files to a Git repository (via a pre-installed Git extension) or upload them to GCS (using <code>gsutil</code> command in a terminal session).</p>
-<h4 id="notebooks-access-to-workgroup-confidential-datasets"><a class="header" href="#notebooks-access-to-workgroup-confidential-datasets">Notebooks Access to workgroup-confidential Datasets</a></h4>
-<p>If you are a member of a restricted access workgroup, you can provision AI notebooks in the <a href="https://console.cloud.google.com/vertex-ai/workbench/list/instances?project=mozdata&amp;supportedpurview=project"><code>mozdata GCP project</code></a> that can read workgroup-confidential data.</p>
-<blockquote>
-<p><strong>⚠</strong> You must provision AI notebooks in <code>mozdata</code> using a nonstandard service account specific to your workgroup, see below.</p>
-</blockquote>
-<p>When you create a notebook server, under &quot;Advanced Options&quot; / &quot;Permissions&quot;, deselect &quot;Use Compute Engine Default Service Account&quot; and replace it with the service account associated with your workgroup. You may need to type this service account manually as it will not be available from a drop-down menu to all users. The ID of the service account matches the following pattern:</p>
-<p><code>WORKGROUP-SUBGROUP@mozdata.iam.gserviceaccount.com</code></p>
-<p>For example, if you are member of <code>workgroup:search-terms/aggregated</code>, use <code>search-terms-aggregated@mozdata.iam.gserviceaccount.com</code>.</p>
-<p>This notebook server should have access to any restricted access datasets that are accessible to <code>workgroup:search-terms/aggregated</code>. Additionally, this notebooks server will not have write access to the standard <code>mozdata.analysis</code> dataset, but will instead have write access to a workgroup-specific dataset that looks like the following:</p>
-<p><code>mozdata.WORKGROUP_SUBGROUP_analysis</code></p>
-<p>In the example above this maps to <code>mozdata.search_terms_aggregated_analysis</code>.</p>
 <h2 id="bigquery-access-request"><a class="header" href="#bigquery-access-request">BigQuery Access Request</a></h2>
 <blockquote>
-<p><strong>⚠</strong>  Access to BigQuery via the <code>mozdata</code> GCP project is granted to Mozilla Staff by default; only file an access request if you need other specific access such as via a teams project</p>
+<p><strong>⚠</strong> Access to BigQuery via the <code>mozdata</code> GCP project is granted to Mozilla Staff by default; only file an access request if you need other specific access such as via a teams project</p>
 </blockquote>
-<p>For access to BigQuery using projects other than <code>mozdata</code>, <a href="https://mozilla-hub.atlassian.net/secure/CreateIssueDetails!init.jspa?pid=10058&amp;issuetype=10007&amp;priority=3&amp;customfield_10014=DSRE-87&amp;summary=BigQuery%20GCP%20Console%20and%20API%20Access%20for%20YOUR_EMAIL_HERE&amp;description=My%20request%20information%0A%3D%3D%3D%3D%3D%3D%3D%3D%0Amozilla.com%20ldap%20login%3A%0Ateam%3A%0Aaccess%20required%3A%20BigQuery%20GCP%20console%20and%20API%20Access%3B%20ENTER%20OTHER%20ACCESS%20REQUESTS%20HERE%0A%0APost%20request%0A%3D%3D%3D%3D%3D%3D%3D%3D%0ASee%20GCP%20console%20and%20other%20access%20methods%20docs%20here%3A%20https%3A%2F%2Fdocs.telemetry.mozilla.org%2Fcookbooks%2Fbigquery">file a bug (requires access to Mozilla Jira)</a>.
-If you require access to AI Notebooks or Dataproc, please specify in the bug and a team project will be provisioned for you.</p>
+<p>For access to BigQuery using projects other than <code>mozdata</code>, <a href="https://mozilla-hub.atlassian.net/secure/CreateIssueDetails!init.jspa?pid=10058&amp;issuetype=10007&amp;priority=3&amp;customfield_10014=DSRE-87&amp;summary=BigQuery%20GCP%20Console%20and%20API%20Access%20for%20YOUR_EMAIL_HERE&amp;description=My%20request%20information%0A%3D%3D%3D%3D%3D%3D%3D%3D%0Amozilla.com%20ldap%20login%3A%0Ateam%3A%0Aaccess%20required%3A%20BigQuery%20GCP%20console%20and%20API%20Access%3B%20ENTER%20OTHER%20ACCESS%20REQUESTS%20HERE%0A%0APost%20request%0A%3D%3D%3D%3D%3D%3D%3D%3D%0ASee%20GCP%20console%20and%20other%20access%20methods%20docs%20here%3A%20https%3A%2F%2Fdocs.telemetry.mozilla.org%2Fcookbooks%2Fbigquery">file a bug (requires access to Mozilla Jira)</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/cookbooks/bigquery/access.md">Edit this page on GitHub.</a></footer>
                     </main>
 
