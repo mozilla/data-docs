@@ -368,44 +368,42 @@ WHERE
   sample_id = '42'
 ```
 
-## Nested Queries
+## Comma at the end of the line
 
-Do not use nested queries.
-Instead, use common table expressions to improve readability.
+Commas in items in the `SELECT` list should always be at the end of the line.
+For example:
 
-**Good**:
-
-```sql
-WITH sample AS (
-  SELECT
-    client_id,
-    submission_date
-  FROM
-    main_summary
-  WHERE
-    sample_id = '42'
-)
-
-SELECT *
-FROM sample
-LIMIT 10
-```
-
-**Bad**:
+**Good**
 
 ```sql
-SELECT *
-FROM (
-  SELECT
-    client_id,
-    submission_date
-  FROM
-    main_summary
-  WHERE
-    sample_id = '42'
-)
-LIMIT 10
+SELECT
+  client_id,
+  os_name,
+  submission_date
+FROM
+  main_summary
+WHERE
+  submission_date > '20180101'
+LIMIT
+  10
 ```
+
+**Bad**
+
+```sql
+SELECT
+  client_id
+  , os_name
+  , submission_date
+FROM
+  main_summary
+WHERE
+  submission_date > '20180101'
+LIMIT
+  10
+```
+
+**
 
 ## About this Document
 
