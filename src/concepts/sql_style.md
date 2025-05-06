@@ -368,6 +368,41 @@ WHERE
   sample_id = '42'
 ```
 
+## Comma at the End of the Line
+
+Commas between `SELECT` elements should always be at the end of the line.
+For example:
+
+**Good**
+
+```sql
+SELECT
+  client_id,
+  os_name,
+  submission_date
+FROM
+  main_summary
+WHERE
+  submission_date > '20180101'
+LIMIT
+  10
+```
+
+**Bad**
+
+```sql
+SELECT
+  client_id
+  , os_name
+  , submission_date
+FROM
+  main_summary
+WHERE
+  submission_date > '20180101'
+LIMIT
+  10
+```
+
 ## Nested Queries
 
 Do not use nested queries.
