@@ -201,6 +201,7 @@
 <li><a href="#join-conditions">Join Conditions</a></li>
 <li><a href="#parentheses">Parentheses</a></li>
 <li><a href="#boolean-at-the-beginning-of-line">Boolean at the Beginning of Line</a></li>
+<li><a href="#comma-at-the-end-of-the-line">Comma at the End of the Line</a></li>
 <li><a href="#nested-queries">Nested Queries</a></li>
 <li><a href="#about-this-document">About this Document</a></li>
 </ul>
@@ -479,6 +480,33 @@ WHERE
 WHERE
   submission_date &gt; 20180101 AND
   sample_id = '42'
+</code></pre>
+<h2 id="comma-at-the-end-of-the-line"><a class="header" href="#comma-at-the-end-of-the-line">Comma at the End of the Line</a></h2>
+<p>Commas between <code>SELECT</code> elements should always be at the end of the line.
+For example:</p>
+<p><strong>Good</strong></p>
+<pre><code class="language-sql">SELECT
+  client_id,
+  os_name,
+  submission_date
+FROM
+  main_summary
+WHERE
+  submission_date &gt; '20180101'
+LIMIT
+  10
+</code></pre>
+<p><strong>Bad</strong></p>
+<pre><code class="language-sql">SELECT
+  client_id
+  , os_name
+  , submission_date
+FROM
+  main_summary
+WHERE
+  submission_date &gt; '20180101'
+LIMIT
+  10
 </code></pre>
 <h2 id="nested-queries"><a class="header" href="#nested-queries">Nested Queries</a></h2>
 <p>Do not use nested queries.
