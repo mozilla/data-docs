@@ -28,6 +28,7 @@ See also [the spreadsheet of notable historic events](https://docs.google.com/sp
 
 When you start to evaluate trends, be aware of events from the past that may invite comparisons with history. Here are a few to keep in mind:
 
+- ** May 19, 2025** - From version 136 up to 138 Firefox Desktop [`usage.first_run_date`](https://dictionary.telemetry.mozilla.org/apps/firefox_desktop/metrics/usage_first_run_date) was busted and would only report the current day. As of version 140 Nightly and version 139 beta 10 (beta uplift), this should report the correct first use of the profile. See [Bug 1966190](https://bugzilla.mozilla.org/show_bug.cgi?id=1966190).
 - **Mar 30, 2025** - The number of `metrics` pings from Firefox for Android from Europe is twice the usual, due to the DST change in Europe. Note that this is a twice-yearly one-day occurrence.
 - **Mar 9, 2025** - The number of `metrics` pings from Firefox for Android from North America (US & CA) is higher than usual, due to the DST change in North America.
 - **Aug 22, 2024** - Adjust is disabled in mobile clients (Firefox Android & Firefox iOS).
