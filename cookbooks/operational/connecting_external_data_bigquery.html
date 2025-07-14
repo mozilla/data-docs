@@ -246,7 +246,11 @@ workgroup_access: # the workgroup_access is optional, used for restricting data 
 <li>This is necessary to ensure the correct access permissions get applied to the spreadsheet</li>
 </ul>
 </li>
-<li>Open a pull-request against <a href="https://github.com/mozilla/bigquery-etl">bigquery-etl</a> and tag someone for review.</li>
+<li>Open a pull-request against <a href="https://github.com/mozilla/bigquery-etl">bigquery-etl</a> and tag someone for review.
+<ul>
+<li>Due to the permissions required, it is not possible to build and QA this table before it is deployed after merging.</li>
+</ul>
+</li>
 <li>Once the PR has been reviewed and merged, the table will be available the next day in BigQuery.
 <ul>
 <li>If the table should be made available immediately, then go to the <a href="https://workflow.telemetry.mozilla.org/dags/bqetl_artifact_deployment/grid"><code>bqetl_artifact_deployment</code> Airflow DAG</a> and clear the <code>publish_new_tables</code> task. This might need to be done by a data engineer or someone who has permissions to trigger and clear tasks in Airflow. The table will be available as soon as the task finishes.</li>
