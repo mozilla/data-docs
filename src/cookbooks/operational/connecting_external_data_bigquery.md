@@ -54,6 +54,7 @@ fields:
 7. Go to the spreadsheet, click on "Share" and add the following service account as _Editor_: `jenkins-node-default@moz-fx-data-terraform-admin.iam.gserviceaccount.com`
    - This is necessary to ensure the correct access permissions get applied to the spreadsheet
 8. Open a pull-request against [bigquery-etl](https://github.com/mozilla/bigquery-etl) and tag someone for review.
+   - Due to the permissions required, it is not possible to build and QA this table before it is deployed after merging.
 9. Once the PR has been reviewed and merged, the table will be available the next day in BigQuery.
    - If the table should be made available immediately, then go to the [`bqetl_artifact_deployment` Airflow DAG](https://workflow.telemetry.mozilla.org/dags/bqetl_artifact_deployment/grid) and clear the `publish_new_tables` task. This might need to be done by a data engineer or someone who has permissions to trigger and clear tasks in Airflow. The table will be available as soon as the task finishes.
 
