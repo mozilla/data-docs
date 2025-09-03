@@ -7,6 +7,7 @@
 200-tab
 24-hour
 28-day
+365-day
 2FA
 89.0a1
 Acryl
@@ -166,6 +167,7 @@ GKE
 Glean.js
 GoFaster
 Grafana
+granularities
 GUD
 gzip
 gzipped
