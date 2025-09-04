@@ -189,6 +189,34 @@ Wildcard expressions can be used to express that a specific statistic should be 
 
 New statistics need to be implemented inside the tooling that uses metric definitions.
 
+##### Period-over-Period Statistics (Looker only)
+
+Statistic definitions can be extended with `period_over_period` configurations:
+
+```toml
+[metrics.any_content_engagement_clients.statistics.rolling_average]
+aggregations = ["ratio", "sum"]
+window_sizes = [28]
+period_over_period = { periods = [365], kinds = ["previous", "relative_change"] }
+```
+
+This is only available in Looker.
+
+This configuration:
+
+- Computes a 28-day rolling average for both ratio and sum.
+- Creates period-over-period comparisons over a 365-day window, producing measures for:
+  - Previous values
+  - Relative changes
+
+Supported types (`kinds`) of period-over-period comparisons are:
+
+- Previous: Returns the historical value from the prior period.
+- Difference: Subtracts the previous period from the current.
+- Relative Change: Shows percentage change between periods.
+
+These measures work with different time period granularities (day, week, quarter, ...), with automatic smart period adjustments (e.g., 30 days ≈ 4 weeks ≈ 1 month).
+
 ### `[dimensions]` Section
 
 Dimensions define a field or dimension on which the client population should be segmented. Dimensions are used in OpMon. For segmenting client populations clients see the `[segments]` section.
@@ -340,6 +368,9 @@ The side pane is split into different sections:
 - **Statistics**: This sections contains the [statistics that have been defined in metric-hub on top of the metric definitions](https://github.com/mozilla/metric-hub/tree/main/looker) as measures. These statistics summarize the distribution of metrics within a specific time frame, population and/or segment and are used to derive insights and patterns from the raw metric data. Statistics have to be defined manually under the [`looker/` directory in metric-hub](https://github.com/mozilla/metric-hub/tree/main/looker).
 - **Sample of source data**: Defines the sample size that should be selected from the data source. Decreasing the sample size will speed up getting results in Looker, however it might decrease the accuracy. The results are being adjusted based on the sample size. For example, if a 1% sample is being used, then certain statistic results (like sum, count) will be multiplied by 100.
 - **Aggregate Client Metrics Per ...**: This parameter controls the time window over which metrics are aggregated per client. For example, this allows to get a weekly average of a metric, a maximum of a metric over the entire time period. By default, aggregations are on a daily basis.
+- **Lookback (Days)**: Adds a configurable buffer of days before the selected analysis period (useful for period-over-period calculations).
+- **Analysis Period (with Lookback)**: Defines the primary analysis window for all comparisons.
+- **Date Group By Position**: Helps resolve grouping when using week/month/quarter/year granularity in BigQuery.
 
 #### Getting Metrics into Looker
 
@@ -355,6 +386,7 @@ Statistics on top of these metrics need to be defined in the [`looker/` folder i
 - `client_count`: distinct count of clients where the metric value is >0
 - `ratio`: ratio between two metrics. When configuring the statistic metric slugs need to be provided for the `numerator` and `denominator` parameters
 - `dau_proportion`: Ratio between the metric and active user counts
+- `rolling_average`: Configurable rolling average of a statistic
 
 To get more statistics added, please reach out on the [#data-help](https://mozilla.slack.com/archives/C4D5ZA91B) Slack channel.
 
@@ -429,3 +461,12 @@ Definitions for metrics can be encoded at different levels. It is preferable to 
 Ideally, metrics should be defined in the `[metrics]` section. However in some cases metrics might rely on more complex logic. For example, if some more complicated unnesting of fields or `JOIN`s across multiple tables are required it might make sense to move the metric computation into the `[data_sources]` definition and then simply reference the field in the `[metrics]` section. The main drawback of this is that if users want to find the definition they will have to go one layer deeper and check how the data source is defined versus just having to look at the metric definition itself.
 
 For computationally expensive metrics it can make sense to set up an ETL job that computes the metrics on a daily basis and writes results to a separate table. This table can serve as basis of a data source which can then be used to define a metric.
+
+### How are period-over-period comparisons computed?
+
+Metric Hub automatically generates LookML for period-over-period measures. It uses:
+
+- LAG functions for standard statistics (e.g., sum, ratio).
+- Adjusted rolling windows for rolling averages (window size adapts to chosen time granularity).
+
+If no appropriate `submission` field is selected, Looker will raise an error prompting you to choose one.
