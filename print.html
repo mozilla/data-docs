@@ -8073,6 +8073,31 @@ mean = {}
 [metrics.'*'.statistics.client_count]
 </code></pre>
 <p>New statistics need to be implemented inside the tooling that uses metric definitions.</p>
+<h5 id="period-over-period-statistics-looker-only"><a class="header" href="#period-over-period-statistics-looker-only">Period-over-Period Statistics (Looker only)</a></h5>
+<p>Statistic definitions can be extended with <code>period_over_period</code> configurations:</p>
+<pre><code class="language-toml">[metrics.any_content_engagement_clients.statistics.rolling_average]
+aggregations = [&quot;ratio&quot;, &quot;sum&quot;]
+window_sizes = [28]
+period_over_period = { periods = [365], kinds = [&quot;previous&quot;, &quot;relative_change&quot;] }
+</code></pre>
+<p>This is only available in Looker.</p>
+<p>This configuration:</p>
+<ul>
+<li>Computes a 28-day rolling average for both ratio and sum.</li>
+<li>Creates period-over-period comparisons over a 365-day window, producing measures for:
+<ul>
+<li>Previous values</li>
+<li>Relative changes</li>
+</ul>
+</li>
+</ul>
+<p>Supported types (<code>kinds</code>) of period-over-period comparisons are:</p>
+<ul>
+<li>Previous: Returns the historical value from the prior period.</li>
+<li>Difference: Subtracts the previous period from the current.</li>
+<li>Relative Change: Shows percentage change between periods.</li>
+</ul>
+<p>These measures work with different time period granularities (day, week, quarter, ...), with automatic smart period adjustments (e.g., 30 days ≈ 4 weeks ≈ 1 month).</p>
 <h3 id="dimensions-section-1"><a class="header" href="#dimensions-section-1"><code>[dimensions]</code> Section</a></h3>
 <p>Dimensions define a field or dimension on which the client population should be segmented. Dimensions are used in OpMon. For segmenting client populations clients see the <code>[segments]</code> section.</p>
 <p>For example:</p>
@@ -8190,6 +8215,9 @@ metric = ConfigLoader.get_metric(metric_slug=&quot;active_hours&quot;, app_name=
 <li><strong>Statistics</strong>: This sections contains the <a href="https://github.com/mozilla/metric-hub/tree/main/looker">statistics that have been defined in metric-hub on top of the metric definitions</a> as measures. These statistics summarize the distribution of metrics within a specific time frame, population and/or segment and are used to derive insights and patterns from the raw metric data. Statistics have to be defined manually under the <a href="https://github.com/mozilla/metric-hub/tree/main/looker"><code>looker/</code> directory in metric-hub</a>.</li>
 <li><strong>Sample of source data</strong>: Defines the sample size that should be selected from the data source. Decreasing the sample size will speed up getting results in Looker, however it might decrease the accuracy. The results are being adjusted based on the sample size. For example, if a 1% sample is being used, then certain statistic results (like sum, count) will be multiplied by 100.</li>
 <li><strong>Aggregate Client Metrics Per ...</strong>: This parameter controls the time window over which metrics are aggregated per client. For example, this allows to get a weekly average of a metric, a maximum of a metric over the entire time period. By default, aggregations are on a daily basis.</li>
+<li><strong>Lookback (Days)</strong>: Adds a configurable buffer of days before the selected analysis period (useful for period-over-period calculations).</li>
+<li><strong>Analysis Period (with Lookback)</strong>: Defines the primary analysis window for all comparisons.</li>
+<li><strong>Date Group By Position</strong>: Helps resolve grouping when using week/month/quarter/year granularity in BigQuery.</li>
 </ul>
 <h4 id="getting-metrics-into-looker"><a class="header" href="#getting-metrics-into-looker">Getting Metrics into Looker</a></h4>
 <p>Metric definitions will be available in the &quot;Metric Definition&quot; explores for metrics that have been added to the <a href="https://github.com/mozilla/metric-hub/tree/main/definitions"><code>definitions/</code> folder in metric-hub</a>.</p>
@@ -8203,6 +8231,7 @@ metric = ConfigLoader.get_metric(metric_slug=&quot;active_hours&quot;, app_name=
 <li><code>client_count</code>: distinct count of clients where the metric value is &gt;0</li>
 <li><code>ratio</code>: ratio between two metrics. When configuring the statistic metric slugs need to be provided for the <code>numerator</code> and <code>denominator</code> parameters</li>
 <li><code>dau_proportion</code>: Ratio between the metric and active user counts</li>
+<li><code>rolling_average</code>: Configurable rolling average of a statistic</li>
 </ul>
 <p>To get more statistics added, please reach out on the <a href="https://mozilla.slack.com/archives/C4D5ZA91B">#data-help</a> Slack channel.</p>
 <p>To filter and segment metrics in Looker, data sources that expose fields as dimensions can be configured in metric-hub. These base field data sources need to be joined with the metric data sources. Wildcard characters can be used to apply these joins to multiple data sources:</p>
@@ -8260,6 +8289,13 @@ denominator = &quot;socket_crash_active_hours_v1.sum&quot;
 <p>Definitions for metrics can be encoded at different levels. It is preferable to specify the SQL that defines how a metric should be computed as much upstream as possible. This allows the most flexible usage of metric definitions.</p>
 <p>Ideally, metrics should be defined in the <code>[metrics]</code> section. However in some cases metrics might rely on more complex logic. For example, if some more complicated unnesting of fields or <code>JOIN</code>s across multiple tables are required it might make sense to move the metric computation into the <code>[data_sources]</code> definition and then simply reference the field in the <code>[metrics]</code> section. The main drawback of this is that if users want to find the definition they will have to go one layer deeper and check how the data source is defined versus just having to look at the metric definition itself.</p>
 <p>For computationally expensive metrics it can make sense to set up an ETL job that computes the metrics on a daily basis and writes results to a separate table. This table can serve as basis of a data source which can then be used to define a metric.</p>
+<h3 id="how-are-period-over-period-comparisons-computed"><a class="header" href="#how-are-period-over-period-comparisons-computed">How are period-over-period comparisons computed?</a></h3>
+<p>Metric Hub automatically generates LookML for period-over-period measures. It uses:</p>
+<ul>
+<li>LAG functions for standard statistics (e.g., sum, ratio).</li>
+<li>Adjusted rolling windows for rolling averages (window size adapts to chosen time granularity).</li>
+</ul>
+<p>If no appropriate <code>submission</code> field is selected, Looker will raise an error prompting you to choose one.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/concepts/metric_hub.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="external-data-integration-using-fivetran"><a class="header" href="#external-data-integration-using-fivetran">External data integration using Fivetran</a></h1>
 <p><a href="https://www.fivetran.com/">Fivetran</a> is used for importing data from external services into our data warehouse. A <a href="https://www.fivetran.com/connectors">range of prebuilt connectors</a> are available that can be configured in the Fivetran web interface. Custom connectors can be implemented as <a href="https://fivetran.com/docs/functions/google-cloud-functions">Google Cloud Functions</a>.</p>
 <h2 id="getting-access"><a class="header" href="#getting-access">Getting access</a></h2>
