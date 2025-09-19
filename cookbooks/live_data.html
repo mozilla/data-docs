@@ -188,7 +188,7 @@
 <h2 id="options-for-working-with-live-data"><a class="header" href="#options-for-working-with-live-data">Options for working with Live Data</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Option</th><th>Recommended Use Case</th><th>Data Size/Complexity</th><th>Latency</th><th>Setup Complexity</th></tr></thead><tbody>
 <tr><td>1. Querying Live Tables Directly</td><td>Small datasets or infrequent, simple queries</td><td>Low</td><td>10-30 min</td><td>Low</td></tr>
-<tr><td>2. Scheduled queries</td><td>Medium</td><td>Periodic updates (e.g., hourly/daily) for dashboards</td><td>Medium</td><td>1h or more</td></tr>
+<tr><td>2. Scheduled queries</td><td>Periodic updates (e.g., hourly/daily) for dashboards</td><td>Medium</td><td>1h or more</td><td>Medium</td></tr>
 <tr><td>3. Using Materialized Views</td><td>Large datasets, complex queries with low-latency needs</td><td>Medium to High</td><td>10-30 min</td><td>Medium to High</td></tr>
 <tr><td>4. Dataflow</td><td>Very low-latency streaming for large datasets</td><td>High</td><td>&lt;10 min</td><td>High</td></tr>
 <tr><td>5. Cloud function with Pub/Sub trigger</td><td>Low-latency for smaller subsets of data</td><td>Medium</td><td>&lt;10 min</td><td>Medium to High</td></tr>
