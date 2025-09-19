@@ -4,13 +4,13 @@ Use cases, such as real-time monitoring, dashboards, or personalized user experi
 
 ## Options for working with Live Data
 
-| Option                                 | Recommended Use Case                                   | Data Size/Complexity                                 | Latency   | Setup Complexity |
-| -------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------- | --------- | ---------------- |
-| 1. Querying Live Tables Directly       | Small datasets or infrequent, simple queries           | Low                                                  | 10-30 min | Low              |
-| 2. Scheduled queries                   | Medium                                                 | Periodic updates (e.g., hourly/daily) for dashboards | Medium    | 1h or more       | Medium |
-| 3. Using Materialized Views            | Large datasets, complex queries with low-latency needs | Medium to High                                       | 10-30 min | Medium to High   |
-| 4. Dataflow                            | Very low-latency streaming for large datasets          | High                                                 | <10 min   | High             |
-| 5. Cloud function with Pub/Sub trigger | Low-latency for smaller subsets of data                | Medium                                               | <10 min   | Medium to High   |
+| Option                                 | Recommended Use Case                                   | Data Size/Complexity                                 | Latency    | Setup Complexity |
+| -------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------- | ---------- | ---------------- |
+| 1. Querying Live Tables Directly       | Small datasets or infrequent, simple queries           | Low                                                  | 10-30 min  | Low              |
+| 2. Scheduled queries                   | Periodic updates (e.g., hourly/daily) for dashboards   | Medium                                               | 1h or more | Medium           |
+| 3. Using Materialized Views            | Large datasets, complex queries with low-latency needs | Medium to High                                       | 10-30 min  | Medium to High   |
+| 4. Dataflow                            | Very low-latency streaming for large datasets          | High                                                 | <10 min    | High             |
+| 5. Cloud function with Pub/Sub trigger | Low-latency for smaller subsets of data                | Medium                                               | <10 min    | Medium to High   |
 
 Live ping tables are the final destination for the telemetry ingestion pipeline. Incoming ping data is loaded into these tables approximately every 10 minutes, though a delay of up to 30 minutes is normal. Data in these tables is set to expire after 30 days.
 
