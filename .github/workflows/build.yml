@@ -54,9 +54,11 @@ jobs:
     - uses: actions/checkout@main
 
     - name: Spell check
+      env:
+        CHANGED_FILES: ${{ needs.get-changed-md-files.outputs.changed_files }}
       run: |
         npm install
-        scripts/spell_check.sh ${{ needs.get-changed-md-files.outputs.changed_files }}
+        scripts/spell_check.sh $CHANGED_FILES
 
   link-check:
     needs: get-changed-md-files
@@ -67,9 +69,11 @@ jobs:
     - uses: actions/checkout@main
 
     - name: Link check
+      env:
+        CHANGED_FILES: ${{ needs.get-changed-md-files.outputs.changed_files }}
       run: |
         npm install
-        scripts/link_check.sh ${{ needs.get-changed-md-files.outputs.changed_files }}
+        scripts/link_check.sh $CHANGED_FILES
 
   prettier-check:
     needs: get-changed-md-files
@@ -80,7 +84,9 @@ jobs:
     - uses: actions/checkout@main
 
     - name: Prettier check
+      env:
+        CHANGED_FILES: ${{ needs.get-changed-md-files.outputs.changed_files }}
       run: |
         npm install
-        scripts/prettier_fix.sh ${{ needs.get-changed-md-files.outputs.changed_files }}
+        scripts/prettier_fix.sh $CHANGED_FILES
         git --no-pager diff --color --exit-code src/ README.md
