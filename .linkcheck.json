@@ -13,10 +13,10 @@
         { "pattern": "^https://monitor.firefox.com$" },
         { "pattern": "^https://developer.android.com/studio/build/application-id$" },
         { "pattern": "^https://github.com" },
-        { "pattern": "^https://help.looker.com"},
         { "pattern": "^https://mozilla-hub.atlassian.net" },
         { "pattern": "^https:///mozilla.slack.com" },
         { "pattern": "^https://mozilla.udemy.com"},
+        { "pattern": "^https://experimenter.services.mozilla.com" },
         { "pattern": "^#bigquery-materialized-views$"},
         { "pattern": "^#looker-pdts--aggregate-awareness$"},
         { "pattern": "^#experiment-unpacking$"}
