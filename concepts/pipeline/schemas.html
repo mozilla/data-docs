@@ -220,9 +220,7 @@
 <h2 id="overview"><a class="header" href="#overview">Overview</a></h2>
 <p>Schemas describe the structure of ingested data. They are used in the pipeline to validate the types
 and values of data, and to define a table schema in a data store. We use a repository of JSON
-Schemas to sort incoming data into <a href="../../cookbooks/bigquery/querying.html#projects-with-bigquery-datasets"><code>decoded</code> and <code>error</code> datasets</a>. We also generate
-BigQuery table schemas on business days from the JSON Schemas: you can see the current status of
-this job on the <a href="https://protosaur.dev/mps-deploys/"><code>mozilla-pipeline-schemas</code> deploy dashboard</a>.</p>
+Schemas to sort incoming data into <a href="../../cookbooks/bigquery/querying.html#projects-with-bigquery-datasets"><code>decoded</code> and <code>error</code> datasets</a>.</p>
 <pre class="mermaid">graph TD
 
 %% Nodes
@@ -276,10 +274,8 @@ modifications to the telemetry environment) will require you to make changes to
 probe-scraper will automatically pick up changes from <code>metrics.yaml</code>.</p>
 <h3 id="when-will-i-see-new-changes-to-the-schema"><a class="header" href="#when-will-i-see-new-changes-to-the-schema">When will I see new changes to the schema?</a></h3>
 <p>Schema deploys happen on business days around UTC+04 when new changes are found in the
-<a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/generated-schema"><code>generated-schemas</code> branch of <code>mozilla-pipeline-schemas</code></a>. This means that any
-changes merged after UTC+04 on Friday will not propagate until Monday UTC+04. See the
-<a href="https://protosaur.dev/mps-deploys/"><code>mozilla-pipeline-schemas</code> deploy</a> dashboard for up-to-date information on the most
-recent deploys.</p>
+<a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/generated-schemas"><code>generated-schemas</code> branch of <code>mozilla-pipeline-schemas</code></a>. This means that any
+changes merged after UTC+04 on Friday will not propagate until Monday UTC+04.</p>
 <h3 id="what-does-it-mean-when-a-schema-deploy-is-blocked"><a class="header" href="#what-does-it-mean-when-a-schema-deploy-is-blocked">What does it mean when a schema deploy is blocked?</a></h3>
 <p>The schema deployment pipeline has a hard dependency on the [<code>probe-scraper</code>], a service that scours
 repositories for new metrics to include in generated schemas. When the probe-scraper fails, it will

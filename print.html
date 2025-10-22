@@ -1290,9 +1290,8 @@ If your application uses <a href="cookbooks/looker/../../concepts/glean/glean.ht
 <p>If you want to explore Looker more deeply, you can check out:</p>
 <ul>
 <li><a href="https://www.cloudskillsboost.google/journeys/28">&quot;BI and Analytics with Looker&quot; training hub</a>: A collection of self-paced video training courses for new users. Full courses are free, but require registration, but course descriptions contain material that is useful on its own.</li>
-<li><a href="https://docs.looker.com/">Looker Documentation</a>: Extensive text and video documentation, a “textbook” reference on how the product works.</li>
-<li><a href="https://help.looker.com/">Looker Help Center</a>: Contains articles on common problems, specific use cases, error messages, and best practices.</li>
-<li><a href="https://community.looker.com/">Looker Community</a> has customer-written material, broadcasts from Looker employees (primarily release notes), and topics written by Looker employees that are not officially supported by Looker.</li>
+<li><a href="https://cloud.google.com/looker/docs/intro">Looker Documentation</a>: Extensive text and video documentation, a “textbook” reference on how the product works.</li>
+<li><a href="https://discuss.google.dev/c/looker/19">Looker Community</a> has customer-written material, broadcasts from Looker employees (primarily release notes), and topics written by Looker employees that are not officially supported by Looker.</li>
 </ul>
 <p>You can find additional Looker training resources on the <a href="https://mana.mozilla.org/wiki/display/DATA/Looker+Training+Resources">Looker Training Resources</a> mana page (LDAP access required).</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/cookbooks/looker/intro.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="normalizing-country-data"><a class="header" href="#normalizing-country-data">Normalizing Country Data</a></h1>
@@ -3295,7 +3294,7 @@ ORDER BY
 when we report a retention value for 2020-01-01, we're talking about what
 portion of clients active on 2020-01-01 are still active some number of days
 later.</p>
-<p>In particular, let's consider the &quot;1-Week Retention&quot; measure shown in <a href="https://gud.telemetry.mozilla.org/">GUD</a>
+<p>In particular, let's consider the &quot;1-Week Retention&quot; measure shown in <a href="cookbooks/looker/growth_usage_dashboards.html">GUD</a>
 which considers a window of 14 days.
 For each client active in &quot;week 0&quot; (days 0 through 6), we determine retention by
 checking if they were also active in &quot;week 1&quot; (days 7 through 13).</p>
@@ -3557,7 +3556,7 @@ was always the most recent day, corresponding to the rightmost bit.
 When we define forward-looking windows, however, we always choose a metric date
 some time in the past. How we number the individual bits depends on what
 metric date we choose.</p>
-<p>For example, in <a href="https://gud.telemetry.mozilla.org/">GUD</a>, we show a &quot;1-Week Retention&quot; which considers a window of 14 days.
+<p>For example, in <a href="cookbooks/looker/growth_usage_dashboards.html">GUD</a> we show a &quot;1-Week Retention&quot; which considers a window of 14 days.
 For each client active in &quot;week 0&quot; (days 0 through 6), we determine retention by
 checking if they were also active in &quot;week 1&quot; (days 7 through 13).</p>
 <p>To make &quot;1-Week Retention&quot; more concrete,
@@ -5533,7 +5532,7 @@ This includes <a href="https://sql.telemetry.mozilla.org/">Redash</a>, <a href="
 Because Glean knows more about the individual data, such as its type and the ranges of acceptable values, it can in many cases provide the most appropriate visualization automatically.</p>
 <h1 id="the-glean-design-principles"><a class="header" href="#the-glean-design-principles">The Glean design principles</a></h1>
 <p><strong>Provide a consistent base of telemetry</strong></p>
-<p>A baseline of analysis is important for all our products, from counting active users to retention and session times. This is supported out-of-the-box by the SDK, and funnels directly into visualization tools like the <a href="https://gud.telemetry.mozilla.org/">Growth and Usage Dashboard (GUD)</a>.</p>
+<p>A baseline of analysis is important for all our products, from counting active users to retention and session times. This is supported out-of-the-box by the SDK, and funnels directly into visualization tools like the <a href="concepts/glean/../../cookbooks/looker/growth_usage_dashboards.html">Growth and Usage Dashboard (GUD)</a>.</p>
 <p>Metrics that are common to all products, such as the operating system and architecture, are provided automatically in a consistent way.</p>
 <p>Any issues found with these base metrics only need to be fixed in Glean to benefit all SDK-using products.</p>
 <p><strong>Encourage specificity</strong></p>
@@ -5980,9 +5979,7 @@ its event payload for Firefox versions before 62.</li>
 <h2 id="overview-3"><a class="header" href="#overview-3">Overview</a></h2>
 <p>Schemas describe the structure of ingested data. They are used in the pipeline to validate the types
 and values of data, and to define a table schema in a data store. We use a repository of JSON
-Schemas to sort incoming data into <a href="concepts/pipeline/../../cookbooks/bigquery/querying.html#projects-with-bigquery-datasets"><code>decoded</code> and <code>error</code> datasets</a>. We also generate
-BigQuery table schemas on business days from the JSON Schemas: you can see the current status of
-this job on the <a href="https://protosaur.dev/mps-deploys/"><code>mozilla-pipeline-schemas</code> deploy dashboard</a>.</p>
+Schemas to sort incoming data into <a href="concepts/pipeline/../../cookbooks/bigquery/querying.html#projects-with-bigquery-datasets"><code>decoded</code> and <code>error</code> datasets</a>.</p>
 <pre class="mermaid">graph TD
 
 %% Nodes
@@ -6036,10 +6033,8 @@ modifications to the telemetry environment) will require you to make changes to
 probe-scraper will automatically pick up changes from <code>metrics.yaml</code>.</p>
 <h3 id="when-will-i-see-new-changes-to-the-schema"><a class="header" href="#when-will-i-see-new-changes-to-the-schema">When will I see new changes to the schema?</a></h3>
 <p>Schema deploys happen on business days around UTC+04 when new changes are found in the
-<a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/generated-schema"><code>generated-schemas</code> branch of <code>mozilla-pipeline-schemas</code></a>. This means that any
-changes merged after UTC+04 on Friday will not propagate until Monday UTC+04. See the
-<a href="https://protosaur.dev/mps-deploys/"><code>mozilla-pipeline-schemas</code> deploy</a> dashboard for up-to-date information on the most
-recent deploys.</p>
+<a href="https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/generated-schemas"><code>generated-schemas</code> branch of <code>mozilla-pipeline-schemas</code></a>. This means that any
+changes merged after UTC+04 on Friday will not propagate until Monday UTC+04.</p>
 <h3 id="what-does-it-mean-when-a-schema-deploy-is-blocked"><a class="header" href="#what-does-it-mean-when-a-schema-deploy-is-blocked">What does it mean when a schema deploy is blocked?</a></h3>
 <p>The schema deployment pipeline has a hard dependency on the [<code>probe-scraper</code>], a service that scours
 repositories for new metrics to include in generated schemas. When the probe-scraper fails, it will
@@ -7172,7 +7167,7 @@ some_local_task.set_upstream(wait_for_bq_events)
 <p>It is important to note that the <code>execution_delta</code> needs to be set correctly depending on the time difference between the upstream DAG schedule and the schedule of the downstream DAG. If the <code>execution_delta</code> is not set correctly, downstream tasks will wait indefinitely without ever getting executed.</p>
 <p>While upstream dependencies are automatically determined between generated DAGs in bigquery-etl, if there are dependencies between DAGs in telemetry-airflow and bigquery-etl, then these dependencies need to be either added manually to the DAG definition or to the scheduling metadata of the scheduled query.</p>
 <h2 id="downstream-dependencies-are-managed-via-externaltaskmarkers"><a class="header" href="#downstream-dependencies-are-managed-via-externaltaskmarkers">Downstream dependencies are managed via <code>ExternalTaskMarker</code>s</a></h2>
-<p><a href="https://airflow.apache.org/docs/apache-airflow/stable/_api/airflow/sensors/external_task/index.html#airflow.sensors.external_task.ExternalTaskMarker"><code>ExternalTaskMarker</code>s</a> are used to indicate all downstream dependencies to a task. Whenever the task is cleared with <em>Downstream Recursive</em> selected, then all downstream tasks will get cleared automatically. This is extremely useful when running backfill of Airflow tasks. When clearing the tasks, a pop-up will show all the downstream tasks that will get cleared. In case a task should be cleared without its downstream dependencies running as well, deselect the <em>Downstream Recursive</em> option.</p>
+<p><a href="https://airflow.apache.org/docs/apache-airflow-providers-standard/stable/sensors/external_task_sensor.html#externaltaskmarker"><code>ExternalTaskMarker</code>s</a> are used to indicate all downstream dependencies to a task. Whenever the task is cleared with <em>Downstream Recursive</em> selected, then all downstream tasks will get cleared automatically. This is extremely useful when running backfill of Airflow tasks. When clearing the tasks, a pop-up will show all the downstream tasks that will get cleared. In case a task should be cleared without its downstream dependencies running as well, deselect the <em>Downstream Recursive</em> option.</p>
 <p><code>ExternalTaskMarker</code>s are generally wrapped into a <code>TaskGroup</code> and defined like:</p>
 <pre><code class="language-python">with TaskGroup('copy_deduplicate_all_external') as copy_deduplicate_all_external:
     ExternalTaskMarker(
@@ -13590,7 +13585,6 @@ style evo fill:lightgrey
 </blockquote>
 <p>This section provides an overview of standard metrics used at Mozilla.
 Here you'll find the definitions and descriptions for each.</p>
-<p>For a deep dive into these metrics, see <a href="https://mozilla.github.io/gud/">the GUD documentation</a>.</p>
 <p>The <a href="metrics/../concepts/index.html">Telemetry Behavior Reference</a> section also provides
 information related to the definitions below.</p>
 <p>We are now in the process of setting up the metrics top-level section here. This information will be moved into the appropriate subsection and this page will be replaced with an overview.</p>
@@ -13618,7 +13612,7 @@ specified day, what proportion (out of 1) are active during the following week.<
 <ul>
 <li>Why isn't &quot;New Users&quot; a metric?
 <ul>
-<li>&quot;New Users&quot; is considered a <a href="https://mozilla.github.io/gud#data-model">usage criterion</a>, which means it may be used
+<li>&quot;New Users&quot; is considered a usage criterion, which means it may be used
 to filter other metrics, rather than itself being a metric. For example,
 you can compute &quot;New User DAU&quot;, which would be the subset of DAU that match
 the &quot;New User&quot; criterion. The exception here is 1-Week New Profile
