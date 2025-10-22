@@ -6,9 +6,7 @@
 
 Schemas describe the structure of ingested data. They are used in the pipeline to validate the types
 and values of data, and to define a table schema in a data store. We use a repository of JSON
-Schemas to sort incoming data into [`decoded` and `error` datasets][bq-datasets]. We also generate
-BigQuery table schemas on business days from the JSON Schemas: you can see the current status of
-this job on the [`mozilla-pipeline-schemas` deploy dashboard][mps-deploys].
+Schemas to sort incoming data into [`decoded` and `error` datasets][bq-datasets].
 
 ```mermaid
 graph TD
@@ -74,9 +72,7 @@ probe-scraper will automatically pick up changes from `metrics.yaml`.
 
 Schema deploys happen on business days around UTC+04 when new changes are found in the
 [`generated-schemas` branch of `mozilla-pipeline-schemas`][generated-schemas]. This means that any
-changes merged after UTC+04 on Friday will not propagate until Monday UTC+04. See the
-[`mozilla-pipeline-schemas` deploy][mps-deploys] dashboard for up-to-date information on the most
-recent deploys.
+changes merged after UTC+04 on Friday will not propagate until Monday UTC+04.
 
 ### What does it mean when a schema deploy is blocked?
 
@@ -94,9 +90,8 @@ is not registered before collection begins, then it will be sorted into the erro
 may be affected by blocked schema deploys.
 
 [bq-datasets]: ../../cookbooks/bigquery/querying.md#projects-with-bigquery-datasets
-[mps-deploys]: https://protosaur.dev/mps-deploys/
 [mps]: https://github.com/mozilla-services/mozilla-pipeline-schemas
-[generated-schemas]: https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/generated-schema
+[generated-schemas]: https://github.com/mozilla-services/mozilla-pipeline-schemas/tree/generated-schemas
 [msg]: https://github.com/mozilla/mozilla-schema-generator
 [probe-scraper]: https://github.com/mozilla/probe-scraper
 
