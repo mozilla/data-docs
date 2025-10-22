@@ -318,19 +318,16 @@ The build id format for Firefox Desktop has been very stable over time thus far,
 #### If you still need to do side-by-side comparisons, be aware that significant discrepancies will occur due to a variety of factors:
 
 1. **Bucket Discrepancies (Histograms)**
-
    - **Legacy Telemetry**: Fewer buckets; Uses a fixed number of buckets depending on histogram type.
    - **Glean**: More buckets; Uses an algorithmically-generated number of buckets depending on the metric's distribution type.
    - **Result**: The distributions and percentiles can look different in GLAM even when measuring the same underlying data because the histogram bounds and number of buckets do not match.
 
 2. **Cross-Process vs. Per-Process Collection**
-
    - **Legacy Telemetry**: Often collects data per process (e.g., main, content, etc.) and can send data differently depending on the process.
    - **Glean**: Consolidates measurements across multiple processes.
    - **Result**: Aggregated Glean data may appear larger or differently distributed compared to Legacy data, because it merges what Legacy would treat as separate process-specific measurements.
 
 3. **Ping Differences ("baseline" & "metrics" Pings in Glean, "main" pings in Legacy Telemetry)**
-
    - **Legacy Telemetry**: Typically sends one primary ping type (e.g., the “main” ping) for most data.
    - **Glean**: Splits data into multiple ping types (e.g., a “baseline” ping, a “metrics” ping, etc.).
    - **Result**: The same metric can appear to have more frequent updates or different submission times in Glean if it is reported in multiple pings.

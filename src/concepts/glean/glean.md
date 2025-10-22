@@ -78,7 +78,6 @@ This includes previously manual and error-prone steps such as updating the ping 
 - [Integrate the Glean SDK](https://mozilla.github.io/glean/book/user/adding-glean-to-your-project/index.html) into your product.
 - [Use Looker](https://mozilla.cloud.looker.com/) to build Explores and Dashboards using your product's datasets.
 - If Looker does not provide the necessary Explores you can resort to [using Redash](https://sql.telemetry.mozilla.org/) to write SQL queries & build dashboards using your products datasets, e.g.:
-
   - `org_mozilla_fenix.baseline`
   - `org_mozilla_fenix.events`
   - `org_mozilla_fenix.metrics`
