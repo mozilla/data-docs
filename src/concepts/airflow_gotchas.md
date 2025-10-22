@@ -43,7 +43,7 @@ While upstream dependencies are automatically determined between generated DAGs 
 
 ## Downstream dependencies are managed via `ExternalTaskMarker`s
 
-[`ExternalTaskMarker`s](https://airflow.apache.org/docs/apache-airflow/stable/_api/airflow/sensors/external_task/index.html#airflow.sensors.external_task.ExternalTaskMarker) are used to indicate all downstream dependencies to a task. Whenever the task is cleared with _Downstream Recursive_ selected, then all downstream tasks will get cleared automatically. This is extremely useful when running backfill of Airflow tasks. When clearing the tasks, a pop-up will show all the downstream tasks that will get cleared. In case a task should be cleared without its downstream dependencies running as well, deselect the _Downstream Recursive_ option.
+[`ExternalTaskMarker`s](https://airflow.apache.org/docs/apache-airflow-providers-standard/stable/sensors/external_task_sensor.html#externaltaskmarker) are used to indicate all downstream dependencies to a task. Whenever the task is cleared with _Downstream Recursive_ selected, then all downstream tasks will get cleared automatically. This is extremely useful when running backfill of Airflow tasks. When clearing the tasks, a pop-up will show all the downstream tasks that will get cleared. In case a task should be cleared without its downstream dependencies running as well, deselect the _Downstream Recursive_ option.
 
 `ExternalTaskMarker`s are generally wrapped into a `TaskGroup` and defined like:
 
