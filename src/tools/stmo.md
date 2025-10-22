@@ -73,7 +73,6 @@ You should see a `clients_last_seen` entry (appearing as `telemetry.clients_last
 - Introspect the available columns
 
   Click `telemetry.clients_last_seen` in the schema browser to display the columns that are available in the table. The following columns are of interest for this query:
-
   - `country`
   - `days_since_seen`
   - `submission_date`.
