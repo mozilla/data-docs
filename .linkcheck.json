@@ -15,10 +15,11 @@
         { "pattern": "^https://github.com" },
         { "pattern": "^https://mozilla-hub.atlassian.net" },
         { "pattern": "^https:///mozilla.slack.com" },
-        { "pattern": "^https://mozilla.udemy.com"},
+        { "pattern": "^https://mozilla.udemy.com" },
+        { "pattern": "^https://sso.mozilla.com" },
         { "pattern": "^https://experimenter.services.mozilla.com" },
-        { "pattern": "^#bigquery-materialized-views$"},
-        { "pattern": "^#looker-pdts--aggregate-awareness$"},
-        { "pattern": "^#experiment-unpacking$"}
+        { "pattern": "^#bigquery-materialized-views$" },
+        { "pattern": "^#looker-pdts--aggregate-awareness$" },
+        { "pattern": "^#experiment-unpacking$" },
     ]
 }
