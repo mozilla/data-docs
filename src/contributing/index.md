@@ -41,7 +41,7 @@ to check.
 ## Review
 
 Once you're happy with your contribution, open a pull request (PR). Give your PR a meaningful commit message
-(see [this article on commit message guidelines](https://chris.beams.io/posts/git-commit/) for some suggestions).
+(see [this article on commit message guidelines](https://cbea.ms/git-commit) for some suggestions).
 If there is a bug associated with your documentation, title it in the form of `Bug 1234 - <descriptive one-liner>` - that way, the [Bugzilla PR linker](https://github.com/mozilla/github-bugzilla-pr-linker) will pick up the PR and attach it to the bug.
 
 After filing your PR, assign the appropriate person for review (GitHub will usually provide some suggestions), assuming you have permissions to do so yourself.
