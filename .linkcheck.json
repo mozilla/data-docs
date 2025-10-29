@@ -18,6 +18,7 @@
         { "pattern": "^https://mozilla.udemy.com" },
         { "pattern": "^https://sso.mozilla.com" },
         { "pattern": "^https://experimenter.services.mozilla.com" },
+        { "pattern": "^https://bugzilla.mozilla.org" },
         { "pattern": "^#bigquery-materialized-views$" },
         { "pattern": "^#looker-pdts--aggregate-awareness$" },
         { "pattern": "^#experiment-unpacking$" },
