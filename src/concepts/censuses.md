@@ -1,8 +1,6 @@
 ## Legacy Census Metrics
 
-> **⚠** The information in this document is obsolete. This content was originally included in the [Project Smoot existing metrics report][smootv1] (Mozilla internal link).
-
-[smootv1]: https://mozilla-private-report.protosaur.dev/smoot-existing-metrics/book/05_overview.html
+> **⚠** The information in this document is obsolete. This content was originally included in the Project Smoot existing metrics report.
 
 ADI and DAU are oft-discussed censuses. This chapter discusses their history and definition.
 
