@@ -1,6 +1,6 @@
 # The Data Catalog
 
-Reference material for data assets (tables, dashboards, pings, etc.) can primarily be found in the Data Catalog: https://mozilla.acryl.io.
+Reference material for data assets (tables, dashboards, pings, etc.) can primarily be found in the Data Catalog: <https://mozilla.acryl.io>.
 It provides an automatically updated "map" of data assets, including lineage and descriptions, without the need for manual curation.
 
 ## What do I use it for?
@@ -15,7 +15,7 @@ The primary use case for the catalog is finding out (at a glance) which data ass
 
 ## How do I use it?
 
-Navigate to https://mozilla.acryl.io and log in via SSO. Once logged in, you should be able to explore assets via the
+Navigate to <https://mozilla.acryl.io> and log in via SSO. Once logged in, you should be able to explore assets via the
 search bar or by clicking on a platform (e.g. BigQuery or Glean).
 
 ## When was this implemented?
