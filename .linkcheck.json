@@ -22,6 +22,7 @@
         { "pattern": "^#bigquery-materialized-views$" },
         { "pattern": "^#looker-pdts--aggregate-awareness$" },
         { "pattern": "^#experiment-unpacking$" },
-        { "pattern": "/v2-system-addon/data_events.html" }
+        { "pattern": "/v2-system-addon/data_events.html" },
+        { "pattern": "^https://console.cloud.google.com/gcr/images/" }
     ]
 }
