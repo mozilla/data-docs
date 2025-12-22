@@ -20,8 +20,6 @@ The [Mozilla accounts documentation](https://mozilla.github.io/ecosystem-platfor
   - Requires FxA.
 - [AMO](https://addons.mozilla.org/en-US/firefox/)
   - For developer accounts; not required by end-users to use or download addons.
-- [Pocket](https://getpocket.com/login/?ep=1)
-  - FxA is an optional authentication method among others.
 - [Monitor](https://monitor.firefox.com)
   - Required to receive email alerts. Not required for email scans.
 - [Relay](https://relay.firefox.com/)
