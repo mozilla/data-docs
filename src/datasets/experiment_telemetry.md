@@ -106,6 +106,6 @@ Normandy and Nimbus events both have event category `normandy`.
 The event value will contain the experiment slug.
 
 The event schema is described
-[in the Firefox source tree](https://hg.mozilla.org/mozilla-central/file/tip/toolkit/components/normandy/lib/TelemetryEvents.sys.mjs).
+[in the Firefox source tree](https://searchfox.org/firefox-main/source/toolkit/components/normandy/metrics.yaml).
 
 The `events` table is updated daily.
