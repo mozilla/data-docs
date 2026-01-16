@@ -502,3 +502,8 @@ is_lineage_mode
 schemaFilter
 client_scalar_probe_counts
 20Definition
+redownloads
+dbt_apple_store
+moz-fx-data-bq-fivetran
+firefox_app_store_v2
+app_store_funnel_v1
