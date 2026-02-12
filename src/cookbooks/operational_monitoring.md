@@ -460,6 +460,22 @@ The table `projects_v1` in `operational_monitoring_derived` contains metadata ab
 
 OpMon is updated nightly by telemetry-airflow. It is invoked by the [operational_monitoring DAG](https://github.com/mozilla/telemetry-airflow/blob/main/dags/operational_monitoring.py).
 
+## Common Use Cases
+
+- **Rollout Monitoring:** Monitor rollouts to detect regressions before they affect the entire population. Compares enabled vs disabled branches for search metrics, performance, and error rates. The rollout monitoring dashboards get created automatically.
+- **Build-over-Build Performance:** Detect performance regressions between consecutive builds on pre-release channels (Beta, Nightly). Tracks page load, FCP, input latency, JS execution, and memory metrics.
+- **Product Health Dashboards:** Continuous monitoring of stability metrics without end dates: crash rates, hangs, exceptions, success/failure rates.
+- **DAU/MAU Tracking and other Business Metrics:** Aggregate-level monitoring of daily/monthly active users, often with KPI forecasting to detect retention issues. Track revenue-impacting metrics like search monetization, subscription engagement, and customer satisfaction.
+- **Experiments & A/B Tests:** As an addition to Experimenter, OpMon can be used to track experiment-specific success criteria and side effects for earlier signals.
+- **Background Processes:** Monitor Firefox's background services (Background Update, Default Browser Agent). Tracks success rates, exception volumes, and timing metrics, often segmented by OS version.
+
+## When to use OpMon?
+
+- OpMon → Continuous monitoring, rollouts, build-over-build comparisons
+- Experimenter → A/B tests requiring statistical significance testing
+- GLAM → Ad-hoc histogram exploration
+- Custom SQL → Complex queries beyond OpMon's aggregation model
+
 ## Experiments vs OpMon
 
 The requirements for Operational Monitoring are related to, but mostly distinct from those for experiments:
