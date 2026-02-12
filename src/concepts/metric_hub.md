@@ -2,7 +2,7 @@
 
 Metric Hub is a [repository](https://github.com/mozilla/metric-hub) that contains metric, data source and segment definitions that have been
 reviewed and can be seen as the source of truth.
-Definitions that are part of Metric Hub can be referenced in configurations of other tooling as well, such as [Jetstream](https://experimenter.info/deep-dives/jetstream/overview) and [OpMon](https://docs.telemetry.mozilla.org/cookbooks/operational_monitoring.html?highlight=opmon#operational-monitoring-opmon).
+Definitions that are part of Metric Hub can be referenced in configurations of other tooling as well, such as [Jetstream](https://experimenter.info/data-analysis/jetstream/overview) and [OpMon](https://docs.telemetry.mozilla.org/cookbooks/operational_monitoring.html?highlight=opmon#operational-monitoring-opmon).
 
 Metric Hub is a "thin" metric layer that lies between the Data Warehouse and consumers, such as analysis tools.
 The Data Warehouse contains the datasets and tables referenced in the metric definitions. Analysis tools can reference metrics that are defined in metric-hub.
@@ -256,7 +256,7 @@ Segment SQL snippets need to be boolean expressions to be valid.
 
 All the definitions are automatically available in some of our tooling:
 
-- [Jetstream](https://experimenter.info/deep-dives/jetstream/overview) - used for analyzing experiments
+- [Jetstream](https://experimenter.info/data-analysis/jetstream/overview) - used for analyzing experiments
 - [mozanalysis](https://github.com/mozilla/mozanalysis) - a Python library which standardizes how experiment data is analyzed at Mozilla
 - [OpMon](https://docs.telemetry.mozilla.org/cookbooks/operational_monitoring.html) - a tool for monitoring operational metrics
 - [bigquery-etl](https://github.com/mozilla/bigquery-etl) - used for writing ETL queries
