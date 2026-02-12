@@ -211,4 +211,4 @@ by interacting with the [`jetstream-config`] repository.
 
 ## Documentation
 
-Additional documentation about Jetstream can be found in the [Jetstream Experimenter Docs](https://experimenter.info/deep-dives/jetstream/overview).
+Additional documentation about Jetstream can be found in the [Jetstream Experimenter Docs](https://experimenter.info/data-analysis/jetstream/overview).
