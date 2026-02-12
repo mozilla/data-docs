@@ -197,7 +197,7 @@ OpMon does not emit real-time results. Dashboards and related datasets get updat
 <p>Access to the Looker Operational Monitoring dashboards is currently limited to Mozilla employees and designated contributors. For more information, see <a href="../concepts/gaining_access.html">gaining access</a>.</p>
 <h2 id="configuring-a-operational-monitoring-project"><a class="header" href="#configuring-a-operational-monitoring-project">Configuring a Operational Monitoring project</a></h2>
 <p>To add or update a project configuration, open a pull request against the <code>opmon/</code> directory in <a href="https://github.com/mozilla/metric-hub/tree/main/opmon">metric-hub</a>.
-Consider using and adding metric definitions to the <a href="https://github.com/mozilla/metric-hub">metric-hub</a> that should be available for use across other tools, such as <a href="https://experimenter.info/deep-dives/jetstream/overview">Jetstream</a>, as well.</p>
+Consider using and adding metric definitions to the <a href="https://github.com/mozilla/metric-hub">metric-hub</a> that should be available for use across other tools, such as <a href="https://experimenter.info/data-analysis/jetstream/overview">Jetstream</a>, as well.</p>
 <p>CI checks will validate the columns, data sources, and SQL syntax. Once CI completes, the pull request gets automatically approved and can be merged. Results for the new project will be available within the next 24 hours.</p>
 <p>Project configurations files are written in <a href="https://toml.io/en/">TOML</a>. To reuse configurations across multiple projects, project configurations can reference configurations from definition files.
 These definitions files are platform-specific and located in the <a href="https://github.com/mozilla/metric-hub/tree/main/opmon/definitions"><code>opmon/definitions/</code> directory in metric-hub</a> or in the <a href="https://github.com/mozilla/metric-hub">metric-hub</a> repository. Platform-specific configuration files follow the same format and structure as project configuration files.</p>
@@ -553,6 +553,22 @@ Result tables are named like:</p>
 </div>
 <h3 id="scheduling"><a class="header" href="#scheduling">Scheduling</a></h3>
 <p>OpMon is updated nightly by telemetry-airflow. It is invoked by the <a href="https://github.com/mozilla/telemetry-airflow/blob/main/dags/operational_monitoring.py">operational_monitoring DAG</a>.</p>
+<h2 id="common-use-cases"><a class="header" href="#common-use-cases">Common Use Cases</a></h2>
+<ul>
+<li><strong>Rollout Monitoring:</strong> Monitor rollouts to detect regressions before they affect the entire population. Compares enabled vs disabled branches for search metrics, performance, and error rates. The rollout monitoring dashboards get created automatically.</li>
+<li><strong>Build-over-Build Performance:</strong> Detect performance regressions between consecutive builds on pre-release channels (Beta, Nightly). Tracks page load, FCP, input latency, JS execution, and memory metrics.</li>
+<li><strong>Product Health Dashboards:</strong> Continuous monitoring of stability metrics without end dates: crash rates, hangs, exceptions, success/failure rates.</li>
+<li><strong>DAU/MAU Tracking and other Business Metrics:</strong> Aggregate-level monitoring of daily/monthly active users, often with KPI forecasting to detect retention issues. Track revenue-impacting metrics like search monetization, subscription engagement, and customer satisfaction.</li>
+<li><strong>Experiments &amp; A/B Tests:</strong> As an addition to Experimenter, OpMon can be used to track experiment-specific success criteria and side effects for earlier signals.</li>
+<li><strong>Background Processes:</strong> Monitor Firefox's background services (Background Update, Default Browser Agent). Tracks success rates, exception volumes, and timing metrics, often segmented by OS version.</li>
+</ul>
+<h2 id="when-to-use-opmon"><a class="header" href="#when-to-use-opmon">When to use OpMon?</a></h2>
+<ul>
+<li>OpMon → Continuous monitoring, rollouts, build-over-build comparisons</li>
+<li>Experimenter → A/B tests requiring statistical significance testing</li>
+<li>GLAM → Ad-hoc histogram exploration</li>
+<li>Custom SQL → Complex queries beyond OpMon's aggregation model</li>
+</ul>
 <h2 id="experiments-vs-opmon"><a class="header" href="#experiments-vs-opmon">Experiments vs OpMon</a></h2>
 <p>The requirements for Operational Monitoring are related to, but mostly distinct from those for experiments:</p>
 <ul>
