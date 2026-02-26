@@ -10,7 +10,7 @@ have been ported to Glean and legacy telemetry is being
 deprecated across the platform.
 
 For more up to date information on events used by Nimbus,
-see <https://experimenter.info/telemetry>.
+see <https://experimenter.info/data-analysis/telemetry>.
 
 </div>
 
