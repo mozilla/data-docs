@@ -3185,7 +3185,7 @@ GROUP BY normalized_os,
 </code></pre>
 <p><a href="https://sql.telemetry.mozilla.org/queries/67927/"><code>STMO#67927</code></a></p>
 <p>These are just initial examples. You can query across all the fields in
-a telemetry crash ping, which provides useful information about the crashes themselves. You can view a summary of the available fields in the STMO schema browser, referring to <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/data/crash-ping.html">the documentation on the Firefox crash ping</a>
+a telemetry crash ping, which provides useful information about the crashes themselves. You can view a summary of the available fields in the STMO schema browser, referring to <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/obsolete/crash-ping.html">the documentation on the Firefox crash ping</a>
 for more information where necessary.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/cookbooks/crash_pings.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="working-with-bit-patterns-in-clients-last-seen"><a class="header" href="#working-with-bit-patterns-in-clients-last-seen">Working with Bit Patterns in Clients Last Seen</a></h1>
 <p>Monthly active users (MAU) is a windowed metric that requires joining data
@@ -8579,11 +8579,11 @@ end of the profile's first session (reason: &quot;shutdown&quot;), whichever com
 Pingsender.</p>
 <p>It was introduced in Firefox 55.</p>
 <h3 id="crash-ping"><a class="header" href="#crash-ping">&quot;crash&quot; ping</a></h3>
-<p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html">&quot;crash&quot; ping</a> provides diagnostic information whenever a
+<p>The <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/crash-ping.html">&quot;crash&quot; ping</a> provides diagnostic information whenever a
 Firefox process exits abnormally. Unlike the &quot;main&quot; ping with reason
 &quot;aborted-session&quot;, this ping does not contain Histograms or Scalars. It
 contains a Telemetry Environment, <a href="https://searchfox.org/mozilla-central/source/toolkit/crashreporter/CrashAnnotations.yaml">Crash Annotations</a>, and
-<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html#stack-traces">Stack Traces</a>.</p>
+<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/crash-ping.html#stack-traces">Stack Traces</a>.</p>
 <p>It was introduced in Firefox 40.</p>
 <h3 id="deletion-request-ping"><a class="header" href="#deletion-request-ping">&quot;deletion-request&quot; ping</a></h3>
 <p>In the event a user opts out of Telemetry, we send one final
@@ -14641,7 +14641,7 @@ group by gfx_compositor
 </code></pre>
 <h2 id="sampling-3"><a class="header" href="#sampling-3">Sampling</a></h2>
 <p><code>CrashSummary</code> contains one record for every
-<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html">crash ping</a>
+<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/crash-ping.html">crash ping</a>
 submitted by Firefox.</p>
 <h2 id="scheduling-31"><a class="header" href="#scheduling-31">Scheduling</a></h2>
 <p>This dataset is updated daily, shortly after midnight UTC.
@@ -14680,7 +14680,7 @@ The DAG is <a href="https://github.com/mozilla/telemetry-airflow/blob/166e0a555e
  |-- submission_date: string (nullable = true)
 </code></pre>
 <p>For more detail on where these fields come from in the
-<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html">raw data</a>,
+<a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/crash-ping.html">raw data</a>,
 please look at the case classes
 <a href="https://github.com/mozilla/telemetry-batch-view/blob/master/GRAVEYARD.md#crash-summary">in the <code>CrashSummaryView</code> code</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/mozilla/data-docs/edit/main/src/datasets/obsolete/crash_summary/reference.md">Edit this page on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><h1 id="error-aggregates-reference"><a class="header" href="#error-aggregates-reference">Error Aggregates Reference</a></h1>
@@ -15216,7 +15216,7 @@ EMR. This script can be used to perform backfill.</p>
 </li>
 </ul>
 <h1 id="introduction-41"><a class="header" href="#introduction-41">Introduction</a></h1>
-<p><em>Note: some of the information in this chapter is a duplication of the info found on <a href="https://wiki.mozilla.org/CloudServices/Sync/ReDash">this</a> wiki page. You can also find more detailed information about the data contained in the sync ping <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/sync-ping.html">here</a></em></p>
+<p><em>Note: some of the information in this chapter is a duplication of the info found on <a href="https://wiki.mozilla.org/CloudServices/Sync/ReDash">this</a> wiki page. You can also find more detailed information about the data contained in the sync ping <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/sync-ping.html">here</a></em></p>
 <p><code>sync_summary</code> and <code>sync_flat_summary</code> are the primary datasets that track the health of sync. <code>sync_flat_summary</code> is derived from <code>sync_summary</code> by unpacking/exploding the <code>engines</code> field of the latter, so they ultimately contain the same data (see below).</p>
 <h2 id="which-dataset-should-i-use"><a class="header" href="#which-dataset-should-i-use">Which dataset should I use?</a></h2>
 <p>Which dataset to use depends on whether you are interested in <em>per-engine</em> sync success or <em>per-sync</em> sync success (see below). If you are interested in whether a sync failed overall, regardless of which engine may have caused the failure, then you can use <code>sync_summary</code>. Otherwise, if you are interested in per-engine data, you should use <code>sync_flat_summary</code>.</p>
@@ -15230,7 +15230,7 @@ EMR. This script can be used to perform backfill.</p>
 <p>Currently, Firefox for desktop, Firefox for iOS and Firefox for Android (fennec) all have sync implemented, and they all send sync telemetry. Though there are some differences in the telemetry that each application sends, it all ends up in the <code>sync_summary</code> and <code>sync_flat_summary</code> datasets.</p>
 <p>Starting with Fenix, however, sync telemetry will start to be sent through <a href="https://github.com/mozilla-mobile/android-components/tree/master/components/service/glean">glean</a>. This means that, in all likelihood, Fenix sync telemetry will initially be segregated from existing sync telemetry (one reason is that current sync telemetry is on AWS while glean pings are ingested to GCP).</p>
 <h2 id="whats-an-engine"><a class="header" href="#whats-an-engine">What's an engine?</a></h2>
-<p>Firefox syncs many different types of browser data and (generally speaking) each one of these data types are synced by their own engine. When the app triggers a &quot;sync&quot; each engine makes their own determination of what needs to be synced (if anything). Many syncs can happen in a day (dozens or more on desktop, usually less on mobile). Telemetry about each sync is logged, and each <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/sync-ping.html">sync ping</a> (sent once a day, and whenever the user logs in or out of sync) contains information about multiple syncs. The scala code responsible for creating the <code>sync_summary</code> dataset unpacks each sync ping into one row per sync. The resulting <code>engines</code> field is an array of &quot;engine records&quot;: data about how each engine performed during that sync. <code>sync_flat_summary</code> further unpacking/exploding the <code>engines</code> field and creates a dataset that is one row per engine record.</p>
+<p>Firefox syncs many different types of browser data and (generally speaking) each one of these data types are synced by their own engine. When the app triggers a &quot;sync&quot; each engine makes their own determination of what needs to be synced (if anything). Many syncs can happen in a day (dozens or more on desktop, usually less on mobile). Telemetry about each sync is logged, and each <a href="https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/sync-ping.html">sync ping</a> (sent once a day, and whenever the user logs in or out of sync) contains information about multiple syncs. The scala code responsible for creating the <code>sync_summary</code> dataset unpacks each sync ping into one row per sync. The resulting <code>engines</code> field is an array of &quot;engine records&quot;: data about how each engine performed during that sync. <code>sync_flat_summary</code> further unpacking/exploding the <code>engines</code> field and creates a dataset that is one row per engine record.</p>
 <p>Existing engines (<code>engine_name</code> in <code>sync_flat_summary</code>) are listed below with brief descriptions in cases where their name isn't transparent.</p>
 <p>Note that not every device syncs each of these engines. They can be disabled individually and some are off by default.</p>
 <ul>
