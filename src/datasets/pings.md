@@ -176,13 +176,13 @@ To augment our data collection, see [Collecting New Data][addprobe] and the
 [event_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/event-ping.html
 [update_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/update-ping.html
 [new_profile_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/new-profile-ping.html
-[crash_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html
+[crash_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/crash-ping.html
 [deletion_request_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/data/deletion-request-ping.html
 [optout_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/obsolete/optout-ping.html
 [crash_annotations]: https://searchfox.org/mozilla-central/source/toolkit/crashreporter/CrashAnnotations.yaml
 [common_ping_data]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/common-ping.html
 [main_reasons]: https://sql.telemetry.mozilla.org/queries/3434
-[stack_traces]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html#stack-traces
+[stack_traces]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/crash-ping.html#stack-traces
 [preferences]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/preferences.html
 [stmo]: https://sql.telemetry.mozilla.org/
 [dataset]: https://mozilla.github.io/python_moztelemetry/api.html#module-moztelemetry.dataset
