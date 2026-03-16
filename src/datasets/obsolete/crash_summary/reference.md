@@ -23,7 +23,7 @@ group by gfx_compositor
 ## Sampling
 
 `CrashSummary` contains one record for every
-[crash ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html)
+[crash ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/crash-ping.html)
 submitted by Firefox.
 
 ## Scheduling
@@ -68,6 +68,6 @@ root
 ```
 
 For more detail on where these fields come from in the
-[raw data](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/crash-ping.html),
+[raw data](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/crash-ping.html),
 please look at the case classes
 [in the `CrashSummaryView` code](https://github.com/mozilla/telemetry-batch-view/blob/master/GRAVEYARD.md#crash-summary).

@@ -33,5 +33,5 @@ GROUP BY normalized_os,
 [`STMO#67927`](https://sql.telemetry.mozilla.org/queries/67927/)
 
 These are just initial examples. You can query across all the fields in
-a telemetry crash ping, which provides useful information about the crashes themselves. You can view a summary of the available fields in the STMO schema browser, referring to [the documentation on the Firefox crash ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/data/crash-ping.html)
+a telemetry crash ping, which provides useful information about the crashes themselves. You can view a summary of the available fields in the STMO schema browser, referring to [the documentation on the Firefox crash ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/obsolete/crash-ping.html)
 for more information where necessary.
