@@ -452,6 +452,31 @@ These statistics allow to determine the total number of crashes, total number of
 
 The [Metric Definitions Clients Daily explore in Looker](https://mozilla.cloud.looker.com/explore/firefox_desktop/metric_definitions_clients_daily?qid=KxzAcgpqBQEzaCcVxrUA3w&toggle=fil,vis) now exposes the defined metrics in statistics which are ready to be used in dashboards or ad-hoc analyses.
 
+## Metric Hub MCP Server
+
+The [Metric Hub MCP Server](https://github.com/mozilla/metric-hub/tree/main/lib/mcp-server) lets AI assistants (such as Claude) access Metric Hub definitions directly. It exposes tools for searching metrics, browsing data sources and segments, retrieving metric SQL, and querying live experiments from Experimenter.
+
+### Connecting to the MCP Server
+
+The server is hosted remotely — no local installation is needed. In Claude Code, run:
+
+```bash
+claude mcp add --transport sse metric-hub https://metric-hub-mcp-744009727678.us-west1.run.app/sse
+```
+
+Or add it manually to `~/.claude/mcp-servers.json`:
+
+```json
+{
+  "metric-hub": {
+    "type": "sse",
+    "url": "https://metric-hub-mcp-744009727678.us-west1.run.app/sse"
+  }
+}
+```
+
+Once connected, you can ask the assistant to create or search for metrics, look up data source definitions, generate metric SQL, or browse experiment configurations.
+
 ## FAQ
 
 ### Should metrics be defined in the metric definition, data source definition or source table?
