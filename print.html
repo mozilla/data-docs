@@ -8294,6 +8294,21 @@ denominator = &quot;socket_crash_active_hours_v1.sum&quot;
 </code></pre>
 <p>These statistics allow to determine the total number of crashes, total number of hours with crashes, how many clients were affected and so on.</p>
 <p>The <a href="https://mozilla.cloud.looker.com/explore/firefox_desktop/metric_definitions_clients_daily?qid=KxzAcgpqBQEzaCcVxrUA3w&amp;toggle=fil,vis">Metric Definitions Clients Daily explore in Looker</a> now exposes the defined metrics in statistics which are ready to be used in dashboards or ad-hoc analyses.</p>
+<h2 id="metric-hub-mcp-server"><a class="header" href="#metric-hub-mcp-server">Metric Hub MCP Server</a></h2>
+<p>The <a href="https://github.com/mozilla/metric-hub/tree/main/lib/mcp-server">Metric Hub MCP Server</a> lets AI assistants (such as Claude) access Metric Hub definitions directly. It exposes tools for searching metrics, browsing data sources and segments, retrieving metric SQL, and querying live experiments from Experimenter.</p>
+<h3 id="connecting-to-the-mcp-server"><a class="header" href="#connecting-to-the-mcp-server">Connecting to the MCP Server</a></h3>
+<p>The server is hosted remotely — no local installation is needed. In Claude Code, run:</p>
+<pre><code class="language-bash">claude mcp add --transport sse metric-hub https://metric-hub-mcp-744009727678.us-west1.run.app/sse
+</code></pre>
+<p>Or add it manually to <code>~/.claude/mcp-servers.json</code>:</p>
+<pre><code class="language-json">{
+  &quot;metric-hub&quot;: {
+    &quot;type&quot;: &quot;sse&quot;,
+    &quot;url&quot;: &quot;https://metric-hub-mcp-744009727678.us-west1.run.app/sse&quot;
+  }
+}
+</code></pre>
+<p>Once connected, you can ask the assistant to create or search for metrics, look up data source definitions, generate metric SQL, or browse experiment configurations.</p>
 <h2 id="faq-1"><a class="header" href="#faq-1">FAQ</a></h2>
 <h3 id="should-metrics-be-defined-in-the-metric-definition-data-source-definition-or-source-table"><a class="header" href="#should-metrics-be-defined-in-the-metric-definition-data-source-definition-or-source-table">Should metrics be defined in the metric definition, data source definition or source table?</a></h3>
 <p>Definitions for metrics can be encoded at different levels. It is preferable to specify the SQL that defines how a metric should be computed as much upstream as possible. This allows the most flexible usage of metric definitions.</p>
