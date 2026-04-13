@@ -5,9 +5,9 @@ In the meantime, please consult [the Glean event documentation](https://mozilla.
 
 ## Overview:
 
-[The Telemetry Events API](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html) allows users to define and record events in the browser.
+[The Telemetry Events API](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/collection/events.html) allows users to define and record events in the browser.
 
-Events are defined in [`Events.yaml`](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html#the-yaml-definition-file) and each events creates records with the following properties:
+Events are defined in [`Events.yaml`](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/collection/events.html#the-yaml-definition-file) and each events creates records with the following properties:
 
 - timestamp
 - category

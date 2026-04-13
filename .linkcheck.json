@@ -24,6 +24,9 @@
         { "pattern": "^#looker-pdts--aggregate-awareness$" },
         { "pattern": "^#experiment-unpacking$" },
         { "pattern": "/v2-system-addon/data_events.html" },
-        { "pattern": "^https://console.cloud.google.com/gcr/images/" }
+        { "pattern": "^https://console.cloud.google.com/gcr/images/" },
+        { "pattern": "^https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/obsolete/" },
+        { "pattern": "^https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/" },
+        { "pattern": "^https://cwiki.apache.org" }
     ]
 }

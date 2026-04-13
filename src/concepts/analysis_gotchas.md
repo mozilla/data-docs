@@ -169,9 +169,9 @@ Beta, Nightly or Developer Edition (the latter is similar to Beta).
 If you want to encourage users to collect good information for Mozilla, ask them to install a Beta release.
 
 [environment]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/environment.html
-[histograms]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/histograms.html
-[scalars]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/scalars.html
-[events]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html
+[histograms]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/collection/histograms.html
+[scalars]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/collection/scalars.html
+[events]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/collection/events.html
 
 ## Trusting Dates
 

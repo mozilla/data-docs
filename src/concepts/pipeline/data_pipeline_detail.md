@@ -377,7 +377,7 @@ graph LR
 [firefox hardware report]: https://data.firefox.com/dashboard/hardware
 [datadog]: http://datadoghq.com/
 [cerberus]: https://github.com/mozilla/cerberus
-[histogram measures]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/histograms.html
+[histogram measures]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/collection/histograms.html
 [airflow]: https://github.com/mozilla/telemetry-airflow
 [redash]: https://redash.io
 [stmo]: ../../tools/stmo.md

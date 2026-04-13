@@ -131,7 +131,7 @@ Telemetry pings can contain several different types of measurements:
   events are preserved, which clarifies sequences of user actions
 
 Data types are discussed in more depth in the [telemetry data
-collection](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/index.html)
+collection](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/collection/index.html)
 documentation.
 
 ## Firefox Desktop Telemetry: The Next Generation
