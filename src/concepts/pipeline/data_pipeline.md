@@ -168,17 +168,17 @@ No, not really. If you want to read more, check out [this article](data_pipeline
 
 There is a vast ecosystem of tools for processing data at scale, each with their pros & cons. The pipeline grew organically and we added new tools as new use-cases came up that we couldn’t solve with our existing stack. There are still scars left from that growth though which require some effort to get rid of, like ingesting data from schema-less format.
 
-[collect data]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/index.html
-[histograms]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/histograms.html
-[scalars]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/scalars.html
-[timings]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/measuring-time.html
-[events]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html
+[collect data]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/collection/index.html
+[histograms]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/collection/histograms.html
+[scalars]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/collection/scalars.html
+[timings]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/collection/measuring-time.html
+[events]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/collection/events.html
 [probes]: ../../datasets/new_data.md
 [collection policy]: https://wiki.mozilla.org/Firefox/Data_Collection
 [subsessions]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/sessions.html#subsessions
 [main ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html
 [ping types]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/pings.html#ping-types
-[create their own ping types]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html
+[create their own ping types]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/collection/custom-pings.html
 [api]: https://searchfox.org/mozilla-central/rev/501eb4718d73870892d28f31a99b46f4783efaa0/toolkit/components/telemetry/app/TelemetryController.jsm#231
 [submit]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/submission.html#submission
 [load balancer]: https://aws.amazon.com/elasticloadbalancing/

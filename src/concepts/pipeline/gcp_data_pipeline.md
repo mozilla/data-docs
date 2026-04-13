@@ -202,18 +202,18 @@ effort (and improving over time) ETL jobs that scrub incoming data of
 potentially identifying information, which reduces risk. When possible, we
 build and work with aggregate datasets rather than individual-level data.
 
-[collect data]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/index.html
-[histograms]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/histograms.html
-[scalars]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/scalars.html
-[timings]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/measuring-time.html
-[events]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html
+[collect data]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/collection/index.html
+[histograms]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/collection/histograms.html
+[scalars]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/collection/scalars.html
+[timings]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/collection/measuring-time.html
+[events]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/collection/events.html
 [probes]: ../../datasets/new_data.md
 [collection policy]: https://wiki.mozilla.org/Firefox/Data_Collection
 [collection categories]: https://wiki.mozilla.org/Data_Collection#Data_Collection_Categories
 [subsessions]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/sessions.html#subsessions
 [main ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html
 [ping types]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/pings.html#ping-types
-[create their own ping types]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html
+[create their own ping types]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/collection/custom-pings.html
 [api]: https://searchfox.org/mozilla-central/rev/501eb4718d73870892d28f31a99b46f4783efaa0/toolkit/components/telemetry/app/TelemetryController.jsm#231
 [submit]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/concepts/submission.html#submission
 [airflow]: https://github.com/mozilla/telemetry-airflow/

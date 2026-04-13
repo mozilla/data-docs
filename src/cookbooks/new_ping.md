@@ -16,7 +16,7 @@ specific, concrete asks that can be translated to data points. This will also ma
 the line as you start data review.
 
 More detail on how to design and implement new pings for Firefox Desktop [can be found
-here](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html).
+here](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/collection/custom-pings.html).
 
 ## Choose a Namespace and DocType
 
@@ -163,7 +163,7 @@ schemas can be viewed at
 ## Start Sending Data
 
 Use the built-in Telemetry APIs when possible. A few examples are the [Gecko Telemetry
-APIs](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html),
+APIs](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/collection/custom-pings.html),
 or the [iOS Telemetry APIs](https://github.com/mozilla-mobile/telemetry-ios).
 
 **Users on Android should use [Glean](../concepts/glean/glean.md)**, which does not require building out custom pings.

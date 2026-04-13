@@ -86,7 +86,7 @@ Where the individual fields are:
 - `value`: `String`, optional, may be null. This is a user defined value, providing context for the event.
 - `extra`: `Object`, optional, may be null. This is an object of the form `{"key": "value", ...}`, both keys and values need to be strings. This is used for events when additional richer context is needed.
 
-See also the [Firefox Telemetry documentation](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html#serialization-format).
+See also the [Firefox Telemetry documentation](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/collection/events.html#serialization-format).
 
 # Event data collection
 
@@ -95,9 +95,9 @@ See also the [Firefox Telemetry documentation](https://firefox-source-docs.mozil
 To collect this event data in Firefox there are different APIs in Firefox, all addressing different
 use cases:
 
-- The [_Telemetry event API_](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html)
+- The [_Telemetry event API_](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/collection/events.html)
   allows easy recording of events from Firefox code.
-- The [_dynamic event API_](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/events.html#registerevents)
+- The [_dynamic event API_](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/collection/events.html#registerevents)
   allows code from Mozilla addons to record new events into Telemetry without shipping Firefox
   code.
 - The _[Telemetry WebExtension API](https://searchfox.org/mozilla-central/rev/55da592d85c2baf8d8818010c41d9738c97013d2/toolkit/components/extensions/schemas/telemetry.json#87)_ ([introduced here](https://bugzilla.mozilla.org/show_bug.cgi?id=1280234))
@@ -108,7 +108,7 @@ For all these APIs, events will get sent to the pipeline through the
 Before Firefox 62, events were sent through the [main ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html) instead, with a hard limit of 500 events per ping.
 From Firefox 61, all events recorded through these APIs are [automatically counted in scalars](https://bugzilla.mozilla.org/show_bug.cgi?id=1440673).
 
-Finally, [_custom pings_](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/collection/custom-pings.html)
+Finally, [_custom pings_](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/collection/custom-pings.html)
 can follow the event data format and potentially connect to the existing tooling with some integration work.
 
 ## Mobile event collection

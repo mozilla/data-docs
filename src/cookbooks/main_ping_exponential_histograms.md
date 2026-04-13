@@ -6,7 +6,7 @@ This tutorial tries to build up an understanding and intuition of how things wor
 
 Assumptions:
 
-- You have some idea of what a histogram is (if not, the [Wikipedia article](https://en.wikipedia.org/wiki/Histogram) is a great place to start), have at least skimmed over [the Firefox documentation on histograms](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/collection/histograms.html)
+- You have some idea of what a histogram is (if not, the [Wikipedia article](https://en.wikipedia.org/wiki/Histogram) is a great place to start), have at least skimmed over [the Firefox documentation on histograms](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/obsolete/collection/histograms.html)
 - You have read [the introduction to STMO](../tools/stmo.md).
 - You understand the [main ping tables](../datasets/main_ping_tables.md) (`telemetry.main_1pct` and `telemetry.main_nightly`).
 
@@ -19,7 +19,7 @@ Assumptions:
 For the purposes of this tutorial, let's look at a typical performance-oriented histogram: [`FX_TAB_SWITCH_SPINNER_VISIBLE_MS`](https://probes.telemetry.mozilla.org/?view=detail&probeId=histogram%2FFX_TAB_SWITCH_SPINNER_VISIBLE_MS) which we use to count the number of times a tab spinner appears after a switch tab operation in Firefox, along with the duration of
 its appearance in milliseconds (ms). This is an unwanted operation (especially if it's long), as it makes the browser appear unresponsive and [confuses / disturbs users](https://support.mozilla.org/en-US/questions/1198062).
 
-`FX_TAB_SWITCH_SPINNER_VISIBLE_MS` is what's called an [exponential histogram](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/collection/histograms.html#exponential): it represents an exponentially increasing distribution of values in each of its "buckets". It's probably easier to visualize this using the histogram viewer than describe:
+`FX_TAB_SWITCH_SPINNER_VISIBLE_MS` is what's called an [exponential histogram](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/obsolete/collection/histograms.html#exponential): it represents an exponentially increasing distribution of values in each of its "buckets". It's probably easier to visualize this using the histogram viewer than describe:
 
 ![example visualization of an exponential histogram](../assets/exponential_histograms_tutorial/example_visualization_of_an_exponential_histogram.png)
 [link](https://telemetry.mozilla.org/histogram-simulator/index.html#low=1&high=1000&n_buckets=20&kind=exponential&generate=normal)
