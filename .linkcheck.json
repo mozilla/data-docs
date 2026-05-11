@@ -27,6 +27,7 @@
         { "pattern": "^https://console.cloud.google.com/gcr/images/" },
         { "pattern": "^https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/obsolete/" },
         { "pattern": "^https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/" },
-        { "pattern": "^https://cwiki.apache.org" }
+        { "pattern": "^https://cwiki.apache.org" },
+        { "pattern": "^https://docs.openstack.org" }
     ]
 }
