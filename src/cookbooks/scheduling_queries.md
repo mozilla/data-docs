@@ -22,6 +22,10 @@ Also, since the procedure for scheduling a query in this way is submitting a pul
 
 For more information on how to use this approach, see [A quick guide to creating a derived dataset with bigquery-etl](https://mozilla.github.io/bigquery-etl/cookbooks/creating_a_derived_dataset/).
 
+### Testing changes before deploying
+
+bigquery-etl can run a query against real data in a private development environment before a pull request is opened, so a new or changed query can be validated — confirming it runs without errors and returns sensible numbers — without affecting the production tables that power live dashboards and metrics. See [Development workflows](https://mozilla.github.io/bigquery-etl/cookbooks/development_workflows/).
+
 ## Scheduling Queries using GCP
 
 Finally, [you can schedule queries using GCP](https://cloud.google.com/bigquery/docs/scheduling-queries). This is generally not recommended, [reach out to the Data team](../concepts/getting_help.md) if you think you need to do this.
