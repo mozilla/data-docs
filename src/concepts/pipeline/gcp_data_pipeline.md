@@ -16,8 +16,8 @@ graph TD
 
 f1(fa:fa-firefox Firefox) -->|HTTP Post| d0(fa:fa-filter Ingestion Edge)
 d0 --> p1(fa:fa-stream Raw Topic)
-p1 --> d1(fa:fa-exchange-alt Landfill Sink)
-d1 --> b1(fa:fa-database Landfill BQ)
+p1 --> d1(fa:fa-exchange-alt Raw Sink)
+d1 --> b1(fa:fa-database Raw BQ)
 p1 --> d2(fa:fa-exchange-alt Decoder)
 d2 -->|success| p2(fa:fa-stream Decoded Topic)
 d2 -.->|fail| p3(fa:fa-stream Errors Topic)
@@ -76,8 +76,10 @@ message body of optionally-gzipped JSON.
 These messages are forwarded to a PubSub message queue with minimal processing,
 and made available in a **Raw** topic.
 
-A [Dataflow] job reads this topic and writes the raw messages to a BigQuery **Landfill** sink.
-This Landfill data is not used for analysis, but is stored in its raw form for
+A Kubernetes `Raw Sink` job (part of the [`ingestion-sink`][ingestion-sink]
+service) reads this topic and writes the raw messages to a BigQuery
+`payload_bytes_raw` sink (historically called _Landfill_).
+This raw data is not used for analysis, but is stored in its raw form for
 recovery and backfill purposes.
 
 If there is a processing error or data-loss downstream in the pipeline, this is an important fail-safe.
