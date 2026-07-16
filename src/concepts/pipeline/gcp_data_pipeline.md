@@ -22,7 +22,7 @@ p1 --> d2(fa:fa-exchange-alt Decoder)
 d2 -->|success| p2(fa:fa-stream Decoded Topic)
 d2 -.->|fail| p3(fa:fa-stream Errors Topic)
 p3 --> d4(fa:fa-exchange-alt Errors Sink)
-p2 --> d3(fa:fa-exchange-alt BigQuery Sink)
+p2 --> d3(fa:fa-exchange-alt Live Sink)
 d3 --> b2(fa:fa-database Live Tables BQ)
 d4 --> b3(fa:fa-database Error Tables BQ)
 
@@ -129,11 +129,13 @@ and the [schema generator].
 The result are tables that contains SQL-friendly field names for all known
 measures, as implemented in the [probe scraper].
 
-A [Dataflow] job reads from the Decoded topic and writes out to
+A Kubernetes `Live Sink` job (part of the [`ingestion-sink`][ingestion-sink]
+service) reads from the Decoded topic and writes out to
 **[live ping tables][table layout]**.
 These tables are updated frequently, and typically reflect data within a few
-minutes of it being ingested. They are optimized for accessing recent data,
-but are only guaranteed to contain a few days of history.
+minutes of it being ingested. They are intended for low-latency access to
+recent data and are not the supported interface for analysis; for that, use the
+**[historical ping tables][table layout]** (stable tables) described below.
 
 Historical raw ping data is stored in **[historical ping tables][table layout]**,
 also known as **stable tables**.
@@ -234,4 +236,5 @@ build and work with aggregate datasets rather than individual-level data.
 [norm]: ../channels/channel_normalization.md
 [bqe]: https://github.com/mozilla/bigquery-etl
 [gcp-ingestion]: https://github.com/mozilla/gcp-ingestion
+[ingestion-sink]: https://github.com/mozilla/gcp-ingestion/tree/main/ingestion-sink
 [looker]: https://mozilla.cloud.looker.com
