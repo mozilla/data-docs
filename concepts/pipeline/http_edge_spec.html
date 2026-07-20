@@ -198,13 +198,21 @@ any further processing, analysis, and storage will be handled.</p>
 documents described by a <a href="https://json-schema.org/">JSONSchema</a>.</p>
 <h2 id="server-requestresponse"><a class="header" href="#server-requestresponse">Server Request/Response</a></h2>
 <h3 id="get-request"><a class="header" href="#get-request">GET Request</a></h3>
-<p>Accept GET on <code>/status</code>, returning <code>OK</code> if all is well. This can be used to
-check the health of web servers.</p>
+<p>The edge server does not serve application data over GET. It exposes
+<a href="https://github.com/mozilla-services/Dockerflow">Dockerflow</a> health-check endpoints:</p>
+<ul>
+<li><code>/__lbheartbeat__</code> - returns 200 unconditionally; used by the load balancer
+and Kubernetes probes to confirm the server is up.</li>
+<li><code>/__heartbeat__</code> - returns 200 when internal checks pass (enough free disk
+for the local queue, and the queue is accessible) and 500 otherwise.</li>
+<li><code>/__version__</code> - returns build and version information.</li>
+</ul>
 <h3 id="get-response-codes"><a class="header" href="#get-response-codes">GET Response codes</a></h3>
 <ul>
-<li><em>200</em> - OK. <code>/status</code> and all's well</li>
-<li><em>404</em> - Any GET other than <code>/status</code></li>
-<li><em>500</em> - All is not well</li>
+<li><em>200</em> - a health check passed (<code>/__lbheartbeat__</code>, or <code>/__heartbeat__</code> when
+all checks pass), or version info was returned (<code>/__version__</code>)</li>
+<li><em>404</em> - any other GET path</li>
+<li><em>500</em> - a <code>/__heartbeat__</code> check failed</li>
 </ul>
 <h3 id="postput-request"><a class="header" href="#postput-request">POST/PUT Request</a></h3>
 <p>Treat POST and PUT the same. Accept POST or PUT to URLs of the form:</p>
@@ -219,7 +227,7 @@ check the health of web servers.</p>
 <li><code>docId</code> - a UUID identifying the exact submission. If the same <code>docId</code> is seen more than once, it will be discarded as a duplicate.</li>
 </ul>
 <p>The combination of <code>namespace</code>, <code>docType</code> and <code>docVersion</code> together identify a specific schema to be used for validating submissions to the above endpoint.</p>
-<p>If a schema is not present in the [schemas repository] corresponding to this combination, the submission
+<p>If a schema is not present in the <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas">schemas repository</a> corresponding to this combination, the submission
 will be considered an error and will not proceed to the data lake.</p>
 <h4 id="special-handling-for-firefox-desktop-telemetry"><a class="header" href="#special-handling-for-firefox-desktop-telemetry">Special handling for Firefox Desktop Telemetry</a></h4>
 <p>Firefox Desktop Telemetry uses a slightly different URL scheme:</p>
@@ -228,19 +236,20 @@ will be considered an error and will not proceed to the data lake.</p>
 <p><code>/submit/telemetry/ce39b608-f595-4c69-b6a6-f7a436604648/main/Firefox/61.0a1/nightly/20180328030202?v=4</code></p>
 <p>Here the <code>namespace</code> is fixed as &quot;telemetry&quot;, and there is no <code>docVersion</code> in the URL.
 This means that incoming JSON documents must be parsed to determine the schema version
-to apply for validation. This logic is part of the downstream [decoder] job.
-Also note the required query parameter suffix <code>?v=4</code>.
-Documents sent under <code>/submit/telemetry</code> without <code>v=4</code> will be rejected at the edge.</p>
+to apply for validation. This logic is part of the downstream <a href="gcp_data_pipeline.html#decoding">decoder</a> job.
+Also note the query parameter suffix <code>?v=4</code>, a historical convention sent by
+Firefox Desktop. The edge server routes on the URL path only and forwards the
+request body opaquely; the query string is preserved as request metadata.</p>
 <h3 id="postput-response-codes"><a class="header" href="#postput-response-codes">POST/PUT Response codes</a></h3>
 <ul>
 <li><em>200</em> - OK. Request accepted into the pipeline.</li>
 <li><em>400</em> - Bad request, for example an un-encoded space in the URL.</li>
 <li><em>404</em> - not found - POST/PUT to an unknown namespace</li>
 <li><em>405</em> - wrong request type (anything other than POST/PUT)</li>
-<li><em>411</em> - missing content-length header</li>
-<li><em>413</em> - request body too large (Note that if we have badly-behaved clients that retry on <code>4XX</code>, we may opt to send back 202 on body/path too long).</li>
-<li><em>414</em> - request path too long (See above)</li>
+<li><em>413</em> - request body too large</li>
+<li><em>431</em> - a request header (or other captured metadata attribute) exceeds PubSub's 1024 byte attribute limit</li>
 <li><em>500</em> - internal error</li>
+<li><em>507</em> - insufficient storage - the edge's local retry queue is full (for example during an extended PubSub outage)</li>
 </ul>
 <h3 id="supported-http-headers"><a class="header" href="#supported-http-headers">Supported HTTP Headers</a></h3>
 <p>The following headers will be passed through the pipeline and made available as metadata.</p>

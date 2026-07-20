@@ -195,13 +195,13 @@ sources, including <a href="../glean/glean.html">Glean</a> applications.</p>
 
 f1(fa:fa-firefox Firefox) --&gt;|HTTP Post| d0(fa:fa-filter Ingestion Edge)
 d0 --&gt; p1(fa:fa-stream Raw Topic)
-p1 --&gt; d1(fa:fa-exchange-alt Landfill Sink)
-d1 --&gt; b1(fa:fa-database Landfill BQ)
+p1 --&gt; d1(fa:fa-exchange-alt Raw Sink)
+d1 --&gt; b1(fa:fa-database Raw BQ)
 p1 --&gt; d2(fa:fa-exchange-alt Decoder)
 d2 --&gt;|success| p2(fa:fa-stream Decoded Topic)
 d2 -.-&gt;|fail| p3(fa:fa-stream Errors Topic)
 p3 --&gt; d4(fa:fa-exchange-alt Errors Sink)
-p2 --&gt; d3(fa:fa-exchange-alt BigQuery Sink)
+p2 --&gt; d3(fa:fa-exchange-alt Live Sink)
 d3 --&gt; b2(fa:fa-database Live Tables BQ)
 d4 --&gt; b3(fa:fa-database Error Tables BQ)
 
@@ -247,8 +247,10 @@ HTTP Server that <a href="http_edge_spec.html">accepts POST requests</a> contain
 message body of optionally-gzipped JSON.</p>
 <p>These messages are forwarded to a PubSub message queue with minimal processing,
 and made available in a <strong>Raw</strong> topic.</p>
-<p>A <a href="https://cloud.google.com/dataflow/docs/">Dataflow</a> job reads this topic and writes the raw messages to a BigQuery <strong>Landfill</strong> sink.
-This Landfill data is not used for analysis, but is stored in its raw form for
+<p>A Kubernetes <code>Raw Sink</code> job (part of the <a href="https://github.com/mozilla/gcp-ingestion/tree/main/ingestion-sink"><code>ingestion-sink</code></a>
+service) reads this topic and writes the raw messages to a BigQuery
+<code>payload_bytes_raw</code> sink (historically called <em>Landfill</em>).
+This raw data is not used for analysis, but is stored in its raw form for
 recovery and backfill purposes.</p>
 <p>If there is a processing error or data-loss downstream in the pipeline, this is an important fail-safe.</p>
 <h2 id="decoding"><a class="header" href="#decoding">Decoding</a></h2>
@@ -285,11 +287,13 @@ and metrics to generate more complete schemas.</p>
 and the <a href="https://github.com/mozilla/mozilla-schema-generator">schema generator</a>.
 The result are tables that contains SQL-friendly field names for all known
 measures, as implemented in the <a href="https://github.com/mozilla/probe-scraper">probe scraper</a>.</p>
-<p>A <a href="https://cloud.google.com/dataflow/docs/">Dataflow</a> job reads from the Decoded topic and writes out to
+<p>A Kubernetes <code>Live Sink</code> job (part of the <a href="https://github.com/mozilla/gcp-ingestion/tree/main/ingestion-sink"><code>ingestion-sink</code></a>
+service) reads from the Decoded topic and writes out to
 <strong><a href="../../cookbooks/bigquery/querying.html#table-layout-and-naming">live ping tables</a></strong>.
 These tables are updated frequently, and typically reflect data within a few
-minutes of it being ingested. They are optimized for accessing recent data,
-but are only guaranteed to contain a few days of history.</p>
+minutes of it being ingested. They are intended for low-latency access to
+recent data and are not the supported interface for analysis; for that, use the
+<strong><a href="../../cookbooks/bigquery/querying.html#table-layout-and-naming">historical ping tables</a></strong> (stable tables) described below.</p>
 <p>Historical raw ping data is stored in <strong><a href="../../cookbooks/bigquery/querying.html#table-layout-and-naming">historical ping tables</a></strong>,
 also known as <strong>stable tables</strong>.
 These tables include only completed days of data, are populated once a day

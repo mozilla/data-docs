@@ -401,10 +401,11 @@ WHERE date(submission_timestamp) = date_sub(current_date, interval 1 day)
 LIMIT 1
 </code></pre>
 <h4 id="data-structure-normalization"><a class="header" href="#data-structure-normalization">Data Structure Normalization</a></h4>
-<p>Thee decoder is also responsible for transforming the data to
-accommodate BigQuery limitations in data representation. All transformations are defined in
-<a href="https://github.com/mozilla/gcp-ingestion/blob/main/ingestion-beam/src/main/java/com/mozilla/telemetry/transforms/PubsubMessageToTableRow.java"><code>ingestion-beam</code> under
-<code>com.mozilla.telemtry.transforms.PubsubMessageToTableRow</code></a>.</p>
+<p>The decoder is also responsible for transforming the data to
+accommodate BigQuery limitations in data representation. Most transformations are implemented in
+<a href="https://github.com/mozilla/gcp-ingestion/blob/main/ingestion-core/src/main/java/com/mozilla/telemetry/ingestion/core/transform/PubsubMessageToObjectNode.java"><code>ingestion-core</code> under
+<code>com.mozilla.telemetry.ingestion.core.transform.PubsubMessageToObjectNode</code></a>;
+<code>ingestion-beam</code>'s <code>PubsubMessageToTableRow</code> is a thin wrapper that adds Beam metrics and converts the result to a BigQuery <code>TableRow</code>.</p>
 <p>The following transformations are currently applied:</p>
 <div class="table-wrapper"><table><thead><tr><th>Transformation</th><th>Description</th></tr></thead><tbody>
 <tr><td>Map Types</td><td>JSON objects that contain an unbounded number of keys with a shared value type are represented as a <a href="../../cookbooks/bigquery/querying.html#accessing-map-like-fields">repeated structure containing a <code>key</code> and <code>value</code> column</a>.</td></tr>

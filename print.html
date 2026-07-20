@@ -5625,13 +5625,13 @@ sources, including <a href="concepts/pipeline/../glean/glean.html">Glean</a> app
 
 f1(fa:fa-firefox Firefox) --&gt;|HTTP Post| d0(fa:fa-filter Ingestion Edge)
 d0 --&gt; p1(fa:fa-stream Raw Topic)
-p1 --&gt; d1(fa:fa-exchange-alt Landfill Sink)
-d1 --&gt; b1(fa:fa-database Landfill BQ)
+p1 --&gt; d1(fa:fa-exchange-alt Raw Sink)
+d1 --&gt; b1(fa:fa-database Raw BQ)
 p1 --&gt; d2(fa:fa-exchange-alt Decoder)
 d2 --&gt;|success| p2(fa:fa-stream Decoded Topic)
 d2 -.-&gt;|fail| p3(fa:fa-stream Errors Topic)
 p3 --&gt; d4(fa:fa-exchange-alt Errors Sink)
-p2 --&gt; d3(fa:fa-exchange-alt BigQuery Sink)
+p2 --&gt; d3(fa:fa-exchange-alt Live Sink)
 d3 --&gt; b2(fa:fa-database Live Tables BQ)
 d4 --&gt; b3(fa:fa-database Error Tables BQ)
 
@@ -5677,8 +5677,10 @@ HTTP Server that <a href="concepts/pipeline/http_edge_spec.html">accepts POST re
 message body of optionally-gzipped JSON.</p>
 <p>These messages are forwarded to a PubSub message queue with minimal processing,
 and made available in a <strong>Raw</strong> topic.</p>
-<p>A <a href="https://cloud.google.com/dataflow/docs/">Dataflow</a> job reads this topic and writes the raw messages to a BigQuery <strong>Landfill</strong> sink.
-This Landfill data is not used for analysis, but is stored in its raw form for
+<p>A Kubernetes <code>Raw Sink</code> job (part of the <a href="https://github.com/mozilla/gcp-ingestion/tree/main/ingestion-sink"><code>ingestion-sink</code></a>
+service) reads this topic and writes the raw messages to a BigQuery
+<code>payload_bytes_raw</code> sink (historically called <em>Landfill</em>).
+This raw data is not used for analysis, but is stored in its raw form for
 recovery and backfill purposes.</p>
 <p>If there is a processing error or data-loss downstream in the pipeline, this is an important fail-safe.</p>
 <h2 id="decoding"><a class="header" href="#decoding">Decoding</a></h2>
@@ -5715,11 +5717,13 @@ and metrics to generate more complete schemas.</p>
 and the <a href="https://github.com/mozilla/mozilla-schema-generator">schema generator</a>.
 The result are tables that contains SQL-friendly field names for all known
 measures, as implemented in the <a href="https://github.com/mozilla/probe-scraper">probe scraper</a>.</p>
-<p>A <a href="https://cloud.google.com/dataflow/docs/">Dataflow</a> job reads from the Decoded topic and writes out to
+<p>A Kubernetes <code>Live Sink</code> job (part of the <a href="https://github.com/mozilla/gcp-ingestion/tree/main/ingestion-sink"><code>ingestion-sink</code></a>
+service) reads from the Decoded topic and writes out to
 <strong><a href="concepts/pipeline/../../cookbooks/bigquery/querying.html#table-layout-and-naming">live ping tables</a></strong>.
 These tables are updated frequently, and typically reflect data within a few
-minutes of it being ingested. They are optimized for accessing recent data,
-but are only guaranteed to contain a few days of history.</p>
+minutes of it being ingested. They are intended for low-latency access to
+recent data and are not the supported interface for analysis; for that, use the
+<strong><a href="concepts/pipeline/../../cookbooks/bigquery/querying.html#table-layout-and-naming">historical ping tables</a></strong> (stable tables) described below.</p>
 <p>Historical raw ping data is stored in <strong><a href="concepts/pipeline/../../cookbooks/bigquery/querying.html#table-layout-and-naming">historical ping tables</a></strong>,
 also known as <strong>stable tables</strong>.
 These tables include only completed days of data, are populated once a day
@@ -5781,13 +5785,21 @@ any further processing, analysis, and storage will be handled.</p>
 documents described by a <a href="https://json-schema.org/">JSONSchema</a>.</p>
 <h2 id="server-requestresponse"><a class="header" href="#server-requestresponse">Server Request/Response</a></h2>
 <h3 id="get-request"><a class="header" href="#get-request">GET Request</a></h3>
-<p>Accept GET on <code>/status</code>, returning <code>OK</code> if all is well. This can be used to
-check the health of web servers.</p>
+<p>The edge server does not serve application data over GET. It exposes
+<a href="https://github.com/mozilla-services/Dockerflow">Dockerflow</a> health-check endpoints:</p>
+<ul>
+<li><code>/__lbheartbeat__</code> - returns 200 unconditionally; used by the load balancer
+and Kubernetes probes to confirm the server is up.</li>
+<li><code>/__heartbeat__</code> - returns 200 when internal checks pass (enough free disk
+for the local queue, and the queue is accessible) and 500 otherwise.</li>
+<li><code>/__version__</code> - returns build and version information.</li>
+</ul>
 <h3 id="get-response-codes"><a class="header" href="#get-response-codes">GET Response codes</a></h3>
 <ul>
-<li><em>200</em> - OK. <code>/status</code> and all's well</li>
-<li><em>404</em> - Any GET other than <code>/status</code></li>
-<li><em>500</em> - All is not well</li>
+<li><em>200</em> - a health check passed (<code>/__lbheartbeat__</code>, or <code>/__heartbeat__</code> when
+all checks pass), or version info was returned (<code>/__version__</code>)</li>
+<li><em>404</em> - any other GET path</li>
+<li><em>500</em> - a <code>/__heartbeat__</code> check failed</li>
 </ul>
 <h3 id="postput-request"><a class="header" href="#postput-request">POST/PUT Request</a></h3>
 <p>Treat POST and PUT the same. Accept POST or PUT to URLs of the form:</p>
@@ -5802,7 +5814,7 @@ check the health of web servers.</p>
 <li><code>docId</code> - a UUID identifying the exact submission. If the same <code>docId</code> is seen more than once, it will be discarded as a duplicate.</li>
 </ul>
 <p>The combination of <code>namespace</code>, <code>docType</code> and <code>docVersion</code> together identify a specific schema to be used for validating submissions to the above endpoint.</p>
-<p>If a schema is not present in the [schemas repository] corresponding to this combination, the submission
+<p>If a schema is not present in the <a href="https://github.com/mozilla-services/mozilla-pipeline-schemas">schemas repository</a> corresponding to this combination, the submission
 will be considered an error and will not proceed to the data lake.</p>
 <h4 id="special-handling-for-firefox-desktop-telemetry"><a class="header" href="#special-handling-for-firefox-desktop-telemetry">Special handling for Firefox Desktop Telemetry</a></h4>
 <p>Firefox Desktop Telemetry uses a slightly different URL scheme:</p>
@@ -5811,19 +5823,20 @@ will be considered an error and will not proceed to the data lake.</p>
 <p><code>/submit/telemetry/ce39b608-f595-4c69-b6a6-f7a436604648/main/Firefox/61.0a1/nightly/20180328030202?v=4</code></p>
 <p>Here the <code>namespace</code> is fixed as &quot;telemetry&quot;, and there is no <code>docVersion</code> in the URL.
 This means that incoming JSON documents must be parsed to determine the schema version
-to apply for validation. This logic is part of the downstream [decoder] job.
-Also note the required query parameter suffix <code>?v=4</code>.
-Documents sent under <code>/submit/telemetry</code> without <code>v=4</code> will be rejected at the edge.</p>
+to apply for validation. This logic is part of the downstream <a href="concepts/pipeline/gcp_data_pipeline.html#decoding">decoder</a> job.
+Also note the query parameter suffix <code>?v=4</code>, a historical convention sent by
+Firefox Desktop. The edge server routes on the URL path only and forwards the
+request body opaquely; the query string is preserved as request metadata.</p>
 <h3 id="postput-response-codes"><a class="header" href="#postput-response-codes">POST/PUT Response codes</a></h3>
 <ul>
 <li><em>200</em> - OK. Request accepted into the pipeline.</li>
 <li><em>400</em> - Bad request, for example an un-encoded space in the URL.</li>
 <li><em>404</em> - not found - POST/PUT to an unknown namespace</li>
 <li><em>405</em> - wrong request type (anything other than POST/PUT)</li>
-<li><em>411</em> - missing content-length header</li>
-<li><em>413</em> - request body too large (Note that if we have badly-behaved clients that retry on <code>4XX</code>, we may opt to send back 202 on body/path too long).</li>
-<li><em>414</em> - request path too long (See above)</li>
+<li><em>413</em> - request body too large</li>
+<li><em>431</em> - a request header (or other captured metadata attribute) exceeds PubSub's 1024 byte attribute limit</li>
 <li><em>500</em> - internal error</li>
+<li><em>507</em> - insufficient storage - the edge's local retry queue is full (for example during an extended PubSub outage)</li>
 </ul>
 <h3 id="supported-http-headers"><a class="header" href="#supported-http-headers">Supported HTTP Headers</a></h3>
 <p>The following headers will be passed through the pipeline and made available as metadata.</p>
@@ -6182,10 +6195,11 @@ WHERE date(submission_timestamp) = date_sub(current_date, interval 1 day)
 LIMIT 1
 </code></pre>
 <h4 id="data-structure-normalization"><a class="header" href="#data-structure-normalization">Data Structure Normalization</a></h4>
-<p>Thee decoder is also responsible for transforming the data to
-accommodate BigQuery limitations in data representation. All transformations are defined in
-<a href="https://github.com/mozilla/gcp-ingestion/blob/main/ingestion-beam/src/main/java/com/mozilla/telemetry/transforms/PubsubMessageToTableRow.java"><code>ingestion-beam</code> under
-<code>com.mozilla.telemtry.transforms.PubsubMessageToTableRow</code></a>.</p>
+<p>The decoder is also responsible for transforming the data to
+accommodate BigQuery limitations in data representation. Most transformations are implemented in
+<a href="https://github.com/mozilla/gcp-ingestion/blob/main/ingestion-core/src/main/java/com/mozilla/telemetry/ingestion/core/transform/PubsubMessageToObjectNode.java"><code>ingestion-core</code> under
+<code>com.mozilla.telemetry.ingestion.core.transform.PubsubMessageToObjectNode</code></a>;
+<code>ingestion-beam</code>'s <code>PubsubMessageToTableRow</code> is a thin wrapper that adds Beam metrics and converts the result to a BigQuery <code>TableRow</code>.</p>
 <p>The following transformations are currently applied:</p>
 <div class="table-wrapper"><table><thead><tr><th>Transformation</th><th>Description</th></tr></thead><tbody>
 <tr><td>Map Types</td><td>JSON objects that contain an unbounded number of keys with a shared value type are represented as a <a href="concepts/pipeline/../../cookbooks/bigquery/querying.html#accessing-map-like-fields">repeated structure containing a <code>key</code> and <code>value</code> column</a>.</td></tr>
