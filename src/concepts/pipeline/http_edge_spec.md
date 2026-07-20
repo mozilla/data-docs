@@ -87,7 +87,7 @@ request body opaquely; the query string is preserved as request metadata.
 - _404_ - not found - POST/PUT to an unknown namespace
 - _405_ - wrong request type (anything other than POST/PUT)
 - _413_ - request body too large
-- _431_ - a request header (or other captured metadata attribute) exceeds PubSub's 1024-byte attribute limit
+- _431_ - a request header (or other captured metadata attribute) exceeds PubSub's 1024 byte attribute limit
 - _500_ - internal error
 - _507_ - insufficient storage - the edge's local retry queue is full (for example during an extended PubSub outage)
 
