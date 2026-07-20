@@ -236,10 +236,11 @@ LIMIT 1
 
 #### Data Structure Normalization
 
-Thee decoder is also responsible for transforming the data to
-accommodate BigQuery limitations in data representation. All transformations are defined in
-[`ingestion-beam` under
-`com.mozilla.telemtry.transforms.PubsubMessageToTableRow`](https://github.com/mozilla/gcp-ingestion/blob/main/ingestion-beam/src/main/java/com/mozilla/telemetry/transforms/PubsubMessageToTableRow.java).
+The decoder is also responsible for transforming the data to
+accommodate BigQuery limitations in data representation. Most transformations are implemented in
+[`ingestion-core` under
+`com.mozilla.telemetry.ingestion.core.transform.PubsubMessageToObjectNode`](https://github.com/mozilla/gcp-ingestion/blob/main/ingestion-core/src/main/java/com/mozilla/telemetry/ingestion/core/transform/PubsubMessageToObjectNode.java);
+`ingestion-beam`'s `PubsubMessageToTableRow` is a thin wrapper that adds Beam metrics and converts the result to a BigQuery `TableRow`.
 
 The following transformations are currently applied:
 

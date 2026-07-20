@@ -23,14 +23,23 @@ documents described by a [JSONSchema].
 
 ### GET Request
 
-Accept GET on `/status`, returning `OK` if all is well. This can be used to
-check the health of web servers.
+The edge server does not serve application data over GET. It exposes
+[Dockerflow] health-check endpoints:
+
+- `/__lbheartbeat__` - returns 200 unconditionally; used by the load balancer
+  and Kubernetes probes to confirm the server is up.
+- `/__heartbeat__` - returns 200 when internal checks pass (enough free disk
+  for the local queue, and the queue is accessible) and 500 otherwise.
+- `/__version__` - returns build and version information.
+
+[dockerflow]: https://github.com/mozilla-services/Dockerflow
 
 ### GET Response codes
 
-- _200_ - OK. `/status` and all's well
-- _404_ - Any GET other than `/status`
-- _500_ - All is not well
+- _200_ - a health check passed (`/__lbheartbeat__`, or `/__heartbeat__` when
+  all checks pass), or version info was returned (`/__version__`)
+- _404_ - any other GET path
+- _500_ - a `/__heartbeat__` check failed
 
 ### POST/PUT Request
 
@@ -67,8 +76,9 @@ A specific example:
 Here the `namespace` is fixed as "telemetry", and there is no `docVersion` in the URL.
 This means that incoming JSON documents must be parsed to determine the schema version
 to apply for validation. This logic is part of the downstream [decoder] job.
-Also note the required query parameter suffix `?v=4`.
-Documents sent under `/submit/telemetry` without `v=4` will be rejected at the edge.
+Also note the query parameter suffix `?v=4`, a historical convention sent by
+Firefox Desktop. The edge server routes on the URL path only and forwards the
+request body opaquely; the query string is preserved as request metadata.
 
 ### POST/PUT Response codes
 
@@ -76,10 +86,10 @@ Documents sent under `/submit/telemetry` without `v=4` will be rejected at the e
 - _400_ - Bad request, for example an un-encoded space in the URL.
 - _404_ - not found - POST/PUT to an unknown namespace
 - _405_ - wrong request type (anything other than POST/PUT)
-- _411_ - missing content-length header
-- _413_ - request body too large (Note that if we have badly-behaved clients that retry on `4XX`, we may opt to send back 202 on body/path too long).
-- _414_ - request path too long (See above)
+- _413_ - request body too large
+- _431_ - a request header (or other captured metadata attribute) exceeds PubSub's 1024 byte attribute limit
 - _500_ - internal error
+- _507_ - insufficient storage - the edge's local retry queue is full (for example during an extended PubSub outage)
 
 ### Supported HTTP Headers
 
@@ -132,3 +142,5 @@ is restored and messages can be flushed to the queue.
 Based on [past outages], this is typically a few hours or less.
 
 [past outages]: https://status.cloud.google.com/incident/cloud-pubsub
+[schemas repository]: https://github.com/mozilla-services/mozilla-pipeline-schemas
+[decoder]: gcp_data_pipeline.md#decoding
