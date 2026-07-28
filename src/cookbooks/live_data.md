@@ -12,7 +12,7 @@ Use cases, such as real-time monitoring, dashboards, or personalized user experi
 | 4. Dataflow                            | Very low-latency streaming for large datasets          | High                 | <10 min    | High             |
 | 5. Cloud function with Pub/Sub trigger | Low-latency for smaller subsets of data                | Medium               | <10 min    | Medium to High   |
 
-Live ping tables are the final destination for the telemetry ingestion pipeline. Incoming ping data is loaded into these tables approximately every 10 minutes, though a delay of up to 30 minutes is normal. Data in these tables is set to expire after 30 days.
+Live ping tables are the final destination for the telemetry ingestion pipeline. Incoming ping data is loaded into these tables approximately every 10 minutes, though a delay of up to 30 minutes is normal. Data in these tables is set to expire after 30 days. Live tables are not deduplicated, so the same `document_id` can appear more than once (usually well under 1%, but up to ~1-1.5% on some platforms such as iOS); deduplicate on `document_id` if you need exact counts for the current day. See [_Table Layout and Naming_](./bigquery/querying.md#table-layout-and-naming) for how live and stable tables compare.
 
 ### 1. Querying Live Tables Directly
 
@@ -117,7 +117,7 @@ Google Cloud Functions can process incoming messages in Pub/Sub and stream the d
 
 ## Tools for Visualizing Live Data
 
-Currently, live data in BigQuery could be considered "near real time" or nearline (as opposed to online), with latency usually below 1 hour to each live table in our ingestion-sink code base.
+Currently, live data in BigQuery could be considered "near real time" or nearline (as opposed to online), with data typically loaded within 10 minutes to each live table in our ingestion-sink code base, though a delay of up to 30 minutes is normal.
 
 For near real time product monitoring use cases, it is recommended to use Looker for hosting dashboards that refresh on a regular interval such as every 10 minutes.
 
