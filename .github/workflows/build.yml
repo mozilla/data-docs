@@ -15,6 +15,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@main
+      with:
+        persist-credentials: false
 
     - name: Install mdbook-dtmo
       run: |
@@ -33,6 +35,7 @@ jobs:
     - uses: actions/checkout@main
       with:
         fetch-depth: 2
+        persist-credentials: false
 
     - name: Get changed files
       id: changed-files
@@ -52,6 +55,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@main
+      with:
+        persist-credentials: false
 
     - name: Spell check
       env:
@@ -67,6 +72,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@main
+      with:
+        persist-credentials: false
 
     - name: Link check
       env:
@@ -82,6 +89,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@main
+      with:
+        persist-credentials: false
 
     - name: Prettier check
       env:
