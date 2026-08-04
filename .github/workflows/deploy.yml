@@ -24,18 +24,24 @@ jobs:
       run: |
         mdbook-dtmo build .
 
-    - name: Install github-pages
-      run: |
-        npm install gh-pages@3.1.0
+    - name: Upload static files as artifact
+      id: deployment
+      uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+      with:
+        path: book
 
-    - name: Set Git config
-      run: |
-        git config user.email "no-one@mozilla.com"
-        git config user.name "GitHub Actions docs-deploy job"
-        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+  deploy:
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
 
-    - name: Deploy to GitHub pages
-      run: |
-        echo "docs-origin.telemetry.mozilla.org" > book/CNAME
-        npx gh-pages --dotfiles --message "Deploy docs" --dist book
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
