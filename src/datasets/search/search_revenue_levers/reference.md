@@ -21,13 +21,18 @@ In practice, Mozillians focused on search-only analyses may prefer the other exi
 
 The differences between the aggregation structures are summarized as follows:
 
-| Column Name     | `search_revenue_levers_daily`  | `search_revenue_levers_monthly` |
-| --------------- | ------------------------------ | ------------------------------- |
-| device          | `desktop`, `mobile`            | `desktop`, `mobile`             |
-| partner         | `Google`, `Bing`, `DuckDuckGo` | `Google`, `Bing`, `DuckDuckGo`  |
-| channel         | `NULL`, `personal`, `ESR`      | column does not exist           |
-| country         | `US`, `DE`, `FR`, ...          | All partners: `US`, `ROW`       |
-| submission_date | minimum aggregation: daily     | minimum aggregation: monthly    |
+Note that the two tables do not use the same column names for the search partner or for
+the aggregation date — `search_revenue_levers_monthly` uses `partner_name` and
+`submission_month`, so a query written against the daily table will not run unchanged
+against the monthly one.
+
+| Concept          | `search_revenue_levers_daily`                    | `search_revenue_levers_monthly`                     |
+| ---------------- | ------------------------------------------------ | --------------------------------------------------- |
+| device           | `device`: `desktop`, `mobile`                     | `device`: `desktop`, `mobile`                        |
+| search partner   | `partner`: `Google`, `Bing`, `DuckDuckGo`         | `partner_name`: `Google`, `Bing`, `DuckDuckGo`       |
+| channel          | `channel`: `NULL`, `personal`, `ESR`              | column does not exist                                |
+| country          | `country`: `US`, `DE`, `FR`, ...                  | `country`: all partners `US`, `ROW`                  |
+| aggregation date | `submission_date`: minimum aggregation daily      | `submission_month`: minimum aggregation monthly      |
 
 There are 14 possible revenue levers measures available:
 

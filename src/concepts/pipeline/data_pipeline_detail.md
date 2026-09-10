@@ -1,5 +1,15 @@
 # A Detailed Look at the Data Platform
 
+> **Status: describes the legacy AWS-era platform.** Much of the architecture below —
+> Redshift, the Heka and Parquet data lakes, Hindsight streaming, Landfill — has been
+> decommissioned and replaced by the GCP pipeline that lands data in BigQuery. Treat this
+> page as historical background on how the platform was structured, not as a description
+> of how data flows today. For the current pipeline see the
+> [Pipeline Overview](data_pipeline.md).
+>
+> <!-- This banner is a stopgap: the page needs either a rewrite against the current
+> GCP architecture or an explicit move under an archive/ section. -->
+
 For a more gentle introduction to the data platform, please read the [Pipeline Overview](data_pipeline.md) article.
 
 This article goes into more depth about the architecture and flow of data in the platform.

@@ -136,8 +136,7 @@ documentation.
 
 ## Firefox Desktop Telemetry: The Next Generation
 
-The next step for Firefox Desktop Telemetry is to prototype an implementation
-using [Glean](glean/glean.md).
-
-This effort is known as "Firefox on Glean" or FOG. This effort is expected to
-begin in late 2019 / early 2020.
+The next step for Firefox Desktop Telemetry was to reimplement it on top of
+[Glean](glean/glean.md). That effort, known as "Firefox on Glean" or FOG, began in
+late 2019 / early 2020 and has since shipped — Glean is now the standard instrumentation
+path for Firefox Desktop, and legacy Telemetry is being wound down rather than extended.

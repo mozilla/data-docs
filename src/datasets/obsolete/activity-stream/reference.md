@@ -1,5 +1,8 @@
 # Activity Stream Datasets
 
+> This dataset is obsolete and is no longer maintained. It is kept for historical
+> reference; do not use it for new analyses.
+
 This article describes the various BigQuery tables Mozilla uses to store Activity Stream data, along with some examples of how to access them.
 
 ## Table of Contents
