@@ -67,6 +67,8 @@ It was introduced in Firefox 62.
 
 ### "update" ping
 
+**Obsolete since Firefox 157**
+
 Firefox Update is the most important means we have of reaching our users with
 the latest fixes and features. The ["update" ping][update_ping] notifies us
 when an update is downloaded and ready to be applied (reason: "ready") and when
@@ -174,7 +176,7 @@ To augment our data collection, see [Collecting New Data][addprobe] and the
 [main_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/main-ping.html
 [first_shutdown_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/first-shutdown-ping.html
 [event_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/event-ping.html
-[update_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/update-ping.html
+[update_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/obsolete/collection/update-ping.html
 [new_profile_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/new-profile-ping.html
 [crash_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/crash-ping.html
 [deletion_request_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/data/deletion-request-ping.html
