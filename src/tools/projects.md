@@ -23,7 +23,7 @@ Below are a number of trailheads that lead into the projects and code that compr
 | Name and repo                   | Description                                            |
 | ------------------------------- | ------------------------------------------------------ |
 | [`bigquery-etl`][bqe]           | SQL ETL code for building derived datasets in BigQuery |
-| [`telemetry-batch-view`][tbv]   | Scala ETL code for derived datasets                    |
+| [`telemetry-batch-view`][tbv]   | Scala ETL code for derived datasets (legacy)           |
 | [`python_mozetl`][pyetl]        | Python ETL code for derived datasets                   |
 | [`telemetry-airflow`][airflow]  | Airflow configuration and DAGs for scheduled jobs      |
 | [`python_mozaggregator`][pyagg] | Aggregation job for `telemetry.mozilla.org` aggregates |
