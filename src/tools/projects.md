@@ -7,7 +7,7 @@ Below are a number of trailheads that lead into the projects and code that compr
 | Name and repo                    | Description                                                                                               |
 | -------------------------------- | --------------------------------------------------------------------------------------------------------- |
 | [`python_moztelemetry`][pymt]    | Python APIs for Mozilla Telemetry (archived)                                                              |
-| [`moztelemetry`][mt]             | Scala APIs for Mozilla Telemetry                                                                          |
+| [`moztelemetry`][mt]             | Scala APIs for Mozilla Telemetry (archived)                                                               |
 | [`spark-hyperloglog`][spark_hll] | Algebird's HyperLogLog support for Apache Spark                                                           |
 | [`mozanalysis`][ma]              | A library for Mozilla experiments analysis                                                                |
 | [`glean`][glean]                 | A client-side mobile Telemetry SDK for collecting metrics and sending them to Mozilla's Telemetry service |
