@@ -14,10 +14,10 @@ This section contains definitions and information about standard metrics used at
 
 Daily Active Users or DAU counts the number of unique profiles active in the product on each day. This is intended to approximate the number of people using the product each day.
 
-The most accurate and up-to-date metric information can be found on the
+Supporting metric information can be found on the
 [Metrics Inventory](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/620494911/Metrics+Inventory) page in Confluence (Mozilla LDAP required).
 
-The official source code definitions for the metrics can be found in
+The canonical, official source code definitions for the metrics can be found in
 [metric-hub](https://github.com/mozilla/metric-hub/tree/main/definitions) on GitHub.
 
 ### Details
