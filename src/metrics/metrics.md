@@ -42,7 +42,7 @@ If the number of users stays constant, but the average number of active profiles
 
 This measure attempts to tell us whether, after creating a profile, the user returned at any point in the next 6 days. This is meant to measure whether a product is successful in engaging users early on: at present, many users churn after the first run and we want to measure whether efforts to make them stick around are succeeding.
 
-This metric is used for all mobile applications, excluding Fenix and Firefox Preview, and is a top-level OKR inside Mozilla for 2020. It can apply both on the level of a specific product (e.g. Firefox iOS, Lockwise for Android) as well as an aggregate measure across all mobile products and devices. This metric is _not_ used for Firefox desktop.
+This metric is used for all mobile applications, excluding Fenix and Firefox Preview, and was a top-level OKR inside Mozilla in 2020. It can apply both on the level of a specific product (e.g. Firefox iOS, Lockwise for Android) as well as an aggregate measure across all mobile products and devices. This metric is _not_ used for Firefox desktop.
 
 ### Details
 
