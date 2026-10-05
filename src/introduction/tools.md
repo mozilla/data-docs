@@ -38,9 +38,9 @@ Note that while STMO is not yet considered deprecated, Looker is the preferred s
 
 ## Deprecated tools
 
-These tools are still available, but are generally not recommended.
+These tools have been retired and are no longer available.
 
 ### Telemetry Measurement Dashboard
 
-The [Telemetry Measurement Dashboard](https://telemetry.mozilla.org/new-pipeline/dist.html) (TMO) site is the 'venerable standby' of Firefox telemetry analysis tools.
-It is the predecessor to GLAM (see above) and is still lightly maintained until we are sure that GLAM covers all of its use cases.
+The [Telemetry Measurement Dashboard](https://telemetry.mozilla.org/new-pipeline/dist.html) (TMO) site was the 'venerable standby' of Firefox telemetry analysis tools.
+It is the predecessor to GLAM (see above). As of December 5, 2024, the data system underpinning it was turned off entirely; use GLAM instead.
