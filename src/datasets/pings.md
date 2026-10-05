@@ -65,6 +65,10 @@ for the ping (default to 1000 per process, governed by a
 
 It was introduced in Firefox 62.
 
+Note that this describes the legacy "event" ping. Glean's "events" ping, which newer
+applications use, is instead sent when the application goes to background or a
+certain number of events is reached.
+
 ### "update" ping
 
 **Obsolete since Firefox 157**
