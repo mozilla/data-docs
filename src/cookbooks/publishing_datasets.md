@@ -22,7 +22,8 @@ labels:
   schedule: daily # scheduled in Airflow to run daily
   public_json: true
   public_bigquery: true
-  review_bug: 1414839 # Bugzilla bug ID of data review
+  review_bugs: # Bugzilla bug IDs of data review
+    - 1414839
   incremental_export: false # non-incremental JSON export writes all data to a single location
 ```
 
@@ -39,7 +40,7 @@ The following options define how data is published:
 - `incremental`: indicates how data gets updated based on the query and Airflow configuration
   - `true`: data gets incrementally updated
   - `false`: the entire table data gets updated
-- `review_bug`: Bugzilla bug number to the data review
+- `review_bugs`: list of Bugzilla bug numbers of the data review
 
 Data will get published when the query is executed in Airflow. Metadata of available public
 data on Cloud Storage is updated daily through a separate Airflow task.
