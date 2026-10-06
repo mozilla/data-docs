@@ -1,5 +1,7 @@
 # Legacy Mobile Datasets
 
+> This dataset is obsolete and is no longer maintained. It is kept for historical reference; do not use it for new analyses.
+
 Modern mobile products use the [Glean SDK] and are thus documented by the [Glean Dictionary].
 This documentation documents some details about accessing data for legacy products based on other technology.
 
