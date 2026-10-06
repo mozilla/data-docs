@@ -131,8 +131,8 @@ and the [schema generator].
 The result are tables that contains SQL-friendly field names for all known
 measures, as implemented in the [probe scraper].
 
-A Kubernetes `Live Sink` job (part of the [`ingestion-sink`][ingestion-sink]
-service) reads from the Decoded topic and writes out to
+A Kubernetes `Live Sink` job (a deployment of the [`ingestion-sink`][ingestion-sink]
+Java application, configured for this role) reads from the Decoded topic and writes out to
 **[live ping tables][table layout]**.
 These tables are updated frequently, and typically reflect data within a few
 minutes of it being ingested. They are intended for low-latency access to

@@ -14,10 +14,10 @@ This section contains definitions and information about standard metrics used at
 
 Daily Active Users or DAU counts the number of unique profiles active in the product on each day. This is intended to approximate the number of people using the product each day.
 
-The most accurate and up-to-date metric information can be found on the
+Supporting metric information can be found on the
 [Metrics Inventory](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/620494911/Metrics+Inventory) page in Confluence (Mozilla LDAP required).
 
-The official source code definitions for the metrics can be found in
+The canonical, official source code definitions for the metrics can be found in
 [metric-hub](https://github.com/mozilla/metric-hub/tree/main/definitions) on GitHub.
 
 ### Details
@@ -42,7 +42,7 @@ If the number of users stays constant, but the average number of active profiles
 
 This measure attempts to tell us whether, after creating a profile, the user returned at any point in the next 6 days. This is meant to measure whether a product is successful in engaging users early on: at present, many users churn after the first run and we want to measure whether efforts to make them stick around are succeeding.
 
-This metric is used for all mobile applications, excluding Fenix and Firefox Preview, and is a top-level OKR inside Mozilla for 2020. It can apply both on the level of a specific product (e.g. Firefox iOS, Lockwise for Android) as well as an aggregate measure across all mobile products and devices. This metric is _not_ used for Firefox desktop.
+This metric is used for all mobile applications, excluding Fenix and Firefox Preview, and was a top-level OKR inside Mozilla in 2020. It can apply both on the level of a specific product (e.g. Firefox iOS, Lockwise for Android) as well as an aggregate measure across all mobile products and devices. This metric is _not_ used for Firefox desktop.
 
 ### Details
 

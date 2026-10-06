@@ -6,8 +6,8 @@ Below are a number of trailheads that lead into the projects and code that compr
 
 | Name and repo                    | Description                                                                                               |
 | -------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| [`python_moztelemetry`][pymt]    | Python APIs for Mozilla Telemetry                                                                         |
-| [`moztelemetry`][mt]             | Scala APIs for Mozilla Telemetry                                                                          |
+| [`python_moztelemetry`][pymt]    | Python APIs for Mozilla Telemetry (archived)                                                              |
+| [`moztelemetry`][mt]             | Scala APIs for Mozilla Telemetry (archived)                                                               |
 | [`spark-hyperloglog`][spark_hll] | Algebird's HyperLogLog support for Apache Spark                                                           |
 | [`mozanalysis`][ma]              | A library for Mozilla experiments analysis                                                                |
 | [`glean`][glean]                 | A client-side mobile Telemetry SDK for collecting metrics and sending them to Mozilla's Telemetry service |
@@ -20,14 +20,14 @@ Below are a number of trailheads that lead into the projects and code that compr
 
 ## ETL code and Datasets
 
-| Name and repo                   | Description                                            |
-| ------------------------------- | ------------------------------------------------------ |
-| [`bigquery-etl`][bqe]           | SQL ETL code for building derived datasets in BigQuery |
-| [`telemetry-batch-view`][tbv]   | Scala ETL code for derived datasets                    |
-| [`python_mozetl`][pyetl]        | Python ETL code for derived datasets                   |
-| [`telemetry-airflow`][airflow]  | Airflow configuration and DAGs for scheduled jobs      |
-| [`python_mozaggregator`][pyagg] | Aggregation job for `telemetry.mozilla.org` aggregates |
-| [`telemetry-streaming`][stream] | Spark Streaming ETL jobs for Mozilla Telemetry         |
+| Name and repo                   | Description                                               |
+| ------------------------------- | --------------------------------------------------------- |
+| [`bigquery-etl`][bqe]           | SQL ETL code for building derived datasets in BigQuery    |
+| [`telemetry-batch-view`][tbv]   | Scala ETL code for derived datasets (legacy)              |
+| [`python_mozetl`][pyetl]        | Python ETL code for derived datasets                      |
+| [`telemetry-airflow`][airflow]  | Airflow configuration and DAGs for scheduled jobs         |
+| [`python_mozaggregator`][pyagg] | Aggregation job for `telemetry.mozilla.org` aggregates    |
+| [`telemetry-streaming`][stream] | Spark Streaming ETL jobs for Mozilla Telemetry (archived) |
 
 See also [`data-docs`][docs] for documentation on datasets.
 
