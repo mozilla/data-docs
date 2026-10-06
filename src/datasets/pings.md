@@ -116,7 +116,8 @@ It was introduced in Firefox 72, replacing the ["optout" ping][optout_ping]
 ### "coverage" ping
 
 The [coverage ping][coverage_ping] ([announcement](https://blog.mozilla.org/data/2018/08/20/effectively-measuring-search-in-firefox/))
-is a periodic census intended to estimate telemetry opt-out rates.
+was a periodic census intended to estimate telemetry opt-out rates.
+It is no longer sent; the ping was removed from Firefox in [bug 1773060](https://bugzilla.mozilla.org/show_bug.cgi?id=1773060).
 
 We estimate that [93% of release channel
 profiles](https://docs.google.com/document/d/1EnQoq9o1sLXTgsbbG8mPnUiWIOmKSINGJOAKyYUm_YA/edit#)
@@ -195,4 +196,4 @@ To augment our data collection, see [Collecting New Data][addprobe] and the
 [addprobe]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/start/adding-a-new-probe.html
 [datacollection]: https://wiki.mozilla.org/Firefox/Data_Collection
 [pingsender]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/pingsender.html
-[coverage_ping]: https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/coverage-ping.html
+[coverage_ping]: https://github.com/mozilla-firefox/firefox/blob/4c877370d5cb831951ab634bacaa065598ec8d70/toolkit/components/telemetry/docs/data/coverage-ping.md
