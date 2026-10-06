@@ -32,8 +32,8 @@ transforming data (ETL) once it's in BigQuery.
 
 Once data is accessible through BigQuery, users within Mozilla also get the
 benefit of leveraging common tools for data access. Beyond the Google-provided
-BigQuery console, Mozilla provides access to instances of Redash,
-Looker, and other tools either with connections to BigQuery already available
+BigQuery console, Mozilla provides access to instances of Looker,
+Redash, and other tools either with connections to BigQuery already available
 or with concrete instructions for provisioning connections.
 
 Some near real-time use cases can be handled via BigQuery as well, with BigQuery

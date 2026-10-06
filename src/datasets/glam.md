@@ -6,7 +6,7 @@ GLAM data is also meant to be explored by itself: GLAM aggregation tables are us
 
 ## GLAM final tables (Aggregates dataset)
 
-The following datasets are split in three categories: Firefox Desktop Glean, Firefox Desktop Legacy and Firefox for Android. The tables contain the final aggregated data that powers GLAM.
+The following datasets are split in three categories: Firefox Desktop Glean, Firefox Desktop Legacy and Firefox for Android. The tables contain the final aggregated data that powers GLAM. The `moz-fx-data-shared-prod.glam_etl` tables listed below are views of the authoritative tables in the `moz-fx-glam-prod.glam_etl` dataset.
 
 Each link below points to the dataset's page on [Mozilla's Data Catalog](https://mozilla.acryl.io/) where you can find the dataset's full documentation.
 
