@@ -4,6 +4,6 @@ Non-Desktop data includes data for all mobile browser products as well as non br
 
 ## List of Datasets
 
-- [Day 2-7 Activation](./non_desktop/day_2_7_activation/reference.md) - Used to calculate the [Day 2-7 Activation metric](../metrics/metrics.md#day-2-7-activation), a key result in 2020 for non-desktop products.
+- [Day 2-7 Activation](./non_desktop/day_2_7_activation/reference.md) - Used to calculate the [Day 2-7 Activation metric](../metrics/metrics.md#day-2-7-activation), a historical key result for non-desktop products (no longer a current KPI).
 - [Google Play Store Data](./non_desktop/google_play_store/reference.md) - Used to understand the acquisition performance for non-desktop products on the Google Play Store.
 - [Apple App Store Data](./non_desktop/app_store_v2_syndicate/reference.md) - Used to understand the acquisition performance for the non-desktop products on the Apple App Store.
