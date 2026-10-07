@@ -1,5 +1,7 @@
 # A Detailed Look at the Data Platform
 
+> This page is obsolete and is no longer maintained. It is kept for historical reference; do not use it for new work.
+
 For a more gentle introduction to the data platform, please read the [Pipeline Overview](data_pipeline.md) article.
 
 This article goes into more depth about the architecture and flow of data in the platform.
