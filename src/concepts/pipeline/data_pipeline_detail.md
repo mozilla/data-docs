@@ -1,5 +1,7 @@
 # A Detailed Look at the Data Platform
 
+> This page is obsolete and is no longer maintained. It is kept for historical reference; do not use it for new work.
+
 For a more gentle introduction to the data platform, please read the [Pipeline Overview](data_pipeline.md) article.
 
 This article goes into more depth about the architecture and flow of data in the platform.
@@ -391,7 +393,7 @@ graph LR
 [metrics graphics]: http://metricsgraphicsjs.org/
 [parquet]: https://parquet.apache.org/
 [hive]: https://cwiki.apache.org/confluence/display/Hive/Home
-[presto]: http://prestosql.io/
+[presto]: https://trino.io/
 [telemetry aggregates]: https://github.com/mozilla/python_mozaggregator/#api
 [amazon s3]: https://aws.amazon.com/s3/
 [taar project]: https://github.com/mozilla/python_mozetl/blob/master/mozetl/taar/taar_dynamo.py

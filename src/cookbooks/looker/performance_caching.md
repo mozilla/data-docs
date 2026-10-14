@@ -31,19 +31,19 @@ See the following example:
 
 ```
 ...
-include: "//looker-hub/search/datagroups/mobile_search_clients_daily_v1_last_updated.datagroup.lkml"
+include: "//looker-hub/search/datagroups/mobile_search_clients_engines_sources_daily_last_updated.datagroup.lkml"
 
 explore: mobile_search_counts {
 
   ...
 
-  persist_with: mobile_search_clients_daily_v1_last_updated
+  persist_with: mobile_search_clients_engines_sources_daily_last_updated
 
 }
 
 ```
 
-Now, query results for the `Mobile Search Counts` explore will be cached until the `mobile_search_clients_daily_v1`
+Now, query results for the `Mobile Search Counts` explore will be cached until the `mobile_search_clients_engines_sources_daily`
 table is updated and users running the same query will receive fast results (a few seconds usually).
 
 If you aren't able to find an auto-generated datagroup or your explore has multiple, complex joins, move on to

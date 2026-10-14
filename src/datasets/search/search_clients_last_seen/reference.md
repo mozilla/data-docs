@@ -28,7 +28,10 @@ This dataset is scheduled on Airflow
 ## Schema
 
 As of 2020-04-22, the current version of `search_clients_last_seee` is `v1`,
-and has a schema as follows.
+and has a schema as follows. The default `search.search_clients_last_seen`
+view still returns this `v1` schema; a newer `v2` version with a different
+schema (described below) also exists and is used as the basis for LTV
+calculations.
 It's backfilled through 2020-01-01
 
 ```
