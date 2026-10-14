@@ -393,7 +393,7 @@ graph LR
 [metrics graphics]: http://metricsgraphicsjs.org/
 [parquet]: https://parquet.apache.org/
 [hive]: https://cwiki.apache.org/confluence/display/Hive/Home
-[presto]: http://prestosql.io/
+[presto]: https://trino.io/
 [telemetry aggregates]: https://github.com/mozilla/python_mozaggregator/#api
 [amazon s3]: https://aws.amazon.com/s3/
 [taar project]: https://github.com/mozilla/python_mozetl/blob/master/mozetl/taar/taar_dynamo.py
