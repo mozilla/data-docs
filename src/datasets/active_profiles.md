@@ -140,3 +140,5 @@ or on [PyPI](https://pypi.org/project/bgbb/). The airflow job is defined in the
 [`bgbb_airflow` repo](https://github.com/wcbeard/bgbb_airflow).
 
 The model to fit the parameters is run weekly, and the table is updated daily.
+
+**Note:** This pipeline (and its DAG) can no longer be found in Mozilla's current `bigquery-etl` or `telemetry-airflow` repositories, suggesting it has been retired (archived); this page may describe a legacy dataset.
