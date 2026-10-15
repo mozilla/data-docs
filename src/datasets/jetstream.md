@@ -23,6 +23,11 @@ The week 0 analysis window aggregates data from each client's days 0
 through 6, the week 1 window aggregates data from days 7 through 13, and
 so on.
 
+Jetstream also computes a 28-day window (`days28`) and two
+pre-enrollment windows (`preenrollment_week` and `preenrollment_days28`)
+that aggregate data from immediately before each client's enrollment,
+used for example to support covariate-adjustment statistics.
+
 Clients are given a fixed amount of time, specified in Experimenter and
 often a week long, to enroll. Final day 0 results are available for
 reporting at the end of the enrollment period, after the last eligible
