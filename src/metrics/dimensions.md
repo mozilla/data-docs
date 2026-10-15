@@ -2,6 +2,8 @@
 
 Here we provide definitions and information about our standard slicing dimensions.
 
+Note: the canonical, maintained dimension definitions now live as `[dimensions.*]` TOML blocks in the [metric-hub](https://github.com/mozilla/metric-hub) repository (see `definitions/*.toml` and `opmon/*.toml`), consumed programmatically by OpMon, Jetstream, and Looker. This page remains a stub template and does not reflect current practice.
+
 Table of contents with links to dimensions.
 
 ---
