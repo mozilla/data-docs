@@ -18,7 +18,7 @@ There are two categories of user-defined functions:
 - UDFs for internal use only: These UDFs are published to the `udf` and `udf_js` datasets in the `moz-fx-data-shared-prod` project and managed via [bigquery-etl](https://github.com/mozilla/bigquery-etl/tree/main/sql/moz-fx-data-shared-prod/udf)
 - public UDFs that can be used even outside of Mozilla projects: These UDFs are published to the `mozfun` project and managed via [bigquery-etl](https://github.com/mozilla/bigquery-etl/tree/main/sql/mozfun)
 
-The UDF deploy is triggered through the `publish_public_udfs` and `publish_persistent_udfs` Airflow task in the [`bqetl_artifact_deployment`](https://workflow.telemetry.mozilla.org/tree?dag_id=bqetl_artifact_deployment) Airflow DAG which run nightly, but can be triggered manually by clearing the tasks.
+The UDF deploy is triggered through the `publish_public_udfs` and `publish_persistent_udfs` Airflow task in the [`bqetl_artifact_deployment`](https://workflow.telemetry.mozilla.org/tree?dag_id=bqetl_artifact_deployment) Airflow DAG. The DAG no longer runs on a nightly schedule; it is triggered by CircleCI on merges to `main` and by Jenkins after schema deploys, and tasks can still be triggered manually by clearing them.
 
 ## Table Deployment
 
