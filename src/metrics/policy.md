@@ -12,6 +12,8 @@ Supporting metric information can also be found on the [Metrics Inventory](https
 
 ## How to propose a change to a standards
 
+Metric definitions are not deleted once added to [Metric Hub](https://github.com/mozilla/metric-hub); other tools and configurations may still reference them. To retire a metric, set `deprecated = true` on its definition instead of removing it. See the [Metric Hub concepts page](https://docs.telemetry.mozilla.org/concepts/metric_hub.html) for details.
+
 ## Recommendations around citing standards for presentations to senior audiences
 
 Something about how all metrics presented should have references to definitions here or explanations as to why a nonstandard metric was used.
