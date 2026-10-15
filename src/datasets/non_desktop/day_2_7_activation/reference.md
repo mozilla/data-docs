@@ -6,6 +6,8 @@
 
 `firefox_nondesktop_day_2_7_activation` is designed for use in calculating the [Day 2-7 Activation metric](../../../metrics/metrics.md#day-2-7-activation), a key result in 2020 for non-desktop products.
 
+**Note:** This table has since been deprecated and deleted from production ([bigquery-etl#9957](https://github.com/mozilla/bigquery-etl/pull/9957)); the information below is retained for historical reference.
+
 # Contents
 
 `firefox_nondesktop_day_2_7_activation` is a table with two key metrics: `new_profiles` and `day_2_7_activated`, aggregated over `submission_date`. It is derived from the [non-desktop clients last seen table](https://docs.telemetry.mozilla.org/cookbooks/clients_last_seen_bits.html).
@@ -66,7 +68,7 @@ root
 
 # Code Reference
 
-The `firefox_nondesktop_day_2_7_activation job is` [defined in `bigquery-etl`](https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/firefox_nondesktop_day_2_7_activation_v1/query.sql).
+The `firefox_nondesktop_day_2_7_activation` job has been removed from `bigquery-etl` (archived); it was deleted via [PR #9957](https://github.com/mozilla/bigquery-etl/pull/9957).
 
 # Background and Caveats
 

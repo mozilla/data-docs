@@ -8,8 +8,13 @@ please read the [Data Collection Guidelines.][data_collection]
 
 ## Mechanics
 
-The mechanics of how to instrument new data collection in Firefox are covered in
-[Adding a new Telemetry probe](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/start/adding-a-new-probe.html).
+Glean is the standard telemetry platform required for all new Mozilla products. See
+[Adding Glean to your project](https://mozilla.github.io/glean/book/user/adding-glean-to-your-project.html)
+for the mechanics of instrumenting new data collection with Glean.
+
+Legacy Telemetry APIs are deprecated for new instrumentation; for background on the
+legacy mechanism, see
+[Adding a new Telemetry probe](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/start/adding-a-new-probe.html) (deprecated).
 
 For non-Telemetry data collection, we have a mechanism for streamlining
 ingestion of structured (JSON) data that utilizes the same underlying

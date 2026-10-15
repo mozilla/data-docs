@@ -12,6 +12,10 @@ If you do not have the necessary access or permissions, please [submit a Jira ti
 Watch the [Bigeye tutorial](https://www.youtube.com/watch?v=8DWyZuU-w1c&t=9s) to get an overview of the platform.
 Please refer to additional helpful videos available on the Bigeye channel.
 
+## Code-Based Monitoring Configuration
+
+In addition to configuring monitors through the Bigeye UI, monitoring can be defined as code in [mozilla/bigquery-etl](https://github.com/mozilla/bigquery-etl). Tables can include a `bigconfig.yml` alongside their `metadata.yaml`, with monitoring enabled via a `monitoring.enabled` field. The `bqetl monitoring` CLI (`deploy`, `update`, `validate`, `deploy_custom_rules`) pushes these configs to Bigeye.
+
 ## Stay Updated on What's Happening
 
 [Jira Epic Link](https://mozilla-hub.atlassian.net/browse/DENG-4563)
