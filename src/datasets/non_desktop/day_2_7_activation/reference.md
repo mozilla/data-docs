@@ -68,7 +68,7 @@ root
 
 # Code Reference
 
-The `firefox_nondesktop_day_2_7_activation job is` [defined in `bigquery-etl`](https://github.com/mozilla/bigquery-etl/blob/master/sql/moz-fx-data-shared-prod/telemetry_derived/firefox_nondesktop_day_2_7_activation_v1/query.sql).
+The `firefox_nondesktop_day_2_7_activation` job has been removed from `bigquery-etl` (archived); it was deleted via [PR #9957](https://github.com/mozilla/bigquery-etl/pull/9957).
 
 # Background and Caveats
 
