@@ -26,7 +26,7 @@ Tables get deployed through the [`publish_tables_and_views` Airflow task](https:
 
 ## View Deployment
 
-View deployment runs after new tables have been published through the [`publish_views` Airflow task](https://workflow.telemetry.mozilla.org/tree?dag_id=bqetl_artifact_deployment). This task will run all SQL generators, which ensures that SQL for generated views will be available. Only views with either changes to their SQL definition, schema, metadata or newly created views will be deployed.
+View deployment happens together with table deployment in the [`publish_tables_and_views` Airflow task](https://workflow.telemetry.mozilla.org/tree?dag_id=bqetl_artifact_deployment), which replaced the former separate `publish_views` task. This task will run all SQL generators, which ensures that SQL for generated views will be available. Only views with either changes to their SQL definition, schema, metadata or newly created views will be deployed.
 
 Views that have been defined in bigquery-etl will be tagged with a `managed` label. This label is used to automatically remove views from BigQuery that have been deleted in bigquery-etl. Having this label ensures that manually created views or views created through other tooling won't get deleted as part of this process.
 
