@@ -8,6 +8,8 @@ Want to refresh a dashboard or other query against our data store automatically?
 
 This is by far the easiest option. Any query on [STMO](../tools/stmo.md) can be made to refresh itself automatically. This can be used to power both dashboards inside sql.telemetry.mozilla.org as well as web sites like the [Tab Spinner Dashboard](https://mikeconley.github.io/bug1310250/) and [Numbers that Matter](https://github.com/mozilla/funnel) via Redash's CSV and JSON APIs.
 
+Note that as of August 2021, Looker is the preferred tool for building new dashboards and data visualizations at Mozilla where possible; STMO remains available for SQL-based exploration and the scheduled-query use case described here.
+
 However, there are disadvantages to this approach:
 
 - Every time it is refreshed, STMO re-runs the query from scratch. This is fine for smaller or less frequently updated dashboards but when querying a large amount of data, [this can get expensive](./bigquery/optimization.md).
