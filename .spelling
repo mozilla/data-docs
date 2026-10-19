@@ -509,3 +509,12 @@ dbt_apple_store
 moz-fx-data-bq-fivetran
 firefox_app_store_v2
 app_store_funnel_v1
+GDPR
+mozilla
+configs
+aggregates.telemetry.mozilla.org
+pre-enrollment
+covariate-adjustment
+bigquery-etl#9957
+programmatically
+pre-calculated

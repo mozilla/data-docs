@@ -103,7 +103,7 @@ use cases:
 - The _[Telemetry WebExtension API](https://searchfox.org/mozilla-central/rev/55da592d85c2baf8d8818010c41d9738c97013d2/toolkit/components/extensions/schemas/telemetry.json#87)_ ([introduced here](https://bugzilla.mozilla.org/show_bug.cgi?id=1280234))
   which allows Mozilla extensions to record new events into Telemetry.
 
-As of Firefox 132, these legacy Telemetry event APIs are deprecated; Firefox Desktop now records events primarily through the [Glean API](glean_data.md), with the WebExtension event functions (`recordEvent`, `registerEvents`) acting as no-ops. See the [Telemetry event collection documentation](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/collection/events.html) for details.
+As of Firefox 132, these legacy Telemetry event APIs are deprecated; Firefox Desktop now records events primarily through the [Glean API](glean_data.md), with the WebExtension event functions (`recordEvent`, `registerEvents`) acting as no-ops. See the [Telemetry event collection documentation](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/obsolete/collection/events.html) for details.
 
 For all these APIs, events will get sent to the pipeline through the
 [event ping](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/data/event-ping.html), which gets sent hourly, if any pings were recorded, or up to every 10 minutes whenever 1000 events were recorded.
