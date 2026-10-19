@@ -26,6 +26,8 @@ DAU counts unique profiles. Keep in mind that a [profile is not necessarily a us
 
 The standard concept of active varies by product, but generally, active users are defined as unique profiles that have sent a `main` ping (on desktop) or a `baseline` ping (on mobile). The precise criteria are defined in the [`usage criterion`](./usage.md) section of this documentation.
 
+DAU, WAU, and MAU values are pre-calculated and available as the single source of truth in the `active_users_aggregates` BigQuery table, which covers both desktop and mobile products. Related mobile engagement and retention metrics are computed from the `mobile_engagement` and `mobile_retention` tables.
+
 We can also restrict the metric to alternative usage criteria. It's **critical to clearly state any non-standard usage criteria on the metric**. The metrics team suggest the following format: `DAU(usage criterion)`. For example, we might be interested in the count of profiles that have viewed more than 5 URIs in a day. We'd denote that metric as `DAU(URI > 5)`.
 
 Some common alternative usage criteria documented in the [`usage criterion` section](./usage.md).

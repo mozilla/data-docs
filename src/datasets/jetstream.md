@@ -8,7 +8,7 @@ BigQuery and serve both as the substrate for the result visualization
 platform and as a resource for data scientists.
 
 Jetstream runs as part of the nightly ETL job (see [Scheduling](#scheduling) below).
-Jetstream is also run after pushes to the [`jetstream-config`] repository.
+Jetstream is also run after pushes to the [`metric-hub`] repository's `jetstream` directory (the `jetstream-config` repository is archived).
 Jetstream publishes tables to the dataset `moz-fx-data-experiments.mozanalysis`.
 
 Experiments are analyzed using the concept of analysis windows. Analysis
@@ -22,6 +22,11 @@ Saturday.
 The week 0 analysis window aggregates data from each client's days 0
 through 6, the week 1 window aggregates data from days 7 through 13, and
 so on.
+
+Jetstream also computes a 28-day window (`days28`) and two
+pre-enrollment windows (`preenrollment_week` and `preenrollment_days28`)
+that aggregate data from immediately before each client's enrollment,
+used for example to support covariate-adjustment statistics.
 
 Clients are given a fixed amount of time, specified in Experimenter and
 often a week long, to enroll. Final day 0 results are available for
@@ -41,6 +46,7 @@ on configuring Jetstream can be found at the [`jetstream-config`] repository.
 
 [jetstream]: https://github.com/mozilla/jetstream
 [`jetstream-config`]: https://github.com/mozilla/jetstream-config
+[`metric-hub`]: https://github.com/mozilla/metric-hub/tree/main/jetstream
 
 ## Statistics tables
 

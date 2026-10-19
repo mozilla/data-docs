@@ -2,6 +2,8 @@
 
 <!-- toc -->
 
+**Note:** The `telemetry_aggregates` dataset and the dashboards it powered (the old Telemetry Measurement Dashboard / aggregates.telemetry.mozilla.org) were decommissioned on December 5, 2024. This page is kept for historical reference; see [GLAM](https://docs.telemetry.mozilla.org/datasets/glam.html) for the current replacement.
+
 # Introduction
 
 {{#include ./intro.md}}

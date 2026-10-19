@@ -8,6 +8,8 @@ Want to refresh a dashboard or other query against our data store automatically?
 
 This is by far the easiest option. Any query on [STMO](../tools/stmo.md) can be made to refresh itself automatically. This can be used to power both dashboards inside sql.telemetry.mozilla.org as well as web sites like the [Tab Spinner Dashboard](https://mikeconley.github.io/bug1310250/) and [Numbers that Matter](https://github.com/mozilla/funnel) via Redash's CSV and JSON APIs.
 
+Note that as of August 2021, Looker is the preferred tool for building new dashboards and data visualizations at Mozilla where possible; STMO remains available for SQL-based exploration and the scheduled-query use case described here.
+
 However, there are disadvantages to this approach:
 
 - Every time it is refreshed, STMO re-runs the query from scratch. This is fine for smaller or less frequently updated dashboards but when querying a large amount of data, [this can get expensive](./bigquery/optimization.md).
@@ -21,6 +23,8 @@ Mozilla's Data Engineering maintains a repository called [bigquery-etl](https://
 Also, since the procedure for scheduling a query in this way is submitting a pull request against the bigquery-etl repository, this is an easy route to getting peer review from the extended Data Team.
 
 For more information on how to use this approach, see [A quick guide to creating a derived dataset with bigquery-etl](https://mozilla.github.io/bigquery-etl/cookbooks/creating_a_derived_dataset/).
+
+Note that new DAGs are deployed in a paused state by default; you'll need to manually unpause the DAG via the Airflow UI on workflow.telemetry.mozilla.org before it will run on its schedule. See [Airflow Gotcha's](https://docs.telemetry.mozilla.org/concepts/airflow_gotchas.html) for details.
 
 ### Testing changes before deploying
 
