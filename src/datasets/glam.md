@@ -27,6 +27,8 @@ Each link below points to the dataset's page on [Mozilla's Data Catalog](https:/
 
 ### Firefox Desktop (Legacy Telemetry)
 
+> **_NOTE:_** Firefox Desktop Legacy Telemetry support in GLAM is deprecated; new data stopped being aggregated for these tables on January 26, 2026.
+
 - [`moz-fx-data-shared-prod.glam_etl.glam_desktop_nightly_aggregates`](<https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.glam_etl.glam_desktop_nightly_aggregates,PROD)/Schema?is_lineage_mode=false&schemaFilter=>)
 - [`moz-fx-data-shared-prod.glam_etl.glam_desktop_beta_aggregates`](<https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.glam_etl.glam_desktop_beta_aggregates,PROD)/Schema?is_lineage_mode=false&schemaFilter=>)
 - [`moz-fx-data-shared-prod.glam_etl.glam_desktop_release_aggregates`](<https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.glam_etl.glam_desktop_release_aggregates,PROD)/Schema?is_lineage_mode=false&schemaFilter=>)
