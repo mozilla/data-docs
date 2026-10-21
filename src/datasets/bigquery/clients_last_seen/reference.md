@@ -87,6 +87,7 @@ Please see this [section](../../../concepts/segments.md) for descriptions regard
 - `days_interacted_bits`: Each bit field represents if a client had at least 1 active tick on that day.
   This is derived from the `active_hours_sum` in `clients_daily`.
 - `days_since_interacted`: Number of days since the clients had at least 1 active tick.
+- `days_since_qualified_use_v1`: Number of days since the client both browsed at least 1 URI and had at least 1 active tick (computed as `days_visited_1_uri_bits & days_interacted_bits`). This is a view-computed field, not a stored bits column.
 - `days_had_8_active_ticks_bits`: Each bit field represents if a client had at least 8 active ticks on that day.
   This can be used to approximate the threshold of 1 URI, and is useful for determining activity for clients using
   Private Browsing Mode where URI counts are not recorded.
