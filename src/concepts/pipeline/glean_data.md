@@ -76,3 +76,5 @@ In this case the event's `category` would be `engine_tab` and its name would be 
 You can use the record's `timestamp` and `extra` fields to get the event's timestamp and specifics related
 to the event.
 For a complete example, see ["event metrics" under Accessing Glean Data](../../cookbooks/accessing_glean_data.md#event-metrics).
+
+For most querying needs, the generated `events_stream` table (e.g. `{app}.events_stream`) is now recommended over unnesting the `events` column directly: it flattens each event into its own row with a stable `event_id`, a derived `event_timestamp`, and `event_extra` as a JSON object. See the [FxA datasets](https://docs.telemetry.mozilla.org/datasets/fxa.html) page for an example.
