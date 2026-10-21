@@ -17,7 +17,7 @@ To indicate whether a failing check should block any downstream Airflow tasks, a
 
 ## Bigconfig
 
-Additional and custom monitors can be defined in a [Bigconfig](https://docs.bigeye.com/docs/bigconfig#example-template) `bigconfig.yml` file that is stored in the same directory as the table query. Bigconfig allows users to deploy other pre-defined monitors, such as row counts or null checks on a table or column level.
+Additional and custom monitors can be defined in a [Bigconfig](https://docs.bigeye.com/docs/bigconfig#example-template) `bigconfig.yml` file that is stored in the same directory as the table query. Bigconfig allows users to deploy other pre-defined monitors, such as row counts or null checks on a table or column level. The file must start with `type: BIGCONFIG_FILE` and defines `table_deployments`, each specifying a `collection.name` and one or more `deployments` (identified by `fq_table_name`); monitors are declared via `table_metrics` (e.g. `saved_metric_id: volume`) and, for column-level checks, `columns[].metrics` (e.g. `saved_metric_id: is_not_null`).
 
 ## Custom SQL Rules
 
