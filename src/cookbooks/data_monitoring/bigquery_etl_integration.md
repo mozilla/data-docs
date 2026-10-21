@@ -74,3 +74,5 @@ To generate a `bigconfig.yml` file with the default metrics when monitoring is e
 The created file can be manually edited. For tables that do not have a `bigconfig.yml` checked into the repository, the file will get generated automatically before deployment to Bigeye. Files only need to be checked in if there are some customizations.
 
 The deployment of Bigconfig files runs automatically as part of the [artifact deployment process](../../concepts/pipeline/artifact_deployment.md), after tables and views have been deployed.
+
+Bigconfig changes should not be applied locally (e.g. via `bigconfig apply`) against an incomplete file set, since this can delete existing Bigeye metrics. Only the `publish_bigeye_monitors` task in the artifact deployment DAG should push bigconfig changes to Bigeye.
