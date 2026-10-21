@@ -80,6 +80,10 @@ Please see this [section](../../../concepts/segments.md) for descriptions regard
 
 - `days_visited_1_uri_bits`: Each bit field represents if a client browsed at least 1 URI on that day.
 - `days_since_visited_1_uri`: Number of days since the client browsed at least 1 URI.
+- `days_visited_1_uri_normal_mode_bits`: Each bit field represents if a client browsed at least 1 URI outside of Private Browsing Mode on that day.
+- `days_since_visited_1_uri_normal_mode`: Number of days since the client browsed at least 1 URI outside of Private Browsing Mode.
+- `days_visited_1_uri_private_mode_bits`: Each bit field represents if a client browsed at least 1 URI in Private Browsing Mode on that day. Only available for Firefox 84 and later.
+- `days_since_visited_1_uri_private_mode`: Number of days since the client browsed at least 1 URI in Private Browsing Mode. Only available for Firefox 84 and later.
 - `days_interacted_bits`: Each bit field represents if a client had at least 1 active tick on that day.
   This is derived from the `active_hours_sum` in `clients_daily`.
 - `days_since_interacted`: Number of days since the clients had at least 1 active tick.
