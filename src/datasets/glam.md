@@ -47,8 +47,8 @@ Most of the GLAM ETL is scheduled to run daily via Airflow. There are separate E
 - [Firefox Desktop on Glean (release)](https://workflow.telemetry.mozilla.org/dags/glam_fog_release/grid)
   - Runs weekly
   - Second "half" of release ETL is processed
-- [Firefox Desktop legacy](https://workflow.telemetry.mozilla.org/dags/glam/grid)
-  - Runs daily
+- [Firefox Desktop legacy](https://workflow.telemetry.mozilla.org/dags/glam/grid) (deprecated)
+  - New aggregations stopped on January 26, 2026
 - [Firefox for Android](https://workflow.telemetry.mozilla.org/dags/glam_fenix/grid)
   - Runs daily
 
