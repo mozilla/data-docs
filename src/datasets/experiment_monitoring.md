@@ -26,6 +26,10 @@ Experiment monitoring datasets are designed to power dashboards, such as [Experi
 | `mozdata.telemetry.experiment_cumulative_search_count`          | Cumulative number of searches by clients enrolled in experiments          |
 | `mozdata.telemetry.experiment_cumulative_search_with_ads_count` | Cumulative number of searches with ads by clients enrolled in experiments |
 
+## Experiment crash rate data
+
+`moz-fx-data-shared-prod.telemetry.experiment_crash_rates_live` provides crash-rate monitoring for clients enrolled in experiments, combining per-app `experiment_crash_events_live_v1` materialized views with historical data from `telemetry_derived.experiment_crash_aggregates_v1`. Values are aggregated by experiment, branch, crash process type and crash signature.
+
 ## Derived dataset
 
 The derived views have the following schema:

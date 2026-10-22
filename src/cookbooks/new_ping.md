@@ -7,6 +7,8 @@ to find out.
 ping document type. To add a histogram, scalar, or event collection to Firefox, please see the
 documentation on [adding a new
 probe](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/start/adding-a-new-probe.html).
+Note also that legacy Telemetry collection APIs (including custom pings) are now deprecated for
+Firefox Desktop in favor of Glean.
 
 ## Write Your Questions
 

@@ -14,6 +14,10 @@ After doing so, you can search for metrics by name (e.g.: `addons.enabled_addons
 
 After selecting a metric, you can get more information on it including a reference to its definition in the source code as well as information on how to get the data submitted by this probe in some of our data tools like [STMO], [Looker], and [GLAM].
 
+## Using the Glean Dictionary with AI assistants
+
+Because the Glean Dictionary's web UI is a single-page application that loads metrics dynamically via JavaScript, AI assistants and other automated tools that fetch the page directly only see an empty HTML shell. For this reason, the Glean Dictionary also exposes a [Model Context Protocol] (MCP) server at `https://dictionary.telemetry.mozilla.org/mcp`, providing structured, direct access to the same metadata. It offers five tools: `list_apps`, `get_app`, `search_metrics`, `get_metric`, and `get_ping`.
+
 ## Common Questions
 
 ### How can I go from a metric to querying it in BigQuery?
@@ -30,3 +34,4 @@ For several examples of this along with a more complete explanation, see [Access
 [looker]: ../../introduction/tools.md#looker
 [glam]: ../../introduction/tools.md#glean-aggregated-metrics-dashboard-glam
 [accessing glean data]: ../accessing_glean_data.md
+[model context protocol]: https://github.com/mozilla/glean-dictionary/blob/main/docs/mcp-server.md

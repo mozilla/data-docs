@@ -35,7 +35,7 @@ You can spin up a Dataproc cluster with Jupyter using the following command. Ins
 ```bash
 gcloud beta dataproc clusters create cluster-name \
     --optional-components=ANACONDA,JUPYTER \
-    --image-version=1.4 \
+    --image-version=2.3 \
     --enable-component-gateway \
     --properties=^#^spark:spark.jars=gs://spark-lib/bigquery/spark-bigquery-latest.jar \
     --num-workers=3 \

@@ -5,6 +5,8 @@
 For information about what sorts of data may be collected,
 and for information on getting a data collection request reviewed,
 please read the [Data Collection Guidelines.][data_collection]
+The data review request and review templates are now maintained as the source of truth in the
+[mozilla/data-review GitHub repository](https://github.com/mozilla/data-review).
 
 ## Mechanics
 

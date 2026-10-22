@@ -446,5 +446,9 @@ LIMIT 10
 
 This document was heavily influenced by https://www.sqlstyle.guide/
 
+For additional conventions on query file structure, naming, incremental
+queries, and other practices not covered here, see the
+[bigquery-etl Recommended Practices](https://mozilla.github.io/bigquery-etl/reference/recommended_practices/) guide.
+
 Changes to the style guide should be reviewed by at least one member of
 both the Data Engineering team and the Data Science team.

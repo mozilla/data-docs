@@ -30,8 +30,11 @@ This dataset is scheduled on Airflow
 As of 2020-04-22, the current version of `search_clients_last_seee` is `v1`,
 and has a schema as follows. The default `search.search_clients_last_seen`
 view still returns this `v1` schema; a newer `v2` version with a different
-schema (described below) also exists and is used as the basis for LTV
-calculations.
+schema also exists and is used as the basis for LTV
+calculations. Compared to `v1`, `v2` replaces `profile_creation_date`/
+`profile_age_in_days` with `first_seen_date` and `first_reported_country`,
+adds `profile_group_id` and a new `total_uri_count_sum`/`days_dau_bytes`
+pair for DAU tracking, and drops `days_created_profile_bytes`.
 It's backfilled through 2020-01-01
 
 ```

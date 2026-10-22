@@ -24,6 +24,8 @@ This documentation is stored as [CommonMark Markdown](https://commonmark.org/hel
 [`data-docs` repository](https://github.com/mozilla/data-docs) on GitHub.
 To build a local copy, fork the repository and check out your copy. Then, [see the README](https://github.com/mozilla/data-docs/blob/master/README.md#building-the-documentation) for up-to-date information on how to build the documentation.
 
+Before submitting a pull request, run the spell checker (`scripts/spell_check.sh`, which uses `markdown-spell-check`) and add any necessary exceptions to the `.spelling` file.
+
 ## Adding a new article
 
 You should read the [style guide](./style_guide.md) before adding a new article: it will help you write material that is more useful and fits cohesively into the rest of the documentation.

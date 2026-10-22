@@ -27,6 +27,8 @@ Each link below points to the dataset's page on [Mozilla's Data Catalog](https:/
 
 ### Firefox Desktop (Legacy Telemetry)
 
+> **_NOTE:_** Firefox Desktop Legacy Telemetry support in GLAM is deprecated; new data stopped being aggregated for these tables on January 26, 2026.
+
 - [`moz-fx-data-shared-prod.glam_etl.glam_desktop_nightly_aggregates`](<https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.glam_etl.glam_desktop_nightly_aggregates,PROD)/Schema?is_lineage_mode=false&schemaFilter=>)
 - [`moz-fx-data-shared-prod.glam_etl.glam_desktop_beta_aggregates`](<https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.glam_etl.glam_desktop_beta_aggregates,PROD)/Schema?is_lineage_mode=false&schemaFilter=>)
 - [`moz-fx-data-shared-prod.glam_etl.glam_desktop_release_aggregates`](<https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.glam_etl.glam_desktop_release_aggregates,PROD)/Schema?is_lineage_mode=false&schemaFilter=>)
@@ -45,8 +47,8 @@ Most of the GLAM ETL is scheduled to run daily via Airflow. There are separate E
 - [Firefox Desktop on Glean (release)](https://workflow.telemetry.mozilla.org/dags/glam_fog_release/grid)
   - Runs weekly
   - Second "half" of release ETL is processed
-- [Firefox Desktop legacy](https://workflow.telemetry.mozilla.org/dags/glam/grid)
-  - Runs daily
+- [Firefox Desktop legacy](https://workflow.telemetry.mozilla.org/dags/glam/grid) (deprecated)
+  - New aggregations stopped on January 26, 2026
 - [Firefox for Android](https://workflow.telemetry.mozilla.org/dags/glam_fenix/grid)
   - Runs daily
 
