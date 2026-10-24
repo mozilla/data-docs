@@ -43,6 +43,10 @@ active during the week beginning one week after the day specified.
 
 Among profiles that were active at least once in the week starting on the
 specified day, what proportion (out of 1) are active during the following week.
+Firefox Desktop now defines retention primarily via the "Retained (DAU)" metric
+(based on DAU-qualifying days); this legacy "submitted any ping" definition has
+been deprecated as of June 2026. See [Metric Hub](https://mozilla.github.io/metric-hub/default_configs/firefox_desktop/)
+for details.
 
 ## Frequently Asked Questions
 
