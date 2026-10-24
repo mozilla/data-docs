@@ -9,6 +9,11 @@ The directory structure should feel comfortable to anyone who is familiar with t
    |--tools - contains tool level documentation
    |--concepts - contains tutorials meant to introduce a new concept to the reader
    |--cookbooks - focused code examples for reference
+   |--introduction - contains introductory material for newcomers to the data platform
+   |--reference - contains in-depth reference material on the data platform
+   |--contributing - contains documentation about contributing to this documentation
+   |--historical - contains archived, historical documentation
+   |--metrics - contains archived, historical metrics documentation
 ```
 
 This documentation is meant to take the reader from beginner to expert.
