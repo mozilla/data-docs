@@ -1,6 +1,6 @@
 # Standard Metrics
 
-> **⚠** Some of the information in this section is obsolete. For an up to date explanation of accepted metrics used at Mozilla, [contact the Data team](../concepts/getting_help.md).
+> **⚠** Some of the information in this section is obsolete. For an up to date explanation of accepted metrics used at Mozilla, see the [Metrics](https://docs.telemetry.mozilla.org/metrics/metrics) page and the [Growth and Usage Dashboard (GUD)](https://mozilla.github.io/gud/), or [contact the Data team](../concepts/getting_help.md).
 
 This section provides an overview of standard metrics used at Mozilla.
 Here you'll find the definitions and descriptions for each.
