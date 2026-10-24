@@ -123,3 +123,5 @@ ORDER BY
 ```
 
 This produces a histogram for the observed user frequencies and the model's predicted frequencies, allowing a chart similar to the one shown in the ["assessing model fit" example](https://lifetimes.readthedocs.io/en/latest/Quickstart.html#assessing-model-fit) in the `lifetimes` documentation. This table only checks performance for clients the model expects have, for example, clicked an ad in 0 to 28 days in the past year, since most of the distribution is contained in that interval.
+
+_Note: this `lifetimes`-based survival model and the `analysis.ltv_daily_model_perf` table are part of the retired v1 design. The current implementation instead derives client states via a Markov-chain model (`mozfun.ltv.\*\_states_\*`UDFs), fed by per-product`ltv*states_v1` tables.*

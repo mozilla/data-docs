@@ -1,6 +1,6 @@
 # Standard Metrics
 
-> **⚠** Some of the information in this section is obsolete. For an up to date explanation of accepted metrics used at Mozilla, [contact the Data team](../concepts/getting_help.md).
+> **⚠** Some of the information in this section is obsolete. For an up to date explanation of accepted metrics used at Mozilla, see the [Metrics](https://docs.telemetry.mozilla.org/metrics/metrics) page and the [Growth and Usage Dashboard (GUD)](https://mozilla.github.io/gud/), or [contact the Data team](../concepts/getting_help.md).
 
 This section provides an overview of standard metrics used at Mozilla.
 Here you'll find the definitions and descriptions for each.
@@ -8,7 +8,7 @@ Here you'll find the definitions and descriptions for each.
 The [Telemetry Behavior Reference](../concepts/index.md) section also provides
 information related to the definitions below.
 
-We are now in the process of setting up the metrics top-level section here. This information will be moved into the appropriate subsection and this page will be replaced with an overview.
+Canonical metric definitions are now maintained as code in [Metric Hub](https://github.com/mozilla/metric-hub) (`definitions/*.toml`, `nimbus/definitions/*.toml`) and in BigQuery tables such as `telemetry.active_users_aggregates` and `telemetry.mobile_active_users_aggregates`, rather than in this static page.
 
 ## Activity
 
@@ -43,6 +43,10 @@ active during the week beginning one week after the day specified.
 
 Among profiles that were active at least once in the week starting on the
 specified day, what proportion (out of 1) are active during the following week.
+Firefox Desktop now defines retention primarily via the "Retained (DAU)" metric
+(based on DAU-qualifying days); this legacy "submitted any ping" definition has
+been deprecated as of June 2026. See [Metric Hub](https://mozilla.github.io/metric-hub/default_configs/firefox_desktop/)
+for details.
 
 ## Frequently Asked Questions
 

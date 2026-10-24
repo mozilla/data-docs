@@ -45,6 +45,11 @@ gcloud beta dataproc clusters create cluster-name \
     --project project-id
 ```
 
+> **Note:** Dataproc image versions 2.1 and above (including the `2.3` image used above) ship with a
+> built-in Spark BigQuery connector. Setting `spark.jars` via `--properties` will not override it, since
+> the built-in connector takes precedence; to use a different connector version, pass
+> `--metadata SPARK_BQ_CONNECTOR_VERSION=<version>` instead.
+
 You can retrieve the Jupyter URL with the following command:
 
 ```bash

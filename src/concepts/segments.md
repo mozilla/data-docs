@@ -25,6 +25,8 @@ so that your communication is forwards compatible.
 
 ## Current user states/segments
 
+Note: a newer `clients_last_seen_v2` view now exists alongside `clients_last_seen_v1`, adding columns not yet described below: `new_profile_7_day_activated_v1`, `new_profile_14_day_activated_v1`, and `new_profile_21_day_activated_v1` (new-profile activation flags), plus a `segment` column that generalizes `activity_segments_v1` using a `days_active_bits` column. See the view source for exact definitions.
+
 ### Regular users v3
 
 `clients_last_seen.is_regular_user_v3`
