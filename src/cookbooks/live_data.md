@@ -117,7 +117,7 @@ Google Cloud Functions can process incoming messages in Pub/Sub and stream the d
 
 ## Tools for Visualizing Live Data
 
-Currently, live data in BigQuery could be considered "near real time" or nearline (as opposed to online), with data typically loaded within 10 minutes to each live table in our ingestion-sink code base, though a delay of up to 30 minutes is normal.
+Currently, live data in BigQuery could be considered "near real time" or nearline (as opposed to online), with latency usually below 1 hour to each live table in our ingestion-sink code base.
 
 For near real time product monitoring use cases, it is recommended to use Looker for hosting dashboards that refresh on a regular interval such as every 10 minutes.
 
