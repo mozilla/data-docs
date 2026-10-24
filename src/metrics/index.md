@@ -8,7 +8,7 @@ Here you'll find the definitions and descriptions for each.
 The [Telemetry Behavior Reference](../concepts/index.md) section also provides
 information related to the definitions below.
 
-We are now in the process of setting up the metrics top-level section here. This information will be moved into the appropriate subsection and this page will be replaced with an overview.
+Canonical metric definitions are now maintained as code in [Metric Hub](https://github.com/mozilla/metric-hub) (`definitions/*.toml`, `nimbus/definitions/*.toml`) and in BigQuery tables such as `telemetry.active_users_aggregates` and `telemetry.mobile_active_users_aggregates`, rather than in this static page.
 
 ## Activity
 
