@@ -87,6 +87,17 @@ root
     |- days_created_profile_bytes: bytes
 ```
 
+## Mobile Search Clients Last Seen
+
+A separate dataset, `search.mobile_search_clients_last_seen` (backed by
+`search_derived.mobile_search_clients_last_seen_v1`), captures search activity
+for mobile clients over the past 365 days and is used as the basis for mobile
+LTV calculations. It is scheduled under the `bqetl_mobile_search` DAG and
+handles app-migration logic (e.g. legacy Fennec/Focus/Klar transitioning to
+their Glean-based successors). See the
+[`mobile_search_clients_last_seen_v1` metadata](https://github.com/mozilla/bigquery-etl/blob/main/sql/moz-fx-data-shared-prod/search_derived/mobile_search_clients_last_seen_v1/metadata.yaml)
+for details.
+
 # Code Reference
 
 The `search_clients_last_seen` job is

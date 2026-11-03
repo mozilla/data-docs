@@ -79,6 +79,9 @@ ORDER BY
   submission_date
 ```
 
+Other bit pattern fields available in the desktop table include `days_active_bits`
+and `days_visited_1_uri_bits`.
+
 Adding a new usage criterion is possible, but requires some work especially
 if a historical backfill is necessary, so
 [file a bug](../concepts/reporting_a_problem.md) to begin discussions on

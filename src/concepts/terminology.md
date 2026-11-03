@@ -158,7 +158,7 @@ In Firefox, [Sessions](#session) are split into subsessions after every 24-hour 
 
 ## STMO (sql.telemetry.mozilla.org)
 
-A service for creating queries and dashboards. See [STMO under analysis tools](../introduction/tools.md#sqltelemetrymozillaorg-stmo).
+A service for creating queries and dashboards. While not deprecated, Looker is now the preferred solution for producing data visualizations and dashboards at Mozilla, where possible. See [STMO under analysis tools](../introduction/tools.md#sqltelemetrymozillaorg-stmo).
 
 ## Telemetry
 

@@ -16,6 +16,8 @@ Please refer to additional helpful videos available on the Bigeye channel.
 
 In addition to configuring monitors through the Bigeye UI, monitoring can be defined as code in [mozilla/bigquery-etl](https://github.com/mozilla/bigquery-etl). Tables can include a `bigconfig.yml` alongside their `metadata.yaml`, with monitoring enabled via a `monitoring.enabled` field. The `bqetl monitoring` CLI (`deploy`, `update`, `validate`, `deploy_custom_rules`) pushes these configs to Bigeye.
 
+**Caution:** Avoid running `bigconfig apply` or `bqetl monitoring deploy` ad hoc on your local machine outside of the normal deployment automation. Doing so with an incomplete set of config files can delete metrics that aren't included in the plan.
+
 ## Stay Updated on What's Happening
 
 [Jira Epic Link](https://mozilla-hub.atlassian.net/browse/DENG-4563)

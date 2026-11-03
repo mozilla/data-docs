@@ -52,7 +52,7 @@ The day 2-7 activation metric is calculated as:
 
 \\[ \frac{\text{Activated New Profiles (day 2-7)}}{\text{New Profiles (day 1-7)}} \\]
 
-Activated New Profiles (day 2-7): Unique count of client ids who use the product at any point starting the day after they created a profile up to 6 days after.
+Activated New Profiles (day 2-7): Unique count of client ids who are seen on more than one day during the day 2-7 window after profile creation and have performed at least one search in that period.
 
 New Profiles: Unique count of client ids with a given profile creation date. As not all initial pings are received exactly on the day of profile creation, we wait for 7 days after the profile creation date before establishing the New Profile cohort to ensure the data is complete.
 

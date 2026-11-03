@@ -27,6 +27,7 @@ infrequently updated, shared views such as `countries.view.lkml` can still use t
 
 After finding the source table, in your `explore.lkml` file, include the auto-generated datagroup and add a
 `persist_with` parameter that matches the datagroup. By convention, the datagroup name matches source tables.
+Generated datagroups also set a default `max_cache_age` of 24 hours as a fallback alongside their SQL trigger.
 See the following example:
 
 ```
