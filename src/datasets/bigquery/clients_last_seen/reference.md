@@ -99,7 +99,7 @@ Please see this [section](../../../concepts/segments.md) for descriptions regard
 - `second_seen_date`: Date the client sent their first main ping.
 - `days_since_first_seen`: Number of days since `first_seen_date`
 - `days_since_second_seen`: Number of days since `second_seen_date`
-- `new_profile_5_day_activated_v1`: Boolean indicating if a new profile has sent a ping 5 out of their first 7 days.
+- `new_profile_7_day_activated_v1`: Boolean indicating if a new profile has sent a ping 5 out of their first 7 days.
 - `new_profile_14_day_activated_v1`: Boolean indicating if a new profile has sent a ping 8 out of their first 14 days.
 - `new_profile_21_day_activated_v1`: Boolean indicating if a new profile has sent a ping 12 out of their first 21 days.
 - `days_since_created_profile`: Number of days since the profile creation date. This field is only populated when the
