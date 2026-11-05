@@ -2,7 +2,7 @@
 
 Here we provide definitions and information about our standard slicing dimensions.
 
-Note: the canonical, maintained dimension definitions now live as `[dimensions.*]` TOML blocks in the [metric-hub](https://github.com/mozilla/metric-hub) repository (see `definitions/*.toml` and `opmon/*.toml`), consumed programmatically by OpMon, Jetstream, and Looker. This page remains a stub template and does not reflect current practice.
+Note: the canonical, maintained dimension definitions now live as `[dimensions.*]` TOML blocks in the [metric-hub](https://github.com/mozilla/metric-hub) repository (see `definitions/*.toml` and `opmon/*.toml`), consumed programmatically by OpMon and Looker; Jetstream uses a parallel `[segments.*]` mechanism (not dimensions) for segmenting experiment populations. This page remains a stub template and does not reflect current practice.
 
 In OpMon, a project's `[project.population.dimensions]` list of slugs (in `opmon/<project>.toml`) is matched by slug against the `[dimensions.*]` blocks defined in `definitions/<platform>.toml` (or locally overridden in the project file) to build per-project dashboard filters. Looker does not consume the `[dimensions]` section directly; filterable fields there come from data source columns (see below).
 
