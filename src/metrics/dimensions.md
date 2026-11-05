@@ -10,6 +10,8 @@ Table of contents with links to dimensions.
 
 ---
 
+Dimensions can also be defined or overridden at the project level: an OpMon project config (`opmon/<project>.toml`) may declare its own local `[dimensions.*]` blocks, or reference platform-level dimensions from `definitions/<platform>.toml` by slug in `project.population.dimensions`.
+
 ## {{Dimension Name}}
 
 TL;DR: two sentence max.
