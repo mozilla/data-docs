@@ -61,7 +61,7 @@ The data is partitioned by `submission_date`.
 
 As of 2019-11-28, the current version of the `clients_daily` dataset is `v6`.
 
-As of Q1 2021, the `telemetry.clients_daily` view points to `clients_daily_joined`, which merges in event-ping, crash, and first/second-seen data on top of the `v6` main-ping table.
+As of Q1 2021, the `telemetry.clients_daily` view points to `clients_daily_joined`, which merges in event-ping, crash (main, content, gpu, rdd, socket, utility, and vr crash counts), and first/second-seen data on top of the `v6` main-ping table.
 
 ## Code Reference
 
