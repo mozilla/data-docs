@@ -37,6 +37,7 @@ The following options define how data is published:
   - `true`: data for each `submission_date` gets exported into separate directories (e.g.
     `files/2020-04-15`, `files/2020-04-16`, ...)
     - `false`: all data gets exported into one `files/` directory
+  - JSON output files are capped at 1GB each and split into sequentially numbered files (e.g. `000000000000.json`, `000000000001.json`, ...), up to 10,000 files per table
 - `incremental`: indicates how data gets updated based on the query and Airflow configuration
   - `true`: data gets incrementally updated
   - `false`: the entire table data gets updated
