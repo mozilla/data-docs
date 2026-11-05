@@ -20,7 +20,7 @@ TL;DR: two sentence max.
 - Definitions of what user has to do to qualify
 - Definitions of what telemetry must be sent to qualify.
 - At least one working definition
-- Link to the dimension's `[dimensions.*]` TOML block (data source and `select_expression`) in [metric-hub](https://github.com/mozilla/metric-hub)
+- Link to the dimension's `[dimensions.*]` TOML block (data source and `select_expression`) in [metric-hub](https://github.com/mozilla/metric-hub); note that a data source can also expose all of its columns as dimensions automatically via `columns_as_dimensions = true` on its `[data_sources.*]` block
 - Possibly an API-linked graph from STMO
 - Common Issues: Failures and Gotchas
 - Resources
