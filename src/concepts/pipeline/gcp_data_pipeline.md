@@ -19,6 +19,10 @@ d0 --> p1(fa:fa-stream Raw Topic)
 p1 --> d1(fa:fa-exchange-alt Raw Sink)
 d1 --> b1(fa:fa-database Raw BQ)
 p1 --> d2(fa:fa-exchange-alt Decoder)
+s1(fa:fa-server Server Apps) -->|log| p4(fa:fa-stream Logging Topic)
+s1 -->|publish| p5(fa:fa-stream Direct Topic)
+p4 --> d2
+p5 --> d2
 d2 -->|success| p2(fa:fa-stream Decoded Topic)
 d2 -.->|fail| p3(fa:fa-stream Errors Topic)
 p3 --> d4(fa:fa-exchange-alt Errors Sink)
@@ -30,9 +34,9 @@ classDef pubsub fill:#eff,stroke:#099;
 classDef exec fill:#efe,stroke:#090;
 classDef producers fill:#fee,stroke:#f90;
 classDef bq fill:#ececff,stroke:#9370db;
-class p1,p2,p3 pubsub
+class p1,p2,p3,p4,p5 pubsub
 class d0,d1,d2,d3,d4 exec
-class f1 producers
+class f1,s1 producers
 class b1,b2,b3 bq
 ```
 
@@ -83,6 +87,11 @@ This raw data is not used for analysis, but is stored in its raw form for
 recovery and backfill purposes.
 
 If there is a processing error or data-loss downstream in the pipeline, this is an important fail-safe.
+
+Server applications using Glean skip the edge. They either log pings to `stdout`,
+which a Cloud Logging sink forwards to PubSub, or publish them to PubSub directly.
+These pings are not written to `payload_bytes_raw`. See
+[Adding Glean to your Server Application][glean-server] in the Glean book.
 
 ## Decoding
 
@@ -240,3 +249,4 @@ build and work with aggregate datasets rather than individual-level data.
 [gcp-ingestion]: https://github.com/mozilla/gcp-ingestion
 [ingestion-sink]: https://github.com/mozilla/gcp-ingestion/tree/main/ingestion-sink
 [looker]: https://mozilla.cloud.looker.com
+[glean-server]: https://mozilla.github.io/glean/book/user/adding-glean-to-your-project/server.html
