@@ -78,6 +78,10 @@ there are inherent differences between infrequent and casual users, for example.
 the past 28 days evenly. One can use `clients_last_seen.days_visited_1_uri_bits` to define their own criteria if a
 different breakdown is desired.
 
+### Metric-hub segments (for experiment analysis)
+
+These user states are also formalized as [metric-hub](metric_hub.md) `segments` definitions (e.g. `activity_core`, `activity_regular`, `regular_users_v3`, `new_or_resurrected_v3`, `weekday_regular_v1`) in `firefox_desktop.toml`, which Jetstream uses to segment experiment analyses.
+
 ## Writing queries with user states/segments
 
 When a user state is defined with respect to a user's _behavior_ (e.g. usage levels) as opposed to more stable

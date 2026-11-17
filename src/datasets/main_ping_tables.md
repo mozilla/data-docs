@@ -37,3 +37,10 @@ which is the same approach we use for choosing `id_bucket` in Exact MAU tables.
 
 This table includes only data from the nightly release channel (`normalized_channel = 'nightly'`).
 It includes 6 months of history.
+
+## Use Counter Data: `telemetry.main_use_counter_1pct`
+
+Use counter data was split out of the main ping into its own stable table. As a result,
+`telemetry.main_1pct` no longer includes use counter data; it is now equivalent to the
+newer `telemetry.main_remainder_1pct` table. A separate 1% sample of use counter data is
+available in `telemetry.main_use_counter_1pct`.

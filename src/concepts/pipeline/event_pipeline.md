@@ -121,7 +121,7 @@ Mobile data collection is done through [Glean](glean_data.md). [Glean events](ht
 
 On the pipeline side, the event data is made available in different datasets:
 
-- [`main_summary`](../../datasets/batch_view/main_summary/reference.md) has a row for each main ping and includes
+- [`main_summary`](../../datasets/batch_view/main_summary/reference.md) (archived; no longer generated) had a row for each main ping and included
   its event payload for Firefox versions before 62.
 - [`events`](../../datasets/batch_view/events/reference.md) contains a row for each event received from main pings and event pings. See [`STMO#52582`](https://sql.telemetry.mozilla.org/queries/52582/source).
 - For applications that collect events through Glean, each application has a separate `events` dataset.

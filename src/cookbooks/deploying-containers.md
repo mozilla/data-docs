@@ -1,6 +1,6 @@
 # Building and Deploying Containers to Google Container Registry (GCR) with CircleCI
 
-The following cookbook describes how to set up automated build and deployment for containers with CircleCI, a useful pattern for scheduling custom jobs in Google Kubernetes Engine.
+The following cookbook describes how to set up automated build and deployment for containers with CircleCI, a pattern now superseded by ArgoCD-based GitOps deployment for MozCloud services (see note above).
 
 > **Note:** Google Container Registry (GCR) has been shut down, so this cookbook is outdated. Google Artifact Registry (GAR) is now the standard, required path for MozCloud services deploying containers via ArgoCD; see [How to Publish Container Images to GAR](https://mozilla-hub.atlassian.net/wiki/spaces/SRE/pages/997163545/How+to+Publish+Container+Images+to+GAR).
 
