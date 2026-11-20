@@ -42,7 +42,7 @@ The following options define how data is published:
 - `incremental`: indicates how data gets updated based on the query and Airflow configuration
   - `true`: data gets incrementally updated
   - `false`: the entire table data gets updated
-- `review_bugs`: list of Bugzilla bug numbers of the data review
+- `review_bugs`: list of Bugzilla bug numbers of the data review; required, and enforced by CI validation, whenever `public_bigquery` or `public_json` is set
 - `legacy`: set to `true` to indicate a dataset that selects only from legacy Telemetry
 
 Data will get published when the query is executed in Airflow. Metadata of available public
