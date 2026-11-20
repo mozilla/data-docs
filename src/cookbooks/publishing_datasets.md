@@ -45,8 +45,9 @@ The following options define how data is published:
 - `review_bugs`: list of Bugzilla bug numbers of the data review; required, and enforced by CI validation, whenever `public_bigquery` or `public_json` is set
 - `legacy`: set to `true` to indicate a dataset that selects only from legacy Telemetry
 
-Data will get published when the query is executed in Airflow. Metadata of available public
-data on Cloud Storage is updated daily through a separate Airflow task.
+Data for `public_json` gets published when the query runs in Airflow, and metadata of available public
+data on Cloud Storage is updated daily through a separate Airflow task. Tables flagged `public_bigquery`
+are deployed to the `mozilla-public-data` project nightly via the `bqetl_artifact_deployment` Airflow DAG.
 
 More information about accessing public data can be found in
 [Accessing Public Data](../cookbooks/public_data.md).
