@@ -71,6 +71,7 @@ Please see this [section](../../../concepts/segments.md) for descriptions regard
 
 - `is_core_active_v1`: Boolean indicating if the client satisfies conditions of being core active on that day.
 - `activity_segments_v1`: The activity segment applicable to the client that day.
+- `segment`: Duplicate of `activity_segments_v1`, using the same logic.
 - `is_regular_user_v3`: Boolean indicating if the client satisfies conditions of being a regular user on that day.
 - `is_new_or_resurrected_v3`: Boolean indicating if the client satisfies conditions of being a regular user on that day.
 - `is_weekday_regular_v1`: Boolean indicating if the client satisfies conditions of being a weekday regular user on that day.
