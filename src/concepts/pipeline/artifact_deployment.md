@@ -24,6 +24,8 @@ The UDF deploy is triggered through the `publish_public_udfs` and `publish_persi
 
 Tables get deployed through the [`publish_tables_and_views` Airflow task](https://workflow.telemetry.mozilla.org/tree?dag_id=bqetl_artifact_deployment), which replaced the former separate `publish_new_tables` task. This task will run all SQL generators, generate schemas for each query and will deploy schemas for tables and apply any schema-compatible changes for existing tables. The task will fail if changes that are incompatible with existing schemas (such as removing fields or changing field types) are to be applied. New tables are first initialized via a separate `bqetl_artifact_initialize` Airflow DAG, which runs `bqetl query initialize` across `moz-fx-data-shared-prod`, `moz-fx-data-experiments`, `moz-fx-data-marketing-prod`, and `moz-fx-data-bq-people`.
 
+Static tables, which are deployed from CSV files rather than generated SQL, are published separately via the `publish_static_tables` task for `moz-fx-data-shared-prod` and `mozdata`.
+
 ## View Deployment
 
 View deployment happens together with table deployment in the [`publish_tables_and_views` Airflow task](https://workflow.telemetry.mozilla.org/tree?dag_id=bqetl_artifact_deployment), which replaced the former separate `publish_views` task. This task will run all SQL generators, which ensures that SQL for generated views will be available. Only views with either changes to their SQL definition, schema, metadata or newly created views will be deployed.
