@@ -91,7 +91,7 @@ Please see this [section](../../../concepts/segments.md) for descriptions regard
 - `days_had_8_active_ticks_bits`: Each bit field represents if a client had at least 8 active ticks on that day.
   This can be used to approximate the threshold of 1 URI, and is useful for determining activity for clients using
   Private Browsing Mode where URI counts are not recorded.
-- `days_since_visited_8_active_ticks`: Number of days since the client had at least 8 active ticks.
+- `days_since_had_8_active_ticks`: Number of days since the client had at least 8 active ticks.
 
 ### New Profile Specific
 
