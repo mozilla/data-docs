@@ -125,7 +125,7 @@ On the pipeline side, the event data is made available in different datasets:
   its event payload for Firefox versions before 62.
 - [`events`](../../datasets/batch_view/events/reference.md) contains a row for each event received from main pings and event pings. See [`STMO#52582`](https://sql.telemetry.mozilla.org/queries/52582/source).
 - For applications that collect events through Glean, each application has a separate `events` dataset.
-- [`events_daily`](../../datasets/bigquery/events_daily/reference.md) encodes each client-day's events as a compressed string of Unicode characters, for use with the `mozfun.event_analysis` functions for funnel and event-count analysis.
+- [`events_daily`](../../datasets/bigquery/events_daily/reference.md) encodes each client-day's events as a compressed string of Unicode characters, for use with the `mozfun.event_analysis` functions for funnel and event-count analysis. The Firefox Desktop version of this table (`telemetry_derived.events_daily_v1`) is deprecated and no longer actively scheduled (see [bug 1805722](https://bugzilla.mozilla.org/show_bug.cgi?id=1805722)).
 
 # Data tooling
 
