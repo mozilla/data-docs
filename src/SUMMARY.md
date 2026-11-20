@@ -135,7 +135,6 @@
   - [Other Datasets](datasets/other.md)
     - [hgpush](datasets/other/hgpush/reference.md)
     - [Stub installer ping](datasets/other/stub_installer/reference.md)
-    - [bmobugs](datasets/other/bmobugs/reference.md)
     - [Build metadata](datasets/buildhub.md)
     - [Release information](datasets/releases.md)
     - [Suggest](datasets/other/suggest/suggest.md)
