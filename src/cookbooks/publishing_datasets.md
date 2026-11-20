@@ -19,12 +19,13 @@ owners:
 labels:
   application: firefox
   incremental: true # incremental queries add data to existing tables
-  schedule: daily # scheduled in Airflow to run daily
   public_json: true
   public_bigquery: true
   review_bugs: # Bugzilla bug IDs of data review
     - 1414839
   incremental_export: false # non-incremental JSON export writes all data to a single location
+scheduling:
+  dag_name: bqetl_ssl_ratios
 ```
 
 The following options define how data is published:
