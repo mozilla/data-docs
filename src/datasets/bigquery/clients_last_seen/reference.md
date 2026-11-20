@@ -93,6 +93,9 @@ Please see this [section](../../../concepts/segments.md) for descriptions regard
   Private Browsing Mode where URI counts are not recorded.
 - `days_since_had_8_active_ticks`: Number of days since the client had at least 8 active ticks.
 
+- `days_active_bits`: Each bit field represents if a client had at least 1 active tick and visited at least 1 URI on that day.
+- `days_since_active`: Number of days since the client was active (had at least 1 active tick and visited at least 1 URI).
+
 ### New Profile Specific
 
 - `first_seen_date`: Date the client sent their first main ping.
