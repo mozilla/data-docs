@@ -1,5 +1,7 @@
 # Intro
 
+**Note:** This dataset is retired/archived. The pipeline no longer exists in Mozilla's current `bigquery-etl` or `telemetry-airflow` repositories, and the table is no longer generated; this page is kept for historical reference. See [Scheduling](#scheduling) below.
+
 The `active_profiles` dataset gives client-level estimates of whether a profile
 is still an active user of the browser at a given point in time, as well as probabilistic forecasts
 of the client's future activity. These quantities are estimated by a model that attempts to infer

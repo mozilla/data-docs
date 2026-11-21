@@ -71,6 +71,7 @@ Please see this [section](../../../concepts/segments.md) for descriptions regard
 
 - `is_core_active_v1`: Boolean indicating if the client satisfies conditions of being core active on that day.
 - `activity_segments_v1`: The activity segment applicable to the client that day.
+- `segment`: Duplicate of `activity_segments_v1`, using the same logic.
 - `is_regular_user_v3`: Boolean indicating if the client satisfies conditions of being a regular user on that day.
 - `is_new_or_resurrected_v3`: Boolean indicating if the client satisfies conditions of being a regular user on that day.
 - `is_weekday_regular_v1`: Boolean indicating if the client satisfies conditions of being a weekday regular user on that day.
@@ -91,7 +92,10 @@ Please see this [section](../../../concepts/segments.md) for descriptions regard
 - `days_had_8_active_ticks_bits`: Each bit field represents if a client had at least 8 active ticks on that day.
   This can be used to approximate the threshold of 1 URI, and is useful for determining activity for clients using
   Private Browsing Mode where URI counts are not recorded.
-- `days_since_visited_8_active_ticks`: Number of days since the client had at least 8 active ticks.
+- `days_since_had_8_active_ticks`: Number of days since the client had at least 8 active ticks.
+
+- `days_active_bits`: Each bit field represents if a client had at least 1 active tick and visited at least 1 URI on that day.
+- `days_since_active`: Number of days since the client was active (had at least 1 active tick and visited at least 1 URI).
 
 ### New Profile Specific
 
